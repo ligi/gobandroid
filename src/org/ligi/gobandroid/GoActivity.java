@@ -22,6 +22,8 @@ import android.view.View.OnTouchListener;
 
 public class GoActivity extends Activity {
     private static final int MENU_UNDO = 0;
+    private static final int MENU_PASS = 1;
+    
     public String[] menu_items= {"Start Game" ,"Quit" };
     
     GoGame game;
@@ -39,14 +41,14 @@ public class GoActivity extends Activity {
     
 int i=0;
     /* Creates the menu items */
-//public void onCreateContextMenu (ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-    //public boolean onCreateOptionsMenu(Menu menu) {
    public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
         if (game.canUndo()) {
-            MenuItem settings_menu=menu.add(0,MENU_UNDO,0,"Undo" + (i++) );
+            MenuItem settings_menu=menu.add(0,MENU_UNDO,0,"Undo");
             settings_menu.setIcon(android.R.drawable.ic_menu_revert);
         }
+        MenuItem settings_menu=menu.add(0,MENU_PASS,0,"Pass" );
+        settings_menu.setIcon(android.R.drawable.ic_menu_set_as);
        return true;
     }
 
@@ -54,11 +56,16 @@ int i=0;
     public boolean onOptionsItemSelected(MenuItem item) {
         
         switch (item.getItemId()) {
-        case MENU_UNDO:
-            game.undo();
-            board_view.invalidate();
+            case MENU_UNDO:
+                game.undo();
+                break;
+                
+            case MENU_PASS:
+                game.pass();
+                break;
             
         }
+        board_view.invalidate();
         return false;
     }
 

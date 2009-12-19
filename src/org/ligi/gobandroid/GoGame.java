@@ -20,12 +20,25 @@ public class GoGame {
     
     private boolean black_to_move = true;
 
+    private boolean last_action_was_pass=false;
+   
+    private boolean game_finished=false;
+    
+    
     private int[][] groups;
 
     private int group_count = -1;
         
     Vector moves;
     
+    public void pass() {
+        if (last_action_was_pass) 
+            game_finished=true; // finish game if both passed
+        else {
+            last_action_was_pass=true;
+            black_to_move=!black_to_move; // next player
+        }
+    }
     
     public GoGame( int size ) {
         calc_board = new GoBoard( size );
@@ -60,6 +73,7 @@ public class GoGame {
                     return false;
                 }
                 visual_board=calc_board.clone();
+                last_action_was_pass=false;
                 moves.add(new byte[] { x,y} );
                 return true;
             }
