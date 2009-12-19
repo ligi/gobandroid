@@ -67,16 +67,21 @@ public class GoGame {
         return false;
     }
 
+    public boolean canUndo() {
+        return (moves.size()>0); 
+    }
     public void undo() {
         clear_calc_board();
         Vector _moves=(Vector)moves.clone();
         moves=new Vector();
+        black_to_move=true;
         for (int step=0 ; step<_moves.size()-1;step++)
         {
             byte move_x=((byte[])_moves.get(step))[0];
             byte move_y=((byte[])_moves.get(step))[1];
             do_move(move_x,move_y);
         }
+        
     }
     
     public int getGroup(byte x,byte y) {

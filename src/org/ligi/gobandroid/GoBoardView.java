@@ -93,15 +93,8 @@ public class GoBoardView extends View implements OnTouchListener{
             if (!game.do_move((byte)(event.getX()/stone_size),(byte)(event.getY()/stone_size)))
                 ; // vibrate
         }
-        else
-        {
-            if (event.getAction()==MotionEvent.ACTION_UP) game.undo();
-        }
-        
         invalidate();  // the board looks diffrent after a move
         return true;
     }
-    
-    // TODO undo to context menue / pass to context
     
 }
