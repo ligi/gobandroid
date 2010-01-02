@@ -31,8 +31,8 @@ public class GoActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent getIntent=getIntent(); 
-        byte size=getIntent.getByteExtra("size",(byte)9);
+        
+        byte size=getIntent().getByteExtra("size",(byte)9);
         game=new GoGame(size);
         board_view=new GoBoardView(this,game);
         board_view.setOnTouchListener((OnTouchListener)board_view );

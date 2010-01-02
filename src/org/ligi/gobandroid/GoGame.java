@@ -29,7 +29,10 @@ public class GoGame {
 
     private int group_count = -1;
         
-    Vector moves;
+    private int captures_white;
+    private int captures_black;
+    
+    Vector<byte[]> moves;
     
     public void pass() {
         if (last_action_was_pass) 
@@ -81,19 +84,40 @@ public class GoGame {
         return false;
     }
 
+    /** moving without checks ( e.g. for undo / recorded games where we can be sure that the move is valid **/
+    public void do_internal_move( byte x, byte y ) {
+        if (black_to_move)
+            calc_board.setCellBlack( x, y );
+        else
+            calc_board.setCellWhite( x, y );
+                
+        black_to_move = !black_to_move;
+        build_groups();
+        remove_dead(x,y); 
+        moves.add(new byte[] { x,y} );
+    }
+
     public boolean canUndo() {
         return (moves.size()>0); 
     }
+    
+    public void reset() {
+    	black_to_move=true;
+    	moves=new Vector<byte[]>();
+    	captures_black=0;
+    	captures_white=0;
+    	
+    }
     public void undo() {
         clear_calc_board();
-        Vector _moves=(Vector)moves.clone();
-        moves=new Vector();
-        black_to_move=true;
+        Vector<byte[]> _moves=(Vector<byte[]>)moves.clone();
+        
+        reset();
         for (int step=0 ; step<_moves.size()-1;step++)
         {
             byte move_x=((byte[])_moves.get(step))[0];
             byte move_y=((byte[])_moves.get(step))[1];
-            do_move(move_x,move_y);
+            do_internal_move(move_x,move_y);
         }
         
     }
@@ -132,6 +156,7 @@ public class GoGame {
     }
     
     public void build_groups() {
+        group_count=0;
         for (int x = 0; x < calc_board.getSize(); x++)
             for (int y = 0; y < calc_board.getSize(); y++) {
                 groups[x][y] = -1;
@@ -211,7 +236,15 @@ public class GoGame {
                 for (int xg = 0; xg < calc_board.getSize(); xg++)
                     for (int yg = 0; yg < calc_board.getSize(); yg++)
                         if (groups[xg][yg]==grp)
-                            calc_board.setCellFree(xg,yg );
+                        	{
+                        	
+                        	if (calc_board.isCellBlack(xg, yg))
+                        			captures_white++;
+                        	else
+                        			captures_black++;
+                        	
+                        	calc_board.setCellFree(xg,yg );
+                        	}
             
         }
 
@@ -221,4 +254,24 @@ public class GoGame {
         return visual_board;
     }
 
+
+    public boolean isLastActionPass() {
+    	return last_action_was_pass;
+    }
+
+    public boolean isFinished() {
+    	return game_finished;
+    }
+    
+    public boolean isBlackToMove() {
+    	return black_to_move;
+    }
+    
+    public int getCapturesBlack() {
+    	return captures_black;
+    }
+    
+    public int getCapturesWhite() {
+    	return captures_white;
+    }
 }
