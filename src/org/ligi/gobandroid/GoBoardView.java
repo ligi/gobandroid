@@ -119,11 +119,12 @@ public class GoBoardView extends View implements OnTouchListener{
         }
         
         
-        canvas.drawText("Captures black: " + game.getCapturesBlack(),txt_anchor_x,txt_anchor_y + 1*spacer,textPaint);
-        canvas.drawText("Captures white: " + game.getCapturesWhite(),txt_anchor_x,txt_anchor_y + 2*spacer,textPaint);
-        
+        canvas.drawText("Move: " + (game.moves.size()+1),txt_anchor_x,txt_anchor_y + 1*spacer,textPaint);
+        canvas.drawText("Captures black: " + game.getCapturesBlack(),txt_anchor_x,txt_anchor_y + 2*spacer,textPaint);
+        canvas.drawText("Captures white: " + game.getCapturesWhite(),txt_anchor_x,txt_anchor_y + 3*spacer,textPaint);
+                
         if (touch_x!=-1)
-        canvas.drawText("Touch: " + (char)('A'+touch_x) + (touch_y+1),txt_anchor_x,txt_anchor_y + 3*spacer,textPaint);
+        canvas.drawText("Touch: " + (char)('A'+touch_x) + (touch_y+1),txt_anchor_x,txt_anchor_y + 4*spacer,textPaint);
     }
     
     boolean width_is_max;
