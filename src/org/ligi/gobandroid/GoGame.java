@@ -17,7 +17,9 @@ public class GoGame {
 
     
     private GoBoard visual_board; // the board to show to the user
-    private GoBoard calc_board;
+    private GoBoard calc_board;	  // the board calculations are done in
+    private GoBoard last_board;   // board to detect KO situations
+    private GoBoard pre_last_board;   // board to detect KO situations
 
     
     private boolean black_to_move = true;
@@ -34,25 +36,45 @@ public class GoGame {
     private int captures_white;
     private int captures_black;
     
+    
     Vector<byte[]> moves;
     
     public void pass() {
-        if (last_action_was_pass) 
-            game_finished=true; // finish game if both passed
+        if (last_action_was_pass)    	// finish game if both passed 
+            game_finished=true; 
         else {
+        	
             last_action_was_pass=true;
             black_to_move=!black_to_move; // next player
         }
     }
     
     public GoGame( int size ) {
+    	// create the boards
         calc_board = new GoBoard( size );
-        visual_board=calc_board.clone();
-        moves= new Vector();
-        groups = new int[calc_board.getSize()][calc_board.getSize()];
+        visual_board=new GoBoard( size );
+        last_board=new GoBoard( size );
+        pre_last_board=new GoBoard( size );
         
+        // create the array for group calculations
+        groups = new int[size][size];
+        
+        reset();
     }
 
+    public void reset() {
+    	
+    	// black always starts
+    	black_to_move=true;
+    	
+    	// create the vector to save the moves
+        moves= new Vector<byte[]>();
+        captures_black=0;
+    	captures_white=0;
+    	
+    	
+    }
+    
     /**
      *  place a stone on the board
      *
@@ -64,25 +86,35 @@ public class GoGame {
         if ((x >= 0) && (x <= calc_board.getSize()) && (y >= 0) && (y < calc_board.getSize())) { // if x and y are inside the board
             if (calc_board.isCellFree( x, y )) { // cant place a stone where another is allready
                 
+            	GoBoard bak_board=calc_board.clone();
+            	
                 if (black_to_move)
                     calc_board.setCellBlack( x, y );
                 else
                     calc_board.setCellWhite( x, y );
                 
                 build_groups();
+                remove_dead(x,y);
                 
-                if (group_has_liberty(groups[x][y])||isDeadGroupOnBoard(x,y)) { // valid move -> do things needed to do 
+                if ((group_has_liberty(groups[x][y])||isDeadGroupOnBoard(x,y)) // if either a field has libertys or get's one
+                		&&!pre_last_board.equals(calc_board)) // and the move is not a ko 
+                { 	// valid move -> do things needed to do after a valid move 
                     Log.d("gobandroid", "isDeadGroupOnBoard(x,y)" + isDeadGroupOnBoard(x,y));
                 	black_to_move = !black_to_move;
-                    remove_dead(x,y); }
-                else { // was an illegal move -> undo
-                    calc_board.setCellFree(x,y );
                     
+                    pre_last_board=last_board.clone();
+                    last_board=calc_board.clone();
+                    visual_board=calc_board.clone();                    
+                    last_action_was_pass=false;
+                    moves.add(new byte[] { x,y} );
+                    
+                    return true;
+                    }
+                else { // was an illegal move -> undo
+                    calc_board=bak_board.clone();
+                    return false;
                 }
-                visual_board=calc_board.clone();
-                last_action_was_pass=false;
-                moves.add(new byte[] { x,y} );
-                return true;
+                
             }
         }
         return false;
@@ -105,13 +137,7 @@ public class GoGame {
         return (moves.size()>0); 
     }
     
-    public void reset() {
-    	black_to_move=true;
-    	moves=new Vector<byte[]>();
-    	captures_black=0;
-    	captures_white=0;
-    	
-    }
+    
     public void undo() {
         clear_calc_board();
         Vector<byte[]> _moves=(Vector<byte[]>)moves.clone();
@@ -123,6 +149,8 @@ public class GoGame {
             byte move_y=((byte[])_moves.get(step))[1];
             do_internal_move(move_x,move_y);
         }
+        
+        visual_board=calc_board.clone();
         
     }
     
