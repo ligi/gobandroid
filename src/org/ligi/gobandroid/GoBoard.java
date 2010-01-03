@@ -28,6 +28,24 @@ public class GoBoard {
         return new GoBoard(size,board);
     }
     
+    /*
+     * check if two boards are equal
+     */
+    public boolean equals(GoBoard other) {
+    	
+    	// if the size is not matching the boards can't be equal
+    	if (size!=other.size) 
+    		return false;
+    	
+    	// check if all stones are placed equaly
+    	boolean equal=true; // be positive
+    	for( int x=0;x<size;x++)
+    		for( int y=0;y<size;y++)
+    			equal&=(board[x][y]==other.board[x][y]);
+    	
+    	return equal;
+    }
+    
     public int getSize() {
         return size;
     }
