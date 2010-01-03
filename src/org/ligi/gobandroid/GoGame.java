@@ -2,6 +2,8 @@ package org.ligi.gobandroid;
 
 import java.util.Vector;
 
+import android.util.Log;
+
 /**
  * 
  * Class to represent a Go Game with its rules
@@ -48,6 +50,7 @@ public class GoGame {
         visual_board=calc_board.clone();
         moves= new Vector();
         groups = new int[calc_board.getSize()][calc_board.getSize()];
+        
     }
 
     /**
@@ -69,11 +72,12 @@ public class GoGame {
                 build_groups();
                 
                 if (group_has_liberty(groups[x][y])||isDeadGroupOnBoard(x,y)) { // valid move -> do things needed to do 
-                    black_to_move = !black_to_move;
+                    Log.d("gobandroid", "isDeadGroupOnBoard(x,y)" + isDeadGroupOnBoard(x,y));
+                	black_to_move = !black_to_move;
                     remove_dead(x,y); }
                 else { // was an illegal move -> undo
                     calc_board.setCellFree(x,y );
-                    return false;
+                    
                 }
                 visual_board=calc_board.clone();
                 last_action_was_pass=false;
@@ -204,12 +208,21 @@ public class GoGame {
                     continue;
             
             boolean grp_living=false;
+            int grp_members=0;
             for (int xg = 0; xg < calc_board.getSize(); xg++)
                 for (int yg = 0; yg < calc_board.getSize(); yg++)
                     if (groups[xg][yg]==grp)
-                        grp_living |= cell_has_liberty(xg,yg);
+                        {
+                    	grp_members++;
+                    	grp_living |= cell_has_liberty(xg,yg);
+                        }
                         
-            if (!grp_living) return true;
+            
+            if ((!grp_living)&&(grp_members>0)) {
+            	Log.d("gobandroid " ,"Grp living" + grp);
+            	return true;
+            	
+            }
         }
         
         return false; // found no dead group
