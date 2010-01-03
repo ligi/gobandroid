@@ -1,5 +1,7 @@
 package org.ligi.gobandroid;
 
+import android.util.Log;
+
 
 /**
  * Class to represent a Go Board
@@ -20,8 +22,15 @@ public class GoBoard {
     }
 
     public GoBoard( int size,int[][] predefined_board ) {
-        this.size=size;
-        board=predefined_board;
+   
+    	this.size=size;
+        board=new int[size][size];
+   
+        // copy the board
+        for( int x=0;x<size;x++)
+    		for( int y=0;y<size;y++)
+    			board[x][y]=predefined_board[x][y];
+        
     }
 
     public GoBoard clone() {
@@ -42,10 +51,28 @@ public class GoBoard {
     	for( int x=0;x<size;x++)
     		for( int y=0;y<size;y++)
     			equal&=(board[x][y]==other.board[x][y]);
-    	
+
     	return equal;
     }
     
+    public void logBoard() {	
+    	String tmp_str="";
+    	
+    	for( int y=0;y<size;y++)
+    	{
+    	for( int x=0;x<size;x++)
+    		{
+    		if (board[x][y]==0)
+        		tmp_str+=" ";
+    		else if (board[x][y]==1)
+	    		tmp_str+="B";
+    		else if (board[x][y]==2)
+	    		tmp_str+="W";
+    		}
+    	Log.d("gobandroid Board",tmp_str);
+    	tmp_str="";
+    	}
+    }
     public int getSize() {
         return size;
     }
