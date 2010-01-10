@@ -34,17 +34,18 @@ public class GoBoardView extends View implements OnTouchListener{
       //  this.board=game.getVisualBoard();
         
         whitePaint=new Paint();
-        whitePaint.setColor(0xCCCCCCCC);
+        whitePaint.setColor(0xFFCCCCCC);
         whitePaint.setAntiAlias(true);
         
         blackPaint=new Paint();
-        blackPaint.setColor(0xCC000000);
+        blackPaint.setColor(0xFF000000);
         blackPaint.setTextAlign(Paint.Align.CENTER  );
         blackPaint.setAntiAlias(true);
         
         boardPaint=new Paint();
-        boardPaint.setColor(0xFFc6b460);
-
+        //boardPaint.setColor(0xFFc6b460);
+        boardPaint.setColor(0xFFA77E3D);
+        //boardPaint.setColor(0xFFA68064);
         gridPaint=new Paint();
         
         //gridPaint.setColor(0xFFFFFFFF);
@@ -79,18 +80,26 @@ public class GoBoardView extends View implements OnTouchListener{
         for(byte x=0;x<game.getVisualBoard().getSize();x++)
             for(byte y=0;y<game.getVisualBoard().getSize();y++)
             {
-                if (game.getVisualBoard().isCellWhite(x,y))
+            	if (game.isStoneDead(x, y))
+            	{
+            		blackPaint.setColor(0xBB000000);
+            		whitePaint.setColor(0xBBCCCCCC);
+            	}
+            	else
+            	{
+            		blackPaint.setColor(0xFF000000);
+            		whitePaint.setColor(0xFFCCCCCC);
+            	}
+            	if (game.getVisualBoard().isCellWhite(x,y))
                     {
                     canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,whitePaint );
-                    canvas.drawText( "" + game.getGroup(x,y) +"-" + (game.group_has_liberty(game.getGroup( x,y))?"x":"-"), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,blackPaint );
+                    //canvas.drawText( "" + game.getGroup(x,y) +"-" + (game.group_has_liberty(game.getGroup( x,y))?"x":"-"), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,blackPaint );
                     }
                 if (game.getVisualBoard().isCellBlack(x,y))
                     {
                     canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,blackPaint );
-                    canvas.drawText( "" + game.getGroup(x,y), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,whitePaint );
+                    //canvas.drawText( "" + game.getGroup(x,y), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,whitePaint );
                     }
-                
-        
             }
     
         
@@ -100,16 +109,16 @@ public class GoBoardView extends View implements OnTouchListener{
         if (width_is_max)
         	{
         	txt_anchor_x=10;
-        	txt_anchor_y=this.getWidth()+10;
+        	txt_anchor_y=this.getWidth()+(int)textPaint.getTextSize()*2;;
         	}
         else        	
         {
-        	txt_anchor_x=this.getHeight()+10;
+        	txt_anchor_x=this.getHeight()+(int)textPaint.getTextSize()*2;
         	txt_anchor_y=20;
         	}
         float spacer=textPaint.getTextSize()*1.5f;
         if (game.isFinished())
-        	canvas.drawText("Game is finished",txt_anchor_x,txt_anchor_y + 0*spacer,textPaint);
+        	canvas.drawText("Game is finished - Mark Dead Stones",txt_anchor_x,txt_anchor_y + 0*spacer,textPaint);
         else
         {
         	if (game.isLastActionPass())
@@ -144,9 +153,6 @@ public class GoBoardView extends View implements OnTouchListener{
     byte touch_y=0;
     
     public boolean onTouch( View v, MotionEvent event ) {
-
-        
-    	
     	
         if ((event.getY()<stone_size*game.getVisualBoard().getSize())&&(event.getX()<stone_size*game.getVisualBoard().getSize())) // if user put his finger on the board
         {
