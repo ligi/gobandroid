@@ -23,10 +23,9 @@ import android.view.View.OnTouchListener;
 public class GoActivity extends Activity {
     private static final int MENU_UNDO = 0;
     private static final int MENU_PASS = 1;
-    
-    public String[] menu_items= {"Start Game" ,"Quit" };
-    
-    GoGame game;
+	private static final int MENU_FINISH = 2;
+
+	GoGame game;
     View board_view;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,12 +42,23 @@ int i=0;
     /* Creates the menu items */
    public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
+   
+        if (!game.isFinished())
+        {
         if (game.canUndo()) {
-            MenuItem settings_menu=menu.add(0,MENU_UNDO,0,"Undo");
-            settings_menu.setIcon(android.R.drawable.ic_menu_revert);
+            MenuItem undo_menu=menu.add(0,MENU_UNDO,0,"Undo");
+            undo_menu.setIcon(android.R.drawable.ic_menu_revert);
         }
-        MenuItem settings_menu=menu.add(0,MENU_PASS,0,"Pass" );
-        settings_menu.setIcon(android.R.drawable.ic_menu_set_as);
+        MenuItem pass_menu=menu.add(0,MENU_PASS,0,"Pass" );
+        pass_menu.setIcon(android.R.drawable.ic_menu_set_as);
+        }
+        else {
+        	MenuItem finish_menu=menu.add(0,MENU_FINISH,0,"Finished Marking dead Stones" );
+        	finish_menu.setIcon(android.R.drawable.ic_menu_set_as);
+            	
+        	
+        }
+        
        return true;
     }
 
