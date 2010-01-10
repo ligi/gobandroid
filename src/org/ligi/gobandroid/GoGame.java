@@ -30,7 +30,12 @@ public class GoGame {
     
     
     private int[][] groups;
-
+    private boolean[][] dead_stones;
+    
+    public boolean isStoneDead(byte x,byte y) {
+    	return dead_stones[x][y];
+    }
+    
     private int group_count = -1;
         
     private int captures_white;
@@ -40,8 +45,9 @@ public class GoGame {
     Vector<byte[]> moves;
     
     public void pass() {
-        if (last_action_was_pass)    	// finish game if both passed 
+        if (last_action_was_pass) {   	// finish game if both passed  
             game_finished=true; 
+        	build_groups();	}
         else {
         	
             last_action_was_pass=true;
@@ -58,7 +64,12 @@ public class GoGame {
         
         // create the array for group calculations
         groups = new int[size][size];
+        dead_stones=new boolean[size][size];
         
+        for (int x=0;x<size;x++)
+        	for (int y=0;y<size;y++)
+        		dead_stones[x][y]=false;
+        	
         reset();
     }
 
@@ -84,6 +95,16 @@ public class GoGame {
      */
     public boolean do_move( byte x, byte y ) {
         if ((x >= 0) && (x <= calc_board.getSize()) && (y >= 0) && (y < calc_board.getSize())) { // if x and y are inside the board
+        	
+        	if(game_finished)
+        	{ // game is finished - players are marking dead stones
+        		for (int xg = 0; xg < calc_board.getSize(); xg++)
+                    for (int yg = 0; yg < calc_board.getSize(); yg++)
+                        if (groups[xg][yg]==groups[x][y])
+                        	dead_stones[xg][yg]=!dead_stones[xg][yg];
+        	}
+        	else {
+        	
             if (calc_board.isCellFree( x, y )) { // cant place a stone where another is allready
                 
             	GoBoard bak_board=calc_board.clone();
@@ -115,6 +136,7 @@ public class GoGame {
                     return false;
                 }
                 
+            }
             }
         }
         return false;
