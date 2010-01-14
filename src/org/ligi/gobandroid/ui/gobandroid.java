@@ -1,4 +1,5 @@
-package org.ligi.gobandroid;
+package org.ligi.gobandroid.ui;
+
 
 import android.app.ListActivity;
 import android.content.Intent;

@@ -1,4 +1,6 @@
-package org.ligi.gobandroid;
+package org.ligi.gobandroid.ui;
+
+import org.ligi.gobandroid.logic.GoGame;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -1,4 +1,4 @@
-package org.ligi.gobandroid;
+package org.ligi.gobandroid.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,6 +17,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import org.ligi.gobandroid.R;
+import org.ligi.gobandroid.R.layout;
 
 /**
  * Activity for a Game

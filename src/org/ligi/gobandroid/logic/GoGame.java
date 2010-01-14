@@ -1,4 +1,5 @@
-package org.ligi.gobandroid;
+package org.ligi.gobandroid.logic;
+
 
 import java.util.Vector;
 
@@ -42,7 +43,7 @@ public class GoGame {
     private int captures_black;
     
     
-    Vector<byte[]> moves;
+    public Vector<byte[]> moves;
     
     public void pass() {
         if (last_action_was_pass) {   	// finish game if both passed  

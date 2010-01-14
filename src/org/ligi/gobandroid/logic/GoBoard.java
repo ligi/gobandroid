@@ -1,4 +1,4 @@
-package org.ligi.gobandroid;
+package org.ligi.gobandroid.logic;
 
 import android.util.Log;
 
