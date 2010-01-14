@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -24,9 +26,16 @@ public class GoBoardView extends View implements OnTouchListener{
     Paint blackPaint;
     Paint boardPaint;
     Paint gridPaint;
+    Paint gridPaint_h; // highlighted for cursor
+    
     Paint textPaint;
     
     float stone_size;
+    float stone_size_zoomed;
+    float stone_size_normal;
+    
+    float offset_x=0.0f;
+    float offset_y=0.0f;
     
     public GoBoardView( Context context,GoGame game ) {
         super( context );
@@ -48,6 +57,9 @@ public class GoBoardView extends View implements OnTouchListener{
         //boardPaint.setColor(0xFFA68064);
         gridPaint=new Paint();
         
+        gridPaint_h=new Paint();
+        gridPaint_h.setColor(0xFF0000FF);
+        gridPaint_h.setShadowLayer(1,1,1,0xFFFFFFFF );
         //gridPaint.setColor(0xFFFFFFFF);
         //gridPaint.setShadowLayer(1,1,1,0xFF000000 );
         
@@ -60,49 +72,53 @@ public class GoBoardView extends View implements OnTouchListener{
         textPaint=new Paint();
         textPaint.setColor(0xFF000000);
         textPaint.setAntiAlias(false);
+        
+        
+     setFocusable(true);   
     }
 
+    public void prepare_keyinput() {
+    	if (touch_x==-1) touch_x=0;
+    	if (touch_y==-1) touch_y=0;
+    }
+    @Override 
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	switch (keyCode) {
+    	case KeyEvent.KEYCODE_DPAD_UP:
+    		prepare_keyinput();
+    		if (touch_y>0) touch_y--;
+    		break;
+    	
+    	case KeyEvent.KEYCODE_DPAD_LEFT:
+    		prepare_keyinput();
+    		if (touch_x>0) touch_x--;
+    		break;
+    	
+    	case KeyEvent.KEYCODE_DPAD_DOWN:
+    		prepare_keyinput();
+    		if (touch_y<game.getVisualBoard().getSize()) touch_y++;
+    		break;
+    	
+    	case KeyEvent.KEYCODE_DPAD_RIGHT:
+    		prepare_keyinput();
+    		if (touch_x<game.getVisualBoard().getSize()) touch_x++;
+    		break;
+    		
+    	case KeyEvent.KEYCODE_DPAD_CENTER:
+    		if (!game.do_move(touch_x,touch_y))	;
+    		
+    		offset_x=0;
+    		offset_y=0;
+        
+    		break;
+    	}
+    	invalidate();
+    	return true;	
+    }
+    
     @Override
     protected void onDraw(Canvas canvas) {
                 canvas.drawRect(new RectF(0,0,this.getWidth(),this.getHeight()),boardPaint );
-        
-        for(int x=0;x<game.getVisualBoard().getSize();x++)
-        	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(game.getVisualBoard().getSize()-1) +stone_size/2.0f,gridPaint);
-                
-        for(int x=0;x<game.getVisualBoard().getSize();x++)
-        {
-            canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(game.getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size,gridPaint);
-            canvas.drawText("" + (1+x) , 6+ stone_size*(float)(game.getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size+gridPaint.getTextSize()/3,gridPaint);
-            canvas.drawText("" + (char)('A'+x) , stone_size/2.0f+ x*stone_size,stone_size*(float)(game.getVisualBoard().getSize()-1) +stone_size/2.0f + 1 + gridPaint.getTextSize() ,gridPaint);
-        }
-        
-        
-        for(byte x=0;x<game.getVisualBoard().getSize();x++)
-            for(byte y=0;y<game.getVisualBoard().getSize();y++)
-            {
-            	if (game.isStoneDead(x, y))
-            	{
-            		blackPaint.setColor(0xBB000000);
-            		whitePaint.setColor(0xBBCCCCCC);
-            	}
-            	else
-            	{
-            		blackPaint.setColor(0xFF000000);
-            		whitePaint.setColor(0xFFCCCCCC);
-            	}
-            	if (game.getVisualBoard().isCellWhite(x,y))
-                    {
-                    canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,whitePaint );
-                    //canvas.drawText( "" + game.getGroup(x,y) +"-" + (game.group_has_liberty(game.getGroup( x,y))?"x":"-"), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,blackPaint );
-                    }
-                if (game.getVisualBoard().isCellBlack(x,y))
-                    {
-                    canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,blackPaint );
-                    //canvas.drawText( "" + game.getGroup(x,y), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,whitePaint );
-                    }
-            }
-    
-        
         int txt_anchor_x=0;
         int txt_anchor_y=0;
         
@@ -134,6 +150,57 @@ public class GoBoardView extends View implements OnTouchListener{
                 
         if (touch_x!=-1)
         canvas.drawText("Touch: " + (char)('A'+touch_x) + (touch_y+1),txt_anchor_x,txt_anchor_y + 4*spacer,textPaint);
+        
+        
+        canvas.translate(offset_x, offset_y);
+        for(int x=0;x<game.getVisualBoard().getSize();x++)
+        	{
+        	if (touch_x==x)
+        		canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(game.getVisualBoard().getSize()-1) +stone_size/2.0f,gridPaint_h);	
+            else
+            	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(game.getVisualBoard().getSize()-1) +stone_size/2.0f,gridPaint);
+            
+        	
+        	}
+                
+        for(int x=0;x<game.getVisualBoard().getSize();x++)
+        {
+            if (touch_y==x)
+            	canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(game.getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size,gridPaint_h);
+            else
+            	canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(game.getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size,gridPaint);
+            
+            canvas.drawText("" + (1+x) , 6+ stone_size*(float)(game.getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size+gridPaint.getTextSize()/3,gridPaint);
+            canvas.drawText("" + (char)('A'+x) , stone_size/2.0f+ x*stone_size,stone_size*(float)(game.getVisualBoard().getSize()-1) +stone_size/2.0f + 1 + gridPaint.getTextSize() ,gridPaint);
+        }
+        
+        
+        for(byte x=0;x<game.getVisualBoard().getSize();x++)
+            for(byte y=0;y<game.getVisualBoard().getSize();y++)
+            {
+            	if (game.isStoneDead(x, y))
+            	{
+            		blackPaint.setColor(0xBB000000);
+            		whitePaint.setColor(0xBBCCCCCC);
+            	}
+            	else
+            	{
+            		blackPaint.setColor(0xFF000000);
+            		whitePaint.setColor(0xFFCCCCCC);
+            	}
+            	if (game.getVisualBoard().isCellWhite(x,y))
+                    {
+                    canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,whitePaint );
+                    //canvas.drawText( "" + game.getGroup(x,y) +"-" + (game.group_has_liberty(game.getGroup( x,y))?"x":"-"), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,blackPaint );
+                    }
+                if (game.getVisualBoard().isCellBlack(x,y))
+                    {
+                    canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,blackPaint );
+                    //canvas.drawText( "" + game.getGroup(x,y), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,whitePaint );
+                    }
+            }
+    
+    canvas.restore();
     }
     
     boolean width_is_max;
@@ -143,30 +210,66 @@ public class GoBoardView extends View implements OnTouchListener{
     	width_is_max=(w<=h);
     	
         if (w<=h)
-            stone_size=w/(float)game.getVisualBoard().getSize();
+            stone_size_normal=w/(float)game.getVisualBoard().getSize();
         else
-            stone_size=h/(float)game.getVisualBoard().getSize();
+            stone_size_normal=h/(float)game.getVisualBoard().getSize();
+       
+        stone_size=stone_size_normal;
+        stone_size_zoomed=stone_size_normal*2;
         invalidate(); // needed here?
     }
 
     byte touch_x=-1;
-    byte touch_y=0;
+    byte touch_y=-1;
+    
+    
+    
     
     public boolean onTouch( View v, MotionEvent event ) {
     	
-        if ((event.getY()<stone_size*game.getVisualBoard().getSize())&&(event.getX()<stone_size*game.getVisualBoard().getSize())) // if user put his finger on the board
+    	float virtualTouchX=event.getX()-offset_x;
+    	float virtualTouchY=event.getY()-offset_y;
+    	
+    	
+    	float board_size=stone_size*game.getVisualBoard().getSize();
+
+    	if ((virtualTouchY<board_size)&&(virtualTouchX<board_size)) // if user put his finger on the board
         {
-        	
-        	touch_x=(byte)(event.getX()/stone_size);
-    		touch_y=(byte)(event.getY()/stone_size);
-    		
-        	if (event.getAction()==MotionEvent.ACTION_UP)
+        	touch_x=(byte)(virtualTouchX/stone_size);
+    		touch_y=(byte)(virtualTouchY/stone_size);
+    		if (event.getAction()==MotionEvent.ACTION_UP)
+    		{
+    		if (stone_size==stone_size_normal)
+    		{
+    			stone_size=stone_size_zoomed;
+    			
+    			
+    			if (touch_x>= (2*game.getVisualBoard().getSize())/3)
+    				offset_x=-stone_size*game.getVisualBoard().getSize()+this.getWidth();
+    			else if (touch_x> (game.getVisualBoard().getSize()/3))
+    				offset_x=(-stone_size*game.getVisualBoard().getSize()+this.getWidth())/2;	
+    			
+    			if (touch_y>= (2*game.getVisualBoard().getSize())/3)
+    				offset_y=-stone_size*game.getVisualBoard().getSize()+this.getWidth();
+    			else if (touch_y> (game.getVisualBoard().getSize()/3))
+    				offset_y=(-stone_size*game.getVisualBoard().getSize()+this.getWidth())/2;	
+    			
+    			
+    			Log.i("gobandroid","offset_x"+offset_x);
+    		}
+    		else
         		{
         		if (!game.do_move(touch_x,touch_y))	;
         		touch_x=-1;
+        		touch_y=-1;
+        		
+        		stone_size=stone_size_normal;
+        		offset_x=0;
+        		offset_y=0;
+            	
         		}
         	
-        	
+    		}
         	
         }
         invalidate();  // the board looks diffrent after a move
