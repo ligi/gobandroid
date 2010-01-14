@@ -37,6 +37,10 @@ public class GoBoardView extends View implements OnTouchListener{
     float offset_x=0.0f;
     float offset_y=0.0f;
     
+    //TODO rename - nami is now missleading
+    byte touch_x=-1;
+    byte touch_y=-1;
+    
     public GoBoardView( Context context,GoGame game ) {
         super( context );
         this.game=game;
@@ -81,39 +85,33 @@ public class GoBoardView extends View implements OnTouchListener{
     	if (touch_x==-1) touch_x=0;
     	if (touch_y==-1) touch_y=0;
     }
-    @Override 
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-    	switch (keyCode) {
-    	case KeyEvent.KEYCODE_DPAD_UP:
-    		prepare_keyinput();
-    		if (touch_y>0) touch_y--;
-    		break;
-    	
-    	case KeyEvent.KEYCODE_DPAD_LEFT:
-    		prepare_keyinput();
-    		if (touch_x>0) touch_x--;
-    		break;
-    	
-    	case KeyEvent.KEYCODE_DPAD_DOWN:
-    		prepare_keyinput();
-    		if (touch_y<game.getVisualBoard().getSize()) touch_y++;
-    		break;
-    	
-    	case KeyEvent.KEYCODE_DPAD_RIGHT:
-    		prepare_keyinput();
-    		if (touch_x<game.getVisualBoard().getSize()) touch_x++;
-    		break;
-    		
-    	case KeyEvent.KEYCODE_DPAD_CENTER:
-    		if (!game.do_move(touch_x,touch_y))	;
-    		
-    		offset_x=0;
-    		offset_y=0;
-        
-    		break;
+    
+
+    public void setZoom(boolean zoom_flag) {
+    	if (zoom_flag) {
+    		stone_size=stone_size_zoomed;
+			
+			if (touch_x>= (2*game.getVisualBoard().getSize())/3)
+				offset_x=-stone_size*game.getVisualBoard().getSize()+this.getWidth();
+			else if (touch_x> (game.getVisualBoard().getSize()/3))
+				offset_x=(-stone_size*game.getVisualBoard().getSize()+this.getWidth())/2;	
+			
+			if (touch_y>= (2*game.getVisualBoard().getSize())/3)
+				offset_y=-stone_size*game.getVisualBoard().getSize()+this.getWidth();
+			else if (touch_y> (game.getVisualBoard().getSize()/3))
+				offset_y=(-stone_size*game.getVisualBoard().getSize()+this.getWidth())/2;	
+			
+
+    	}else {
+			stone_size=stone_size_normal;
+			offset_x=0;
+			offset_y=0;
     	}
     	invalidate();
-    	return true;	
+    }
+
+    public boolean isZoomed() {
+    	return (stone_size==stone_size_zoomed);
     }
     
     @Override
@@ -184,7 +182,7 @@ public class GoBoardView extends View implements OnTouchListener{
             	//blackPaint.setStyle(Paint.Style) .setStrokeWidth(stone_size/12);
             	
             	if (game.isPosHoschi(x, y))
-            			canvas.drawCircle( stone_size/2.0f+ x*stone_size +1.0f ,stone_size/2.0f+y*stone_size+1.0f,stone_size/10,blackPaint );
+            			canvas.drawCircle( stone_size/2.0f+ x*stone_size +0.5f ,stone_size/2.0f+y*stone_size+0.5f,stone_size/10,blackPaint );
             	
             	if (game.isStoneDead(x, y))
             	{
@@ -223,15 +221,10 @@ public class GoBoardView extends View implements OnTouchListener{
             stone_size_normal=h/(float)game.getVisualBoard().getSize();
        
         stone_size=stone_size_normal;
-        stone_size_zoomed=stone_size_normal*3;
+        stone_size_zoomed=stone_size_normal*2;
         invalidate(); // needed here?
     }
 
-    byte touch_x=-1;
-    byte touch_y=-1;
-    
-    
-    
     
     public boolean onTouch( View v, MotionEvent event ) {
     	
@@ -247,35 +240,19 @@ public class GoBoardView extends View implements OnTouchListener{
     		touch_y=(byte)(virtualTouchY/stone_size);
     		if (event.getAction()==MotionEvent.ACTION_UP)
     		{
-    		if (stone_size==stone_size_normal)
+    		if (isZoomed())
     		{
-    			stone_size=stone_size_zoomed;
-    			
-    			
-    			if (touch_x>= (2*game.getVisualBoard().getSize())/3)
-    				offset_x=-stone_size*game.getVisualBoard().getSize()+this.getWidth();
-    			else if (touch_x> (game.getVisualBoard().getSize()/3))
-    				offset_x=(-stone_size*game.getVisualBoard().getSize()+this.getWidth())/2;	
-    			
-    			if (touch_y>= (2*game.getVisualBoard().getSize())/3)
-    				offset_y=-stone_size*game.getVisualBoard().getSize()+this.getWidth();
-    			else if (touch_y> (game.getVisualBoard().getSize()/3))
-    				offset_y=(-stone_size*game.getVisualBoard().getSize()+this.getWidth())/2;	
-    			
-    			
-    			Log.i("gobandroid","offset_x"+offset_x);
-    		}
-    		else
-        		{
-        		if (!game.do_move(touch_x,touch_y))	;
+    			if (!game.do_move(touch_x,touch_y))	;
         		touch_x=-1;
         		touch_y=-1;
         		
         		stone_size=stone_size_normal;
         		offset_x=0;
         		offset_y=0;
-            	
-        		}
+    		}
+    		else
+    			setZoom(true);
+        		
         	
     		}
         	

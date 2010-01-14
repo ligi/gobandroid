@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +36,7 @@ public class GoActivity extends Activity {
 	private static final int MENU_SETTINGS = 4;
 
 	GoGame game;
-	View board_view;
+	GoBoardView board_view;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -137,4 +138,51 @@ public class GoActivity extends Activity {
 		return false;
 	}
 
+	
+    
+    @Override 
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	
+    	switch (keyCode) {
+    	case KeyEvent.KEYCODE_DPAD_UP:
+    		board_view.prepare_keyinput();
+    		if (board_view.touch_y>0) board_view.touch_y--;
+    		break;
+    	
+    	case KeyEvent.KEYCODE_DPAD_LEFT:
+    		board_view.prepare_keyinput();
+    		if (board_view.touch_x>0) board_view.touch_x--;
+    		break;
+    	
+    	case KeyEvent.KEYCODE_DPAD_DOWN:
+    		board_view.prepare_keyinput();
+    		if (board_view.touch_y<game.getVisualBoard().getSize()) board_view.touch_y++;
+    		break;
+    	
+    	case KeyEvent.KEYCODE_DPAD_RIGHT:
+    		board_view.prepare_keyinput();
+    		if (board_view.touch_x<game.getVisualBoard().getSize()) board_view.touch_x++;
+    		break;
+    		
+    	case KeyEvent.KEYCODE_DPAD_CENTER:
+    		if (!game.do_move(board_view.touch_x,board_view.touch_y))	;
+    		
+    		board_view.setZoom(false);
+    		break;
+    		
+    	case KeyEvent.KEYCODE_BACK:
+    		if (board_view.isZoomed())
+    		
+    		{ 
+    			Log.i("gobandroid","unzoom");
+    			board_view.setZoom(false);
+    			
+    			return true;
+    		}
+    		break;
+    	}
+    	board_view.invalidate();
+    	return super.onKeyDown(keyCode, event);	
+    }
+	
 }
