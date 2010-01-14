@@ -173,11 +173,19 @@ public class GoBoardView extends View implements OnTouchListener{
             canvas.drawText("" + (1+x) , 6+ stone_size*(float)(game.getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size+gridPaint.getTextSize()/3,gridPaint);
             canvas.drawText("" + (char)('A'+x) , stone_size/2.0f+ x*stone_size,stone_size*(float)(game.getVisualBoard().getSize()-1) +stone_size/2.0f + 1 + gridPaint.getTextSize() ,gridPaint);
         }
+                
         
         
         for(byte x=0;x<game.getVisualBoard().getSize();x++)
             for(byte y=0;y<game.getVisualBoard().getSize();y++)
             {
+            	blackPaint.setColor(0xFF000000);
+            	blackPaint.setStrokeWidth(stone_size/12);
+            	//blackPaint.setStyle(Paint.Style) .setStrokeWidth(stone_size/12);
+            	
+            	if (game.isPosHoschi(x, y))
+            			canvas.drawCircle( stone_size/2.0f+ x*stone_size +1.0f ,stone_size/2.0f+y*stone_size+1.0f,stone_size/10,blackPaint );
+            	
             	if (game.isStoneDead(x, y))
             	{
             		blackPaint.setColor(0xBB000000);
@@ -190,7 +198,7 @@ public class GoBoardView extends View implements OnTouchListener{
             	}
             	if (game.getVisualBoard().isCellWhite(x,y))
                     {
-                    canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,whitePaint );
+            		canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,whitePaint );
                     //canvas.drawText( "" + game.getGroup(x,y) +"-" + (game.group_has_liberty(game.getGroup( x,y))?"x":"-"), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,blackPaint );
                     }
                 if (game.getVisualBoard().isCellBlack(x,y))
@@ -215,7 +223,7 @@ public class GoBoardView extends View implements OnTouchListener{
             stone_size_normal=h/(float)game.getVisualBoard().getSize();
        
         stone_size=stone_size_normal;
-        stone_size_zoomed=stone_size_normal*2;
+        stone_size_zoomed=stone_size_normal*3;
         invalidate(); // needed here?
     }
 

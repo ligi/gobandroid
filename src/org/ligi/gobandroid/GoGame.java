@@ -313,10 +313,37 @@ public class GoGame {
 
     }
 
+    public boolean isPosHoschi(byte x,byte y) {
+    	
+    	if ((x==0)||(y==0)||((y+1)==getVisualBoard().getSize())||((x+1)==getVisualBoard().getSize()))
+    		return false;
+    	
+    	switch(getVisualBoard().getSize())
+    	{
+    	case 9:
+    		return (((x%2)==0)&&((y%2)==0));
+    	case 13:
+    		return (((x%3)==0)&&((y%3)==0));
+    	
+    	case 19:
+    		return (((x==9)&&(y==9))|| 
+    				((x==3)&&(y==3)) ||
+    				((x==15)&&(y==15)) ||
+    				((x==3)&&(y==15)) ||
+    				((x==15)&&(y==3)) ||
+    				((x==9)&&(y==3)) ||
+    				((x==3)&&(y==9)) ||
+    				((x==9)&&(y==15))||
+    				((x==15)&&(y==9)) );
+    	default:	
+    		return false;
+    	}
+    	
+    }
+    
     public GoBoard getVisualBoard() {
         return visual_board;
     }
-
 
     public boolean isLastActionPass() {
     	return last_action_was_pass;
