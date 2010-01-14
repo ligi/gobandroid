@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+<ScrollView android:id="@+id/ScrollView01" android:layout_height="wrap_content" android:layout_width="fill_parent"><TableLayout android:id="@+id/TableLayout01" android:layout_height="wrap_content" android:layout_width="fill_parent"><TableRow android:id="@+id/TableRow02" android:layout_width="wrap_content" android:layout_height="wrap_content">
+<LinearLayout android:id="@+id/LinearLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical"><TextView android:id="@+id/TextView03" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="8pt" android:text="Default SGF Filename"></TextView><TextView android:id="@+id/TextView04" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView></LinearLayout><Button android:id="@+id/Button01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="set"></Button>
+</TableRow><TableRow android:id="@+id/TableRow01" android:layout_height="wrap_content" android:layout_width="fill_parent"><LinearLayout android:id="@+id/LinearLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical"><TextView android:id="@+id/TextView03" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="First Tap Zooms" android:textSize="8pt"></TextView><TextView android:id="@+id/TextView04" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="(aka fat Finger Mode)"></TextView></LinearLayout><CheckBox android:id="@+id/CheckBox01" android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox></TableRow><TableRow android:id="@+id/TableRow02" android:layout_width="wrap_content" android:layout_height="wrap_content">
+<LinearLayout android:id="@+id/LinearLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical"><TextView android:id="@+id/TextView03" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="8pt" android:text="Default SGF Filename"></TextView><TextView android:id="@+id/TextView04" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView></LinearLayout><Button android:id="@+id/Button01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="set"></Button>
+</TableRow>
+</TableLayout></ScrollView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>
