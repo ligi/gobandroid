@@ -1,6 +1,8 @@
 package org.ligi.gobandroid.ui;
 
 
+import org.ligi.gobandroid.R;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,9 +23,12 @@ public class gobandroid extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        setContentView(R.layout.main);
         this.setListAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, menu_items));
            
+        
     }
     
     @Override
