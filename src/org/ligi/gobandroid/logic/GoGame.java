@@ -162,6 +162,7 @@ public class GoGame {
     
     
     public void undo() {
+    	last_action_was_pass=false;
         clear_calc_board();
         Vector<byte[]> _moves=(Vector<byte[]>)moves.clone();
         
