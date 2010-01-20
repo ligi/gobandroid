@@ -38,22 +38,41 @@ public class GoActivity extends Activity {
 	private static final int MENU_WRITE_SGF = 3;
 	private static final int MENU_SETTINGS = 4;
 
-	GoGame game;
+	GoGame game=null;
 	GoBoardView board_view;
+
+	int i = 0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		byte size = getIntent().getByteExtra("size", (byte) 9);
-		game = new GoGame(size);
-		board_view = new GoBoardView(this, game);
-		board_view.setOnTouchListener((OnTouchListener) board_view);
-		setContentView(board_view);
+		
+		Log.i("gobandroid","onCreate" + game);
+		
+		if (game==null) {
+			
+			
+			// if there is a game saved e.g. on rotation use this game
+			if (getLastNonConfigurationInstance()!=null) 
+				game=(GoGame)getLastNonConfigurationInstance();
+			else {
+				// otherwise create a new game
+				byte size = getIntent().getByteExtra("size", (byte) 9);
+				game = new GoGame(size);
+			}
+		
+			board_view = new GoBoardView(this, game);
+			board_view.setOnTouchListener((OnTouchListener) board_view);
+			setContentView(board_view); 
+			}
 	}
 
-	int i = 0;
-
+	@Override
+	public Object onRetainNonConfigurationInstance() {
+		// remember the game in case of e.g. a device rotation
+		return(game);
+	}
+	
 	/* Creates the menu items */
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
