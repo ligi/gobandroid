@@ -16,6 +16,10 @@ import android.util.Log;
 
 public class GoGame {
 
+	public final static byte PLAYER_BLACK=0;
+	public final static byte PLAYER_WHITE=1;
+	
+	private byte act_player=PLAYER_BLACK;
     
     private GoBoard visual_board; // the board to show to the user
     private GoBoard calc_board;	  // the board calculations are done in
@@ -23,7 +27,7 @@ public class GoGame {
     private GoBoard pre_last_board;   // board to detect KO situations
 
     
-    private boolean black_to_move = true;
+    //private boolean black_to_move = true;
 
     private boolean last_action_was_pass=false;
    
@@ -33,29 +37,14 @@ public class GoGame {
     private int[][] groups;
     private boolean[][] dead_stones;
     
-    public boolean isStoneDead(byte x,byte y) {
-    	return dead_stones[x][y];
-    }
     
     private int group_count = -1;
         
     private int captures_white;
     private int captures_black;
     
-    
     public Vector<byte[]> moves;
-    
-    public void pass() {
-        if (last_action_was_pass) {   	// finish game if both passed  
-            game_finished=true; 
-        	build_groups();	}
-        else {
-        	
-            last_action_was_pass=true;
-            black_to_move=!black_to_move; // next player
-        }
-    }
-    
+
     public GoGame( int size ) {
     	// create the boards
         calc_board = new GoBoard( size );
@@ -75,16 +64,27 @@ public class GoGame {
     }
 
     public void reset() {
-    	
     	// black always starts
-    	black_to_move=true;
+    	act_player=PLAYER_BLACK;
     	
     	// create the vector to save the moves
         moves= new Vector<byte[]>();
         captures_black=0;
     	captures_white=0;
-    	
-    	
+    }
+    
+    public void pass() {
+        if (last_action_was_pass) {   	// finish game if both passed  
+            game_finished=true; 
+        	build_groups();	}
+        else {
+            last_action_was_pass=true;
+            setNextPlayer();
+        }
+    }
+
+    public boolean isStoneDead(byte x,byte y) {
+    	return dead_stones[x][y];
     }
     
     /**
@@ -110,7 +110,7 @@ public class GoGame {
                 
             	GoBoard bak_board=calc_board.clone();
             	
-                if (black_to_move)
+                if (isBlackToMove())
                     calc_board.setCellBlack( x, y );
                 else
                     calc_board.setCellWhite( x, y );
@@ -122,7 +122,8 @@ public class GoGame {
                 		&&!pre_last_board.equals(calc_board)) // and the move is not a ko 
                 { 	// valid move -> do things needed to do after a valid move 
                     Log.d("gobandroid", "isDeadGroupOnBoard(x,y)" + isDeadGroupOnBoard(x,y));
-                	black_to_move = !black_to_move;
+                    setNextPlayer();
+                    
                     
                     pre_last_board=last_board.clone();
                     last_board=calc_board.clone();
@@ -143,14 +144,20 @@ public class GoGame {
         return false;
     }
 
-    /** moving without checks ( e.g. for undo / recorded games where we can be sure that the move is valid **/
+    /** 
+     * moving without checks 
+     * usefull  e.g. for undo / recorded games 
+     * where we can be sure that the move is valid 
+     * 
+     **/
     public void do_internal_move( byte x, byte y ) {
-        if (black_to_move)
+        if (isBlackToMove())
             calc_board.setCellBlack( x, y );
         else
             calc_board.setCellWhite( x, y );
                 
-        black_to_move = !black_to_move;
+        setNextPlayer();
+        
         build_groups();
         remove_dead(x,y); 
         moves.add(new byte[] { x,y} );
@@ -161,16 +168,22 @@ public class GoGame {
     }
     
     
+    /**
+     * 
+     * undo the last move
+     * 
+     */
+    
     public void undo() {
     	last_action_was_pass=false;
         clear_calc_board();
-        Vector<byte[]> _moves=(Vector<byte[]>)moves.clone();
+        byte[][] _moves=  (byte[][]) (moves.toArray());// (Vector<byte[]>)moves.clone();
         
         reset();
-        for (int step=0 ; step<_moves.size()-1;step++)
+        for (int step=0 ; step<_moves.length-1;step++)
         {
-            byte move_x=((byte[])_moves.get(step))[0];
-            byte move_y=((byte[])_moves.get(step))[1];
+            byte move_x=_moves[step][0];
+            byte move_y=_moves[step][1];
             do_internal_move(move_x,move_y);
         }
         
@@ -178,9 +191,8 @@ public class GoGame {
         
     }
     
-    public int getGroup(byte x,byte y) {
-        return groups[x][y];
-    }
+    
+    
     public boolean cell_has_liberty(int x , int y )
     {
       
@@ -210,9 +222,19 @@ public class GoGame {
             for (byte y = 0; y < calc_board.getSize(); y++) 
                 calc_board.setCellFree(x,y );
     }
+  
+    /**
+     * group the stones 
+     * 
+     * the result is written in groups[][]
+     * 
+     */
     
     public void build_groups() {
         group_count=0;
+        
+        
+        // reset groups
         for (int x = 0; x < calc_board.getSize(); x++)
             for (int y = 0; y < calc_board.getSize(); y++) {
                 groups[x][y] = -1;
@@ -251,7 +273,13 @@ public class GoGame {
 
     }
     
-    /** detect dead groups **/
+    /**
+     * 
+     *  detect if there are dead groups on the board
+     *   
+     * the cell with ignore_x and ignore_y is ignored - e.g. last move
+     *  
+    **/
     public boolean isDeadGroupOnBoard(byte ignore_x,byte ignore_y) {
                 
         for (int grp=0;grp<=group_count;grp++)
@@ -282,7 +310,13 @@ public class GoGame {
 
 
 
-    /** remove dead groups **/
+    /** 
+     * 
+     * remove dead groups from the board - e.g. after a move 
+     * 
+     * the cell with ignore_x and ignore_y is ignored - e.g. last move
+     * 
+     * **/
     public void remove_dead(byte ignore_x,byte ignore_y) {
                 
         for (int grp=0;grp<=group_count;grp++) // iterate over all groups
@@ -315,12 +349,20 @@ public class GoGame {
 
     }
 
+    /** 
+     * 
+     * return if it's a handicap stone so that the view can visualize it
+     * 
+     * TODO: - check rename ( general marker ) 
+     * 		 - check caching ( in arr cuz speed )
+     * 
+     * **/
     public boolean isPosHoschi(byte x,byte y) {
     	
-    	if ((x==0)||(y==0)||((y+1)==getVisualBoard().getSize())||((x+1)==getVisualBoard().getSize()))
+    	if ((x==0)||(y==0)||((y+1)==getBoardSize())||((x+1)==getBoardSize()))
     		return false;
     	
-    	switch(getVisualBoard().getSize())
+    	switch(getBoardSize())
     	{
     	case 9:
     		return (((x%2)==0)&&((y%2)==0));
@@ -356,7 +398,7 @@ public class GoGame {
     }
     
     public boolean isBlackToMove() {
-    	return black_to_move;
+    	return (act_player==PLAYER_BLACK);
     }
     
     public int getCapturesBlack() {
@@ -366,4 +408,17 @@ public class GoGame {
     public int getCapturesWhite() {
     	return captures_white;
     }
+    
+    public int getBoardSize() {
+    	return calc_board.getSize(); // TODO cache?
+    }
+
+    public int getGroup(byte x,byte y) {
+        return groups[x][y];
+    }
+    
+    public void setNextPlayer() {
+    	act_player=(act_player==PLAYER_BLACK)?PLAYER_WHITE:PLAYER_BLACK;
+    }
+    
 }
