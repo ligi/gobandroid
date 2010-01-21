@@ -14,11 +14,8 @@ import android.util.Log;
  * This software is licenced with GPLv3         
  */
 
-public class GoGame {
+public class GoGame implements GoDefinitions {
 
-	public final static byte PLAYER_BLACK=0;
-	public final static byte PLAYER_WHITE=1;
-	
 	private byte act_player=PLAYER_BLACK;
     
     private GoBoard visual_board; // the board to show to the user
@@ -33,15 +30,13 @@ public class GoGame {
    
     private boolean game_finished=false;
     
-    
-    private int[][] groups;
-    private boolean[][] dead_stones;
-    
-    
+    private int[][] groups; // array to build groups
+    private boolean[][] dead_stones; // dead stone marker
+        
     private int group_count = -1;
         
-    private int captures_white;
-    private int captures_black;
+    private int captures_white; // counter for the captures from black
+    private int captures_black; // counter for the captures from white
     
     public Vector<byte[]> moves;
 
