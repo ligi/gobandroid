@@ -6,11 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.EditText;
 
@@ -21,6 +19,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import org.ligi.gobandroid.logic.GoGame;
+import org.ligi.gobandroid.logic.SGFWriter;
 
 /**
  * Activity for a Game
@@ -90,10 +89,10 @@ public class GoActivity extends Activity {
 			finish_menu.setIcon(android.R.drawable.ic_menu_set_as);
 
 		}
-		/*
+		
 		MenuItem save_menu = menu.add(0, MENU_WRITE_SGF, 0,"Save as SGF");
 		save_menu.setIcon(android.R.drawable.ic_menu_save);
-		
+		/*
 		MenuItem settings_menu = menu.add(0, MENU_SETTINGS, 0,"Settings");
 		settings_menu.setIcon(android.R.drawable.ic_menu_preferences);
 		
@@ -116,8 +115,9 @@ public class GoActivity extends Activity {
 		case MENU_WRITE_SGF:
 			
 			final EditText input = new EditText(this);   
-			input.setText("/sdcard/gobandroid/game0.sgf");
-			new AlertDialog.Builder(this).setTitle("Save SGF").setMessage("Where should I save it?").setView(input)
+			input.setText("game");
+
+			new AlertDialog.Builder(this).setTitle("Save SGF").setMessage("How should the file I will write to /sdcard/gobandroid be named?").setView(input)
 			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String value = input.getText().toString(); 
@@ -127,13 +127,13 @@ public class GoActivity extends Activity {
 				f.mkdirs();
 				
 				try {
-					f=new File("/sdcard/gobandroid/foo.sgf");
+					f=new File("/sdcard/gobandroid/"+value+".sgf");
 					f.createNewFile();
 					
 					FileWriter gpxwriter = new FileWriter(f);
 					BufferedWriter out = new BufferedWriter(gpxwriter);
 
-					out.write("Hello world");
+					out.write(SGFWriter.game2sgf(game));
 
 					out.close();
 					gpxwriter.close();
