@@ -38,14 +38,39 @@ public class GoGame implements GoDefinitions {
     private int captures_white; // counter for the captures from black
     private int captures_black; // counter for the captures from white
     
+    private int handicap=0;
+    
     public Vector<byte[]> moves;
 
-    public GoGame( int size ) {
+    public GoGame( byte size ) {
+    	construct(size);
+    }
+    
+    public GoGame(byte size,byte handicap) {
+    	this.handicap=handicap;
+    	construct(size);
+    }
+    
+    private void apply_handicap() {
+    	for (int i=0;i<handicap;i++)
+            if (getBoardSize()==19)
+            	calc_board.setCellBlack(hoshis19x19[i][0], hoshis19x19[i][1]);
+            else if (getBoardSize()==13)
+            	calc_board.setCellBlack(hoshis13x13[i][0], hoshis13x13[i][1]);
+            else if (getBoardSize()==9)
+            	calc_board.setCellBlack(hoshis9x9[i][0], hoshis9x9[i][1]);
+            
+    }
+
+    private void construct(byte size) {
     	// create the boards
         calc_board = new GoBoard( size );
-        visual_board=new GoBoard( size );
-        last_board=new GoBoard( size );
-        pre_last_board=new GoBoard( size );
+        
+        apply_handicap();
+        
+        visual_board=calc_board.clone();
+        last_board=calc_board.clone();
+        pre_last_board=calc_board.clone();
         
         // create the array for group calculations
         groups = new int[size][size];
@@ -55,9 +80,10 @@ public class GoGame implements GoDefinitions {
         	for (int y=0;y<size;y++)
         		dead_stones[x][y]=false;
         	
-        reset();
+        reset();	
+        
+        
     }
-
     public void reset() {
     	// black always starts
     	act_player=PLAYER_BLACK;
@@ -74,6 +100,7 @@ public class GoGame implements GoDefinitions {
         	build_groups();	}
         else {
             last_action_was_pass=true;
+            moves.add(new byte[] { -1,-1} );
             setNextPlayer();
         }
     }
@@ -172,22 +199,25 @@ public class GoGame implements GoDefinitions {
     public void undo() {
     	last_action_was_pass=false;
         clear_calc_board();
-        byte[][] _moves=  (byte[][]) (moves.toArray());// (Vector<byte[]>)moves.clone();
         
+       	Vector<byte[]> _moves=  (Vector<byte[]>)moves.clone();
+        Log.i("gobandroid ","after cast");
         reset();
-        for (int step=0 ; step<_moves.length-1;step++)
+        Log.i("gobandroid ","after reset");
+        for (int step=0 ; step<_moves.size()-1;step++)
         {
-            byte move_x=_moves[step][0];
-            byte move_y=_moves[step][1];
-            do_internal_move(move_x,move_y);
+            byte move_x=_moves.get(step)[0];
+            byte move_y=_moves.get(step)[1];
+            if (move_x==-1) // move was a pass
+            	setNextPlayer();
+            else
+            	do_internal_move(move_x,move_y);
         }
         
         visual_board=calc_board.clone();
         
     }
-    
-    
-    
+   
     public boolean cell_has_liberty(int x , int y )
     {
       
@@ -216,6 +246,7 @@ public class GoGame implements GoDefinitions {
         for (byte x = 0; x < calc_board.getSize(); x++)
             for (byte y = 0; y < calc_board.getSize(); y++) 
                 calc_board.setCellFree(x,y );
+        apply_handicap();
     }
   
     /**
@@ -374,6 +405,8 @@ public class GoGame implements GoDefinitions {
     				((x==3)&&(y==9)) ||
     				((x==9)&&(y==15))||
     				((x==15)&&(y==9)) );
+    		
+    		
     	default:	
     		return false;
     	}
