@@ -2,8 +2,12 @@ package org.ligi.gobandroid.ui;
 
 import org.ligi.gobandroid.logic.GoGame;
 
+import org.ligi.gobandroid.R;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.MotionEvent;
@@ -18,28 +22,35 @@ import android.view.View.OnTouchListener;
  * This software is licenced with GPLv3 
  */
 public class GoBoardView extends View implements OnTouchListener{
+   	private GoGame game;
 
-    //GoBoard board;
-    GoGame game;
-
-    Paint whitePaint;
-    Paint blackPaint;
-    Paint boardPaint;
-    Paint gridPaint;
-    Paint gridPaint_h; // highlighted for cursor
+	private Paint whitePaint;
+	private Paint blackPaint;
+	private Paint boardPaint;
+	private Paint gridPaint;
+	private Paint gridPaint_h; // highlighted for cursor
     
-    Paint textPaint;
+    private Paint textPaint;
     
-    float stone_size;
-    float stone_size_zoomed;
-    float stone_size_normal;
+    private float stone_size;
+    private float stone_size_zoomed;
+    private float stone_size_normal;
     
-    float offset_x=0.0f;
-    float offset_y=0.0f;
+    private float offset_x=0.0f;
+    private float offset_y=0.0f;
     
     //TODO rename - nami is now missleading
-    byte touch_x=-1;
-    byte touch_y=-1;
+    public byte touch_x=-1;
+    public byte touch_y=-1;
+
+    
+    public boolean do_skin=false;
+    public boolean do_zoom=false;
+    
+    
+    private Bitmap bg_bitmap=null;
+    private Bitmap white_stone_bitmap=null;
+    private Bitmap black_stone_bitmap=null;
     
     public GoBoardView( Context context,GoGame game ) {
         super( context );
@@ -81,6 +92,29 @@ public class GoBoardView extends View implements OnTouchListener{
      setFocusable(true);   
     }
 
+
+	public Bitmap resize_to_screen(Bitmap orig, float x_scale_, float y_scale_) {
+		// createa matrix for the manipulation
+		Matrix matrix = new Matrix();
+		float x_scale, y_scale;
+		if (y_scale_ != 0f)
+			y_scale = (getHeight() * y_scale_) / orig.getHeight();
+		else
+			// take x_scale
+			y_scale = (getWidth() * x_scale_) / orig.getWidth();
+
+		if (x_scale_ != 0f)
+			x_scale = (getWidth() * x_scale_) / orig.getWidth();
+		else
+			x_scale = (getHeight() * y_scale_) / orig.getHeight();
+
+		matrix.postScale(x_scale, y_scale);
+		return Bitmap.createBitmap(orig, 0, 0, (int) (orig.getWidth()),
+				(int) (orig.getHeight()), matrix, true);// BitmapContfig.ARGB_8888
+		// );
+	}
+
+    
     public void prepare_keyinput() {
     	if (touch_x==-1) touch_x=0;
     	if (touch_y==-1) touch_y=0;
@@ -101,12 +135,14 @@ public class GoBoardView extends View implements OnTouchListener{
 			else if (touch_y> (game.getVisualBoard().getSize()/3))
 				offset_y=(-stone_size*game.getVisualBoard().getSize()+this.getWidth())/2;	
 			
-
+			
+			
     	}else {
 			stone_size=stone_size_normal;
 			offset_x=0;
 			offset_y=0;
     	}
+    	regenerate_stone_images();	
     	invalidate();
     }
 
@@ -116,39 +152,56 @@ public class GoBoardView extends View implements OnTouchListener{
     
     @Override
     protected void onDraw(Canvas canvas) {
-                canvas.drawRect(new RectF(0,0,this.getWidth(),this.getHeight()),boardPaint );
-        int txt_anchor_x=0;
-        int txt_anchor_y=0;
-        
-        if (width_is_max)
-        	{
-        	txt_anchor_x=10;
-        	txt_anchor_y=this.getWidth()+(int)textPaint.getTextSize()*2;;
-        	}
-        else        	
-        {
-        	txt_anchor_x=this.getHeight()+(int)textPaint.getTextSize()*2;
-        	txt_anchor_y=20;
-        	}
-        float spacer=textPaint.getTextSize()*1.5f;
-        if (game.isFinished())
-        	canvas.drawText("Game is finished - Mark Dead Stones",txt_anchor_x,txt_anchor_y + 0*spacer,textPaint);
-        else
-        {
-        	if (game.isLastActionPass())
-        		canvas.drawText((game.isBlackToMove()?"black":"white")+" to move (" +(!game.isBlackToMove()?"black":"white") + " passed)",txt_anchor_x,txt_anchor_y + 0*spacer,textPaint);
-        	else
-        		canvas.drawText((game.isBlackToMove()?"black":"white")+" to move",txt_anchor_x,txt_anchor_y + 0*spacer,textPaint);
-        }
-        
-        
-        canvas.drawText("Move: " + (game.moves.size()+1),txt_anchor_x,txt_anchor_y + 1*spacer,textPaint);
-        canvas.drawText("Captures black: " + game.getCapturesBlack(),txt_anchor_x,txt_anchor_y + 2*spacer,textPaint);
-        canvas.drawText("Captures white: " + game.getCapturesWhite(),txt_anchor_x,txt_anchor_y + 3*spacer,textPaint);
-                
-        if (touch_x!=-1)
-        canvas.drawText("Touch: " + (char)('A'+touch_x) + (touch_y+1),txt_anchor_x,txt_anchor_y + 4*spacer,textPaint);
-        
+    	
+    	if (bg_bitmap!=null)
+    		canvas.drawBitmap(bg_bitmap,0.0f, 0.0f, boardPaint);
+    	else
+    		canvas.drawRect(new RectF(0,0,this.getWidth(),this.getHeight()),boardPaint );
+    	
+    	
+		if (!isZoomed()) {
+			int txt_anchor_x = 0;
+			int txt_anchor_y = 0;
+
+			if (width_is_max) {
+				txt_anchor_x = 10;
+				txt_anchor_y = this.getWidth() + (int) textPaint.getTextSize()
+						* 2;
+				;
+			} else {
+				txt_anchor_x = this.getHeight() + (int) textPaint.getTextSize()
+						* 2;
+				txt_anchor_y = 20;
+			}
+			float spacer = textPaint.getTextSize() * 1.5f;
+			if (game.isFinished())
+				canvas.drawText("Game is finished - Mark Dead Stones",
+						txt_anchor_x, txt_anchor_y + 0 * spacer, textPaint);
+			else {
+				if (game.isLastActionPass())
+					canvas.drawText((game.isBlackToMove() ? "black" : "white")
+							+ " to move ("
+							+ (!game.isBlackToMove() ? "black" : "white")
+							+ " passed)", txt_anchor_x, txt_anchor_y + 0
+							* spacer, textPaint);
+				else
+					canvas.drawText((game.isBlackToMove() ? "black" : "white")
+							+ " to move", txt_anchor_x, txt_anchor_y + 0
+							* spacer, textPaint);
+			}
+
+			canvas.drawText("Move: " + (game.moves.size() + 1), txt_anchor_x,
+					txt_anchor_y + 1 * spacer, textPaint);
+			canvas.drawText("Captures black: " + game.getCapturesBlack(),
+					txt_anchor_x, txt_anchor_y + 2 * spacer, textPaint);
+			canvas.drawText("Captures white: " + game.getCapturesWhite(),
+					txt_anchor_x, txt_anchor_y + 3 * spacer, textPaint);
+
+			if (touch_x != -1)
+				canvas.drawText("Touch: " + (char) ('A' + touch_x)
+						+ (touch_y + 1), txt_anchor_x, txt_anchor_y + 4
+						* spacer, textPaint);
+		}
         
         canvas.translate(offset_x, offset_y);
         for(int x=0;x<game.getVisualBoard().getSize();x++)
@@ -196,12 +249,18 @@ public class GoBoardView extends View implements OnTouchListener{
             	}
             	if (game.getVisualBoard().isCellWhite(x,y))
                     {
-            		canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,whitePaint );
+            		if (white_stone_bitmap!=null)
+            			canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
+            		else
+            			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,whitePaint );
                     //canvas.drawText( "" + game.getGroup(x,y) +"-" + (game.group_has_liberty(game.getGroup( x,y))?"x":"-"), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,blackPaint );
                     }
                 if (game.getVisualBoard().isCellBlack(x,y))
                     {
-                    canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,blackPaint );
+                	if (black_stone_bitmap!=null)
+            			canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
+            		else
+            			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,blackPaint );
                     //canvas.drawText( "" + game.getGroup(x,y), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,whitePaint );
                     }
             }
@@ -211,10 +270,24 @@ public class GoBoardView extends View implements OnTouchListener{
     
     boolean width_is_max;
     
+    public void regenerate_stone_images() {
+    	if (do_skin){
+    	white_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
+   				getResources(), R.drawable.white), (int)stone_size, (int)stone_size, true);
+
+           black_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
+   				getResources(), R.drawable.black), (int)stone_size, (int)stone_size, true);
+    	}
+    	else {
+    		black_stone_bitmap=null;
+    		white_stone_bitmap=null;
+    	}
+    	}	
+    
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
     	width_is_max=(w<=h);
-    	
+       
         if (w<=h)
             stone_size_normal=w/(float)game.getVisualBoard().getSize();
         else
@@ -222,7 +295,17 @@ public class GoBoardView extends View implements OnTouchListener{
        
         stone_size=stone_size_normal;
         stone_size_zoomed=stone_size_normal*2;
-        invalidate(); // needed here?
+
+
+        if (do_skin)
+        	bg_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
+				getResources(), R.drawable.shinkaya), this.getWidth(), this.getHeight(), true);
+        else
+        	bg_bitmap=null;
+        
+        regenerate_stone_images();
+        
+        invalidate(); // needed here or automaticaly called?
     }
 
     
@@ -240,15 +323,15 @@ public class GoBoardView extends View implements OnTouchListener{
     		touch_y=(byte)(virtualTouchY/stone_size);
     		if (event.getAction()==MotionEvent.ACTION_UP)
     		{
-    		if (isZoomed())
+    		if (isZoomed()||(!do_zoom))
     		{
     			if (!game.do_move(touch_x,touch_y))	;
         		touch_x=-1;
         		touch_y=-1;
         		
+        		setZoom(false);
         		stone_size=stone_size_normal;
-        		offset_x=0;
-        		offset_y=0;
+        		
     		}
     		else
     			setZoom(true);
