@@ -13,7 +13,15 @@ public class SGFWriter {
 		for (int move=0;move<game.moves.size();move++)
 			{
 			byte[] act_move=game.moves.get(move);
-			res+=";" + (black_to_move?"B":"W") + "[" + (char)('a'+act_move[0]) +(char)('a'+act_move[1])+ "]\n";
+			
+			
+			res+=";" + (black_to_move?"B":"W");
+			
+			if (act_move[0]==-1)
+				res+="[]";
+			else	
+				res+= "[" + (char)('a'+act_move[0]) +(char)('a'+act_move[1])+ "]\n";
+			
 			black_to_move=!black_to_move;
 			}
 			
