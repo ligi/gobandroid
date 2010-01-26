@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -57,7 +58,8 @@ public class GoActivity extends Activity {
 			else {
 				// otherwise create a new game
 				byte size = getIntent().getByteExtra("size", (byte) 9);
-				game = new GoGame(size);
+				byte handicap = getIntent().getByteExtra("handicap", (byte) 0);
+				game = new GoGame(size,handicap);
 			}
 		
 			board_view = new GoBoardView(this, game);
@@ -72,6 +74,16 @@ public class GoActivity extends Activity {
 		return(game);
 	}
 	
+	
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		SharedPreferences shared_prefs=this.getSharedPreferences("gobandroid", 0);
+		board_view.do_skin=shared_prefs.getBoolean("skin", false);
+		board_view.do_zoom=shared_prefs.getBoolean("fatfinger", false);
+	}
+
 	/* Creates the menu items */
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
@@ -114,20 +126,27 @@ public class GoActivity extends Activity {
 
 		case MENU_WRITE_SGF:
 			
+			
+			SharedPreferences shared_prefs = this.getSharedPreferences("gobandroid", 0);
+			
+			final String sgf_fname=shared_prefs.getString("sgf_fname", "game");
+			final String sgf_path=shared_prefs.getString("sgf_path", "/sdcard/gobandroid");
+			
+			
 			final EditText input = new EditText(this);   
-			input.setText("game");
+			input.setText(sgf_fname);
 
-			new AlertDialog.Builder(this).setTitle("Save SGF").setMessage("How should the file I will write to /sdcard/gobandroid be named?").setView(input)
+			new AlertDialog.Builder(this).setTitle("Save SGF").setMessage("How should the file I will write to " +sgf_path + " be named?").setView(input)
 			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String value = input.getText().toString(); 
 					
 				//value.split("\/")
-				File f = new File("/sdcard/gobandroid/");
+				File f = new File(sgf_path);
 				f.mkdirs();
 				
 				try {
-					f=new File("/sdcard/gobandroid/"+value+".sgf");
+					f=new File(sgf_path + "/"+value+".sgf");
 					f.createNewFile();
 					
 					FileWriter gpxwriter = new FileWriter(f);
