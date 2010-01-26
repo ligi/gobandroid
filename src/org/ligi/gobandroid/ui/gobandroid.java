@@ -18,7 +18,12 @@ import android.widget.ListView;
 **/
 
 public class gobandroid extends ListActivity {
-    public String[] menu_items= {"Start 9x9" ,"Start 13x13","Start 19x19","Quit" };
+    public String[] menu_items= {"Start Game","Settings" ,"Quit" };
+    
+    private final static int MENU_GAMESTART=0;
+    private final static int MENU_SETTINGS=1;
+    private final static int MENU_QUIT=2;
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,22 +42,17 @@ public class gobandroid extends ListActivity {
 
         Intent go_intent;
             switch (position) {
-                case 0:
-                    go_intent=new Intent(this,GoActivity.class);
-                    go_intent.putExtra("size",(byte)9 );
+                case MENU_GAMESTART:
+                    go_intent=new Intent(this,GoSetupActivity.class);
                     startActivity(go_intent);
                      break;
-                case 1:
-                    go_intent=new Intent(this,GoActivity.class);
-                    go_intent.putExtra("size",(byte)13 );
+                
+                case MENU_SETTINGS:
+                    go_intent=new Intent(this,SettingsActivity.class);
                     startActivity(go_intent);
-                     break;
-                case 2:
-                    go_intent=new Intent(this,GoActivity.class);
-                    go_intent.putExtra("size",(byte)19 );
-                    startActivity(go_intent);
-                     break;
-                case 3:
+                    break;
+                     
+                case MENU_QUIT:
                     finish();
                     break;
             }
