@@ -11,20 +11,20 @@ import android.util.Log;
  * This software is licenced with GPLv3 
 **/
 
-public class GoBoard {
+public class GoBoard implements GoDefinitions{
     
-    private int size;
-    public int[][] board;
+    private byte size;
+    public byte[][] board;
     
-    public GoBoard( int size ) {
+    public GoBoard( byte size ) {
         this.size=size;
-        board=new int[size][size];
+        board=new byte[size][size];
     }
 
-    public GoBoard( int size,int[][] predefined_board ) {
+    public GoBoard( byte size,byte[][] predefined_board ) {
    
     	this.size=size;
-        board=new int[size][size];
+        board=new byte[size][size];
    
         // copy the board
         for( int x=0;x<size;x++)
@@ -47,12 +47,13 @@ public class GoBoard {
     		return false;
     	
     	// check if all stones are placed equaly
-    	boolean equal=true; // be positive
+    	
     	for( int x=0;x<size;x++)
     		for( int y=0;y<size;y++)
-    			equal&=(board[x][y]==other.board[x][y]);
-
-    	return equal;
+    			if (board[x][y]!=other.board[x][y])
+    			  return false;
+    			  
+    	return true;
     }
     
     public void logBoard() {	
@@ -73,37 +74,48 @@ public class GoBoard {
     	tmp_str="";
     	}
     }
+    
     public int getSize() {
         return size;
     }
 
-
     public boolean isCellFree( int x, int y ) {
-        return (board[x][y]==0); 
+        return (board[x][y]==STONE_NONE) // no stone on board
+        		||(board[x][y]<0);  // or dead stone; 
     }
     public boolean isCellBlack( int x, int y ) {
-        return (board[x][y]==1); 
+        return (board[x][y]==STONE_BLACK); 
     }
     
     public boolean isCellWhite( int x, int y ) {
-        return (board[x][y]==2); 
+        return (board[x][y]==STONE_WHITE); 
     }
 
 
     public boolean areCellsEqual( int x, int y , int x2 , int y2 ) {
-        return (board[x][y]==board[x2][y2]); 
+        return ((board[x][y]==board[x2][y2])||
+        		(isCellFree(x,y)&&isCellFree(x2,y2)));
     }
 
 
     public void setCellFree( int x, int y ) {
-        board[x][y]=0; 
+        board[x][y]=STONE_NONE; 
     }
 
     public void setCellBlack( int x, int y ) {
-        board[x][y]=1; 
+        board[x][y]=STONE_BLACK; 
     }
+
     public void setCellWhite( int x, int y ) {
-        board[x][y]=2; 
+        board[x][y]=STONE_WHITE; 
+    }
+
+    public void toggleCellDead( int x, int y ) {
+        board[x][y]*=-1; 
+    }
+
+    public boolean isCellDead( int x, int y ) {
+        return (board[x][y]<0); 
     }
 
 
