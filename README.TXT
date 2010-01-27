@@ -4,6 +4,8 @@ I'm looking for testers/ideas and graphics / code contributors
 
 Changelog:
 
+ 0.8 - end game counting
+     - add 42px stones( from ruth hinckley )
  0.7 - work on settings
      - initial skin ( from ruth hinckley )
      - implement pass in sgf export
@@ -20,7 +22,7 @@ Changelog:
  
  
 2DO:
- - after game counting
- - settings menu
- - sgf save/load
+ - sgf load
  - editable zoom levels
+ - count dead stones on the end
+ - graphical top bar
