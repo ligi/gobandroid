@@ -1,5 +1,6 @@
 package org.ligi.gobandroid.ui;
 
+import org.ligi.gobandroid.logic.GoDefinitions;
 import org.ligi.gobandroid.logic.GoGame;
 
 import org.ligi.gobandroid.R;
@@ -49,8 +50,13 @@ public class GoBoardView extends View implements OnTouchListener{
     
     
     private Bitmap bg_bitmap=null;
+    
+    
     private Bitmap white_stone_bitmap=null;
     private Bitmap black_stone_bitmap=null;
+    private Bitmap white_stone_bitmap_small=null;
+    private Bitmap black_stone_bitmap_small=null;
+    
     
     public GoBoardView( Context context,GoGame game ) {
         super( context );
@@ -174,6 +180,7 @@ public class GoBoardView extends View implements OnTouchListener{
 				txt_anchor_y = 20;
 			}
 			float spacer = textPaint.getTextSize() * 1.5f;
+			
 			if (game.isFinished())
 				canvas.drawText("Game is finished - Mark Dead Stones",
 						txt_anchor_x, txt_anchor_y + 0 * spacer, textPaint);
@@ -189,18 +196,46 @@ public class GoBoardView extends View implements OnTouchListener{
 							+ " to move", txt_anchor_x, txt_anchor_y + 0
 							* spacer, textPaint);
 			}
-
+			txt_anchor_y+=spacer;
 			canvas.drawText("Move: " + (game.moves.size() + 1), txt_anchor_x,
-					txt_anchor_y + 1 * spacer, textPaint);
-			canvas.drawText("Captures black: " + game.getCapturesBlack(),
-					txt_anchor_x, txt_anchor_y + 2 * spacer, textPaint);
-			canvas.drawText("Captures white: " + game.getCapturesWhite(),
-					txt_anchor_x, txt_anchor_y + 3 * spacer, textPaint);
-
+					txt_anchor_y , textPaint);
+			txt_anchor_y+=spacer;
+			
+			if (!game.isFinished()) {
+				canvas.drawText("Captures black: " + game.getCapturesBlack(),
+						txt_anchor_x, txt_anchor_y, textPaint);
+				txt_anchor_y+=spacer;
+				canvas.drawText("Captures white: " + game.getCapturesWhite(),
+						txt_anchor_x, txt_anchor_y, textPaint);
+			
+				txt_anchor_y+=spacer;	
+			}
+			else
+			{
+			canvas.drawText("Black: " + game.territory_black + " (Territory) + " + game.getCapturesBlack() + " (Captures) =" + game.getPointsBlack() ,
+					txt_anchor_x, txt_anchor_y , textPaint);
+			txt_anchor_y+=spacer;	
+			canvas.drawText("White: " + game.territory_white + " (Territory) + "+ game.getCapturesWhite() + " (Captures) + " + game.getKomi() + " (Komi) =" + game.getPointsWhite(),
+					txt_anchor_x, txt_anchor_y , textPaint);
+			txt_anchor_y+=spacer;	
+			
+			if (game.getPointsBlack()==game.getPointsWhite())
+				canvas.drawText("The Game ended in a draw",
+						txt_anchor_x, txt_anchor_y , textPaint);
+			if (game.getPointsBlack()>game.getPointsWhite())
+				canvas.drawText("Black won with " + (game.getPointsBlack()-game.getPointsWhite()) + " Points.",
+						txt_anchor_x, txt_anchor_y , textPaint);
+			
+			if (game.getPointsWhite()>game.getPointsBlack())
+				canvas.drawText("White won with " + (game.getPointsWhite()-game.getPointsBlack()) + " Points.",
+						txt_anchor_x, txt_anchor_y , textPaint);
+			txt_anchor_y+=spacer;	
+			}
 			if (touch_x != -1)
 				canvas.drawText("Touch: " + (char) ('A' + touch_x)
-						+ (touch_y + 1), txt_anchor_x, txt_anchor_y + 4
-						* spacer, textPaint);
+						+ (touch_y + 1), txt_anchor_x, txt_anchor_y 
+						, textPaint);
+			txt_anchor_y+=spacer;	
 		}
         
         canvas.translate(offset_x, offset_y);
@@ -237,23 +272,34 @@ public class GoBoardView extends View implements OnTouchListener{
             	if (game.isPosHoschi(x, y))
             			canvas.drawCircle( stone_size/2.0f+ x*stone_size +0.5f ,stone_size/2.0f+y*stone_size+0.5f,stone_size/10,blackPaint );
             	
-            	if (game.isStoneDead(x, y))
+            	blackPaint.setColor(0xFF000000);
+        		whitePaint.setColor(0xFFCCCCCC);
+        		
+            	if (game.getCalcBoard().isCellDead(x,y))
             	{
-            		blackPaint.setColor(0xBB000000);
-            		whitePaint.setColor(0xBBCCCCCC);
+            		if (game.getVisualBoard().isCellWhite(x,y))
+                    {
+            		if (white_stone_bitmap_small!=null)
+            			canvas.drawBitmap(white_stone_bitmap_small, x*stone_size  + (stone_size-white_stone_bitmap_small.getWidth())/2 ,y*stone_size + (stone_size-white_stone_bitmap_small.getHeight())/2,whitePaint );
+            		else
+            			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/5,whitePaint );
+                    }
+                if (game.getVisualBoard().isCellBlack(x,y))
+                    {
+                	if (black_stone_bitmap_small!=null)
+                		canvas.drawBitmap(black_stone_bitmap_small, x*stone_size  + (stone_size-black_stone_bitmap_small.getWidth())/2 ,y*stone_size + (stone_size-black_stone_bitmap_small.getHeight())/2,whitePaint );
+            		else
+            			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/5,blackPaint );
+                    }
             	}
             	else
             	{
-            		blackPaint.setColor(0xFF000000);
-            		whitePaint.setColor(0xFFCCCCCC);
-            	}
             	if (game.getVisualBoard().isCellWhite(x,y))
                     {
             		if (white_stone_bitmap!=null)
             			canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
             		else
             			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,whitePaint );
-                    //canvas.drawText( "" + game.getGroup(x,y) +"-" + (game.group_has_liberty(game.getGroup( x,y))?"x":"-"), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,blackPaint );
                     }
                 if (game.getVisualBoard().isCellBlack(x,y))
                     {
@@ -261,8 +307,38 @@ public class GoBoardView extends View implements OnTouchListener{
             			canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
             		else
             			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,blackPaint );
-                    //canvas.drawText( "" + game.getGroup(x,y), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,whitePaint );
                     }
+            	}
+                
+                
+                if (game.isFinished()) {
+
+            		blackPaint.setColor(0xBB000000);
+            		whitePaint.setColor(0xBBCCCCCC);
+            		
+                	if (game.area_assign[x][y]==GoDefinitions.PLAYER_BLACK)
+                			{
+                    	if (black_stone_bitmap!=null)
+                			canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
+                		else
+                			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,blackPaint );
+                        //canvas.drawText( "" + game.getGroup(x,y), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,whitePaint );
+                        }		
+             
+                   	if (game.area_assign[x][y]==GoDefinitions.PLAYER_WHITE)
+        			{
+                		if (white_stone_bitmap!=null)
+                			canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
+                		else
+                			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,whitePaint );
+                
+        			}
+                	
+                			
+                }
+                
+                //canvas.drawText( "" + game.area_groups[x][y], x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,whitePaint );
+                
             }
     
     canvas.restore();
@@ -272,11 +348,46 @@ public class GoBoardView extends View implements OnTouchListener{
     
     public void regenerate_stone_images() {
     	if (do_skin){
-    	white_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
-   				getResources(), R.drawable.white), (int)stone_size, (int)stone_size, true);
+    		if (stone_size>23)
+    		{
+    			white_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
+   				getResources(), R.drawable.white2), (int)stone_size, (int)stone_size, true);
 
-           black_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
-   				getResources(), R.drawable.black), (int)stone_size, (int)stone_size, true);
+    			black_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
+   				getResources(), R.drawable.black2), (int)stone_size, (int)stone_size, true);
+    		}
+    		else
+    		{
+        		white_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
+       				getResources(), R.drawable.white), (int)stone_size, (int)stone_size, true);
+
+        		black_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
+       				getResources(), R.drawable.black), (int)stone_size, (int)stone_size, true);
+        	}    			
+    		
+
+    		float SMALL_STONE_SCALER=0.7f;
+    		if ((stone_size/SMALL_STONE_SCALER)>23)
+    		{
+    			white_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
+   				getResources(), R.drawable.white2), (int)(stone_size*SMALL_STONE_SCALER), (int)(stone_size*SMALL_STONE_SCALER), true);
+
+    			black_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
+   				getResources(), R.drawable.black2), (int)(stone_size*SMALL_STONE_SCALER), (int)(stone_size*SMALL_STONE_SCALER), true);
+    		}
+    		else
+    		{
+        		white_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
+       				getResources(), R.drawable.white), (int)(stone_size*SMALL_STONE_SCALER), (int)(stone_size*SMALL_STONE_SCALER), true);
+
+        		black_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
+       				getResources(), R.drawable.black), (int)(stone_size*SMALL_STONE_SCALER), (int)(stone_size*SMALL_STONE_SCALER), true);
+        	}    			
+    		
+
+    		
+    		
+    		
     	}
     	else {
     		black_stone_bitmap=null;
