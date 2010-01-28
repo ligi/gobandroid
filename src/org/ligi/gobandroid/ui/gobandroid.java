@@ -18,11 +18,12 @@ import android.widget.ListView;
 **/
 
 public class gobandroid extends ListActivity {
-    public String[] menu_items= {"Start Game","Settings" ,"Quit" };
+    public String[] menu_items= {"Start Game","Settings" ,"Quit", /*"Load Game" */ };
     
     private final static int MENU_GAMESTART=0;
     private final static int MENU_SETTINGS=1;
     private final static int MENU_QUIT=2;
+    private final static int MENU_LOADGAME=3;
     
     /** Called when the activity is first created. */
     @Override
@@ -33,7 +34,6 @@ public class gobandroid extends ListActivity {
         this.setListAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, menu_items));
            
-        
     }
     
     @Override
@@ -46,7 +46,12 @@ public class gobandroid extends ListActivity {
                     go_intent=new Intent(this,GoSetupActivity.class);
                     startActivity(go_intent);
                      break;
-                
+    
+                case MENU_LOADGAME:
+                    go_intent=new Intent(this,SGFListActivity.class);
+                    startActivity(go_intent);
+                    break;
+    
                 case MENU_SETTINGS:
                     go_intent=new Intent(this,SettingsActivity.class);
                     startActivity(go_intent);
