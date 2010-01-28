@@ -137,9 +137,9 @@ public class GoBoardView extends View implements OnTouchListener{
 				offset_x=(-stone_size*game.getVisualBoard().getSize()+this.getWidth())/2;	
 			
 			if (touch_y>= (2*game.getVisualBoard().getSize())/3)
-				offset_y=-stone_size*game.getVisualBoard().getSize()+this.getWidth();
+				offset_y=-stone_size*game.getVisualBoard().getSize()+this.getHeight();
 			else if (touch_y> (game.getVisualBoard().getSize()/3))
-				offset_y=(-stone_size*game.getVisualBoard().getSize()+this.getWidth())/2;	
+				offset_y=(-stone_size*game.getVisualBoard().getSize()+this.getHeight())/2;	
 			
 			
 			
@@ -272,6 +272,35 @@ public class GoBoardView extends View implements OnTouchListener{
             	if (game.isPosHoschi(x, y))
             			canvas.drawCircle( stone_size/2.0f+ x*stone_size +0.5f ,stone_size/2.0f+y*stone_size+0.5f,stone_size/10,blackPaint );
             	
+            	 
+                if (game.isFinished()) {
+
+            		blackPaint.setColor(0x77000000);
+            		whitePaint.setColor(0x77CCCCCC);
+            		
+                	if (game.area_assign[x][y]==GoDefinitions.PLAYER_BLACK)
+                			{
+                    	if (black_stone_bitmap!=null)
+                			canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
+                		else
+                			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,blackPaint );
+                        //canvas.drawText( "" + game.getGroup(x,y), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,whitePaint );
+                        }		
+             
+                   	if (game.area_assign[x][y]==GoDefinitions.PLAYER_WHITE)
+        			{
+                		if (white_stone_bitmap!=null)
+                			canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
+                		else
+                			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,whitePaint );
+                
+        			}
+                	
+                			
+                }
+                
+            	
+            	
             	blackPaint.setColor(0xFF000000);
         		whitePaint.setColor(0xFFCCCCCC);
         		
@@ -310,33 +339,7 @@ public class GoBoardView extends View implements OnTouchListener{
                     }
             	}
                 
-                
-                if (game.isFinished()) {
-
-            		blackPaint.setColor(0xBB000000);
-            		whitePaint.setColor(0xBBCCCCCC);
-            		
-                	if (game.area_assign[x][y]==GoDefinitions.PLAYER_BLACK)
-                			{
-                    	if (black_stone_bitmap!=null)
-                			canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
-                		else
-                			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,blackPaint );
-                        //canvas.drawText( "" + game.getGroup(x,y), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,whitePaint );
-                        }		
-             
-                   	if (game.area_assign[x][y]==GoDefinitions.PLAYER_WHITE)
-        			{
-                		if (white_stone_bitmap!=null)
-                			canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
-                		else
-                			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,whitePaint );
-                
-        			}
-                	
-                			
-                }
-                
+               
                 //canvas.drawText( "" + game.area_groups[x][y], x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,whitePaint );
                 
             }
@@ -366,7 +369,7 @@ public class GoBoardView extends View implements OnTouchListener{
         	}    			
     		
 
-    		float SMALL_STONE_SCALER=0.7f;
+    		float SMALL_STONE_SCALER=0.6f;
     		if ((stone_size/SMALL_STONE_SCALER)>23)
     		{
     			white_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
