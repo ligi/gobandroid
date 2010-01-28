@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="org.ligi.gobandroid"
-      android:versionCode="8" android:versionName="0.8">
+      android:versionCode="9" android:versionName="0.9">
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".ui.gobandroid"
                   android:label="@string/app_name">
@@ -14,6 +14,7 @@
     <activity android:name="org.ligi.gobandroid.ui.GoActivity"></activity>
 <activity android:name="org.ligi.gobandroid.ui.SettingsActivity"></activity>
 <activity android:name=".ui.GoSetupActivity"></activity>
+<activity android:name=".ui.SGFListActivity"></activity>
 </application>
     <uses-sdk android:minSdkVersion="2" />
 
