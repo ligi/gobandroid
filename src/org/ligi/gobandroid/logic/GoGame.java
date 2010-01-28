@@ -23,7 +23,6 @@ public class GoGame implements GoDefinitions {
     private GoBoard last_board;   // board to detect KO situations
     private GoBoard pre_last_board;   // board to detect KO situations
 
-    
     //private boolean black_to_move = true;
 
     private boolean last_action_was_pass=false;
@@ -34,8 +33,7 @@ public class GoGame implements GoDefinitions {
         
     public int[][] area_groups; // array to build groups
     public byte[][] area_assign; // cache to which player a area belongs in a finished game
-    
-    
+        
     //private boolean[][] dead_stones; // dead stone marker
         
     private int group_count = -1;
@@ -43,11 +41,10 @@ public class GoGame implements GoDefinitions {
     private int captures_white; // counter for the captures from black
     private int captures_black; // counter for the captures from white
     
-    
     public int territory_white; // counter for the captures from black
     public int territory_black; // counter for the captures from white
     
-    private int handicap=0;
+    private byte handicap=0;
     
     float komi=6.5f;
     
@@ -112,7 +109,11 @@ public class GoGame implements GoDefinitions {
     }
     public void reset() {
     	// black always starts
-    	act_player=PLAYER_BLACK;
+    	
+    	if (handicap==0)
+    		act_player=PLAYER_BLACK;
+    	else
+    		act_player=PLAYER_WHITE;
     	
     	// create the vector to save the moves
         moves= new Vector<byte[]>();
@@ -600,6 +601,10 @@ public class GoGame implements GoDefinitions {
     
     public void setNextPlayer() {
     	act_player=(act_player==PLAYER_BLACK)?PLAYER_WHITE:PLAYER_BLACK;
+    }
+    
+    public byte getHandicap() {
+    	return handicap;
     }
     
 }
