@@ -1,6 +1,6 @@
 package org.ligi.gobandroid.logic;
 
-public class SGFWriter {
+public class SGFHelper {
 
 	public static String game2sgf(GoGame game) {
 		String res="";
@@ -10,10 +10,14 @@ public class SGFWriter {
 		
 		boolean black_to_move=true;
 		
+		if (game.getHandicap()>0)
+			black_to_move=false;
+		
 		for (int move=0;move<game.moves.size();move++)
 			{
 			byte[] act_move=game.moves.get(move);
 			
+			//TODO handle game handicap
 			
 			res+=";" + (black_to_move?"B":"W");
 			
