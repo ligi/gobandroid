@@ -20,7 +20,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import org.ligi.gobandroid.logic.GoGame;
-import org.ligi.gobandroid.logic.SGFWriter;
+import org.ligi.gobandroid.logic.SGFHelper;
 
 /**
  * Activity for a Game
@@ -96,10 +96,10 @@ public class GoActivity extends Activity {
 			MenuItem pass_menu = menu.add(0, MENU_PASS, 0, "Pass");
 			pass_menu.setIcon(android.R.drawable.ic_menu_set_as);
 		} else {
-			MenuItem finish_menu = menu.add(0, MENU_FINISH, 0,
+			/*MenuItem finish_menu = menu.add(0, MENU_FINISH, 0,
 			"Finished Marking dead Stones");
 			finish_menu.setIcon(android.R.drawable.ic_menu_set_as);
-
+			 */
 		}
 		
 		MenuItem save_menu = menu.add(0, MENU_WRITE_SGF, 0,"Save as SGF");
@@ -152,7 +152,7 @@ public class GoActivity extends Activity {
 					FileWriter gpxwriter = new FileWriter(f);
 					BufferedWriter out = new BufferedWriter(gpxwriter);
 
-					out.write(SGFWriter.game2sgf(game));
+					out.write(SGFHelper.game2sgf(game));
 
 					out.close();
 					gpxwriter.close();
@@ -197,12 +197,12 @@ public class GoActivity extends Activity {
     	
     	case KeyEvent.KEYCODE_DPAD_DOWN:
     		board_view.prepare_keyinput();
-    		if (board_view.touch_y<game.getVisualBoard().getSize()) board_view.touch_y++;
+    		if (board_view.touch_y<game.getVisualBoard().getSize()-1) board_view.touch_y++;
     		break;
     	
     	case KeyEvent.KEYCODE_DPAD_RIGHT:
     		board_view.prepare_keyinput();
-    		if (board_view.touch_x<game.getVisualBoard().getSize()) board_view.touch_x++;
+    		if (board_view.touch_x<game.getVisualBoard().getSize()-1) board_view.touch_x++;
     		break;
     		
     	case KeyEvent.KEYCODE_DPAD_CENTER:
