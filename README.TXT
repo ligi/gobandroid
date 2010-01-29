@@ -33,3 +33,4 @@ Changelog:
  - editable zoom levels
  - count dead stones on the end
  - graphical top bar
+ - fullscreen option
