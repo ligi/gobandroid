@@ -71,16 +71,22 @@ public class GoGame implements GoDefinitions {
     }
     
     private void apply_handicap() {
+    	
     	for (int i=0;i<handicap;i++)
-            if (getBoardSize()==19)
-            	calc_board.setCellBlack(hoshis19x19[i][0], hoshis19x19[i][1]);
-            else if (getBoardSize()==13)
-            	calc_board.setCellBlack(hoshis13x13[i][0], hoshis13x13[i][1]);
-            else if (getBoardSize()==9)
-            	calc_board.setCellBlack(hoshis9x9[i][0], hoshis9x9[i][1]);
+    		calc_board.setCellBlack(getHandicapArray()[i][0], getHandicapArray()[i][1]);
             
     }
 
+    public byte[][] getHandicapArray() {
+        if (getBoardSize()==19)
+        	return hoshis19x19;
+        else if (getBoardSize()==13)
+        	return hoshis13x13;
+        else if (getBoardSize()==9)
+        	return hoshis9x9;
+        else return new byte[0][0];
+    }
+    
     private void construct(byte size) {
     	// create the boards
         calc_board = new GoBoard( size );
