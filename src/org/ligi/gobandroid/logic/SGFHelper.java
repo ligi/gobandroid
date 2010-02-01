@@ -11,13 +11,17 @@ public class SGFHelper {
 		boolean black_to_move=true;
 		
 		if (game.getHandicap()>0)
-			black_to_move=false;
+			{
+			black_to_move=false; // white begins on a handicap game - not black
+			res+="AB";
+			for ( int handicap=0;handicap<game.getHandicap();handicap++)
+				res+="["+(char)('a' + game.getHandicapArray()[handicap][0])+(char)('a' + game.getHandicapArray()[handicap][1]) + "]";
+			res+="\n";
+			}
 		
 		for (int move=0;move<game.moves.size();move++)
 			{
 			byte[] act_move=game.moves.get(move);
-			
-			//TODO handle game handicap
 			
 			res+=";" + (black_to_move?"B":"W");
 			
