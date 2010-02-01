@@ -4,6 +4,7 @@ I'm looking for testers/ideas and graphics / code contributors
 
 Changelog:
 
+ 0.10 - fix handicap handling when saving sgf
  0.9 - fix zooming in Landscape
      - ui improvements
      - when handicap let white start
