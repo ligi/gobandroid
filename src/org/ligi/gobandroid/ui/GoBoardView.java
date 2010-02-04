@@ -128,7 +128,8 @@ public class GoBoardView extends View implements OnTouchListener{
     
 
     public void setZoom(boolean zoom_flag) {
-    	if (zoom_flag) {
+    	if (zoom_flag) 
+    		{
     		stone_size=stone_size_zoomed;
 			
 			if (touch_x>= (2*game.getVisualBoard().getSize())/3)
@@ -140,18 +141,23 @@ public class GoBoardView extends View implements OnTouchListener{
 				offset_y=-stone_size*game.getVisualBoard().getSize()+this.getHeight();
 			else if (touch_y> (game.getVisualBoard().getSize()/3))
 				offset_y=(-stone_size*game.getVisualBoard().getSize()+this.getHeight())/2;	
-			
-			
-			
-    	}else {
+    		}
+    	else 
+    		{
 			stone_size=stone_size_normal;
 			offset_x=0;
 			offset_y=0;
-    	}
+    		}
+    	
     	regenerate_stone_images();	
     	invalidate();
     }
 
+    /**
+     * check if the Board is Zoomed
+     * 
+     * @return true if zoomed
+     */
     public boolean isZoomed() {
     	return (stone_size==stone_size_zoomed);
     }
@@ -344,8 +350,8 @@ public class GoBoardView extends View implements OnTouchListener{
                 
             }
     
-    canvas.restore();
-    }
+        canvas.restore();
+    } // end of onDraw
     
     boolean width_is_max;
     
@@ -386,17 +392,13 @@ public class GoBoardView extends View implements OnTouchListener{
         		black_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
        				getResources(), R.drawable.black), (int)(stone_size*SMALL_STONE_SCALER), (int)(stone_size*SMALL_STONE_SCALER), true);
         	}    			
-    		
-
-    		
-    		
-    		
     	}
-    	else {
+    	else 
+    	{
     		black_stone_bitmap=null;
     		white_stone_bitmap=null;
     	}
-    	}	
+    }	
     
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -449,10 +451,7 @@ public class GoBoardView extends View implements OnTouchListener{
     		}
     		else
     			setZoom(true);
-        		
-        	
     		}
-        	
         }
         invalidate();  // the board looks diffrent after a move
         return true;

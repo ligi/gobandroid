@@ -30,6 +30,8 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 	
 	private CheckBox fat_finger_checkbox;
 	private CheckBox skin_checkbox;
+	private CheckBox fullscreen_checkbox;
+	private CheckBox awake_checkbox;
 	
 	private Button sgf_path_btn;
 	private Button sgf_file_btn;
@@ -48,6 +50,15 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 		fat_finger_checkbox=(CheckBox)findViewById(R.id.FatFingerCheckBox);
 		fat_finger_checkbox.setChecked(shared_prefs.getBoolean("fatfinger", false));
 		fat_finger_checkbox.setOnCheckedChangeListener(this);
+		
+		
+		awake_checkbox=(CheckBox)findViewById(R.id.ScreenAwakeCheckBox);
+		awake_checkbox.setChecked(shared_prefs.getBoolean("awake", false));
+		awake_checkbox.setOnCheckedChangeListener(this);
+		
+		fullscreen_checkbox=(CheckBox)findViewById(R.id.FullScreenCheckBox);
+		fullscreen_checkbox.setChecked(shared_prefs.getBoolean("fullscreen", false));
+		fullscreen_checkbox.setOnCheckedChangeListener(this);
 		
 		skin_checkbox=(CheckBox)findViewById(R.id.SkinCheckBox);
 		skin_checkbox.setChecked(shared_prefs.getBoolean("skin", false));
@@ -77,17 +88,19 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 		
 		if (buttonView==fat_finger_checkbox)
 			editor.putBoolean("fatfinger", isChecked);
-		else
-			if (buttonView==skin_checkbox)	
-				editor.putBoolean("skin", isChecked);
+		else if (buttonView==skin_checkbox)	
+			editor.putBoolean("skin", isChecked);
+		else if (buttonView==fullscreen_checkbox)
+			editor.putBoolean("fullscreen", isChecked);
+		else if (buttonView==awake_checkbox)
+			editor.putBoolean("awake", isChecked);
+		
 		editor.commit();
 	}
 
 	@Override
 	public void onClick(View arg0) {
-		
-
-		Log.i("gobandroid","click"+arg0);
+	
 		final EditText input = new EditText(this);   
 		
 		if (arg0==sgf_path_btn)
@@ -117,15 +130,7 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 				editor.putString("sgf_fname", ""+input.getText());
 				editor.commit();		
 				refresh_labels();
-			}	
-			
-			}).show();
+			}}).show();
 		}
-		
-		
-		
-		
-		
 		}
-
 }

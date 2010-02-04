@@ -2,14 +2,18 @@ package org.ligi.gobandroid.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.view.View.OnTouchListener;
 import android.widget.EditText;
 
@@ -27,26 +31,29 @@ import org.ligi.gobandroid.logic.SGFHelper;
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  * 
- *         This software is licenced with GPLv3
+ * Licence: This software is licenced with GPLv3
  * 
  **/
 
 public class GoActivity extends Activity {
 	private static final int MENU_UNDO = 0;
 	private static final int MENU_PASS = 1;
-	private static final int MENU_FINISH = 2;
+	//private static final int MENU_FINISH = 2;
 	private static final int MENU_WRITE_SGF = 3;
 	private static final int MENU_SETTINGS = 4;
 
-	GoGame game=null;
-	GoBoardView board_view;
+	private GoGame game=null;
+	private GoBoardView board_view;
 
-	int i = 0;
-
+	private SharedPreferences shared_prefs;
+	
+	private WakeLock mWakeLock=null;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
+		shared_prefs=this.getSharedPreferences("gobandroid", 0);
 		Log.i("gobandroid","onCreate" + game);
 		
 		if (game==null) {
@@ -66,6 +73,20 @@ public class GoActivity extends Activity {
 			board_view.setOnTouchListener((OnTouchListener) board_view);
 			setContentView(board_view); 
 			}
+		
+		
+		if (shared_prefs.getBoolean("fullscreen", false))
+			this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		else
+			this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	
+		if (shared_prefs.getBoolean("awake", false))
+			{
+			final PowerManager pm = (PowerManager) (this.getSystemService(Context.POWER_SERVICE)); 
+			mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "DUBwise Wakelog TAG");  
+        	mWakeLock.acquire();
+			}
 	}
 
 	@Override
@@ -79,9 +100,10 @@ public class GoActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		SharedPreferences shared_prefs=this.getSharedPreferences("gobandroid", 0);
+		
 		board_view.do_skin=shared_prefs.getBoolean("skin", false);
 		board_view.do_zoom=shared_prefs.getBoolean("fatfinger", false);
+		
 	}
 
 	/* Creates the menu items */
@@ -206,24 +228,27 @@ public class GoActivity extends Activity {
     		break;
     		
     	case KeyEvent.KEYCODE_DPAD_CENTER:
-    		if (!game.do_move(board_view.touch_x,board_view.touch_y))	;
-    		
+    		game.do_move(board_view.touch_x,board_view.touch_y);
     		board_view.setZoom(false);
     		break;
     		
     	case KeyEvent.KEYCODE_BACK:
     		if (board_view.isZoomed())
-    		
-    		{ 
+    			{ 
     			Log.i("gobandroid","unzoom");
     			board_view.setZoom(false);
-    			
     			return true;
-    		}
+    			}
     		break;
     	}
     	board_view.invalidate();
     	return super.onKeyDown(keyCode, event);	
     }
 	
+    @Override 
+    public void onDestroy() {
+    	super.onDestroy();
+    	if (mWakeLock!=null)
+    		mWakeLock.release();
+    }
 }
