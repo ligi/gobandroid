@@ -7,9 +7,7 @@ import java.util.Vector;
 import org.ligi.gobandroid.R;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ListActivity;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,7 +34,7 @@ public class SGFListActivity extends ListActivity {
         
     	File dir=new File("/sdcard/gobandroid");
         
-        Dialog dlg=new Dialog(this);
+    	//        	Dialog dlg=new Dialog(this);
         
         /*dlg.setTitle("Foo");
         dlg.show();
@@ -77,8 +75,6 @@ public class SGFListActivity extends ListActivity {
         
         this.setListAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, menu_items));
-           
-        
     }
     
     @Override
