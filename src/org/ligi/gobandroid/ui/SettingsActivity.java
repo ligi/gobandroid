@@ -98,11 +98,19 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 
 		File f=new File("/sdcard/gobandroid/skins");
 		int pos=0;
-		skin_strings=new String[1+f.listFiles().length];
+		
+		File[] file_list;
+		
+		if (f.exists())
+			file_list=f.listFiles();
+		else 
+			file_list=new File[0];
+		
+		skin_strings=new String[1+file_list.length];
 		skin_strings[pos++]="no Skin";
 		int selection_remember=0;
 		
-		for (File skin:f.listFiles())
+		for (File skin:file_list)
 			{
 			if (shared_prefs.getString("skinname", "").equals(skin.getName()))
 				selection_remember=pos;
