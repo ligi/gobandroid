@@ -57,8 +57,6 @@ public class GoActivity extends Activity {
 		Log.i("gobandroid","onCreate" + game);
 		
 		if (game==null) {
-			
-			
 			// if there is a game saved e.g. on rotation use this game
 			if (getLastNonConfigurationInstance()!=null) 
 				game=(GoGame)getLastNonConfigurationInstance();
@@ -101,9 +99,18 @@ public class GoActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		
-		board_view.do_skin=shared_prefs.getBoolean("skin", false);
+		
+		board_view.skin_name=shared_prefs.getString("skinname", "");
 		board_view.do_zoom=shared_prefs.getBoolean("fatfinger", false);
 		
+		if (!(new File(board_view.skin_path+"/"	+ board_view.skin_name).exists()))
+		 {
+			SharedPreferences.Editor editor=shared_prefs.edit();
+			editor.putBoolean("skin", false);
+			editor.commit();
+		 }
+		
+		board_view.do_skin=shared_prefs.getBoolean("skin", false);
 	}
 
 	/* Creates the menu items */

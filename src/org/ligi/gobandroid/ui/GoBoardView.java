@@ -47,8 +47,9 @@ public class GoBoardView extends View implements OnTouchListener{
     
     public boolean do_skin=false;
     public boolean do_zoom=false;
+    public String skin_name="";
     
-    
+    public String skin_path="/sdcard/gobandroid/skins/";
     private Bitmap bg_bitmap=null;
     
     
@@ -357,41 +358,32 @@ public class GoBoardView extends View implements OnTouchListener{
     
     public void regenerate_stone_images() {
     	if (do_skin){
+    		int size_append=17;
     		if (stone_size>23)
-    		{
-    			white_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
-   				getResources(), R.drawable.white2), (int)stone_size, (int)stone_size, true);
-
-    			black_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
-   				getResources(), R.drawable.black2), (int)stone_size, (int)stone_size, true);
-    		}
-    		else
-    		{
-        		white_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
-       				getResources(), R.drawable.white), (int)stone_size, (int)stone_size, true);
-
-        		black_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
-       				getResources(), R.drawable.black), (int)stone_size, (int)stone_size, true);
-        	}    			
+    			size_append=32;
+    		if (stone_size>50)
+    			size_append=64;
     		
+    		
+    		white_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeFile(skin_path +"/" + skin_name + "/white" + size_append + ".png"
+				), (int)stone_size, (int)stone_size, true);
+    		
+    		black_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeFile(skin_path +"/" + skin_name + "/black" + size_append + ".png"
+				), (int)stone_size, (int)stone_size, true);
 
-    		float SMALL_STONE_SCALER=0.6f;
-    		if ((stone_size/SMALL_STONE_SCALER)>23)
-    		{
-    			white_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
-   				getResources(), R.drawable.white2), (int)(stone_size*SMALL_STONE_SCALER), (int)(stone_size*SMALL_STONE_SCALER), true);
+    		float SMALL_STONE_SCALER=0.6f;	
+    		 size_append=17;
+     		if (stone_size/SMALL_STONE_SCALER>23)
+     			size_append=32;
+     		if (stone_size/SMALL_STONE_SCALER>50)
+     			size_append=64;
 
-    			black_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
-   				getResources(), R.drawable.black2), (int)(stone_size*SMALL_STONE_SCALER), (int)(stone_size*SMALL_STONE_SCALER), true);
-    		}
-    		else
-    		{
-        		white_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
-       				getResources(), R.drawable.white), (int)(stone_size*SMALL_STONE_SCALER), (int)(stone_size*SMALL_STONE_SCALER), true);
+    		white_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeFile(skin_path +"/" + skin_name + "/white" + size_append + ".png"
+    		), (int)(stone_size/SMALL_STONE_SCALER), (int)(stone_size/SMALL_STONE_SCALER), true);
+    		
+    		black_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeFile(skin_path +"/"+ skin_name + "/black" + size_append + ".png"
+    		), (int)(stone_size/SMALL_STONE_SCALER), (int)(stone_size/SMALL_STONE_SCALER), true);
 
-        		black_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
-       				getResources(), R.drawable.black), (int)(stone_size*SMALL_STONE_SCALER), (int)(stone_size*SMALL_STONE_SCALER), true);
-        	}    			
     	}
     	else 
     	{
@@ -414,13 +406,12 @@ public class GoBoardView extends View implements OnTouchListener{
 
 
         if (do_skin)
-        	bg_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
-				getResources(), R.drawable.shinkaya), this.getWidth(), this.getHeight(), true);
+        	bg_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeFile("/sdcard/gobandroid/skins/" + skin_name + "/board.jpg"), this.getWidth(), this.getHeight(), true);
         else
         	bg_bitmap=null;
         
         regenerate_stone_images();
-        
+
         invalidate(); // needed here or automaticaly called?
     }
 
