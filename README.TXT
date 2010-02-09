@@ -2,9 +2,18 @@ This is the alpha release of an opensource goban for android to play go / baduk 
 I'm looking for testers/ideas and graphics / code contributors
  
 Changelog:
-
+ 
+ 0.15
+   F count dead stones as captures
+   F skin bugfixing
+ 0.14
+    F skin bugfixing
+ 0.13
+    F skin bugfixing
+ 0.12
+   + implement skins on SD-Card option
  0.11 
- 	+ fullscreen board option
+    + fullscreen board option
     + keep screen awake option
  0.10 
  	F fix handicap handling when saving sgf

@@ -3,7 +3,6 @@ package org.ligi.gobandroid.ui;
 import org.ligi.gobandroid.logic.GoDefinitions;
 import org.ligi.gobandroid.logic.GoGame;
 
-import org.ligi.gobandroid.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -373,16 +372,16 @@ public class GoBoardView extends View implements OnTouchListener{
 
     		float SMALL_STONE_SCALER=0.6f;	
     		 size_append=17;
-     		if (stone_size/SMALL_STONE_SCALER>23)
+     		if (stone_size*SMALL_STONE_SCALER>23)
      			size_append=32;
-     		if (stone_size/SMALL_STONE_SCALER>50)
+     		if (stone_size*SMALL_STONE_SCALER>50)
      			size_append=64;
 
     		white_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeFile(skin_path +"/" + skin_name + "/white" + size_append + ".png"
-    		), (int)(stone_size/SMALL_STONE_SCALER), (int)(stone_size/SMALL_STONE_SCALER), true);
+    		), (int)(stone_size*SMALL_STONE_SCALER), (int)(stone_size*SMALL_STONE_SCALER), true);
     		
     		black_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeFile(skin_path +"/"+ skin_name + "/black" + size_append + ".png"
-    		), (int)(stone_size/SMALL_STONE_SCALER), (int)(stone_size/SMALL_STONE_SCALER), true);
+    		), (int)(stone_size*SMALL_STONE_SCALER), (int)(stone_size*SMALL_STONE_SCALER), true);
 
     	}
     	else 
@@ -403,7 +402,6 @@ public class GoBoardView extends View implements OnTouchListener{
        
         stone_size=stone_size_normal;
         stone_size_zoomed=stone_size_normal*2;
-
 
         if (do_skin)
         	bg_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeFile("/sdcard/gobandroid/skins/" + skin_name + "/board.jpg"), this.getWidth(), this.getHeight(), true);

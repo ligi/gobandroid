@@ -41,6 +41,10 @@ public class GoGame implements GoDefinitions {
     private int captures_white; // counter for the captures from black
     private int captures_black; // counter for the captures from white
     
+    private int dead_white; // counter for the captures from black
+    private int dead_black; // counter for the captures from white
+        
+    
     public int territory_white; // counter for the captures from black
     public int territory_black; // counter for the captures from white
     
@@ -161,7 +165,23 @@ public class GoGame implements GoDefinitions {
                         if (groups[xg][yg]==groups[x][y])
                         	calc_board.toggleCellDead(xg, yg);
         		buildAreaGroups();
-        		
+    
+        		int _dead_white=0; 
+        	    int _dead_black=0; 
+        	    
+                for (int xg = 0; xg < calc_board.getSize(); xg++)
+                    for (int yg = 0; yg < calc_board.getSize(); yg++)
+                    	if (calc_board.isCellDead(xg, yg))
+                    	{
+                    		if (calc_board.isCellDeadBlack(xg, yg))
+                    			_dead_black++;
+                    		
+                    		if (calc_board.isCellDeadWhite(xg, yg))
+                    			_dead_white++;
+                    	}
+                dead_white=_dead_white;
+                dead_black=_dead_black;
+                
         	}
         	else {
         	
@@ -590,11 +610,11 @@ public class GoGame implements GoDefinitions {
     }
     
     public int getCapturesBlack() {
-    	return captures_black;
+    	return captures_black + dead_white;
     }
     
     public int getCapturesWhite() {
-    	return captures_white;
+    	return captures_white + dead_black;
     }
     
     public int getBoardSize() {

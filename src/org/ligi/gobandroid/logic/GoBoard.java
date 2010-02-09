@@ -91,6 +91,15 @@ public class GoBoard implements GoDefinitions{
         return (board[x][y]==STONE_WHITE); 
     }
 
+    
+    public boolean isCellDeadBlack( int x, int y ) {
+        return (-board[x][y]==STONE_BLACK); 
+    }
+    
+    public boolean isCellDeadWhite( int x, int y ) {
+        return (-board[x][y]==STONE_WHITE); 
+    }
+
 
     public boolean areCellsEqual( int x, int y , int x2 , int y2 ) {
         return ((board[x][y]==board[x2][y2])||
@@ -109,6 +118,8 @@ public class GoBoard implements GoDefinitions{
     public void setCellWhite( int x, int y ) {
         board[x][y]=STONE_WHITE; 
     }
+    
+    
 
     public void toggleCellDead( int x, int y ) {
         board[x][y]*=-1; 
