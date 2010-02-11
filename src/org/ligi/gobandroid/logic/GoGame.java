@@ -57,11 +57,11 @@ public class GoGame implements GoDefinitions {
     }
 
     public float getPointsWhite() {
-    	return komi+captures_white+territory_white;
+    	return komi+getCapturesWhite()+territory_white;
     }
     
     public float getPointsBlack() {
-    	return captures_black+territory_black;
+    	return getCapturesBlack()+territory_black;
     }
     public Vector<byte[]> moves;
 
