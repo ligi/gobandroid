@@ -194,7 +194,7 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 		{
 			//Uri uri = Uri.fromParts("package", "org.ligi.gobandroid.skinstaller.lironah", null);
 			Intent intent = new Intent(Intent.ACTION_VIEW); 
-			intent.setData(Uri.parse("market://search?q=gobandroid skinstaller")); 
+			intent.setData(Uri.parse("market://search?q=org.ligi.gobandroid.skinstaller")); 
 			startActivity(intent);
 			
 		}
@@ -207,6 +207,7 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 	if (arg0==skin_spinner) {
 		SharedPreferences.Editor editor=shared_prefs.edit();
 		editor.putBoolean("skin",  (arg2!=0));
+		Log.i("gobandroid","setting skin to " + (arg2!=0));
 		editor.putString("skinname", skin_strings[arg2]);
 		editor.commit();
 	}

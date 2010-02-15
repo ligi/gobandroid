@@ -10,12 +10,20 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnTouchListener;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 
 import java.io.BufferedWriter;
@@ -23,6 +31,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.ligi.gobandroid.R;
 import org.ligi.gobandroid.logic.GoGame;
 import org.ligi.gobandroid.logic.SGFHelper;
 
@@ -38,7 +47,7 @@ import org.ligi.gobandroid.logic.SGFHelper;
 public class GoActivity extends Activity {
 	private static final int MENU_UNDO = 0;
 	private static final int MENU_PASS = 1;
-	//private static final int MENU_FINISH = 2;
+	private static final int MENU_FINISH = 2;
 	private static final int MENU_WRITE_SGF = 3;
 	private static final int MENU_SETTINGS = 4;
 
@@ -53,6 +62,8 @@ public class GoActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		this.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+		
 		shared_prefs=this.getSharedPreferences("gobandroid", 0);
 		Log.i("gobandroid","onCreate" + game);
 		
@@ -100,17 +111,28 @@ public class GoActivity extends Activity {
 		super.onResume();
 		
 		
-		board_view.skin_name=shared_prefs.getString("skinname", "");
+		GOSkin.setSkin(shared_prefs.getString("skinname", ""));
+		GOSkin.setEnabled(shared_prefs.getBoolean("skin", false));
+		
+		
+
+		Log.i("gobandroid","1do skin" +GOSkin.useSkin());
+		Log.i("gobandroid","1name skin" +GOSkin.getSkinName() + "/" + shared_prefs.getString("skinname", ""));
+		
+		
 		board_view.do_zoom=shared_prefs.getBoolean("fatfinger", false);
 		
-		if (!(new File(board_view.skin_path+"/"	+ board_view.skin_name).exists()))
-		 {
-			SharedPreferences.Editor editor=shared_prefs.edit();
-			editor.putBoolean("skin", false);
-			editor.commit();
-		 }
+		SharedPreferences.Editor editor=shared_prefs.edit();
+		if (shared_prefs.getBoolean("skin", false))
+			editor.putBoolean("skin",GOSkin.setSkin(shared_prefs.getString("skinname", "")) );
 		
-		board_view.do_skin=shared_prefs.getBoolean("skin", false);
+		Log.i("gobandroid","do skin" +GOSkin.useSkin());
+		Log.i("gobandroid","name skin" +GOSkin.getSkinName());
+		
+		editor.commit();
+		
+		setCustomTitle(R.layout.top);
+		((TopView)(this.findViewById(R.id.TopView))).setGame(game);
 	}
 
 	/* Creates the menu items */
@@ -125,10 +147,10 @@ public class GoActivity extends Activity {
 			MenuItem pass_menu = menu.add(0, MENU_PASS, 0, "Pass");
 			pass_menu.setIcon(android.R.drawable.ic_menu_set_as);
 		} else {
-			/*MenuItem finish_menu = menu.add(0, MENU_FINISH, 0,
-			"Finished Marking dead Stones");
+			MenuItem finish_menu = menu.add(0, MENU_FINISH, 0,
+			"Finish");
 			finish_menu.setIcon(android.R.drawable.ic_menu_set_as);
-			 */
+			
 		}
 		
 		MenuItem save_menu = menu.add(0, MENU_WRITE_SGF, 0,"Save as SGF");
@@ -141,10 +163,91 @@ public class GoActivity extends Activity {
 		return true;
 	}
 
+	public TextView filledTextView(String txt,boolean center,float size) {
+		TextView res=new TextView(this);
+		res.setText(txt);
+		res.setPadding(3, 0, 10, 0);
+		if (center)
+				res.setGravity(Gravity.CENTER_HORIZONTAL);
+		res.setTextSize(size);
+		return res;
+	}
+	
 	/* Handles item selections */
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
+		case MENU_FINISH:
+			TableLayout table=new TableLayout(this);
+			TableRow row=new TableRow(this);
+			
+			row.addView(filledTextView("",true,0.0f));
+			
+			ImageView img=new ImageView(this);
+			img.setImageBitmap(GOSkin.getBlackStone(32));
+			img.setPadding(0, 0, 20, 0);
+			
+			row.addView(img);
+
+			
+			img=new ImageView(this);
+			img.setImageBitmap(GOSkin.getWhiteStone(32));
+			row.addView(img);
+			
+			table.addView(row);
+			
+			row=new TableRow(this);
+			
+			float size1=20.0f;
+			float size2=23.0f;
+			
+			row.addView(filledTextView("Territory",false,size1));
+			row.addView(filledTextView(""+game.territory_black,true,size1));
+			row.addView(filledTextView(""+game.territory_white,true,size1));
+			table.addView(row);
+			
+			row=new TableRow(this);
+			row.addView(filledTextView("Captures",false,size1));
+			row.addView(filledTextView(""+game.getCapturesBlack(),true,size1));
+			row.addView(filledTextView(""+game.getCapturesWhite(),true,size1));
+			table.addView(row);
+			
+			row=new TableRow(this);
+			row.addView(filledTextView("Komi",false,size1));
+			row.addView(filledTextView("0",true,size1));
+			row.addView(filledTextView(""+game.getKomi(),true,size1));
+			
+			table.addView(row);
+			
+			row=new TableRow(this);
+			row.addView(filledTextView("Final Points",false,size2));
+			row.addView(filledTextView(""+game.getPointsBlack(),true,size2));
+			row.addView(filledTextView(""+game.getPointsWhite(),true,size2));
+			table.addView(row);
+			
+			
+			
+			String game_fin_txt="";
+			if (game.getPointsBlack()==game.getPointsWhite())
+				 game_fin_txt=("The Game ended in a draw");
+						
+			if (game.getPointsBlack()>game.getPointsWhite())
+				game_fin_txt=("Black won with " + (game.getPointsBlack()-game.getPointsWhite()) + " Points.");
+						
+			if (game.getPointsWhite()>game.getPointsBlack())
+				game_fin_txt=("White won with " + (game.getPointsWhite()-game.getPointsBlack()) + " Points.");
+			
+			new AlertDialog.Builder(this).setTitle("Game Result").setView(table)
+			.setMessage(
+					 game_fin_txt
+		).setPositiveButton("OK",  new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				finish();
+			}
+		}).show();
+			
+			break;
+				
 		case MENU_UNDO:
 			game.undo();
 			break;
@@ -208,7 +311,29 @@ public class GoActivity extends Activity {
 		return false;
 	}
 
-	
+	private void setCustomTitle(int view_id) {
+		try {
+		// retrieve value for
+		//com.android.internal.R.id.title_container
+		int titleContainerId = (Integer) Class.forName(
+		"com.android.internal.R$id").getField
+		("title_container").get(null);
+
+		// remove all views from titleContainer
+		((ViewGroup) this.getWindow().findViewById
+				(titleContainerId)).removeAllViews();
+
+		// add new custom title view
+
+		((ViewGroup) this.getWindow().findViewById
+					(titleContainerId)).setVisibility(View.VISIBLE	);
+			this.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, view_id);
+		
+		} catch(Exception ex) {}
+		
+		
+	} // end of setCustomTitle
+
     
     @Override 
     public boolean onKeyDown(int keyCode, KeyEvent event) {

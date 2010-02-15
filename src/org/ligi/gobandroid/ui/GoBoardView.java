@@ -1,5 +1,6 @@
 package org.ligi.gobandroid.ui;
 
+import org.ligi.gobandroid.R;
 import org.ligi.gobandroid.logic.GoDefinitions;
 import org.ligi.gobandroid.logic.GoGame;
 
@@ -10,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -44,11 +46,11 @@ public class GoBoardView extends View implements OnTouchListener{
     public byte touch_y=-1;
 
     
-    public boolean do_skin=false;
-    public boolean do_zoom=false;
-    public String skin_name="";
     
-    public String skin_path="/sdcard/gobandroid/skins/";
+    public boolean do_zoom=false;
+    
+    
+    
     private Bitmap bg_bitmap=null;
     
     
@@ -149,6 +151,7 @@ public class GoBoardView extends View implements OnTouchListener{
 			offset_y=0;
     		}
     	
+    	
     	regenerate_stone_images();	
     	invalidate();
     }
@@ -164,13 +167,15 @@ public class GoBoardView extends View implements OnTouchListener{
     
     @Override
     protected void onDraw(Canvas canvas) {
+    
+    	
     	
     	if (bg_bitmap!=null)
     		canvas.drawBitmap(bg_bitmap,0.0f, 0.0f, boardPaint);
     	else
     		canvas.drawRect(new RectF(0,0,this.getWidth(),this.getHeight()),boardPaint );
     	
-    	
+    	/*
 		if (!isZoomed()) {
 			int txt_anchor_x = 0;
 			int txt_anchor_y = 0;
@@ -244,6 +249,8 @@ public class GoBoardView extends View implements OnTouchListener{
 			txt_anchor_y+=spacer;	
 		}
         
+        */
+    	
         canvas.translate(offset_x, offset_y);
         for(int x=0;x<game.getVisualBoard().getSize();x++)
         	{
@@ -285,23 +292,12 @@ public class GoBoardView extends View implements OnTouchListener{
             		whitePaint.setColor(0x77CCCCCC);
             		
                 	if (game.area_assign[x][y]==GoDefinitions.PLAYER_BLACK)
-                			{
-                    	if (black_stone_bitmap!=null)
-                			canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
-                		else
-                			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,blackPaint );
-                        //canvas.drawText( "" + game.getGroup(x,y), x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,whitePaint );
-                        }		
-             
+                		canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
+                		
+                        
                    	if (game.area_assign[x][y]==GoDefinitions.PLAYER_WHITE)
-        			{
-                		if (white_stone_bitmap!=null)
-                			canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
-                		else
-                			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,whitePaint );
-                
-        			}
-                	
+                		canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
+                   		
                 			
                 }
                 
@@ -313,36 +309,18 @@ public class GoBoardView extends View implements OnTouchListener{
             	if (game.getCalcBoard().isCellDead(x,y))
             	{
             		if (game.getVisualBoard().isCellWhite(x,y))
-                    {
-            		if (white_stone_bitmap_small!=null)
             			canvas.drawBitmap(white_stone_bitmap_small, x*stone_size  + (stone_size-white_stone_bitmap_small.getWidth())/2 ,y*stone_size + (stone_size-white_stone_bitmap_small.getHeight())/2,whitePaint );
-            		else
-            			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/5,whitePaint );
-                    }
-                if (game.getVisualBoard().isCellBlack(x,y))
-                    {
-                	if (black_stone_bitmap_small!=null)
-                		canvas.drawBitmap(black_stone_bitmap_small, x*stone_size  + (stone_size-black_stone_bitmap_small.getWidth())/2 ,y*stone_size + (stone_size-black_stone_bitmap_small.getHeight())/2,whitePaint );
-            		else
-            			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/5,blackPaint );
-                    }
+            		
+            		if (game.getVisualBoard().isCellBlack(x,y))
+            			canvas.drawBitmap(black_stone_bitmap_small, x*stone_size  + (stone_size-black_stone_bitmap_small.getWidth())/2 ,y*stone_size + (stone_size-black_stone_bitmap_small.getHeight())/2,whitePaint );
+            		
             	}
             	else
             	{
             	if (game.getVisualBoard().isCellWhite(x,y))
-                    {
-            		if (white_stone_bitmap!=null)
-            			canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
-            		else
-            			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,whitePaint );
-                    }
-                if (game.getVisualBoard().isCellBlack(x,y))
-                    {
-                	if (black_stone_bitmap!=null)
-            			canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
-            		else
-            			canvas.drawCircle( x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f,stone_size/2,blackPaint );
-                    }
+                	canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
+            	if (game.getVisualBoard().isCellBlack(x,y))
+                    canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
             	}
                 
                
@@ -356,39 +334,16 @@ public class GoBoardView extends View implements OnTouchListener{
     boolean width_is_max;
     
     public void regenerate_stone_images() {
-    	if (do_skin){
-    		int size_append=17;
-    		if (stone_size>23)
-    			size_append=32;
-    		if (stone_size>50)
-    			size_append=64;
-    		
-    		
-    		white_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeFile(skin_path +"/" + skin_name + "/white" + size_append + ".png"
-				), (int)stone_size, (int)stone_size, true);
-    		
-    		black_stone_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeFile(skin_path +"/" + skin_name + "/black" + size_append + ".png"
-				), (int)stone_size, (int)stone_size, true);
-
-    		float SMALL_STONE_SCALER=0.6f;	
-    		 size_append=17;
-     		if (stone_size*SMALL_STONE_SCALER>23)
-     			size_append=32;
-     		if (stone_size*SMALL_STONE_SCALER>50)
-     			size_append=64;
-
-    		white_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeFile(skin_path +"/" + skin_name + "/white" + size_append + ".png"
-    		), (int)(stone_size*SMALL_STONE_SCALER), (int)(stone_size*SMALL_STONE_SCALER), true);
-    		
-    		black_stone_bitmap_small=Bitmap.createScaledBitmap(BitmapFactory.decodeFile(skin_path +"/"+ skin_name + "/black" + size_append + ".png"
-    		), (int)(stone_size*SMALL_STONE_SCALER), (int)(stone_size*SMALL_STONE_SCALER), true);
-
-    	}
-    	else 
-    	{
-    		black_stone_bitmap=null;
-    		white_stone_bitmap=null;
-    	}
+    	
+    	
+    	
+    	Log.i("gobandrod","regenerating images to stone size " + stone_size);
+    	float SMALL_STONE_SCALER=0.6f;	
+    	white_stone_bitmap=GOSkin.getWhiteStone(stone_size);
+    	black_stone_bitmap=GOSkin.getBlackStone(stone_size);
+    	white_stone_bitmap_small=GOSkin.getWhiteStone(SMALL_STONE_SCALER*stone_size);
+    	black_stone_bitmap_small=GOSkin.getBlackStone(SMALL_STONE_SCALER*stone_size);
+    	
     }	
     
     @Override
@@ -403,8 +358,8 @@ public class GoBoardView extends View implements OnTouchListener{
         stone_size=stone_size_normal;
         stone_size_zoomed=stone_size_normal*2;
 
-        if (do_skin)
-        	bg_bitmap=Bitmap.createScaledBitmap(BitmapFactory.decodeFile("/sdcard/gobandroid/skins/" + skin_name + "/board.jpg"), this.getWidth(), this.getHeight(), true);
+        if (GOSkin.useSkin())
+        	bg_bitmap=GOSkin.getBoard(this.getWidth(),this.getHeight());
         else
         	bg_bitmap=null;
         
@@ -415,6 +370,8 @@ public class GoBoardView extends View implements OnTouchListener{
 
     
     public boolean onTouch( View v, MotionEvent event ) {
+    	
+    	
     	
     	float virtualTouchX=event.getX()-offset_x;
     	float virtualTouchY=event.getY()-offset_y;

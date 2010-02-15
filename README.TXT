@@ -3,6 +3,11 @@ I'm looking for testers/ideas and graphics / code contributors
  
 Changelog:
  
+ 0.17
+   + Status in the TOP Bar
+   + Game Finish Screen
+ 0.16
+   F bugfixes
  0.15
    F count dead stones as captures
    F skin bugfixing
