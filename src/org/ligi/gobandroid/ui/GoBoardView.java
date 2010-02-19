@@ -47,7 +47,7 @@ public class GoBoardView extends View implements OnTouchListener{
 
     
     
-    public boolean do_zoom=false;
+    //public boolean do_zoom=false;
     
     
     
@@ -358,10 +358,7 @@ public class GoBoardView extends View implements OnTouchListener{
         stone_size=stone_size_normal;
         stone_size_zoomed=stone_size_normal*2;
 
-        if (GOSkin.useSkin())
-        	bg_bitmap=GOSkin.getBoard(this.getWidth(),this.getHeight());
-        else
-        	bg_bitmap=null;
+        bg_bitmap=GOSkin.getBoard(this.getWidth(),this.getHeight());
         
         regenerate_stone_images();
 
@@ -385,7 +382,7 @@ public class GoBoardView extends View implements OnTouchListener{
     		touch_y=(byte)(virtualTouchY/stone_size);
     		if (event.getAction()==MotionEvent.ACTION_UP)
     		{
-    		if (isZoomed()||(!do_zoom))
+    		if (isZoomed()||(!GoPrefs.getFatFingerEnabled()))
     		{
     			if (!game.do_move(touch_x,touch_y))	;
         		touch_x=-1;

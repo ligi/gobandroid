@@ -11,60 +11,65 @@ import android.util.Log;
 
 public class GOSkin {
 
-	private static boolean do_skin=false;
-	private static String skin_name="none";
-
-	public final static String skin_path="/sdcard/gobandroid/skins/";
+	private static boolean do_board_skin=false;
+	private static String board_skin_name="none";
 	
+	private static boolean do_stone_skin=false;
+	private static String stone_skin_name="none";
+	
+
+	public final static String skin_base_path="/sdcard/gobandroid/skins/";
+	
+	/*
 	public static String getSkinName() {
 		return skin_name;
 		
-	}
+	}*/
 	
-	public static boolean setSkin(String name) {
-		if (useSkin())
-			{
-			if ((new File(skin_path+name).exists())) 
-				{
-				skin_name=name;
-				return true; 
-				}
-			else 
-				setEnabled(false);
-			}
-	
-		
-		return false;
+	public static void setBoardSkin(String name) {
+		if ((new File(skin_base_path+name).exists())) 
+		{
+			board_skin_name=name;
+			do_board_skin=true;
+		}
+		else 
+			do_board_skin=false;
 	}
 
-	public static void setEnabled(boolean enabled) {
-		do_skin=enabled;
+
+	public static void setStoneSkin(String name) {
+		if ((new File(skin_base_path+name).exists())) 
+		{
+			stone_skin_name=name;
+			do_stone_skin=true;
+		}
+		else 
+			do_stone_skin=false;
 	}
+
 	
-	public static boolean useSkin() {
-		return do_skin;
-	}
-	public static String getFullPath() {
-		return skin_path+skin_name+"/";
+	public static String getBoardFname() {
+		return skin_base_path+board_skin_name+"/board.jpg";
 	}
 	
 	public static Bitmap getBoard(int width,int height) {
-		if (do_skin)
-			return Bitmap.createScaledBitmap(BitmapFactory.decodeFile(getFullPath()+"board.jpg"), width,height, true);
+		if (do_board_skin)
+			return Bitmap.createScaledBitmap(BitmapFactory.decodeFile(getBoardFname()), width,height, true);
 		else
 			return null;
 	}
 	
 	
 	public static Bitmap getWhiteStone(float size) {
-				return getStone("white",size);
+		return getStone("white",size);
 	}
 	
 	public static Bitmap getBlackStone(float size) {
 		return getStone("black",size);
-}
+	}
+	
 	public static Bitmap getStone(String name,float size) {
-		if (do_skin) {
+		if (do_stone_skin) {
 				
 		int size_append=17;
 		if (size>23)
@@ -73,7 +78,7 @@ public class GOSkin {
 			size_append=64;
 
 		Log.i("gobandroid", "scale to size" + size);	
-		return Bitmap.createScaledBitmap(BitmapFactory.decodeFile(getFullPath()+name + size_append + ".png"
+		return Bitmap.createScaledBitmap(BitmapFactory.decodeFile(skin_base_path+stone_skin_name+"/"+name + size_append + ".png"
 			), (int)size, (int)size, true);
 		}
 		else {

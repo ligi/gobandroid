@@ -3,11 +3,16 @@ I'm looking for testers/ideas and graphics / code contributors
  
 Changelog:
  
+ 0.19
+   + Streamlined Settings with PreferencesScreen - looks better on QVGA 
+   + diffrent skins for Board and Stones selectable
+ 0.19
+   + QVGA aka small screen support 
  0.17
    + Status in the TOP Bar
-   + Game Finish Screen
+   + Game Finish Dialog
  0.16
-   F bugfixes
+   F dead stones in end sum
  0.15
    F count dead stones as captures
    F skin bugfixing

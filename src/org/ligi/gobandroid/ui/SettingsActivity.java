@@ -65,7 +65,7 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 		setContentView(R.layout.settings);
 		
 		shared_prefs = this.getSharedPreferences("gobandroid", 0);
-						
+				//this.getD		
 	}
 	
 	

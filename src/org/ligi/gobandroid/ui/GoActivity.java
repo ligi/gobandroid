@@ -5,7 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -53,8 +53,6 @@ public class GoActivity extends Activity {
 
 	private GoGame game=null;
 	private GoBoardView board_view;
-
-	private SharedPreferences shared_prefs;
 	
 	private WakeLock mWakeLock=null;
 	
@@ -62,9 +60,10 @@ public class GoActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		
+		
 		this.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		
-		shared_prefs=this.getSharedPreferences("gobandroid", 0);
 		Log.i("gobandroid","onCreate" + game);
 		
 		if (game==null) {
@@ -84,13 +83,13 @@ public class GoActivity extends Activity {
 			}
 		
 		
-		if (shared_prefs.getBoolean("fullscreen", false))
+		if (GoPrefs.getFullscreenEnabled())
 			this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 					WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		else
 			this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	
-		if (shared_prefs.getBoolean("awake", false))
+		if (GoPrefs.getKeepLightEnabled())
 			{
 			final PowerManager pm = (PowerManager) (this.getSystemService(Context.POWER_SERVICE)); 
 			mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "DUBwise Wakelog TAG");  
@@ -110,7 +109,9 @@ public class GoActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		
-		
+		GOSkin.setBoardSkin(GoPrefs.getBoardSkinName());
+		GOSkin.setStoneSkin(GoPrefs.getStoneSkinName());
+/*		
 		GOSkin.setSkin(shared_prefs.getString("skinname", ""));
 		GOSkin.setEnabled(shared_prefs.getBoolean("skin", false));
 		
@@ -120,7 +121,7 @@ public class GoActivity extends Activity {
 		Log.i("gobandroid","1name skin" +GOSkin.getSkinName() + "/" + shared_prefs.getString("skinname", ""));
 		
 		
-		board_view.do_zoom=shared_prefs.getBoolean("fatfinger", false);
+		//board_view.do_zoom=shared_prefs.getBoolean("fatfinger", false);
 		
 		SharedPreferences.Editor editor=shared_prefs.edit();
 		if (shared_prefs.getBoolean("skin", false))
@@ -128,9 +129,9 @@ public class GoActivity extends Activity {
 		
 		Log.i("gobandroid","do skin" +GOSkin.useSkin());
 		Log.i("gobandroid","name skin" +GOSkin.getSkinName());
-		
+	
 		editor.commit();
-		
+	*/		
 		setCustomTitle(R.layout.top);
 		((TopView)(this.findViewById(R.id.TopView))).setGame(game);
 	}
@@ -259,26 +260,22 @@ public class GoActivity extends Activity {
 		case MENU_WRITE_SGF:
 			
 			
-			SharedPreferences shared_prefs = this.getSharedPreferences("gobandroid", 0);
-			
-			final String sgf_fname=shared_prefs.getString("sgf_fname", "game");
-			final String sgf_path=shared_prefs.getString("sgf_path", "/sdcard/gobandroid");
 			
 			
 			final EditText input = new EditText(this);   
-			input.setText(sgf_fname);
+			input.setText(GoPrefs.getSGFFname());
 
-			new AlertDialog.Builder(this).setTitle("Save SGF").setMessage("How should the file I will write to " +sgf_path + " be named?").setView(input)
+			new AlertDialog.Builder(this).setTitle("Save SGF").setMessage("How should the file I will write to " +GoPrefs.getSGFPath() + " be named?").setView(input)
 			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String value = input.getText().toString(); 
 					
 				//value.split("\/")
-				File f = new File(sgf_path);
+				File f = new File(GoPrefs.getSGFPath());
 				f.mkdirs();
 				
 				try {
-					f=new File(sgf_path + "/"+value+".sgf");
+					f=new File(GoPrefs.getSGFPath() + "/"+value+".sgf");
 					f.createNewFile();
 					
 					FileWriter gpxwriter = new FileWriter(f);

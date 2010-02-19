@@ -29,6 +29,8 @@ public class gobandroid extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    
+        GoPrefs.init(this);
         
         setContentView(R.layout.main);
         this.setListAdapter(new ArrayAdapter<String>(this,
@@ -53,7 +55,7 @@ public class gobandroid extends ListActivity {
                     break;
     
                 case MENU_SETTINGS:
-                    go_intent=new Intent(this,SettingsActivity.class);
+                    go_intent=new Intent(this,GoPrefsActivity.class);
                     startActivity(go_intent);
                     break;
                      
