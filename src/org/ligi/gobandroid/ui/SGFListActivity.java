@@ -118,30 +118,14 @@ public class SGFListActivity extends ListActivity {
 			FileReader reader=new FileReader(files[position]);
 			
 			char[] cbuf = new char[1024];
-			int n;
-			String str="";
-			while( (n = reader.read(cbuf)) >= 0 ) {
-			  
-				str+=String.valueOf(cbuf);
-				
-				
-			}
+			String sgf_str="";
+			
+			while( reader.read(cbuf) >= 0 ) 
+				sgf_str+=String.valueOf(cbuf);
 
-			
-			int c;
-			/*
-			while ((c=reader.read())!=-1)
-			{
-				str+=(char)c;
-			}
-*/
-			Log.i("gobandroid","sfg " + str  + "len " +  (int)files[position].length());
-			
 	        Intent go_intent=new Intent(this,GoActivity.class);
 	        
-	        
-	        
-	        go_intent.putExtra("sgf",str );
+	        go_intent.putExtra("sgf",sgf_str );
 	     
 	        startActivity(go_intent);	
 		} catch (Exception e) {

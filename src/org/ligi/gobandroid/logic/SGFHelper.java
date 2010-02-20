@@ -19,7 +19,7 @@
 
 package org.ligi.gobandroid.logic;
 
-import android.util.Log;
+//import android.util.Log;
 
 public class SGFHelper {
 
@@ -97,7 +97,7 @@ public class SGFHelper {
 			
 				
 				if (!escape) {
-				Log.i("","" + last_cmd + " " + act_cmd);
+					//Log.i("","" + last_cmd + " " + act_cmd);
 				if (last_cmd.equals("SZ"))
 					{
 					size=Byte.parseByte(act_cmd);
@@ -107,7 +107,7 @@ public class SGFHelper {
 				if (variation_depth==1)
 				if ((last_cmd.equals("B"))||(last_cmd.equals("W")))
 				{
-					Log.i("gobanroid","process move");
+					//Log.i("gobanroid","process move");
 					if (act_cmd.length()==0)
 						game.pass();
 					else
@@ -135,7 +135,7 @@ public class SGFHelper {
 				
 			}
 		
-		Log.i("gobandroid", "loading game with size" + size);
+	//Log.i("gobandroid", "loading game with size" + size);
 		return game;
 	}
 	
