@@ -66,6 +66,8 @@ public class SGFHelper {
 		
 		String last_cmd="";
 		int variation_depth=0;
+		boolean escape=false;
+		int param_level=0;
 		
 		for (int p=0;p<sgf.length();p++)
 			switch(sgf.charAt(p)) {
@@ -75,10 +77,12 @@ public class SGFHelper {
 				act_cmd="";
 				break;
 			case '(':
+				if (param_level!=0) break;
 				act_cmd="";
 				variation_depth++;
 				break;
 			case ')':
+				if (param_level!=0) break;
 				act_cmd="";
 				variation_depth--;
 				break;
@@ -86,10 +90,13 @@ public class SGFHelper {
 			case '[':
 				last_cmd=act_cmd;
 				act_cmd="";
+				param_level++;
 				break;
 			case ']':
 				
+			
 				
+				if (!escape) {
 				Log.i("","" + last_cmd + " " + act_cmd);
 				if (last_cmd.equals("SZ"))
 					{
@@ -100,13 +107,29 @@ public class SGFHelper {
 				if (variation_depth==1)
 				if ((last_cmd.equals("B"))||(last_cmd.equals("W")))
 				{
-					game.do_move((byte)(act_cmd.charAt(0)-'a'), (byte)(act_cmd.charAt(1)-'a'));
+					Log.i("gobanroid","process move");
+					if (act_cmd.length()==0)
+						game.pass();
+					else
+					{
+						if (game.isBlackToMove()&&(last_cmd.equals("W")))
+							game.pass();
+						else if ((!game.isBlackToMove())&&(last_cmd.equals("B")))
+							game.pass();
+					
+						game.do_move((byte)(act_cmd.charAt(0)-'a'), (byte)(act_cmd.charAt(1)-'a'));
+						
+					}
 				}
 
 				act_cmd="";
-				
+				param_level=0;
 				break;
+				} // if !escape
+				act_cmd=""+act_cmd.subSequence(0, act_cmd.length()-1); // cut the \ 
+				// fall wanted to catch the ]
 			default:
+				escape=(sgf.charAt(p)=='\\');
 				act_cmd+=sgf.charAt(p);
 				break;
 				
