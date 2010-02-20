@@ -3,6 +3,8 @@ I'm looking for testers/ideas and graphics / code contributors
  
 Changelog:
  
+ 0.24
+   F sgf loading speedup & more robust
  0.23
    F wasnt showing up on tatoo - testing with more supports-screens options and a target sdk
  0.22
