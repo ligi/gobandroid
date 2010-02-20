@@ -20,8 +20,10 @@
 package org.ligi.gobandroid.ui;
 
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.nio.CharBuffer;
 import java.util.Vector;
 
 import org.ligi.gobandroid.R;
@@ -114,13 +116,27 @@ public class SGFListActivity extends ListActivity {
 
         try {
 			FileReader reader=new FileReader(files[position]);
-			int c;
+			
+			char[] cbuf = new char[1024];
+			int n;
 			String str="";
+			while( (n = reader.read(cbuf)) >= 0 ) {
+			  
+				str+=String.valueOf(cbuf);
+				
+				
+			}
+
+			
+			int c;
+			/*
 			while ((c=reader.read())!=-1)
 			{
 				str+=(char)c;
 			}
-
+*/
+			Log.i("gobandroid","sfg " + str  + "len " +  (int)files[position].length());
+			
 	        Intent go_intent=new Intent(this,GoActivity.class);
 	        
 	        
