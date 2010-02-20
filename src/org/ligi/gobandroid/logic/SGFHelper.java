@@ -1,10 +1,12 @@
 package org.ligi.gobandroid.logic;
 
+import android.util.Log;
+
 public class SGFHelper {
 
 	public static String game2sgf(GoGame game) {
 		String res="";
-		res="(;FF[4]GM[1]"; // header
+		res="(;FF[4]GM[1]AP[gobandroid:0]"; // header
 		res+="SZ[" + game.getBoardSize() + "]"; // board_size;
 		res+="\n";
 		
@@ -38,5 +40,52 @@ public class SGFHelper {
 	}
 	
 	
+	public static GoGame sgf2game(String sgf) {
+		String act_cmd="";
+		byte size=-1;
+		GoGame game=null;
+		
+		String last_cmd="";
+		
+		
+		for (int p=0;p<sgf.length();p++)
+			switch(sgf.charAt(p)) {
+			case '\r':
+			case '\n':
+			case ';':
+				act_cmd="";
+				break;
+			case '[':
+				last_cmd=act_cmd;
+				act_cmd="";
+				break;
+			case ']':
+				
+				Log.i("","" + last_cmd + " " + act_cmd);
+				if (last_cmd.equals("SZ"))
+					{
+					size=Byte.parseByte(act_cmd);
+					game=new GoGame(size);
+					}
+			
+				if ((last_cmd.equals("B"))||(last_cmd.equals("W")))
+				{
+					game.do_move((byte)(act_cmd.charAt(0)-'a'), (byte)(act_cmd.charAt(1)-'a'));
+				}
+				
+		
+				
+				act_cmd="";
+				
+				break;
+			default:
+				act_cmd+=sgf.charAt(p);
+				break;
+				
+			}
+		
+		Log.i("gobandroid", "loading game with size" + size);
+		return game;
+	}
 	
 }

@@ -18,12 +18,13 @@ import android.widget.ListView;
 **/
 
 public class gobandroid extends ListActivity {
-    public String[] menu_items= {"Start Game","Settings" ,"Quit", /*"Load Game" */ };
+    public String[] menu_items= {"Start Game", "Load Game" ,"Settings" ,"Quit" };
     
     private final static int MENU_GAMESTART=0;
-    private final static int MENU_SETTINGS=1;
-    private final static int MENU_QUIT=2;
-    private final static int MENU_LOADGAME=3;
+    private final static int MENU_LOADGAME=1;
+    private final static int MENU_SETTINGS=2;
+    private final static int MENU_QUIT=3;
+    
     
     /** Called when the activity is first created. */
     @Override

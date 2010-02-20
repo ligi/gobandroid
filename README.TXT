@@ -3,6 +3,8 @@ I'm looking for testers/ideas and graphics / code contributors
  
 Changelog:
  
+ 0.22
+   + Initial SGF loading
  0.21
    + review controls
  0.20

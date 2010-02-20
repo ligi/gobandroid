@@ -156,6 +156,7 @@ public class GoGame implements GoDefinitions {
      * @return true if the move was valid - false if invalid move
      */
     public boolean do_move( byte x, byte y ) {
+    	Log.i("gobandroid","move" + x + "  " + y );
         if ((x >= 0) && (x <= calc_board.getSize()) && (y >= 0) && (y < calc_board.getSize())) { // if x and y are inside the board
         	
         	if(game_finished)

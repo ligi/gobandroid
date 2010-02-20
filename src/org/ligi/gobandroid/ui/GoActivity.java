@@ -37,6 +37,7 @@ import android.view.View.OnTouchListener;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Vector;
@@ -90,9 +91,18 @@ public class GoActivity
 				game=(GoGame)getLastNonConfigurationInstance();
 			else {
 				// otherwise create a new game
-				byte size = getIntent().getByteExtra("size", (byte) 9);
-				byte handicap = getIntent().getByteExtra("handicap", (byte) 0);
-				game = new GoGame(size,handicap);
+				
+				String load_from=getIntent().getStringExtra("sgf");
+				if (load_from!=null) {
+					game=SGFHelper.sgf2game(load_from);
+					review_mode=true;
+				}
+				else {
+					byte size = getIntent().getByteExtra("size", (byte) 9);
+					byte handicap = getIntent().getByteExtra("handicap", (byte) 0);
+					game = new GoGame(size,handicap);
+					review_mode=false;
+				}
 			}
 		
 			board_view = new GoBoardView(this, game);
@@ -279,8 +289,8 @@ public class GoActivity
 			pass_menu.setIcon(android.R.drawable.ic_menu_set_as);
 		} else {
 			MenuItem finish_menu = menu.add(0, MENU_FINISH, 0,
-			"Finish");
-			finish_menu.setIcon(android.R.drawable.ic_menu_set_as);
+			"Results");
+			finish_menu.setIcon(android.R.drawable.ic_menu_more);
 			
 		}
 
@@ -388,7 +398,7 @@ public class GoActivity
 					 game_fin_txt
 		).setPositiveButton("OK",  new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				finish();
+				
 			}
 		}).show();
 			
