@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="org.ligi.gobandroid"
-      android:versionName="0.22" android:versionCode="22">
+      android:versionName="0.23" android:versionCode="23">
     
-    <uses-sdk android:minSdkVersion="3" />
+     <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="4" />
     
+     <supports-screens android:largeScreens="true"
+						  android:normalScreens="true" 
+						  android:smallScreens="true"
+						  android:anyDensity="true" /> 
+
     <!-- Permission to keep the screen awake -->  
     <uses-permission android:name="android.permission.WAKE_LOCK" />
      
