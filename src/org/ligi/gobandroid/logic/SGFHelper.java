@@ -1,3 +1,22 @@
+/**
+ * gobandroid 
+ * by Marcus -Ligi- Bueschleb 
+ * http://ligi.de
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as 
+ * published by the Free Software Foundation; 
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * 
+ **/
+
 package org.ligi.gobandroid.logic;
 
 import android.util.Log;
@@ -46,7 +65,7 @@ public class SGFHelper {
 		GoGame game=null;
 		
 		String last_cmd="";
-		
+		int variation_depth=0;
 		
 		for (int p=0;p<sgf.length();p++)
 			switch(sgf.charAt(p)) {
@@ -55,11 +74,21 @@ public class SGFHelper {
 			case ';':
 				act_cmd="";
 				break;
+			case '(':
+				act_cmd="";
+				variation_depth++;
+				break;
+			case ')':
+				act_cmd="";
+				variation_depth--;
+				break;
+			
 			case '[':
 				last_cmd=act_cmd;
 				act_cmd="";
 				break;
 			case ']':
+				
 				
 				Log.i("","" + last_cmd + " " + act_cmd);
 				if (last_cmd.equals("SZ"))
@@ -68,13 +97,12 @@ public class SGFHelper {
 					game=new GoGame(size);
 					}
 			
+				if (variation_depth==1)
 				if ((last_cmd.equals("B"))||(last_cmd.equals("W")))
 				{
 					game.do_move((byte)(act_cmd.charAt(0)-'a'), (byte)(act_cmd.charAt(1)-'a'));
 				}
-				
-		
-				
+
 				act_cmd="";
 				
 				break;
