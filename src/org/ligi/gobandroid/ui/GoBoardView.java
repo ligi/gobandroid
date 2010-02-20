@@ -19,13 +19,11 @@
 
 package org.ligi.gobandroid.ui;
 
-import org.ligi.gobandroid.R;
 import org.ligi.gobandroid.logic.GoDefinitions;
 import org.ligi.gobandroid.logic.GoGame;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;

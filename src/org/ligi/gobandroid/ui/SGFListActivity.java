@@ -21,13 +21,10 @@ package org.ligi.gobandroid.ui;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.nio.CharBuffer;
 import java.util.Vector;
 
 import org.ligi.gobandroid.R;
-import org.ligi.gobandroid.logic.SGFHelper;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;

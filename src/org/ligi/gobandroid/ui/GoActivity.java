@@ -41,7 +41,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -52,11 +51,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
 
-import android.view.View.OnTouchListener;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Vector;
