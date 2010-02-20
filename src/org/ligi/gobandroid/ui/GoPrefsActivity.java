@@ -85,7 +85,7 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         boardSkinPref.setTitle("Board Skin");
         boardSkinPref.setSummary(GoPrefs.getBoardSkinName());
         boardSkinPref.setOnPreferenceChangeListener(this);
-        boardSkinPref.setDefaultValue(GoPrefs.getStoneSkinName());
+        boardSkinPref.setDefaultValue(GoPrefs.getBoardSkinName());
         skinPrefCat.addPreference(boardSkinPref);
 
         
@@ -95,7 +95,7 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         stoneSkinPref.setDialogTitle("Set Skin");
         stoneSkinPref.setKey(GoPrefs.KEY_STONES_SKIN);
         stoneSkinPref.setTitle("Stone Skin");
-        stoneSkinPref.setSummary(GoPrefs.getBoardSkinName());
+        stoneSkinPref.setSummary(GoPrefs.getStoneSkinName());
         stoneSkinPref.setOnPreferenceChangeListener(this);
         stoneSkinPref.setDefaultValue(GoPrefs.getStoneSkinName());
         skinPrefCat.addPreference(stoneSkinPref);
