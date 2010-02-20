@@ -9,27 +9,37 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.RelativeLayout.LayoutParams;
 
+import android.view.View.OnTouchListener;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Vector;
 
 import org.ligi.gobandroid.R;
 import org.ligi.gobandroid.logic.GoGame;
@@ -44,17 +54,25 @@ import org.ligi.gobandroid.logic.SGFHelper;
  * 
  **/
 
-public class GoActivity extends Activity {
+public class GoActivity 
+		extends Activity 
+		implements OnClickListener, OnTouchListener
+{
+
+	
 	private static final int MENU_UNDO = 0;
 	private static final int MENU_PASS = 1;
 	private static final int MENU_FINISH = 2;
 	private static final int MENU_WRITE_SGF = 3;
 	private static final int MENU_SETTINGS = 4;
+	private static final int MENU_SHOWCONTROLS= 5;
 
 	private GoGame game=null;
 	private GoBoardView board_view;
 	
 	private WakeLock mWakeLock=null;
+	
+	ImageButton next,back,first,last;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -78,8 +96,85 @@ public class GoActivity extends Activity {
 			}
 		
 			board_view = new GoBoardView(this, game);
-			board_view.setOnTouchListener((OnTouchListener) board_view);
-			setContentView(board_view); 
+			board_view.setOnTouchListener(this);
+			
+			
+			RelativeLayout rel=new RelativeLayout(this);
+			rel.addView(board_view);
+			
+			DisplayMetrics dm = new DisplayMetrics();
+			getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+			Vector<ImageButton> control_buttons=new Vector<ImageButton>();
+			
+			
+			first=new ImageButton(this);
+			first.setImageResource(android.R.drawable.ic_media_previous);
+			control_buttons.add(first);
+			first.setOnClickListener(this);
+			
+			back=new ImageButton(this);
+			back.setImageResource(android.R.drawable.ic_media_rew);
+			control_buttons.add(back);
+			back.setOnClickListener(this);
+			
+			next=new ImageButton(this);
+			next.setImageResource(android.R.drawable.ic_media_ff);
+			control_buttons.add(next);
+			next.setOnClickListener(this);
+			
+			last=new ImageButton(this);
+			last.setImageResource(android.R.drawable.ic_media_next);
+			last.setOnClickListener(this);
+			control_buttons.add(last);
+
+			
+			if (dm.heightPixels>dm.widthPixels)
+			{
+				TableLayout controls_table=new TableLayout(this);
+				
+				TableRow controls_row=new TableRow(this);
+				controls_table.addView(controls_row);
+				
+				int btn_id=0;
+				for (ImageButton btn:control_buttons) 
+					{
+					controls_row.addView(btn);
+					controls_table.setColumnStretchable(btn_id++, true);
+					}
+				
+				
+				rel.addView(controls_table);
+				
+				RelativeLayout.LayoutParams bottom_nav_params = new
+				RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT);
+				bottom_nav_params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+
+				controls_table.setLayoutParams(bottom_nav_params);
+				//			rel.getLayoutParams(). addRule(RelativeLayout.CENTER_IN_PARENT);
+
+				rel.setGravity(Gravity.BOTTOM);
+				
+			}
+			else
+			{
+				LinearLayout lin=new LinearLayout(this);
+				for (ImageButton btn:control_buttons) 
+					lin.addView(btn);
+				lin.setOrientation(LinearLayout.VERTICAL);
+				
+
+				RelativeLayout.LayoutParams bottom_nav_params = new
+				RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.FILL_PARENT);
+				bottom_nav_params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+
+				lin.setLayoutParams(bottom_nav_params);
+			
+				rel.addView(lin);
+			}
+			setContentView(rel);
 			}
 		
 		
@@ -95,14 +190,45 @@ public class GoActivity extends Activity {
 			mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "DUBwise Wakelog TAG");  
         	mWakeLock.acquire();
 			}
+		updateControlsStatus();
+		
 	}
 
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		super.onTouchEvent(event);
+		updateControlsStatus();
+		return false;
+	}
 	@Override
 	public Object onRetainNonConfigurationInstance() {
 		// remember the game in case of e.g. a device rotation
 		return(game);
 	}
 	
+	public void updateControlsStatus() {
+		
+		back.setEnabled(game.canUndo());
+		first.setEnabled(game.canUndo());
+		next.setEnabled(game.canRedo());
+		last.setEnabled(game.canRedo());
+		
+		int visible=0;
+		if (review_mode)
+			visible=View.VISIBLE;
+		else
+			visible=View.GONE;
+			
+		
+		back.setVisibility(visible);
+		first.setVisibility(visible);
+		next.setVisibility(visible);
+		last.setVisibility(visible);
+		
+		
+		
+		
+	}
 	
 
 	@Override
@@ -134,8 +260,12 @@ public class GoActivity extends Activity {
 	*/		
 		setCustomTitle(R.layout.top);
 		((TopView)(this.findViewById(R.id.TopView))).setGame(game);
+
+		
 	}
 
+	boolean review_mode=false;
+	
 	/* Creates the menu items */
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
@@ -153,7 +283,18 @@ public class GoActivity extends Activity {
 			finish_menu.setIcon(android.R.drawable.ic_menu_set_as);
 			
 		}
-		
+
+		if (review_mode) 
+			{
+			MenuItem review_menu = menu.add(0, MENU_SHOWCONTROLS, 0,"Hide review controls");
+			review_menu.setIcon(android.R.drawable.ic_menu_view);
+			}
+		else
+			{
+			MenuItem review_menu = menu.add(0, MENU_SHOWCONTROLS, 0,"Show review controls");
+			review_menu.setIcon(android.R.drawable.ic_menu_view);
+			}
+
 		MenuItem save_menu = menu.add(0, MENU_WRITE_SGF, 0,"Save as SGF");
 		save_menu.setIcon(android.R.drawable.ic_menu_save);
 		/*
@@ -178,6 +319,10 @@ public class GoActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
+		case MENU_SHOWCONTROLS:
+			review_mode=!review_mode;
+			
+			break;
 		case MENU_FINISH:
 			TableLayout table=new TableLayout(this);
 			TableRow row=new TableRow(this);
@@ -304,6 +449,7 @@ public class GoActivity extends Activity {
              startActivity(new Intent(this,SettingsActivity.class));
              break;
 		}
+		 updateControlsStatus() ;
 		board_view.invalidate();
 		return false;
 	}
@@ -366,10 +512,28 @@ public class GoActivity extends Activity {
     			{ 
     			Log.i("gobandroid","unzoom");
     			board_view.setZoom(false);
-    			return true;
+    		
     			}
-    		break;
+    		else
+    		{
+    			new AlertDialog.Builder(this).setTitle("End Game?")
+    			.setMessage(
+    					 "Do you really want to quit this game?"
+    		).setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
+    			public void onClick(DialogInterface dialog, int whichButton) {
+    				finish();
+    			}
+    		}).setCancelable(true).setNegativeButton("No",  new DialogInterface.OnClickListener() {
+    			public void onClick(DialogInterface dialog, int whichButton) {
+    				
+    			}
+    		}).show();
+    				
+    		}
+    		return true;
+    		
     	}
+    	updateControlsStatus();
     	board_view.invalidate();
     	return super.onKeyDown(keyCode, event);	
     }
@@ -380,4 +544,42 @@ public class GoActivity extends Activity {
     	if (mWakeLock!=null)
     		mWakeLock.release();
     }
+
+	@Override
+	public void onClick(View btn) {
+
+		Log.i("gobandroid", "onClick");
+		
+		if (btn==back)
+			game.undo();
+		else if (btn==next)
+			game.redo();
+		else if (btn==first)
+			game.jumpFirst();
+		else if (btn==last)
+			game.jumpLast();
+		
+		updateControlsStatus();
+		board_view.invalidate();
+	}
+
+    public boolean onTouch( View v, MotionEvent event ) {
+    	board_view.doTouch(event);
+    	updateControlsStatus();
+    	return true;
+    }
+ 
+    
+    @Override 
+    protected void onRestoreInstanceState(Bundle savedInstanceState) { 
+      super.onRestoreInstanceState(savedInstanceState); 
+      review_mode=savedInstanceState.getBoolean("review_mode");
+      updateControlsStatus();
+    } 
+    @Override 
+    protected void onSaveInstanceState(Bundle outState) { 
+      outState.putBoolean("review_mode", review_mode);
+      super.onSaveInstanceState(outState); 
+    } 
+    
 }

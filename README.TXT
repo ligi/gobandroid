@@ -3,10 +3,14 @@ I'm looking for testers/ideas and graphics / code contributors
  
 Changelog:
  
+ 0.21
+   + review controls
+ 0.20
+   + Confirm Dialog on Back in game 
  0.19
    + Streamlined Settings with PreferencesScreen - looks better on QVGA 
-   + diffrent skins for Board and Stones selectable
- 0.19
+   + different skins for Board and Stones selectable
+ 0.18
    + QVGA aka small screen support 
  0.17
    + Status in the TOP Bar

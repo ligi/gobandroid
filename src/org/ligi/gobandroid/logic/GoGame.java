@@ -209,7 +209,8 @@ public class GoGame implements GoDefinitions {
                     visual_board=calc_board.clone();                    
                     last_action_was_pass=false;
                     moves.add(new byte[] { x,y} );
-                    
+                
+                    moves_history=(Vector<byte[]>) moves.clone();
                     return true;
                     }
                 else { // was an illegal move -> undo
@@ -223,6 +224,11 @@ public class GoGame implements GoDefinitions {
         return false;
     }
 
+    public boolean canRedo() {
+    	if ((moves_history!=null))
+    	Log.i("gobandroid","redo"+moves_history.size() + "   " + moves.size());
+    	return ((moves_history!=null)&&(moves_history.size()>moves.size()));
+    }
     /** 
      * moving without checks 
      * usefull  e.g. for undo / recorded games 
@@ -247,6 +253,7 @@ public class GoGame implements GoDefinitions {
     }
     
     
+    Vector<byte[]> moves_history=null;
     /**
      * 
      * undo the last move
@@ -254,23 +261,42 @@ public class GoGame implements GoDefinitions {
      */
     
     public void undo() {
+    	jump(moves.size()-1);
+    }
+    
+    public void redo() {
+    	jump(moves.size()+1);
+    }
+    
+    public void jumpFirst() {
+    	jump(0);
+    }
+    
+    public void jumpLast() {
+    	jump(moves_history.size());
+    }
+    
+    public void jump(int pos) {
     	last_action_was_pass=false;
         clear_calc_board();
         
-       	Vector<byte[]> _moves=  (Vector<byte[]>)moves.clone();
+        if (moves_history==null)
+        	moves_history=  (Vector<byte[]>)moves.clone();
+        
+        
        	reset();
         
-        for (int step=0 ; step<_moves.size()-1;step++)
+        for (int step=0 ; step<pos;step++)
         {
-            byte move_x=_moves.get(step)[0];
-            byte move_y=_moves.get(step)[1];
+            byte move_x=moves_history.get(step)[0];
+            byte move_y=moves_history.get(step)[1];
             if (move_x==-1) // move was a pass
             	setNextPlayer();
             else
             	do_internal_move(move_x,move_y);
         }
         
-        visual_board=calc_board.clone();
+        visual_board=calc_board.clone();    	
     }
    
     

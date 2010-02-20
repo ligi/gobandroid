@@ -14,7 +14,7 @@ import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
+
 
 /**
  * Class to visualy represent a Go Board in Android
@@ -23,7 +23,7 @@ import android.view.View.OnTouchListener;
  *         
  * This software is licenced with GPLv3 
  */
-public class GoBoardView extends View implements OnTouchListener{
+public class GoBoardView extends View {
    	private GoGame game;
 
 	private Paint whitePaint;
@@ -365,10 +365,8 @@ public class GoBoardView extends View implements OnTouchListener{
         invalidate(); // needed here or automaticaly called?
     }
 
-    
-    public boolean onTouch( View v, MotionEvent event ) {
-    	
-    	
+
+    public void doTouch( MotionEvent event) {
     	
     	float virtualTouchX=event.getX()-offset_x;
     	float virtualTouchY=event.getY()-offset_y;
@@ -397,7 +395,6 @@ public class GoBoardView extends View implements OnTouchListener{
     		}
         }
         invalidate();  // the board looks diffrent after a move
-        return true;
-    }
+     }
     
 }
