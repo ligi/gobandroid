@@ -3,6 +3,10 @@ I'm looking for testers/ideas and graphics / code contributors
  
 Changelog:
  
+ 
+ 0.25
+   + Variation Handling
+   + Fix Permission
  0.24
    F sgf loading speedup & more robust
  0.23
