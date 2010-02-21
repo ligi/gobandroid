@@ -262,6 +262,10 @@ public class GoGame implements GoDefinitions {
         return false;
     }
 
+    
+    public GoMove getActMove() {
+    	return act_move;
+    }
     public boolean canRedo() {
     	/*if ((moves_history!=null))
     	Log.i("gobandroid","redo"+moves_history.size() + "   " + moves.size());
