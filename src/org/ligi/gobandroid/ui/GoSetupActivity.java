@@ -63,6 +63,9 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		GoPrefs.init(this);
+		
 		this.setContentView(R.layout.game_setup);
 		
 		size_seek=(SeekBar)this.findViewById(R.id.size_slider);

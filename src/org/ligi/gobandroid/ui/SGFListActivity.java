@@ -53,6 +53,9 @@ public class SGFListActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        GoPrefs.init(this);
+        
         setContentView(R.layout.main);
         
         

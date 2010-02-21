@@ -21,6 +21,7 @@ package org.ligi.gobandroid.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,6 +42,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -95,7 +97,7 @@ public class GoActivity
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		
+		GoPrefs.init(this);	
 		
 		this.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		
@@ -443,17 +445,25 @@ public class GoActivity
 					
 				//value.split("\/")
 				File f = new File(GoPrefs.getSGFPath());
-				f.mkdirs();
+				
+				Log.i("gobandroid"," making dirs for sgf" + f + " -- " +f.mkdirs());
+				
 				
 				try {
+					Log.i("gobandroid"," making file");
 					f=new File(GoPrefs.getSGFPath() + "/"+value+".sgf");
 					f.createNewFile();
+					Log.i("gobandroid"," done");
 					
 					FileWriter gpxwriter = new FileWriter(f);
+					
+					Log.i("gobandroid"," file writer");
 					BufferedWriter out = new BufferedWriter(gpxwriter);
-
+					Log.i("gobandroid"," out");
+					
+					
 					out.write(SGFHelper.game2sgf(game));
-
+					Log.i("gobandroid"," write");
 					out.close();
 					gpxwriter.close();
 				} catch (IOException e) {
@@ -578,8 +588,68 @@ public class GoActivity
 		
 		if (btn==back)
 			game.undo();
-		else if (btn==next)
-			game.redo();
+		else if (btn==next) {
+			Log.i("gobandroid", " !!!!!possible variations on redo" +game.getPossibleVariationCount());
+			
+			
+			if (game.getPossibleVariationCount()>0)
+				{
+				LinearLayout lin=new LinearLayout(this);
+				LinearLayout li=new LinearLayout(this);
+
+				TextView txt =new TextView(this);
+				txt.setText("" +( game.getPossibleVariationCount()+1) + " Variations found for this move - which should we take?");
+			
+				txt.setPadding(10, 2, 10, 23);
+				lin.addView(txt);
+				lin.addView(li);
+				lin.setOrientation(LinearLayout.VERTICAL);
+				
+				final Dialog select_dlg=new Dialog(this);
+				
+				View.OnClickListener var_select_listener=new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						game.redo((Integer)(v.getTag()));
+						select_dlg.hide();
+						updateControlsStatus();
+						board_view.invalidate();
+					}
+				};
+				
+				li.setWeightSum(1.0f*(game.getPossibleVariationCount()+1));
+				li.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+				
+				for (Integer i=0;i<game.getPossibleVariationCount()+1;i++)
+					{
+					Button var_btn=new Button(this);
+					var_btn.setTag(i);
+					var_btn.setOnClickListener(var_select_listener );
+					var_btn.setText(""+(i+1));
+					li.addView(var_btn);
+			
+					var_btn.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1f));
+					}
+
+				select_dlg.setTitle("Variations");
+				select_dlg.setContentView(lin);
+				
+				/*select_dlg.setM .setMessage(
+						 "" +( game.getPossibleVariationCount()+1) + " Variations found for this move - which should we take?"
+				);
+				select_dlg.setNegativeButton("Cancel",  new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					
+				}
+			}).*/
+				select_dlg.show();
+			}
+			else
+				game.redo(0);
+			
+			
+		}
 		else if (btn==first)
 			game.jumpFirst();
 		else if (btn==last)

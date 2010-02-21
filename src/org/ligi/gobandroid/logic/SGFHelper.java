@@ -23,6 +23,39 @@ package org.ligi.gobandroid.logic;
 
 public class SGFHelper {
 
+	
+	private static String move2string(GoMove move , boolean black_to_move) {
+		String res="";
+		
+
+			
+		
+			if (!move.isFirstMove())
+			{
+				res+=";" + (black_to_move?"B":"W");
+			
+				if (move.isPassMove())
+					res+="[]";
+				else	
+					res+= "[" + (char)('a'+move.getX()) +(char)('a'+move.getY())+ "]\n";
+			
+				black_to_move=!black_to_move;
+				
+			}
+			
+			if (move.hasNextMove())
+				{
+					if (move.hasNextMoveVariations()) {
+					for (GoMove var: move.getNextMoveVariations())
+						res+="("+move2string(var , black_to_move)+")" ;
+					}
+					else
+						res+=move2string(move.getnextMove(0) , black_to_move) ;
+				}
+
+			
+		return res;
+	}
 	public static String game2sgf(GoGame game) {
 		String res="";
 		res="(;FF[4]GM[1]AP[gobandroid:0]"; // header
@@ -39,7 +72,12 @@ public class SGFHelper {
 				res+="["+(char)('a' + game.getHandicapArray()[handicap][0])+(char)('a' + game.getHandicapArray()[handicap][1]) + "]";
 			res+="\n";
 			}
+
 		
+		GoMove move=game.getFirstMove();
+		
+		
+		/*
 		for (int move=0;move<game.moves.size();move++)
 			{
 			byte[] act_move=game.moves.get(move);
@@ -53,8 +91,8 @@ public class SGFHelper {
 			
 			black_to_move=!black_to_move;
 			}
-			
-		res+=")"; // close
+			*/
+		res+=move2string(move ,black_to_move)+")"; // close
 		return res;
 	}
 	
@@ -85,8 +123,8 @@ public class SGFHelper {
 				if (param_level!=0) break;
 				act_cmd="";
 				variation_depth--;
-				break;
 			
+				break;
 			case '[':
 				last_cmd=act_cmd;
 				act_cmd="";
