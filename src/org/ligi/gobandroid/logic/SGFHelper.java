@@ -19,6 +19,8 @@
 
 package org.ligi.gobandroid.logic;
 
+import java.util.Vector;
+
 //import android.util.Log;
 
 public class SGFHelper {
@@ -103,9 +105,10 @@ public class SGFHelper {
 		GoGame game=null;
 		
 		String last_cmd="";
-		int variation_depth=0;
+		
 		boolean escape=false;
 		int param_level=0;
+		Vector <GoMove> var_vect=new Vector<GoMove>();
 		
 		for (int p=0;p<sgf.length();p++)
 			switch(sgf.charAt(p)) {
@@ -115,14 +118,18 @@ public class SGFHelper {
 				act_cmd="";
 				break;
 			case '(':
+				if (game!=null)
+					var_vect.add(game.getActMove());
 				if (param_level!=0) break;
 				act_cmd="";
-				variation_depth++;
+				
 				break;
 			case ')':
-				if (param_level!=0) break;
+				if (var_vect.size()>0) {
+					game.jump(var_vect.lastElement());
+					var_vect.remove(var_vect.lastElement()); }
 				act_cmd="";
-				variation_depth--;
+		
 			
 				break;
 			case '[':
@@ -142,9 +149,10 @@ public class SGFHelper {
 					game=new GoGame(size);
 					}
 			
-				if (variation_depth==1)
+				//if (variation_depth==1)
 				if ((last_cmd.equals("B"))||(last_cmd.equals("W")))
 				{
+					
 					//Log.i("gobanroid","process move");
 					if (act_cmd.length()==0)
 						game.pass();
@@ -158,6 +166,7 @@ public class SGFHelper {
 						game.do_move((byte)(act_cmd.charAt(0)-'a'), (byte)(act_cmd.charAt(1)-'a'));
 						
 					}
+					
 				}
 
 				act_cmd="";
