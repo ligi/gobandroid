@@ -12,7 +12,9 @@
 
     <!-- Permission to keep the screen awake -->  
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-     
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	
+	     
      
     <supports-screens android:anyDensity="true" />
       
@@ -25,11 +27,14 @@
             </intent-filter>
         </activity>
 
-    	<activity android:name="org.ligi.gobandroid.ui.GoActivity"></activity>
-		<activity android:name="org.ligi.gobandroid.ui.SettingsActivity"></activity>
+
+
+    	
+		<activity android:name=".ui.SettingsActivity"></activity>
 		<activity android:name=".ui.GoSetupActivity"></activity>
 		<activity android:name=".ui.SGFListActivity"></activity>
 		<activity android:name=".ui.GoPrefsActivity"></activity>
+		<activity android:name=".ui.GoActivity"></activity>
 	</application>
     
 </manifest> 
