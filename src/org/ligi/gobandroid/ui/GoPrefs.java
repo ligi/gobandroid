@@ -36,6 +36,8 @@ public class GoPrefs {
 	public static String KEY_BOARD_SKIN="board_skina";
 	public static String KEY_STONES_SKIN="stones_skina";
 	
+	public static String KEY_MARKLASTSTONE="mark_last_stone";
+	
 	public static String KEY_SGF_PATH="sgf_path";
 	public static String KEY_SGF_FNAME="sgf_fname";
 	
@@ -59,6 +61,10 @@ public class GoPrefs {
 	
 	public static boolean getKeepLightEnabled() {
 		return shared_prefs.getBoolean(KEY_KEEPLIGHT, false);
+	}
+
+	public static boolean getMarkLastStone() {
+		return shared_prefs.getBoolean(KEY_MARKLASTSTONE, false);
 	}
 
 	public static String getBoardSkinName() {

@@ -32,6 +32,7 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -45,7 +46,7 @@ import android.widget.ListView;
  *         
 **/
 
-public class SGFListActivity extends ListActivity {
+public class SGFSDCardListActivity extends ListActivity {
     public String[] menu_items;
     File[] files;
     
@@ -115,29 +116,11 @@ public class SGFListActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        
+        startActivity(
+        new Intent( "android.intent.action.VIEW",
+        		Uri.parse( "file://" + files[position])
+        		));
 
-        try {
-			FileReader reader=new FileReader(files[position]);
-			
-			char[] cbuf = new char[1024];
-			String sgf_str="";
-			
-			while( reader.read(cbuf) >= 0 ) 
-				sgf_str+=String.valueOf(cbuf);
-
-	        Intent go_intent=new Intent(this,GoActivity.class);
-	        
-	        go_intent.putExtra("sgf",sgf_str );
-	     
-	        startActivity(go_intent);	
-		} catch (Exception e) {
-		
-		}
-
-		
-        
-        
     }
     
 }

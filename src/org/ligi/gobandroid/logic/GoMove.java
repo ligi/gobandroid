@@ -38,6 +38,7 @@ public class GoMove implements GoDefinitions {
 
 	byte x;
 	byte y;
+	String comment="";
 	
 	boolean did_captures=false;
 	
@@ -59,8 +60,7 @@ public class GoMove implements GoDefinitions {
 		this.x=x;
 		this.y=y;
 		init();
-		if (parent!=null)
-			parent.addNextMove(this);
+	
 	}
 	
 	public void setDidCaptures(boolean did) {
@@ -74,6 +74,9 @@ public class GoMove implements GoDefinitions {
 	
 	private void init() {
 		next_move_variations=new Vector<GoMove>();
+		
+		if (parent!=null)
+			parent.addNextMove(this);
 	}
 	
 	public boolean hasNextMove() {
@@ -130,4 +133,17 @@ public class GoMove implements GoDefinitions {
 		return ""+x +" " +y;
 	}
 	
+	public boolean hasComment() {
+		return !comment.equals("");
+	}
+
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String newComment) {
+		comment+=newComment;
+	}
+
+
+
 }

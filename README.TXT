@@ -3,7 +3,11 @@ I'm looking for testers/ideas and graphics / code contributors
  
 Changelog:
  
- 
+ 0.26
+   + intent filter to assign sgf files with gobandroid ( e.g. when clicking on sgf in website gobandroid can open )
+   + options from game screen 
+   F SGF loading
+   
  0.25
    + Variation Handling
    + Fix Permission

@@ -64,6 +64,12 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         nextScreenCheckBoxPref.setSummary("aka fat finger mode");
         inlinePrefCat.addPreference(nextScreenCheckBoxPref);
 
+        CheckBoxPreference markLastStoneCheckBoxPref = new CheckBoxPreference(this);
+        markLastStoneCheckBoxPref.setKey(GoPrefs.KEY_MARKLASTSTONE);
+        markLastStoneCheckBoxPref.setTitle("mark last stone");
+        markLastStoneCheckBoxPref.setSummary("little circle showing last stone");
+        inlinePrefCat.addPreference(markLastStoneCheckBoxPref);
+
         
         /* Skin section */
         PreferenceCategory skinPrefCat = new PreferenceCategory(this);

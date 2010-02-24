@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="org.ligi.gobandroid"
-      android:versionName="0.25" android:versionCode="25">
+      android:versionName="0.26" android:versionCode="26">
     
      <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="4" />
     
@@ -13,6 +13,7 @@
     <!-- Permission to keep the screen awake -->  
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.INTERNET"/>
 	
 	     
      
@@ -32,9 +33,46 @@
     	
 		<activity android:name=".ui.SettingsActivity"></activity>
 		<activity android:name=".ui.GoSetupActivity"></activity>
-		<activity android:name=".ui.SGFListActivity"></activity>
+		<activity android:name=".ui.SGFSDCardListActivity"></activity>
 		<activity android:name=".ui.GoPrefsActivity"></activity>
-		<activity android:name=".ui.GoActivity"></activity>
+		<activity android:name=".ui.LoadActionsActivity"></activity>
+		<activity android:name=".ui.SGFOnlineListActivity"></activity>
+		<activity android:name=".ui.GoActivity">
+		<intent-filter>
+    		<action android:name="android.intent.action.VIEW"/>
+    		<category android:name="android.intent.category.DEFAULT"/>
+    		<category android:name="android.intent.category.BROWSABLE"/>
+       
+       		
+       		<data android:scheme="http"   android:host="*"  android:pathPattern=".*\\.sgf"/>
+		ad</intent-filter>
+		<intent-filter>
+    		<action android:name="android.intent.action.VIEW"/>
+    		<category android:name="android.intent.category.DEFAULT"/>
+    		<category android:name="android.intent.category.BROWSABLE"/>
+       	
+			<data android:scheme="https"  android:host="*" android:pathPattern=".*\\.sgf"/>
+		</intent-filter>
+		
+		<intent-filter>
+			<action android:name="android.intent.action.VIEW"/>
+    		<category android:name="android.intent.category.DEFAULT"/>
+    		<category android:name="android.intent.category.BROWSABLE"/>
+       
+    		<data android:scheme="file"  android:host="*" android:pathPattern=".*\\.sgf"/>
+			
+		</intent-filter>
+		
+		<intent-filter>
+			<action android:name="android.intent.action.VIEW"/>
+    		<category android:name="android.intent.category.DEFAULT"/>
+    		<category android:name="android.intent.category.BROWSABLE"/>
+    		
+			<data android:mimeType="application/x-go-sgf" />	
+		</intent-filter>
+		
+		
+		</activity>
 	</application>
     
 </manifest> 

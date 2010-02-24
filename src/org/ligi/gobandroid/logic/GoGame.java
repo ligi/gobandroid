@@ -42,7 +42,9 @@ public class GoGame implements GoDefinitions {
     private GoBoard calc_board;	  // the board calculations are done in
     private GoBoard last_board;   // board to detect KO situations
     private GoBoard pre_last_board;   // board to detect KO situations
-
+    private GoBoard handicap_board;
+    
+    
     //private boolean black_to_move = true;
 
     private boolean last_action_was_pass=false;
@@ -101,9 +103,7 @@ public class GoGame implements GoDefinitions {
     
     private void apply_handicap() {
     	
-    	for (int i=0;i<handicap;i++)
-    		calc_board.setCellBlack(getHandicapArray()[i][0], getHandicapArray()[i][1]);
-            
+    	calc_board=handicap_board.clone();
     }
 
     public byte[][] getHandicapArray() {
@@ -118,13 +118,21 @@ public class GoGame implements GoDefinitions {
     
     private void construct(byte size) {
     	// create the boards
-        calc_board = new GoBoard( size );
+
+    	calc_board = new GoBoard( size );
         
+    	handicap_board=calc_board.clone();
+    	    
+    	for (int i=0;i<handicap;i++)
+    		handicap_board.setCellBlack(getHandicapArray()[i][0], getHandicapArray()[i][1]);
+    	
         apply_handicap();
         
         visual_board=calc_board.clone();
         last_board=calc_board.clone();
         pre_last_board=calc_board.clone();
+        
+        
         
         // create the array for group calculations
         groups = new int[size][size];
@@ -146,13 +154,16 @@ public class GoGame implements GoDefinitions {
         
         
     }
+    
+    byte start_player=PLAYER_BLACK;
+    
     public void reset() {
     	// black always starts
     	
-    	if (handicap==0)
-    		act_player=PLAYER_BLACK;
-    	else
-    		act_player=PLAYER_WHITE;
+    	if (handicap!=0)
+    		start_player=PLAYER_WHITE;
+    	
+    	act_player=start_player;
     	
     	// create the vector to save the moves
         //moves= new Vector<byte[]>();
@@ -188,7 +199,7 @@ public class GoGame implements GoDefinitions {
      * @return true if the move was valid - false if invalid move
      */
     public boolean do_move( byte x, byte y ) {
-    	Log.i("gobandroid","move" + x + "  " + y );
+    	Log.i("gobandroid","move " + x + "  " + y );
         if ((x >= 0) && (x <= calc_board.getSize()) && (y >= 0) && (y < calc_board.getSize())) { // if x and y are inside the board
         	
         	if(game_finished)
@@ -335,6 +346,9 @@ public class GoGame implements GoDefinitions {
     }
     
     public void redo(int var) {
+    	Log.i("gobandroid " , "redoing " +act_move.getnextMove(var).toString());
+    	
+    	
     	jump(act_move.getnextMove(var));
     }
     
@@ -411,10 +425,13 @@ public class GoGame implements GoDefinitions {
             
           //  Log.i("gobandroid"," replaying " +replay_move.toString());
             
+        	/*
             if (replay_move.isPassMove()) // move was a pass
-            	setNextPlayer();
-            else
-            	do_internal_move(replay_moves.get(step));
+            	//setNextPlayer();
+            	pass();
+            else*/
+        	
+            do_internal_move(replay_moves.get(step));
         }
         
         visual_board=calc_board.clone();    	
@@ -503,7 +520,8 @@ public class GoGame implements GoDefinitions {
     }
        
     public void clear_calc_board() {
-        for (byte x = 0; x < calc_board.getSize(); x++)
+      
+    	for (byte x = 0; x < calc_board.getSize(); x++)
             for (byte y = 0; y < calc_board.getSize(); y++) 
                 calc_board.setCellFree(x,y );
         apply_handicap();
@@ -778,6 +796,10 @@ public class GoGame implements GoDefinitions {
     
     public byte getHandicap() {
     	return handicap;
+    }
+
+    public GoBoard getHandicapBoard() {
+    	return handicap_board;
     }
     
 }

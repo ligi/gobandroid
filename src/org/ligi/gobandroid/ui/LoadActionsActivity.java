@@ -36,13 +36,11 @@ import android.widget.ListView;
  *         
 **/
 
-public class gobandroid extends ListActivity {
-    public String[] menu_items= {"Start Game", "Load Game" ,"Settings" ,"Quit" };
+public class LoadActionsActivity extends ListActivity {
+    public String[] menu_items= {"SD Card", "Online" };
     
-    private final static int MENU_GAMESTART=0;
-    private final static int MENU_LOADGAME=1;
-    private final static int MENU_SETTINGS=2;
-    private final static int MENU_QUIT=3;
+    private final static int MENU_SDCARD=0;
+    private final static int MENU_ONLINE=1;
     
     
     /** Called when the activity is first created. */
@@ -64,23 +62,14 @@ public class gobandroid extends ListActivity {
 
         Intent go_intent;
             switch (position) {
-                case MENU_GAMESTART:
-                    go_intent=new Intent(this,GoSetupActivity.class);
+                case MENU_SDCARD:
+                    go_intent=new Intent(this,SGFSDCardListActivity.class);
                     startActivity(go_intent);
                      break;
     
-                case MENU_LOADGAME:
-                    go_intent=new Intent(this,LoadActionsActivity.class);
+                case MENU_ONLINE:
+                    go_intent=new Intent(this,SGFOnlineListActivity.class);
                     startActivity(go_intent);
-                    break;
-    
-                case MENU_SETTINGS:
-                    go_intent=new Intent(this,GoPrefsActivity.class);
-                    startActivity(go_intent);
-                    break;
-                     
-                case MENU_QUIT:
-                    finish();
                     break;
             }
       

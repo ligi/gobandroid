@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -54,10 +55,15 @@ import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
 
 
+import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
 import java.util.Vector;
 
 import org.ligi.gobandroid.R;
@@ -91,7 +97,7 @@ public class GoActivity
 	
 	private WakeLock mWakeLock=null;
 	
-	ImageButton next,back,first,last;
+	ImageButton next,back,first,last,comments;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -109,12 +115,43 @@ public class GoActivity
 				game=(GoGame)getLastNonConfigurationInstance();
 			else {
 				// otherwise create a new game
+		
+				Uri intent_uri=getIntent().getData();
+				//String load_from=getIntent().getStringExtra("sgf");
 				
-				String load_from=getIntent().getStringExtra("sgf");
+				if (intent_uri!=null) {
+					try {
+						
+						
+						Log.i("gobandroid","load" + intent_uri);
+						 InputStream in= new BufferedInputStream(new URL(""+intent_uri) 
+			              .openStream(), 
+			                         1024*4); 
+						
+						
+						//InputStream in = getContentResolver().openInputStream(intent_uri);
+						
+						int c;
+						String sgf="";
+						while(true) {
+							c=in.read();
+							if (c==-1) break;
+							sgf+=(char)c;
+						}
+						
+						Log.i("gobandroid","got sgf" + sgf);
+						game=SGFHelper.sgf2game(sgf);
+						review_mode=true;	
+					} catch (Exception e) {
+						Log.i("gobandroid","exception in load"+e);
+					}
+					
+				}
+	/*			else				
 				if (load_from!=null) {
 					game=SGFHelper.sgf2game(load_from);
 					review_mode=true;
-				}
+				}*/
 				else {
 					byte size = getIntent().getByteExtra("size", (byte) 9);
 					byte handicap = getIntent().getByteExtra("handicap", (byte) 0);
@@ -146,10 +183,17 @@ public class GoActivity
 			control_buttons.add(back);
 			back.setOnClickListener(this);
 			
+			comments=new ImageButton(this);
+			comments.setImageResource(android.R.drawable.ic_dialog_email);
+			control_buttons.add(comments);
+			comments.setOnClickListener(this);
+						
 			next=new ImageButton(this);
 			next.setImageResource(android.R.drawable.ic_media_ff);
 			control_buttons.add(next);
 			next.setOnClickListener(this);
+			
+			
 			
 			last=new ImageButton(this);
 			last.setImageResource(android.R.drawable.ic_media_next);
@@ -206,11 +250,8 @@ public class GoActivity
 			}
 		
 		
-		if (GoPrefs.getFullscreenEnabled())
-			this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-					WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		else
-			this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		updateControlsStatus();
+		
 	
 		if (GoPrefs.getKeepLightEnabled())
 			{
@@ -218,8 +259,7 @@ public class GoActivity
 			mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "DUBwise Wakelog TAG");  
         	mWakeLock.acquire();
 			}
-		updateControlsStatus();
-		
+	
 	}
 
 	@Override
@@ -240,6 +280,7 @@ public class GoActivity
 		first.setEnabled(game.canUndo());
 		next.setEnabled(game.canRedo());
 		last.setEnabled(game.canRedo());
+		comments.setEnabled(game.getActMove().hasComment());
 		
 		int visible=0;
 		if (review_mode)
@@ -252,6 +293,7 @@ public class GoActivity
 		first.setVisibility(visible);
 		next.setVisibility(visible);
 		last.setVisibility(visible);
+		comments.setVisibility(visible);
 		
 		
 		
@@ -263,8 +305,19 @@ public class GoActivity
 	public void onResume() {
 		super.onResume();
 		
+		Log.i("gobandroid ", " resuming go activity" + GoPrefs.getBoardSkinName());
+		
 		GOSkin.setBoardSkin(GoPrefs.getBoardSkinName());
 		GOSkin.setStoneSkin(GoPrefs.getStoneSkinName());
+		
+		board_view.regenerate_stones_flag=true;
+		
+		if (GoPrefs.getFullscreenEnabled())
+			this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		else
+			this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	
 /*		
 		GOSkin.setSkin(shared_prefs.getString("skinname", ""));
 		GOSkin.setEnabled(shared_prefs.getBoolean("skin", false));
@@ -298,6 +351,8 @@ public class GoActivity
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
 
+		
+		
 		if (!game.isFinished()) {
 			if (game.canUndo()) {
 				MenuItem undo_menu = menu.add(0, MENU_UNDO, 0, "Undo");
@@ -330,6 +385,10 @@ public class GoActivity
 		settings_menu.setIcon(android.R.drawable.ic_menu_preferences);
 		
 */
+		
+		MenuItem settings_menu = menu.add(0, MENU_SETTINGS, 0, "Settings");
+		settings_menu.setIcon(android.R.drawable.ic_menu_preferences);
+		
 		return true;
 	}
 
@@ -347,6 +406,7 @@ public class GoActivity
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
+		
 		case MENU_SHOWCONTROLS:
 			review_mode=!review_mode;
 			
@@ -482,7 +542,7 @@ public class GoActivity
 		case MENU_SETTINGS:
 			 
              
-             startActivity(new Intent(this,SettingsActivity.class));
+             startActivity(new Intent(this,GoPrefsActivity.class));
              break;
 		}
 		 updateControlsStatus() ;
@@ -606,13 +666,20 @@ public class GoActivity
 				lin.setOrientation(LinearLayout.VERTICAL);
 				
 				final Dialog select_dlg=new Dialog(this);
-				
+				final Boolean redoing=false;
 				View.OnClickListener var_select_listener=new View.OnClickListener() {
+					
 					
 					@Override
 					public void onClick(View v) {
-						game.redo((Integer)(v.getTag()));
+						if (redoing)
+							return;
 						select_dlg.hide();
+						if (!v.isEnabled()) return;
+						v.setEnabled(false	);
+						
+						game.redo((Integer)(v.getTag()));
+					
 						updateControlsStatus();
 						board_view.invalidate();
 					}
@@ -654,6 +721,19 @@ public class GoActivity
 			game.jumpFirst();
 		else if (btn==last)
 			game.jumpLast();
+		else if (btn==comments) {
+	
+			new AlertDialog.Builder(this).setTitle("Comments")
+			.setMessage(
+					 game.getActMove().getComment()
+		).setPositiveButton("OK",  new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+			
+			}
+		}).show();
+		
+			
+		}
 		
 		updateControlsStatus();
 		board_view.invalidate();

@@ -24,6 +24,7 @@ import org.ligi.gobandroid.R;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -36,13 +37,23 @@ import android.widget.ListView;
  *         
 **/
 
-public class gobandroid extends ListActivity {
-    public String[] menu_items= {"Start Game", "Load Game" ,"Settings" ,"Quit" };
+public class SGFOnlineListActivity extends ListActivity {
+	public String[] menu_items= {"Britgo recent", 
+    							 "USGo Problems" ,
+    							 "egoban" ,
+    							 "byheartgo",
+    							 "Judan",
+    							 "companion"};
     
-    private final static int MENU_GAMESTART=0;
-    private final static int MENU_LOADGAME=1;
-    private final static int MENU_SETTINGS=2;
-    private final static int MENU_QUIT=3;
+	public String[] menu_urls = {
+			
+			"http://www.britgo.org/bgj/recent.html",
+			"http://www.usgo.org/problems/index.html",
+			"http://egoban.org/@@recent_games",
+			"http://sites.google.com/site/byheartgo/",
+			"http://homepages.cwi.nl/~aeb/go/games/games/Judan/",
+			"http://www.andromeda.com/people/ddyer/age-summer-94/companion.html"
+	};
     
     
     /** Called when the activity is first created. */
@@ -62,28 +73,8 @@ public class gobandroid extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        Intent go_intent;
-            switch (position) {
-                case MENU_GAMESTART:
-                    go_intent=new Intent(this,GoSetupActivity.class);
-                    startActivity(go_intent);
-                     break;
-    
-                case MENU_LOADGAME:
-                    go_intent=new Intent(this,LoadActionsActivity.class);
-                    startActivity(go_intent);
-                    break;
-    
-                case MENU_SETTINGS:
-                    go_intent=new Intent(this,GoPrefsActivity.class);
-                    startActivity(go_intent);
-                    break;
-                     
-                case MENU_QUIT:
-                    finish();
-                    break;
-            }
-      
+        startActivity(new Intent( "android.intent.action.VIEW",
+        		Uri.parse( menu_urls[position])));     
     }
     
 }
