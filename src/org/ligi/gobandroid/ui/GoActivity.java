@@ -122,11 +122,13 @@ public class GoActivity
 				if (intent_uri!=null) {
 					try {
 						
-						
+						InputStream in;
 						Log.i("gobandroid","load" + intent_uri);
-						 InputStream in= new BufferedInputStream(new URL(""+intent_uri) 
-			              .openStream(), 
-			                         1024*4); 
+						if (intent_uri.toString().startsWith("content://"))
+							in = getContentResolver().openInputStream(intent_uri);	
+						else
+						  in= new BufferedInputStream(new URL(""+intent_uri) 
+			              .openStream(), 1024*4); 
 						
 						
 						//InputStream in = getContentResolver().openInputStream(intent_uri);

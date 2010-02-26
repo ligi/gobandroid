@@ -3,14 +3,18 @@ I'm looking for testers/ideas and graphics / code contributors
  
 Changelog:
  
+ 0.27
+   + handle content://
  0.26
    + intent filter to assign sgf files with gobandroid ( e.g. when clicking on sgf in website gobandroid can open )
-   + options from game screen 
-   F SGF loading
-   
+   + load SGF from URL
+   + options from game screen
+   + show comments of a loaded game
+   + show some urls with SGF's 
+   F SGF with handicap loading
  0.25
    + Variation Handling
-   + Fix Permission
+   + Fix Permission for SD-Card
  0.24
    F sgf loading speedup & more robust
  0.23
@@ -77,8 +81,7 @@ Changelog:
   
  
 2DO:
- - sgf load
  - editable zoom levels
- - count dead stones on the end
- - graphical top bar
- - fullscreen option
+ - progress bar on loading
+ - share sgf's
+ 
