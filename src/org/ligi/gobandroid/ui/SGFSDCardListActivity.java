@@ -19,11 +19,7 @@
 
 package org.ligi.gobandroid.ui;
 
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.nio.CharBuffer;
 import java.util.Vector;
 
 import org.ligi.gobandroid.R;

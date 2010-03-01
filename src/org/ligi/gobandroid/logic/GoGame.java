@@ -418,21 +418,7 @@ public class GoGame implements GoDefinitions {
         
         //Log.i("gobandroid"," replaying " + replay_moves.size() +" moves" );
         for (int step=replay_moves.size()-1 ; step>=0;step--)
-        {
-        	
-        	GoMove replay_move=replay_moves.get(step);
-        	
-            
-          //  Log.i("gobandroid"," replaying " +replay_move.toString());
-            
-        	/*
-            if (replay_move.isPassMove()) // move was a pass
-            	//setNextPlayer();
-            	pass();
-            else*/
-        	
             do_internal_move(replay_moves.get(step));
-        }
         
         visual_board=calc_board.clone();    	
     }

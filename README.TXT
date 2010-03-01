@@ -3,6 +3,8 @@ I'm looking for testers/ideas and graphics / code contributors
  
 Changelog:
  
+ 0.28
+   F cleanup
  0.27
    + handle content://
  0.26
