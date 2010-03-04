@@ -79,6 +79,8 @@ public class GoGame implements GoDefinitions {
     private GoMove act_move=null;
     
     
+    private GnuGoMover go_mover=null;
+    
     public float getKomi() {
     	return komi;
     }
@@ -247,6 +249,16 @@ public class GoGame implements GoDefinitions {
                 		&&!pre_last_board.equals(calc_board)) // and the move is not a ko 
                 { 	// valid move -> do things needed to do after a valid move 
                     Log.d("gobandroid", "isDeadGroupOnBoard(x,y)" + isDeadGroupOnBoard(x,y));
+                    
+                    
+                    if (getGoMover()!=null)
+                    {
+                    	if (isBlackToMove())
+                    		getGoMover().processBlackMove(x, y);
+                    	else
+                    		getGoMover().processWhiteMove(x, y);
+                    }
+                    
                     setNextPlayer();
                     
                     
@@ -787,5 +799,12 @@ public class GoGame implements GoDefinitions {
     public GoBoard getHandicapBoard() {
     	return handicap_board;
     }
+
+	public void setGoMover(GnuGoMover go_mover) {
+		this.go_mover = go_mover;
+	}
     
+	public GnuGoMover getGoMover() {
+		return go_mover;
+	}
 }

@@ -21,10 +21,17 @@ package org.ligi.gobandroid.ui;
 
 
 import org.ligi.gobandroid.R;
+import org.ligi.gobandroid.ai.gnugo.IGnuGoService;
 
 import android.app.ListActivity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -44,6 +51,7 @@ public class gobandroid extends ListActivity {
     private final static int MENU_SETTINGS=2;
     private final static int MENU_QUIT=3;
     
+    IGnuGoService gnu_service=null;;
     
     /** Called when the activity is first created. */
     @Override
@@ -55,7 +63,10 @@ public class gobandroid extends ListActivity {
         setContentView(R.layout.main);
         this.setListAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, menu_items));
-           
+       
+        
+          
+       
     }
     
     @Override
@@ -70,6 +81,8 @@ public class gobandroid extends ListActivity {
                      break;
     
                 case MENU_LOADGAME:
+				
+                	
                     go_intent=new Intent(this,LoadActionsActivity.class);
                     startActivity(go_intent);
                     break;

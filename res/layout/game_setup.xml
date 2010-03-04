@@ -29,12 +29,17 @@
 <ImageView android:id="@+id/ImageView01" android:src="@drawable/icon" android:scaleType="center" android:layout_gravity="center" android:layout_height="wrap_content" android:layout_width="wrap_content"></ImageView>
 <ScrollView android:id="@+id/ScrollView01" android:layout_height="fill_parent" android:layout_width="fill_parent"><LinearLayout android:orientation="vertical" android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/handicap_slider"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Game Size 9x9" android:id="@+id/game_size_label"></TextView><SeekBar android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_marginLeft="7pt" android:layout_marginRight="7pt" android:id="@+id/size_slider" android:max="21"></SeekBar><LinearLayout android:id="@+id/LinearLayout02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="7pt" android:layout_marginBottom="4pt"><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="9x9" android:id="@+id/size_button9x9"></Button><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="13x13" android:id="@+id/size_button13x13"></Button><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="19x19" android:id="@+id/size_button19x19"></Button>
 
+</LinearLayout><TextView android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Player Setup"></TextView>
+
+<LinearLayout android:id="@+id/LinearLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="7pt"><Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/BlackPlayerSpinner"></Spinner><Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/WhitePlayerSpinner"></Spinner><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Install AI" android:id="@+id/InstallAIButton"></Button></LinearLayout><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Handicap" android:id="@+id/handicap_label"></TextView><SeekBar android:layout_height="wrap_content" android:layout_width="fill_parent" android:paddingLeft="7pt" android:paddingRight="7pt" android:id="@+id/handicap_seek" android:max="9" android:paddingBottom="7pt"></SeekBar><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Start" android:layout_gravity="center" android:id="@+id/game_start_button"></Button>
+
+
+
+
+
+
 </LinearLayout>
 
-<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Handicap" android:id="@+id/handicap_label"></TextView><SeekBar android:layout_height="wrap_content" android:layout_width="fill_parent" android:paddingLeft="7pt" android:paddingRight="7pt" android:id="@+id/handicap_seek" android:max="9" android:paddingBottom="7pt"></SeekBar><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Start" android:layout_gravity="center" android:id="@+id/game_start_button"></Button>
-
-
-</LinearLayout>
 
 
 
@@ -45,7 +50,7 @@
 
 
 
-</ScrollView><TableLayout android:id="@+id/TableLayout01" android:layout_height="wrap_content" android:layout_width="fill_parent"><TableRow android:id="@+id/TableRow01" android:layout_height="wrap_content" android:paddingRight="7pt" android:orientation="horizontal" android:layout_width="fill_parent"></TableRow><TableRow android:id="@+id/TableRow03" android:layout_width="wrap_content" android:layout_height="wrap_content"><TextView android:id="@+id/TextView03" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView></TableRow><TableRow android:id="@+id/TableRow02" android:layout_width="wrap_content" android:layout_height="wrap_content"><TextView android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView></TableRow></TableLayout>
+</ScrollView>
 
 
 </LinearLayout>

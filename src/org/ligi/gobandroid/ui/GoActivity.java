@@ -22,13 +22,18 @@ package org.ligi.gobandroid.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Looper;
 import android.os.PowerManager;
+import android.os.RemoteException;
 import android.os.PowerManager.WakeLock;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -52,6 +57,7 @@ import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 
 
@@ -65,6 +71,9 @@ import java.net.URL;
 import java.util.Vector;
 
 import org.ligi.gobandroid.R;
+import org.ligi.gobandroid.ai.gnugo.IGnuGoService;
+import org.ligi.gobandroid.logic.GTPHelper;
+import org.ligi.gobandroid.logic.GnuGoMover;
 import org.ligi.gobandroid.logic.GoGame;
 import org.ligi.gobandroid.logic.SGFHelper;
 
@@ -79,7 +88,7 @@ import org.ligi.gobandroid.logic.SGFHelper;
 
 public class GoActivity 
 		extends Activity 
-		implements OnClickListener, OnTouchListener
+		implements OnClickListener, OnTouchListener, Runnable
 {
 
 	
@@ -95,7 +104,10 @@ public class GoActivity
 	
 	private WakeLock mWakeLock=null;
 	
-	ImageButton next,back,first,last,comments;
+	private ImageButton next,back,first,last,comments;
+	
+	
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -155,8 +167,15 @@ public class GoActivity
 				else {
 					byte size = getIntent().getByteExtra("size", (byte) 9);
 					byte handicap = getIntent().getByteExtra("handicap", (byte) 0);
+		
+					int white_player=getIntent().getIntExtra("white_player", 0);
+					int black_player=getIntent().getIntExtra("black_player", 0);
+					
 					game = new GoGame(size,handicap);
 					review_mode=false;
+					
+					if ((white_player!=0)||(black_player!=0))
+						game.setGoMover(new GnuGoMover(this,game,black_player!=0,white_player!=0));
 				}
 			}
 		
@@ -259,11 +278,14 @@ public class GoActivity
 			mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "DUBwise Wakelog TAG");  
         	mWakeLock.acquire();
 			}
-	
+		
+		new Thread(this).start();
 	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+		
+		
 		super.onTouchEvent(event);
 		updateControlsStatus();
 		return false;
@@ -354,12 +376,14 @@ public class GoActivity
 		
 		
 		if (!game.isFinished()) {
-			if (game.canUndo()) {
+			if (game.canUndo()&&(game.getGoMover()==null)) {
 				MenuItem undo_menu = menu.add(0, MENU_UNDO, 0, "Undo");
 				undo_menu.setIcon(android.R.drawable.ic_menu_revert);
 			}
+			
+			if ((game.getGoMover()==null)||((!game.getGoMover().playing_black)&&game.isBlackToMove())||((!game.getGoMover().playing_white)&&(!game.isBlackToMove())) ) {
 			MenuItem pass_menu = menu.add(0, MENU_PASS, 0, "Pass");
-			pass_menu.setIcon(android.R.drawable.ic_menu_set_as);
+			pass_menu.setIcon(android.R.drawable.ic_menu_set_as); }
 		} else {
 			MenuItem finish_menu = menu.add(0, MENU_FINISH, 0,
 			"Results");
@@ -367,6 +391,7 @@ public class GoActivity
 			
 		}
 
+		if ((game.getGoMover()==null)||game.isFinished())
 		if (review_mode) 
 			{
 			MenuItem review_menu = menu.add(0, MENU_SHOWCONTROLS, 0,"Hide review controls");
@@ -631,6 +656,8 @@ public class GoActivity
     	}
     	updateControlsStatus();
     	board_view.invalidate();
+    	
+    	
     	return super.onKeyDown(keyCode, event);	
     }
 	
@@ -739,7 +766,21 @@ public class GoActivity
 		board_view.invalidate();
 	}
 
-    public boolean onTouch( View v, MotionEvent event ) {
+	Toast its_not_your_turn_toast=null;
+
+	public boolean onTouch( View v, MotionEvent event ) {
+		if ((game.getGoMover()!=null)&&
+				((!game.isFinished())&&
+				((game.isBlackToMove()&&(game.getGoMover().playing_black))
+				||((!game.isBlackToMove())&&(game.getGoMover().playing_white)))))
+			{
+			if (its_not_your_turn_toast==null)
+				its_not_your_turn_toast=Toast.makeText(this, "It's not your turn!", Toast.LENGTH_LONG);
+			its_not_your_turn_toast.show();
+			
+			return true;
+			}
+
     	board_view.doTouch(event);
     	updateControlsStatus();
     	return true;
@@ -756,6 +797,36 @@ public class GoActivity
     protected void onSaveInstanceState(Bundle outState) { 
       outState.putBoolean("review_mode", review_mode);
       super.onSaveInstanceState(outState); 
-    } 
+    }
+
+    boolean running=true;
+
+    boolean gnugo_size_set=false;
+	@Override
+	public void run() {
+		Looper.prepare();
+		while (running) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
+					
+			
+			
+			class UpdateViewClass implements Runnable {
+
+				@Override
+				public void run() {
+					board_view.invalidate();		
+				}
+				
+			}
+			this.runOnUiThread(new UpdateViewClass());
+
+		}
+	} 
     
+	
 }

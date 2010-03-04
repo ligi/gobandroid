@@ -380,6 +380,7 @@ public class GoBoardView extends View {
     	black_stone_bitmap_small=GOSkin.getBlackStone(SMALL_STONE_SCALER*stone_size);
     
     	bg_bitmap=GOSkin.getBoard(this.getWidth(),this.getHeight());
+    	regenerate_stones_flag=false;
     }	
     
     @Override
@@ -395,9 +396,8 @@ public class GoBoardView extends View {
         stone_size_zoomed=stone_size_normal*2;
 
         
+        regenerate_stones_flag=true;
         
-        regenerate_images();
-
         invalidate(); // needed here or automaticaly called?
     }
 
