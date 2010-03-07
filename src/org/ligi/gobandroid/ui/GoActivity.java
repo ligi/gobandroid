@@ -175,7 +175,7 @@ public class GoActivity
 					review_mode=false;
 					
 					if ((white_player!=0)||(black_player!=0))
-						game.setGoMover(new GnuGoMover(this,game,black_player!=0,white_player!=0));
+						game.setGoMover(new GnuGoMover(this,game,black_player!=0,white_player!=0,GoPrefs.getAILevel()));
 				}
 			}
 		
@@ -411,8 +411,11 @@ public class GoActivity
 		
 */
 		
-		MenuItem settings_menu = menu.add(0, MENU_SETTINGS, 0, "Settings");
-		settings_menu.setIcon(android.R.drawable.ic_menu_preferences);
+		if (game.getGoMover()==null) 
+			{
+			MenuItem settings_menu = menu.add(0, MENU_SETTINGS, 0, "Settings");
+			settings_menu.setIcon(android.R.drawable.ic_menu_preferences);
+			}
 		
 		return true;
 	}
