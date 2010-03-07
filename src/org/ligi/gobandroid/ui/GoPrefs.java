@@ -41,6 +41,9 @@ public class GoPrefs {
 	public static String KEY_SGF_PATH="sgf_path";
 	public static String KEY_SGF_FNAME="sgf_fname";
 	
+	public static String KEY_AI_LEVEL="ai_level";
+	
+	public static String DEFAULT_AI_LEVEL="5";
 	public static String DEFAULT_SKIN="no Skin";
 	public static String DEFAULT_SGF_PATH="/sdcard/gobandroid/sgf";
 	public static String DEFAULT_SGF_FNAME="game";
@@ -83,6 +86,10 @@ public class GoPrefs {
 		return shared_prefs.getString(KEY_SGF_FNAME,DEFAULT_SGF_FNAME );
 	}
 	
+	public static byte getAILevel() {
+		return Byte.parseByte(shared_prefs.getString(KEY_AI_LEVEL,DEFAULT_AI_LEVEL ).substring(0, 1));
+	}
+	
 	public static String[] getAllSkinNames() {
 		Log.i("gobandroid", "entering all skins");
 		File f=new File(GOSkin.skin_base_path);
@@ -108,5 +115,16 @@ public class GoPrefs {
 
 		Log.i("gobandroid", "ending ");
 		return skin_strings;
+
 	}
+
+	public static String[] getAllAILevelStrings() {
+		return new String[] {"1 fast/weak","2","3","4","5 balance","6","7","8","9","10 slow/strong"};
+	}
+
+	public static String getAILevelString() {
+		return  getAllAILevelStrings()[getAILevel()-1];
+	}
+
 }
+

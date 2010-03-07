@@ -37,7 +37,7 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
 	private ListPreference stoneSkinPref;
 	private EditTextPreference sgf_path_pref;
 	private EditTextPreference sgf_fname_pref;
-	
+	private ListPreference aiLevelPref;
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,6 +153,21 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         sgf_fname_pref.setSummary(GoPrefs.getSGFFname());
         sgf_fname_pref.setOnPreferenceChangeListener(this);
 
+        PreferenceCategory aiPrefCat = new PreferenceCategory(this);
+        aiPrefCat.setTitle("A.I. Preferences");
+        root.addPreference( aiPrefCat);
+
+        
+        aiLevelPref = new ListPreference(this);
+        aiLevelPref.setEntries(GoPrefs.getAllAILevelStrings());
+        aiLevelPref.setEntryValues(GoPrefs.getAllAILevelStrings());
+        aiLevelPref.setDialogTitle("Set A.I. Strength");
+        aiLevelPref.setKey(GoPrefs.KEY_AI_LEVEL);
+        aiLevelPref.setTitle("A.I. strength");
+        aiLevelPref.setSummary(GoPrefs.getAILevelString());
+        aiLevelPref.setOnPreferenceChangeListener(this);
+        aiLevelPref.setDefaultValue(GoPrefs.DEFAULT_AI_LEVEL);
+        aiPrefCat.addPreference(aiLevelPref);
         
         return root;
         
@@ -164,7 +179,7 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
  	public boolean onPreferenceChange(Preference preference, Object newValue) {
 	  	
  		if ((preference==sgf_path_pref)||(preference==sgf_fname_pref)
- 				||(preference==boardSkinPref)|| (preference==stoneSkinPref))
+ 				||(preference==boardSkinPref)|| (preference==stoneSkinPref)|| (preference==aiLevelPref))
 	  		preference.setSummary((String)newValue);
  		  	
 	  	return true; // return that we are OK with preferences
