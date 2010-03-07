@@ -44,12 +44,13 @@ import android.widget.ListView;
 **/
 
 public class gobandroid extends ListActivity {
-    public String[] menu_items= {"Start Game", "Load Game" ,"Settings" ,"Quit" };
+    public String[] menu_items= {"Start Game", "Load Game" ,"Settings" ,"About","Quit" };
     
     private final static int MENU_GAMESTART=0;
     private final static int MENU_LOADGAME=1;
     private final static int MENU_SETTINGS=2;
-    private final static int MENU_QUIT=3;
+    private final static int MENU_ABOUT=3;
+    private final static int MENU_QUIT=4;
     
     IGnuGoService gnu_service=null;;
     
@@ -91,7 +92,12 @@ public class gobandroid extends ListActivity {
                     go_intent=new Intent(this,GoPrefsActivity.class);
                     startActivity(go_intent);
                     break;
-                     
+ 
+                case MENU_ABOUT:
+                    go_intent=new Intent(this,AboutActivity.class);
+                    startActivity(go_intent);
+                    break;
+ 
                 case MENU_QUIT:
                     finish();
                     break;
