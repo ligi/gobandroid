@@ -1,7 +1,8 @@
 0.30
-   + AI Level select
+   + AI Level select ( Faster Games possible )
    F AI&handicap
    F handle resign in gtp
+   + About screen with changelog and credits
 0.29
    + AI / GTP support
 0.28
