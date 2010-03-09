@@ -42,15 +42,20 @@ public class GnuGoMover implements Runnable{
 	
 	public final static String intent_action_name="org.ligi.gobandroid.ai.gnugo.GnuGoService";
 	private byte level;
+	private Activity activity;
+	
+	ServiceConnection conn;
+	Thread mover_thread;
 	
 	public GnuGoMover(Activity activity,GoGame game,boolean playing_black,boolean playing_white,byte level) {
+		this.activity=activity;
 		this.level=level;
 		this.playing_black=playing_black;
 		this.playing_white=playing_white;
 		
 		this.game=game;
 		
-        ServiceConnection conn = new ServiceConnection() {
+        conn = new ServiceConnection() {
 
 			@Override
 			public void onServiceConnected(ComponentName name, IBinder service) {
@@ -72,8 +77,9 @@ public class GnuGoMover implements Runnable{
         };
         
         activity.bindService(new Intent("org.ligi.gobandroid.ai.gnugo.GnuGoService"), conn, Context.BIND_AUTO_CREATE);
-	
-        new Thread(this).start();
+        
+        mover_thread=new Thread(this);
+        mover_thread.start();
 	}
 	
 	public String coordinates2gtpstr(byte x,byte y)  {
@@ -94,6 +100,19 @@ public class GnuGoMover implements Runnable{
 		} catch (RemoteException e) {		}
 	}
 	
+	public void stop() {
+		try {
+			if (!game.isFinished()) {
+				game.pass();
+				game.pass();	
+			}
+			Log.i("gobandroid", "gugoservice stopping service" + game.isFinished());
+			activity.unbindService(conn);
+			activity.stopService(new Intent("org.ligi.gobandroid.ai.gnugo.GnuGoService"));
+		}
+		catch (Exception e) {}
+	} 
+	
 	@Override
 	public void run() {
 		while ( true) {
@@ -105,6 +124,8 @@ public class GnuGoMover implements Runnable{
 				e.printStackTrace();
 			}
 
+			if (game.isFinished())
+				break;
 
 			if (gnu_service==null)
 				continue;
@@ -123,10 +144,14 @@ public class GnuGoMover implements Runnable{
 					gnugo_size_set=true;
 				} catch (RemoteException e) {}
 			
-				if (game.isBlackToMove()&&(playing_black)) {
+			if (game.isBlackToMove()&&(playing_black)) {
 				try {
 				
 					String answer= gnu_service.processGTP("genmove black");
+					
+					if (game.isFinished())
+						break;
+					
 					GTPHelper.doMoveByGTPString(answer, game);
 					Log.i("gobandroid", "gugoservice" + gnu_service.processGTP("showboard"));		
 										
@@ -137,6 +162,10 @@ public class GnuGoMover implements Runnable{
 				
 				try {
 					String answer= gnu_service.processGTP("genmove white");
+					
+					if (game.isFinished())
+						break;
+					
 					GTPHelper.doMoveByGTPString(answer, game);
 					
 					Log.i("gobandroid", "gugoservice" + gnu_service.processGTP("showboard"));
@@ -146,6 +175,7 @@ public class GnuGoMover implements Runnable{
 			}
 
 		}
+		stop();
 	}
 
 	

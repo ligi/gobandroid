@@ -71,7 +71,6 @@ import java.net.URL;
 import java.util.Vector;
 
 import org.ligi.gobandroid.R;
-import org.ligi.gobandroid.ai.gnugo.IGnuGoService;
 import org.ligi.gobandroid.logic.GTPHelper;
 import org.ligi.gobandroid.logic.GnuGoMover;
 import org.ligi.gobandroid.logic.GoGame;
@@ -642,9 +641,11 @@ public class GoActivity
     		{
     			new AlertDialog.Builder(this).setTitle("End Game?")
     			.setMessage(
-    					 "Do you really want to quit this game?"
+    					 "Do you really want to quit this game??"
     		).setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
     			public void onClick(DialogInterface dialog, int whichButton) {
+    				if (game.getGoMover()!=null)
+    					game.getGoMover().stop();
     				finish();
     			}
     		}).setCancelable(true).setNegativeButton("No",  new DialogInterface.OnClickListener() {

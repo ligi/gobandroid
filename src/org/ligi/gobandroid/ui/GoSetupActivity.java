@@ -25,7 +25,9 @@ import org.ligi.gobandroid.R;
 import org.ligi.gobandroid.logic.GnuGoMover;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -199,14 +201,30 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 			else if (v==size_button19x19)
 				act_size=19;
 			else if (v==start_button) {
-				 Intent go_intent=new Intent(this,GoActivity.class);
-	             go_intent.putExtra("size",act_size );
-	             go_intent.putExtra("handicap",act_handicap );
+				
+				
+				if ((act_size>19)&&((black_player_spinner.getSelectedItemPosition()!=0)||(white_player_spinner.getSelectedItemPosition()!=0)))
+						{
+							new AlertDialog.Builder(this).setTitle("Problem")
+							.setMessage(
+	    					 "GnuGo can only play up to 19x19"
+							).setPositiveButton("OK",  new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int whichButton) {
+	    				
+								}
+							}).setCancelable(true).show();
+	    			
+						}
+				else {
+					Intent go_intent=new Intent(this,GoActivity.class);
+					go_intent.putExtra("size",act_size );
+					go_intent.putExtra("handicap",act_handicap );
 	    
-	             go_intent.putExtra("white_player",white_player_spinner.getSelectedItemPosition());
-	             go_intent.putExtra("black_player",black_player_spinner.getSelectedItemPosition());
+					go_intent.putExtra("white_player",white_player_spinner.getSelectedItemPosition());
+					go_intent.putExtra("black_player",black_player_spinner.getSelectedItemPosition());
 	             
-	             startActivity(go_intent);
+					startActivity(go_intent);
+				}
 			}
 		
 		refresh_ui();

@@ -1,3 +1,6 @@
+0.31
+   F close gnugo connection when not needed anymore
+   F block using gnugo on boards > 19x19
 0.30
    + AI Level select ( Faster Games possible )
    F AI&handicap
