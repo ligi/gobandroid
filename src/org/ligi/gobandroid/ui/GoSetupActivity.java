@@ -58,7 +58,7 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 	private byte act_handicap=0;
 	
 	private final static int size_offset=2;
-	
+	 
 	private SeekBar size_seek;
 	private SeekBar handicap_seek;
 	
@@ -169,14 +169,19 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 
 		handicap_seek.setEnabled((act_size==9)||(act_size==13)||(act_size==19));
 	}
+	
 	public void onProgressChanged(SeekBar seekBar, int progress,
 			boolean fromUser) {
-		if (seekBar==size_seek) 
+		if ((seekBar==size_seek)&&(act_size!=(byte)(progress+size_offset))) 
+			{
 			act_size=(byte)(progress+size_offset);
-		else if (seekBar==handicap_seek)
+			refresh_ui();
+			}
+		else if ((seekBar==handicap_seek)&&(act_handicap!=(byte)progress))
+			{
 			act_handicap=(byte)progress;
-		
-		refresh_ui();
+			refresh_ui();
+			}
 	}
 
 	@Override
