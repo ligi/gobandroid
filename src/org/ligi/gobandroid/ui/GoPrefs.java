@@ -87,7 +87,12 @@ public class GoPrefs {
 	}
 	
 	public static byte getAILevel() {
-		return Byte.parseByte(shared_prefs.getString(KEY_AI_LEVEL,DEFAULT_AI_LEVEL ).substring(0, 1));
+		String level_str=shared_prefs.getString(KEY_AI_LEVEL,DEFAULT_AI_LEVEL );
+		try {
+			return Byte.parseByte(level_str.substring(0, 2));
+		} catch (Exception e) {
+			return Byte.parseByte(level_str.substring(0, 1));
+		}
 	}
 	
 	public static String[] getAllSkinNames() {

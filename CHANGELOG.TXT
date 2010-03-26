@@ -1,3 +1,5 @@
+0.33
+   F fix 1<>10 in A.I. Strength
 0.32
    F Bugfix for Samsung Moment - Big thanks to Oren Laskin for sending me the log which helped to find the bug
 0.31
