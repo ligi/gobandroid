@@ -82,10 +82,14 @@ public class GnuGoMover implements Runnable{
         mover_thread.start();
 	}
 	
+	public boolean isServiceBound() {
+		return gnu_service!=null;
+	}
+	
 	public String coordinates2gtpstr(byte x,byte y)  {
-	if (x>8) x++; // I is missing
-	y=(byte)(game.getBoardSize()-(y));
-	return ""+(char)('A'+x) + ""+(y);
+		if (x>8) x++; // I is missing
+		y=(byte)(game.getBoardSize()-(y));
+		return ""+(char)('A'+x) + ""+(y);
 	}
 
 	public void processWhiteMove(byte x,byte y)   {

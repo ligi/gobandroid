@@ -773,13 +773,28 @@ public class GoActivity
 	Toast its_not_your_turn_toast=null;
 
 	public boolean onTouch( View v, MotionEvent event ) {
+		
+		if ((game.getGoMover()!=null)&&
+				(!game.getGoMover().isServiceBound()))
+			{
+			if (its_not_your_turn_toast==null)
+				its_not_your_turn_toast=Toast.makeText(this, "", Toast.LENGTH_LONG);
+			
+			its_not_your_turn_toast.setText("Wait for GnuGo to settle");
+			its_not_your_turn_toast.show();
+			
+			return true;
+			}
+		
 		if ((game.getGoMover()!=null)&&
 				((!game.isFinished())&&
 				((game.isBlackToMove()&&(game.getGoMover().playing_black))
 				||((!game.isBlackToMove())&&(game.getGoMover().playing_white)))))
 			{
 			if (its_not_your_turn_toast==null)
-				its_not_your_turn_toast=Toast.makeText(this, "It's not your turn!", Toast.LENGTH_LONG);
+				its_not_your_turn_toast=Toast.makeText(this, "", Toast.LENGTH_LONG);
+			
+			its_not_your_turn_toast.setText("It's not your turn!");
 			its_not_your_turn_toast.show();
 			
 			return true;
