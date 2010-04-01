@@ -1,5 +1,9 @@
+0.35 
+   F bind gnugo service to application and not activity to avoid leaking the service-connection
+0.34
+   F bug when gnugo is not settled
 0.33
-   F fix 1<>10 in A.I. Strength
+   F 1<>10 in A.I. Strength
 0.32
    F Bugfix for Samsung Moment - Big thanks to Oren Laskin for sending me the log which helped to find the bug
 0.31

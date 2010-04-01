@@ -22,6 +22,7 @@ package org.ligi.gobandroid.logic;
 import org.ligi.gobandroid.ai.gnugo.IGnuGoService;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -42,13 +43,13 @@ public class GnuGoMover implements Runnable{
 	
 	public final static String intent_action_name="org.ligi.gobandroid.ai.gnugo.GnuGoService";
 	private byte level;
-	private Activity activity;
+	private Application application;
 	
 	ServiceConnection conn;
 	Thread mover_thread;
 	
 	public GnuGoMover(Activity activity,GoGame game,boolean playing_black,boolean playing_white,byte level) {
-		this.activity=activity;
+		this.application=activity.getApplication();
 		this.level=level;
 		this.playing_black=playing_black;
 		this.playing_white=playing_white;
@@ -76,7 +77,7 @@ public class GnuGoMover implements Runnable{
         	
         };
         
-        activity.bindService(new Intent("org.ligi.gobandroid.ai.gnugo.GnuGoService"), conn, Context.BIND_AUTO_CREATE);
+        application.bindService(new Intent("org.ligi.gobandroid.ai.gnugo.GnuGoService"), conn, Context.BIND_AUTO_CREATE);
         
         mover_thread=new Thread(this);
         mover_thread.start();
@@ -111,8 +112,8 @@ public class GnuGoMover implements Runnable{
 				game.pass();	
 			}
 			Log.i("gobandroid", "gugoservice stopping service" + game.isFinished());
-			activity.unbindService(conn);
-			activity.stopService(new Intent("org.ligi.gobandroid.ai.gnugo.GnuGoService"));
+			application.unbindService(conn);
+			application.stopService(new Intent("org.ligi.gobandroid.ai.gnugo.GnuGoService"));
 		}
 		catch (Exception e) {}
 	} 
