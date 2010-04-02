@@ -36,15 +36,17 @@ import android.util.Log;
 
 public class GoMove implements GoDefinitions {
 
-	byte x;
-	byte y;
-	String comment="";
+	private byte x,y;
 	
-	boolean did_captures=false;
+	private String comment="";
 	
-	GoMove parent=null;
+	private boolean did_captures=false;
 	
-	Vector<GoMove> next_move_variations;
+	private GoMove parent=null;
+	
+	private Vector<GoMove> next_move_variations;
+	
+	private int move_pos=0;
 	
 	public Vector<GoMove> getNextMoveVariations() {
 		return next_move_variations;
@@ -72,11 +74,27 @@ public class GoMove implements GoDefinitions {
 	}
 	
 	
+	
+	public int getMovePos() {
+		return move_pos;
+	}
 	private void init() {
 		next_move_variations=new Vector<GoMove>();
 		
 		if (parent!=null)
+			{
 			parent.addNextMove(this);
+	
+			GoMove act_move=this;
+			
+			while((act_move!=null)&&(!act_move.isFirstMove()))
+					{
+					move_pos++;
+					act_move=act_move.parent;
+					}
+					
+			
+			}
 	}
 	
 	public boolean hasNextMove() {
@@ -142,6 +160,9 @@ public class GoMove implements GoDefinitions {
 	}
 	public void setComment(String newComment) {
 		comment+=newComment;
+	}
+	public boolean didCaptures() {
+		return did_captures;
 	}
 
 

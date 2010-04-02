@@ -140,7 +140,7 @@ public class TopView extends View implements Runnable
 		canvas.drawText(white_points_str ,this.getWidth()-white_stone.getWidth()*1.2f-getTextWidth(white_points_str), this
 				.getHeight() - 5, mTextPaintWhite);
 
-		String move_txt="Move ";// + (game.moves.size()+1) + "";
+		String move_txt="Move " + game.getActMove().getMovePos();
 		
 		canvas.drawText(move_txt ,this.getWidth()/2-getTextWidth(move_txt)/2.0f, this
 				.getHeight() - 5, mTextPaintWhite);

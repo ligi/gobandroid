@@ -329,7 +329,7 @@ public class GoGame implements GoDefinitions {
         
         setNextPlayer();
         
-        if (move.did_captures) {
+        if (move.didCaptures()) {
         	buildGroups();
         	remove_dead( move.getX(), move.getY() );
         }
