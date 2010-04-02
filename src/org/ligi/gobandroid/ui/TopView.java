@@ -37,6 +37,14 @@ public class TopView extends View implements Runnable
 	private Paint mPaint = new Paint();
 	private Paint mTextPaintWhite = new Paint();
 	private Paint mTextPaintBlack = new Paint();
+
+	private int alpha=200;
+	private int alpha_dir=-2;
+
+	private Bitmap black_stone;
+	private Bitmap white_stone;
+
+	
 	public TopView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		new Thread(this).start();
@@ -46,35 +54,11 @@ public class TopView extends View implements Runnable
 		super(context);
 	}
 
-	Bitmap black_stone;
-	Bitmap white_stone;
-
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		black_stone=GOSkin.getBlackStone(h*0.9f);
 		white_stone=GOSkin.getWhiteStone(h*0.9f);
-		/*
-		// load and scale the images
-		black_img = resize_to_screen(BitmapFactory.decodeResource(
-				getResources(), R.drawable.bluetooth_off), 0.0f, 1f);
 
-		bt_on_img = resize_to_screen(BitmapFactory.decodeResource(
-				getResources(), R.drawable.bluetooth_on), 0.0f, 1f);
-		
-		bt_on_highlight_img =resize_to_screen(BitmapFactory.decodeResource(
-				getResources(), R.drawable.bluetooth_on_highlight), 0.0f, 1f);
-
-		batt_img = resize_to_screen(BitmapFactory.decodeResource(
-				getResources(), R.drawable.batt), 0.0f, 1f);
-
-		sats_img = resize_to_screen(BitmapFactory.decodeResource(
-				getResources(), R.drawable.sats), 0.0f, 1f);
-
-		rc_img = resize_to_screen(BitmapFactory.decodeResource(getResources(),
-				R.drawable.rc), 0.0f, 1f);
-		alert_img = resize_to_screen(BitmapFactory.decodeResource(getResources(),
-				R.drawable.alert), 0.0f, 1f);
-*/
 		// set up the Paint's
 		mTextPaintWhite.setColor(Color.WHITE);
 		mTextPaintWhite.setAntiAlias(true); // text looks better without alias
@@ -91,16 +75,6 @@ public class TopView extends View implements Runnable
 		mTextPaintBlack.setTextSize(this.getHeight());
 
 	}
-
-	public void symbol_paint(Canvas c, Bitmap img) {
-/*
-		c.drawBitmap(img, act_symbol_pos, 0, mPaint);
-
-		act_symbol_pos += img.getWidth();
-*/
-	}
-
-	int act_symbol_pos = 0;
 
 	
 	
@@ -148,65 +122,7 @@ public class TopView extends View implements Runnable
 		
 		canvas.drawText(""+game.getCapturesWhite() ,black_stone.getWidth()*1.2f, this
 				.getHeight() - 5, mTextPaintWhite);
-
-		
-	/*	MKCommunicator mk = MKProvider.getMK();
-
-		act_symbol_pos = 0;
-
-		// connection
-
-		if (mk.connected){
-			if (((mk.stats.bytes_in>>4)&1)==1)
-				symbol_paint(canvas, bt_on_img);
-			else
-				symbol_paint(canvas, bt_on_highlight_img);
-
-			act_symbol_pos += spacer_items;
-
-			// if (mk.UBatt()!=-1)
-			// mPaint.getFontMetrics().
-			
-			if (mk.UBatt() != -1) {
-				symbol_paint(canvas, batt_img);
-				canvas.drawText("" + mk.UBatt() / 10.0, act_symbol_pos, this
-						.getHeight() - 5, mTextPaint);
-				act_symbol_pos += getTextWidth("" + mk.UBatt() / 10.0);
-				act_symbol_pos += spacer_items;
-			}
-
-			if (mk.SenderOkay() >190) {
-				symbol_paint(canvas, rc_img);
-				act_symbol_pos += spacer_items;
-			}
-
-			if (mk.is_navi() || mk.is_fake()) {
-				if (mk.SatsInUse() != -1) {
-					symbol_paint(canvas, sats_img);
-					canvas.drawText("" + mk.SatsInUse(), act_symbol_pos, this
-							.getHeight() - 5, mTextPaint);
-					act_symbol_pos += getTextWidth("" + mk.SatsInUse());
-					act_symbol_pos += spacer_items;
-				}
-				if (mk.gps_position.ErrorCode != 0) {
-					symbol_paint(canvas, alert_img);
-					act_symbol_pos += spacer_items;
-				}
-			}
-
-		}
-		else
-			symbol_paint(canvas, bt_off_img);
-
-		
-		// spend some cpu time ( Top doesnt need to be updated that often )
-		//TODO make timing editable
-		try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			
-		}
-		*/
+	
 		invalidate();
 	}
 
@@ -231,8 +147,6 @@ public class TopView extends View implements Runnable
 		// );
 	}
 
-	int alpha=200;
-	int alpha_dir=-2;
 	@Override
 	public void run() {
 		while (true) {
