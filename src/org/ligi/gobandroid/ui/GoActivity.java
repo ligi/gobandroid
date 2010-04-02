@@ -22,18 +22,14 @@ package org.ligi.gobandroid.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.ServiceConnection;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.os.Looper;
 import android.os.PowerManager;
-import android.os.RemoteException;
 import android.os.PowerManager.WakeLock;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -71,7 +67,6 @@ import java.net.URL;
 import java.util.Vector;
 
 import org.ligi.gobandroid.R;
-import org.ligi.gobandroid.logic.GTPHelper;
 import org.ligi.gobandroid.logic.GnuGoMover;
 import org.ligi.gobandroid.logic.GoGame;
 import org.ligi.gobandroid.logic.SGFHelper;
@@ -384,37 +379,16 @@ public class GoActivity
 			MenuItem pass_menu = menu.add(0, MENU_PASS, 0, "Pass");
 			pass_menu.setIcon(android.R.drawable.ic_menu_set_as); }
 		} else {
-			MenuItem finish_menu = menu.add(0, MENU_FINISH, 0,
-			"Results");
-			finish_menu.setIcon(android.R.drawable.ic_menu_more);
+			menu.add(0, MENU_FINISH, 0,	"Results").setIcon(android.R.drawable.ic_menu_more);
 			
 		}
 
 		if ((game.getGoMover()==null)||game.isFinished())
-		if (review_mode) 
-			{
-			MenuItem review_menu = menu.add(0, MENU_SHOWCONTROLS, 0,"Hide review controls");
-			review_menu.setIcon(android.R.drawable.ic_menu_view);
-			}
-		else
-			{
-			MenuItem review_menu = menu.add(0, MENU_SHOWCONTROLS, 0,"Show review controls");
-			review_menu.setIcon(android.R.drawable.ic_menu_view);
-			}
+			menu.add(0, MENU_SHOWCONTROLS, 0,(review_mode?"Hide review controls":"Show review controls")).setIcon(android.R.drawable.ic_menu_view);
+			
 
-		MenuItem save_menu = menu.add(0, MENU_WRITE_SGF, 0,"Save as SGF");
-		save_menu.setIcon(android.R.drawable.ic_menu_save);
-		/*
-		MenuItem settings_menu = menu.add(0, MENU_SETTINGS, 0,"Settings");
-		settings_menu.setIcon(android.R.drawable.ic_menu_preferences);
-		
-*/
-		
-		if (game.getGoMover()==null) 
-			{
-			MenuItem settings_menu = menu.add(0, MENU_SETTINGS, 0, "Settings");
-			settings_menu.setIcon(android.R.drawable.ic_menu_preferences);
-			}
+		menu.add(0, MENU_WRITE_SGF, 0,"Save as SGF").setIcon(android.R.drawable.ic_menu_save);
+		menu.add(0, MENU_SETTINGS, 0, "Settings").setIcon(android.R.drawable.ic_menu_preferences);
 		
 		return true;
 	}
