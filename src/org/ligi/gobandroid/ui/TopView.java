@@ -32,8 +32,6 @@ public class TopView extends View implements Runnable
 {
 	private GoGame game;
 	
-	public String tmp="bar";
-	
 	private Paint mPaint = new Paint();
 	private Paint mTextPaintWhite = new Paint();
 	private Paint mTextPaintBlack = new Paint();
@@ -43,7 +41,6 @@ public class TopView extends View implements Runnable
 
 	private Bitmap black_stone;
 	private Bitmap white_stone;
-
 	
 	public TopView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -77,7 +74,6 @@ public class TopView extends View implements Runnable
 	}
 
 	
-	
 	private float getTextWidth(String text) {
 
 		float[] widths = new float[text.length()];
@@ -87,8 +83,6 @@ public class TopView extends View implements Runnable
 			res += widths[i];
 		return res;
 	}
-
-	int spacer_items = 5;
 
 	@Override
 	protected void onDraw(Canvas canvas) {
