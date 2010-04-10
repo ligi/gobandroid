@@ -1,3 +1,6 @@
+0.36
+   + Display Move Number on top bar
+   F let user edit settings when ai is active
 0.35 
    F bind gnugo service to application and not activity to avoid leaking the service-connection
 0.34
