@@ -195,8 +195,20 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 	@Override
 	public void onClick(View v) {
 		if (v==((Button)this.findViewById(R.id.InstallAIButton))) {
-			this.startActivity(new Intent().setAction(Intent.ACTION_VIEW)
-                .setData(Uri.parse("market://search?q=org.ligi.gobandroid.ai")));
+			try {
+				this.startActivity(new Intent().setAction(Intent.ACTION_VIEW)
+						.setData(Uri.parse("market://search?q=org.ligi.gobandroid.ai")));
+			}
+			catch (Exception e) {
+				new AlertDialog.Builder(this).setTitle("Problem")
+				.setMessage(
+				 "Can't Accesss the Android Market to install an AI - you will have to install it manualy."
+				).setPositiveButton("OK",  new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+			
+					}
+				}).setCancelable(true).show();
+			}
 		}
 		else 
 			if (v==size_button9x9)
