@@ -34,11 +34,11 @@ import android.view.View;
 
 
 /**
- * Class to visualy represent a Go Board in Android
+ * Class to visually represent a Go Board in Android
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  *         
- * This software is licenced with GPLv3 
+ * This software is licensed with GPLv3 
  */
 public class GoBoardView extends View {
    	private GoGame game;
@@ -58,18 +58,13 @@ public class GoBoardView extends View {
     private float offset_x=0.0f;
     private float offset_y=0.0f;
     
-    //TODO rename - nami is now missleading
+    //TODO rename - name is now misleading
     public byte touch_x=-1;
     public byte touch_y=-1;
 
-    
-    
     //public boolean do_zoom=false;
     
-    
-    
     private Bitmap bg_bitmap=null;
-    
     
     private Bitmap white_stone_bitmap=null;
     private Bitmap black_stone_bitmap=null;
@@ -107,14 +102,12 @@ public class GoBoardView extends View {
         gridPaint.setShadowLayer(1,1,1,0xFFFFFFFF );
         gridPaint.setTextAlign(Paint.Align.CENTER );
         gridPaint.setTextSize(12.0f );
-
     
         textPaint=new Paint();
         textPaint.setColor(0xFF000000);
         textPaint.setAntiAlias(false);
         
-        
-     setFocusable(true);   
+        setFocusable(true);   
     }
 
 
@@ -270,6 +263,7 @@ public class GoBoardView extends View {
         */
     	
         canvas.translate(offset_x, offset_y);
+        
         for(int x=0;x<game.getVisualBoard().getSize();x++)
         	{
         	if (touch_x==x)
@@ -341,25 +335,23 @@ public class GoBoardView extends View {
             		if (game.getVisualBoard().isCellBlack(x,y))
             			canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
             
-            		if (GoPrefs.getMarkLastStone()) {
-            		blackPaint.setStyle(Paint.Style.STROKE);
-            		whitePaint.setStyle(Paint.Style.STROKE);
-            		whitePaint.setStrokeWidth(2.0f);
-            		blackPaint.setStrokeWidth(2.0f);
+            		if (GoPrefs.getMarkLastStone()) { // if the last stone should be marked
+            			blackPaint.setStyle(Paint.Style.STROKE);
+            			whitePaint.setStyle(Paint.Style.STROKE);
+            			whitePaint.setStrokeWidth(2.0f);
+            			blackPaint.setStrokeWidth(2.0f);
             		
-            		if ((game.getActMove().getX()==x)&&(game.getActMove().getY()==y))
+            			if ((game.getActMove().getX()==x)&&(game.getActMove().getY()==y))
             			{
-            			if (game.getVisualBoard().isCellWhite(x,y))
-            				canvas.drawCircle( stone_size/2.0f+ x*stone_size  ,stone_size/2.0f+y*stone_size,stone_size/4.0f,blackPaint );
-                		if (game.getVisualBoard().isCellBlack(x,y))
-            				canvas.drawCircle( stone_size/2.0f+ x*stone_size  ,stone_size/2.0f+y*stone_size,stone_size/4.0f,whitePaint );
+            				if (game.getVisualBoard().isCellWhite(x,y))
+            					canvas.drawCircle( stone_size/2.0f+ x*stone_size  ,stone_size/2.0f+y*stone_size,stone_size/4.0f,blackPaint );
+                			if (game.getVisualBoard().isCellBlack(x,y))
+            					canvas.drawCircle( stone_size/2.0f+ x*stone_size  ,stone_size/2.0f+y*stone_size,stone_size/4.0f,whitePaint );
             	
             			}
             		}
             	}
-                
-               
-                //canvas.drawText( "" + game.area_groups[x][y], x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,whitePaint );
+                 //canvas.drawText( "" + game.area_groups[x][y], x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,whitePaint );
                 
             }
     

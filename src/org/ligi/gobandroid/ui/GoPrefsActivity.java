@@ -38,11 +38,11 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
 	private EditTextPreference sgf_path_pref;
 	private EditTextPreference sgf_fname_pref;
 	private ListPreference aiLevelPref;
+	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setPreferenceScreen(createPreferenceHierarchy());
-        
     }
 	
     private PreferenceScreen createPreferenceHierarchy() {
@@ -77,8 +77,9 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         root.addPreference( skinPrefCat);
         
         PreferenceScreen intentPref = getPreferenceManager().createPreferenceScreen(this);
-        intentPref.setIntent(new Intent().setAction(Intent.ACTION_VIEW)
-                .setData(Uri.parse("market://search?q=org.ligi.gobandroid.skinstaller")));
+        Intent i=new Intent().setAction(Intent.ACTION_VIEW)
+        .setData(Uri.parse("market://search?q=org.ligi.gobandroid.skinstaller"));
+        intentPref.setIntent(i);
         intentPref.setTitle("Install Skins");
         intentPref.setSummary("get skins from the market");
         skinPrefCat.addPreference(intentPref);
@@ -124,8 +125,6 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         keepScreenAwakeCheckBoxPref.setSummary("drain your Battery while playing");
        	uiPrefCat.addPreference(keepScreenAwakeCheckBoxPref);
 
-        
-        
         /* SGF section */
         PreferenceCategory sgfPrefCat = new PreferenceCategory(this);
         sgfPrefCat.setTitle("SGF Preferences");
@@ -170,8 +169,6 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         aiPrefCat.addPreference(aiLevelPref);
         
         return root;
-        
- 
     }
     
     
