@@ -30,7 +30,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -43,10 +42,10 @@ import android.widget.ListView;
 **/
 
 public class SGFSDCardListActivity extends ListActivity {
-    public String[] menu_items;
-    File[] files;
     
-    /** Called when the activity is first created. */
+	private String[] menu_items;
+    private File[] files;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,20 +54,12 @@ public class SGFSDCardListActivity extends ListActivity {
         
         setContentView(R.layout.main);
         
-        
         String sgf_path=GoPrefs.getSGFPath();
     	File dir=new File(sgf_path);
         
-    	//        	Dialog dlg=new Dialog(this);
-        
-        /*dlg.setTitle("Foo");
-        dlg.show();
-        */
-        Log.i("gobandroid" ,"dir!=null");
-
         if (dir==null){
-    		new AlertDialog.Builder(this).setTitle("Problem listing SGF's").setMessage("The SGF Path is invalid " +sgf_path + "")
-    		.setPositiveButton("Ok",  new DialogInterface.OnClickListener() {
+    		new AlertDialog.Builder(this).setTitle(R.string.problem_listing_sgf).setMessage(getResources().getString(R.string.sgf_path_invalid) +" " +sgf_path)
+    		.setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
     			public void onClick(DialogInterface dialog, int whichButton) {
     				finish();
     			}
@@ -81,8 +72,8 @@ public class SGFSDCardListActivity extends ListActivity {
         
         
         if (files==null){
-    		new AlertDialog.Builder(this).setTitle("Problem listing SGF's").setMessage("There are no files in " +sgf_path + "")
-    		.setPositiveButton("Ok",  new DialogInterface.OnClickListener() {
+    		new AlertDialog.Builder(this).setTitle(R.string.problem_listing_sgf).setMessage(getResources().getString(R.string.there_are_no_files_in) + " " +sgf_path )
+    		.setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
     			public void onClick(DialogInterface dialog, int whichButton) {
     			finish();	
     			}
@@ -92,17 +83,11 @@ public class SGFSDCardListActivity extends ListActivity {
             }
         
         Vector<String> fnames=new Vector<String>();
-        for(File file:files) {
-    		Log.i("gobandroid" ,"processing file"+file);
+        for(File file:files) 
         	if (file.getName().endsWith(".sgf"))
-        		{
-        		Log.i("gobandroid" ,"adding" + file.getName());
         		fnames.add(file.getName());
-        		}
-        }
-        
+        		
         menu_items=(String[])fnames.toArray(new String[fnames.size()]);
-        
         
         this.setListAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, menu_items));

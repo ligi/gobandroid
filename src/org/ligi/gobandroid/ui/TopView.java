@@ -19,6 +19,7 @@
 
 package org.ligi.gobandroid.ui;
 
+import org.ligi.gobandroid.R;
 import org.ligi.gobandroid.logic.GoGame;
 
 import android.app.Activity;
@@ -108,7 +109,7 @@ public class TopView extends View implements Runnable
 		canvas.drawText(white_points_str ,this.getWidth()-white_stone.getWidth()*1.2f-getTextWidth(white_points_str), this
 				.getHeight() - 5, mTextPaintWhite);
 
-		String move_txt="Move " + game.getActMove().getMovePos();
+		String move_txt=   this.getResources().getString(R.string.move ) + " " + game.getActMove().getMovePos();
 		
 		canvas.drawText(move_txt ,this.getWidth()/2-getTextWidth(move_txt)/2.0f, this
 				.getHeight() - 5, mTextPaintWhite);
