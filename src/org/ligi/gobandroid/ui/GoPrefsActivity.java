@@ -19,6 +19,8 @@
 
 package org.ligi.gobandroid.ui;
 
+import org.ligi.gobandroid.R;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -54,7 +56,7 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         
         /* Gameplay section */
         PreferenceCategory inlinePrefCat = new PreferenceCategory(this);
-        inlinePrefCat.setTitle("Gameplay");
+        inlinePrefCat.setTitle(R.string.gameplay);
         root.addPreference(inlinePrefCat);
         
         

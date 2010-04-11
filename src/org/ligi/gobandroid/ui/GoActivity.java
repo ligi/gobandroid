@@ -99,6 +99,11 @@ public class GoActivity
 	private WakeLock mWakeLock=null;
 	
 	private ImageButton next,back,first,last,comments;
+	private boolean running=true;
+
+	private boolean review_mode=false;
+    
+	private Toast its_not_your_turn_toast=null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -281,6 +286,7 @@ public class GoActivity
 		updateControlsStatus();
 		return false;
 	}
+	
 	@Override
 	public Object onRetainNonConfigurationInstance() {
 		// remember the game in case of e.g. a device rotation
@@ -307,10 +313,6 @@ public class GoActivity
 		next.setVisibility(visible);
 		last.setVisibility(visible);
 		comments.setVisibility(visible);
-		
-		
-		
-		
 	}
 	
 
@@ -358,7 +360,7 @@ public class GoActivity
 		
 	}
 
-	boolean review_mode=false;
+
 	
 	/* Creates the menu items */
 	public boolean onPrepareOptionsMenu(Menu menu) {
@@ -489,10 +491,6 @@ public class GoActivity
 			break;
 
 		case MENU_WRITE_SGF:
-			
-			
-			
-			
 			final EditText input = new EditText(this);   
 			input.setText(GoPrefs.getSGFFname());
 
@@ -538,8 +536,6 @@ public class GoActivity
 						break;
 
 		case MENU_SETTINGS:
-			 
-             
              startActivity(new Intent(this,GoPrefsActivity.class));
              break;
 		}
@@ -738,7 +734,7 @@ public class GoActivity
 		board_view.invalidate();
 	}
 
-	Toast its_not_your_turn_toast=null;
+	
 
 	public boolean onTouch( View v, MotionEvent event ) {
 		
@@ -788,9 +784,6 @@ public class GoActivity
       super.onSaveInstanceState(outState); 
     }
 
-    boolean running=true;
-
-    boolean gnugo_size_set=false;
 	@Override
 	public void run() {
 		Looper.prepare();
@@ -802,15 +795,11 @@ public class GoActivity
 				e.printStackTrace();
 			}
 					
-			
-			
 			class UpdateViewClass implements Runnable {
-
 				@Override
 				public void run() {
 					board_view.invalidate();		
 				}
-				
 			}
 			this.runOnUiThread(new UpdateViewClass());
 

@@ -39,12 +39,6 @@ public class GOSkin {
 
 	public final static String skin_base_path="/sdcard/gobandroid/skins/";
 	
-	/*
-	public static String getSkinName() {
-		return skin_name;
-		
-	}*/
-	
 	public static void setBoardSkin(String name) {
 		if ((new File(skin_base_path+name).exists())) 
 		{

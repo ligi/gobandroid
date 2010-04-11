@@ -73,10 +73,6 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 	
 	private TextView handicap_text;
 	
-	
-    
-    
-
 	/**
 	 * Indicates whether the specified action can be used as an intent. This
 	 * method queries the package manager for installed packages that can
@@ -200,10 +196,10 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 						.setData(Uri.parse("market://search?q=org.ligi.gobandroid.ai")));
 			}
 			catch (Exception e) {
-				new AlertDialog.Builder(this).setTitle("Problem")
+				new AlertDialog.Builder(this).setTitle(R.string.problem)
 				.setMessage(
-				 "Can't Accesss the Android Market to install an AI - you will have to install it manualy."
-				).setPositiveButton("OK",  new DialogInterface.OnClickListener() {
+					R.string.android_market_problem
+				).setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 			
 					}
@@ -222,10 +218,10 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 				
 				if ((act_size>19)&&((black_player_spinner.getSelectedItemPosition()!=0)||(white_player_spinner.getSelectedItemPosition()!=0)))
 						{
-							new AlertDialog.Builder(this).setTitle("Problem")
+							new AlertDialog.Builder(this).setTitle(R.string.problem)
 							.setMessage(
-	    					 "GnuGo can only play up to 19x19"
-							).setPositiveButton("OK",  new DialogInterface.OnClickListener() {
+	    					 R.string.gnugo_size_problem
+							).setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog, int whichButton) {
 	    				
 								}

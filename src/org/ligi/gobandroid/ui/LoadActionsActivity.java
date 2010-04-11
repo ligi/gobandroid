@@ -37,7 +37,8 @@ import android.widget.ListView;
 **/
 
 public class LoadActionsActivity extends ListActivity {
-    public String[] menu_items= {"SD Card", "Online" };
+    
+	private String[] menu_items= {"SD Card", "Online" };
     
     private final static int MENU_SDCARD=0;
     private final static int MENU_ONLINE=1;
