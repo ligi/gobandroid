@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
     <string name="app_name">gobandroid</string>
+	<string name="quit_confirm">Do you really want to quit this game?</string>
+	<string name="no">No</string>
+	<string name="yes">Yes</string>
+	<string name="end_game_quesstion_title">End Game?</string>
+	<string name="comments">Comments</string>
+	<string name="ok">OK</string>
+	<string name="wait_gnugo">Wait for GnuGo to settle</string>
+	<string name="not_your_turn">It's not your turn!</string>
+	<string name="undo">Undo</string>
+	<string name="redo">Redo</string>
+	<string name="pass">Pass</string>
+	<string name="results">Results</string>
+	<string name="settings">Settings</string>
+	<string name="save_as_sgf">Save as SGF</string>
 </resources>

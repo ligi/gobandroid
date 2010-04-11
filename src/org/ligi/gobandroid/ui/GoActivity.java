@@ -100,9 +100,6 @@ public class GoActivity
 	
 	private ImageButton next,back,first,last,comments;
 	
-	
-	
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -371,7 +368,7 @@ public class GoActivity
 		
 		if (!game.isFinished()) {
 			if (game.canUndo()&&(game.getGoMover()==null)) {
-				MenuItem undo_menu = menu.add(0, MENU_UNDO, 0, "Undo");
+				MenuItem undo_menu = menu.add(0, MENU_UNDO, 0, R.string.undo);
 				undo_menu.setIcon(android.R.drawable.ic_menu_revert);
 			}
 			
@@ -379,7 +376,7 @@ public class GoActivity
 			MenuItem pass_menu = menu.add(0, MENU_PASS, 0, "Pass");
 			pass_menu.setIcon(android.R.drawable.ic_menu_set_as); }
 		} else {
-			menu.add(0, MENU_FINISH, 0,	"Results").setIcon(android.R.drawable.ic_menu_more);
+			menu.add(0, MENU_FINISH, 0,R.string.results).setIcon(android.R.drawable.ic_menu_more);
 			
 		}
 
@@ -613,16 +610,15 @@ public class GoActivity
     			}
     		else
     		{
-    			new AlertDialog.Builder(this).setTitle("End Game?")
-    			.setMessage(
-    					 "Do you really want to quit this game??"
+    			new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
+    			.setMessage( R.string.quit_confirm
     		).setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
     			public void onClick(DialogInterface dialog, int whichButton) {
     				if (game.getGoMover()!=null)
     					game.getGoMover().stop();
     				finish();
     			}
-    		}).setCancelable(true).setNegativeButton("No",  new DialogInterface.OnClickListener() {
+    		}).setCancelable(true).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
     			public void onClick(DialogInterface dialog, int whichButton) {
     				
     			}
@@ -654,9 +650,7 @@ public class GoActivity
 		if (btn==back)
 			game.undo();
 		else if (btn==next) {
-			Log.i("gobandroid", " !!!!!possible variations on redo" +game.getPossibleVariationCount());
-			
-			
+						
 			if (game.getPossibleVariationCount()>0)
 				{
 				LinearLayout lin=new LinearLayout(this);
@@ -728,10 +722,10 @@ public class GoActivity
 			game.jumpLast();
 		else if (btn==comments) {
 	
-			new AlertDialog.Builder(this).setTitle("Comments")
+			new AlertDialog.Builder(this).setTitle(R.string.comments)
 			.setMessage(
 					 game.getActMove().getComment()
-		).setPositiveButton("OK",  new DialogInterface.OnClickListener() {
+		).setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 			
 			}
@@ -754,7 +748,7 @@ public class GoActivity
 			if (its_not_your_turn_toast==null)
 				its_not_your_turn_toast=Toast.makeText(this, "", Toast.LENGTH_LONG);
 			
-			its_not_your_turn_toast.setText("Wait for GnuGo to settle");
+			its_not_your_turn_toast.setText(R.string.wait_gnugo);
 			its_not_your_turn_toast.show();
 			
 			return true;
@@ -768,7 +762,7 @@ public class GoActivity
 			if (its_not_your_turn_toast==null)
 				its_not_your_turn_toast=Toast.makeText(this, "", Toast.LENGTH_LONG);
 			
-			its_not_your_turn_toast.setText("It's not your turn!");
+			its_not_your_turn_toast.setText(R.string.not_your_turn);
 			its_not_your_turn_toast.show();
 			
 			return true;
@@ -786,6 +780,8 @@ public class GoActivity
       review_mode=savedInstanceState.getBoolean("review_mode");
       updateControlsStatus();
     } 
+    
+    
     @Override 
     protected void onSaveInstanceState(Bundle outState) { 
       outState.putBoolean("review_mode", review_mode);
