@@ -392,6 +392,7 @@ public class GoActivity
 		return true;
 	}
 
+	
 	public TextView filledTextView(String txt,boolean center,float size) {
 		TextView res=new TextView(this);
 		res.setText(txt);
@@ -400,6 +401,10 @@ public class GoActivity
 				res.setGravity(Gravity.CENTER_HORIZONTAL);
 		res.setTextSize(size);
 		return res;
+	}
+	
+	public TextView filledTextView(int txt_id,boolean center,float size) {
+		return filledTextView(getResources().getString(txt_id),center,size);
 	}
 	
 	/* Handles item selections */
@@ -435,26 +440,26 @@ public class GoActivity
 			float size1=20.0f;
 			float size2=23.0f;
 			
-			row.addView(filledTextView("Territory",false,size1));
+			row.addView(filledTextView(R.string.territory,false,size1));
 			row.addView(filledTextView(""+game.territory_black,true,size1));
 			row.addView(filledTextView(""+game.territory_white,true,size1));
 			table.addView(row);
 			
 			row=new TableRow(this);
-			row.addView(filledTextView("Captures",false,size1));
+			row.addView(filledTextView(R.string.captures,false,size1));
 			row.addView(filledTextView(""+game.getCapturesBlack(),true,size1));
 			row.addView(filledTextView(""+game.getCapturesWhite(),true,size1));
 			table.addView(row);
 			
 			row=new TableRow(this);
-			row.addView(filledTextView("Komi",false,size1));
+			row.addView(filledTextView(R.string.komi,false,size1));
 			row.addView(filledTextView("0",true,size1));
 			row.addView(filledTextView(""+game.getKomi(),true,size1));
 			
 			table.addView(row);
 			
 			row=new TableRow(this);
-			row.addView(filledTextView("Final Points",false,size2));
+			row.addView(filledTextView(R.string.filal_points,false,size2));
 			row.addView(filledTextView(""+game.getPointsBlack(),true,size2));
 			row.addView(filledTextView(""+game.getPointsWhite(),true,size2));
 			table.addView(row);
@@ -463,7 +468,7 @@ public class GoActivity
 			
 			String game_fin_txt="";
 			if (game.getPointsBlack()==game.getPointsWhite())
-				 game_fin_txt=("The Game ended in a draw");
+				 game_fin_txt=getResources().getString(R.string.game_ended_in_draw);
 						
 			if (game.getPointsBlack()>game.getPointsWhite())
 				game_fin_txt=("Black won with " + (game.getPointsBlack()-game.getPointsWhite()) + " Points.");
@@ -471,10 +476,10 @@ public class GoActivity
 			if (game.getPointsWhite()>game.getPointsBlack())
 				game_fin_txt=("White won with " + (game.getPointsWhite()-game.getPointsBlack()) + " Points.");
 			
-			new AlertDialog.Builder(this).setTitle("Game Result").setView(table)
+			new AlertDialog.Builder(this).setTitle(R.string.results).setView(table)
 			.setMessage(
 					 game_fin_txt
-		).setPositiveButton("OK",  new DialogInterface.OnClickListener() {
+		).setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				
 			}
@@ -495,40 +500,30 @@ public class GoActivity
 			input.setText(GoPrefs.getSGFFname());
 
 			new AlertDialog.Builder(this).setTitle("Save SGF").setMessage("How should the file I will write to " +GoPrefs.getSGFPath() + " be named?").setView(input)
-			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			.setPositiveButton(R.string.ok , new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String value = input.getText().toString(); 
 					
-				//value.split("\/")
 				File f = new File(GoPrefs.getSGFPath());
 				
-				Log.i("gobandroid"," making dirs for sgf" + f + " -- " +f.mkdirs());
-				
-				
 				try {
-					Log.i("gobandroid"," making file");
 					f=new File(GoPrefs.getSGFPath() + "/"+value+".sgf");
 					f.createNewFile();
-					Log.i("gobandroid"," done");
 					
-					FileWriter gpxwriter = new FileWriter(f);
+					FileWriter sgf_writer = new FileWriter(f);
 					
-					Log.i("gobandroid"," file writer");
-					BufferedWriter out = new BufferedWriter(gpxwriter);
-					Log.i("gobandroid"," out");
-					
+					BufferedWriter out = new BufferedWriter(sgf_writer);
 					
 					out.write(SGFHelper.game2sgf(game));
-					Log.i("gobandroid"," write");
 					out.close();
-					gpxwriter.close();
+					sgf_writer.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 	
 			}
-			}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 			// Do nothing.
 			}
@@ -557,7 +552,6 @@ public class GoActivity
 				(titleContainerId)).removeAllViews();
 
 		// add new custom title view
-
 		((ViewGroup) this.getWindow().findViewById
 					(titleContainerId)).setVisibility(View.VISIBLE	);
 			this.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, view_id);
@@ -608,7 +602,7 @@ public class GoActivity
     		{
     			new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
     			.setMessage( R.string.quit_confirm
-    		).setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
+    		).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
     			public void onClick(DialogInterface dialog, int whichButton) {
     				if (game.getGoMover()!=null)
     					game.getGoMover().stop();
@@ -694,7 +688,7 @@ public class GoActivity
 					var_btn.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1f));
 					}
 
-				select_dlg.setTitle("Variations");
+				select_dlg.setTitle(R.string.variations);
 				select_dlg.setContentView(lin);
 				
 				/*select_dlg.setM .setMessage(
