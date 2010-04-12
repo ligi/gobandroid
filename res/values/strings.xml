@@ -23,4 +23,6 @@
 <string name="gnugo_size_problem">GnuGo can only play up to 19x19</string>
 <string name="problem">Problem</string>
 <string name="gameplay">Gameplay</string>
+<string name="show_review_controls">Show review Controls</string>
+<string name="hide_review_controls">Hide review Controls</string>
 </resources>

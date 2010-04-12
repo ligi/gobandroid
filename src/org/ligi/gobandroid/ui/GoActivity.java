@@ -375,7 +375,7 @@ public class GoActivity
 			}
 			
 			if ((game.getGoMover()==null)||((!game.getGoMover().playing_black)&&game.isBlackToMove())||((!game.getGoMover().playing_white)&&(!game.isBlackToMove())) ) {
-			MenuItem pass_menu = menu.add(0, MENU_PASS, 0, "Pass");
+			MenuItem pass_menu = menu.add(0, MENU_PASS, 0,R.string.pass);
 			pass_menu.setIcon(android.R.drawable.ic_menu_set_as); }
 		} else {
 			menu.add(0, MENU_FINISH, 0,R.string.results).setIcon(android.R.drawable.ic_menu_more);
@@ -383,11 +383,11 @@ public class GoActivity
 		}
 
 		if ((game.getGoMover()==null)||game.isFinished())
-			menu.add(0, MENU_SHOWCONTROLS, 0,(review_mode?"Hide review controls":"Show review controls")).setIcon(android.R.drawable.ic_menu_view);
+			menu.add(0, MENU_SHOWCONTROLS, 0,(review_mode?R.string.hide_review_controls:R.string.show_review_controls)).setIcon(android.R.drawable.ic_menu_view);
 			
 
-		menu.add(0, MENU_WRITE_SGF, 0,"Save as SGF").setIcon(android.R.drawable.ic_menu_save);
-		menu.add(0, MENU_SETTINGS, 0, "Settings").setIcon(android.R.drawable.ic_menu_preferences);
+		menu.add(0, MENU_WRITE_SGF, 0,R.string.save_as_sgf).setIcon(android.R.drawable.ic_menu_save);
+		menu.add(0, MENU_SETTINGS, 0, R.string.settings).setIcon(android.R.drawable.ic_menu_preferences);
 		
 		return true;
 	}
