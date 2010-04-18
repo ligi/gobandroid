@@ -280,8 +280,6 @@ public class GoActivity
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		
-		
 		super.onTouchEvent(event);
 		updateControlsStatus();
 		return false;
@@ -356,18 +354,14 @@ public class GoActivity
 	*/		
 		setCustomTitle(R.layout.top);
 		((TopView)(this.findViewById(R.id.TopView))).setGame(game);
-
-		
 	}
-
-
 	
-	/* Creates the menu items */
+	/**
+	 *  Creates the menu items 
+	 **/
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
 
-		
-		
 		if (!game.isFinished()) {
 			if (game.canUndo()&&(game.getGoMover()==null)) {
 				MenuItem undo_menu = menu.add(0, MENU_UNDO, 0, R.string.undo);
@@ -499,7 +493,7 @@ public class GoActivity
 			final EditText input = new EditText(this);   
 			input.setText(GoPrefs.getSGFFname());
 
-			new AlertDialog.Builder(this).setTitle("Save SGF").setMessage("How should the file I will write to " +GoPrefs.getSGFPath() + " be named?").setView(input)
+			new AlertDialog.Builder(this).setTitle(R.string.save_sgf).setMessage("How should the file I will write to " +GoPrefs.getSGFPath() + " be named?").setView(input)
 			.setPositiveButton(R.string.ok , new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String value = input.getText().toString(); 
@@ -518,8 +512,6 @@ public class GoActivity
 					out.close();
 					sgf_writer.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 	
 			}
@@ -593,16 +585,12 @@ public class GoActivity
     		
     	case KeyEvent.KEYCODE_BACK:
     		if (board_view.isZoomed())
-    			{ 
-    			Log.i("gobandroid","unzoom");
     			board_view.setZoom(false);
-    		
-    			}
     		else
     		{
     			new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
     			.setMessage( R.string.quit_confirm
-    		).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
+    			).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
     			public void onClick(DialogInterface dialog, int whichButton) {
     				if (game.getGoMover()!=null)
     					game.getGoMover().stop();
@@ -620,8 +608,6 @@ public class GoActivity
     	}
     	updateControlsStatus();
     	board_view.invalidate();
-    	
-    	
     	return super.onKeyDown(keyCode, event);	
     }
 	
@@ -634,9 +620,6 @@ public class GoActivity
 
 	@Override
 	public void onClick(View btn) {
-
-		Log.i("gobandroid", "onClick");
-		
 		if (btn==back)
 			game.undo();
 		else if (btn==next) {
@@ -720,8 +703,6 @@ public class GoActivity
 			
 			}
 		}).show();
-		
-			
 		}
 		
 		updateControlsStatus();
@@ -785,8 +766,6 @@ public class GoActivity
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				
-				e.printStackTrace();
 			}
 					
 			class UpdateViewClass implements Runnable {
