@@ -43,6 +43,12 @@ public class GoPrefs {
 	
 	public static String KEY_AI_LEVEL="ai_level";
 	
+	public static String KEY_LAST_BOARD_SIZE="last_board_size";
+	public static String KEY_LAST_HANDICAP="last_handicap";
+	public static String KEY_LAST_PLAYER_BLACK="last_player_black";
+	public static String KEY_LAST_PLAYER_WHITE="last_player_white";
+	
+	
 	public static String DEFAULT_AI_LEVEL="5";
 	public static String DEFAULT_SKIN="no Skin";
 	public static String DEFAULT_SGF_PATH="/sdcard/gobandroid/sgf";
