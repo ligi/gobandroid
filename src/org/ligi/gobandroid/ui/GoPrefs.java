@@ -30,30 +30,28 @@ public class GoPrefs {
 
 	private static SharedPreferences shared_prefs;
 	
-	public static String KEY_FATFINGER="fatfinger";
-	public static String KEY_FULLSCREEN="fullscreen";
-	public static String KEY_KEEPLIGHT="keeplight";
-	public static String KEY_BOARD_SKIN="board_skina";
-	public static String KEY_STONES_SKIN="stones_skina";
+	public final static String KEY_FATFINGER="fatfinger";
+	public final static String KEY_FULLSCREEN="fullscreen";
+	public final static String KEY_KEEPLIGHT="keeplight";
+	public final static String KEY_BOARD_SKIN="board_skina";
+	public final static String KEY_STONES_SKIN="stones_skina";
 	
-	public static String KEY_MARKLASTSTONE="mark_last_stone";
+	public final static String KEY_MARKLASTSTONE="mark_last_stone";
 	
-	public static String KEY_SGF_PATH="sgf_path";
-	public static String KEY_SGF_FNAME="sgf_fname";
+	public final static String KEY_SGF_PATH="sgf_path";
+	public final static String KEY_SGF_FNAME="sgf_fname";
 	
-	public static String KEY_AI_LEVEL="ai_level";
+	public final static String KEY_AI_LEVEL="ai_level";
 	
-	public static String KEY_LAST_BOARD_SIZE="last_board_size";
-	public static String KEY_LAST_HANDICAP="last_handicap";
-	public static String KEY_LAST_PLAYER_BLACK="last_player_black";
-	public static String KEY_LAST_PLAYER_WHITE="last_player_white";
+	public final static String KEY_LAST_BOARD_SIZE="last_board_size";
+	public final static String KEY_LAST_HANDICAP="last_handicap";
+	public final static String KEY_LAST_PLAYER_BLACK="last_player_black";
+	public final static String KEY_LAST_PLAYER_WHITE="last_player_white";
 	
-	
-	public static String DEFAULT_AI_LEVEL="5";
-	public static String DEFAULT_SKIN="no Skin";
-	public static String DEFAULT_SGF_PATH="/sdcard/gobandroid/sgf";
-	public static String DEFAULT_SGF_FNAME="game";
-	
+	public final static String DEFAULT_AI_LEVEL="5";
+	public final static String DEFAULT_SKIN="no Skin";
+	public final static String DEFAULT_SGF_PATH="/sdcard/gobandroid/sgf";
+	public final static String DEFAULT_SGF_FNAME="game";
 	
 	public static void init(Context context) {
 		shared_prefs=PreferenceManager.getDefaultSharedPreferences(context)	;
