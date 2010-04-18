@@ -57,7 +57,6 @@ public class GoPrefs {
 		shared_prefs=PreferenceManager.getDefaultSharedPreferences(context)	;
 	}
 	
-	
 	public static boolean getFatFingerEnabled() {
 		return shared_prefs.getBoolean(KEY_FATFINGER, false);
 	}
@@ -99,8 +98,10 @@ public class GoPrefs {
 		}
 	}
 	
+	/**
+	 * @return all available skins in the skin base path
+	 */
 	public static String[] getAllSkinNames() {
-		Log.i("gobandroid", "entering all skins");
 		File f=new File(GOSkin.skin_base_path);
 		int pos=0;
 		
@@ -113,16 +114,10 @@ public class GoPrefs {
 		
 		String[] skin_strings=new String[1+file_list.length];
 		skin_strings[pos++]="no Skin";
-		//int selection_remember=0;
 		
 		for (File skin:file_list)
-			{
-			//if (shared_prefs.getString("skinname", "").equals(skin.getName()))
-			//	selection_remember=pos;
 			skin_strings[pos++]=skin.getName();
-			}
 
-		Log.i("gobandroid", "ending ");
 		return skin_strings;
 
 	}
