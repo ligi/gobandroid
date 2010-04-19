@@ -24,7 +24,6 @@ import java.io.File;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 public class GoPrefs {
 
@@ -53,8 +52,47 @@ public class GoPrefs {
 	public final static String DEFAULT_SGF_PATH="/sdcard/gobandroid/sgf";
 	public final static String DEFAULT_SGF_FNAME="game";
 	
+	public final static int DEFAULT_LAST_BOARD_SIZE=9;
+	public final static int DEFAULT_LAST_HANDICAP=0;
+	
+	public final static String DEFAULT_LAST_PLAYER_BLACK="last_player_black";
+	public final static String DEFAULT_LAST_PLAYER_WHITE="last_player_white";
+	
 	public static void init(Context context) {
 		shared_prefs=PreferenceManager.getDefaultSharedPreferences(context)	;
+	}
+	
+	public static void setLastBoardSize(int size) {
+		shared_prefs.edit().putInt(KEY_LAST_BOARD_SIZE, size).commit();
+	}
+	
+	public static int getLastBoardSize() {
+		return shared_prefs.getInt(KEY_LAST_BOARD_SIZE, DEFAULT_LAST_BOARD_SIZE);  
+	}
+		
+	public static void setLastHandicap(int size) {
+		shared_prefs.edit().putInt(KEY_LAST_HANDICAP, size).commit();
+	}
+	
+	public static int getLastHandicap() {
+		return shared_prefs.getInt(KEY_LAST_HANDICAP, DEFAULT_LAST_HANDICAP);  
+	}
+	
+	
+	public static String getLastPlayerBlack() {
+		return shared_prefs.getString(KEY_LAST_PLAYER_BLACK, DEFAULT_LAST_PLAYER_BLACK);
+	}
+	
+	public static String getLastPlayerWhite() {
+		return shared_prefs.getString(KEY_LAST_PLAYER_WHITE, DEFAULT_LAST_PLAYER_WHITE);
+	}
+	
+	public static void setLastPlayerWhite(String last_player) {
+		shared_prefs.edit().putString(KEY_LAST_PLAYER_WHITE, last_player).commit();
+	}
+	
+	public static void setLastPlayerBlack(String last_player) {
+		shared_prefs.edit().putString(KEY_LAST_PLAYER_BLACK, last_player).commit();
 	}
 	
 	public static boolean getFatFingerEnabled() {

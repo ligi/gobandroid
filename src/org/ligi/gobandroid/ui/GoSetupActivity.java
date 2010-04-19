@@ -33,13 +33,16 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 
@@ -48,11 +51,11 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  * 
- *         This software is licenced with GPLv3
+ *         This software is licensed with GPLv3
  * 
  **/
 
-public class GoSetupActivity extends Activity implements OnSeekBarChangeListener, OnClickListener{
+public class GoSetupActivity extends Activity implements OnSeekBarChangeListener, OnClickListener, OnItemSelectedListener{
 
 	private byte act_size=9;
 	private byte act_handicap=0;
@@ -107,6 +110,7 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 	public void onResume() {
 		super.onResume();
 
+		Log.i("gobandroid", "resume !!!!!!");
 		size_seek=(SeekBar)this.findViewById(R.id.size_slider);
 		size_seek.setOnSeekBarChangeListener(this);
 		
@@ -139,45 +143,77 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 
  		spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-	 		
+ 		Log.i("gobandroid","posfoo" + spinner_adapter.getPosition("foo"));
+ 		Log.i("gobandroid","posgg" + spinner_adapter.getPosition("GnuGo"));
+ 		
  		white_player_spinner=(Spinner)this.findViewById(R.id.WhitePlayerSpinner);
+ 		
+ 		
  		
 		black_player_spinner.setAdapter(spinner_adapter);
 		white_player_spinner.setAdapter(spinner_adapter);
 		
+		white_player_spinner.setOnItemSelectedListener(this);
+		black_player_spinner.setOnItemSelectedListener(this);
+		
+		// set the default selection 
+		int spinner_pos=spinner_adapter.getPosition(GoPrefs.getLastPlayerBlack());
+		if (spinner_pos==-1)
+			spinner_pos=0;
+				
+		black_player_spinner.setSelection(spinner_pos,true);
+		
+		spinner_pos=spinner_adapter.getPosition(GoPrefs.getLastPlayerWhite());
+			if (spinner_pos==-1)
+				spinner_pos=0;
+					
+		white_player_spinner.setSelection(spinner_pos,true);
+
+	
 		start_button=(Button)this.findViewById(R.id.game_start_button);
 		start_button.setOnClickListener(this);
 		
-		
 		handicap_text=(TextView)this.findViewById(R.id.handicap_label);
 		handicap_seek=(SeekBar)this.findViewById(R.id.handicap_seek);
-		
 		handicap_seek.setOnSeekBarChangeListener(this);
 		
+		// set defaults
+		act_size=(byte)GoPrefs.getLastBoardSize();
+		act_handicap=(byte)GoPrefs.getLastHandicap();
+		
 		refresh_ui();
-
 	}
+	
+	
+	/**
+	 * refresh the ui elements with values from act_size / act_handicap 
+	 */
 	public void refresh_ui() {
 		size_text.setText("Size "+act_size+"x"+act_size);
 		handicap_text.setText("Handicap " + act_handicap);
 	
-		size_seek.setProgress(act_size-size_offset);
-
+		// the checks for change here are important - otherwise samsung moment will die here with stack overflow
+		if ((act_size-size_offset)!=size_seek.getProgress())
+			size_seek.setProgress(act_size-size_offset);
+		if (act_handicap!=handicap_seek.getProgress())
+			handicap_seek.setProgress(act_handicap);
+		
+		// only enable handicap seeker when the size is 9x9 or 13x13 or 19x19
 		handicap_seek.setEnabled((act_size==9)||(act_size==13)||(act_size==19));
+		
+		GoPrefs.setLastBoardSize(act_size);
+		GoPrefs.setLastHandicap(act_handicap);
 	}
 	
 	public void onProgressChanged(SeekBar seekBar, int progress,
 			boolean fromUser) {
 		if ((seekBar==size_seek)&&(act_size!=(byte)(progress+size_offset))) 
-			{
 			act_size=(byte)(progress+size_offset);
-			refresh_ui();
-			}
 		else if ((seekBar==handicap_seek)&&(act_handicap!=(byte)progress))
-			{
 			act_handicap=(byte)progress;
-			refresh_ui();
-			}
+
+
+		refresh_ui();
 	}
 
 	@Override
@@ -237,11 +273,26 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 					go_intent.putExtra("black_player",black_player_spinner.getSelectedItemPosition());
 	             
 					startActivity(go_intent);
+					
 				}
 			}
 		
 		refresh_ui();
 		
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> arg0, View selected_view, int arg2,
+			long arg3) {
+		if (arg0==white_player_spinner)
+			GoPrefs.setLastPlayerWhite((String)arg0.getAdapter().getItem(arg2));
+		if (arg0==black_player_spinner)
+			GoPrefs.setLastPlayerBlack((String)arg0.getAdapter().getItem(arg2));
+
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> arg0) {
 	}
 	
 }

@@ -71,7 +71,6 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         markLastStoneCheckBoxPref.setTitle("mark last stone");
         markLastStoneCheckBoxPref.setSummary("little circle showing last stone");
         inlinePrefCat.addPreference(markLastStoneCheckBoxPref);
-
         
         /* Skin section */
         PreferenceCategory skinPrefCat = new PreferenceCategory(this);

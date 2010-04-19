@@ -1,3 +1,5 @@
+0.37
+   + Remember stuff in the game setup 
 0.36
    + Display Move Number on top bar
    F let user edit settings when ai is active
