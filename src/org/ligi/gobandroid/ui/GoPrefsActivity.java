@@ -40,6 +40,8 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
 	private EditTextPreference sgf_path_pref;
 	private EditTextPreference sgf_fname_pref;
 	private ListPreference aiLevelPref;
+	private CheckBoxPreference SGFLegendCheckBoxPref;
+	private CheckBoxPreference doLegendCheckBoxPref;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +128,23 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         keepScreenAwakeCheckBoxPref.setSummary("drain your Battery while playing");
        	uiPrefCat.addPreference(keepScreenAwakeCheckBoxPref);
 
+        doLegendCheckBoxPref = new CheckBoxPreference(this);
+        doLegendCheckBoxPref.setKey(GoPrefs.KEY_DO_LEGEND);
+        doLegendCheckBoxPref.setTitle("Show Legend");
+        doLegendCheckBoxPref.setSummary("show legend to see position fast");
+        doLegendCheckBoxPref.setDefaultValue(GoPrefs.getLegendEnabled());
+        doLegendCheckBoxPref.setOnPreferenceChangeListener(this);
+       	uiPrefCat.addPreference(doLegendCheckBoxPref);
+
+        SGFLegendCheckBoxPref = new CheckBoxPreference(this);
+        SGFLegendCheckBoxPref.setKey(GoPrefs.KEY_SGF_LEGEND);
+        SGFLegendCheckBoxPref.setTitle("SGF Legend");
+        SGFLegendCheckBoxPref.setSummary("GHJKL instead of GHIJKL");
+        SGFLegendCheckBoxPref.setEnabled(GoPrefs.getLegendEnabled());
+        SGFLegendCheckBoxPref.setDefaultValue(GoPrefs.getLegendSGFMode());
+        
+       	uiPrefCat.addPreference(SGFLegendCheckBoxPref);
+       	
         /* SGF section */
         PreferenceCategory sgfPrefCat = new PreferenceCategory(this);
         sgfPrefCat.setTitle("SGF Preferences");
@@ -179,7 +198,10 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
  		if ((preference==sgf_path_pref)||(preference==sgf_fname_pref)
  				||(preference==boardSkinPref)|| (preference==stoneSkinPref)|| (preference==aiLevelPref))
 	  		preference.setSummary((String)newValue);
- 		  	
+ 		
+ 		if (preference==doLegendCheckBoxPref)
+ 			SGFLegendCheckBoxPref.setEnabled((Boolean)newValue);
+ 		
 	  	return true; // return that we are OK with preferences
 	} 	
 }

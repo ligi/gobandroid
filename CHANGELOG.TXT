@@ -1,3 +1,6 @@
+0.38
+   + toggle board legend
+   + legend in SGF mode Option
 0.37
    + Remember stuff in the game setup 
 0.36

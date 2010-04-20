@@ -27,11 +27,11 @@
 	<string name="game_results">Game Results</string>
 	<string name="show_review_controls">Show review Controls</string>
 	<string name="hide_review_controls">Hide review Controls</string>
-<string name="game_ended_in_draw">The Game ended in a draw</string>
-<string name="variations">Variations</string>
-<string name="territory">Territory</string>
-<string name="captures">Captures</string>
-<string name="komi">Komi</string>
-<string name="filal_points">Final Points</string>
-<string name="save_sgf">save SGF</string>
+	<string name="game_ended_in_draw">The Game ended in a draw</string>
+	<string name="variations">Variations</string>
+	<string name="territory">Territory</string>
+	<string name="captures">Captures</string>
+	<string name="komi">Komi</string>
+	<string name="filal_points">Final Points</string>
+	<string name="save_sgf">save SGF</string>
 </resources>

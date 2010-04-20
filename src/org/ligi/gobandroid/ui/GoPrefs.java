@@ -35,6 +35,10 @@ public class GoPrefs {
 	public final static String KEY_BOARD_SKIN="board_skina";
 	public final static String KEY_STONES_SKIN="stones_skina";
 	
+	public final static String KEY_DO_LEGEND="do_legend";
+	public final static String KEY_SGF_LEGEND="sgf legend";
+	
+	
 	public final static String KEY_MARKLASTSTONE="mark_last_stone";
 	
 	public final static String KEY_SGF_PATH="sgf_path";
@@ -110,7 +114,14 @@ public class GoPrefs {
 	public static boolean getMarkLastStone() {
 		return shared_prefs.getBoolean(KEY_MARKLASTSTONE, false);
 	}
+	
+	public static boolean getLegendEnabled() {
+		return shared_prefs.getBoolean(KEY_DO_LEGEND, false);
+	}
 
+	public static boolean getLegendSGFMode() {
+		return shared_prefs.getBoolean(KEY_SGF_LEGEND, false);
+	}
 	public static String getBoardSkinName() {
 		return shared_prefs.getString(KEY_BOARD_SKIN,DEFAULT_SKIN );
 	}
@@ -126,6 +137,8 @@ public class GoPrefs {
 	public static String getSGFFname() {
 		return shared_prefs.getString(KEY_SGF_FNAME,DEFAULT_SGF_FNAME );
 	}
+	
+	
 	
 	public static byte getAILevel() {
 		String level_str=shared_prefs.getString(KEY_AI_LEVEL,DEFAULT_AI_LEVEL );
