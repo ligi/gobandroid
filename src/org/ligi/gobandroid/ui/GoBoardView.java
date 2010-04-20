@@ -186,84 +186,8 @@ public class GoBoardView extends View {
     	else
     		canvas.drawRect(new RectF(0,0,this.getWidth(),this.getHeight()),boardPaint );
     	
-    	/*
-		if (!isZoomed()) {
-			int txt_anchor_x = 0;
-			int txt_anchor_y = 0;
-
-			if (width_is_max) {
-				txt_anchor_x = 10;
-				txt_anchor_y = this.getWidth() + (int) textPaint.getTextSize()
-						* 2;
-				;
-			} else {
-				txt_anchor_x = this.getHeight() + (int) textPaint.getTextSize()
-						* 2;
-				txt_anchor_y = 20;
-			}
-			float spacer = textPaint.getTextSize() * 1.5f;
-			
-			if (game.isFinished())
-				canvas.drawText("Game is finished - Mark Dead Stones",
-						txt_anchor_x, txt_anchor_y + 0 * spacer, textPaint);
-			else {
-				if (game.isLastActionPass())
-					canvas.drawText((game.isBlackToMove() ? "black" : "white")
-							+ " to move ("
-							+ (!game.isBlackToMove() ? "black" : "white")
-							+ " passed)", txt_anchor_x, txt_anchor_y + 0
-							* spacer, textPaint);
-				else
-					canvas.drawText((game.isBlackToMove() ? "black" : "white")
-							+ " to move", txt_anchor_x, txt_anchor_y + 0
-							* spacer, textPaint);
-			}
-			txt_anchor_y+=spacer;
-			canvas.drawText("Move: " + (game.moves.size() + 1), txt_anchor_x,
-					txt_anchor_y , textPaint);
-			txt_anchor_y+=spacer;
-			
-			if (!game.isFinished()) {
-				canvas.drawText("Captures black: " + game.getCapturesBlack(),
-						txt_anchor_x, txt_anchor_y, textPaint);
-				txt_anchor_y+=spacer;
-				canvas.drawText("Captures white: " + game.getCapturesWhite(),
-						txt_anchor_x, txt_anchor_y, textPaint);
-			
-				txt_anchor_y+=spacer;	
-			}
-			else
-			{
-			canvas.drawText("Black: " + game.territory_black + " (Territory) + " + game.getCapturesBlack() + " (Captures) =" + game.getPointsBlack() ,
-					txt_anchor_x, txt_anchor_y , textPaint);
-			txt_anchor_y+=spacer;	
-			canvas.drawText("White: " + game.territory_white + " (Territory) + "+ game.getCapturesWhite() + " (Captures) + " + game.getKomi() + " (Komi) =" + game.getPointsWhite(),
-					txt_anchor_x, txt_anchor_y , textPaint);
-			txt_anchor_y+=spacer;	
-			
-			if (game.getPointsBlack()==game.getPointsWhite())
-				canvas.drawText("The Game ended in a draw",
-						txt_anchor_x, txt_anchor_y , textPaint);
-			if (game.getPointsBlack()>game.getPointsWhite())
-				canvas.drawText("Black won with " + (game.getPointsBlack()-game.getPointsWhite()) + " Points.",
-						txt_anchor_x, txt_anchor_y , textPaint);
-			
-			if (game.getPointsWhite()>game.getPointsBlack())
-				canvas.drawText("White won with " + (game.getPointsWhite()-game.getPointsBlack()) + " Points.",
-						txt_anchor_x, txt_anchor_y , textPaint);
-			txt_anchor_y+=spacer;	
-			}
-			if (touch_x != -1)
-				canvas.drawText("Touch: " + (char) ('A' + touch_x)
-						+ (touch_y + 1), txt_anchor_x, txt_anchor_y 
-						, textPaint);
-			txt_anchor_y+=spacer;	
-		}
-        
-        */
     	
         canvas.translate(offset_x, offset_y);
-        
         
         // draw the vertical lines
         for(int x=0;x<game.getVisualBoard().getSize();x++)
