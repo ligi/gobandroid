@@ -264,6 +264,8 @@ public class GoBoardView extends View {
     	
         canvas.translate(offset_x, offset_y);
         
+        
+        // draw the vertical lines
         for(int x=0;x<game.getVisualBoard().getSize();x++)
         	{
         	if (touch_x==x)
@@ -273,7 +275,8 @@ public class GoBoardView extends View {
             
         	
         	}
-                
+           
+        // draw the horizontal lines and the legend
         for(int x=0;x<game.getVisualBoard().getSize();x++)
         {
             if (touch_y==x)
