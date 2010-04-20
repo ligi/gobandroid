@@ -191,15 +191,8 @@ public class GoBoardView extends View {
         
         // draw the vertical lines
         for(int x=0;x<game.getVisualBoard().getSize();x++)
-        	{
-        	if (touch_x==x)
-        		canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(game.getVisualBoard().getSize()-1) +stone_size/2.0f,gridPaint_h);	
-            else
-            	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(game.getVisualBoard().getSize()-1) +stone_size/2.0f,gridPaint);
-            
+        	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(game.getVisualBoard().getSize()-1) +stone_size/2.0f,(touch_x==x)?gridPaint_h:gridPaint);	
         	
-        	}
-           
         // draw the horizontal lines and the legend
         for(int x=0;x<game.getVisualBoard().getSize();x++)
         {
