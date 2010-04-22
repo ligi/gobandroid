@@ -123,7 +123,6 @@ public class GoActivity
 				// otherwise create a new game
 		
 				Uri intent_uri=getIntent().getData();
-				//String load_from=getIntent().getStringExtra("sgf");
 				
 				if (intent_uri!=null) {
 					try {
@@ -135,9 +134,6 @@ public class GoActivity
 						else
 						  in= new BufferedInputStream(new URL(""+intent_uri) 
 			              .openStream(), 1024*4); 
-						
-						
-						//InputStream in = getContentResolver().openInputStream(intent_uri);
 						
 						int c;
 						String sgf="";
@@ -155,11 +151,6 @@ public class GoActivity
 					}
 					
 				}
-	/*			else				
-				if (load_from!=null) {
-					game=SGFHelper.sgf2game(load_from);
-					review_mode=true;
-				}*/
 				else {
 					byte size = getIntent().getByteExtra("size", (byte) 9);
 					byte handicap = getIntent().getByteExtra("handicap", (byte) 0);
@@ -239,7 +230,6 @@ public class GoActivity
 				bottom_nav_params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 
 				controls_table.setLayoutParams(bottom_nav_params);
-				//			rel.getLayoutParams(). addRule(RelativeLayout.CENTER_IN_PARENT);
 
 				rel.setGravity(Gravity.BOTTOM);
 				
@@ -331,27 +321,6 @@ public class GoActivity
 		else
 			this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	
-/*		
-		GOSkin.setSkin(shared_prefs.getString("skinname", ""));
-		GOSkin.setEnabled(shared_prefs.getBoolean("skin", false));
-		
-		
-
-		Log.i("gobandroid","1do skin" +GOSkin.useSkin());
-		Log.i("gobandroid","1name skin" +GOSkin.getSkinName() + "/" + shared_prefs.getString("skinname", ""));
-		
-		
-		//board_view.do_zoom=shared_prefs.getBoolean("fatfinger", false);
-		
-		SharedPreferences.Editor editor=shared_prefs.edit();
-		if (shared_prefs.getBoolean("skin", false))
-			editor.putBoolean("skin",GOSkin.setSkin(shared_prefs.getString("skinname", "")) );
-		
-		Log.i("gobandroid","do skin" +GOSkin.useSkin());
-		Log.i("gobandroid","name skin" +GOSkin.getSkinName());
-	
-		editor.commit();
-	*/		
 		setCustomTitle(R.layout.top);
 		((TopView)(this.findViewById(R.id.TopView))).setGame(game);
 	}
@@ -672,14 +641,6 @@ public class GoActivity
 				select_dlg.setTitle(R.string.variations);
 				select_dlg.setContentView(lin);
 				
-				/*select_dlg.setM .setMessage(
-						 "" +( game.getPossibleVariationCount()+1) + " Variations found for this move - which should we take?"
-				);
-				select_dlg.setNegativeButton("Cancel",  new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					
-				}
-			}).*/
 				select_dlg.show();
 			}
 			else
