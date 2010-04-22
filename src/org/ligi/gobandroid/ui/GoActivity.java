@@ -103,7 +103,7 @@ public class GoActivity
 
 	private boolean review_mode=false;
     
-	private Toast its_not_your_turn_toast=null;
+	private Toast info_toast=null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -113,7 +113,7 @@ public class GoActivity
 		
 		this.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		
-		Log.i("gobandroid","onCreate" + game);
+		info_toast=Toast.makeText(this, "", Toast.LENGTH_LONG);
 		
 		if (game==null) {
 			// if there is a game saved e.g. on rotation use this game
@@ -675,13 +675,10 @@ public class GoActivity
 		if ((game.getGoMover()!=null)&&
 				(!game.getGoMover().isServiceBound()))
 			{
-			if (its_not_your_turn_toast==null)
-				its_not_your_turn_toast=Toast.makeText(this, "", Toast.LENGTH_LONG);
-			
-			its_not_your_turn_toast.setText(R.string.wait_gnugo);
-			its_not_your_turn_toast.show();
-			
-			return true;
+					
+				info_toast.setText(R.string.wait_gnugo);
+				info_toast.show();
+				return true;
 			}
 		
 		if ((game.getGoMover()!=null)&&
@@ -689,13 +686,11 @@ public class GoActivity
 				((game.isBlackToMove()&&(game.getGoMover().playing_black))
 				||((!game.isBlackToMove())&&(game.getGoMover().playing_white)))))
 			{
-			if (its_not_your_turn_toast==null)
-				its_not_your_turn_toast=Toast.makeText(this, "", Toast.LENGTH_LONG);
 			
-			its_not_your_turn_toast.setText(R.string.not_your_turn);
-			its_not_your_turn_toast.show();
+				info_toast.setText(R.string.not_your_turn);
+				info_toast.show();
 			
-			return true;
+				return true;
 			}
 
     	board_view.doTouch(event);
