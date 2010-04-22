@@ -76,7 +76,7 @@ import org.ligi.gobandroid.logic.SGFHelper;
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  * 
- * Licence: This software is licenced with GPLv3
+ * License: This software is licensed with GPLv3
  * 
  **/
 
@@ -362,24 +362,21 @@ public class GoActivity
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
 
-		if (!game.isFinished()) {
-			if (game.canUndo()&&(game.getGoMover()==null)) {
-				MenuItem undo_menu = menu.add(0, MENU_UNDO, 0, R.string.undo);
-				undo_menu.setIcon(android.R.drawable.ic_menu_revert);
+		if (!game.isFinished()) 
+			{
+			
+			if (game.canUndo()&&( game.getGoMover()==null)) 
+				menu.add(0, MENU_UNDO, 0, R.string.undo).setIcon(android.R.drawable.ic_menu_revert);
+						
+			if ((game.getGoMover()==null)||((!game.getGoMover().playing_black)&&game.isBlackToMove())||((!game.getGoMover().playing_white)&&(!game.isBlackToMove())) )
+				menu.add(0, MENU_PASS, 0,R.string.pass).setIcon(android.R.drawable.ic_menu_set_as); 
+			else 
+				menu.add(0, MENU_FINISH, 0,R.string.results).setIcon(android.R.drawable.ic_menu_more);
 			}
-			
-			if ((game.getGoMover()==null)||((!game.getGoMover().playing_black)&&game.isBlackToMove())||((!game.getGoMover().playing_white)&&(!game.isBlackToMove())) ) {
-			MenuItem pass_menu = menu.add(0, MENU_PASS, 0,R.string.pass);
-			pass_menu.setIcon(android.R.drawable.ic_menu_set_as); }
-		} else {
-			menu.add(0, MENU_FINISH, 0,R.string.results).setIcon(android.R.drawable.ic_menu_more);
-			
-		}
-
+		
 		if ((game.getGoMover()==null)||game.isFinished())
 			menu.add(0, MENU_SHOWCONTROLS, 0,(review_mode?R.string.hide_review_controls:R.string.show_review_controls)).setIcon(android.R.drawable.ic_menu_view);
 			
-
 		menu.add(0, MENU_WRITE_SGF, 0,R.string.save_as_sgf).setIcon(android.R.drawable.ic_menu_save);
 		menu.add(0, MENU_SETTINGS, 0, R.string.settings).setIcon(android.R.drawable.ic_menu_preferences);
 		
