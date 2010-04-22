@@ -44,9 +44,6 @@ public class GoGame implements GoDefinitions {
     private GoBoard pre_last_board;   // board to detect KO situations
     private GoBoard handicap_board;
     
-    
-    //private boolean black_to_move = true;
-
     private boolean last_action_was_pass=false;
    
     private boolean game_finished=false;
@@ -55,8 +52,6 @@ public class GoGame implements GoDefinitions {
         
     public int[][] area_groups; // array to build groups
     public byte[][] area_assign; // cache to which player a area belongs in a finished game
-        
-    //private boolean[][] dead_stones; // dead stone marker
         
     private int group_count = -1;
         
@@ -73,8 +68,6 @@ public class GoGame implements GoDefinitions {
     private byte handicap=0;
     
     private float komi=6.5f;
-    //public Vector<byte[]> moves;
-    
     
     private GoMove act_move=null;
     
@@ -132,9 +125,7 @@ public class GoGame implements GoDefinitions {
         
         visual_board=calc_board.clone();
         last_board=calc_board.clone();
-        pre_last_board=calc_board.clone();
-        
-        
+        pre_last_board=null;
         
         // create the array for group calculations
         groups = new int[size][size];
@@ -166,6 +157,8 @@ public class GoGame implements GoDefinitions {
     		start_player=PLAYER_WHITE;
     	
     	act_player=start_player;
+    	
+    	pre_last_board=null;
     	
     	// create the vector to save the moves
         //moves= new Vector<byte[]>();
@@ -246,21 +239,17 @@ public class GoGame implements GoDefinitions {
                 remove_dead(x,y);
                 
                 if ((hasGroupLibertie(groups[x][y])||isDeadGroupOnBoard(x,y)) // if either a field has libertys or get's one
-                		&&!pre_last_board.equals(calc_board)) // and the move is not a ko 
+                		&&!calc_board.equals(pre_last_board)) // and the move is not a ko 
                 { 	// valid move -> do things needed to do after a valid move 
                     Log.d("gobandroid", "isDeadGroupOnBoard(x,y)" + isDeadGroupOnBoard(x,y));
                     
                     
-                    if (getGoMover()!=null)
-                    {
-                    	if (isBlackToMove())
-                    		getGoMover().processBlackMove(x, y);
+                    if (isBlackToMove())
+                    	getGoMover().processBlackMove(x, y);
                     	else
-                    		getGoMover().processWhiteMove(x, y);
-                    }
+                    getGoMover().processWhiteMove(x, y);
                     
                     setNextPlayer();
-                    
                     
                     pre_last_board=last_board.clone();
                     last_board=calc_board.clone();
@@ -275,6 +264,7 @@ public class GoGame implements GoDefinitions {
                     return true;
                     }
                 else { // was an illegal move -> undo
+                	Logger.i("illegal move");
                     calc_board=bak_board.clone();
                     return false;
                 }
@@ -352,8 +342,8 @@ public class GoGame implements GoDefinitions {
      */
     
     public void undo() {
-    	//jump(moves.size()-1);
     	jump(act_move.getParent());
+    	getGoMover().undo();
     	game_finished=false;
     }
     
@@ -401,23 +391,17 @@ public class GoGame implements GoDefinitions {
     	last_action_was_pass=false;
         clear_calc_board();
    
-        
         Vector <GoMove> replay_moves=new Vector<GoMove>();
-     
         
-        	replay_moves.add(move);
-        	while (true)
-        	{
-
-        		if (replay_moves.lastElement().isFirstMove()) 
-        			break;
+        replay_moves.add(move);
+        while (true)
+        {
+        	if (replay_moves.lastElement().isFirstMove()) 
+        		break;
         		
-        		Log.i("gobandroid" , "adding" + replay_moves.lastElement().toString() );
-        		replay_moves.add(replay_moves.lastElement().getParent());
-        		
-        	}
-        
-        
+        	Log.i("gobandroid" , "adding" + replay_moves.lastElement().toString() );
+        	replay_moves.add(replay_moves.lastElement().getParent());
+        }
         
         /*
         

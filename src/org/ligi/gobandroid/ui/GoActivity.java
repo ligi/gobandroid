@@ -448,7 +448,14 @@ public class GoActivity
 			break;
 				
 		case MENU_UNDO:
+			game.getGoMover().paused=true;
 			game.undo();
+			
+			if (game.canUndo()&&(game.getGoMover().isMoversMove()))
+				game.undo();
+			
+			game.getGoMover().paused=false;
+			
 			break;
 
 		case MENU_PASS:

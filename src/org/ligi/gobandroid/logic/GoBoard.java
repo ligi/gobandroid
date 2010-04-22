@@ -62,6 +62,10 @@ public class GoBoard implements GoDefinitions{
      */
     public boolean equals(GoBoard other) {
     	
+    	// cannot be the same if board is null
+    	if (other==null)
+    		return false;
+    	
     	// if the size is not matching the boards can't be equal
     	if (size!=other.size) 
     		return false;

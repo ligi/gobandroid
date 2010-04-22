@@ -133,7 +133,7 @@ public class GnuGoMover implements Runnable{
 	
 	@Override
 	public void run() {
-		while ( true) {
+		while (!game.isFinished()) {
 			
 			try {
 				Thread.sleep(100);
@@ -142,16 +142,9 @@ public class GnuGoMover implements Runnable{
 				e.printStackTrace();
 			}
 
-			if (game.isFinished())
-				break;
-
-			if (gnu_service==null)
+			if ((gnu_service==null)||(paused))
 				continue;
-			
-			if (paused)
-				continue;
-			
-			
+						
 			if (!gnugo_size_set)
 				try {
 					// set the size
@@ -184,7 +177,7 @@ public class GnuGoMover implements Runnable{
 				} catch (RemoteException e) {
 				}
 			}
-			if (!game.isBlackToMove()) {
+			else {
 				
 				try {
 					String answer= gnu_service.processGTP("genmove white");
@@ -199,6 +192,7 @@ public class GnuGoMover implements Runnable{
 				} catch (RemoteException e) {
 				}				
 			}
+			
 			thinking=false;
 			}
 
@@ -211,6 +205,17 @@ public class GnuGoMover implements Runnable{
 	 */
 	public boolean isThinking() {
 		return thinking;
+	}
+	
+	/**
+	 * process an undo in the engine
+	 */
+	public void undo() {
+		try {
+			gnu_service.processGTP("undo");
+		} catch (RemoteException e) {
+			Logger.i(""+e);
+		}
 	}
 	
 	/**
