@@ -368,7 +368,7 @@ public class GoActivity
 			if (game.canUndo()&&( game.getGoMover()==null)) 
 				menu.add(0, MENU_UNDO, 0, R.string.undo).setIcon(android.R.drawable.ic_menu_revert);
 						
-			if ((game.getGoMover()==null)||((!game.getGoMover().playing_black)&&game.isBlackToMove())||((!game.getGoMover().playing_white)&&(!game.isBlackToMove())) )
+			if ((game.getGoMover()==null)||(!game.getGoMover().isMoversMove()))
 				menu.add(0, MENU_PASS, 0,R.string.pass).setIcon(android.R.drawable.ic_menu_set_as); 
 			else 
 				menu.add(0, MENU_FINISH, 0,R.string.results).setIcon(android.R.drawable.ic_menu_more);
