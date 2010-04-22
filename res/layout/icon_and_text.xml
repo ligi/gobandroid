@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/********************************************************************
+ *
+ *	Layout to Display an icon besides a text - used in
+ *	IconicAdapter for Menues
+ *	
+ * Project URL:
+ *  http://mikrokopter.de/ucwiki/en/DUBwise
+ * 
+ * License:
+ *  http://creativecommons.org/licenses/by-nc-sa/2.0/de/ 
+ *  (Creative Commons / Non Commercial / Share Alike)
+ *  Additionally to the Creative Commons terms it is not allowed
+ *  to use this project in _any_ violent manner! 
+ *  This explicitly includes that lethal Weapon owning "People" and 
+ *  Organisations (e.g. Army & Police) 
+ *  are not allowed to use this Project!
+ *
+********************************************************************/
+-->
+
+<LinearLayout android:id="@+id/LinearLayout01" android:layout_height="wrap_content" android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+	<TextView android:text="@+id/TextView01" android:id="@+id/TextView01" android:layout_width="wrap_content" android:textStyle="" android:layout_gravity="center_vertical" android:layout_height="wrap_content" android:textSize="27dp" >
+	</TextView>
+	<RelativeLayout android:id="@+id/RelativeLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<ImageView android:id="@+id/ImageView01" android:layout_height="wrap_content" android:src="@drawable/icon" android:layout_alignParentRight="true" android:layout_width="wrap_content">
+		</ImageView>
+	</RelativeLayout>
+</LinearLayout>

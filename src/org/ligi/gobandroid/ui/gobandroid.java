@@ -19,30 +19,25 @@
 
 package org.ligi.gobandroid.ui;
 
+import java.util.Vector;
+
 import org.ligi.gobandroid.R;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /**
- * This is the main Activity of gobandroid
+ * This is the main Activity of gobandroid which shows an menu 
+ * with the stuff you can do here 
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  *         
 **/
 
 public class gobandroid extends ListActivity {
-    public String[] menu_items= {"Start Game", "Load Game" ,"Settings" ,"About","Quit" };
-    
-    private final static int MENU_GAMESTART=0;
-    private final static int MENU_LOADGAME=1;
-    private final static int MENU_SETTINGS=2;
-    private final static int MENU_ABOUT=3;
-    private final static int MENU_QUIT=4;
-    
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,9 +45,31 @@ public class gobandroid extends ListActivity {
     
         GoPrefs.init(this);
         
+        Vector<IconicMenuItem> menu_items_vector = new Vector<IconicMenuItem>();
+
+		menu_items_vector.add(new IconicMenuItem("Start Game",
+				android.R.drawable.ic_menu_agenda, new Intent(this,
+						GoSetupActivity.class)));
+		
+		menu_items_vector.add(new IconicMenuItem("Load Game",
+				android.R.drawable.ic_menu_save, new Intent(this,
+						LoadActionsActivity.class)));
+		
+		menu_items_vector.add(new IconicMenuItem("Settings",
+				android.R.drawable.ic_menu_preferences, new Intent(this,
+						GoPrefsActivity.class)));
+		
+		menu_items_vector.add(new IconicMenuItem("Info",
+				android.R.drawable.ic_menu_info_details, new Intent(this,
+						AboutActivity.class)));
+		
+		menu_items_vector.add(new IconicMenuItem("Quit",
+				android.R.drawable.ic_menu_close_clear_cancel,null));
+		
         setContentView(R.layout.main);
-        this.setListAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, menu_items));
+        
+        this.setListAdapter(new IconicAdapter(this, menu_items_vector
+				.toArray()));
        
     }
     
@@ -60,33 +77,14 @@ public class gobandroid extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        Intent go_intent;
-            switch (position) {
-                case MENU_GAMESTART:
-                    go_intent=new Intent(this,GoSetupActivity.class);
-                    startActivity(go_intent);
-                    break;
-    
-                case MENU_LOADGAME:
-                	go_intent=new Intent(this,LoadActionsActivity.class);
-                    startActivity(go_intent);
-                    break;
-    
-                case MENU_SETTINGS:
-                    go_intent=new Intent(this,GoPrefsActivity.class);
-                    startActivity(go_intent);
-                    break;
- 
-                case MENU_ABOUT:
-                    go_intent=new Intent(this,AboutActivity.class);
-                    startActivity(go_intent);
-                    break;
- 
-                case MENU_QUIT:
-                    finish();
-                    break;
-            }
-      
+        
+		IconicMenuItem item = ((IconicMenuItem) (this.getListAdapter()
+				.getItem(position)));
+
+		if (item.intent != null)
+			startActivity(item.intent);
+		else
+			finish();
     }
     
 }
