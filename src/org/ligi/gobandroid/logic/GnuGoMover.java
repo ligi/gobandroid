@@ -36,17 +36,20 @@ public class GnuGoMover implements Runnable{
 	private IGnuGoService gnu_service ;
 	private GoGame game;
 	
-
 	private boolean gnugo_size_set=false;
+	
 	public boolean playing_black=false;
 	public boolean playing_white=false;
+	
+	public boolean paused=false;
+	public boolean thinking=false;
 	
 	public final static String intent_action_name="org.ligi.gobandroid.ai.gnugo.GnuGoService";
 	private byte level;
 	private Application application;
 	
-	ServiceConnection conn;
-	Thread mover_thread;
+	private ServiceConnection conn;
+	private Thread mover_thread;
 	
 	public GnuGoMover(Activity activity,GoGame game,boolean playing_black,boolean playing_white,byte level) {
 		this.application=activity.getApplication();
@@ -135,6 +138,10 @@ public class GnuGoMover implements Runnable{
 			if (gnu_service==null)
 				continue;
 			
+			if (paused)
+				continue;
+			
+			
 			if (!gnugo_size_set)
 				try {
 					// set the size
@@ -149,7 +156,11 @@ public class GnuGoMover implements Runnable{
 					gnugo_size_set=true;
 				} catch (RemoteException e) {}
 			
-			if (game.isBlackToMove()&&(playing_black)) {
+				
+			if (isMoversMove()) 
+			{
+			thinking =true;
+			if (game.isBlackToMove()) {
 				try {
 				
 					String answer= gnu_service.processGTP("genmove black");
@@ -163,7 +174,7 @@ public class GnuGoMover implements Runnable{
 				} catch (RemoteException e) {
 				}
 			}
-			if (!game.isBlackToMove()&&(playing_white)) {
+			if (!game.isBlackToMove()) {
 				
 				try {
 					String answer= gnu_service.processGTP("genmove white");
@@ -178,10 +189,24 @@ public class GnuGoMover implements Runnable{
 				} catch (RemoteException e) {
 				}				
 			}
+			thinking=false;
+			}
 
 		}
 		stop();
 	}
 
+	/**
+	 * @return  if the engine is thinking
+	 */
+	public boolean isThinking() {
+		return thinking;
+	}
 	
+	/**
+	 * @return if it is a move the mover has to process
+	 */
+	public boolean isMoversMove() {
+		return (game.isBlackToMove()&&(playing_black))|| (!game.isBlackToMove()&&(playing_white)) ;
+	}
 }
