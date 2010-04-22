@@ -24,7 +24,8 @@ import android.content.Intent;
 public class IconicMenuItem {
         
         public int drawable;
-        public String label;
+        public String label=null;
+        public int label_resId;
         public Intent intent=null;
         public int action=-1;
         
@@ -37,6 +38,18 @@ public class IconicMenuItem {
         public IconicMenuItem( String label , int drawable,int action) {
             this.drawable=drawable;
             this.label=label;
+            this.action=action;
+        }
+        
+        public IconicMenuItem( int label_resId , int drawable,Intent intent) {
+            this.drawable=drawable;
+            this.label_resId=label_resId;
+            this.intent=intent;
+        }
+        
+        public IconicMenuItem( int label_resId , int drawable,int action) {
+            this.drawable=drawable;
+            this.label_resId=label_resId;
             this.action=action;
         }
         
