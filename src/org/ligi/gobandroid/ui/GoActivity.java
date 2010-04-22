@@ -333,7 +333,7 @@ public class GoActivity
 		if (!game.isFinished()) 
 			{
 			
-			if (game.canUndo()&&( game.getGoMover().isMoversMove())) 
+			if (game.canUndo()&&(!game.getGoMover().isMoversMove())) 
 				menu.add(0, MENU_UNDO, 0, R.string.undo).setIcon(android.R.drawable.ic_menu_revert);
 						
 			if (!game.getGoMover().isMoversMove())
@@ -678,7 +678,7 @@ public class GoActivity
 	
 	public boolean onTouch( View v, MotionEvent event ) {
 		
-		if (game.getGoMover().isReady())
+		if (!game.getGoMover().isReady())
 			showInfoToast(R.string.wait_gnugo);
 		else if (game.getGoMover().isMoversMove())
 			showInfoToast(R.string.not_your_turn);
