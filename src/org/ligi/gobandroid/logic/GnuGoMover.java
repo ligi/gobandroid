@@ -89,8 +89,9 @@ public class GnuGoMover implements Runnable{
 			}
 	}
 	
-	public boolean isServiceBound() {
-		return gnu_service!=null;
+	public boolean isReady() {
+		return (!(playing_black || playing_white )) // not need to init
+				|| (gnu_service!=null); 	// or the service is there
 	}
 	
 	public String coordinates2gtpstr(byte x,byte y)  {

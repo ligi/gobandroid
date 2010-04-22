@@ -668,32 +668,25 @@ public class GoActivity
 		board_view.invalidate();
 	}
 
+	/**
+	 * show a the info toast with a specified text
+	 * 
+	 * @param resId
+	 */
+	public void showInfoToast(int resId) {
+		info_toast.setText(resId);
+		info_toast.show();
+	}
 	
-
 	public boolean onTouch( View v, MotionEvent event ) {
 		
-		if ((game.getGoMover()!=null)&&
-				(!game.getGoMover().isServiceBound()))
-			{
-					
-				info_toast.setText(R.string.wait_gnugo);
-				info_toast.show();
-				return true;
-			}
+		if (game.getGoMover().isReady())
+			showInfoToast(R.string.wait_gnugo);
+		else if (game.getGoMover().isMoversMove())
+			showInfoToast(R.string.not_your_turn);
+		else
+			board_view.doTouch(event);
 		
-		if ((game.getGoMover()!=null)&&
-				((!game.isFinished())&&
-				((game.isBlackToMove()&&(game.getGoMover().playing_black))
-				||((!game.isBlackToMove())&&(game.getGoMover().playing_white)))))
-			{
-			
-				info_toast.setText(R.string.not_your_turn);
-				info_toast.show();
-			
-				return true;
-			}
-
-    	board_view.doTouch(event);
     	updateControlsStatus();
     	return true;
     }
