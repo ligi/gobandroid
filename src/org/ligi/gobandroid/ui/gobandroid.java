@@ -47,23 +47,23 @@ public class gobandroid extends ListActivity {
         
         Vector<IconicMenuItem> menu_items_vector = new Vector<IconicMenuItem>();
 
-		menu_items_vector.add(new IconicMenuItem("Start Game",
+		menu_items_vector.add(new IconicMenuItem(R.string.start_game,
 				android.R.drawable.ic_menu_agenda, new Intent(this,
 						GoSetupActivity.class)));
 		
-		menu_items_vector.add(new IconicMenuItem("Load Game",
+		menu_items_vector.add(new IconicMenuItem(R.string.load_game,
 				android.R.drawable.ic_menu_save, new Intent(this,
 						LoadActionsActivity.class)));
 		
-		menu_items_vector.add(new IconicMenuItem("Settings",
+		menu_items_vector.add(new IconicMenuItem(R.string.settings,
 				android.R.drawable.ic_menu_preferences, new Intent(this,
 						GoPrefsActivity.class)));
 		
-		menu_items_vector.add(new IconicMenuItem("Info",
+		menu_items_vector.add(new IconicMenuItem(R.string.info,
 				android.R.drawable.ic_menu_info_details, new Intent(this,
 						AboutActivity.class)));
 		
-		menu_items_vector.add(new IconicMenuItem("Quit",
+		menu_items_vector.add(new IconicMenuItem(R.string.quit,
 				android.R.drawable.ic_menu_close_clear_cancel,null));
 		
         setContentView(R.layout.main);
