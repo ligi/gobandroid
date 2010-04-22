@@ -370,9 +370,10 @@ public class GoActivity
 						
 			if ((game.getGoMover()==null)||(!game.getGoMover().isMoversMove()))
 				menu.add(0, MENU_PASS, 0,R.string.pass).setIcon(android.R.drawable.ic_menu_set_as); 
-			else 
-				menu.add(0, MENU_FINISH, 0,R.string.results).setIcon(android.R.drawable.ic_menu_more);
 			}
+		else 
+			menu.add(0, MENU_FINISH, 0,R.string.results).setIcon(android.R.drawable.ic_menu_more);
+			
 		
 		if ((game.getGoMover()==null)||game.isFinished())
 			menu.add(0, MENU_SHOWCONTROLS, 0,(review_mode?R.string.hide_review_controls:R.string.show_review_controls)).setIcon(android.R.drawable.ic_menu_view);
