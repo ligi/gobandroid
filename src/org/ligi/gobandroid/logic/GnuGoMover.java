@@ -90,8 +90,14 @@ public class GnuGoMover implements Runnable{
 	}
 	
 	public boolean isReady() {
-		return (!(playing_black || playing_white )) // not need to init
+		return (!isPlayingInThisGame()) // not need to init
 				|| (gnu_service!=null); 	// or the service is there
+	}
+	
+	
+	
+	public boolean isPlayingInThisGame() {
+		return (playing_black || playing_white );
 	}
 	
 	public String coordinates2gtpstr(byte x,byte y)  {

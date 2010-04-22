@@ -161,7 +161,6 @@ public class GoActivity
 					game = new GoGame(size,handicap);
 					review_mode=false;
 					
-					
 					game.setGoMover(new GnuGoMover(this,game,black_player!=0,white_player!=0,GoPrefs.getAILevel()));
 				}
 			}
@@ -334,17 +333,17 @@ public class GoActivity
 		if (!game.isFinished()) 
 			{
 			
-			if (game.canUndo()&&( game.getGoMover()==null)) 
+			if (game.canUndo()&&( game.getGoMover().isMoversMove())) 
 				menu.add(0, MENU_UNDO, 0, R.string.undo).setIcon(android.R.drawable.ic_menu_revert);
 						
-			if ((game.getGoMover()==null)||(!game.getGoMover().isMoversMove()))
+			if (!game.getGoMover().isMoversMove())
 				menu.add(0, MENU_PASS, 0,R.string.pass).setIcon(android.R.drawable.ic_menu_set_as); 
 			}
 		else 
 			menu.add(0, MENU_FINISH, 0,R.string.results).setIcon(android.R.drawable.ic_menu_more);
 			
 		
-		if ((game.getGoMover()==null)||game.isFinished())
+		if ((!game.getGoMover().isPlayingInThisGame())||game.isFinished())
 			menu.add(0, MENU_SHOWCONTROLS, 0,(review_mode?R.string.hide_review_controls:R.string.show_review_controls)).setIcon(android.R.drawable.ic_menu_view);
 			
 		menu.add(0, MENU_WRITE_SGF, 0,R.string.save_as_sgf).setIcon(android.R.drawable.ic_menu_save);
@@ -559,8 +558,7 @@ public class GoActivity
     			.setMessage( R.string.quit_confirm
     			).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
     			public void onClick(DialogInterface dialog, int whichButton) {
-    				if (game.getGoMover()!=null)
-    					game.getGoMover().stop();
+    				game.getGoMover().stop();
     				finish();
     			}
     		}).setCancelable(true).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
