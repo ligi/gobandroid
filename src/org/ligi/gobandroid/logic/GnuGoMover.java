@@ -59,31 +59,34 @@ public class GnuGoMover implements Runnable{
 		
 		this.game=game;
 		
-        conn = new ServiceConnection() {
-
-			@Override
-			public void onServiceConnected(ComponentName name, IBinder service) {
-				gnu_service = IGnuGoService.Stub.asInterface(service);
+		if ( playing_black || playing_white ) 
+			{
+	        conn = new ServiceConnection() {
 	
-				try {
-					Log.i("INFO", "Service bound "  + gnu_service.processGTP("test"));
-				} catch (RemoteException e) {
+				@Override
+				public void onServiceConnected(ComponentName name, IBinder service) {
+					gnu_service = IGnuGoService.Stub.asInterface(service);
+		
+					try {
+						Log.i("INFO", "Service bound "  + gnu_service.processGTP("test"));
+					} catch (RemoteException e) {
+					}
+					
 				}
-				
+	
+				@Override
+				public void onServiceDisconnected(ComponentName name) {
+					Log.i("INFO", "Service unbound ");				
+				}
+	        	
+	        	
+	        };
+	        
+	        application.bindService(new Intent("org.ligi.gobandroid.ai.gnugo.GnuGoService"), conn, Context.BIND_AUTO_CREATE);
+	        
+	        mover_thread=new Thread(this);
+	        mover_thread.start();
 			}
-
-			@Override
-			public void onServiceDisconnected(ComponentName name) {
-				Log.i("INFO", "Service unbound ");				
-			}
-        	
-        	
-        };
-        
-        application.bindService(new Intent("org.ligi.gobandroid.ai.gnugo.GnuGoService"), conn, Context.BIND_AUTO_CREATE);
-        
-        mover_thread=new Thread(this);
-        mover_thread.start();
 	}
 	
 	public boolean isServiceBound() {

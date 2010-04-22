@@ -170,8 +170,8 @@ public class GoActivity
 					game = new GoGame(size,handicap);
 					review_mode=false;
 					
-					if ((white_player!=0)||(black_player!=0))
-						game.setGoMover(new GnuGoMover(this,game,black_player!=0,white_player!=0,GoPrefs.getAILevel()));
+					
+					game.setGoMover(new GnuGoMover(this,game,black_player!=0,white_player!=0,GoPrefs.getAILevel()));
 				}
 			}
 		
