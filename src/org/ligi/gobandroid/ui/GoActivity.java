@@ -69,6 +69,7 @@ import java.util.Vector;
 import org.ligi.gobandroid.R;
 import org.ligi.gobandroid.logic.GnuGoMover;
 import org.ligi.gobandroid.logic.GoGame;
+import org.ligi.gobandroid.logic.Logger;
 import org.ligi.gobandroid.logic.SGFHelper;
 
 /**
@@ -145,7 +146,10 @@ public class GoActivity
 						
 						Log.i("gobandroid","got sgf" + sgf);
 						game=SGFHelper.sgf2game(sgf);
-						review_mode=true;	
+						review_mode=true;
+						
+						
+						
 					} catch (Exception e) {
 						Log.i("gobandroid","exception in load"+e);
 					}
@@ -282,6 +286,7 @@ public class GoActivity
 	
 	public void updateControlsStatus() {
 		
+		Logger.i("game " + game);
 		back.setEnabled(game.canUndo());
 		first.setEnabled(game.canUndo());
 		next.setEnabled(game.canRedo());
@@ -473,6 +478,9 @@ public class GoActivity
 					
 				File f = new File(GoPrefs.getSGFPath());
 				
+				if (!f.isDirectory())
+					f.mkdirs();
+				
 				try {
 					f=new File(GoPrefs.getSGFPath() + "/"+value+".sgf");
 					f.createNewFile();
@@ -485,6 +493,7 @@ public class GoActivity
 					out.close();
 					sgf_writer.close();
 				} catch (IOException e) {
+					Logger.i(""+e);
 				}
 	
 			}
