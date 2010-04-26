@@ -789,6 +789,9 @@ public class GoGame implements GoDefinitions {
 	}
     
 	public GnuGoMover getGoMover() {
+		if (go_mover==null)
+			// an inactive "dummy" go mover
+			return new GnuGoMover(); 
 		return go_mover;
 	}
 }
