@@ -196,7 +196,16 @@ public class SGFHelper {
 					if (act_cmd.length()==0)
 						act_cmd=last_cmd;
 				
-					
+					if (act_cmd.equals("LB"))
+						{
+						byte x=(byte)(act_param.charAt(0)-'a');
+						byte y=(byte)(act_param.charAt(1)-'a');
+						
+						GoMarker marker=new GoMarker(x,y,act_param.substring(3));
+						game.getActMove().addMarker(marker);
+						}
+						
+					// size command
 					if (act_cmd.equals("SZ"))
 						{
 						size=Byte.parseByte(act_param);

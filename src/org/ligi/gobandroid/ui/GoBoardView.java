@@ -21,6 +21,7 @@ package org.ligi.gobandroid.ui;
 
 import org.ligi.gobandroid.logic.GoDefinitions;
 import org.ligi.gobandroid.logic.GoGame;
+import org.ligi.gobandroid.logic.GoMarker;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -28,6 +29,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Paint.FontMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,6 +47,8 @@ public class GoBoardView extends View {
 
 	private Paint whitePaint;
 	private Paint blackPaint;
+	private Paint blackTextPaint;
+	private Paint whiteTextPaint;
 	private Paint boardPaint;
 	private Paint gridPaint;
 	private Paint gridPaint_h; // highlighted for cursor
@@ -81,9 +85,21 @@ public class GoBoardView extends View {
         whitePaint.setColor(0xFFCCCCCC);
         whitePaint.setAntiAlias(true);
         
+        whiteTextPaint=new Paint();
+        whiteTextPaint.setColor(0xFFFFFFFF);
+        whiteTextPaint.setAntiAlias(true);
+        whiteTextPaint.setTextAlign(Paint.Align.CENTER );
+        whiteTextPaint.setShadowLayer(2, 1, 1, 0xFF000000);
+        
+        blackTextPaint=new Paint();
+        blackTextPaint.setColor(0xFF000000);
+        blackTextPaint.setAntiAlias(true);
+        blackTextPaint.setTextAlign(Paint.Align.CENTER  ); 
+        blackTextPaint.setShadowLayer(2, 1, 1, 0xFFFFFFFF);
+        
         blackPaint=new Paint();
         blackPaint.setColor(0xFF000000);
-        blackPaint.setTextAlign(Paint.Align.CENTER  );
+       
         blackPaint.setAntiAlias(true);
         
         boardPaint=new Paint();
@@ -274,10 +290,21 @@ public class GoBoardView extends View {
             			}
             		}
             	}
-                 //canvas.drawText( "" + game.area_groups[x][y], x*stone_size + stone_size/2.0f ,y*stone_size+stone_size/2.0f ,whitePaint );
-                
+
+            	
             }
-    
+
+        FontMetrics fm=whiteTextPaint.getFontMetrics();
+        
+        // paint the markers
+        for (GoMarker marker:game.getActMove().getMarkers())
+        	        
+        if (game.getVisualBoard().isCellBlack(marker.getX(),marker.getY()))
+    		canvas.drawText( marker.getText() , marker.getX()*stone_size + stone_size/2.0f ,marker.getY()*stone_size-(fm.top+fm.bottom) ,whiteTextPaint );
+    	else
+    		canvas.drawText( marker.getText() , marker.getX()*stone_size + stone_size/2.0f ,marker.getY()*stone_size-(fm.top+fm.bottom) ,blackTextPaint );
+        
+        
         canvas.restore();
     } // end of onDraw
     
@@ -296,6 +323,10 @@ public class GoBoardView extends View {
     
     	bg_bitmap=GOSkin.getBoard(this.getWidth(),this.getHeight());
     	regenerate_stones_flag=false;
+    	
+    	whiteTextPaint.setTextSize(stone_size);
+    	blackTextPaint.setTextSize(stone_size);
+    	
     }	
     
     @Override

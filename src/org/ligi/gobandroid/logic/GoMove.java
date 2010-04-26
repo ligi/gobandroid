@@ -46,11 +46,10 @@ public class GoMove implements GoDefinitions {
 	
 	private Vector<GoMove> next_move_variations;
 	
+	private Vector<GoMarker> markers;
+	
 	private int move_pos=0;
 	
-	public Vector<GoMove> getNextMoveVariations() {
-		return next_move_variations;
-	}
 	public GoMove(GoMove parent) {
 		this.parent=parent;
 		init();
@@ -62,24 +61,11 @@ public class GoMove implements GoDefinitions {
 		this.x=x;
 		this.y=y;
 		init();
-	
 	}
 	
-	public void setDidCaptures(boolean did) {
-		did_captures=did;
-	}
-	
-	public boolean isCapturesMove() {
-		return did_captures;
-	}
-	
-	
-	
-	public int getMovePos() {
-		return move_pos;
-	}
 	private void init() {
 		next_move_variations=new Vector<GoMove>();
+		markers=new Vector<GoMarker>();
 		
 		if (parent!=null)
 			{
@@ -96,6 +82,21 @@ public class GoMove implements GoDefinitions {
 			
 			}
 	}
+	
+	public void setDidCaptures(boolean did) {
+		did_captures=did;
+	}
+	
+	public boolean isCapturesMove() {
+		return did_captures;
+	}
+	
+	
+	
+	public int getMovePos() {
+		return move_pos;
+	}
+	
 	
 	public boolean hasNextMove() {
 		return (next_move_variations.size()>0);
@@ -165,6 +166,18 @@ public class GoMove implements GoDefinitions {
 		return did_captures;
 	}
 
+	public Vector<GoMove> getNextMoveVariations() {
+		return next_move_variations;
+	}
 
+	/**
+	 * @return the markers - e.g. from SGF Problems
+	 */
+	public Vector<GoMarker> getMarkers() {
+		return markers;
+	}
 
+	public void addMarker(GoMarker marker) {
+		markers.add(marker);
+	}
 }
