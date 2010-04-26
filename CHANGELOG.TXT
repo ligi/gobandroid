@@ -1,3 +1,6 @@
+0.40
+   + nicing up the main menu
+   F npe when not playing against gnugo
 0.39
    + allow undo when playing vs AI 
 0.38

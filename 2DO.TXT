@@ -1,1 +1,2 @@
 GTP Server Connection
+share SGF

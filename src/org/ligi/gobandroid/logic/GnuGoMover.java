@@ -109,13 +109,13 @@ public class GnuGoMover implements Runnable{
 	public void processWhiteMove(byte x,byte y)   {
 		try {
 			gnu_service.processGTP("white " + coordinates2gtpstr(x,y));
-		} catch (RemoteException e) {		}
+		} catch (Exception e) {		}
 	}
 	
 	public void processBlackMove(byte x,byte y)   {
 		try {
 			gnu_service.processGTP("black " + coordinates2gtpstr(x,y));
-		} catch (RemoteException e) {		}
+		} catch (Exception e) {		}
 	}
 	
 	public void stop() {

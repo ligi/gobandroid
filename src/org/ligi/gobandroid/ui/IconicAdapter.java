@@ -53,7 +53,7 @@ public class IconicAdapter extends ArrayAdapter<Object> {
             if (item.label!=null)
             	label.setText(item.label); 
             else
-            	label.setTag(item.label_resId);
+            	label.setText(item.label_resId);
             
             if ((items.length>position)&&(item.drawable!=-1)) { 
                 ImageView icon=(ImageView)row.findViewById(R.id.ImageView01); 
