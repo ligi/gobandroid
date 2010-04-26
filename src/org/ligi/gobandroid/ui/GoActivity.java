@@ -611,7 +611,12 @@ public class GoActivity
 				LinearLayout li=new LinearLayout(this);
 
 				TextView txt =new TextView(this);
-				txt.setText("" +( game.getPossibleVariationCount()+1) + " Variations found for this move - which should we take?");
+		
+				// show the comment when there is one - useful for SGF game problems
+				if (game.getActMove().hasComment())
+					txt.setText(game.getActMove().getComment());
+				else
+					txt.setText("" +( game.getPossibleVariationCount()+1) + " Variations found for this move - which should we take?");
 			
 				txt.setPadding(10, 2, 10, 23);
 				lin.addView(txt);

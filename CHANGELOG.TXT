@@ -1,3 +1,7 @@
+0.42
+   + show the comment when there is one - useful for SGF game problems
+0.41
+   F Load save SGF ( thanks to David Byrne for reporting )
 0.40
    + nicing up the main menu
    F npe when not playing against gnugo
