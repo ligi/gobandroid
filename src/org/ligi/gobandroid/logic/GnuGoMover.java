@@ -51,6 +51,10 @@ public class GnuGoMover implements Runnable{
 	private ServiceConnection conn;
 	private Thread mover_thread;
 	
+	public GnuGoMover() {
+		this.playing_black=false;
+		this.playing_white=false;
+	}
 	public GnuGoMover(Activity activity,GoGame game,boolean playing_black,boolean playing_white,byte level) {
 		this.application=activity.getApplication();
 		this.level=level;
@@ -213,7 +217,7 @@ public class GnuGoMover implements Runnable{
 	public void undo() {
 		try {
 			gnu_service.processGTP("undo");
-		} catch (RemoteException e) {
+		} catch (Exception e) {
 			Logger.i(""+e);
 		}
 	}
@@ -222,6 +226,9 @@ public class GnuGoMover implements Runnable{
 	 * @return if it is a move the mover has to process
 	 */
 	public boolean isMoversMove() {
-		return (game.isBlackToMove()&&(playing_black))|| (!game.isBlackToMove()&&(playing_white)) ;
+		if (!isPlayingInThisGame())
+			return false;
+		return
+			(game.isBlackToMove()&&(playing_black))|| (!game.isBlackToMove()&&(playing_white)) ;
 	}
 }
