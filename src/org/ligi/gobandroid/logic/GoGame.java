@@ -194,9 +194,23 @@ public class GoGame implements GoDefinitions {
      * @return true if the move was valid - false if invalid move
      */
     public boolean do_move( byte x, byte y ) {
-    	Log.i("gobandroid","move " + x + "  " + y );
+    	Logger.i("do_move x:" + x + "  y:" + y );
         if ((x >= 0) && (x <= calc_board.getSize()) && (y >= 0) && (y < calc_board.getSize())) { // if x and y are inside the board
         	
+        	// check if the "new" move is in the variations - to not have 2 equal move as different variations
+        	GoMove matching_move=null;
+        	
+        	for (GoMove move_matcher:act_move.getNextMoveVariations())
+        		if ((move_matcher.getX()==x)&&(move_matcher.getY()==y))
+        			matching_move=move_matcher;
+
+        	// if there is one matching use this move and we are done
+        	if (matching_move!=null)
+        		{
+        		jump(matching_move);
+        		return true;
+        		}
+        		
         	if(game_finished)
         	{ // game is finished - players are marking dead stones
         		for (int xg = 0; xg < calc_board.getSize(); xg++)
