@@ -651,7 +651,11 @@ public class GoActivity
 					Button var_btn=new Button(this);
 					var_btn.setTag(i);
 					var_btn.setOnClickListener(var_select_listener );
-					var_btn.setText(""+(i+1));
+					if (game.getActMove().getnextMove(i).isMarked())
+						var_btn.setText(game.getActMove().getnextMove(i).getMarkText());
+					else
+						var_btn.setText(""+(i+1));
+						
 					li.addView(var_btn);
 			
 					var_btn.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1f));

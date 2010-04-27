@@ -794,4 +794,5 @@ public class GoGame implements GoDefinitions {
 			return new GnuGoMover(); 
 		return go_mover;
 	}
+	
 }

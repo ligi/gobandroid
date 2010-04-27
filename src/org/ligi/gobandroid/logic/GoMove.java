@@ -180,4 +180,22 @@ public class GoMove implements GoDefinitions {
 	public void addMarker(GoMarker marker) {
 		markers.add(marker);
 	}
+
+	public GoMarker getGoMarker() {
+		for (GoMarker marker:parent.getMarkers())
+			if ((this.getX()==marker.getX())&&(this.getY()==marker.getY()))
+				return marker;
+		return null;
+	}
+	public boolean isMarked() {
+		if (parent==null)
+			return false;
+		return (getGoMarker()!=null);
+	}
+	
+	public String getMarkText() {
+		if (parent==null)
+			return "";
+		return (getGoMarker().getText());
+	}
 }
