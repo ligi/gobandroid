@@ -22,6 +22,9 @@ package org.ligi.gobandroid.ui;
 import java.util.Vector;
 
 import org.ligi.gobandroid.R;
+
+import com.nullwire.trace.ExceptionHandler;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,6 +46,8 @@ public class gobandroid extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     
+        ExceptionHandler.register(this);
+        
         GoPrefs.init(this);
         
         Vector<IconicMenuItem> menu_items_vector = new Vector<IconicMenuItem>();
