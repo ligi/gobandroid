@@ -28,4 +28,12 @@ public class Logger {
 	public static void i(String msg) {
 		Log.i(DEFAULT_TAG,msg);
 	}
+	
+	public static void w(String msg) {
+		Log.w(DEFAULT_TAG,msg);
+	}
+	
+	public static void e(String msg) {
+		Log.e(DEFAULT_TAG,msg);
+	}
 }
