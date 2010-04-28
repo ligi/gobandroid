@@ -98,7 +98,8 @@ public class SGFSDCardListActivity extends ListActivity {
         super.onListItemClick(l, v, position, id);
 
         startActivity(
-        new Intent( "android.intent.action.VIEW",
+        new Intent( "org.ligi.intent.action.SGFVIEW",
+        		//"android.intent.action.VIEW",
         		Uri.parse( "file://" + files[position])
         		));
 
