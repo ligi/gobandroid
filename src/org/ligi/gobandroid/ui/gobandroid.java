@@ -46,7 +46,7 @@ public class gobandroid extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     
-        ExceptionHandler.register(this);
+        ExceptionHandler.register(this.getApplicationContext());
         
         GoPrefs.init(this);
         
