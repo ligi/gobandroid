@@ -286,13 +286,7 @@ public class GoActivity
 	
 	public void updateControlsStatus() {
 		
-		Logger.i("game " + game);
-		back.setEnabled(game.canUndo());
-		first.setEnabled(game.canUndo());
-		next.setEnabled(game.canRedo());
-		last.setEnabled(game.canRedo());
-		comments.setEnabled(game.getActMove().hasComment());
-		
+
 		int visible=0;
 		if (review_mode)
 			visible=View.VISIBLE;
@@ -305,6 +299,20 @@ public class GoActivity
 		next.setVisibility(visible);
 		last.setVisibility(visible);
 		comments.setVisibility(visible);
+		
+		// prevent NPE
+		if (game==null)
+			{
+			Logger.w("no game there when updateControlsStatus");	
+			return;
+			}
+		
+		back.setEnabled(game.canUndo());
+		first.setEnabled(game.canUndo());
+		next.setEnabled(game.canRedo());
+		last.setEnabled(game.canRedo());
+		comments.setEnabled(game.getActMove().hasComment());
+		
 	}
 	
 
