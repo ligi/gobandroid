@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.Vector;
 
 import org.ligi.gobandroid.R;
+import org.ligi.gobandroid.logic.Logger;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -55,8 +56,13 @@ public class SGFSDCardListActivity extends ListActivity {
         setContentView(R.layout.main);
         
         String sgf_path=GoPrefs.getSGFPath();
-    	File dir=new File(sgf_path);
         
+        File dir;
+        
+        if (this.getIntent().getData()!=null)
+        	dir=new File(this.getIntent().getData().getPath());
+        else
+        	dir=new File(sgf_path);
         if (dir==null){
     		new AlertDialog.Builder(this).setTitle(R.string.problem_listing_sgf).setMessage(getResources().getString(R.string.sgf_path_invalid) +" " +sgf_path)
     		.setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
@@ -84,7 +90,7 @@ public class SGFSDCardListActivity extends ListActivity {
         
         Vector<String> fnames=new Vector<String>();
         for(File file:files) 
-        	if (file.getName().endsWith(".sgf"))
+        	if ((file.getName().endsWith(".sgf"))||(file.isDirectory()))
         		fnames.add(file.getName());
         		
         menu_items=(String[])fnames.toArray(new String[fnames.size()]);
@@ -97,15 +103,20 @@ public class SGFSDCardListActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        Intent i=new Intent(this,GoActivity.class);
-        i.setData(Uri.parse( "file://" + files[position]));
-        startActivity(i);
-        /*
-        new Intent( "org.ligi.intent.action.SGFVIEW",
-        		//"android.intent.action.VIEW",
-        		Uri.parse( "file://" + files[position])
-        		));
-*/
+        if (files[position].isDirectory())
+        {
+        	Intent sgf_list_intent=new Intent(this,SGFSDCardListActivity.class);
+        	sgf_list_intent.setData(Uri.parse("file://"+files[position].getAbsolutePath()));
+        	startActivity(sgf_list_intent);
+        	
+        }
+        else
+        {
+        	Intent go_intent=new Intent(this,GoActivity.class);
+        	go_intent.setData(Uri.parse( "file://" + files[position]));
+        	startActivity(go_intent);
+        }
+        
     }
     
 }
