@@ -74,6 +74,8 @@ public class GoGame implements GoDefinitions {
     
     private GnuGoMover go_mover=null;
     
+    private GoGameMetadata metadata=null;
+    
     public float getKomi() {
     	return komi;
     }
@@ -114,6 +116,8 @@ public class GoGame implements GoDefinitions {
     private void construct(byte size) {
     	// create the boards
 
+    	metadata=new GoGameMetadata();
+    	
     	calc_board = new GoBoard( size );
         
     	handicap_board=calc_board.clone();
@@ -808,4 +812,12 @@ public class GoGame implements GoDefinitions {
 		return go_mover;
 	}
 	
+	public GoGameMetadata getMetaData() {
+		Logger.i("returning meta" + metadata);
+		return metadata;
+	}
+	
+	public void setMetadata(GoGameMetadata metadata) {
+		this.metadata=metadata;
+	}
 }

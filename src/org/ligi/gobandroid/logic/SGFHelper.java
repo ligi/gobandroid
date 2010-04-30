@@ -122,6 +122,8 @@ public class SGFHelper {
 		String act_cmd="";
 		String last_cmd="";
 		
+		GoGameMetadata metadata=new GoGameMetadata();
+		
 		
 		for (int p=0;p<sgf.length();p++)
 		{
@@ -212,7 +214,26 @@ public class SGFHelper {
 						GoMarker marker=new GoMarker(x,y,act_param.substring(3));
 						game.getActMove().addMarker(marker);
 						}
-						
+
+					if (act_cmd.equals("GN")) // Game Name
+						metadata.setName(act_param);
+
+					if (act_cmd.equals("PW")) // Player White Name
+						metadata.setWhiteName(act_param);
+
+					if (act_cmd.equals("PB")) // Player Black Name
+						metadata.setBlackName(act_param);
+
+					if (act_cmd.equals("WR")) // Player White Rank
+						metadata.setWhiteRank(act_param);
+
+					if (act_cmd.equals("BR")) // Player Black Rank
+						metadata.setBlackRank(act_param);
+
+					if (act_cmd.equals("RE")) // Game Result
+						metadata.setResult(act_param);
+
+					
 					// size command
 					if (act_cmd.equals("SZ"))
 						{
@@ -322,6 +343,7 @@ public class SGFHelper {
 			
 			
 		}
+		game.setMetadata(metadata);
 		return game;
 	}
 	
