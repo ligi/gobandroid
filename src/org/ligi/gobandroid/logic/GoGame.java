@@ -318,7 +318,6 @@ public class GoGame implements GoDefinitions {
     	act_move=move;
     	if (move.isFirstMove())
     		return;
-    	
 
     	if (move.isPassMove())
     		{

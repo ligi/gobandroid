@@ -60,6 +60,7 @@ import android.widget.RelativeLayout.LayoutParams;
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -106,6 +107,10 @@ public class GoActivity
     
 	private Toast info_toast=null;
 	
+	private String sgf="";
+	
+	private Uri intent_uri;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -123,9 +128,10 @@ public class GoActivity
 			else {
 				// otherwise create a new game
 		
-				Uri intent_uri=getIntent().getData();
+				intent_uri=getIntent().getData();
 				
 				if (intent_uri!=null) {
+					
 					try {
 						
 						InputStream in;
@@ -134,15 +140,31 @@ public class GoActivity
 							in = getContentResolver().openInputStream(intent_uri);	
 						else
 						  in= new BufferedInputStream(new URL(""+intent_uri) 
-			              .openStream(), 1024*4); 
+			              .openStream(), 4096); 
 						
-						int c;
-						String sgf="";
-						while(true) {
-							c=in.read();
-							if (c==-1) break;
-							sgf+=(char)c;
-						}
+						FileOutputStream file_writer =null;
+					    if (intent_uri.toString().startsWith("http"))  
+					    		{
+					    		new File(GoPrefs.getSGFPath()+"/downloads").mkdirs();
+					    							    		
+					      		File f = new File(GoPrefs.getSGFPath()+"/downloads/"+intent_uri.getLastPathSegment()	);
+								f.createNewFile();
+
+								 file_writer = new FileOutputStream(f);
+								
+					    		}
+						
+					    StringBuffer out = new StringBuffer();
+					    byte[] b = new byte[4096];
+					    for (int n; (n = in.read(b)) != -1;) {
+					        out.append(new String(b, 0, n));
+					        if (file_writer!=null)
+					        	file_writer.write(b, 0, n);
+					    }
+					    if (file_writer!=null)
+				        	file_writer.close();
+				    
+					    sgf=out.toString();
 						
 						Log.i("gobandroid","got sgf" + sgf);
 						game=SGFHelper.sgf2game(sgf);
@@ -151,7 +173,31 @@ public class GoActivity
 						
 						
 					} catch (Exception e) {
-						Log.i("gobandroid","exception in load"+e);
+						Log.i("gobandroid","exception in load" + e);
+						e.printStackTrace();
+						
+						
+						new AlertDialog.Builder(this).setTitle(R.string.results)
+						.setMessage(
+								 "Problem Loading sgf would you like to send ligi this sgf to fix the problem?"
+						).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							final  Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+							emailIntent .setType("plain/text");
+							emailIntent .putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"ligi@ligi.de"});
+							emailIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, "SGF Problem");
+							emailIntent .putExtra(android.content.Intent.EXTRA_TEXT, "uri: " + intent_uri + "sgf:\n" + sgf);
+							GoActivity.this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+							finish();
+						}
+					}).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							finish();
+						}
+					})
+					
+					.show();
+						return;
 					}
 					
 				}
@@ -319,6 +365,9 @@ public class GoActivity
 	@Override
 	public void onResume() {
 		super.onResume();
+		
+		if (game==null)
+			return;
 		
 		Log.i("gobandroid ", " resuming go activity" + GoPrefs.getBoardSkinName());
 		

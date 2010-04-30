@@ -1,3 +1,12 @@
+0.44
+   + intent filter for content:// to open sgf from file browser
+   + bugfix in SGF loading without SZ
+   + option to send me an email a sgf if it made problems
+0.43
+   + support dirs in SGF loading
+   + save sgf's from http* viewing
+   + make sure sgf's are handled by gobandroid 
+   + speed up sgf loading
 0.42
    + show the comment when there is one - useful for SGF game problems
 0.41
