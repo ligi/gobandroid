@@ -1,3 +1,6 @@
+0.45
+   + initial sgf metadata support
+   + fixing sgf problems
 0.44
    + intent filter for content:// to open sgf from file browser
    + bugfix in SGF loading without SZ
