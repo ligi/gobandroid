@@ -23,17 +23,18 @@ import java.util.Vector;
 
 import android.util.Log;
 
-//import android.util.Log;
-
+/**
+ * class for serializing and deserializing SGF
+ * 
+ * @author ligi
+ *
+ */
 public class SGFHelper {
 
 	
 	private static String move2string(GoMove move , boolean black_to_move) {
 		String res="";
-		
-
-			
-		
+	
 			if (!move.isFirstMove())
 			{
 				res+=";" + (black_to_move?"B":"W");
@@ -60,6 +61,8 @@ public class SGFHelper {
 			
 		return res;
 	}
+
+	
 	public static String game2sgf(GoGame game) {
 		String res="";
 		res="(;FF[4]GM[1]AP[gobandroid:0]"; // header
@@ -122,71 +125,76 @@ public class SGFHelper {
 		
 		for (int p=0;p<sgf.length();p++)
 		{
-			
+			char act_char=sgf.charAt(p);
+			//Logger.i("act_char:" + (char)act_char + "  " + act_cmd + "  " + act_param);
 			//System.out.println("processing " + sgf.charAt(p) + " @ " + p);
-			switch(sgf.charAt(p)) {
-			case '\r':
-			case '\n':
-			case ';':
-			case '\t':
-			case ' ':
-				if (consuming_param)
-					act_param+=sgf.charAt(p);
-				else
-					{
+			if (!consuming_param)
+				// consuming command
+				switch(act_char) {
+				case '\r':
+				case'\n':
+				case ';':
+				case '\t':
+				case ' ':
 					last_cmd=act_cmd;
 					act_cmd="";
-					}
-				break;
-			case '(':
-				
-				if (!consuming_param) {
-					// for files without SZ
-					if ((opener==1)&&(game==null))
-						{
-						game=new GoGame((byte)19);
-						var_vect.add(game.getActMove());
-						}
-				
-					opener++;
-				
-				
-					// 	push the move we where to the stack to return here after the variation
-				
-					//	if (param_level!=0) break;
-					Log.i("gobandroid","   !!! opening variation");
-					if (game!=null)
-						var_vect.add(game.getActMove());
-			
-					last_cmd="";
-					act_cmd="";
-				}
-				break;
-			case ')':
-				if (var_vect.size()>0) {
-					game.jump(var_vect.lastElement());
-					var_vect.remove(var_vect.lastElement()); 
-					 Log.w("gobandroid" , "popping variaton from stack");	
-				}
-				else Log.w("gobandroid" , "variation vector underrun!!");
-				last_cmd="";
-				act_cmd="";
-				
-		
-			
-				break;
-			case '[':
-				if (!consuming_param) {
+					break;
+
+				case '[':
 					consuming_param=true;
 					act_param="";
-				//	param_level++;
+					break;
+
+				case '(':
+					
+					if (!consuming_param) {
+						// for files without SZ
+						if ((opener==1)&&(game==null))
+							{
+							game=new GoGame((byte)19);
+							var_vect.add(game.getActMove());
+							}
+					
+						opener++;
+					
+						// 	push the move we where to the stack to return here after the variation
+					
+						//	if (param_level!=0) break;
+						Log.i("gobandroid","   !!! opening variation" + game);
+						if (game!=null)
+							var_vect.add(game.getActMove());
+				
+						last_cmd="";
+						act_cmd="";
+					}
+					break;
+				case ')':
+					if (var_vect.size()>0) {
+						game.jump(var_vect.lastElement());
+						var_vect.remove(var_vect.lastElement()); 
+						Log.w("gobandroid" , "popping variaton from stack");	
+						}
+						else 
+						Log.w("gobandroid" , "variation vector underrun!!");
+					
+					last_cmd="";
+					act_cmd="";
+					
+					break;
+				
+				default:
+					act_cmd+=	sgf.charAt(p);
+						
 				}
-				break;
-			case ']':
+			else
+				// consuming param
+				switch(act_char) {
+				case ']':
 				
 				
-				if(var_vect.size()>1)
-				Log.i("gobandroid","   command " + act_cmd + " -  act param " + act_param + " esc " + escape + " 1stv " + var_vect.get(1).getNextMoveVariationCount()) ;
+/*				if(var_vect.size()>1)
+					Log.i("gobandroid","   command " + act_cmd + " -  act param " + act_param + " esc " + escape + " 1stv " + var_vect.get(1).getNextMoveVariationCount()) ;
+*/
 		//		Log.i("gobandroid", " esc " + escape +"   (no)move " + last_cmd + " - " + act_cmd);
 					
 				if (!escape) {
@@ -223,6 +231,12 @@ public class SGFHelper {
 						{
 						Log.i("gobandroid","   command " + act_cmd + " -  act param" + act_param);
 					
+						// if still no game open -> open one with default size
+						if (game==null)
+						{
+							game=new GoGame((byte)19);
+							var_vect.add(game.getActMove());
+						}
 				
 						//	Log.i("gobanroid","process move");
 						if (act_param.length()==0)
@@ -286,30 +300,28 @@ public class SGFHelper {
 				act_cmd="";	
 				act_param="";
 				//param_level=0;
-				break;
+				
 				} // if !escape
-				act_cmd=""+act_cmd.subSequence(0, act_cmd.length()-1); // cut the escaper \ 
+//				act_cmd=""+act_cmd.subSequence(0, act_cmd.length()-1); // cut the escaper \ 
 				// fall wanted to catch the ]
-			default:
-				
-				
-				if (consuming_param)
-					{
-					act_param+=sgf.charAt(p);
-					escape=(sgf.charAt(p)=='\\');
-					}
+			case '\\':
+				if (escape)
+				{
+					act_param+=(char)act_char;
+					escape=false;
+				}
 				else
-					act_cmd+=sgf.charAt(p);
+					escape=true;
+				break;
+			default:
+				act_param+=(char)act_char;
+				escape=false;
 				break;
 				
 			}
 			
 			
 		}
-		Log.i("gobandroid", "var vect after reading" + var_vect.size());
-		Log.i("gobandroid", "var vect after reading" + game.getActMove().isFirstMove());
-		Log.i("gobandroid", "var vect after reading" + game.getActMove().getNextMoveVariationCount());
-		//	
 		return game;
 	}
 	
