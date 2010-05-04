@@ -28,8 +28,12 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.graphics.*;
 
+/**
+ * draw status info for a go game ( act move ; captures ; act turn )
+ * @author ligi
+ *
+ */
 public class TopView extends View implements Runnable
-
 {
 	private GoGame game;
 	
@@ -88,6 +92,7 @@ public class TopView extends View implements Runnable
 	@Override
 	protected void onDraw(Canvas canvas) {
 		
+		if (game!=null) {
 		if (game.isBlackToMove()||game.isFinished())
 			mPaint.setAlpha(alpha);
 		else
@@ -117,7 +122,13 @@ public class TopView extends View implements Runnable
 		
 		canvas.drawText(""+game.getCapturesWhite() ,black_stone.getWidth()*1.2f, this
 				.getHeight() - 5, mTextPaintWhite);
-	
+		}
+		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+		}
+
 		invalidate();
 	}
 

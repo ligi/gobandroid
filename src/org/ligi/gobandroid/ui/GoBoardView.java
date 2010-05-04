@@ -22,6 +22,7 @@ package org.ligi.gobandroid.ui;
 import org.ligi.gobandroid.logic.GoDefinitions;
 import org.ligi.gobandroid.logic.GoGame;
 import org.ligi.gobandroid.logic.GoMarker;
+import org.ligi.gobandroid.logic.Logger;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -74,6 +75,9 @@ public class GoBoardView extends View {
     private Bitmap black_stone_bitmap=null;
     private Bitmap white_stone_bitmap_small=null;
     private Bitmap black_stone_bitmap_small=null;
+    
+    private boolean width_is_max;
+    private boolean regenerate_stones_flag=true;
     
     
     public GoBoardView( Context context,GoGame game ) {
@@ -194,6 +198,10 @@ public class GoBoardView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
     
+    	
+    	if (game==null)
+    		return;
+    	
     	if (regenerate_stones_flag)
     		regenerate_images();
     	
@@ -308,13 +316,27 @@ public class GoBoardView extends View {
         canvas.restore();
     } // end of onDraw
     
-    boolean width_is_max;
-    boolean regenerate_stones_flag=true;
     
     
     public void regenerate_images() {
    
-    	Log.i("gobandrod","regenerating images to stone size " + stone_size);
+    	try {
+
+    	if (game==null)
+    		return;
+    	    	
+    	width_is_max=(this.getWidth()<=this.getHeight());
+       
+        if (this.getWidth()<=this.getHeight())
+            stone_size_normal=this.getWidth()/(float)game.getVisualBoard().getSize();
+        else
+            stone_size_normal=this.getHeight()/(float)game.getVisualBoard().getSize();
+       
+        stone_size=stone_size_normal;
+        stone_size_zoomed=stone_size_normal*2;
+
+        
+    	Log.i("gobandrod","regenerating images to stone size " + stone_size + "  " +regenerate_stones_flag); 
     	float SMALL_STONE_SCALER=0.6f;	
     	white_stone_bitmap=GOSkin.getWhiteStone(stone_size);
     	black_stone_bitmap=GOSkin.getBlackStone(stone_size);
@@ -327,28 +349,24 @@ public class GoBoardView extends View {
     	whiteTextPaint.setTextSize(stone_size);
     	blackTextPaint.setTextSize(stone_size);
     	
+    	invalidate();
+    	}
+    	catch (Exception e) {
+    		
+    		Logger.i("Exception " + e);
+    	}
     }	
     
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-    	width_is_max=(w<=h);
-       
-        if (w<=h)
-            stone_size_normal=w/(float)game.getVisualBoard().getSize();
-        else
-            stone_size_normal=h/(float)game.getVisualBoard().getSize();
-       
-        stone_size=stone_size_normal;
-        stone_size_zoomed=stone_size_normal*2;
-
-        
-        regenerate_stones_flag=true;
-        
-        invalidate(); // needed here or automaticaly called?
+    	regenerate_images();        
     }
 
 
     public void doTouch( MotionEvent event) {
+    	
+    	if (game==null)
+    		return;
     	
     	float virtualTouchX=event.getX()-offset_x;
     	float virtualTouchY=event.getY()-offset_y;
@@ -378,5 +396,11 @@ public class GoBoardView extends View {
         }
         invalidate();  // the board looks diffrent after a move
      }
-    
+
+    public void setGame(GoGame game) {
+    	this.game=game;
+    	Logger.i("set game" + game);
+    	regenerate_images();
+    	
+    }
 }

@@ -28,7 +28,9 @@ import android.content.Intent;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.DisplayMetrics;
@@ -75,7 +77,7 @@ import org.ligi.gobandroid.logic.Logger;
 import org.ligi.gobandroid.logic.SGFHelper;
 
 /**
- * Activity for a Game
+ * Activity to play a Go Game
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  * 
@@ -87,7 +89,6 @@ public class GoActivity
 		extends Activity 
 		implements OnClickListener, OnTouchListener, Runnable
 {
-
 	
 	private static final int MENU_UNDO = 0;
 	private static final int MENU_PASS = 1;
@@ -113,6 +114,11 @@ public class GoActivity
 	
 	private Uri intent_uri;
 	
+	private Vector<ImageButton> control_buttons;
+	
+	private AlertDialog loading_alert;
+	
+	private AlertHandler alert_handler;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -121,202 +127,106 @@ public class GoActivity
 		
 		this.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		
+		control_buttons=new Vector<ImageButton>();
+		
+		first=new ImageButton(this);
+		first.setImageResource(android.R.drawable.ic_media_previous);
+		control_buttons.add(first);
+		first.setOnClickListener(this);
+		
+		back=new ImageButton(this);
+		back.setImageResource(android.R.drawable.ic_media_rew);
+		control_buttons.add(back);
+		back.setOnClickListener(this);
+		
+		comments=new ImageButton(this);
+		comments.setImageResource(android.R.drawable.ic_dialog_email);
+		control_buttons.add(comments);
+		comments.setOnClickListener(this);
+					
+		next=new ImageButton(this);
+		next.setImageResource(android.R.drawable.ic_media_ff);
+		control_buttons.add(next);
+		next.setOnClickListener(this);
+		
+		last=new ImageButton(this);
+		last.setImageResource(android.R.drawable.ic_media_next);
+		last.setOnClickListener(this);
+		control_buttons.add(last);
+
+		
+
+		board_view = new GoBoardView(this, game);
+		board_view.setOnTouchListener(this);
+		//board_view.regenerate_stones_flag=true;
+		
+		RelativeLayout rel=new RelativeLayout(this);
+		rel.addView(board_view);
+		
+		DisplayMetrics dm = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
+						
+		if (dm.heightPixels>dm.widthPixels)
+		{
+			TableLayout controls_table=new TableLayout(this);
+			
+			TableRow controls_row=new TableRow(this);
+			controls_table.addView(controls_row);
+			
+			int btn_id=0;
+			for (ImageButton btn:control_buttons) 
+				{
+				controls_row.addView(btn);
+				controls_table.setColumnStretchable(btn_id++, true);
+				}
+			
+			
+			rel.addView(controls_table);
+			
+			RelativeLayout.LayoutParams bottom_nav_params = new
+			RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT,
+			LayoutParams.WRAP_CONTENT);
+			bottom_nav_params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+
+			controls_table.setLayoutParams(bottom_nav_params);
+
+			rel.setGravity(Gravity.BOTTOM);
+			
+		}
+		else
+		{
+			LinearLayout lin=new LinearLayout(this);
+			for (ImageButton btn:control_buttons) 
+				lin.addView(btn);
+			lin.setOrientation(LinearLayout.VERTICAL);
+			
+
+			RelativeLayout.LayoutParams bottom_nav_params = new
+			RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+			LayoutParams.FILL_PARENT);
+			bottom_nav_params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+
+			lin.setLayoutParams(bottom_nav_params);
+		
+			rel.addView(lin);
+		}
+		setContentView(rel);
+		
+
+		
+		loading_alert= new AlertDialog.Builder(this).setTitle("Game Info")
+		.setMessage("Loading .."
+				 
+		).show();
+		
+		alert_handler=new AlertHandler();
+				
 		info_toast=Toast.makeText(this, "", Toast.LENGTH_LONG);
 		
-		if (game==null) {
-			// if there is a game saved e.g. on rotation use this game
-			if (getLastNonConfigurationInstance()!=null) 
-				game=(GoGame)getLastNonConfigurationInstance();
-			else {
-				// otherwise create a new game
+		// if there is a game saved e.g. on rotation use this game
+		if (getLastNonConfigurationInstance()!=null) 
+			game=(GoGame)getLastNonConfigurationInstance();
 		
-				intent_uri=getIntent().getData();
-				
-				if (intent_uri!=null) {
-					
-					try {
-						
-						InputStream in;
-						Log.i("gobandroid","load" + intent_uri);
-						if (intent_uri.toString().startsWith("content://"))
-							in = getContentResolver().openInputStream(intent_uri);	
-						else
-						  in= new BufferedInputStream(new URL(""+intent_uri) 
-			              .openStream(), 4096); 
-						
-						FileOutputStream file_writer =null;
-					    if (intent_uri.toString().startsWith("http"))  
-					    		{
-					    		new File(GoPrefs.getSGFPath()+"/downloads").mkdirs();
-					    							    		
-					      		File f = new File(GoPrefs.getSGFPath()+"/downloads/"+intent_uri.getLastPathSegment()	);
-								f.createNewFile();
-
-								 file_writer = new FileOutputStream(f);
-								
-					    		}
-						
-					    StringBuffer out = new StringBuffer();
-					    byte[] b = new byte[4096];
-					    for (int n; (n = in.read(b)) != -1;) {
-					        out.append(new String(b, 0, n));
-					        if (file_writer!=null)
-					        	file_writer.write(b, 0, n);
-					    }
-					    if (file_writer!=null)
-				        	file_writer.close();
-				    
-					    sgf=out.toString();
-						
-						Log.i("gobandroid","got sgf" + sgf);
-						game=SGFHelper.sgf2game(sgf);
-						review_mode=true;
-						
-						
-						
-					} catch (Exception e) {
-						Log.i("gobandroid","exception in load" + e);
-						e.printStackTrace();
-						
-						
-						new AlertDialog.Builder(this).setTitle(R.string.results)
-						.setMessage(
-								 "Problem Loading sgf would you like to send ligi this sgf to fix the problem?"
-						).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int whichButton) {
-							final  Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-							emailIntent .setType("plain/text");
-							emailIntent .putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"ligi@ligi.de"});
-							emailIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, "SGF Problem");
-							emailIntent .putExtra(android.content.Intent.EXTRA_TEXT, "uri: " + intent_uri + "sgf:\n" + sgf);
-							GoActivity.this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-							finish();
-						}
-					}).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int whichButton) {
-							finish();
-						}
-					})
-					
-					.show();
-						return;
-					}
-					
-				}
-				else {
-					byte size = getIntent().getByteExtra("size", (byte) 9);
-					byte handicap = getIntent().getByteExtra("handicap", (byte) 0);
-		
-					int white_player=getIntent().getIntExtra("white_player", 0);
-					int black_player=getIntent().getIntExtra("black_player", 0);
-					
-					game = new GoGame(size,handicap);
-					review_mode=false;
-					
-					game.setGoMover(new GnuGoMover(this,game,black_player!=0,white_player!=0,GoPrefs.getAILevel()));
-				}
-			}
-		
-			board_view = new GoBoardView(this, game);
-			board_view.setOnTouchListener(this);
-			
-			
-			RelativeLayout rel=new RelativeLayout(this);
-			rel.addView(board_view);
-			
-			DisplayMetrics dm = new DisplayMetrics();
-			getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-			Vector<ImageButton> control_buttons=new Vector<ImageButton>();
-			
-			
-			first=new ImageButton(this);
-			first.setImageResource(android.R.drawable.ic_media_previous);
-			control_buttons.add(first);
-			first.setOnClickListener(this);
-			
-			back=new ImageButton(this);
-			back.setImageResource(android.R.drawable.ic_media_rew);
-			control_buttons.add(back);
-			back.setOnClickListener(this);
-			
-			comments=new ImageButton(this);
-			comments.setImageResource(android.R.drawable.ic_dialog_email);
-			control_buttons.add(comments);
-			comments.setOnClickListener(this);
-						
-			next=new ImageButton(this);
-			next.setImageResource(android.R.drawable.ic_media_ff);
-			control_buttons.add(next);
-			next.setOnClickListener(this);
-			
-			
-			
-			last=new ImageButton(this);
-			last.setImageResource(android.R.drawable.ic_media_next);
-			last.setOnClickListener(this);
-			control_buttons.add(last);
-
-			
-			if (dm.heightPixels>dm.widthPixels)
-			{
-				TableLayout controls_table=new TableLayout(this);
-				
-				TableRow controls_row=new TableRow(this);
-				controls_table.addView(controls_row);
-				
-				int btn_id=0;
-				for (ImageButton btn:control_buttons) 
-					{
-					controls_row.addView(btn);
-					controls_table.setColumnStretchable(btn_id++, true);
-					}
-				
-				
-				rel.addView(controls_table);
-				
-				RelativeLayout.LayoutParams bottom_nav_params = new
-				RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.WRAP_CONTENT);
-				bottom_nav_params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-
-				controls_table.setLayoutParams(bottom_nav_params);
-
-				rel.setGravity(Gravity.BOTTOM);
-				
-			}
-			else
-			{
-				LinearLayout lin=new LinearLayout(this);
-				for (ImageButton btn:control_buttons) 
-					lin.addView(btn);
-				lin.setOrientation(LinearLayout.VERTICAL);
-				
-
-				RelativeLayout.LayoutParams bottom_nav_params = new
-				RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.FILL_PARENT);
-				bottom_nav_params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-
-				lin.setLayoutParams(bottom_nav_params);
-			
-				rel.addView(lin);
-			}
-			setContentView(rel);
-			}
-		
-		
-		updateControlsStatus();
-		
-	
-		if (GoPrefs.getKeepLightEnabled())
-			{
-			final PowerManager pm = (PowerManager) (this.getSystemService(Context.POWER_SERVICE)); 
-			mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "DUBwise Wakelog TAG");  
-        	mWakeLock.acquire();
-			}
-		
-		new Thread(this).start();
 	}
 
 	@Override
@@ -367,16 +277,27 @@ public class GoActivity
 	@Override
 	public void onResume() {
 		super.onResume();
+				
 		
-		if (game==null)
-			return;
+		updateControlsStatus();
+		
+	
+		if (GoPrefs.getKeepLightEnabled())
+			{
+			final PowerManager pm = (PowerManager) (this.getSystemService(Context.POWER_SERVICE)); 
+			mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "DUBwise Wakelog TAG");  
+        	mWakeLock.acquire();
+			}
+		
+		new Thread(this).start();
+		//this.runOnUiThread(this);
 		
 		Log.i("gobandroid ", " resuming go activity" + GoPrefs.getBoardSkinName());
 		
 		GOSkin.setBoardSkin(GoPrefs.getBoardSkinName());
 		GOSkin.setStoneSkin(GoPrefs.getStoneSkinName());
 		
-		board_view.regenerate_stones_flag=true;
+	
 		
 		if (GoPrefs.getFullscreenEnabled())
 			this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -385,7 +306,19 @@ public class GoActivity
 			this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	
 		setCustomTitle(R.layout.top);
-		((TopView)(this.findViewById(R.id.TopView))).setGame(game);
+
+	}
+	
+	
+	class AlertHandler extends Handler {
+		@Override
+
+		public void handleMessage(Message msg) {
+		super.handleMessage(msg);
+		loading_alert.hide();
+		board_view.invalidate();
+		Logger.i("game:" + game);
+		}
 	}
 	
 	/**
@@ -893,10 +826,116 @@ public class GoActivity
 	public void run() {
 		Looper.prepare();
 		while (running) {
+	
+			new AlertDialog.Builder(this).setTitle(R.string.results)
+			.setMessage(
+					 "Loading SGF"
+			).show();
+			
+
+			if (game==null) {
+				
+					// otherwise create a new game
+			
+					intent_uri=getIntent().getData();
+					
+					if (intent_uri!=null) {
+						
+						try {
+							
+							InputStream in;
+							Log.i("gobandroid","load" + intent_uri);
+							if (intent_uri.toString().startsWith("content://"))
+								in = getContentResolver().openInputStream(intent_uri);	
+							else
+							  in= new BufferedInputStream(new URL(""+intent_uri) 
+				              .openStream(), 4096); 
+							
+							// save the file to downloads when from http
+							FileOutputStream file_writer =null;
+						    if (intent_uri.toString().startsWith("http"))  
+						    		{
+						    		new File(GoPrefs.getSGFPath()+"/downloads").mkdirs();
+						      		File f = new File(GoPrefs.getSGFPath()+"/downloads/"+intent_uri.getLastPathSegment()	);
+									f.createNewFile();
+									file_writer = new FileOutputStream(f);
+						    		}
+							
+						    StringBuffer out = new StringBuffer();
+						    byte[] b = new byte[4096];
+						    for (int n; (n = in.read(b)) != -1;) {
+						        out.append(new String(b, 0, n));
+						        if (file_writer!=null)
+						        	file_writer.write(b, 0, n);
+						    }
+						    if (file_writer!=null)
+					        	file_writer.close();
+					    
+						    sgf=out.toString();
+							
+							Log.i("gobandroid","got sgf" + sgf);
+							game=SGFHelper.sgf2game(sgf);
+							review_mode=true;
+							
+							
+							
+						} catch (Exception e) {
+							Log.i("gobandroid","exception in load" + e);
+							e.printStackTrace();
+							
+							
+							new AlertDialog.Builder(this).setTitle(R.string.results)
+							.setMessage(
+									 "Problem Loading sgf would you like to send ligi this sgf to fix the problem?"
+							).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+								final  Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+								emailIntent .setType("plain/text");
+								emailIntent .putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"ligi@ligi.de"});
+								emailIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, "SGF Problem");
+								emailIntent .putExtra(android.content.Intent.EXTRA_TEXT, "uri: " + intent_uri + "sgf:\n" + sgf);
+								GoActivity.this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+								finish();
+							}
+						}).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+								finish();
+							}
+						})
+						
+						.show();
+							return;
+						}
+						
+					}
+					else {
+						byte size = getIntent().getByteExtra("size", (byte) 9);
+						byte handicap = getIntent().getByteExtra("handicap", (byte) 0);
+			
+						int white_player=getIntent().getIntExtra("white_player", 0);
+						int black_player=getIntent().getIntExtra("black_player", 0);
+						
+						game = new GoGame(size,handicap);
+						review_mode=false;
+						
+						game.setGoMover(new GnuGoMover(this,game,black_player!=0,white_player!=0,GoPrefs.getAILevel()));
+					}
+			
+					//loading_alert.hide();
+					board_view.setGame(game);				
+					((TopView)(this.findViewById(R.id.TopView))).setGame(game);
+					alert_handler.sendEmptyMessage(0);
+				
+					
+				}
+			
+				
+				}
+			
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-			}
+			
 					
 			class UpdateViewClass implements Runnable {
 				@Override
