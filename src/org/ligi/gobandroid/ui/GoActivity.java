@@ -169,8 +169,6 @@ public class GoActivity
 						Log.i("got sgf" + sgf);
 						game=SGFHelper.sgf2game(sgf);
 						review_mode=true;
-						game=null;
-						
 						
 					} catch (Exception e) {
 						Log.i("exception in load" + e);
