@@ -22,8 +22,8 @@ package org.ligi.gobandroid.ui;
 import java.util.Vector;
 
 import org.ligi.gobandroid.R;
-
-import com.nullwire.trace.ExceptionHandler;
+import org.ligi.tracedroid.TraceDroid;
+import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -46,7 +46,8 @@ public class gobandroid extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     
-        ExceptionHandler.register(this.getApplicationContext());
+        TraceDroid.init(this);
+        TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
         
         GoPrefs.init(this);
         
