@@ -47,7 +47,6 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -56,7 +55,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
-
 
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
@@ -73,6 +71,7 @@ import org.ligi.gobandroid.logic.GnuGoMover;
 import org.ligi.gobandroid.logic.GoGame;
 import org.ligi.gobandroid.logic.Logger;
 import org.ligi.gobandroid.logic.SGFHelper;
+import org.ligi.gobandroid.ui.alerts.GameResultsAlert;
 
 /**
  * Activity for a Game
@@ -419,19 +418,7 @@ public class GoActivity
 	}
 
 	
-	public TextView filledTextView(String txt,boolean center,float size) {
-		TextView res=new TextView(this);
-		res.setText(txt);
-		res.setPadding(3, 0, 10, 0);
-		if (center)
-				res.setGravity(Gravity.CENTER_HORIZONTAL);
-		res.setTextSize(size);
-		return res;
-	}
-	
-	public TextView filledTextView(int txt_id,boolean center,float size) {
-		return filledTextView(getResources().getString(txt_id),center,size);
-	}
+
 	
 	/* Handles item selections */
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -495,8 +482,6 @@ public class GoActivity
 			
 			table_gameinfo.addView(row_white_name);
 
-
-
 			TableRow row_white_rank=new TableRow(this);
 			EditText white_rank_et=new EditText(this);
 			white_rank_et.setText(game.getMetaData().getWhiteRank());
@@ -542,74 +527,7 @@ public class GoActivity
 			
 			break;
 		case MENU_FINISH:
-			TableLayout table=new TableLayout(this);
-			TableRow row=new TableRow(this);
-			
-			row.addView(filledTextView("",true,0.0f));
-			
-			ImageView img=new ImageView(this);
-			img.setImageBitmap(GOSkin.getBlackStone(32));
-			img.setPadding(0, 0, 20, 0);
-			
-			row.addView(img);
-
-			
-			img=new ImageView(this);
-			img.setImageBitmap(GOSkin.getWhiteStone(32));
-			row.addView(img);
-			
-			table.addView(row);
-			
-			row=new TableRow(this);
-			
-			float size1=20.0f;
-			float size2=23.0f;
-			
-			row.addView(filledTextView(R.string.territory,false,size1));
-			row.addView(filledTextView(""+game.territory_black,true,size1));
-			row.addView(filledTextView(""+game.territory_white,true,size1));
-			table.addView(row);
-			
-			row=new TableRow(this);
-			row.addView(filledTextView(R.string.captures,false,size1));
-			row.addView(filledTextView(""+game.getCapturesBlack(),true,size1));
-			row.addView(filledTextView(""+game.getCapturesWhite(),true,size1));
-			table.addView(row);
-			
-			row=new TableRow(this);
-			row.addView(filledTextView(R.string.komi,false,size1));
-			row.addView(filledTextView("0",true,size1));
-			row.addView(filledTextView(""+game.getKomi(),true,size1));
-			
-			table.addView(row);
-			
-			row=new TableRow(this);
-			row.addView(filledTextView(R.string.filal_points,false,size2));
-			row.addView(filledTextView(""+game.getPointsBlack(),true,size2));
-			row.addView(filledTextView(""+game.getPointsWhite(),true,size2));
-			table.addView(row);
-			
-			
-			
-			String game_fin_txt="";
-			if (game.getPointsBlack()==game.getPointsWhite())
-				 game_fin_txt=getResources().getString(R.string.game_ended_in_draw);
-						
-			if (game.getPointsBlack()>game.getPointsWhite())
-				game_fin_txt=("Black won with " + (game.getPointsBlack()-game.getPointsWhite()) + " Points.");
-						
-			if (game.getPointsWhite()>game.getPointsBlack())
-				game_fin_txt=("White won with " + (game.getPointsWhite()-game.getPointsBlack()) + " Points.");
-			
-			new AlertDialog.Builder(this).setTitle(R.string.results).setView(table)
-			.setMessage(
-					 game_fin_txt
-		).setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				
-			}
-		}).show();
-			
+			GameResultsAlert.show(this, game);
 			break;
 				
 		case MENU_UNDO:
