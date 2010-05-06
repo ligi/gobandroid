@@ -32,7 +32,6 @@ import android.os.Looper;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -69,9 +68,9 @@ import java.util.Vector;
 import org.ligi.gobandroid.R;
 import org.ligi.gobandroid.logic.GnuGoMover;
 import org.ligi.gobandroid.logic.GoGame;
-import org.ligi.gobandroid.logic.Logger;
 import org.ligi.gobandroid.logic.SGFHelper;
 import org.ligi.gobandroid.ui.alerts.GameResultsAlert;
+import org.ligi.tracedroid.logging.Log;
 
 /**
  * Activity for a Game
@@ -136,7 +135,7 @@ public class GoActivity
 					try {
 						
 						InputStream in;
-						Log.i("gobandroid","load" + intent_uri);
+						Log.i("load" + intent_uri);
 						if (intent_uri.toString().startsWith("content://"))
 							in = getContentResolver().openInputStream(intent_uri);	
 						else
@@ -167,14 +166,14 @@ public class GoActivity
 				    
 					    sgf=out.toString();
 						
-						Log.i("gobandroid","got sgf" + sgf);
+						Log.i("got sgf" + sgf);
 						game=SGFHelper.sgf2game(sgf);
 						review_mode=true;
-						
+						game=null;
 						
 						
 					} catch (Exception e) {
-						Log.i("gobandroid","exception in load" + e);
+						Log.i("exception in load" + e);
 						e.printStackTrace();
 						
 						
@@ -350,7 +349,7 @@ public class GoActivity
 		// prevent NPE
 		if (game==null)
 			{
-			Logger.w("no game there when updateControlsStatus");	
+			Log.w("no game there when updateControlsStatus");	
 			return;
 			}
 		
@@ -370,7 +369,7 @@ public class GoActivity
 		if (game==null)
 			return;
 		
-		Log.i("gobandroid ", " resuming go activity" + GoPrefs.getBoardSkinName());
+		Log.i(" resuming go activity" + GoPrefs.getBoardSkinName());
 		
 		GOSkin.setBoardSkin(GoPrefs.getBoardSkinName());
 		GOSkin.setStoneSkin(GoPrefs.getStoneSkinName());
@@ -571,7 +570,7 @@ public class GoActivity
 					out.close();
 					sgf_writer.close();
 				} catch (IOException e) {
-					Logger.i(""+e);
+					Log.i(""+e);
 				}
 	
 			}

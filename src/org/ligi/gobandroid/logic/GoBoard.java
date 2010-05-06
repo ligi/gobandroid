@@ -20,7 +20,7 @@
 
 package org.ligi.gobandroid.logic;
 
-import android.util.Log;
+import org.ligi.tracedroid.logging.Log;
 
 
 /**
@@ -94,7 +94,7 @@ public class GoBoard implements GoDefinitions{
     		else if (board[x][y]==2)
 	    		tmp_str+="W";
     		}
-    	Log.d("gobandroid Board",tmp_str);
+    	Log.d(tmp_str);
     	tmp_str="";
     	}
     }

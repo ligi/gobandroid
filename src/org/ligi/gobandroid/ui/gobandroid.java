@@ -23,6 +23,7 @@ import java.util.Vector;
 
 import org.ligi.gobandroid.R;
 import org.ligi.tracedroid.TraceDroid;
+import org.ligi.tracedroid.logging.Log;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 
 import android.app.ListActivity;
@@ -47,6 +48,7 @@ public class gobandroid extends ListActivity {
         super.onCreate(savedInstanceState);
     
         TraceDroid.init(this);
+        Log.setTAG("gobandroid");
         TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
         
         GoPrefs.init(this);

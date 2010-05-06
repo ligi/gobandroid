@@ -21,7 +21,8 @@ package org.ligi.gobandroid.logic;
 
 import java.util.Vector;
 
-import android.util.Log;
+import org.ligi.tracedroid.logging.Log;
+
 
 /**
  * class for serializing and deserializing SGF
@@ -106,7 +107,7 @@ public class SGFHelper {
 	
 	public static GoGame sgf2game(String sgf) {
 
-		Log.i("gobandroid " , "sgf to process:" + sgf);
+		Log.i("sgf to process:" + sgf);
 		byte size=-1;
 		GoGame game=null;
 		
@@ -162,7 +163,7 @@ public class SGFHelper {
 						// 	push the move we where to the stack to return here after the variation
 					
 						//	if (param_level!=0) break;
-						Log.i("gobandroid","   !!! opening variation" + game);
+						Log.i("   !!! opening variation" + game);
 						if (game!=null)
 							var_vect.add(game.getActMove());
 				
@@ -174,10 +175,10 @@ public class SGFHelper {
 					if (var_vect.size()>0) {
 						game.jump(var_vect.lastElement());
 						var_vect.remove(var_vect.lastElement()); 
-						Log.w("gobandroid" , "popping variaton from stack");	
+						Log.w( "popping variaton from stack");	
 						}
 						else 
-						Log.w("gobandroid" , "variation vector underrun!!");
+						Log.w( "variation vector underrun!!");
 					
 					last_cmd="";
 					act_cmd="";
@@ -250,7 +251,7 @@ public class SGFHelper {
 					//if (variation_depth==1)
 					if ((act_cmd.equals("B"))||(act_cmd.equals("W")))
 						{
-						Log.i("gobandroid","   command " + act_cmd + " -  act param" + act_param);
+						Log.i("   command " + act_cmd + " -  act param" + act_param);
 					
 						// if still no game open -> open one with default size
 						if (game==null)

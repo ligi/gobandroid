@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.ligi.gobandroid.R;
 import org.ligi.gobandroid.logic.GnuGoMover;
+import org.ligi.tracedroid.logging.Log;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -33,7 +34,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -110,7 +110,7 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 	public void onResume() {
 		super.onResume();
 
-		Log.i("gobandroid", "resume !!!!!!");
+		Log.i("GoSetup Resume");
 		size_seek=(SeekBar)this.findViewById(R.id.size_slider);
 		size_seek.setOnSeekBarChangeListener(this);
 		
@@ -143,12 +143,7 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 
  		spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
- 		Log.i("gobandroid","posfoo" + spinner_adapter.getPosition("foo"));
- 		Log.i("gobandroid","posgg" + spinner_adapter.getPosition("GnuGo"));
- 		
  		white_player_spinner=(Spinner)this.findViewById(R.id.WhitePlayerSpinner);
- 		
- 		
  		
 		black_player_spinner.setAdapter(spinner_adapter);
 		white_player_spinner.setAdapter(spinner_adapter);

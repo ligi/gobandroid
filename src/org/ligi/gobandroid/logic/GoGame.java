@@ -23,7 +23,7 @@ package org.ligi.gobandroid.logic;
 
 import java.util.Vector;
 
-import android.util.Log;
+import org.ligi.tracedroid.logging.Log;
 
 /**
  * 
@@ -198,7 +198,7 @@ public class GoGame implements GoDefinitions {
      * @return true if the move was valid - false if invalid move
      */
     public boolean do_move( byte x, byte y ) {
-    	Logger.i("do_move x:" + x + "  y:" + y );
+    	Log.i("do_move x:" + x + "  y:" + y );
         if ((x >= 0) && (x <= calc_board.getSize()) && (y >= 0) && (y < calc_board.getSize())) { // if x and y are inside the board
         	
         	// check if the "new" move is in the variations - to not have 2 equal move as different variations
@@ -259,7 +259,7 @@ public class GoGame implements GoDefinitions {
                 if ((hasGroupLibertie(groups[x][y])||isDeadGroupOnBoard(x,y)) // if either a field has libertys or get's one
                 		&&!calc_board.equals(pre_last_board)) // and the move is not a ko 
                 { 	// valid move -> do things needed to do after a valid move 
-                    Log.d("gobandroid", "isDeadGroupOnBoard(x,y)" + isDeadGroupOnBoard(x,y));
+                    Log.d("isDeadGroupOnBoard(x,y)" + isDeadGroupOnBoard(x,y));
                     
                     
                     if (isBlackToMove())
@@ -282,7 +282,7 @@ public class GoGame implements GoDefinitions {
                     return true;
                     }
                 else { // was an illegal move -> undo
-                	Logger.i("illegal move");
+                	Log.i("illegal move");
                     calc_board=bak_board.clone();
                     return false;
                 }
@@ -365,7 +365,7 @@ public class GoGame implements GoDefinitions {
     }
     
     public void redo(int var) {
-    	Log.i("gobandroid " , "redoing " +act_move.getnextMove(var).toString());
+    	Log.i("redoing " +act_move.getnextMove(var).toString());
     	
     	
     	jump(act_move.getnextMove(var));
@@ -416,7 +416,7 @@ public class GoGame implements GoDefinitions {
         	if (replay_moves.lastElement().isFirstMove()) 
         		break;
         		
-        	Log.i("gobandroid" , "adding" + replay_moves.lastElement().toString() );
+        	Log.i( "adding" + replay_moves.lastElement().toString() );
         	replay_moves.add(replay_moves.lastElement().getParent());
         }
         
@@ -665,7 +665,7 @@ public class GoGame implements GoDefinitions {
                         
             
             if ((!grp_living)&&(grp_members>0)) {
-            	Log.d("gobandroid " ,"Grp living" + grp);
+            	Log.d("Grp living" + grp);
             	return true;
             	
             }
@@ -813,7 +813,7 @@ public class GoGame implements GoDefinitions {
 	}
 	
 	public GoGameMetadata getMetaData() {
-		Logger.i("returning meta" + metadata);
+		Log.i("returning meta" + metadata);
 		return metadata;
 	}
 	

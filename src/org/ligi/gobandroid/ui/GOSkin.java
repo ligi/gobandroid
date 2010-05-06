@@ -21,12 +21,13 @@ package org.ligi.gobandroid.ui;
 
 import java.io.File;
 
+import org.ligi.tracedroid.logging.Log;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 
 public class GOSkin {
 
@@ -90,7 +91,7 @@ public class GOSkin {
 		if (size>50)
 			size_append=64;
 
-		Log.i("gobandroid", "scale to size" + size);	
+		Log.i("scale to size" + size);	
 		return Bitmap.createScaledBitmap(BitmapFactory.decodeFile(skin_base_path+stone_skin_name+"/"+name + size_append + ".png"
 			), (int)size, (int)size, true);
 		}

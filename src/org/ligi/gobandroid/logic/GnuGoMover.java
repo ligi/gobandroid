@@ -20,6 +20,7 @@
 package org.ligi.gobandroid.logic;
 
 import org.ligi.gobandroid.ai.gnugo.IGnuGoService;
+import org.ligi.tracedroid.logging.Log;
 
 import android.app.Activity;
 import android.app.Application;
@@ -29,7 +30,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.util.Log;
 
 public class GnuGoMover implements Runnable{
 
@@ -72,7 +72,7 @@ public class GnuGoMover implements Runnable{
 					gnu_service = IGnuGoService.Stub.asInterface(service);
 		
 					try {
-						Log.i("INFO", "Service bound "  + gnu_service.processGTP("test"));
+						Log.i( "Service bound "  + gnu_service.processGTP("test"));
 					} catch (RemoteException e) {
 					}
 					
@@ -80,7 +80,7 @@ public class GnuGoMover implements Runnable{
 	
 				@Override
 				public void onServiceDisconnected(ComponentName name) {
-					Log.i("INFO", "Service unbound ");				
+					Log.i( "Service unbound ");				
 				}
 	        	
 	        	
@@ -128,7 +128,7 @@ public class GnuGoMover implements Runnable{
 				game.pass();
 				game.pass();	
 			}
-			Log.i("gobandroid", "gugoservice stopping service" + game.isFinished());
+			Log.i( "gugoservice stopping service" + game.isFinished());
 			application.unbindService(conn);
 			application.stopService(new Intent("org.ligi.gobandroid.ai.gnugo.GnuGoService"));
 		}
@@ -159,7 +159,7 @@ public class GnuGoMover implements Runnable{
 						for (byte y=0;y<game.getBoardSize();y++)
 							if (game.getHandicapBoard().isCellBlack(x, y))
 								gnu_service.processGTP("black " + coordinates2gtpstr(x,y));
-					Log.i("gobandroid" ,"setting level " + gnu_service.processGTP("level "+level));
+					Log.i("setting level " + gnu_service.processGTP("level "+level));
 					gnugo_size_set=true;
 				} catch (RemoteException e) {}
 			
@@ -176,7 +176,7 @@ public class GnuGoMover implements Runnable{
 						break;
 					
 					GTPHelper.doMoveByGTPString(answer, game);
-					Log.i("gobandroid", "gugoservice" + gnu_service.processGTP("showboard"));		
+					Log.i("gugoservice" + gnu_service.processGTP("showboard"));		
 										
 				} catch (RemoteException e) {
 				}
@@ -191,7 +191,7 @@ public class GnuGoMover implements Runnable{
 					
 					GTPHelper.doMoveByGTPString(answer, game);
 					
-					Log.i("gobandroid", "gugoservice" + gnu_service.processGTP("showboard"));
+					Log.i("gugoservice" + gnu_service.processGTP("showboard"));
 					
 				} catch (RemoteException e) {
 				}				
@@ -218,7 +218,7 @@ public class GnuGoMover implements Runnable{
 		try {
 			gnu_service.processGTP("undo");
 		} catch (Exception e) {
-			Logger.i(""+e);
+			Log.i(""+e);
 		}
 	}
 	

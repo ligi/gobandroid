@@ -22,6 +22,7 @@ package org.ligi.gobandroid.ui;
 import org.ligi.gobandroid.logic.GoDefinitions;
 import org.ligi.gobandroid.logic.GoGame;
 import org.ligi.gobandroid.logic.GoMarker;
+import org.ligi.tracedroid.logging.Log;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -30,7 +31,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Paint.FontMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -314,7 +314,7 @@ public class GoBoardView extends View {
     
     public void regenerate_images() {
    
-    	Log.i("gobandrod","regenerating images to stone size " + stone_size);
+    	Log.i("regenerating images to stone size " + stone_size);
     	float SMALL_STONE_SCALER=0.6f;	
     	white_stone_bitmap=GOSkin.getWhiteStone(stone_size);
     	black_stone_bitmap=GOSkin.getBlackStone(stone_size);

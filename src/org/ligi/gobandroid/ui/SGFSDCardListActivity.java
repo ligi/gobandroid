@@ -23,7 +23,6 @@ import java.io.File;
 import java.util.Vector;
 
 import org.ligi.gobandroid.R;
-import org.ligi.gobandroid.logic.Logger;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
