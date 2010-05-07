@@ -19,14 +19,14 @@
 
 package org.ligi.gobandroid.logic;
 
-import android.util.Log;
+import org.ligi.tracedroid.logging.Log;
 
 public class GTPHelper {
 
 	
 	public static void doMoveByGTPString(String gtp_str,GoGame game) {
 		
-		Log.i("gobandroid","processing gtp str" + gtp_str);
+		Log.i("processing gtp str" + gtp_str);
 		gtp_str=gtp_str.replace(" ", "");
 		gtp_str=gtp_str.replace("=", "");
 		gtp_str=gtp_str.replace("\r", "");
