@@ -23,7 +23,7 @@ package org.ligi.gobandroid.logic;
 
 import java.util.Vector;
 
-import android.util.Log;
+import org.ligi.tracedroid.logging.Log;
 
 /**
  * 
@@ -112,7 +112,7 @@ public class GoMove implements GoDefinitions {
 
 	public void addNextMove(GoMove move) {
 		next_move_variations.add(move);
-		Log.i("gobandroid","var count" +next_move_variations.size() );
+		Log.i("var count" +next_move_variations.size() );
 	}
 
 	public void setToPassMove() {
