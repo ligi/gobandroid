@@ -1,3 +1,6 @@
 GTP Server Connection
 share SGF
 init tracedroid when not came over gobandroid main activity
+other engines: 
+ - http://ricoh51.free.fr/go/engineeng.htm
+ - Pachi
