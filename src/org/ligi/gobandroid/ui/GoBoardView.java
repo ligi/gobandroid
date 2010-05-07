@@ -327,6 +327,10 @@ public class GoBoardView extends View {
     	whiteTextPaint.setTextSize(stone_size);
     	blackTextPaint.setTextSize(stone_size);
     	
+    	if (GoPrefs.getGridEmbossEnabled())
+    		gridPaint.setShadowLayer(1,1,1,0xFFFFFFFF );
+    	else
+    		gridPaint.setShadowLayer(1,1,1,0xFF000000 );
     }	
     
     @Override

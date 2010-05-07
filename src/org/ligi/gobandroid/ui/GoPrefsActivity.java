@@ -128,6 +128,13 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         keepScreenAwakeCheckBoxPref.setSummary("drain your Battery while playing");
        	uiPrefCat.addPreference(keepScreenAwakeCheckBoxPref);
 
+        CheckBoxPreference doEmbossCheckBoxPref = new CheckBoxPreference(this);
+        doEmbossCheckBoxPref.setKey(GoPrefs.KEY_GRID_EMBOSS);
+        doEmbossCheckBoxPref.setTitle("Grid Emboss");
+        doEmbossCheckBoxPref.setDefaultValue(GoPrefs.getGridEmbossEnabled());
+        doEmbossCheckBoxPref.setSummary("emboss the grid or pure black");
+       	uiPrefCat.addPreference(doEmbossCheckBoxPref);
+
         doLegendCheckBoxPref = new CheckBoxPreference(this);
         doLegendCheckBoxPref.setKey(GoPrefs.KEY_DO_LEGEND);
         doLegendCheckBoxPref.setTitle("Show Legend");

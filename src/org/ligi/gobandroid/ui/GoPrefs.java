@@ -51,6 +51,8 @@ public class GoPrefs {
 	public final static String KEY_LAST_PLAYER_BLACK="last_player_black";
 	public final static String KEY_LAST_PLAYER_WHITE="last_player_white";
 	
+	public final static String KEY_GRID_EMBOSS="grid_emboss";
+	
 	public final static String DEFAULT_AI_LEVEL="5";
 	public final static String DEFAULT_SKIN="no Skin";
 	public final static String DEFAULT_SGF_PATH="/sdcard/gobandroid/sgf";
@@ -97,6 +99,10 @@ public class GoPrefs {
 	
 	public static void setLastPlayerBlack(String last_player) {
 		shared_prefs.edit().putString(KEY_LAST_PLAYER_BLACK, last_player).commit();
+	}
+	
+	public static boolean getGridEmbossEnabled() {
+		return shared_prefs.getBoolean(KEY_GRID_EMBOSS, true);
 	}
 	
 	public static boolean getFatFingerEnabled() {

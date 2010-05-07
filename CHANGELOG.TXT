@@ -1,3 +1,6 @@
+0.47
+   + switchable grid emboss
+   + save metadata to SGF
 0.46
    + use tracedroid
    F layout fix in result display
