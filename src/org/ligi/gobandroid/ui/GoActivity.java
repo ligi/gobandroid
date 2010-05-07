@@ -69,6 +69,7 @@ import org.ligi.gobandroid.R;
 import org.ligi.gobandroid.logic.GnuGoMover;
 import org.ligi.gobandroid.logic.GoGame;
 import org.ligi.gobandroid.logic.SGFHelper;
+import org.ligi.gobandroid.ui.alerts.GameInfoAlert;
 import org.ligi.gobandroid.ui.alerts.GameResultsAlert;
 import org.ligi.tracedroid.logging.Log;
 
@@ -423,100 +424,7 @@ public class GoActivity
 		switch (item.getItemId()) {
 		
 		case MENU_GAMEINFO:
-			ScrollView scroll_view=new ScrollView(this);
-			TableLayout table_gameinfo=new TableLayout(this);
-			TableRow row_gameinfo=new TableRow(this);
-			
-			table_gameinfo.setColumnStretchable(1, true);
-			
-			EditText game_name_et=new EditText(this);
-			game_name_et.setText(game.getMetaData().getName());
-			game_name_et.setPadding(2, 0, 5, 0);
-			TextView game_name_tv=new TextView(this);
-			game_name_tv.setText("Game Name");
-			
-			row_gameinfo.addView(game_name_tv);
-			row_gameinfo.addView(game_name_et);
-			
-			table_gameinfo.addView(row_gameinfo);
-
-			TableRow row_black_name=new TableRow(this);
-			EditText black_name_et=new EditText(this);
-			black_name_et.setText(game.getMetaData().getBlackName());
-			black_name_et.setPadding(2, 0, 5, 0);
-			TextView black_name_tv=new TextView(this);
-			black_name_tv.setPadding(2, 0, 5, 0);
-			black_name_tv.setText("Black Name");
-			
-			row_black_name.addView(black_name_tv);
-			row_black_name.addView(black_name_et);
-			
-			table_gameinfo.addView(row_black_name);
-
-			TableRow row_black_rank=new TableRow(this);
-			EditText black_rank_et=new EditText(this);
-			black_rank_et.setText(game.getMetaData().getBlackRank());
-			black_rank_et.setPadding(2, 0, 5, 0);
-			TextView black_rank_tv=new TextView(this);
-			black_rank_tv.setPadding(2, 0, 5, 0);
-			black_rank_tv.setText("Black Rank");
-			
-			row_black_rank.addView(black_rank_tv);
-			row_black_rank.addView(black_rank_et);
-			
-			table_gameinfo.addView(row_black_rank);
-
-			TableRow row_white_name=new TableRow(this);
-			EditText white_name_et=new EditText(this);
-			white_name_et.setText(game.getMetaData().getWhiteName());
-			white_name_et.setPadding(2, 0, 5, 0);
-			TextView white_name_tv=new TextView(this);
-			white_name_tv.setPadding(2, 0, 5, 0);
-			white_name_tv.setText("White Name");
-			
-			row_white_name.addView(white_name_tv);
-			row_white_name.addView(white_name_et);
-			
-			table_gameinfo.addView(row_white_name);
-
-			TableRow row_white_rank=new TableRow(this);
-			EditText white_rank_et=new EditText(this);
-			white_rank_et.setText(game.getMetaData().getWhiteRank());
-			white_rank_et.setPadding(2, 0, 5, 0);
-			TextView white_rank_tv=new TextView(this);
-			white_rank_tv.setPadding(2, 0, 5, 0);
-			white_rank_tv.setText("White Rank");
-			
-			row_white_rank.addView(white_rank_tv);
-			row_white_rank.addView(white_rank_et);
-			
-			table_gameinfo.addView(row_white_rank);
-
-			TableRow game_result_row=new TableRow(this);
-			EditText game_result_et=new EditText(this);
-			game_result_et.setText(game.getMetaData().getResult());
-			game_result_et.setPadding(2, 0, 5, 0);
-			TextView game_result_tv=new TextView(this);
-			game_result_tv.setPadding(2, 0, 5, 0);
-			game_result_tv.setText("Game Result");
-			
-			game_result_row.addView(game_result_tv);
-			game_result_row.addView(game_result_et);
-			
-			table_gameinfo.addView(game_result_row);
-
-			
-			scroll_view.addView(table_gameinfo);
-			
-			new AlertDialog.Builder(this).setTitle("Game Info").setView(scroll_view)
-			.setMessage(""
-					 
-			).setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				
-			}
-			}).show();
-			
+			GameInfoAlert.show(this,game);
 			break;
 			
 		case MENU_SHOWCONTROLS:
