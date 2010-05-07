@@ -63,11 +63,24 @@ public class SGFHelper {
 		return res;
 	}
 
+	public static String escapeSGF(String txt) {
+		txt.replace("]", "\\]");
+		txt.replace(")", "\\)");
+		txt.replace("\\", "\\\\");
+		return txt;
+	}
 	
 	public static String game2sgf(GoGame game) {
 		String res="";
 		res="(;FF[4]GM[1]AP[gobandroid:0]"; // header
 		res+="SZ[" + game.getBoardSize() + "]"; // board_size;
+		res+="GN[" + escapeSGF(game.getMetaData().getName()) + "]";
+		res+="PB[" + escapeSGF(game.getMetaData().getBlackName()) + "]";
+		res+="PW[" + escapeSGF(game.getMetaData().getWhiteName()) + "]";
+		res+="BR[" + escapeSGF(game.getMetaData().getBlackRank()) + "]";
+		res+="WR[" + escapeSGF(game.getMetaData().getWhiteRank()) + "]";
+		res+="RE[" + escapeSGF(game.getMetaData().getResult()) + "]";
+		
 		res+="\n";
 		
 		boolean black_to_move=true;
