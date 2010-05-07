@@ -1,2 +1,3 @@
 GTP Server Connection
 share SGF
+init tracedroid when not came over gobandroid main activity
