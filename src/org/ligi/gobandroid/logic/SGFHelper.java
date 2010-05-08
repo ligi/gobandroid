@@ -319,27 +319,15 @@ public class SGFHelper {
 						var_vect.add(game.getActMove());
 						}
 						
-					
-						//	Log.i("gobanroid","process move");
 						if (act_param.length()==0)
 							game.pass();
 						else
 						{
-							/*
-							
-								game.pass();
-							else if ((!game.isBlackToMove())&&(act_cmd.equals("AB")))
-								game.pass();
-					
-							game.do_move((byte)(act_param.charAt(0)-'a'), (byte)(act_param.charAt(1)-'a'));
-						*/
-							byte x=(byte)(act_param.charAt(0)-'a');
-							byte y=(byte)(act_param.charAt(1)-'a');
-							
+
 							if (game.isBlackToMove()&&(act_cmd.equals("AB")))
-								game.getHandicapBoard().setCellBlack(x, y);
+								game.getHandicapBoard().setCellBlack(param_x, param_y);
 							if (game.isBlackToMove()&&(act_cmd.equals("AW")))
-								game.getHandicapBoard().setCellWhite(x, y);
+								game.getHandicapBoard().setCellWhite(param_x, param_y);
 							
 						}
 						
@@ -348,12 +336,9 @@ public class SGFHelper {
 				last_cmd=act_cmd;
 				act_cmd="";	
 				act_param="";
-				//param_level=0;
 				
-				} // if !escape
-//				act_cmd=""+act_cmd.subSequence(0, act_cmd.length()-1); // cut the escaper \ 
-				// fall wanted to catch the ]
-			case '\\':
+				} 
+				case '\\':
 				if (escape)
 				{
 					act_param+=(char)act_char;
