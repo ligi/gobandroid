@@ -32,7 +32,6 @@ import android.os.Looper;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,8 +48,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
@@ -111,6 +108,8 @@ public class GoActivity
 	private String sgf="";
 	
 	private Uri intent_uri;
+	
+	private TextView comment_tv;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -254,7 +253,17 @@ public class GoActivity
 			last.setOnClickListener(this);
 			control_buttons.add(last);
 
+			LinearLayout outer_lin=new LinearLayout(this);
+			
+			
 			LinearLayout lin=new LinearLayout(this);
+
+			
+			
+			comment_tv=new TextView(this);
+			comment_tv.setText("foobar\njpjpjp");
+			comment_tv.setTextColor(0xCC111111);
+			comment_tv.setPadding(10, 0, 10, 10);
 			
 			for (ImageButton btn:control_buttons) 
 			{
@@ -265,19 +274,28 @@ public class GoActivity
 				
 			if (dm.heightPixels>dm.widthPixels) {
 				lin.setOrientation(LinearLayout.HORIZONTAL);
+				outer_lin.setOrientation(LinearLayout.VERTICAL);
+			
 				LayoutParams bottom_nav_params=new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
 				bottom_nav_params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 				
+				outer_lin.setLayoutParams(bottom_nav_params);
 				lin.setLayoutParams(bottom_nav_params);
 			}
 			else {
 				lin.setOrientation(LinearLayout.VERTICAL);
+				outer_lin.setOrientation(LinearLayout.HORIZONTAL);
 				LayoutParams bottom_nav_params=new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT);
 				bottom_nav_params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+				outer_lin.setLayoutParams(bottom_nav_params);
 				lin.setLayoutParams(bottom_nav_params);
 			}
 			
-			rel.addView(lin);
+
+			outer_lin.addView(comment_tv);
+			outer_lin.addView(lin);
+			
+			rel.addView(outer_lin);
 			setContentView(rel);
 			}
 		
@@ -337,6 +355,7 @@ public class GoActivity
 		last.setEnabled(game.canRedo());
 		comments.setEnabled(game.getActMove().hasComment());
 		
+		comment_tv.setText(game.getActMove().getComment());
 	}
 	
 
