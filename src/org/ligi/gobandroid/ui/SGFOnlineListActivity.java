@@ -38,7 +38,9 @@ import android.widget.ListView;
 **/
 
 public class SGFOnlineListActivity extends ListActivity {
-	public String[] menu_items= {"Britgo recent", 
+	public String[] menu_items= {
+								 "Commented gogameworld sample games",
+								  "Britgo recent", 
     							 "USGo Problems" ,
     							 "egoban" ,
     							 "byheartgo",
@@ -46,7 +48,7 @@ public class SGFOnlineListActivity extends ListActivity {
     							 "companion"};
     
 	public String[] menu_urls = {
-			
+			"http://gogameworld.com/gophp/pg_samplegames.php",
 			"http://www.britgo.org/bgj/recent.html",
 			"http://www.usgo.org/problems/index.html",
 			"http://egoban.org/@@recent_games",
