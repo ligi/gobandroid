@@ -19,6 +19,13 @@
 
 package org.ligi.gobandroid.logic;
 
+/**
+ * class to mark a pos on the board 
+ * useful for go problems - e.g. from SGF
+ * 
+ * @author ligi
+ *
+ */
 public class GoMarker {
 
 	private byte x,y;
