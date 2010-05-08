@@ -225,7 +225,7 @@ public class SGFHelper {
 						byte x=(byte)(act_param.charAt(0)-'a');
 						byte y=(byte)(act_param.charAt(1)-'a');
 						
-						GoMarker marker=new GoMarker(x,y,act_param.substring(3));
+						GoMarker marker=new GoMarker(x,y,act_param.substring(3).charAt(0));
 						game.getActMove().addMarker(marker);
 						}
 

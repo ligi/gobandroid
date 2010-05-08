@@ -300,9 +300,9 @@ public class GoBoardView extends View {
         for (GoMarker marker:game.getActMove().getMarkers())
         	        
         if (game.getVisualBoard().isCellBlack(marker.getX(),marker.getY()))
-    		canvas.drawText( marker.getText() , marker.getX()*stone_size + stone_size/2.0f ,marker.getY()*stone_size-(fm.top+fm.bottom) ,whiteTextPaint );
+    		canvas.drawText( ""+marker.getText() , marker.getX()*stone_size + stone_size/2.0f ,marker.getY()*stone_size-(fm.top+fm.bottom) ,whiteTextPaint );
     	else
-    		canvas.drawText( marker.getText() , marker.getX()*stone_size + stone_size/2.0f ,marker.getY()*stone_size-(fm.top+fm.bottom) ,blackTextPaint );
+    		canvas.drawText( ""+marker.getText() , marker.getX()*stone_size + stone_size/2.0f ,marker.getY()*stone_size-(fm.top+fm.bottom) ,blackTextPaint );
         
         
         canvas.restore();
