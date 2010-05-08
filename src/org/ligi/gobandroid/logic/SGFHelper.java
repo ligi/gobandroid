@@ -205,30 +205,31 @@ public class SGFHelper {
 			else
 				// consuming param
 				switch(act_char) {
-				case ']':
-				
-				
-/*				if(var_vect.size()>1)
-					Log.i("gobandroid","   command " + act_cmd + " -  act param " + act_param + " esc " + escape + " 1stv " + var_vect.get(1).getNextMoveVariationCount()) ;
-*/
-		//		Log.i("gobandroid", " esc " + escape +"   (no)move " + last_cmd + " - " + act_cmd);
-					
+				case ']':	// closing command parameter -> can process command now
 				if (!escape) {
 					consuming_param=false;
-					//Log.i("","" + last_cmd + " " + act_cmd);
 					
+					byte param_x=0,	param_y=0;
+					
+					if (act_param.length()>2) {
+						param_x=(byte)(act_param.charAt(0)-'a');
+						param_y=(byte)(act_param.charAt(1)-'a');
+					}
+
+					// if command is empty -> use the last command
 					if (act_cmd.length()==0)
 						act_cmd=last_cmd;
 				
+					// marker section - infos here http://www.red-bean.com/sgf/properties.html
+					
+					// marker with text
 					if (act_cmd.equals("LB"))
-						{
-						byte x=(byte)(act_param.charAt(0)-'a');
-						byte y=(byte)(act_param.charAt(1)-'a');
-						
-						GoMarker marker=new GoMarker(x,y,act_param.substring(3));
-						game.getActMove().addMarker(marker);
-						}
+						game.getActMove().addMarker(new GoMarker(param_x,param_y,act_param.substring(3)));
 
+					// mark with x
+					if (act_cmd.equals("MA"))
+						game.getActMove().addMarker(new GoMarker(param_x,param_y,"X"));
+					
 					if (act_cmd.equals("GN")) // Game Name
 						metadata.setName(act_param);
 
