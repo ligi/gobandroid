@@ -5,6 +5,8 @@ other engines:
  - http://ricoh51.free.fr/go/engineeng.htm
  - Pachi
 
+on horizontal view - review controls to left
+
 from mail by Oren Laskin:
 Hey there.  I have some time to work on the source code coming up.  I
 don't know if you have a list of features, but here are some I'd like
