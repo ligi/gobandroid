@@ -254,51 +254,30 @@ public class GoActivity
 			last.setOnClickListener(this);
 			control_buttons.add(last);
 
+			LinearLayout lin=new LinearLayout(this);
 			
-			if (dm.heightPixels>dm.widthPixels)
+			for (ImageButton btn:control_buttons) 
 			{
-				TableLayout controls_table=new TableLayout(this);
-				
-				TableRow controls_row=new TableRow(this);
-				controls_table.addView(controls_row);
-				
-				int btn_id=0;
-				for (ImageButton btn:control_buttons) 
-					{
-					controls_row.addView(btn);
-					controls_table.setColumnStretchable(btn_id++, true);
-					}
+				btn.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT,1));
+				lin.addView(btn);
+			}
 				
 				
-				rel.addView(controls_table);
-				
-				RelativeLayout.LayoutParams bottom_nav_params = new
-				RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.WRAP_CONTENT);
+			if (dm.heightPixels>dm.widthPixels) {
+				lin.setOrientation(LinearLayout.HORIZONTAL);
+				LayoutParams bottom_nav_params=new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
 				bottom_nav_params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-
-				controls_table.setLayoutParams(bottom_nav_params);
-
-				rel.setGravity(Gravity.BOTTOM);
 				
-			}
-			else
-			{
-				LinearLayout lin=new LinearLayout(this);
-				for (ImageButton btn:control_buttons) 
-					lin.addView(btn);
-				lin.setOrientation(LinearLayout.VERTICAL);
-				
-
-				RelativeLayout.LayoutParams bottom_nav_params = new
-				RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.FILL_PARENT);
-				bottom_nav_params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-
 				lin.setLayoutParams(bottom_nav_params);
-			
-				rel.addView(lin);
 			}
+			else {
+				lin.setOrientation(LinearLayout.VERTICAL);
+				LayoutParams bottom_nav_params=new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT);
+				bottom_nav_params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+				lin.setLayoutParams(bottom_nav_params);
+			}
+			
+			rel.addView(lin);
 			setContentView(rel);
 			}
 		
