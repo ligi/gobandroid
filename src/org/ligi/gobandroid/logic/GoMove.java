@@ -193,9 +193,10 @@ public class GoMove implements GoDefinitions {
 		return (getGoMarker()!=null);
 	}
 	
-	public String getMarkText() {
+	
+	public char getMarkText() {
 		if (parent==null)
-			return "";
+			return ' ';
 		return (getGoMarker().getText());
-	}
+	} 
 }
