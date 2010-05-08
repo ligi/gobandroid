@@ -265,9 +265,12 @@ public class SGFHelper {
 					// size command
 					if (act_cmd.equals("SZ"))
 						{
+						
 						size=Byte.parseByte(act_param);
-						game=new GoGame(size);
-						var_vect.add(game.getActMove());
+						if ((game==null)||(game.getBoardSize()!=size)) {
+							game=new GoGame(size);
+							var_vect.add(game.getActMove());
+						}
 						}	
 			
 					if (act_cmd.equals("C")) {
