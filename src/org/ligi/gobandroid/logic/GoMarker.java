@@ -19,24 +19,16 @@
 
 package org.ligi.gobandroid.logic;
 
-/**
- * class to mark a position on a board - useful for go problems
- * 
- * @author ligi
- *
- */
 public class GoMarker {
 
-	// the position on the board
 	private byte x,y;
-	private char text;
+	private String text;
 	
-	public GoMarker(byte x,byte y , char chr) {
+	public GoMarker(byte x,byte y , String text) {
 		this.x=x;
 		this.y=y;
-		this.text=chr;
+		this.text=text;
 	}
-	
 	public byte getX() {
 		return x;
 	}
@@ -45,7 +37,7 @@ public class GoMarker {
 		return y;
 	}
 
-	public char getText() {
+	public String getText() {
 		return text;
 	}
 
