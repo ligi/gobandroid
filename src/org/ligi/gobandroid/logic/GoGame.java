@@ -536,7 +536,6 @@ public class GoGame implements GoDefinitions {
     public void buildGroups() {
         group_count=0;
         
-        
         // reset groups
         for (int x = 0; x < calc_board.getSize(); x++)
             for (int y = 0; y < calc_board.getSize(); y++) {

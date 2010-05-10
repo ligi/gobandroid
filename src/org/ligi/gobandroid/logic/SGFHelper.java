@@ -118,7 +118,7 @@ public class SGFHelper {
 	}
 	
 	
-	public static GoGame sgf2game(String sgf) {
+	public static GoGame sgf2game(String sgf,ISGFLoadProgressCallback callback) {
 
 		Log.i("sgf to process:" + sgf);
 		byte size=-1;
@@ -142,6 +142,7 @@ public class SGFHelper {
 		for (int p=0;p<sgf.length();p++)
 		{
 			char act_char=sgf.charAt(p);
+			
 			//Logger.i("act_char:" + (char)act_char + "  " + act_cmd + "  " + act_param);
 			//System.out.println("processing " + sgf.charAt(p) + " @ " + p);
 			if (!consuming_param)
@@ -206,6 +207,8 @@ public class SGFHelper {
 				// consuming param
 				switch(act_char) {
 				case ']':	// closing command parameter -> can process command now
+				if (game!=null)
+					callback.progress(p, sgf.length(), "Move " + game.getActMove().getMovePos());
 				if (!escape) {
 					consuming_param=false;
 					
@@ -363,4 +366,7 @@ public class SGFHelper {
 		return game;
 	}
 	
+	public interface ISGFLoadProgressCallback {
+		public void progress(int act,int max,String Message);
+	}
 }

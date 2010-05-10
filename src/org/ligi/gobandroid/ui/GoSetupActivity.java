@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.ligi.gobandroid.R;
 import org.ligi.gobandroid.logic.GnuGoMover;
+import org.ligi.gobandroid.logic.GoGameProvider;
 import org.ligi.tracedroid.logging.Log;
 
 import android.app.Activity;
@@ -260,6 +261,7 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 	    			
 						}
 				else {
+					GoGameProvider.setGame(null);
 					Intent go_intent=new Intent(this,GoActivity.class);
 					go_intent.putExtra("size",act_size );
 					go_intent.putExtra("handicap",act_handicap );

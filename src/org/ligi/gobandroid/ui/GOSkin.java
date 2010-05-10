@@ -92,7 +92,7 @@ public class GOSkin {
 			size_append=64;
 
 		Log.i("scale to size" + size);	
-		return Bitmap.createScaledBitmap(BitmapFactory.decodeFile(skin_base_path+stone_skin_name+"/"+name + size_append + ".png"
+		return Bitmap.createScaledBitmap(BitmapFactory .decodeFile(skin_base_path+stone_skin_name+"/"+name + size_append + ".png"
 			), (int)size, (int)size, true);
 		}
 		else {

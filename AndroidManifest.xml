@@ -28,12 +28,7 @@
     	
 		<activity android:name=".ui.GoSetupActivity"></activity>
 		<activity android:name=".ui.SGFSDCardListActivity"></activity>
-		<activity android:name=".ui.GoPrefsActivity"></activity>
-		<activity android:name=".ui.LoadActionsActivity"></activity>
-		<activity android:name=".ui.SGFOnlineListActivity"></activity>
-		<activity android:name=".ui.AboutActivity"></activity>
-		<activity android:name=".ui.GoActivity">
-		
+		<activity android:name=".ui.SGFLoadActivity">
 		<intent-filter>
     		<action android:name="android.intent.action.VIEW"/>
     		<category android:name="android.intent.category.DEFAULT"/>
@@ -73,6 +68,14 @@
     		
 			<data android:mimeType="application/x-go-sgf" />	
 		</intent-filter>
+		
+		
+		</activity>
+		<activity android:name=".ui.GoPrefsActivity"></activity>
+		<activity android:name=".ui.LoadActionsActivity"></activity>
+		<activity android:name=".ui.SGFOnlineListActivity"></activity>
+		<activity android:name=".ui.AboutActivity"></activity>
+		<activity android:name=".ui.GoActivity">
 		
 		
 		</activity>

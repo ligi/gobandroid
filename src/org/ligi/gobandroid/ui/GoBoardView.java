@@ -33,6 +33,10 @@ import android.graphics.RectF;
 import android.graphics.Paint.FontMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.RelativeLayout.LayoutParams;
 
 
 /**
@@ -75,9 +79,20 @@ public class GoBoardView extends View {
     private Bitmap white_stone_bitmap_small=null;
     private Bitmap black_stone_bitmap_small=null;
     
+   /*
+    private GoBoardOverlay overlay;
     
+    public GoBoardOverlay getOverlay() {
+    	return overlay;
+    }
+    */
+    Context context;
     public GoBoardView( Context context,GoGame game ) {
         super( context );
+        this.context=context;
+        
+        
+       
         this.game=game;
       //  this.board=game.getVisualBoard();
         
@@ -194,8 +209,10 @@ public class GoBoardView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
     
+    	Log.i("onDraw");
     	if (regenerate_stones_flag)
     		regenerate_images();
+    	
     	
     	if (bg_bitmap!=null)
     		canvas.drawBitmap(bg_bitmap,0.0f, 0.0f, boardPaint);
@@ -311,7 +328,9 @@ public class GoBoardView extends View {
     boolean width_is_max;
     boolean regenerate_stones_flag=true;
     
-    
+    public float getBoardPixels() {
+    	return stone_size*game.getVisualBoard().getSize();
+    }
     public void regenerate_images() {
    
     	Log.i("regenerating images to stone size " + stone_size);
@@ -348,7 +367,15 @@ public class GoBoardView extends View {
         
         regenerate_stones_flag=true;
         
-        invalidate(); // needed here or automaticaly called?
+		
+        
+
+      /*  if (this.getWidth()>this.getHeight())
+        	overlay.refresh(this.getWidth()-(int)this.getBoardPixels(),this.getHeight(),true);
+        else
+        	overlay.refresh(this.getWidth(),this.getHeight()-(int)this.getBoardPixels(),false);
+        	*/
+    //invalidate(); // needed here or automaticaly called?
     }
 
 

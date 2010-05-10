@@ -21,10 +21,10 @@ package org.ligi.gobandroid.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,15 +42,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.widget.Button;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
+import android.widget.FrameLayout;
 import android.widget.Toast;
-import android.widget.RelativeLayout.LayoutParams;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
@@ -60,11 +56,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Vector;
 
 import org.ligi.gobandroid.R;
 import org.ligi.gobandroid.logic.GnuGoMover;
 import org.ligi.gobandroid.logic.GoGame;
+import org.ligi.gobandroid.logic.GoGameProvider;
 import org.ligi.gobandroid.logic.SGFHelper;
 import org.ligi.gobandroid.ui.alerts.GameInfoAlert;
 import org.ligi.gobandroid.ui.alerts.GameResultsAlert;
@@ -98,7 +94,6 @@ public class GoActivity
 	
 	private WakeLock mWakeLock=null;
 	
-	private ImageButton next,back,first,last,comments;
 	private boolean running=true;
 
 	private boolean review_mode=false;
@@ -109,8 +104,6 @@ public class GoActivity
 	
 	private Uri intent_uri;
 	
-	private TextView comment_tv;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -120,86 +113,17 @@ public class GoActivity
 		this.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		
 		info_toast=Toast.makeText(this, "", Toast.LENGTH_LONG);
-		
+
 		if (game==null) {
+			// passed from e.g. SGFLoadActivity
+			if (GoGameProvider.getGame()!=null)
+				game=GoGameProvider.getGame();
+			else
 			// if there is a game saved e.g. on rotation use this game
 			if (getLastNonConfigurationInstance()!=null) 
 				game=(GoGame)getLastNonConfigurationInstance();
 			else {
-				// otherwise create a new game
-		
-				intent_uri=getIntent().getData();
 				
-				if (intent_uri!=null) {
-					
-					try {
-						
-						InputStream in;
-						Log.i("load" + intent_uri);
-						if (intent_uri.toString().startsWith("content://"))
-							in = getContentResolver().openInputStream(intent_uri);	
-						else
-						  in= new BufferedInputStream(new URL(""+intent_uri) 
-			              .openStream(), 4096); 
-						
-						FileOutputStream file_writer =null;
-					    if (intent_uri.toString().startsWith("http"))  
-					    		{
-					    		new File(GoPrefs.getSGFPath()+"/downloads").mkdirs();
-					    							    		
-					      		File f = new File(GoPrefs.getSGFPath()+"/downloads/"+intent_uri.getLastPathSegment()	);
-								f.createNewFile();
-
-								 file_writer = new FileOutputStream(f);
-								
-					    		}
-						
-					    StringBuffer out = new StringBuffer();
-					    byte[] b = new byte[4096];
-					    for (int n; (n = in.read(b)) != -1;) {
-					        out.append(new String(b, 0, n));
-					        if (file_writer!=null)
-					        	file_writer.write(b, 0, n);
-					    }
-					    if (file_writer!=null)
-				        	file_writer.close();
-				    
-					    sgf=out.toString();
-						
-						Log.i("got sgf" + sgf);
-						game=SGFHelper.sgf2game(sgf);
-						review_mode=true;
-						
-					} catch (Exception e) {
-						Log.i("exception in load" + e);
-						e.printStackTrace();
-						
-						
-						new AlertDialog.Builder(this).setTitle(R.string.results)
-						.setMessage(
-								 "Problem Loading sgf would you like to send ligi this sgf to fix the problem?"
-						).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int whichButton) {
-							final  Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-							emailIntent .setType("plain/text");
-							emailIntent .putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"ligi@ligi.de"});
-							emailIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, "SGF Problem");
-							emailIntent .putExtra(android.content.Intent.EXTRA_TEXT, "uri: " + intent_uri + "sgf:\n" + sgf);
-							GoActivity.this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-							finish();
-						}
-					}).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int whichButton) {
-							finish();
-						}
-					})
-					
-					.show();
-						return;
-					}
-					
-				}
-				else {
 					byte size = getIntent().getByteExtra("size", (byte) 9);
 					byte handicap = getIntent().getByteExtra("handicap", (byte) 0);
 		
@@ -210,96 +134,33 @@ public class GoActivity
 					review_mode=false;
 					
 					game.setGoMover(new GnuGoMover(this,game,black_player!=0,white_player!=0,GoPrefs.getAILevel()));
+				
 				}
-			}
 		
 			board_view = new GoBoardView(this, game);
 			board_view.setOnTouchListener(this);
 			
+			FrameLayout rel=new FrameLayout(this);
+			rel.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
+
+			FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT);
+			board_view.setBackgroundColor(0x0000);
+			board_view.setLayoutParams(bottom_nav_params);
 			
-			RelativeLayout rel=new RelativeLayout(this);
 			rel.addView(board_view);
-			
-			DisplayMetrics dm = new DisplayMetrics();
-			getWindowManager().getDefaultDisplay().getMetrics(dm);
+			//rel.addView(new ImageButton(this));
+			 DisplayMetrics dm = new DisplayMetrics();
+			 getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-			Vector<ImageButton> control_buttons=new Vector<ImageButton>();
-			
-			
-			first=new ImageButton(this);
-			first.setImageResource(android.R.drawable.ic_media_previous);
-			control_buttons.add(first);
-			first.setOnClickListener(this);
-			
-			back=new ImageButton(this);
-			back.setImageResource(android.R.drawable.ic_media_rew);
-			control_buttons.add(back);
-			back.setOnClickListener(this);
-			
-			comments=new ImageButton(this);
-			comments.setImageResource(android.R.drawable.ic_dialog_email);
-			control_buttons.add(comments);
-			comments.setOnClickListener(this);
-						
-			next=new ImageButton(this);
-			next.setImageResource(android.R.drawable.ic_media_ff);
-			control_buttons.add(next);
-			next.setOnClickListener(this);
-			
-			
-			
-			last=new ImageButton(this);
-			last.setImageResource(android.R.drawable.ic_media_next);
-			last.setOnClickListener(this);
-			control_buttons.add(last);
 
-			LinearLayout outer_lin=new LinearLayout(this);
-			
-			
-			LinearLayout lin=new LinearLayout(this);
+			overlay=new GoBoardOverlay(this,board_view,dm.widthPixels,dm.heightPixels,dm.widthPixels>dm.heightPixels);
+			rel.addView(overlay.getView());
 
-			
-			
-			comment_tv=new TextView(this);
-			comment_tv.setText("foobar\njpjpjp");
-			comment_tv.setTextColor(0xCC111111);
-			comment_tv.setPadding(10, 0, 10, 10);
-			
-			for (ImageButton btn:control_buttons) 
-			{
-				btn.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT,1));
-				lin.addView(btn);
-			}
-				
-				
-			if (dm.heightPixels>dm.widthPixels) {
-				lin.setOrientation(LinearLayout.HORIZONTAL);
-				outer_lin.setOrientation(LinearLayout.VERTICAL);
-			
-				LayoutParams bottom_nav_params=new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
-				bottom_nav_params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-				
-				outer_lin.setLayoutParams(bottom_nav_params);
-				lin.setLayoutParams(bottom_nav_params);
-			}
-			else {
-				lin.setOrientation(LinearLayout.VERTICAL);
-				outer_lin.setOrientation(LinearLayout.HORIZONTAL);
-				LayoutParams bottom_nav_params=new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT);
-				bottom_nav_params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-				outer_lin.setLayoutParams(bottom_nav_params);
-				lin.setLayoutParams(bottom_nav_params);
-			}
-			
-
-			outer_lin.addView(comment_tv);
-			outer_lin.addView(lin);
-			
-			rel.addView(outer_lin);
 			setContentView(rel);
-			}
+			overlay.updateCommentsSize(dm.widthPixels,dm.heightPixels,dm.widthPixels>dm.heightPixels);
+		}
 		
-		
+		GoGameProvider.setGame(game);
 		updateControlsStatus();
 		
 	
@@ -316,8 +177,11 @@ public class GoActivity
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		super.onTouchEvent(event);
+		overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
 		updateControlsStatus();
 		return false;
+
+	
 	}
 	
 	@Override
@@ -326,36 +190,15 @@ public class GoActivity
 		return(game);
 	}
 	
+	GoBoardOverlay overlay;
+	
 	public void updateControlsStatus() {
+		overlay.getCommentTextView().setText(game.getActMove().getComment());
+		overlay.updateButtonState(review_mode);
+		//new LayoutParams(0,0);
+		//new ScrollView.
 		
-
-		int visible=0;
-		if (review_mode)
-			visible=View.VISIBLE;
-		else
-			visible=View.GONE;
-			
-		
-		back.setVisibility(visible);
-		first.setVisibility(visible);
-		next.setVisibility(visible);
-		last.setVisibility(visible);
-		comments.setVisibility(visible);
-		
-		// prevent NPE
-		if (game==null)
-			{
-			Log.w("no game there when updateControlsStatus");	
-			return;
-			}
-		
-		back.setEnabled(game.canUndo());
-		first.setEnabled(game.canUndo());
-		next.setEnabled(game.canRedo());
-		last.setEnabled(game.canRedo());
-		comments.setEnabled(game.getActMove().hasComment());
-		
-		comment_tv.setText(game.getActMove().getComment());
+//		outer_lin.requestLayout();
 	}
 	
 
@@ -412,8 +255,6 @@ public class GoActivity
 		
 		return true;
 	}
-
-	
 
 	
 	/* Handles item selections */
@@ -582,94 +423,7 @@ public class GoActivity
 
 	@Override
 	public void onClick(View btn) {
-		if (btn==back)
-			game.undo();
-		else if (btn==next) {
-						
-			if (game.getPossibleVariationCount()>0)
-				{
-				LinearLayout lin=new LinearLayout(this);
-				LinearLayout li=new LinearLayout(this);
-
-				TextView txt =new TextView(this);
 		
-				// show the comment when there is one - useful for SGF game problems
-				if (game.getActMove().hasComment())
-					txt.setText(game.getActMove().getComment());
-				else
-					txt.setText("" +( game.getPossibleVariationCount()+1) + " Variations found for this move - which should we take?");
-			
-				txt.setPadding(10, 2, 10, 23);
-				lin.addView(txt);
-				lin.addView(li);
-				lin.setOrientation(LinearLayout.VERTICAL);
-				
-				final Dialog select_dlg=new Dialog(this);
-				final Boolean redoing=false;
-				View.OnClickListener var_select_listener=new View.OnClickListener() {
-					
-					
-					@Override
-					public void onClick(View v) {
-						if (redoing)
-							return;
-						select_dlg.hide();
-						if (!v.isEnabled()) return;
-						v.setEnabled(false	);
-						
-						game.redo((Integer)(v.getTag()));
-					
-						updateControlsStatus();
-						board_view.invalidate();
-					}
-				};
-				
-				li.setWeightSum(1.0f*(game.getPossibleVariationCount()+1));
-				li.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-				
-				for (Integer i=0;i<game.getPossibleVariationCount()+1;i++)
-					{
-					Button var_btn=new Button(this);
-					var_btn.setTag(i);
-					var_btn.setOnClickListener(var_select_listener );
-					if (game.getActMove().getnextMove(i).isMarked())
-						var_btn.setText(game.getActMove().getnextMove(i).getMarkText());
-					else
-						var_btn.setText(""+(i+1));
-						
-					li.addView(var_btn);
-			
-					var_btn.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1f));
-					}
-
-				select_dlg.setTitle(R.string.variations);
-				select_dlg.setContentView(lin);
-				
-				select_dlg.show();
-			}
-			else
-				game.redo(0);
-			
-			
-		}
-		else if (btn==first)
-			game.jumpFirst();
-		else if (btn==last)
-			game.jumpLast();
-		else if (btn==comments) {
-	
-			new AlertDialog.Builder(this).setTitle(R.string.comments)
-			.setMessage(
-					 game.getActMove().getComment()
-		).setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-			
-			}
-		}).show();
-		}
-		
-		updateControlsStatus();
-		board_view.invalidate();
 	}
 
 	/**

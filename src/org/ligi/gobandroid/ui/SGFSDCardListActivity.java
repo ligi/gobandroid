@@ -111,7 +111,7 @@ public class SGFSDCardListActivity extends ListActivity {
         }
         else
         {
-        	Intent go_intent=new Intent(this,GoActivity.class);
+        	Intent go_intent=new Intent(this,SGFLoadActivity.class);
         	go_intent.setData(Uri.parse( "file://" + files[position]));
         	startActivity(go_intent);
         }
