@@ -22,6 +22,7 @@ package org.ligi.gobandroid.logic;
 
 
 import java.util.Vector;
+import java.util.Stack;
 
 import org.ligi.tracedroid.logging.Log;
 
@@ -254,13 +255,13 @@ public class GoGame implements GoDefinitions {
                     calc_board.setCellWhite( x, y );
                 
                 buildGroups();
+                /* is there any reason to do this before processing the move? */
                 remove_dead(x,y);
                 
-                if ((hasGroupLibertie(groups[x][y])||isDeadGroupOnBoard(x,y)) // if either a field has libertys or get's one
+                if ((hasGroupLiberty(x, y)||isDeadGroupOnBoard(x,y)) // if either a field has liberties or get's one
                 		&&!calc_board.equals(pre_last_board)) // and the move is not a ko 
                 { 	// valid move -> do things needed to do after a valid move 
                     Log.d("isDeadGroupOnBoard(x,y)" + isDeadGroupOnBoard(x,y));
-                    
                     
                     if (isBlackToMove())
                     	getGoMover().processBlackMove(x, y);
@@ -482,12 +483,59 @@ public class GoGame implements GoDefinitions {
      * @return boolean weather the group has a liberty
      * 
      */
-    public boolean hasGroupLibertie(int group2check ) {
+    public boolean hasGroupLiberty(int x, int y ) {
+ /*
         for (int xg = 0; xg < getBoardSize(); xg++)
+  
             for (int yg = 0; yg < getBoardSize(); yg++)
                 if ((groups[xg][yg]==group2check)&&(cell_has_liberty(xg,yg)))
                      return true; // if one of the stones in the group has a liberty -> return true because then the group has a liberty
         return false;  // found no stone in the group with a liberty 
+ */
+ /* do a depth search first from point */
+        // create the array for group calculations
+        boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board.getSize()];
+        Stack <Integer>ptStackX = new Stack<Integer>();
+        Stack <Integer>ptStackY = new Stack<Integer>();
+
+        /* Replace previous code with more efficient flood fill */
+   		ptStackX.push(x);
+   		ptStackY.push(y);
+           		
+   		while (!ptStackX.empty()) {
+   			int newx = ptStackX.pop();
+   			int newy = ptStackY.pop();
+   			
+   	        if (cell_has_liberty(newx,newy)) return true;
+   	        else checked_pos[newx][newy] = true;
+   			
+   			/* check to the left */
+   			if (newx > 0)
+   				if (calc_board.areCellsEqual(newx-1,newy,newx,newy) && (checked_pos[newx-1][newy] == false)) {
+   					ptStackX.push(newx-1);
+   					ptStackY.push(newy);
+   				}
+   			/* check to the right */
+   			if (newx < calc_board.getSize() - 1)
+   				if (calc_board.areCellsEqual(newx+1,newy,newx,newy) && (checked_pos[newx+1][newy] == false)) {
+   					ptStackX.push(newx+1);
+   					ptStackY.push(newy);
+   				}
+   			/* check down */
+   			if (newy > 0)
+   				if (calc_board.areCellsEqual(newx,newy-1,newx,newy) && (checked_pos[newx][newy-1] == false)) {
+   					ptStackX.push(newx);
+   					ptStackY.push(newy-1);
+   				}
+   			/* check up */
+   			if (newy < calc_board.getSize() - 1)
+   				if (calc_board.areCellsEqual(newx,newy+1,newx,newy) && (checked_pos[newx][newy+1] == false)) {
+   					ptStackX.push(newx);
+   					ptStackY.push(newy+1);
+   				}
+   		}
+    	
+    	return false;
     }
         
     public boolean isAreaGroupBlacks(int group2check ) {
@@ -541,7 +589,7 @@ public class GoGame implements GoDefinitions {
             for (int y = 0; y < calc_board.getSize(); y++) {
                 groups[x][y] = -1;
             }
-        
+/*        
         for (int x = 0; x < calc_board.getSize(); x++)
             for (int y = 0; y < calc_board.getSize(); y++) {
                 if (!calc_board.isCellFree( x, y )) {
@@ -572,7 +620,49 @@ public class GoGame implements GoDefinitions {
 
                 }
             }
-
+*/
+        Stack <Integer>ptStackX = new Stack<Integer>();
+        Stack <Integer>ptStackY = new Stack<Integer>();
+        
+        /* Replace previous code with more efficient flood fill */
+        for (int x = 0; x < calc_board.getSize(); x++)
+            for (int y = 0; y < calc_board.getSize(); y++) {
+            	if (groups[x][y] == -1) {
+            		ptStackX.push(x);
+            		ptStackY.push(y);
+            		
+            		while (!ptStackX.empty()) {
+            			int newx = ptStackX.pop();
+            			int newy = ptStackY.pop();
+            			groups[newx][newy] = group_count;
+            			/* check to the left */
+            			if (newx > 0)
+            				if (calc_board.areCellsEqual(newx-1,newy,newx,newy) && (groups[newx-1][newy] == -1)) {
+            						ptStackX.push(newx-1);
+            						ptStackY.push(newy);
+            				}
+            			/* check to the right */
+            			if (newx < calc_board.getSize() - 1)
+            				if (calc_board.areCellsEqual(newx+1,newy,newx,newy) && (groups[newx+1][newy] == -1)) {
+            						ptStackX.push(newx+1);
+            						ptStackY.push(newy);
+            				}
+            			/* check down */
+            			if (newy > 0)
+            				if (calc_board.areCellsEqual(newx,newy-1,newx,newy) && (groups[newx][newy-1] == -1)) {
+            						ptStackX.push(newx);
+            						ptStackY.push(newy-1);
+            				}
+            			/* check up */
+            			if (newy < calc_board.getSize() - 1)
+            				if (calc_board.areCellsEqual(newx,newy+1,newx,newy) && (groups[newx][newy+1] == -1)) {
+            						ptStackX.push(newx);
+            						ptStackY.push(newy+1);
+            				}
+            		}
+            	group_count++;
+            	}
+            }
     }
 
     
@@ -646,7 +736,8 @@ public class GoGame implements GoDefinitions {
      *  
     **/
     public boolean isDeadGroupOnBoard(byte ignore_x,byte ignore_y) {
-                
+
+    	/*
         for (int grp=0;grp<=group_count;grp++)
         {
             if (groups[ignore_x][ignore_y]==grp)
@@ -669,7 +760,12 @@ public class GoGame implements GoDefinitions {
             	
             }
         }
+        */
         
+    	/* Need to check if this move removed all liberties from groups above, left, right, and down
+    	 * 	from the ignored point
+    	 */
+    	
         return false; // found no dead group
     }
 
@@ -683,7 +779,7 @@ public class GoGame implements GoDefinitions {
      * 
      * **/
     public void remove_dead(byte ignore_x,byte ignore_y) {
-                
+        /* just need to check last move killed anything        
         for (int grp=0;grp<=group_count;grp++) // iterate over all groups
         {
 
@@ -711,9 +807,82 @@ public class GoGame implements GoDefinitions {
                         	}
             
         }
-
+        */
+    	
+    	/* check left */
+    	if (ignore_x > 0)
+    		if (!hasGroupLiberty(ignore_x-1, ignore_y))
+    			remove_group(ignore_x-1, (int)ignore_y);
+    	/* check right */
+    	if (ignore_x < calc_board.getSize()-1)
+    		if (!hasGroupLiberty(ignore_x+1, ignore_y))
+    			remove_group(ignore_x+1, (int)ignore_y);
+    	/* check down */
+    	if (ignore_y > 0)
+    		if (!hasGroupLiberty(ignore_x, ignore_y-1))
+    			remove_group((int)ignore_x, ignore_y-1);
+    	/* check up */
+    	if (ignore_y < calc_board.getSize()-1)
+    		if (!hasGroupLiberty(ignore_x, ignore_y+1))
+    			remove_group((int)ignore_x, ignore_y+1);
+    		
+    		
     }
 
+    public void remove_group(Integer x,Integer y)
+    {
+    	int local_captures = 0;
+    	boolean is_black_capture = calc_board.isCellBlack(x, y);
+    
+        boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board.getSize()];
+        Stack <Integer>ptStackX = new Stack<Integer>();
+        Stack <Integer>ptStackY = new Stack<Integer>();
+
+        /* Replace previous code with more efficient flood fill */
+   		ptStackX.push(x);
+   		ptStackY.push(y);
+           		
+   		while (!ptStackX.empty()) {
+   			int newx = ptStackX.pop();
+   			int newy = ptStackY.pop();
+   			
+   			/* check to the left */
+   			if (newx > 0)
+   				if (calc_board.areCellsEqual(newx-1,newy,newx,newy) && (checked_pos[newx-1][newy] == false)) {
+   					ptStackX.push(newx-1);
+   					ptStackY.push(newy);
+   				}
+   			/* check to the right */
+   			if (newx < calc_board.getSize() - 1)
+   				if (calc_board.areCellsEqual(newx+1,newy,newx,newy) && (checked_pos[newx+1][newy] == false)) {
+   					ptStackX.push(newx+1);
+   					ptStackY.push(newy);
+   				}
+   			/* check down */
+   			if (newy > 0)
+   				if (calc_board.areCellsEqual(newx,newy-1,newx,newy) && (checked_pos[newx][newy-1] == false)) {
+   					ptStackX.push(newx);
+   					ptStackY.push(newy-1);
+   				}
+   			/* check up */
+   			if (newy < calc_board.getSize() - 1)
+   				if (calc_board.areCellsEqual(newx,newy+1,newx,newy) && (checked_pos[newx][newy+1] == false)) {
+   					ptStackX.push(newx);
+   					ptStackY.push(newy+1);
+   				}
+
+   			calc_board.setCellFree(newx,newy);
+   			checked_pos[newx][newy] = true;
+   			local_captures++;
+   		
+   		}
+ 
+   		if (is_black_capture)
+   			captures_black += local_captures;
+   		else
+   			captures_white += local_captures;
+    }
+    
     /** 
      * 
      * return if it's a handicap stone so that the view can visualize it
