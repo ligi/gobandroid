@@ -103,7 +103,7 @@ public class SGFLoadActivity
 		
 		lin.addView(frame);
 		
-		alert_dlg=new AlertDialog.Builder(this).setTitle("Loading SGF").setView(lin).show();
+		alert_dlg=new AlertDialog.Builder(this).setCancelable(false).setTitle("Loading SGF").setView(lin).show();
 		
 		new Thread(this).start();
 	}
