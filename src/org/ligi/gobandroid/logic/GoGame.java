@@ -258,7 +258,7 @@ public class GoGame implements GoDefinitions {
                 /* is there any reason to do this before processing the move? */
                 remove_dead(x,y);
                 
-                if ((hasGroupLiberty(x, y)||isDeadGroupOnBoard(x,y)) // if either a field has liberties or get's one
+                if ((hasGroupLibertie(x, y)||isDeadGroupOnBoard(x,y)) // if either a field has liberties or get's one
                 		&&!calc_board.equals(pre_last_board)) // and the move is not a ko 
                 { 	// valid move -> do things needed to do after a valid move 
                     Log.d("isDeadGroupOnBoard(x,y)" + isDeadGroupOnBoard(x,y));
@@ -438,7 +438,7 @@ public class GoGame implements GoDefinitions {
     }
    
     
-    public boolean cell_has_liberty(int x , int y )    {
+    public boolean cell_has_libertie(int x , int y )    {
       
       return ( ((x != 0)&&(calc_board.isCellFree( x- 1, y ) ))
           ||
@@ -483,7 +483,7 @@ public class GoGame implements GoDefinitions {
      * @return boolean weather the group has a liberty
      * 
      */
-    public boolean hasGroupLiberty(int x, int y ) {
+    public boolean hasGroupLibertie(int x, int y ) {
  /*
         for (int xg = 0; xg < getBoardSize(); xg++)
   
@@ -506,7 +506,7 @@ public class GoGame implements GoDefinitions {
    			int newx = ptStackX.pop();
    			int newy = ptStackY.pop();
    			
-   	        if (cell_has_liberty(newx,newy)) return true;
+   	        if (cell_has_libertie(newx,newy)) return true;
    	        else checked_pos[newx][newy] = true;
    			
    			/* check to the left */
@@ -811,19 +811,19 @@ public class GoGame implements GoDefinitions {
     	
     	/* check left */
     	if (ignore_x > 0)
-    		if (!hasGroupLiberty(ignore_x-1, ignore_y))
+    		if (!hasGroupLibertie(ignore_x-1, ignore_y))
     			remove_group(ignore_x-1, (int)ignore_y);
     	/* check right */
     	if (ignore_x < calc_board.getSize()-1)
-    		if (!hasGroupLiberty(ignore_x+1, ignore_y))
+    		if (!hasGroupLibertie(ignore_x+1, ignore_y))
     			remove_group(ignore_x+1, (int)ignore_y);
     	/* check down */
     	if (ignore_y > 0)
-    		if (!hasGroupLiberty(ignore_x, ignore_y-1))
+    		if (!hasGroupLibertie(ignore_x, ignore_y-1))
     			remove_group((int)ignore_x, ignore_y-1);
     	/* check up */
     	if (ignore_y < calc_board.getSize()-1)
-    		if (!hasGroupLiberty(ignore_x, ignore_y+1))
+    		if (!hasGroupLibertie(ignore_x, ignore_y+1))
     			remove_group((int)ignore_x, ignore_y+1);
     		
     		
