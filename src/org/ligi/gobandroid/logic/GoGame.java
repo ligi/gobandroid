@@ -347,7 +347,7 @@ public class GoGame implements GoDefinitions {
 
     public boolean canUndo() {
         //return (moves.size()>0);
-    	return !act_move.isFirstMove();
+    	return (!act_move.isFirstMove())&&(!getGoMover().isMoversMove());
     }
     
     
