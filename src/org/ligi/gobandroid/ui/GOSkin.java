@@ -66,9 +66,13 @@ public class GOSkin {
 		return skin_base_path+board_skin_name+"/board.jpg";
 	}
 	
+	public static Bitmap getBoard() {
+		return BitmapFactory.decodeFile(getBoardFname());
+	}
+	
 	public static Bitmap getBoard(int width,int height) {
 		if (do_board_skin)
-			return Bitmap.createScaledBitmap(BitmapFactory.decodeFile(getBoardFname()), width,height, true);
+			return Bitmap.createScaledBitmap(getBoard(), width,height, true);
 		else
 			return null;
 	}
