@@ -33,11 +33,6 @@ import android.graphics.RectF;
 import android.graphics.Paint.FontMetrics;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.RelativeLayout.LayoutParams;
-
 
 /**
  * Class to visually represent a Go Board in Android
@@ -213,7 +208,7 @@ public class GoBoardView extends View {
     	if (regenerate_stones_flag)
     		regenerate_images();
     	
-    	
+  
     	if (bg_bitmap!=null)
     		canvas.drawBitmap(bg_bitmap,0.0f, 0.0f, boardPaint);
     	else

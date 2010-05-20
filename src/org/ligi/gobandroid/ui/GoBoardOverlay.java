@@ -27,7 +27,7 @@ public class GoBoardOverlay implements OnClickListener {
 		private TextView comment_tv;
 	    private ScrollView comment_sv;
 	    private LinearLayout outer_lin;
-		private ImageButton next,back,first,last,comments;
+		public ImageButton next,back,first,last,comments;
 		private LinearLayout button_container;
 		private Context context;
 		private GoBoardView board_view;
@@ -157,10 +157,15 @@ public class GoBoardOverlay implements OnClickListener {
 			outer_lin.addView(button_container);
 
 			Log.i("refreshing overlay to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getMeasuredHeight());
-			updateButtonState(true);
+			updateButtonState();
 		}
 
+	    int last_w;
 	    public void updateCommentsSize(int w,int h,boolean horizontal) {
+/*	    	if (last_w==w)
+	    		return;
+	    	last_w=w;
+*/
 	    	Log.i("refreshing overlay to --" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getHeight());
 	    	if (!horizontal)
 			{
@@ -173,6 +178,8 @@ public class GoBoardOverlay implements OnClickListener {
 				
 				
 			}
+	    	comment_tv.requestLayout();
+	    	comment_sv.requestLayout();
 	    }
 	    
 	    public View getView() {
@@ -193,7 +200,21 @@ public class GoBoardOverlay implements OnClickListener {
 			//GoGame game=GoGameProvider.getGame();
 			
 			if (btn==back)
+			{
+				// dont do it if the mover has to move at the moment
+				if (game.getGoMover().isMoversMove())
+					return;
+				
+				game.getGoMover().paused=true;
 				game.undo();
+
+				// undo twice if there is a mover
+				if (game.canUndo()&&(game.getGoMover().isMoversMove()))
+					game.undo();
+				
+				game.getGoMover().paused=false;
+				
+			}
 			else if (btn==next) {
 							
 				if (game.getPossibleVariationCount()>0)
@@ -229,7 +250,7 @@ public class GoBoardOverlay implements OnClickListener {
 							
 							game.redo((Integer)(v.getTag()));
 						
-							updateButtonState(true);
+							updateButtonState();
 							board_view.invalidate();
 						}
 					};
@@ -279,24 +300,11 @@ public class GoBoardOverlay implements OnClickListener {
 			}
 			
 			getCommentTextView().setText(game.getActMove().getComment());
-			updateButtonState(true);
+			updateButtonState();
 			board_view.invalidate();
 		}
 		
-		public void updateButtonState(boolean in_reviewmode) {
-			int visible=0;
-			if (in_reviewmode)
-				visible=View.VISIBLE;
-			else
-				visible=View.GONE;
-				
-			visible=View.VISIBLE;
-			
-			back.setVisibility(visible);
-			first.setVisibility(visible);
-			next.setVisibility(visible);
-			last.setVisibility(visible);
-			comments.setVisibility(visible);
+		public void updateButtonState() {
 			
 			GoGame game=GoGameProvider.getGame();
 			// prevent NPE

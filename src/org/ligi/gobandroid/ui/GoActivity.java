@@ -24,7 +24,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Canvas;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,18 +45,13 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 
 import org.ligi.gobandroid.R;
 import org.ligi.gobandroid.logic.GnuGoMover;
@@ -80,7 +76,6 @@ public class GoActivity
 		implements OnClickListener, OnTouchListener, Runnable
 {
 
-	
 	private static final int MENU_UNDO = 0;
 	private static final int MENU_PASS = 1;
 	private static final int MENU_FINISH = 2;
@@ -148,6 +143,7 @@ public class GoActivity
 			board_view.setLayoutParams(bottom_nav_params);
 			
 			rel.addView(board_view);
+			//rel.setBackgroundDrawable(new BitmapDrawable(GOSkin.getBoard()));
 			//rel.addView(new ImageButton(this));
 			 DisplayMetrics dm = new DisplayMetrics();
 			 getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -194,7 +190,7 @@ public class GoActivity
 	
 	public void updateControlsStatus() {
 		overlay.getCommentTextView().setText(game.getActMove().getComment());
-		overlay.updateButtonState(review_mode);
+		overlay.updateButtonState();
 		//new LayoutParams(0,0);
 		//new ScrollView.
 		
@@ -244,10 +240,11 @@ public class GoActivity
 		else 
 			menu.add(0, MENU_FINISH, 0,R.string.results).setIcon(android.R.drawable.ic_menu_more);
 			
-		
+		/*
 		if ((!game.getGoMover().isPlayingInThisGame())||game.isFinished())
 			menu.add(0, MENU_SHOWCONTROLS, 0,(review_mode?R.string.hide_review_controls:R.string.show_review_controls)).setIcon(android.R.drawable.ic_menu_view);
-
+		 */
+		
 		menu.add(0, MENU_GAMEINFO, 0,"Game Info").setIcon(android.R.drawable.ic_menu_help);
 
 		menu.add(0, MENU_WRITE_SGF, 0,R.string.save_as_sgf).setIcon(android.R.drawable.ic_menu_save);
@@ -464,25 +461,53 @@ public class GoActivity
       super.onSaveInstanceState(outState); 
     }
 
+
+	class UpdateBoardViewClass implements Runnable {
+		@Override
+		public void run() {
+			board_view.invalidate();
+			updateControlsStatus();
+		}
+	}
+	
+	class UptateOverlayVisibilityClass implements Runnable {
+		@Override
+		public void run() {
+			overlay.getView().setVisibility(getBoardViewNeededVisibility());
+	    
+		}
+	}
+
+	private int getBoardViewNeededVisibility() {
+		return board_view.isZoomed()?View.INVISIBLE:View.VISIBLE;
+	}
+	private int act_move_pos=0;
+	
 	@Override
 	public void run() {
 		Looper.prepare();
 		while (running) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
+				// invalidate if the move changed - e.g. when go engine moved
+				if (game.getActMove().getMovePos()!=act_move_pos)
+					{
+					act_move_pos=game.getActMove().getMovePos();
+					this.runOnUiThread(new UpdateBoardViewClass());
+					
+					}
+				if (overlay.getView().getVisibility() != getBoardViewNeededVisibility())
+					this.runOnUiThread(new UptateOverlayVisibilityClass());
+				
 			} catch (InterruptedException e) {
 			}
 					
-			class UpdateViewClass implements Runnable {
-				@Override
-				public void run() {
-					board_view.invalidate();		
-				}
+			
 			}
-			this.runOnUiThread(new UpdateViewClass());
+			
+			
 
 		}
-	} 
-    
+  
 	
 }
