@@ -95,7 +95,6 @@ public class GoBoardOverlay implements OnClickListener {
 						//comment_sv.setLayoutParams(new LinearLayout. LayoutParams(LayoutParams.FILL_PARENT,(h-20-1/*-last.getHeight() */)));
 					//comment_tv.setHeight(board_view.getHeight()-(int)board_view.getBoardPixels()-20-1-last.getHeight());
 
-
 			  	
 					if (!horizontal)
 					{
@@ -116,6 +115,7 @@ public class GoBoardOverlay implements OnClickListener {
 						back.requestLayout();
 						Log.i("refreshing overlay to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getHeight());
 						comment_sv.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, h-w-20-back.getHeight()));
+						comment_sv.setVisibility(View.GONE);
 					}
 					else
 					{
@@ -128,7 +128,7 @@ public class GoBoardOverlay implements OnClickListener {
 						bottom_nav_params.gravity=Gravity.RIGHT;
 						outer_lin.setOrientation(LinearLayout.HORIZONTAL);
 						outer_lin.setLayoutParams(bottom_nav_params);
-						
+						comment_sv.setVisibility(View.VISIBLE);	
 					}
 			/*		else {
 						lin.setOrientation(LinearLayout.VERTICAL);
