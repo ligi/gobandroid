@@ -30,8 +30,10 @@ import org.ligi.tracedroid.logging.Log;
  * 
  * Class to represent a Go Game with its rules
  *
- * @author <a href="http://ligi.de">Marcus -LiGi- Bueschleb </a>
- * 
+ * @authors
+ *  <a href="http://ligi.de">Marcus -LiGi- Bueschleb </a>
+ *  oren laskin
+ *  
  * This software is licenced with GPLv3         
  */
 
