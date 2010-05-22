@@ -833,7 +833,7 @@ public class GoGame implements GoDefinitions {
     public void remove_group(Integer x,Integer y)
     {
     	int local_captures = 0;
-    	boolean is_black_capture = calc_board.isCellBlack(x, y);
+    	boolean is_black_capture = calc_board.isCellWhite(x, y);
     
         boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board.getSize()];
         Stack <Integer>ptStackX = new Stack<Integer>();
