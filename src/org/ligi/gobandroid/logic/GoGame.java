@@ -842,6 +842,7 @@ public class GoGame implements GoDefinitions {
         /* Replace previous code with more efficient flood fill */
    		ptStackX.push(x);
    		ptStackY.push(y);
+		checked_pos[x][y] = true;
            		
    		while (!ptStackX.empty()) {
    			int newx = ptStackX.pop();
@@ -852,28 +853,31 @@ public class GoGame implements GoDefinitions {
    				if (calc_board.areCellsEqual(newx-1,newy,newx,newy) && (checked_pos[newx-1][newy] == false)) {
    					ptStackX.push(newx-1);
    					ptStackY.push(newy);
+   					checked_pos[newx-1][newy]=true;
    				}
    			/* check to the right */
    			if (newx < calc_board.getSize() - 1)
    				if (calc_board.areCellsEqual(newx+1,newy,newx,newy) && (checked_pos[newx+1][newy] == false)) {
    					ptStackX.push(newx+1);
    					ptStackY.push(newy);
+   					checked_pos[newx+1][newy]=true;
    				}
    			/* check down */
    			if (newy > 0)
    				if (calc_board.areCellsEqual(newx,newy-1,newx,newy) && (checked_pos[newx][newy-1] == false)) {
    					ptStackX.push(newx);
    					ptStackY.push(newy-1);
+   					checked_pos[newx][newy-1]=true;
    				}
    			/* check up */
    			if (newy < calc_board.getSize() - 1)
    				if (calc_board.areCellsEqual(newx,newy+1,newx,newy) && (checked_pos[newx][newy+1] == false)) {
    					ptStackX.push(newx);
    					ptStackY.push(newy+1);
+   					checked_pos[newx][newy+1]=true;
    				}
 
    			calc_board.setCellFree(newx,newy);
-   			checked_pos[newx][newy] = true;
    			local_captures++;
    		
    		}
