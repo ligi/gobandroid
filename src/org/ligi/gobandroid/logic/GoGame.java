@@ -258,7 +258,7 @@ public class GoGame implements GoDefinitions {
                 /* is there any reason to do this before processing the move? */
                 remove_dead(x,y);
                 
-                if ((hasGroupLibertie(x, y)||isDeadGroupOnBoard(x,y)) // if either a field has liberties or get's one
+                if ((hasGroupLiberties(x, y)||isDeadGroupOnBoard(x,y)) // if either a field has liberties or get's one
                 		&&!calc_board.equals(pre_last_board)) // and the move is not a ko 
                 { 	// valid move -> do things needed to do after a valid move 
                     Log.d("isDeadGroupOnBoard(x,y)" + isDeadGroupOnBoard(x,y));
@@ -480,10 +480,10 @@ public class GoGame implements GoDefinitions {
      * check if a group has liberties
      * 
      * @param group2check - the group to check
-     * @return boolean weather the group has a liberty
+     * @return boolean weather the group has liberty
      * 
      */
-    public boolean hasGroupLibertie(int x, int y ) {
+    public boolean hasGroupLiberties(int x, int y ) {
  /*
         for (int xg = 0; xg < getBoardSize(); xg++)
   
@@ -549,7 +549,7 @@ public class GoGame implements GoDefinitions {
             	   else
             		   res|=(cell_has_black_neighbours(xg,yg));
             		   
-        return res;  // found no stone in the group with a liberty 
+        return res;  // found no stone in the group with liberty 
     }
    
     public boolean isAreaGroupWhites(int group2check ) {
@@ -563,7 +563,7 @@ public class GoGame implements GoDefinitions {
             	   else
             		   res|=(cell_has_white_neighbours(xg,yg));
             		   
-        return res;  // found no stone in the group with a liberty 
+        return res;  // found no stone in the group with liberty 
     }
        
     public void clear_calc_board() {
@@ -811,19 +811,19 @@ public class GoGame implements GoDefinitions {
     	
     	/* check left */
     	if (ignore_x > 0)
-    		if (!hasGroupLibertie(ignore_x-1, ignore_y))
+    		if (!hasGroupLiberties(ignore_x-1, ignore_y))
     			remove_group(ignore_x-1, (int)ignore_y);
     	/* check right */
     	if (ignore_x < calc_board.getSize()-1)
-    		if (!hasGroupLibertie(ignore_x+1, ignore_y))
+    		if (!hasGroupLiberties(ignore_x+1, ignore_y))
     			remove_group(ignore_x+1, (int)ignore_y);
     	/* check down */
     	if (ignore_y > 0)
-    		if (!hasGroupLibertie(ignore_x, ignore_y-1))
+    		if (!hasGroupLiberties(ignore_x, ignore_y-1))
     			remove_group((int)ignore_x, ignore_y-1);
     	/* check up */
     	if (ignore_y < calc_board.getSize()-1)
-    		if (!hasGroupLibertie(ignore_x, ignore_y+1))
+    		if (!hasGroupLiberties(ignore_x, ignore_y+1))
     			remove_group((int)ignore_x, ignore_y+1);
     		
     		
