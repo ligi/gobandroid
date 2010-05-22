@@ -1,5 +1,8 @@
 Oren Laskin
- for sending me the log of the Samsung Moment Bug
+ for:
+  a lot of feeback
+  commits ( sgf load speed improvement )
+  sending me the log of the Samsung Moment Bug
  
 Andreas Grothe 
  for the NDK part of the GnuGo A.I.
