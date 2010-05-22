@@ -1,3 +1,8 @@
+0.48
+   + review controls on board all the time
+   + in horizontal mode show comments on board
+   + progress bar while loading sgf 
+   F speed improvements by oren laskin
 0.47
    + switchable grid emboss
    + save metadata to SGF
