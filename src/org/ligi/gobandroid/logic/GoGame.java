@@ -493,6 +493,8 @@ public class GoGame implements GoDefinitions {
  */
  /* do a depth search first from point */
         // create the array for group calculations
+    	if (calc_board.isCellFree(x,y)) return true;
+    	
         boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board.getSize()];
         Stack <Integer>ptStackX = new Stack<Integer>();
         Stack <Integer>ptStackY = new Stack<Integer>();
