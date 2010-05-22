@@ -314,10 +314,10 @@ public class GoBoardOverlay implements OnClickListener {
 				return;
 				}
 			
-			back.setEnabled(game.canUndo());
-			first.setEnabled(game.canUndo());
-			next.setEnabled(game.canRedo());
-			last.setEnabled(game.canRedo());
+			back.setEnabled(game.canUndo()&&(!game.getGoMover().isMoversMove()));
+			first.setEnabled(game.canUndo()&&(!game.getGoMover().isPlayingInThisGame()));
+			next.setEnabled(game.canRedo()&&(!game.getGoMover().isPlayingInThisGame()));
+			last.setEnabled(game.canRedo()&&(!game.getGoMover().isPlayingInThisGame()));
 			comments.setEnabled(game.getActMove().hasComment());
 			
 
