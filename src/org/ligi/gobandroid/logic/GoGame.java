@@ -254,7 +254,6 @@ public class GoGame implements GoDefinitions {
                 else
                     calc_board.setCellWhite( x, y );
                 
-                buildGroups();
                 /* is there any reason to do this before processing the move? */
                 remove_dead(x,y);
                 
