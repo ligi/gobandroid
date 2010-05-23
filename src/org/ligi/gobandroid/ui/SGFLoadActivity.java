@@ -96,7 +96,7 @@ public class SGFLoadActivity
 		FrameLayout frame=new FrameLayout(this);
 		frame.addView(progress);
 		message_tv=new TextView(this);
-		message_tv.setText("foo");
+		message_tv.setText("starting");
 		message_tv.setTextColor(0xFF000000);
 		message_tv.setPadding(7, 0, 0, 0);
 		frame.addView(message_tv);
