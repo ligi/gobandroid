@@ -21,6 +21,7 @@ package org.ligi.gobandroid.ui;
 
 import java.io.File;
 import java.util.Vector;
+import java.util.Arrays;
 
 import org.ligi.gobandroid.R;
 
@@ -45,6 +46,7 @@ public class SGFSDCardListActivity extends ListActivity {
     
 	private String[] menu_items;
     private File[] files;
+    private File dir;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,8 +57,6 @@ public class SGFSDCardListActivity extends ListActivity {
         setContentView(R.layout.main);
         
         String sgf_path=GoPrefs.getSGFPath();
-        
-        File dir;
         
         if (this.getIntent().getData()!=null)
         	dir=new File(this.getIntent().getData().getPath());
@@ -91,8 +91,9 @@ public class SGFSDCardListActivity extends ListActivity {
         for(File file:files) 
         	if ((file.getName().endsWith(".sgf"))||(file.isDirectory()))
         		fnames.add(file.getName());
-        		
+        
         menu_items=(String[])fnames.toArray(new String[fnames.size()]);
+        Arrays.sort(menu_items);
         
         this.setListAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, menu_items));
@@ -102,17 +103,17 @@ public class SGFSDCardListActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        if (files[position].isDirectory())
+        if (new File(dir.getAbsolutePath() + "/" + menu_items[position]).isDirectory())
         {
         	Intent sgf_list_intent=new Intent(this,SGFSDCardListActivity.class);
-        	sgf_list_intent.setData(Uri.parse("file://"+files[position].getAbsolutePath()));
+        	sgf_list_intent.setData(Uri.parse( "file://" + dir.getAbsolutePath() + "/" + menu_items[position]));
         	startActivity(sgf_list_intent);
         	
         }
         else
         {
         	Intent go_intent=new Intent(this,SGFLoadActivity.class);
-        	go_intent.setData(Uri.parse( "file://" + files[position]));
+        	go_intent.setData(Uri.parse( "file://" + dir.getAbsolutePath() + "/" + menu_items[position]));
         	startActivity(go_intent);
         }
         
