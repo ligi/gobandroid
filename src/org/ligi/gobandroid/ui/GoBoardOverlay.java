@@ -84,7 +84,7 @@ public class GoBoardOverlay implements OnClickListener {
 
 			//refresh(100,100,true);
 			
-			Log.i("refreshing overlay to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + next.getHeight());
+			Log.i("refreshing overlay in constructor to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + next.getHeight());
 			/*
 			    	if (horizontal)
 					{
@@ -114,8 +114,8 @@ public class GoBoardOverlay implements OnClickListener {
 //						lin.setLayoutParams(bottom_nav_params_i);
 						back.requestLayout();
 						Log.i("refreshing overlay to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getHeight());
-						comment_sv.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, h-w-20-back.getHeight()));
-						comment_sv.setVisibility(View.GONE);
+						comment_sv.setLayoutParams(new LinearLayout.LayoutParams(w, h-w-back.getHeight()));
+						comment_sv.setVisibility(View.VISIBLE);
 					}
 					else
 					{
@@ -158,6 +158,7 @@ public class GoBoardOverlay implements OnClickListener {
 
 			Log.i("refreshing overlay to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getMeasuredHeight());
 			updateButtonState();
+			comment_tv.setText(GoGameProvider.getGame().getActMove().getComment());
 		}
 
 	    int last_w;
@@ -166,11 +167,11 @@ public class GoBoardOverlay implements OnClickListener {
 	    		return;
 	    	last_w=w;
 */
-	    	Log.i("refreshing overlay to --" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getHeight());
+	    	Log.i("refreshing overlay in update to --" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getHeight());
 	    	if (!horizontal)
 			{
 				
-				comment_sv.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, h-w-20-back.getHeight()));
+				comment_sv.setLayoutParams(new LinearLayout.LayoutParams(w, h-w-back.getHeight()));
 			}
 			else
 			{
@@ -180,6 +181,8 @@ public class GoBoardOverlay implements OnClickListener {
 			}
 	    	comment_tv.requestLayout();
 	    	comment_sv.requestLayout();
+			comment_tv.setText(GoGameProvider.getGame().getActMove().getComment());
+
 	    }
 	    
 	    public View getView() {

@@ -82,12 +82,9 @@ public class GoBoardView extends View {
     }
     */
     Context context;
-    public GoBoardView( Context context,GoGame game ) {
+    public GoBoardView( Context context,GoGame game) {
         super( context );
         this.context=context;
-        
-        
-       
         this.game=game;
       //  this.board=game.getVisualBoard();
         
@@ -370,7 +367,7 @@ public class GoBoardView extends View {
         else
         	overlay.refresh(this.getWidth(),this.getHeight()-(int)this.getBoardPixels(),false);
         	*/
-    //invalidate(); // needed here or automaticaly called?
+    //invalidate(); // needed here or automatically called?
     }
 
 
@@ -402,7 +399,7 @@ public class GoBoardView extends View {
     			setZoom(true);
     		}
         }
-        invalidate();  // the board looks diffrent after a move
+        invalidate();  // the board looks different after a move
      }
     
 }

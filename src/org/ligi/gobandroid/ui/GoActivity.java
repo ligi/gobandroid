@@ -189,6 +189,7 @@ public class GoActivity
 	GoBoardOverlay overlay;
 	
 	public void updateControlsStatus() {
+		overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
 		overlay.getCommentTextView().setText(game.getActMove().getComment());
 		overlay.updateButtonState();
 		//new LayoutParams(0,0);
@@ -327,7 +328,8 @@ public class GoActivity
              startActivity(new Intent(this,GoPrefsActivity.class));
              break;
 		}
-		 updateControlsStatus() ;
+		
+		updateControlsStatus() ;
 		board_view.invalidate();
 		return false;
 	}
