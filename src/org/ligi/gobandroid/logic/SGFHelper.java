@@ -20,7 +20,6 @@
 package org.ligi.gobandroid.logic;
 
 import java.util.Vector;
-
 import org.ligi.tracedroid.logging.Log;
 
 
@@ -94,26 +93,8 @@ public class SGFHelper {
 			res+="\n";
 			}
 
+		res+=move2string(game.getFirstMove() ,black_to_move)+")"; 
 		
-		GoMove move=game.getFirstMove();
-		
-		
-		/*
-		for (int move=0;move<game.moves.size();move++)
-			{
-			byte[] act_move=game.moves.get(move);
-			
-			res+=";" + (black_to_move?"B":"W");
-			
-			if (act_move[0]==-1)
-				res+="[]";
-			else	
-				res+= "[" + (char)('a'+act_move[0]) +(char)('a'+act_move[1])+ "]\n";
-			
-			black_to_move=!black_to_move;
-			}
-			*/
-		res+=move2string(move ,black_to_move)+")"; // close
 		return res;
 	}
 	
@@ -143,8 +124,6 @@ public class SGFHelper {
 		{
 			char act_char=sgf.charAt(p);
 			
-			//Logger.i("act_char:" + (char)act_char + "  " + act_cmd + "  " + act_param);
-			//System.out.println("processing " + sgf.charAt(p) + " @ " + p);
 			if (!consuming_param)
 				// consuming command
 				switch(act_char) {
@@ -214,6 +193,7 @@ public class SGFHelper {
 					
 					byte param_x=0,	param_y=0;
 					
+					
 					if (act_param.length()==2) {
 						param_x=(byte)(act_param.charAt(0)-'a');
 						param_y=(byte)(act_param.charAt(1)-'a');
@@ -223,6 +203,8 @@ public class SGFHelper {
 					if (act_cmd.length()==0)
 						act_cmd=last_cmd;
 				
+					Log.i("   command " + act_cmd + " -  act param" + act_param);
+					
 					// marker section - infos here http://www.red-bean.com/sgf/properties.html
 					
 					// marker with text
@@ -284,8 +266,7 @@ public class SGFHelper {
 					//if (variation_depth==1)
 					if ((act_cmd.equals("B"))||(act_cmd.equals("W")))
 						{
-						Log.i("   command " + act_cmd + " -  act param" + act_param);
-					
+						
 						// if still no game open -> open one with default size
 						if (game==null)
 						{
@@ -327,7 +308,6 @@ public class SGFHelper {
 						}
 						
 						if (act_param.length()!=0)	{
-							Log.i("act_cmd" + act_cmd + " param x" + param_x + " param y" + param_y); 
 							if (game.isBlackToMove()&&(act_cmd.equals("AB")))
 								game.getHandicapBoard().setCellBlack(param_x, param_y);
 							if (game.isBlackToMove()&&(act_cmd.equals("AW")))
