@@ -316,27 +316,24 @@ public class SGFHelper {
 						}
 					
 						
-						
+					// handle predefined stones ( mostly handicap stones )  in SGF 
 					if ((act_cmd.equals("AB"))||(act_cmd.equals("AW")))
 						{
-						if ((game==null))
-						{
-						game=new GoGame((byte)19);
-						var_vect.add(game.getActMove());
+						
+						if ((game==null)) { // create a game if it is not there yet
+							game=new GoGame((byte)19);
+							var_vect.add(game.getActMove());
 						}
 						
-						if (act_param.length()==0)
-							game.pass();
-						else
-						{
-
+						if (act_param.length()!=0)	{
 							if (game.isBlackToMove()&&(act_cmd.equals("AB")))
 								game.getHandicapBoard().setCellBlack(param_x, param_y);
 							if (game.isBlackToMove()&&(act_cmd.equals("AW")))
 								game.getHandicapBoard().setCellWhite(param_x, param_y);
-							
 						}
-						
+						else {
+							Log.w("AB / AW command without param");
+						}
 				}
 
 				last_cmd=act_cmd;
