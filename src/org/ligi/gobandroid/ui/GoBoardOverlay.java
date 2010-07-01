@@ -158,10 +158,19 @@ public class GoBoardOverlay implements OnClickListener {
 
 			Log.i("refreshing overlay to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getMeasuredHeight());
 			updateButtonState();
-			comment_tv.setText(GoGameProvider.getGame().getActMove().getComment());
+			
+			comment_tv.setText(getGameComment());
 		}
 
 	    int last_w;
+	    
+	    private String getGameComment() {
+	    	if (GoGameProvider.getGame()==null)
+				return "";
+			else
+				return GoGameProvider.getGame().getActMove().getComment();
+	    }
+	    
 	    public void updateCommentsSize(int w,int h,boolean horizontal) {
 /*	    	if (last_w==w)
 	    		return;
@@ -181,7 +190,7 @@ public class GoBoardOverlay implements OnClickListener {
 			}
 	    	comment_tv.requestLayout();
 	    	comment_sv.requestLayout();
-			comment_tv.setText(GoGameProvider.getGame().getActMove().getComment());
+			comment_tv.setText(getGameComment());
 
 	    }
 	    
