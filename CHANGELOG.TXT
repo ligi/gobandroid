@@ -1,3 +1,5 @@
+0.49
+   F remove bug when SGF loading
 0.48
    + review controls on board all the time
    + in horizontal mode show comments on board
