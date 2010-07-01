@@ -214,7 +214,7 @@ public class SGFHelper {
 					
 					byte param_x=0,	param_y=0;
 					
-					if (act_param.length()>2) {
+					if (act_param.length()==2) {
 						param_x=(byte)(act_param.charAt(0)-'a');
 						param_y=(byte)(act_param.charAt(1)-'a');
 					}
@@ -310,7 +310,7 @@ public class SGFHelper {
 							else if ((!game.isBlackToMove())&&(act_cmd.equals("B")))
 								game.pass();
 					
-							game.do_move((byte)(act_param.charAt(0)-'a'), (byte)(act_param.charAt(1)-'a'));
+							game.do_move(param_x, param_y);
 						
 						}
 						}
@@ -320,12 +320,14 @@ public class SGFHelper {
 					if ((act_cmd.equals("AB"))||(act_cmd.equals("AW")))
 						{
 						
+						
 						if ((game==null)) { // create a game if it is not there yet
 							game=new GoGame((byte)19);
 							var_vect.add(game.getActMove());
 						}
 						
 						if (act_param.length()!=0)	{
+							Log.i("act_cmd" + act_cmd + " param x" + param_x + " param y" + param_y); 
 							if (game.isBlackToMove()&&(act_cmd.equals("AB")))
 								game.getHandicapBoard().setCellBlack(param_x, param_y);
 							if (game.isBlackToMove()&&(act_cmd.equals("AW")))
