@@ -416,10 +416,34 @@ public class GoActivity
     @Override 
     public void onDestroy() {
     	super.onDestroy();
+    		
     	if (mWakeLock!=null)
     		mWakeLock.release();
     }
 
+    @Override 
+    public void onPause() {
+    	super.onPause();
+    	
+		try {
+			File f=new File(GoPrefs.getSGFPath() + "/autosave.sgf");
+			f.createNewFile();
+			
+			FileWriter sgf_writer = new FileWriter(f);
+			
+			BufferedWriter out = new BufferedWriter(sgf_writer);
+			
+			out.write(SGFHelper.game2sgf(game));
+			out.close();
+			sgf_writer.close();
+			
+		} catch (IOException e) {
+			Log.i(""+e);
+		}
+	
+    }
+    
+    
 	@Override
 	public void onClick(View btn) {
 		
