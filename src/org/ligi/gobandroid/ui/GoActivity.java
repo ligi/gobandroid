@@ -416,9 +416,15 @@ public class GoActivity
     @Override 
     public void onDestroy() {
     	super.onDestroy();
-    		
-    	if (mWakeLock!=null)
-    		mWakeLock.release();
+    	releaseWakeLock();
+    }
+    
+    public void releaseWakeLock() {
+    	if (mWakeLock==null)
+    		return;
+    	
+    	mWakeLock.release();
+    	mWakeLock=null;
     }
 
     @Override 
@@ -441,6 +447,7 @@ public class GoActivity
 			Log.i(""+e);
 		}
 	
+		releaseWakeLock();
     }
     
     
