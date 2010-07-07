@@ -24,10 +24,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.PowerManager;
@@ -94,10 +90,6 @@ public class GoActivity
 	private boolean review_mode=false;
     
 	private Toast info_toast=null;
-	
-	private String sgf="";
-	
-	private Uri intent_uri;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
