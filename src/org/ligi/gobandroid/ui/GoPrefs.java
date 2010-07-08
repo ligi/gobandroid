@@ -35,6 +35,8 @@ public class GoPrefs {
 	public final static String KEY_BOARD_SKIN="board_skina";
 	public final static String KEY_STONES_SKIN="stones_skina";
 	
+	public final static String KEY_VARIANT_MODE="variant_mode";
+	
 	public final static String KEY_DO_LEGEND="do_legend";
 	public final static String KEY_SGF_LEGEND="sgf legend";
 	
@@ -103,6 +105,14 @@ public class GoPrefs {
 	
 	public static boolean getGridEmbossEnabled() {
 		return shared_prefs.getBoolean(KEY_GRID_EMBOSS, true);
+	}
+	
+	public static boolean isAskVariantEnabled() {
+		return shared_prefs.getString(KEY_VARIANT_MODE, "ask").equals("ask");
+	}
+	
+	public static boolean isKeepVariantEnabled() {
+		return shared_prefs.getString(KEY_VARIANT_MODE, "ask").equals("keep");
 	}
 	
 	public static boolean getFatFingerEnabled() {

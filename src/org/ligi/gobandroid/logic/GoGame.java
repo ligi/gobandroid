@@ -366,10 +366,29 @@ public class GoGame implements GoDefinitions {
     	game_finished=false;
     }
     
+    
+    private void _undo(boolean keep_move) {
+    	getGoMover().paused=true;
+		
+	   	GoMove mLastMove=act_move;
+    	jump(mLastMove.getParent());
+    	if (!keep_move)
+    		mLastMove.destroy();
+    	getGoMover().undo();
+    	game_finished=false;
+    	
+    	getGoMover().paused=false;
+    }
+
+    public void undo(boolean keep_move) {
+    	_undo(keep_move);
+    	
+    	if (canUndo()&&(getGoMover().isMoversMove()))
+    		_undo(keep_move);
+    }
+
     public void redo(int var) {
     	Log.i("redoing " +act_move.getnextMove(var).toString());
-    	
-    	
     	jump(act_move.getnextMove(var));
     }
     

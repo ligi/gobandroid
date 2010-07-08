@@ -265,13 +265,23 @@ public class GoActivity
 			break;
 				
 		case MENU_UNDO:
-			game.getGoMover().paused=true;
-			game.undo();
+
+			if (GoPrefs.isAskVariantEnabled()) { 
+				new AlertDialog.Builder(this).setTitle("Keep Variant?").setMessage("Keep this move as variant?")
+				.setPositiveButton(R.string.yes , new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					game.undo(true);
+				}
+				}).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					
+					game.undo(false);
+					}
+				}).show();
+			}
+			else
+				game.undo(GoPrefs.isKeepVariantEnabled());
 			
-			if (game.canUndo()&&(game.getGoMover().isMoversMove()))
-				game.undo();
-			
-			game.getGoMover().paused=false;
 			
 			break;
 

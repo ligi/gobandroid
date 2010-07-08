@@ -156,7 +156,24 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         PreferenceCategory sgfPrefCat = new PreferenceCategory(this);
         sgfPrefCat.setTitle("SGF Preferences");
         root.addPreference( sgfPrefCat);
-       
+
+
+        String[] variant_option_labels=new String[] {"ask","keep","discard"};
+        String[] variant_options=new String[] {"ask","keep","discard"};
+        
+        ListPreference variantHandlePreference = new ListPreference(this);
+        variantHandlePreference.setEntries(variant_option_labels);
+        variantHandlePreference.setEntryValues(variant_options);
+        
+        variantHandlePreference.setDialogTitle("Variant Handling");
+        variantHandlePreference.setKey(GoPrefs.KEY_VARIANT_MODE);
+        variantHandlePreference.setTitle("Variant Handling");
+        variantHandlePreference.setSummary("how to handle variants when undoing");
+        variantHandlePreference.setOnPreferenceChangeListener(this);
+        variantHandlePreference.setDefaultValue("ask");
+        sgfPrefCat.addPreference(variantHandlePreference);
+        
+        
         sgf_path_pref = new EditTextPreference(this);
         sgf_path_pref.setTitle("Path");
         sgf_path_pref.setDialogTitle("SGF Path");
@@ -182,7 +199,6 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         PreferenceCategory aiPrefCat = new PreferenceCategory(this);
         aiPrefCat.setTitle("A.I. Preferences");
         root.addPreference( aiPrefCat);
-
         
         aiLevelPref = new ListPreference(this);
         aiLevelPref.setEntries(GoPrefs.getAllAILevelStrings());

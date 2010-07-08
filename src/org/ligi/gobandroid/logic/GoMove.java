@@ -187,6 +187,7 @@ public class GoMove implements GoDefinitions {
 				return marker;
 		return null;
 	}
+	
 	public boolean isMarked() {
 		if (parent==null)
 			return false;
@@ -198,4 +199,11 @@ public class GoMove implements GoDefinitions {
 			return "";
 		return (getGoMarker().getText());
 	}
+	
+	public void destroy() {
+		this.getParent().getNextMoveVariations().remove(this);
+		markers.removeAllElements(); // usefull?
+		next_move_variations.removeAllElements(); // usefull?
+	}
+
 }
