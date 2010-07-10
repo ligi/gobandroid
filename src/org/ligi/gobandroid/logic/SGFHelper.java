@@ -193,8 +193,8 @@ public class SGFHelper {
 					
 					byte param_x=0,	param_y=0;
 					
-					
-					if (act_param.length()==2) {
+					// if we have a minimum of 2 chars in param - could be coords - so parse
+					if (act_param.length()>=2) {
 						param_x=(byte)(act_param.charAt(0)-'a');
 						param_y=(byte)(act_param.charAt(1)-'a');
 					}
