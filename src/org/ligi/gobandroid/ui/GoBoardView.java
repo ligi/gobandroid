@@ -24,7 +24,9 @@ import org.ligi.gobandroid.logic.GoGame;
 import org.ligi.gobandroid.logic.GoMarker;
 import org.ligi.tracedroid.logging.Log;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -53,6 +55,9 @@ public class GoBoardView extends View {
 	private Paint gridPaint_h; // highlighted for cursor
     
     private Paint textPaint;
+    private Paint bitmapPaint;
+    
+    
     
     private float stone_size;
     private float stone_size_zoomed;
@@ -74,6 +79,9 @@ public class GoBoardView extends View {
     private Bitmap white_stone_bitmap_small=null;
     private Bitmap black_stone_bitmap_small=null;
     
+    
+    private boolean move_stone_mode=false;
+    
    /*
     private GoBoardOverlay overlay;
     
@@ -86,8 +94,8 @@ public class GoBoardView extends View {
         super( context );
         this.context=context;
         this.game=game;
-      //  this.board=game.getVisualBoard();
-        
+
+        // set up the paints
         whitePaint=new Paint();
         whitePaint.setColor(0xFFCCCCCC);
         whitePaint.setAntiAlias(true);
@@ -129,6 +137,9 @@ public class GoBoardView extends View {
         textPaint=new Paint();
         textPaint.setColor(0xFF000000);
         textPaint.setAntiAlias(false);
+
+        bitmapPaint=new Paint();
+        
         
         setFocusable(true);   
     }
@@ -262,6 +273,7 @@ public class GoBoardView extends View {
                 			
                 }
                 
+                
             	
             	
             	blackPaint.setColor(0xFF000000);
@@ -278,10 +290,20 @@ public class GoBoardView extends View {
             	}
             	else
             	{
+            		
+            	
+            	
+            		if (move_stone_mode&&(x==game.getActMove().getX())&&(y==game.getActMove().getY()))
+            			bitmapPaint.setAlpha(0x77);
+            		else
+            			bitmapPaint.setAlpha(0xFF);
+            			
+            			
+            			
             		if (game.getVisualBoard().isCellWhite(x,y))
-            			canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
+            			canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,bitmapPaint );
             		if (game.getVisualBoard().isCellBlack(x,y))
-            			canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
+            			canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,bitmapPaint );
             
             		if (GoPrefs.getMarkLastStone()) { // if the last stone should be marked
             			blackPaint.setStyle(Paint.Style.STROKE);
@@ -370,36 +392,70 @@ public class GoBoardView extends View {
     //invalidate(); // needed here or automatically called?
     }
 
+    
+    
+    private void initializeStoneMove() {
+    	
+    	if (game.getGoMover().isPlayingInThisGame()) // dont allow with a mover
+    		return;									 
+    	
+    	if (move_stone_mode)  // allready in the mode
+    		return;			  // -> do nothing
+		
+    	move_stone_mode=true;
+    	
+    	if (!GoPrefs.isAnnounceMoveActive())
+    		return;
+    	
+		new AlertDialog.Builder(this.getContext()).setMessage("You tapped on the current stone. This initiates moving a stone which is indicated by a half transparent Stone.")
+		.setPositiveButton("OK", 
+		
+		new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				GoPrefs.setAnnounceMoveActive(false);
+			}
+			}).show();
+		    	
+    }
 
     public void doTouch( MotionEvent event) {
     	
     	float virtualTouchX=event.getX()-offset_x;
     	float virtualTouchY=event.getY()-offset_y;
     	
-    	
     	float board_size=stone_size*game.getVisualBoard().getSize();
 
-    	if ((virtualTouchY<board_size)&&(virtualTouchX<board_size)) // if user put his finger on the board
-        {
+    	if ((virtualTouchY<board_size)&&(virtualTouchX<board_size)) { // if user put his finger on the board
+
+    		// calculate position on the field by position on the touchscreen
         	touch_x=(byte)(virtualTouchX/stone_size);
     		touch_y=(byte)(virtualTouchY/stone_size);
-    		if (event.getAction()==MotionEvent.ACTION_UP)
-    		{
-    		if (isZoomed()||(!GoPrefs.getFatFingerEnabled()))
-    		{
-    			if (!game.do_move(touch_x,touch_y))	;
-        		touch_x=-1;
-        		touch_y=-1;
-        		
-        		setZoom(false);
-        		stone_size=stone_size_normal;
-        		
-    		}
-    		else
-    			setZoom(true);
+    		
+    		if (event.getAction()==MotionEvent.ACTION_UP) {
+    			
+    			// if pressed on the last stone - initialize a Stone move
+        			if (isZoomed()||(!GoPrefs.getFatFingerEnabled()))	{
+        				if (move_stone_mode) {
+        					// TODO check if this is an illegal move ( e.g. in variants )
+        					game.getActMove().setXY(touch_x, touch_y);
+        					game.refreshBoards();
+        					move_stone_mode=false;
+        					}
+        				else if ((game.getActMove().getX()==touch_x)&&(game.getActMove().getY()==touch_y)) 
+                				initializeStoneMove();
+                			else 
+                				game.do_move(touch_x,touch_y);
+        				
+        				touch_x=-1;
+        				touch_y=-1;
+        				
+        				setZoom(false);
+        			}
+        			else
+        				setZoom(true);
     		}
         }
-        invalidate();  // the board looks different after a move
+        invalidate();  // the board looks different after a move (-;
      }
     
 }

@@ -131,6 +131,18 @@ public class GoMove implements GoDefinitions {
 		return (x==-2);
 	}
 	
+	public void setXY(byte x,byte y) {
+		setX(x);
+		setY(y);
+	}
+	
+	public void setX(byte x) {
+		this.x=x;
+	}
+	
+	public void setY(byte y) {
+		this.y=y;
+	}
 	
 	public byte getX() {
 		return x;

@@ -172,8 +172,7 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         variantHandlePreference.setOnPreferenceChangeListener(this);
         variantHandlePreference.setDefaultValue("ask");
         sgfPrefCat.addPreference(variantHandlePreference);
-        
-        
+                
         sgf_path_pref = new EditTextPreference(this);
         sgf_path_pref.setTitle("Path");
         sgf_path_pref.setDialogTitle("SGF Path");

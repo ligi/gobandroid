@@ -91,6 +91,8 @@ public class GoActivity
 	private boolean review_mode=false;
     
 	private Toast info_toast=null;
+
+	private int act_move_pos=0;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -491,7 +493,6 @@ public class GoActivity
 	private int getBoardViewNeededVisibility() {
 		return board_view.isZoomed()?View.INVISIBLE:View.VISIBLE;
 	}
-	private int act_move_pos=0;
 	
 	@Override
 	public void run() {
@@ -501,11 +502,9 @@ public class GoActivity
 				Thread.sleep(100);
 			} catch (InterruptedException e) { }
 				// invalidate if the move changed - e.g. when go engine moved
-				if (game.getActMove().getMovePos()!=act_move_pos)
-					{
+				if (game.getActMove().getMovePos()!=act_move_pos) {
 					act_move_pos=game.getActMove().getMovePos();
 					this.runOnUiThread(new UpdateBoardViewClass());
-					
 					}
 				if (overlay.getView().getVisibility() != getBoardViewNeededVisibility())
 					this.runOnUiThread(new UptateOverlayVisibilityClass());

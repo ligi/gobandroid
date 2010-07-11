@@ -35,6 +35,8 @@ public class GoPrefs {
 	public final static String KEY_BOARD_SKIN="board_skina";
 	public final static String KEY_STONES_SKIN="stones_skina";
 	
+	public final static String KEY_ANNOUNCE_MOVE="announce move";
+	
 	public final static String KEY_VARIANT_MODE="variant_mode";
 	
 	public final static String KEY_DO_LEGEND="do_legend";
@@ -70,6 +72,14 @@ public class GoPrefs {
 		shared_prefs=PreferenceManager.getDefaultSharedPreferences(context)	;
 	}
 	
+	public static boolean isAnnounceMoveActive() {
+		return shared_prefs.getBoolean(KEY_ANNOUNCE_MOVE, true);
+	}
+	
+	public static void setAnnounceMoveActive(boolean announce) {
+		shared_prefs.edit().putBoolean(KEY_ANNOUNCE_MOVE, announce).commit();
+	}
+
 	public static void setLastBoardSize(int size) {
 		shared_prefs.edit().putInt(KEY_LAST_BOARD_SIZE, size).commit();
 	}
@@ -85,7 +95,6 @@ public class GoPrefs {
 	public static int getLastHandicap() {
 		return shared_prefs.getInt(KEY_LAST_HANDICAP, DEFAULT_LAST_HANDICAP);  
 	}
-	
 	
 	public static String getLastPlayerBlack() {
 		return shared_prefs.getString(KEY_LAST_PLAYER_BLACK, DEFAULT_LAST_PLAYER_BLACK);
@@ -154,8 +163,6 @@ public class GoPrefs {
 		return shared_prefs.getString(KEY_SGF_FNAME,DEFAULT_SGF_FNAME );
 	}
 	
-	
-	
 	public static byte getAILevel() {
 		String level_str=shared_prefs.getString(KEY_AI_LEVEL,DEFAULT_AI_LEVEL );
 		try {
@@ -198,4 +205,3 @@ public class GoPrefs {
 	}
 
 }
-

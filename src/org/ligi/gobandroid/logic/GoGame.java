@@ -405,7 +405,9 @@ public class GoGame implements GoDefinitions {
     	}
     }
     
-    
+    public void refreshBoards() {
+    	jump(getActMove());
+    }
     public void jumpFirst() {
     	jump(getFirstMove());
     }
@@ -421,7 +423,6 @@ public class GoGame implements GoDefinitions {
     		}
     		move=move.getnextMove(0);
     	}
-
     	
     }
     
