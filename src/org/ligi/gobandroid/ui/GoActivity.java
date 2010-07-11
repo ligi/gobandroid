@@ -59,7 +59,7 @@ import org.ligi.gobandroid.ui.alerts.GameResultsAlert;
 import org.ligi.tracedroid.logging.Log;
 
 /**
- * Activity for a Game
+ * Activity for a Go Game
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  * 
@@ -82,6 +82,7 @@ public class GoActivity
 
 	private GoGame game=null;
 	private GoBoardView board_view;
+	private GoBoardOverlay overlay;
 	
 	private WakeLock mWakeLock=null;
 	
@@ -135,11 +136,8 @@ public class GoActivity
 			board_view.setLayoutParams(bottom_nav_params);
 			
 			rel.addView(board_view);
-			//rel.setBackgroundDrawable(new BitmapDrawable(GOSkin.getBoard()));
-			//rel.addView(new ImageButton(this));
-			 DisplayMetrics dm = new DisplayMetrics();
-			 getWindowManager().getDefaultDisplay().getMetrics(dm);
-
+			DisplayMetrics dm = new DisplayMetrics();
+			getWindowManager().getDefaultDisplay().getMetrics(dm);
 
 			overlay=new GoBoardOverlay(this,board_view,dm.widthPixels,dm.heightPixels,dm.widthPixels>dm.heightPixels);
 			rel.addView(overlay.getView());
@@ -150,10 +148,8 @@ public class GoActivity
 		
 		GoGameProvider.setGame(game);
 		updateControlsStatus();
-		
 	
-		if (GoPrefs.getKeepLightEnabled())
-			{
+		if (GoPrefs.getKeepLightEnabled()) 	{
 			final PowerManager pm = (PowerManager) (this.getSystemService(Context.POWER_SERVICE)); 
 			mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "DUBwise Wakelog TAG");  
         	mWakeLock.acquire();
@@ -168,8 +164,6 @@ public class GoActivity
 		overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
 		updateControlsStatus();
 		return false;
-
-	
 	}
 	
 	@Override
@@ -178,19 +172,12 @@ public class GoActivity
 		return(game);
 	}
 	
-	GoBoardOverlay overlay;
-	
 	public void updateControlsStatus() {
 		overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
 		overlay.getCommentTextView().setText(game.getActMove().getComment());
 		overlay.updateButtonState();
-		//new LayoutParams(0,0);
-		//new ScrollView.
-		
-//		outer_lin.requestLayout();
 	}
 	
-
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -221,9 +208,7 @@ public class GoActivity
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
 
-		if (!game.isFinished()) 
-			{
-			
+		if (!game.isFinished())  {
 			if (game.canUndo()&&(!game.getGoMover().isMoversMove())) 
 				menu.add(0, MENU_UNDO, 0, R.string.undo).setIcon(android.R.drawable.ic_menu_revert);
 						
@@ -233,11 +218,6 @@ public class GoActivity
 		else 
 			menu.add(0, MENU_FINISH, 0,R.string.results).setIcon(android.R.drawable.ic_menu_more);
 			
-		/*
-		if ((!game.getGoMover().isPlayingInThisGame())||game.isFinished())
-			menu.add(0, MENU_SHOWCONTROLS, 0,(review_mode?R.string.hide_review_controls:R.string.show_review_controls)).setIcon(android.R.drawable.ic_menu_view);
-		 */
-		
 		menu.add(0, MENU_GAMEINFO, 0,"Game Info").setIcon(android.R.drawable.ic_menu_help);
 
 		menu.add(0, MENU_WRITE_SGF, 0,R.string.save_as_sgf).setIcon(android.R.drawable.ic_menu_save);
@@ -247,7 +227,7 @@ public class GoActivity
 	}
 
 	
-	/* Handles item selections */
+	/* Handles menu item selections */
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
@@ -274,7 +254,6 @@ public class GoActivity
 				}
 				}).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
-					
 					game.undo(false);
 					}
 				}).show();
@@ -354,8 +333,6 @@ public class GoActivity
 			this.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, view_id);
 		
 		} catch(Exception ex) {}
-		
-		
 	} // end of setCustomTitle
 
     
@@ -459,7 +436,7 @@ public class GoActivity
 	}
 
 	/**
-	 * show a the info toast with a specified text
+	 * show a the info toast with a specified text from a resource ID
 	 * 
 	 * @param resId
 	 */
@@ -489,13 +466,11 @@ public class GoActivity
       updateControlsStatus();
     } 
     
-    
     @Override 
     protected void onSaveInstanceState(Bundle outState) { 
       outState.putBoolean("review_mode", review_mode);
       super.onSaveInstanceState(outState); 
     }
-
 
 	class UpdateBoardViewClass implements Runnable {
 		@Override
@@ -524,6 +499,7 @@ public class GoActivity
 		while (running) {
 			try {
 				Thread.sleep(100);
+			} catch (InterruptedException e) { }
 				// invalidate if the move changed - e.g. when go engine moved
 				if (game.getActMove().getMovePos()!=act_move_pos)
 					{
@@ -534,15 +510,7 @@ public class GoActivity
 				if (overlay.getView().getVisibility() != getBoardViewNeededVisibility())
 					this.runOnUiThread(new UptateOverlayVisibilityClass());
 				
-			} catch (InterruptedException e) {
 			}
-					
-			
-			}
-			
-			
-
 		}
-  
-	
+
 }
