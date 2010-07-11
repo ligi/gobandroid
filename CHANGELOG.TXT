@@ -1,5 +1,7 @@
 0.51
-   + AutoSave 
+   + AutoSave
+   + option to not keep variants ( e.g. missclick )
+   F markers only on upper left 
 0.50
    F FC when opening new game
 0.49
