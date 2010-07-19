@@ -24,6 +24,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.PowerManager;
@@ -40,8 +41,10 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.BufferedWriter;
@@ -271,10 +274,19 @@ public class GoActivity
 			break;
 
 		case MENU_WRITE_SGF:
+			
+			LinearLayout lin=new LinearLayout(this);
+			lin.setOrientation(LinearLayout.VERTICAL);
+			
 			final EditText input = new EditText(this);   
 			input.setText(GoPrefs.getSGFFname());
 
-			new AlertDialog.Builder(this).setTitle(R.string.save_sgf).setMessage("How should the file I will write to " +GoPrefs.getSGFPath() + " be named?").setView(input)
+			final CheckBox box=new CheckBox(this);
+			box.setText("share after saving?");
+			lin.addView(input);
+			lin.addView(box);
+			
+			new AlertDialog.Builder(this).setTitle(R.string.save_sgf).setMessage("How should the file I will write to " +GoPrefs.getSGFPath() + " be named?").setView(lin)
 			.setPositiveButton(R.string.ok , new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String value = input.getText().toString(); 
@@ -295,6 +307,18 @@ public class GoActivity
 					out.write(SGFHelper.game2sgf(game));
 					out.close();
 					sgf_writer.close();
+					
+					
+					if (box.isChecked())
+					{
+						//add extra
+						Intent it = new Intent(Intent.ACTION_SEND);   
+						it.putExtra(Intent.EXTRA_SUBJECT, "SGF created with gobandroid");   
+						it.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://"+GoPrefs.getSGFPath() + "/"+value+".sgf"));   
+						it.setType("application/x-go-sgf");   
+						startActivity(Intent.createChooser(it, "Choose how to send the SGF"));
+
+					}
 				} catch (IOException e) {
 					Log.i(""+e);
 				}
