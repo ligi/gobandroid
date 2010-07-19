@@ -1,3 +1,5 @@
+0.52
+   + moving of a stone ( by tapping on the last stone ) - sometimes useful when recording a real live game
 0.51
    + AutoSave
    + option to not keep variants ( e.g. missclick )
