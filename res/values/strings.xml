@@ -12,7 +12,7 @@
 	<string name="comments">Comments</string>
 	<string name="ok">OK</string>
 	<string name="wait_gnugo">Wait for GnuGo to settle</string>
-	<string name="not_your_turn">It's not your turn!</string>
+	<string name="not_your_turn">It\'s not your turn!</string>
 	<string name="undo">Undo</string>
 	<string name="redo">Redo</string>
 	<string name="pass">Pass</string>
@@ -21,10 +21,10 @@
 	<string name="settings">Settings</string>
 	<string name="save_as_sgf">Save as SGF</string>
 	<string name="move">Move</string>
-	<string name="problem_listing_sgf">Problem listing SGF's</string>
+	<string name="problem_listing_sgf">Problem listing SGF\'s</string>
 	<string name="there_are_no_files_in">There are no files in </string>
 	<string name="sgf_path_invalid">The SGF Path is invalid</string>
-	<string name="android_market_problem">Can't Accesss the Android Market to install an AI - you will have to install it manualy.</string>
+	<string name="android_market_problem">Can\'t Access the Android Market to install an AI - you will have to install it manually.</string>
 	<string name="gnugo_size_problem">GnuGo can only play up to 19x19</string>
 	<string name="problem">Problem</string>
 	<string name="gameplay">Gameplay</string>
