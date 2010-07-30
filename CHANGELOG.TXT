@@ -1,3 +1,7 @@
+0.54
+   F reduce recursion depth from move count to variations - caused stack overflows on long lasting games
+   F crash when handicap > 0 and size not 9 / 13 or 19
+   F crash when small stone size
 0.53
    + option to share SGF after saving
 0.52
