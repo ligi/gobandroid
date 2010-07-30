@@ -24,40 +24,41 @@ import org.ligi.tracedroid.logging.Log;
 
 
 /**
- * class for serializing and deserializing SGF
+ * class for (de)serializing games to/from SGF
  * 
- * @author ligi
+ * @author Marcus -Ligi- Bueschleb
  *
- */
+ **/
 public class SGFHelper {
 
-	
+	/**
+	 * convert a Go Move / tree of moves to a string to use in SGF
+	 * next moves are processed recursive
+	 * 
+	 * @param move - the start move
+	 * @param black_to_move
+	 * @return
+	 */
 	private static String move2string(GoMove move , boolean black_to_move) {
 		String res="";
 	
-			if (!move.isFirstMove())
-			{
-				res+=";" + (black_to_move?"B":"W");
+		if (!move.isFirstMove()) {
+			res+=";" + (black_to_move?"B":"W");
+			if (move.isPassMove())
+				res+="[]";
+			else	
+				res+= "[" + (char)('a'+move.getX()) +(char)('a'+move.getY())+ "]\n";
 			
-				if (move.isPassMove())
-					res+="[]";
-				else	
-					res+= "[" + (char)('a'+move.getX()) +(char)('a'+move.getY())+ "]\n";
+			black_to_move=!black_to_move;
+		}
 			
-				black_to_move=!black_to_move;
-				
+		if (move.hasNextMove())	{
+			if (move.hasNextMoveVariations()) 
+				for (GoMove var: move.getNextMoveVariations())
+					res+="("+move2string(var , black_to_move)+")" ;
+				else
+					res+=move2string(move.getnextMove(0) , black_to_move) ;
 			}
-			
-			if (move.hasNextMove())
-				{
-					if (move.hasNextMoveVariations()) {
-					for (GoMove var: move.getNextMoveVariations())
-						res+="("+move2string(var , black_to_move)+")" ;
-					}
-					else
-						res+=move2string(move.getnextMove(0) , black_to_move) ;
-				}
-
 			
 		return res;
 	}
@@ -79,13 +80,11 @@ public class SGFHelper {
 		res+="BR[" + escapeSGF(game.getMetaData().getBlackRank()) + "]";
 		res+="WR[" + escapeSGF(game.getMetaData().getWhiteRank()) + "]";
 		res+="RE[" + escapeSGF(game.getMetaData().getResult()) + "]";
-		
 		res+="\n";
 		
 		boolean black_to_move=true;
 		
-		if (game.getHandicap()>0)
-			{
+		if (game.getHandicap()>0) {
 			black_to_move=false; // white begins on a handicap game - not black
 			res+="AB";
 			byte[][] handicap_arr= GoDefinitions.getHandicapArray(game.getBoardSize());
@@ -114,16 +113,13 @@ public class SGFHelper {
 		Vector <GoMove> var_vect=new Vector<GoMove>();
 		boolean consuming_param=false;
 		
-		
 		String act_param="";
 		String act_cmd="";
 		String last_cmd="";
 		
 		GoGameMetadata metadata=new GoGameMetadata();
 		
-		
-		for (int p=0;p<sgf.length();p++)
-		{
+		for (int p=0;p<sgf.length();p++) {
 			char act_char=sgf.charAt(p);
 			
 			if (!consuming_param)
@@ -250,40 +246,33 @@ public class SGFHelper {
 
 					
 					// size command
-					if (act_cmd.equals("SZ"))
-						{
-						
+					if (act_cmd.equals("SZ")){
 						size=Byte.parseByte(act_param);
 						if ((game==null)||(game.getBoardSize()!=size)) {
 							game=new GoGame(size);
 							var_vect.add(game.getActMove());
 						}
-						}	
-			
+					}	
+
+					// comment command
 					if (act_cmd.equals("C")) {
 						if (game!=null) 
 							game.getActMove().setComment(act_param);
 					}
 					
-					//if (variation_depth==1)
-					if ((act_cmd.equals("B"))||(act_cmd.equals("W")))
-						{
+					// move command
+					if ((act_cmd.equals("B"))||(act_cmd.equals("W"))) {
 						
 						// if still no game open -> open one with default size
-						if (game==null)
-						{
+						if (game==null) {
 							game=new GoGame((byte)19);
 							var_vect.add(game.getActMove());
 						}
 				
-						//	Log.i("gobanroid","process move");
 						if (act_param.length()==0)
 							game.pass();
-						else
-						{
-							
-							if (game.getActMove().isFirstMove()&&game.isBlackToMove()&&(act_cmd.equals("W")))
-								{
+						else {
+							if (game.getActMove().isFirstMove()&&game.isBlackToMove()&&(act_cmd.equals("W"))) {
 								game.start_player=GoDefinitions.PLAYER_WHITE;
 								game.setNextPlayer();								
 								}
@@ -294,15 +283,12 @@ public class SGFHelper {
 								game.pass();
 					
 							game.do_move(param_x, param_y);
-						
 						}
-						}
+					}
 					
 						
 					// handle predefined stones ( mostly handicap stones )  in SGF 
-					if ((act_cmd.equals("AB"))||(act_cmd.equals("AW")))
-						{
-						
+					if ((act_cmd.equals("AB"))||(act_cmd.equals("AW")))	{
 						
 						if ((game==null)) { // create a game if it is not there yet
 							game=new GoGame((byte)19);
@@ -315,10 +301,10 @@ public class SGFHelper {
 							if (game.isBlackToMove()&&(act_cmd.equals("AW")))
 								game.getHandicapBoard().setCellWhite(param_x, param_y);
 						}
-						else {
+						else 
 							Log.w("AB / AW command without param");
-						}
-				}
+
+					}
 
 				last_cmd=act_cmd;
 				act_cmd="";	
