@@ -86,33 +86,50 @@ public class GOSkin {
 		return getStone("black",size);
 	}
 	
+	/**
+	 * returns a image for a go stone - either a 
+	 * selected ( by color/size ) and scaled image from the skin
+	 * or a drawn circle in the right color ( fallback / no skin )   
+	 * 
+	 * @param name "white" or "black"
+	 * @param size the size in pixels
+	 * 
+	 * @return the scaled image
+	 */
 	public static Bitmap getStone(String name,float size) {
-		if (do_stone_skin) {
+		
+		if (size<1)
+			size=1;	
+		
+		if (do_stone_skin) try {
 				
-		int size_append=17;
-		if (size>23)
-			size_append=32;
-		if (size>50)
-			size_append=64;
-
-		Log.i("scale to size" + size);	
-		return Bitmap.createScaledBitmap(BitmapFactory .decodeFile(skin_base_path+stone_skin_name+"/"+name + size_append + ".png"
-			), (int)size, (int)size, true);
-		}
-		else {
-			Bitmap btm=Bitmap.createBitmap((int)size,(int)size,Bitmap.Config.ARGB_4444);
+			int size_append=17;
 			
-			Canvas c=new Canvas(btm);
-			Paint mPaint=new Paint();
-			mPaint.setAntiAlias(true);
-			if (name.equals("white"))
-				mPaint.setColor(Color.WHITE);
-			else
-				mPaint.setColor(Color.BLACK);
+			if (size>50)
+				size_append=64;
+			else if (size>23)
+				size_append=32;
 			
-			c.drawCircle(c.getWidth()/2, c.getHeight()/2, size/2.0f, mPaint);
-			return btm;
+			Log.i("scale to size" + size);	
+			Bitmap unscaled_bitmap=BitmapFactory.decodeFile(skin_base_path+stone_skin_name+"/"+name + size_append + ".png");
+			return Bitmap.createScaledBitmap(unscaled_bitmap, (int)size, (int)size, true);
+			}
+		catch (Exception e) {
+			Log.w("problem scaling the " + name + " stone bitmap to" + size );
 		}
+		
+		Bitmap btm=Bitmap.createBitmap((int)size,(int)size,Bitmap.Config.ARGB_4444);
+			
+		Canvas c=new Canvas(btm);
+		Paint mPaint=new Paint();
+		mPaint.setAntiAlias(true);
+		if (name.equals("white"))
+			mPaint.setColor(Color.WHITE);
+		else
+			mPaint.setColor(Color.BLACK);
+			
+		c.drawCircle(c.getWidth()/2, c.getHeight()/2, size/2.0f, mPaint);
+		return btm;
 	}
 	
 }
