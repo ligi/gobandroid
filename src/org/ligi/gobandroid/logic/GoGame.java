@@ -37,9 +37,9 @@ import org.ligi.tracedroid.logging.Log;
  * This software is licenced with GPLv3         
  */
 
-public class GoGame implements GoDefinitions {
+public class GoGame  {
 
-	private byte act_player=PLAYER_BLACK;
+	private byte act_player=GoDefinitions.PLAYER_BLACK;
     
     private GoBoard visual_board; // the board to show to the user
     private GoBoard calc_board;	  // the board calculations are done in
@@ -106,15 +106,6 @@ public class GoGame implements GoDefinitions {
     	calc_board=handicap_board.clone();
     }
 
-    public byte[][] getHandicapArray() {
-        if (getBoardSize()==19)
-        	return hoshis19x19;
-        else if (getBoardSize()==13)
-        	return hoshis13x13;
-        else if (getBoardSize()==9)
-        	return hoshis9x9;
-        else return new byte[0][0];
-    }
     
     private void construct(byte size) {
     	// create the boards
@@ -125,8 +116,9 @@ public class GoGame implements GoDefinitions {
         
     	handicap_board=calc_board.clone();
     	    
-    	for (int i=0;i<handicap;i++)
-    		handicap_board.setCellBlack(getHandicapArray()[i][0], getHandicapArray()[i][1]);
+    	if (GoDefinitions.getHandicapArray(size)!=null)
+    		for (int i=0;i<handicap;i++)
+    			handicap_board.setCellBlack(GoDefinitions.getHandicapArray(size)[i][0], GoDefinitions.getHandicapArray(size)[i][1]);
     	
         apply_handicap();
         
@@ -155,13 +147,13 @@ public class GoGame implements GoDefinitions {
         
     }
     
-    byte start_player=PLAYER_BLACK;
+    byte start_player=GoDefinitions.PLAYER_BLACK;
     
     public void reset() {
     	// black always starts
     	
     	if (handicap!=0)
-    		start_player=PLAYER_WHITE;
+    		start_player=GoDefinitions.PLAYER_WHITE;
     	
     	act_player=start_player;
     	
@@ -738,12 +730,12 @@ public class GoGame implements GoDefinitions {
             for (int y = 0; y < calc_board.getSize(); y++) {
             	if (isAreaGroupWhites(area_groups[x][y]))
         			{ 
-            		area_assign[x][y]=PLAYER_WHITE;
+            		area_assign[x][y]=GoDefinitions.PLAYER_WHITE;
             		territory_white++;
         			}
             	else if (isAreaGroupBlacks(area_groups[x][y])) {
             		territory_black++;
-            		area_assign[x][y]=PLAYER_BLACK;
+            		area_assign[x][y]=GoDefinitions.PLAYER_BLACK;
             	}
         			
             }
@@ -965,7 +957,7 @@ public class GoGame implements GoDefinitions {
     }
     
     public boolean isBlackToMove() {
-    	return (act_player==PLAYER_BLACK);
+    	return (act_player==GoDefinitions.PLAYER_BLACK);
     }
     
     public int getCapturesBlack() {
@@ -985,7 +977,7 @@ public class GoGame implements GoDefinitions {
     }
     
     public void setNextPlayer() {
-    	act_player=(act_player==PLAYER_BLACK)?PLAYER_WHITE:PLAYER_BLACK;
+    	act_player=(act_player==GoDefinitions.PLAYER_BLACK)?GoDefinitions.PLAYER_WHITE:GoDefinitions.PLAYER_BLACK;
     }
     
     public byte getHandicap() {

@@ -19,7 +19,7 @@
 
 package org.ligi.gobandroid.logic;
 
-public interface GoDefinitions {
+public class GoDefinitions {
 
 	public final static byte PLAYER_BLACK=1;
 	public final static byte PLAYER_WHITE=2;
@@ -46,5 +46,17 @@ public interface GoDefinitions {
 		};
 	
 
-
+	public final static byte[][] getHandicapArray(int size) {
+    	switch(size) {
+    		case 9:
+    			return hoshis9x9;
+    		case 13:
+    			return hoshis13x13;
+    		case 19:
+    			return hoshis19x19;
+    	}
+    	return null;
+    }
+    
+	
 }	

@@ -34,7 +34,7 @@ import org.ligi.tracedroid.logging.Log;
  * This software is licenced with GPLv3         
  */
 
-public class GoMove implements GoDefinitions {
+public class GoMove{
 
 	private byte x,y;
 	

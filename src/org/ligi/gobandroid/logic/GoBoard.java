@@ -31,7 +31,7 @@ import org.ligi.tracedroid.logging.Log;
  * This software is licenced with GPLv3 
 **/
 
-public class GoBoard implements GoDefinitions{
+public class GoBoard {
     
     private byte size;
     public byte[][] board;
@@ -104,24 +104,24 @@ public class GoBoard implements GoDefinitions{
     }
 
     public boolean isCellFree( int x, int y ) {
-        return (board[x][y]==STONE_NONE) // no stone on board
+        return (board[x][y]==GoDefinitions.STONE_NONE) // no stone on board
         		||(board[x][y]<0);  // or dead stone; 
     }
     public boolean isCellBlack( int x, int y ) {
-        return (board[x][y]==STONE_BLACK); 
+        return (board[x][y]==GoDefinitions.STONE_BLACK); 
     }
     
     public boolean isCellWhite( int x, int y ) {
-        return (board[x][y]==STONE_WHITE); 
+        return (board[x][y]==GoDefinitions.STONE_WHITE); 
     }
 
     
     public boolean isCellDeadBlack( int x, int y ) {
-        return (-board[x][y]==STONE_BLACK); 
+        return (-board[x][y]==GoDefinitions.STONE_BLACK); 
     }
     
     public boolean isCellDeadWhite( int x, int y ) {
-        return (-board[x][y]==STONE_WHITE); 
+        return (-board[x][y]==GoDefinitions.STONE_WHITE); 
     }
 
 
@@ -132,15 +132,15 @@ public class GoBoard implements GoDefinitions{
 
 
     public void setCellFree( int x, int y ) {
-        board[x][y]=STONE_NONE; 
+        board[x][y]=GoDefinitions.STONE_NONE; 
     }
 
     public void setCellBlack( int x, int y ) {
-        board[x][y]=STONE_BLACK; 
+        board[x][y]=GoDefinitions.STONE_BLACK; 
     }
 
     public void setCellWhite( int x, int y ) {
-        board[x][y]=STONE_WHITE; 
+        board[x][y]=GoDefinitions.STONE_WHITE; 
     }
     
     

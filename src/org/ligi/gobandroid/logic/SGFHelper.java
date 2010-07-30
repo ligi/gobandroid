@@ -88,8 +88,10 @@ public class SGFHelper {
 			{
 			black_to_move=false; // white begins on a handicap game - not black
 			res+="AB";
-			for ( int handicap=0;handicap<game.getHandicap();handicap++)
-				res+="["+(char)('a' + game.getHandicapArray()[handicap][0])+(char)('a' + game.getHandicapArray()[handicap][1]) + "]";
+			byte[][] handicap_arr= GoDefinitions.getHandicapArray(game.getBoardSize());
+			if (handicap_arr!=null)
+				for ( int handicap=0;handicap<game.getHandicap();handicap++)
+					res+="["+(char)('a' +handicap_arr[handicap][0])+(char)('a' + handicap_arr[handicap][1]) + "]";
 			res+="\n";
 			}
 
@@ -282,7 +284,7 @@ public class SGFHelper {
 							
 							if (game.getActMove().isFirstMove()&&game.isBlackToMove()&&(act_cmd.equals("W")))
 								{
-								game.start_player=GoGame.PLAYER_WHITE;
+								game.start_player=GoDefinitions.PLAYER_WHITE;
 								game.setNextPlayer();								
 								}
 							
