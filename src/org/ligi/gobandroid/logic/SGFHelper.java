@@ -32,33 +32,44 @@ import org.ligi.tracedroid.logging.Log;
 public class SGFHelper {
 
 	/**
-	 * convert a Go Move / tree of moves to a string to use in SGF
+	 * convert tree of moves to a string to use in SGF
 	 * next moves are processed recursive
 	 * 
 	 * @param move - the start move
 	 * @param black_to_move
 	 * @return
 	 */
-	private static String move2string(GoMove move , boolean black_to_move) {
+	private static String moves2string(GoMove move , boolean black_to_move) {
 		String res="";
 	
-		if (!move.isFirstMove()) {
-			res+=";" + (black_to_move?"B":"W");
-			if (move.isPassMove())
-				res+="[]";
-			else	
-				res+= "[" + (char)('a'+move.getX()) +(char)('a'+move.getY())+ "]\n";
-			
-			black_to_move=!black_to_move;
-		}
-			
-		if (move.hasNextMove())	{
-			if (move.hasNextMoveVariations()) 
-				for (GoMove var: move.getNextMoveVariations())
-					res+="("+move2string(var , black_to_move)+")" ;
-				else
-					res+=move2string(move.getnextMove(0) , black_to_move) ;
+		GoMove act_move=move;
+		
+		while (act_move!=null) {
+		
+			if (!act_move.isFirstMove()) {
+				res+=";" + (black_to_move?"B":"W");
+				if (act_move.isPassMove())
+					res+="[]";
+				else	
+					res+= "[" + (char)('a'+act_move.getX()) +(char)('a'+act_move.getY())+ "]\n";
+				
+				black_to_move=!black_to_move;
 			}
+		
+			GoMove next_move=null;
+			
+			if (act_move.hasNextMove())	{
+				if (act_move.hasNextMoveVariations()) 
+					for (GoMove var: act_move.getNextMoveVariations())
+						res+="("+moves2string(var , black_to_move)+")" ;
+					else
+						next_move=act_move.getnextMove(0);
+				}
+			
+			act_move=next_move;
+			
+			
+		}	
 			
 		return res;
 	}
@@ -94,7 +105,7 @@ public class SGFHelper {
 			res+="\n";
 			}
 
-		res+=move2string(game.getFirstMove() ,black_to_move)+")"; 
+		res+=moves2string(game.getFirstMove() ,black_to_move)+")"; 
 		
 		return res;
 	}
