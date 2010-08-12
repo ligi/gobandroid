@@ -221,7 +221,7 @@ public class SGFHelper {
 						game.getActMove().addMarker(new GoMarker(param_x,param_y,act_param.substring(3)));
 
 					// mark with x
-					if (act_cmd.equals("MA"))
+					if (act_cmd.equals("Mark") | act_cmd.equals("MA"))
 						game.getActMove().addMarker(new GoMarker(param_x,param_y,"X"));
 					
 					// mark with triangle - fake by |>
@@ -257,7 +257,7 @@ public class SGFHelper {
 
 					
 					// size command
-					if (act_cmd.equals("SZ")){
+					if (act_cmd.equals("SiZe") || act_cmd.equals("SZ")){
 						size=Byte.parseByte(act_param);
 						if ((game==null)||(game.getBoardSize()!=size)) {
 							game=new GoGame(size);
@@ -266,13 +266,13 @@ public class SGFHelper {
 					}	
 
 					// comment command
-					if (act_cmd.equals("C")) {
+					if (act_cmd.equals("Comment") || act_cmd.equals("C")) {
 						if (game!=null) 
 							game.getActMove().setComment(act_param);
 					}
 					
 					// move command
-					if ((act_cmd.equals("B"))||(act_cmd.equals("W"))) {
+					if (act_cmd.equals("Black")||act_cmd.equals("B")||act_cmd.equals("W")||act_cmd.equals("White")) {
 						
 						// if still no game open -> open one with default size
 						if (game==null) {
@@ -283,14 +283,14 @@ public class SGFHelper {
 						if (act_param.length()==0)
 							game.pass();
 						else {
-							if (game.getActMove().isFirstMove()&&game.isBlackToMove()&&(act_cmd.equals("W"))) {
+							if (game.getActMove().isFirstMove()&&game.isBlackToMove()&&(act_cmd.equals("W")||act_cmd.equals("White") )) {
 								game.start_player=GoDefinitions.PLAYER_WHITE;
 								game.setNextPlayer();								
 								}
 							
-							if (game.isBlackToMove()&&(act_cmd.equals("W")))
+							if (game.isBlackToMove()&&((act_cmd.equals("W")||(act_cmd.equals("White")))))
 								game.pass();
-							else if ((!game.isBlackToMove())&&(act_cmd.equals("B")))
+							else if ((!game.isBlackToMove())&&((act_cmd.equals("B")||(act_cmd.equals("Black")))))
 								game.pass();
 					
 							game.do_move(param_x, param_y);
@@ -299,17 +299,18 @@ public class SGFHelper {
 					
 						
 					// handle predefined stones ( mostly handicap stones )  in SGF 
-					if ((act_cmd.equals("AB"))||(act_cmd.equals("AW")))	{
+					if (act_cmd.equals("AddBlack")||act_cmd.equals("AB")
+						||act_cmd.equals("AW")||act_cmd.equals("AddWhite") )	{
 						
-						if ((game==null)) { // create a game if it is not there yet
+						if (game==null) { // create a game if it is not there yet
 							game=new GoGame((byte)19);
 							var_vect.add(game.getActMove());
 						}
 						
 						if (act_param.length()!=0)	{
-							if (game.isBlackToMove()&&(act_cmd.equals("AB")))
+							if (game.isBlackToMove()&&(act_cmd.equals("AB")||act_cmd.equals("AddBlack") ))
 								game.getHandicapBoard().setCellBlack(param_x, param_y);
-							if (game.isBlackToMove()&&(act_cmd.equals("AW")))
+							if (game.isBlackToMove()&&(act_cmd.equals("AW")||act_cmd.equals("AddWhite")))
 								game.getHandicapBoard().setCellWhite(param_x, param_y);
 						}
 						else 
