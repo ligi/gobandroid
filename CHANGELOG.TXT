@@ -1,3 +1,5 @@
+0.55
+   + link to go rules on wikipedia ( many people asked for the rules )
 0.54
    F reduce recursion depth from move count to variations - caused stack overflows on long lasting games
    F crash when handicap > 0 and size not 9 / 13 or 19
