@@ -38,11 +38,12 @@ import android.widget.ListView;
 **/
 
 public class AboutActivity extends ListActivity {
-    public String[] menu_items= {"Changelog","Credits", "Ligi's Blog"  };
+    public String[] menu_items= {"Go Rules", "Changelog","Credits", "Ligi's Blog"  };
     
-    private final static int MENU_CHANGELOG=0;
-    private final static int MENU_CREDITS=1;
-    private final static int MENU_BLOG=2;
+    private final static int MENU_RULES=0;
+    private final static int MENU_CHANGELOG=1;
+    private final static int MENU_CREDITS=2;
+    private final static int MENU_BLOG=3;
     
     /** Called when the activity is first created. */
     @Override
@@ -62,7 +63,16 @@ public class AboutActivity extends ListActivity {
         super.onListItemClick(l, v, position, id);
 
 		switch (position) {
-		case MENU_CHANGELOG:
+			case MENU_RULES:
+
+				this
+						.startActivity(new Intent(
+								"android.intent.action.VIEW",
+								Uri.parse("http://en.wikipedia.org/wiki/Rules_of_Go")));
+
+				break;
+
+			case MENU_CHANGELOG:
 
 			this
 					.startActivity(new Intent(
