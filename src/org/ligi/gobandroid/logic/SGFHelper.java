@@ -298,6 +298,7 @@ public class SGFHelper {
 					}
 					
 						
+					// TODO support AddEmpty
 					// handle predefined stones ( mostly handicap stones )  in SGF 
 					if (act_cmd.equals("AddBlack")||act_cmd.equals("AB")
 						||act_cmd.equals("AW")||act_cmd.equals("AddWhite") )	{
