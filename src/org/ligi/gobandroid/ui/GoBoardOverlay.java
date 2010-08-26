@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.FrameLayout;
@@ -177,17 +178,11 @@ public class GoBoardOverlay implements OnClickListener {
 	    	last_w=w;
 */
 	    	Log.i("refreshing overlay in update to --" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getHeight());
-	    	if (!horizontal)
-			{
-				
+	    	if (!horizontal) 
 				comment_sv.setLayoutParams(new LinearLayout.LayoutParams(w, h-w-back.getHeight()));
-			}
 			else
-			{
 				comment_tv.setWidth(w-h-20-back.getWidth());
-				
-				
-			}
+
 	    	comment_tv.requestLayout();
 	    	comment_sv.requestLayout();
 			comment_tv.setText(getGameComment());
@@ -300,17 +295,36 @@ public class GoBoardOverlay implements OnClickListener {
 			else if (btn==last)
 				game.jumpLast();
 			else if (btn==comments) {
-		
-				new AlertDialog.Builder(context).setTitle(R.string.comments)
-				.setMessage(
-						 game.getActMove().getComment()
-			).setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
 				
-				}
-			}).show();
+				new AlertDialog.Builder(context).setTitle(R.string.comments)
+				.setMessage(getGameComment())
+				.setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {	}
+				})
+				.setNeutralButton("Edit", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {	
+				
+					final EditText comment_edit=new EditText(context);
+					comment_edit.setText(getGameComment());
+					
+					new AlertDialog.Builder(context).setTitle(R.string.comments)
+					.setView(comment_edit)
+					.setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							game.getActMove().setComment(comment_edit.getText().toString());
+						}
+					})
+					.setNegativeButton(R.string.cancel,  new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {	}
+					})
+	
+					.show();
+					
+					}
+				} )
+				.show();
 			}
-			
+
 			getCommentTextView().setText(game.getActMove().getComment());
 			updateButtonState();
 			board_view.invalidate();
@@ -319,9 +333,9 @@ public class GoBoardOverlay implements OnClickListener {
 		public void updateButtonState() {
 			
 			GoGame game=GoGameProvider.getGame();
+
 			// prevent NPE
-			if (game==null)
-				{
+			if (game==null)	{
 				Log.w("no game there when updateControlsStatus");	
 				return;
 				}
@@ -330,9 +344,7 @@ public class GoBoardOverlay implements OnClickListener {
 			first.setEnabled(game.canUndo()&&(!game.getGoMover().isPlayingInThisGame()));
 			next.setEnabled(game.canRedo()&&(!game.getGoMover().isPlayingInThisGame()));
 			last.setEnabled(game.canRedo()&&(!game.getGoMover().isPlayingInThisGame()));
-			comments.setEnabled(game.getActMove().hasComment());
-			
-
+			//comments.setEnabled(game.getActMove().hasComment());
 		}
 	
 }
