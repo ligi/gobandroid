@@ -5,27 +5,6 @@
     android:layout_height="fill_parent"
     >
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <ImageView android:id="@+id/ImageView01" android:src="@drawable/icon" android:scaleType="center" android:layout_gravity="center" android:layout_height="wrap_content" android:layout_width="wrap_content"></ImageView>
 <ListView android:id="@+id/android:list" android:layout_width="fill_parent" android:layout_height="fill_parent"></ListView>
 </LinearLayout>
