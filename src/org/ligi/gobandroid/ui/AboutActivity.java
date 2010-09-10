@@ -65,44 +65,28 @@ public class AboutActivity extends ListActivity {
 
 		switch (position) {
 			case MENU_RULES:
-
-				this
-						.startActivity(new Intent(
-								"android.intent.action.VIEW",
-								Uri.parse("http://en.wikipedia.org/wiki/Rules_of_Go")));
-
+				open_uri("http://en.wikipedia.org/wiki/Rules_of_Go");
 				break;
 
 			case MENU_CHANGELOG:
+				open_uri("http://github.com/ligi/gobandroid/raw/master/CHANGELOG.TXT");
+				break;
 
-			this
-					.startActivity(new Intent(
-							"android.intent.action.VIEW",
-							Uri
-									.parse("http://github.com/ligi/gobandroid/raw/master/CHANGELOG.TXT")));
+			case MENU_CREDITS:
+				open_uri("http://github.com/ligi/gobandroid/raw/master/CREDITS.TXT");
+				break;
 
-			break;
+			case MENU_BLOG:
+				open_uri("http://ligi.de");
+				break;
 
-		case MENU_CREDITS:
-			this
-					.startActivity(new Intent(
-							"android.intent.action.VIEW",
-							Uri.parse("http://github.com/ligi/gobandroid/raw/master/CREDITS.TXT")));
-
-			break;
-
-		case MENU_BLOG:
-			this.startActivity(new Intent("android.intent.action.VIEW", Uri
-					.parse("http://ligi.de")));
-			break;
-
-		case MENU_SUPPORT:
-			this.startActivity(new Intent("android.intent.action.VIEW", Uri
-					.parse("https://flattr.com/thing/49828/gobandroid")));
-			break;
-
+			case MENU_SUPPORT:
+				open_uri("https://flattr.com/thing/49828/gobandroid");
+				break;
 		}
-  
     }
     
+    public void open_uri(String uri) {
+		this.startActivity(new Intent("android.intent.action.VIEW", Uri.parse(uri)));
+    }
 }
