@@ -38,12 +38,13 @@ import android.widget.ListView;
 **/
 
 public class AboutActivity extends ListActivity {
-    public String[] menu_items= {"Go Rules", "Changelog","Credits", "Ligi's Blog"  };
+    public String[] menu_items= {"Go Rules", "Changelog","Credits", "Ligi's Blog","Support"  };
     
     private final static int MENU_RULES=0;
     private final static int MENU_CHANGELOG=1;
     private final static int MENU_CREDITS=2;
     private final static int MENU_BLOG=3;
+    private final static int MENU_SUPPORT=4;
     
     /** Called when the activity is first created. */
     @Override
@@ -93,6 +94,11 @@ public class AboutActivity extends ListActivity {
 		case MENU_BLOG:
 			this.startActivity(new Intent("android.intent.action.VIEW", Uri
 					.parse("http://ligi.de")));
+			break;
+
+		case MENU_SUPPORT:
+			this.startActivity(new Intent("android.intent.action.VIEW", Uri
+					.parse("https://flattr.com/thing/49828/gobandroid")));
 			break;
 
 		}
