@@ -183,10 +183,14 @@ public class GoBoardOverlay implements OnClickListener {
 			else
 				comment_tv.setWidth(w-h-20-back.getWidth());
 
-	    	comment_tv.requestLayout();
-	    	comment_sv.requestLayout();
-			comment_tv.setText(getGameComment());
+	    	updateCommentText();
 
+	    	comment_sv.requestLayout();
+	    }
+
+	    public void updateCommentText() {
+			comment_tv.setText(getGameComment());
+			comment_tv.requestLayout(); // to make the changed text appear on screen 
 	    }
 	    
 	    public View getView() {
@@ -312,6 +316,7 @@ public class GoBoardOverlay implements OnClickListener {
 					.setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton) {
 							game.getActMove().setComment(comment_edit.getText().toString());
+							updateCommentText();
 						}
 					})
 					.setNegativeButton(R.string.cancel,  new DialogInterface.OnClickListener() {
