@@ -31,7 +31,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /**
- * This is the main Activity of gobandroid
+ * This is the Info Activity of gobandroid
+ * links to some webpages with info's which could be interesting for gobandroid users
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  *         
