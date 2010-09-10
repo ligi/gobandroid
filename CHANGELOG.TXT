@@ -1,5 +1,6 @@
 0.56
    + option for user to edit the comments
+   + flattr link
 0.55
    + link to go rules on wikipedia ( many people asked for the rules )
 0.54
