@@ -37,32 +37,46 @@ public class GOSkin {
 	private static boolean do_stone_skin=false;
 	private static String stone_skin_name="none";
 	
-
 	public final static String skin_base_path="/sdcard/gobandroid/skins/";
-	
-	public static void setBoardSkin(String name) {
-		if ((new File(skin_base_path+name).exists())) 
-		{
-			board_skin_name=name;
-			do_board_skin=true;
-		}
+
+
+	/**
+	 * set the current skin for the board
+	 * if the skin does not exist switch of board skin usage
+	 * 
+	 * @param skin_name
+	 * @return success
+	 */
+	public static boolean setBoardSkin(String skin_name) {
+		if ((new File(skin_base_path+skin_name).exists())) {
+			board_skin_name=skin_name;
+			do_board_skin=true;	} 
 		else 
 			do_board_skin=false;
+		
+		return do_board_skin;
 	}
 
 
-	public static void setStoneSkin(String name) {
-		if ((new File(skin_base_path+name).exists())) 
-		{
-			stone_skin_name=name;
-			do_stone_skin=true;
-		}
+	/**
+	 * set the current skin for stones
+	 * if the skin does not exist switch of skin usage for stones
+	 * 
+	 * @param skin_name
+	 * @return success
+	 */
+	public static boolean setStoneSkin(String skin_name) {
+		if ((new File(skin_base_path+skin_name).exists())) {
+			stone_skin_name=skin_name;
+			do_stone_skin=true; } 
 		else 
 			do_stone_skin=false;
+		
+		return do_stone_skin;
 	}
 
 	
-	public static String getBoardFname() {
+	private static String getBoardFname() {
 		return skin_base_path+board_skin_name+"/board.jpg";
 	}
 	
@@ -76,7 +90,6 @@ public class GOSkin {
 		else
 			return null;
 	}
-	
 	
 	public static Bitmap getWhiteStone(float size) {
 		return getStone("white",size);
@@ -130,6 +143,6 @@ public class GOSkin {
 			
 		c.drawCircle(c.getWidth()/2, c.getHeight()/2, size/2.0f, mPaint);
 		return btm;
-	}
-	
+	} // getStone
+
 }

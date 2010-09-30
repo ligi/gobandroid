@@ -72,13 +72,10 @@ public class GoBoardOverlay implements OnClickListener {
 			control_buttons.add(last);
 
 			outer_lin=new LinearLayout(context);
-			
-			
-			button_container=new LinearLayout(context);
 
+			button_container=new LinearLayout(context);
 						
-			for (ImageButton btn:control_buttons) 
-			{
+			for (ImageButton btn:control_buttons) {
 				btn.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT,1));
 				button_container.addView(btn);
 			}
@@ -97,8 +94,7 @@ public class GoBoardOverlay implements OnClickListener {
 					//comment_tv.setHeight(board_view.getHeight()-(int)board_view.getBoardPixels()-20-1-last.getHeight());
 
 			  	
-					if (!horizontal)
-					{
+					if (!horizontal) {
 						
 						button_container.setOrientation(LinearLayout.HORIZONTAL);
 						button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
@@ -118,8 +114,7 @@ public class GoBoardOverlay implements OnClickListener {
 						comment_sv.setLayoutParams(new LinearLayout.LayoutParams(w, h-w-back.getHeight()));
 						comment_sv.setVisibility(View.VISIBLE);
 					}
-					else
-					{
+					else {
 						comment_tv.setWidth(w-h-20-back.getWidth());
 						button_container.setOrientation(LinearLayout.VERTICAL);
 						button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT));
@@ -162,8 +157,6 @@ public class GoBoardOverlay implements OnClickListener {
 			
 			comment_tv.setText(getGameComment());
 		}
-
-	    int last_w;
 	    
 	    private String getGameComment() {
 	    	if (GoGameProvider.getGame()==null)
@@ -173,10 +166,7 @@ public class GoBoardOverlay implements OnClickListener {
 	    }
 	    
 	    public void updateCommentsSize(int w,int h,boolean horizontal) {
-/*	    	if (last_w==w)
-	    		return;
-	    	last_w=w;
-*/
+
 	    	Log.i("refreshing overlay in update to --" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getHeight());
 	    	if (!horizontal) 
 				comment_sv.setLayoutParams(new LinearLayout.LayoutParams(w, h-w-back.getHeight()));
@@ -210,8 +200,7 @@ public class GoBoardOverlay implements OnClickListener {
 			final GoGame game=GoGameProvider.getGame();
 			//GoGame game=GoGameProvider.getGame();
 			
-			if (btn==back)
-			{
+			if (btn==back) {
 				// dont do it if the mover has to move at the moment
 				if (game.getGoMover().isMoversMove())
 					return;
@@ -228,8 +217,7 @@ public class GoBoardOverlay implements OnClickListener {
 			}
 			else if (btn==next) {
 							
-				if (game.getPossibleVariationCount()>0)
-					{
+				if (game.getPossibleVariationCount()>0)	{
 					LinearLayout lin=new LinearLayout(context);
 					LinearLayout li=new LinearLayout(context);
 

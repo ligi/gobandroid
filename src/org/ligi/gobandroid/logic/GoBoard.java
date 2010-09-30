@@ -115,7 +115,6 @@ public class GoBoard {
         return (board[x][y]==GoDefinitions.STONE_WHITE); 
     }
 
-    
     public boolean isCellDeadBlack( int x, int y ) {
         return (-board[x][y]==GoDefinitions.STONE_BLACK); 
     }
@@ -124,12 +123,10 @@ public class GoBoard {
         return (-board[x][y]==GoDefinitions.STONE_WHITE); 
     }
 
-
     public boolean areCellsEqual( int x, int y , int x2 , int y2 ) {
         return ((board[x][y]==board[x2][y2])||
         		(isCellFree(x,y)&&isCellFree(x2,y2)));
     }
-
 
     public void setCellFree( int x, int y ) {
         board[x][y]=GoDefinitions.STONE_NONE; 
@@ -142,8 +139,6 @@ public class GoBoard {
     public void setCellWhite( int x, int y ) {
         board[x][y]=GoDefinitions.STONE_WHITE; 
     }
-    
-    
 
     public void toggleCellDead( int x, int y ) {
         board[x][y]*=-1; 
@@ -152,7 +147,4 @@ public class GoBoard {
     public boolean isCellDead( int x, int y ) {
         return (board[x][y]<0); 
     }
-
-
-
 }

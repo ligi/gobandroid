@@ -17,9 +17,7 @@
  * 
  **/
 
-
 package org.ligi.gobandroid.logic;
-
 
 import java.util.Vector;
 
@@ -67,19 +65,15 @@ public class GoMove{
 		next_move_variations=new Vector<GoMove>();
 		markers=new Vector<GoMarker>();
 		
-		if (parent!=null)
-			{
+		if (parent!=null) {
 			parent.addNextMove(this);
 	
 			GoMove act_move=this;
 			
-			while((act_move!=null)&&(!act_move.isFirstMove()))
-					{
+			while((act_move!=null)&&(!act_move.isFirstMove())) {
 					move_pos++;
 					act_move=act_move.parent;
 					}
-					
-			
 			}
 	}
 	
@@ -91,12 +85,9 @@ public class GoMove{
 		return did_captures;
 	}
 	
-	
-	
 	public int getMovePos() {
 		return move_pos;
 	}
-	
 	
 	public boolean hasNextMove() {
 		return (next_move_variations.size()>0);
@@ -217,5 +208,4 @@ public class GoMove{
 		markers.removeAllElements(); // usefull?
 		next_move_variations.removeAllElements(); // usefull?
 	}
-
 }

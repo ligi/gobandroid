@@ -67,10 +67,7 @@ public class SGFHelper {
 				}
 			
 			act_move=next_move;
-			
-			
 		}	
-			
 		return res;
 	}
 
@@ -325,8 +322,7 @@ public class SGFHelper {
 				
 				} 
 				case '\\':
-				if (escape)
-				{
+				if (escape) {
 					act_param+=(char)act_char;
 					escape=false;
 				}

@@ -55,7 +55,6 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         
         root.setPersistent(true);
         
-        
         /* Gameplay section */
         PreferenceCategory inlinePrefCat = new PreferenceCategory(this);
         inlinePrefCat.setTitle(R.string.gameplay);

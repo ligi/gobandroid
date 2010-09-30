@@ -31,7 +31,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /**
- * This is the main Activity of gobandroid
+ * Activity to jump to websites with SGF files
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  *         
@@ -40,7 +40,7 @@ import android.widget.ListView;
 public class SGFOnlineListActivity extends ListActivity {
 	public String[] menu_items= {
 								 "Commented gogameworld sample games",
-								  "Britgo recent", 
+								 "Britgo recent", 
     							 "USGo Problems" ,
     							 "egoban" ,
     							 "byheartgo",

@@ -195,7 +195,7 @@ public class GoActivity
 		GOSkin.setBoardSkin(GoPrefs.getBoardSkinName());
 		GOSkin.setStoneSkin(GoPrefs.getStoneSkinName());
 		
-		board_view.regenerate_stones_flag=true;
+		board_view.setRegenerataStonesFlag(true);
 		
 		if (GoPrefs.getFullscreenEnabled())
 			this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -329,11 +329,11 @@ public class GoActivity
 			// Do nothing.
 			}
 			}).show();
-						break;
+			break;
 
 		case MENU_SETTINGS:
-             startActivity(new Intent(this,GoPrefsActivity.class));
-             break;
+            startActivity(new Intent(this,GoPrefsActivity.class));
+            break;
 		}
 		
 		updateControlsStatus() ;

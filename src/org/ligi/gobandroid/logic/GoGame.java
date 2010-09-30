@@ -251,15 +251,14 @@ public class GoGame  {
                 /* is there any reason to do this before processing the move? */
                 remove_dead(x,y);
                 
-                if ((hasGroupLiberties(x, y)||isDeadGroupOnBoard(x,y)) // if either a field has liberties or get's one
+                if (hasGroupLiberties(x, y) // if either a field has liberties 
                 		&&!calc_board.equals(pre_last_board)) // and the move is not a ko 
                 { 	// valid move -> do things needed to do after a valid move 
-                    Log.d("isDeadGroupOnBoard(x,y)" + isDeadGroupOnBoard(x,y));
                     
                     if (isBlackToMove())
                     	getGoMover().processBlackMove(x, y);
-                    	else
-                    getGoMover().processWhiteMove(x, y);
+                    else
+                    	getGoMover().processWhiteMove(x, y);
                     
                     setNextPlayer();
                     
@@ -291,6 +290,7 @@ public class GoGame  {
     public GoMove getActMove() {
     	return act_move;
     }
+
     public boolean canRedo() {
     	/*if ((moves_history!=null))
     	Log.i("gobandroid","redo"+moves_history.size() + "   " + moves.size());
@@ -358,7 +358,6 @@ public class GoGame  {
     	game_finished=false;
     }
     
-    
     private void _undo(boolean keep_move) {
     	getGoMover().paused=true;
 		
@@ -384,15 +383,12 @@ public class GoGame  {
     	jump(act_move.getnextMove(var));
     }
     
-    
     public GoMove getFirstMove() {
     	GoMove move=act_move;
     	
-    	while(true)
-    	{
-    		if (move.isFirstMove()) {
+    	while(true)	{
+    		if (move.isFirstMove()) 
     			return move;
-    		}
     		move=move.getParent();
     	}
     }
@@ -400,6 +396,7 @@ public class GoGame  {
     public void refreshBoards() {
     	jump(getActMove());
     }
+    
     public void jumpFirst() {
     	jump(getFirstMove());
     }
@@ -407,15 +404,13 @@ public class GoGame  {
     public void jumpLast() {
     	GoMove move=act_move;
     	
-    	while(true)
-    	{
+    	while(true) {
     		if (!move.hasNextMove()) {
     			jump(move);
     			return;
     		}
     		move=move.getnextMove(0);
     	}
-    	
     }
     
     public void jump(GoMove move) {
@@ -425,8 +420,7 @@ public class GoGame  {
         Vector <GoMove> replay_moves=new Vector<GoMove>();
         
         replay_moves.add(move);
-        while (true)
-        {
+        while (true) {
         	if (replay_moves.lastElement().isFirstMove()) 
         		break;
         		
@@ -450,8 +444,7 @@ public class GoGame  {
         visual_board=calc_board.clone();    	
     }
    
-    
-    public boolean cell_has_libertie(int x , int y )    {
+    public boolean cell_has_libertie(int x , int y ) {
       
       return ( ((x != 0)&&(calc_board.isCellFree( x- 1, y ) ))
           ||
@@ -463,8 +456,7 @@ public class GoGame  {
       );  
     }
    
-
-    public boolean cell_has_white_neighbours(int x , int y )    {
+    public boolean cell_has_white_neighbours(int x , int y ) {
       
       return ( ((x != 0)&&(calc_board.isCellWhite( x- 1, y ) ))
           ||
@@ -476,7 +468,7 @@ public class GoGame  {
       );  
     }
    
-    public boolean cell_has_black_neighbours(int x , int y )    {
+    public boolean cell_has_black_neighbours(int x , int y ) {
         
         return ( ((x != 0)&&(calc_board.isCellBlack( x- 1, y ) ))
             ||
@@ -497,16 +489,16 @@ public class GoGame  {
      * 
      */
     public boolean hasGroupLiberties(int x, int y ) {
- /*
-        for (int xg = 0; xg < getBoardSize(); xg++)
-  
-            for (int yg = 0; yg < getBoardSize(); yg++)
-                if ((groups[xg][yg]==group2check)&&(cell_has_liberty(xg,yg)))
-                     return true; // if one of the stones in the group has a liberty -> return true because then the group has a liberty
-        return false;  // found no stone in the group with a liberty 
- */
- /* do a depth search first from point */
-        // create the array for group calculations
+		 /*
+		        for (int xg = 0; xg < getBoardSize(); xg++)
+		  
+		            for (int yg = 0; yg < getBoardSize(); yg++)
+		                if ((groups[xg][yg]==group2check)&&(cell_has_liberty(xg,yg)))
+		                     return true; // if one of the stones in the group has a liberty -> return true because then the group has a liberty
+		        return false;  // found no stone in the group with a liberty 
+		 */
+		 /* do a depth search first from point */
+		        // create the array for group calculations
     	if (calc_board.isCellFree(x,y)) return true;
     	
         boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board.getSize()];
@@ -743,49 +735,6 @@ public class GoGame  {
     }
 
     
-    /**
-     * 
-     *  detect if there are dead groups on the board
-     *   
-     * the cell with ignore_x and ignore_y is ignored - e.g. last move
-     *  
-    **/
-    public boolean isDeadGroupOnBoard(byte ignore_x,byte ignore_y) {
-
-    	/*
-        for (int grp=0;grp<=group_count;grp++)
-        {
-            if (groups[ignore_x][ignore_y]==grp)
-                    continue;
-            
-            boolean grp_living=false;
-            int grp_members=0;
-            for (int xg = 0; xg < calc_board.getSize(); xg++)
-                for (int yg = 0; yg < calc_board.getSize(); yg++)
-                    if (groups[xg][yg]==grp)
-                        {
-                    	grp_members++;
-                    	grp_living |= cell_has_liberty(xg,yg);
-                        }
-                        
-            
-            if ((!grp_living)&&(grp_members>0)) {
-            	Log.d("Grp living" + grp);
-            	return true;
-            	
-            }
-        }
-        */
-        
-    	/* Need to check if this move removed all liberties from groups above, left, right, and down
-    	 * 	from the ignored point
-    	 */
-    	
-        return false; // found no dead group
-    }
-
-
-
     /** 
      * 
      * remove dead groups from the board - e.g. after a move 

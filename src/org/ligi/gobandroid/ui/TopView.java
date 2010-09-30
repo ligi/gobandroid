@@ -139,7 +139,6 @@ public class TopView extends View implements Runnable
 		matrix.postScale(x_scale, y_scale);
 		return Bitmap.createBitmap(orig, 0, 0, (int) (orig.getWidth()),
 				(int) (orig.getHeight()), matrix, true);// BitmapContfig.ARGB_8888
-		// );
 	}
 
 	@Override
@@ -150,8 +149,7 @@ public class TopView extends View implements Runnable
 				alpha_dir*=-1;
 			try {
 				Thread.sleep(10);
-			} catch (InterruptedException e) {
-			}
+			} catch (InterruptedException e) { }
 		}
 	}
 

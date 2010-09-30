@@ -84,7 +84,6 @@ public class gobandroid extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-
         
 		IconicMenuItem item = ((IconicMenuItem) (this.getListAdapter()
 				.getItem(position)));
@@ -94,5 +93,4 @@ public class gobandroid extends ListActivity {
 		else
 			finish();
     }
-    
 }
