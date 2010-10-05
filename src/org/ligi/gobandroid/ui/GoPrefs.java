@@ -202,5 +202,4 @@ public class GoPrefs {
 	public static String getAILevelString() {
 		return  getAllAILevelStrings()[getAILevel()-1];
 	}
-
 }
