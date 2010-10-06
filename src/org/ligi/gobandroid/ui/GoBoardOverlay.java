@@ -1,3 +1,22 @@
+/**
+ * gobandroid 
+ * by Marcus -Ligi- Bueschleb 
+ * http://ligi.de
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as 
+ * published by the Free Software Foundation; 
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * 
+ **/
+
 package org.ligi.gobandroid.ui;
 
 import java.util.Vector;
@@ -23,6 +42,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.FrameLayout.LayoutParams;
 
+/**
+ * overlay for the go-board with comments and nav buttons
+ * 
+ * @author ligi
+ *
+ */
 public class GoBoardOverlay implements OnClickListener {
 	
 		private TextView comment_tv;
@@ -95,8 +120,20 @@ public class GoBoardOverlay implements OnClickListener {
 					//comment_tv.setHeight(board_view.getHeight()-(int)board_view.getBoardPixels()-20-1-last.getHeight());
 
 			  	
-			if (!horizontal) {
-						
+			if (horizontal) {
+				//newcomment_tv.setWidth(w-h-20-back.getWidth());
+				button_container.setOrientation(LinearLayout.VERTICAL);
+				button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT));
+				FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT);
+				//bottom_nav_params.addRule(FrameLayout.ALIGN_PARENT_BOTTOM);
+					
+				bottom_nav_params.gravity=Gravity.RIGHT;
+				outer_lin.setOrientation(LinearLayout.HORIZONTAL);
+				outer_lin.setLayoutParams(bottom_nav_params);
+				comment_sv.setVisibility(View.VISIBLE);	
+			}
+			else { //vertical layout
+				
 				button_container.setOrientation(LinearLayout.HORIZONTAL);
 				button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
 				//		outer_lin.setOrientation(LinearLayout.VERTICAL);
@@ -114,26 +151,13 @@ public class GoBoardOverlay implements OnClickListener {
 				//newLog.i("refreshing overlay to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getHeight());
 				//newcomment_sv.setLayoutParams(new LinearLayout.LayoutParams(w, h-w-back.getHeight()));
 				comment_sv.setVisibility(View.VISIBLE);
-			}
-			else {
-				//newcomment_tv.setWidth(w-h-20-back.getWidth());
-				button_container.setOrientation(LinearLayout.VERTICAL);
-				button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT));
-				FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT);
-				//bottom_nav_params.addRule(FrameLayout.ALIGN_PARENT_BOTTOM);
-					
-				bottom_nav_params.gravity=Gravity.RIGHT;
-				outer_lin.setOrientation(LinearLayout.HORIZONTAL);
-				outer_lin.setLayoutParams(bottom_nav_params);
-				comment_sv.setVisibility(View.VISIBLE);	
+		
 			}
 
 			outer_lin.addView(comment_sv);
 			outer_lin.addView(button_container);
 
-			//Log.i("refreshing overlay to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getMeasuredHeight());
 			updateButtonState();
-			
 			updateCommentText();
 		}
 	    
@@ -172,16 +196,7 @@ public class GoBoardOverlay implements OnClickListener {
 	    	return outer_lin;
 	    }
 	    
-	    /*
-		public TextView getCommentTextView() {
-	    	return comment_tv;
-	    }
-	    
-	    public ScrollView getCommentScrollView() {
-	    	return comment_sv;
-	    }*/
-	    
-		@Override
+	    @Override
 		public void onClick(View btn) {
 			final GoGame game=GoGameProvider.getGame();
 			//GoGame game=GoGameProvider.getGame();
@@ -318,7 +333,7 @@ public class GoBoardOverlay implements OnClickListener {
 				}
 			
 			back.setEnabled(game.canUndo()&&(!game.getGoMover().isMoversMove()));
-			//first.setEnabled(game.canUndo()&&(!game.getGoMover().isPlayingInThisGame()));
+			first.setEnabled(game.canUndo()&&(!game.getGoMover().isPlayingInThisGame()));
 			next.setEnabled(game.canRedo()&&(!game.getGoMover().isPlayingInThisGame()));
 			last.setEnabled(game.canRedo()&&(!game.getGoMover().isPlayingInThisGame()));
 			//comments.setEnabled(game.getActMove().hasComment());
