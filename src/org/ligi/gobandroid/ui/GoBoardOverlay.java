@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.FrameLayout.LayoutParams;
 
 public class GoBoardOverlay implements OnClickListener {
-
+	
 		private TextView comment_tv;
 	    private ScrollView comment_sv;
 	    private LinearLayout outer_lin;
@@ -33,14 +33,15 @@ public class GoBoardOverlay implements OnClickListener {
 		private Context context;
 		private GoBoardView board_view;
 		
-	    public GoBoardOverlay(Context context,GoBoardView board_view,int w,int h,boolean horizontal) {
+	    public GoBoardOverlay(Context context,GoBoardView board_view,boolean horizontal) {
 	    	this.context=context;
 	    	this.board_view=board_view;
 	    	
 	    	comment_tv=new TextView(context);
 	     	comment_tv.setTextColor(0xCC111111);
 	 		comment_tv.setPadding(10, 0, 10, 10);
-	 		comment_tv.setText("foobar");
+	 		comment_tv.setText("test");
+	 		comment_tv.setBackgroundColor(0x00FF00);
 	 		comment_sv=new ScrollView(context);
 	 		comment_sv.addView(comment_tv);
 	 		
@@ -82,7 +83,7 @@ public class GoBoardOverlay implements OnClickListener {
 
 			//refresh(100,100,true);
 			
-			Log.i("refreshing overlay in constructor to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + next.getHeight());
+			//Log.i("refreshing overlay in constructor to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + next.getHeight());
 			/*
 			    	if (horizontal)
 					{
@@ -94,68 +95,46 @@ public class GoBoardOverlay implements OnClickListener {
 					//comment_tv.setHeight(board_view.getHeight()-(int)board_view.getBoardPixels()-20-1-last.getHeight());
 
 			  	
-					if (!horizontal) {
+			if (!horizontal) {
 						
-						button_container.setOrientation(LinearLayout.HORIZONTAL);
-						button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
+				button_container.setOrientation(LinearLayout.HORIZONTAL);
+				button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
 				//		outer_lin.setOrientation(LinearLayout.VERTICAL);
 					
-						FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
-						//bottom_nav_params.addRule(FrameLayout.ALIGN_PARENT_BOTTOM);
+				FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
+				//bottom_nav_params.addRule(FrameLayout.ALIGN_PARENT_BOTTOM);
 					
-						bottom_nav_params.gravity=Gravity.BOTTOM| Gravity.CENTER_HORIZONTAL;
+				bottom_nav_params.gravity=Gravity.BOTTOM| Gravity.CENTER_HORIZONTAL;
 						
-						outer_lin.setLayoutParams(bottom_nav_params);
-						outer_lin.setOrientation(LinearLayout.VERTICAL);
-//						LinearLayout.LayoutParams bottom_nav_params_i=new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
-//						lin.setLayoutParams(bottom_nav_params_i);
-						back.requestLayout();
-						Log.i("refreshing overlay to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getHeight());
-						comment_sv.setLayoutParams(new LinearLayout.LayoutParams(w, h-w-back.getHeight()));
-						comment_sv.setVisibility(View.VISIBLE);
-					}
-					else {
-						comment_tv.setWidth(w-h-20-back.getWidth());
-						button_container.setOrientation(LinearLayout.VERTICAL);
-						button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT));
-						FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT);
-						//bottom_nav_params.addRule(FrameLayout.ALIGN_PARENT_BOTTOM);
+				outer_lin.setLayoutParams(bottom_nav_params);
+				outer_lin.setOrientation(LinearLayout.VERTICAL);
+				//	LinearLayout.LayoutParams bottom_nav_params_i=new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
+				//	lin.setLayoutParams(bottom_nav_params_i);
+				back.requestLayout();
+				//newLog.i("refreshing overlay to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getHeight());
+				//newcomment_sv.setLayoutParams(new LinearLayout.LayoutParams(w, h-w-back.getHeight()));
+				comment_sv.setVisibility(View.VISIBLE);
+			}
+			else {
+				//newcomment_tv.setWidth(w-h-20-back.getWidth());
+				button_container.setOrientation(LinearLayout.VERTICAL);
+				button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT));
+				FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT);
+				//bottom_nav_params.addRule(FrameLayout.ALIGN_PARENT_BOTTOM);
 					
-						bottom_nav_params.gravity=Gravity.RIGHT;
-						outer_lin.setOrientation(LinearLayout.HORIZONTAL);
-						outer_lin.setLayoutParams(bottom_nav_params);
-						comment_sv.setVisibility(View.VISIBLE);	
-					}
-			/*		else {
-						lin.setOrientation(LinearLayout.VERTICAL);
-						
-						outer_lin.setOrientation(LinearLayout.HORIZONTAL);
-						FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT);
-						
-						bottom_nav_params.addRule(FrameLayout.ALIGN_PARENT_RIGHT);
-						outer_lin.setLayoutParams(bottom_nav_params);
-						
-						LinearLayout.LayoutParams bottom_nav_params_i=new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT);
-						
-						lin.setLayoutParams(bottom_nav_params_i);
-						
-					}
-				*/	/*
-				  	comment_sv.requestLayout();
-					comment_tv.requestLayout();
-					comment_sv.invalidate();
-					outer_lin.requestLayout();*/
-					//comment_sv.getParent().requestLayout();
-					//outer_lin.getParent().requestLayout();
-			
-			outer_lin.addView(getCommentScrollView());
-			
+				bottom_nav_params.gravity=Gravity.RIGHT;
+				outer_lin.setOrientation(LinearLayout.HORIZONTAL);
+				outer_lin.setLayoutParams(bottom_nav_params);
+				comment_sv.setVisibility(View.VISIBLE);	
+			}
+
+			outer_lin.addView(comment_sv);
 			outer_lin.addView(button_container);
 
-			Log.i("refreshing overlay to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getMeasuredHeight());
+			//Log.i("refreshing overlay to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getMeasuredHeight());
 			updateButtonState();
 			
-			comment_tv.setText(getGameComment());
+			updateCommentText();
 		}
 	    
 	    private String getGameComment() {
@@ -167,6 +146,9 @@ public class GoBoardOverlay implements OnClickListener {
 	    
 	    public void updateCommentsSize(int w,int h,boolean horizontal) {
 
+	    	if ((w==0)||(h==0))
+	    		return;
+	    	
 	    	Log.i("refreshing overlay in update to --" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getHeight());
 	    	if (!horizontal) 
 				comment_sv.setLayoutParams(new LinearLayout.LayoutParams(w, h-w-back.getHeight()));
@@ -179,21 +161,25 @@ public class GoBoardOverlay implements OnClickListener {
 	    }
 
 	    public void updateCommentText() {
+	    	Log.i("Update Comment Text to " + getGameComment()+"_");
+	    	
 			comment_tv.setText(getGameComment());
 			comment_tv.requestLayout(); // to make the changed text appear on screen 
 	    }
+	    
 	    
 	    public View getView() {
 	    	return outer_lin;
 	    }
 	    
+	    /*
 		public TextView getCommentTextView() {
 	    	return comment_tv;
 	    }
 	    
 	    public ScrollView getCommentScrollView() {
 	    	return comment_sv;
-	    }
+	    }*/
 	    
 		@Override
 		public void onClick(View btn) {
@@ -238,7 +224,6 @@ public class GoBoardOverlay implements OnClickListener {
 					final Boolean redoing=false;
 					View.OnClickListener var_select_listener=new View.OnClickListener() {
 						
-						
 						@Override
 						public void onClick(View v) {
 							if (redoing)
@@ -279,8 +264,6 @@ public class GoBoardOverlay implements OnClickListener {
 				}
 				else
 					game.redo(0);
-				
-				
 			}
 			else if (btn==first)
 				game.jumpFirst();
@@ -309,20 +292,21 @@ public class GoBoardOverlay implements OnClickListener {
 					})
 					.setNegativeButton(R.string.cancel,  new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton) {	}
-					})
-	
-					.show();
+					}).show();
 					
 					}
 				} )
 				.show();
 			}
 
-			getCommentTextView().setText(game.getActMove().getComment());
+			updateCommentText();
 			updateButtonState();
 			board_view.invalidate();
 		}
 		
+		/**
+		 * set the buttons active/inactive depending on the possibility to use them
+		 */
 		public void updateButtonState() {
 			
 			GoGame game=GoGameProvider.getGame();
@@ -334,7 +318,7 @@ public class GoBoardOverlay implements OnClickListener {
 				}
 			
 			back.setEnabled(game.canUndo()&&(!game.getGoMover().isMoversMove()));
-			first.setEnabled(game.canUndo()&&(!game.getGoMover().isPlayingInThisGame()));
+			//first.setEnabled(game.canUndo()&&(!game.getGoMover().isPlayingInThisGame()));
 			next.setEnabled(game.canRedo()&&(!game.getGoMover().isPlayingInThisGame()));
 			last.setEnabled(game.canRedo()&&(!game.getGoMover().isPlayingInThisGame()));
 			//comments.setEnabled(game.getActMove().hasComment());

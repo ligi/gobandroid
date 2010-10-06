@@ -144,11 +144,16 @@ public class GoActivity
 			DisplayMetrics dm = new DisplayMetrics();
 			getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-			overlay=new GoBoardOverlay(this,board_view,dm.widthPixels,dm.heightPixels,dm.widthPixels>dm.heightPixels);
+			
+			overlay=new GoBoardOverlay(this,board_view
+					//,board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
+					//,dm.widthPixels,dm.heightPixels,
+					,dm.widthPixels>dm.heightPixels);
 			rel.addView(overlay.getView());
 
 			setContentView(rel);
-			overlay.updateCommentsSize(dm.widthPixels,dm.heightPixels,dm.widthPixels>dm.heightPixels);
+			//overlay.updateCommentsSize(dm.widthPixels,dm.heightPixels,dm.widthPixels>dm.heightPixels);
+			//overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
 		}
 		
 		GoGameProvider.setGame(game);
@@ -166,7 +171,7 @@ public class GoActivity
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		super.onTouchEvent(event);
-		overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
+		//overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
 		updateControlsStatus();
 		return false;
 	}
@@ -178,8 +183,8 @@ public class GoActivity
 	}
 	
 	public void updateControlsStatus() {
-		overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
-		overlay.getCommentTextView().setText(game.getActMove().getComment());
+		//overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
+		overlay.updateCommentText();
 		overlay.updateButtonState();
 	}
 	
@@ -514,9 +519,19 @@ public class GoActivity
 		}
 	}
 
+	class updaterCommentsSize implements Runnable {
+		@Override
+		public void run() {
+				last_board_size=""+board_view.getWidth()+"x"+board_view.getHeight();
+				overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
+		}
+	}
+	
 	private int getBoardViewNeededVisibility() {
 		return board_view.isZoomed()?View.INVISIBLE:View.VISIBLE;
 	}
+	
+	private String last_board_size="";
 	
 	@Override
 	public void run() {
@@ -530,8 +545,12 @@ public class GoActivity
 					act_move_pos=game.getActMove().getMovePos();
 					this.runOnUiThread(new UpdateBoardViewClass());
 					}
+				
 				if (overlay.getView().getVisibility() != getBoardViewNeededVisibility())
 					this.runOnUiThread(new UptateOverlayVisibilityClass());
+				
+				if (!last_board_size.equals(""+board_view.getWidth()+"x"+board_view.getHeight()))
+					this.runOnUiThread(new updaterCommentsSize());
 				
 			}
 		}
