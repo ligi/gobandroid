@@ -80,7 +80,7 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         
         PreferenceScreen intentPref = getPreferenceManager().createPreferenceScreen(this);
         Intent i=new Intent().setAction(Intent.ACTION_VIEW)
-        .setData(Uri.parse("market://search?q=org.ligi.gobandroid.skinstaller"));
+        .setData(Uri.parse("market://search?q=skinstaller"));
         intentPref.setIntent(i);
         intentPref.setTitle("Install Skins");
         intentPref.setSummary("get skins from the market");
