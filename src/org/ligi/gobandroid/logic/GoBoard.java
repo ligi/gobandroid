@@ -50,16 +50,19 @@ public class GoBoard {
         for( int x=0;x<size;x++)
     		for( int y=0;y<size;y++)
     			board[x][y]=predefined_board[x][y];
-        
     }
 
+    /**
+     * clone this board
+     * @return a copy of this board
+     */
     public GoBoard clone() {
         return new GoBoard(size,board);
     }
     
-    /*
+    /**
      * check if two boards are equal
-     */
+     **/
     public boolean equals(GoBoard other) {
     	
     	// cannot be the same if board is null
@@ -70,8 +73,7 @@ public class GoBoard {
     	if (size!=other.size) 
     		return false;
     	
-    	// check if all stones are placed equaly
-    	
+    	// check if all stones are placed equally
     	for( int x=0;x<size;x++)
     		for( int y=0;y<size;y++)
     			if (board[x][y]!=other.board[x][y])
@@ -80,25 +82,34 @@ public class GoBoard {
     	return true;
     }
     
+    /**
+     * print a visual representation of the board via Log.d
+     */
     public void logBoard() {	
     	String tmp_str="";
     	
-    	for( int y=0;y<size;y++)
-    	{
-    	for( int x=0;x<size;x++)
-    		{
-    		if (board[x][y]==0)
-        		tmp_str+=" ";
-    		else if (board[x][y]==1)
-	    		tmp_str+="B";
-    		else if (board[x][y]==2)
-	    		tmp_str+="W";
-    		}
-    	Log.d(tmp_str);
-    	tmp_str="";
+    	for( int y=0;y<size;y++) {
+	    	for( int x=0;x<size;x++) {
+	    		if (board[x][y]==GoDefinitions.STONE_NONE)
+	        		tmp_str+=" ";
+	    		else if (board[x][y]==GoDefinitions.STONE_BLACK)
+		    		tmp_str+="B";
+	    		else if (board[x][y]==GoDefinitions.STONE_WHITE)
+		    		tmp_str+="W";
+	    		else if (board[x][y]==-GoDefinitions.STONE_BLACK)
+		    		tmp_str+="b";
+	    		else if (board[x][y]==-GoDefinitions.STONE_WHITE)
+		    		tmp_str+="w";
+	    		
+	    		}
+	    	Log.d(tmp_str);
+	    	tmp_str="";
     	}
     }
     
+    /**
+     * @return the board size
+     */
     public int getSize() {
         return size;
     }
