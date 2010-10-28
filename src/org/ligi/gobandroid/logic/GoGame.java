@@ -275,12 +275,10 @@ public class GoGame  {
                     last_board=calc_board.clone();
                     visual_board=calc_board.clone();                    
                     last_action_was_pass=false;
-                    //moves.add(new byte[] { x,y} );
               
                     act_move=new GoMove(x,y,act_move);
                     
                     act_move.setDidCaptures((tmp_cap!=(captures_black+captures_white)));
-                    //moves_history=(Vector<byte[]>) moves.clone();
                     return true;
                     }
                 else { // was an illegal move -> undo
