@@ -106,6 +106,7 @@ public class GoGame  {
     	calc_board=handicap_board.clone();
     }
 
+    boolean[][] all_handicap_positions;
     
     private void construct(byte size) {
     	// create the boards
@@ -116,9 +117,15 @@ public class GoGame  {
         
     	handicap_board=calc_board.clone();
     	    
+    	all_handicap_positions=new boolean[size][size];
+    	
     	if (GoDefinitions.getHandicapArray(size)!=null)
-    		for (int i=0;i<handicap;i++)
-    			handicap_board.setCellBlack(GoDefinitions.getHandicapArray(size)[i][0], GoDefinitions.getHandicapArray(size)[i][1]);
+    		for (int i=0;i<handicap;i++) {
+    				if (i<handicap)
+    					handicap_board.setCellBlack(GoDefinitions.getHandicapArray(size)[i][0], GoDefinitions.getHandicapArray(size)[i][1]);
+    				all_handicap_positions[GoDefinitions.getHandicapArray(size)[i][0]][GoDefinitions.getHandicapArray(size)[i][1]]=true;
+    			}
+    		
     	
         apply_handicap();
         
@@ -248,12 +255,14 @@ public class GoGame  {
                 else
                     calc_board.setCellWhite( x, y );
                 
-                /* is there any reason to do this before processing the move? */
+
+            	/* is there any reason to do this before processing the move? -> yea ko&so*/
                 remove_dead(x,y);
-                
+
                 if (hasGroupLiberties(x, y) // if either a field has liberties 
                 		&&!calc_board.equals(pre_last_board)) // and the move is not a ko 
                 { 	// valid move -> do things needed to do after a valid move 
+                
                     
                     if (isBlackToMove())
                     	getGoMover().processBlackMove(x, y);
@@ -856,38 +865,12 @@ public class GoGame  {
      * return if it's a handicap stone so that the view can visualize it
      * 
      * TODO: - check rename ( general marker ) 
-     * 		 - check caching ( in arr cuz speed )
-     * 
+     * 		  
      * **/
     public boolean isPosHoschi(byte x,byte y) {
-    	
-    	if ((x==0)||(y==0)||((y+1)==getBoardSize())||((x+1)==getBoardSize()))
-    		return false;
-    	
-    	switch(getBoardSize())
-    	{
-    	case 9:
-    		return (((x%2)==0)&&((y%2)==0));
-    	case 13:
-    		return (((x%3)==0)&&((y%3)==0));
-    	
-    	case 19:
-    		return (((x==9)&&(y==9))|| 
-    				((x==3)&&(y==3)) ||
-    				((x==15)&&(y==15)) ||
-    				((x==3)&&(y==15)) ||
-    				((x==15)&&(y==3)) ||
-    				((x==9)&&(y==3)) ||
-    				((x==3)&&(y==9)) ||
-    				((x==9)&&(y==15))||
-    				((x==15)&&(y==9)) );
-    		
-    		
-    	default:	
-    		return false;
-    	}
-    	
+    	return all_handicap_positions[x][y];
     }
+    
     
     public GoBoard getVisualBoard() {
         return visual_board;
