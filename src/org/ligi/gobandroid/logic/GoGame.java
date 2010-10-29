@@ -86,6 +86,8 @@ public class GoGame  {
     public final static byte MOVE_INVALID_IS_KO=4;
 
     byte start_player=GoDefinitions.PLAYER_BLACK;
+
+    boolean[][] all_handicap_positions;
     
     public float getKomi() {
     	return komi;
@@ -113,8 +115,6 @@ public class GoGame  {
     	calc_board=handicap_board.clone();
     }
 
-    boolean[][] all_handicap_positions;
-    
     private void construct(byte size) {
     	// create the boards
 
@@ -234,7 +234,6 @@ public class GoGame  {
             
             return MOVE_VALID;       
         }
-        	
         
         if (!calc_board.isCellFree( x, y ))  // cant place a stone where another is allready
         	return MOVE_INVALID_CELL_NOT_FREE;
@@ -256,7 +255,6 @@ public class GoGame  {
             calc_board=bak_board.clone();
             return MOVE_INVALID_IS_KO;
         }
-        	
 
         if (!hasGroupLiberties(x, y)) {
         	Log.i("illegal move -> NO LIBERTIES");
@@ -282,8 +280,9 @@ public class GoGame  {
         act_move=new GoMove(x,y,act_move);
         
         act_move.setDidCaptures((tmp_cap!=(captures_black+captures_white)));
-        return MOVE_VALID;
         
+        // if we reached this point this move must be valid
+        return MOVE_VALID;
     }
     
     public GoMove getActMove() {
@@ -293,7 +292,6 @@ public class GoGame  {
     public boolean canRedo() {
     	return (act_move!=null)&&(act_move.hasNextMove());
     }
-    
     
     public int getPossibleVariationCount() {
     	 if (act_move==null)
@@ -305,7 +303,7 @@ public class GoGame  {
      * moving without checks 
      * useful  e.g. for undo / recorded games 
      * where we can be sure that the move is valid 
-     * 
+     * and so be faster
      **/
     public void do_internal_move( GoMove move ) {
     	
@@ -336,11 +334,8 @@ public class GoGame  {
     }
     
     /**
-     * 
      * undo the last move
-     * 
      */
-    
     public void undo() {
     	jump(act_move.getParent());
     	getGoMover().undo();
@@ -371,7 +366,10 @@ public class GoGame  {
     	Log.i("redoing " +act_move.getnextMove(var).toString());
     	jump(act_move.getnextMove(var));
     }
-    
+
+    /**
+     * @return the first move of the game 
+     */
     public GoMove getFirstMove() {
     	GoMove move=act_move;
     	
@@ -658,7 +656,7 @@ public class GoGame  {
         territory_black=0;
         territory_white=0;
         for (int x = 0; x < calc_board.getSize(); x++)
-            for (int y = 0; y < calc_board.getSize(); y++) {
+            for (int y = 0; y < calc_board.getSize(); y++) 
             	if (isAreaGroupWhites(area_groups[x][y])) { 
             		area_assign[x][y]=GoDefinitions.PLAYER_WHITE;
             		territory_white++;
@@ -667,10 +665,7 @@ public class GoGame  {
             		territory_black++;
             		area_assign[x][y]=GoDefinitions.PLAYER_BLACK;
             	}
-        			
-            }
     }
-
     
     /** 
      * 
