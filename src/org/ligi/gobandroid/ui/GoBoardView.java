@@ -341,11 +341,7 @@ public class GoBoardView extends View {
     
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        if (w<=h)
-            stone_size_normal=w/(float)game.getVisualBoard().getSize();
-        else
-            stone_size_normal=h/(float)game.getVisualBoard().getSize();
-       
+    	stone_size_normal=((w<h)?w:h)/(float)game.getVisualBoard().getSize();
         stone_size=stone_size_normal;
         stone_size_zoomed=stone_size_normal*2;
         regenerate_stones_flag=true;
