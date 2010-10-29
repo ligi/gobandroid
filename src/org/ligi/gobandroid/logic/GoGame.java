@@ -64,7 +64,6 @@ public class GoGame  {
     private int dead_white; // counter for the captures from black
     private int dead_black; // counter for the captures from white
         
-    
     public int territory_white; // counter for the captures from black
     public int territory_black; // counter for the captures from white
     
@@ -79,6 +78,14 @@ public class GoGame  {
     private GoGameMetadata metadata=null;
     
     private int area_group_count=0;
+
+    public final static byte MOVE_VALID=0;
+    public final static byte MOVE_INVALID_NOT_ON_BOARD=1;
+    public final static byte MOVE_INVALID_CELL_NOT_FREE=2;
+    public final static byte MOVE_INVALID_CELL_NO_LIBERTIES=3;
+    public final static byte MOVE_INVALID_IS_KO=4;
+
+    byte start_player=GoDefinitions.PLAYER_BLACK;
     
     public float getKomi() {
     	return komi;
@@ -92,7 +99,6 @@ public class GoGame  {
     	return getCapturesBlack()+territory_black;
     }
     
-
     public GoGame( byte size ) {
     	construct(size);
     }
@@ -145,11 +151,7 @@ public class GoGame  {
         reset();	
     }
     
-    byte start_player=GoDefinitions.PLAYER_BLACK;
-    
     public void reset() {
-    	// black always starts
-    	
     	if (handicap!=0)
     		start_player=GoDefinitions.PLAYER_WHITE;
     	
@@ -157,8 +159,6 @@ public class GoGame  {
     	
     	pre_last_board=null;
     	
-    	// create the vector to save the moves
-        //moves= new Vector<byte[]>();
         captures_black=0;
     	captures_white=0;
     }
@@ -174,28 +174,20 @@ public class GoGame  {
             
             act_move=new GoMove(act_move);
             act_move.setToPassMove();
-            //moves.add(new byte[] { -1,-1} );
             setNextPlayer();
         }
     }
-/*
-    public boolean isStoneDead(byte x,byte y) {
-    	return dead_stones[x][y];
-    }
-*/  
-    
-    public final static byte MOVE_VALID=0;
-    public final static byte MOVE_INVALID_NOT_ON_BOARD=1;
-    public final static byte MOVE_INVALID_CELL_NOT_FREE=2;
-    public final static byte MOVE_INVALID_CELL_NO_LIBERTIES=3;
-    public final static byte MOVE_INVALID_IS_KO=4;
     
     /**
      *  place a stone on the board
      *
      * @param x
      * @param y
-     * @return true if the move was valid - false if invalid move
+     * @return 	MOVE_VALID 
+     * 			MOVE_INVALID_NOT_ON_BOARD 
+     * 		   	MOVE_INVALID_CELL_NOT_FREE 
+     *         	MOVE_INVALID_CELL_NO_LIBERTIES 
+     *         	MOVE_INVALID_IS_KO
      */
     public byte do_move( byte x, byte y ) {
     	Log.i("do_move x:" + x + "  y:" + y );
@@ -204,7 +196,6 @@ public class GoGame  {
         if ((x < 0) || (x > calc_board.getSize()) || (y < 0) || (y > calc_board.getSize()))
         	return MOVE_INVALID_NOT_ON_BOARD;
         
-        	
         // check if the "new" move is in the variations - to not have 2 equal move as different variations
         GoMove matching_move=null;
         	
@@ -275,7 +266,6 @@ public class GoGame  {
         
         // if we reach this point it is avalid move 
         // -> do things needed to do after a valid move 
-        
                 
         if (isBlackToMove())
         	getGoMover().processBlackMove(x, y);
@@ -295,17 +285,12 @@ public class GoGame  {
         return MOVE_VALID;
         
     }
-
     
     public GoMove getActMove() {
     	return act_move;
     }
 
     public boolean canRedo() {
-    	/*if ((moves_history!=null))
-    	Log.i("gobandroid","redo"+moves_history.size() + "   " + moves.size());
-    	return ((moves_history!=null)&&(moves_history.size()>moves.size()));
-    	*/
     	return (act_move!=null)&&(act_move.hasNextMove());
     }
     
@@ -315,9 +300,10 @@ public class GoGame  {
     		 return 0;
     	return (act_move.getNextMoveVariationCount());
     }
+    
     /** 
      * moving without checks 
-     * usefull  e.g. for undo / recorded games 
+     * useful  e.g. for undo / recorded games 
      * where we can be sure that the move is valid 
      * 
      **/
@@ -327,8 +313,7 @@ public class GoGame  {
     	if (move.isFirstMove())
     		return;
 
-    	if (move.isPassMove())
-    		{
+    	if (move.isPassMove()) {
     		setNextPlayer();
     		return;
     		}
@@ -344,18 +329,12 @@ public class GoGame  {
         	buildGroups();
         	remove_dead( move.getX(), move.getY() );
         }
-        
-        //moves.add(new byte[] { x,y} );
-        //act_move=move;
     }
 
     public boolean canUndo() {
-        //return (moves.size()>0);
     	return (!act_move.isFirstMove());//&&(!getGoMover().isMoversMove());
     }
     
-    
-    //Vector<byte[]> moves_history=null;
     /**
      * 
      * undo the last move
@@ -492,17 +471,9 @@ public class GoGame  {
      * 
      */
     public boolean hasGroupLiberties(int x, int y ) {
-		 /*
-		        for (int xg = 0; xg < getBoardSize(); xg++)
-		  
-		            for (int yg = 0; yg < getBoardSize(); yg++)
-		                if ((groups[xg][yg]==group2check)&&(cell_has_liberty(xg,yg)))
-		                     return true; // if one of the stones in the group has a liberty -> return true because then the group has a liberty
-		        return false;  // found no stone in the group with a liberty 
-		 */
 		 /* do a depth search first from point */
-		        // create the array for group calculations
-    	if (calc_board.isCellFree(x,y)) return true;
+    	if (calc_board.isCellFree(x,y)) 
+    		return true;
     	
         boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board.getSize()];
         Stack <Integer>ptStackX = new Stack<Integer>();
@@ -590,7 +561,6 @@ public class GoGame  {
      * the result is written in groups[][]
      * 
      */
-    
     public void buildGroups() {
         group_count=0;
         
@@ -644,9 +614,6 @@ public class GoGame  {
             }
     }
 
-    
-    
-    
     public void buildAreaGroups() {
         area_group_count=0;
                 
@@ -702,7 +669,6 @@ public class GoGame  {
             	}
         			
             }
-        
     }
 
     
@@ -794,13 +760,12 @@ public class GoGame  {
      * 
      * return if it's a handicap stone so that the view can visualize it
      * 
-     * TODO: - check rename ( general marker ) 
+     * TODO: check rename ( general marker ) 
      * 		  
      * **/
     public boolean isPosHoschi(byte x,byte y) {
     	return all_handicap_positions[x][y];
     }
-    
     
     public GoBoard getVisualBoard() {
         return visual_board;
@@ -862,7 +827,6 @@ public class GoGame  {
 	}
 	
 	public GoGameMetadata getMetaData() {
-		Log.i("returning meta" + metadata);
 		return metadata;
 	}
 	
