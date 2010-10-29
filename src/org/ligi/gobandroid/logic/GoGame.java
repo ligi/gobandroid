@@ -83,7 +83,7 @@ public class GoGame  {
     public final static byte MOVE_INVALID_CELL_NO_LIBERTIES=3;
     public final static byte MOVE_INVALID_IS_KO=4;
 
-    private byte start_player=GoDefinitions.PLAYER_BLACK;
+    public byte start_player=GoDefinitions.PLAYER_BLACK;
 
     private boolean[][] all_handicap_positions;
 
