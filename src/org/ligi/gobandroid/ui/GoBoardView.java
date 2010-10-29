@@ -57,12 +57,12 @@ public class GoBoardView extends View {
     private Paint textPaint;
     private Paint bitmapPaint;
     
-    private float stone_size;
+    public float stone_size;
     private float stone_size_zoomed;
     private float stone_size_normal;
     
-    private float offset_x=0.0f;
-    private float offset_y=0.0f;
+    public float offset_x=0.0f;
+    public float offset_y=0.0f;
     
     //TODO rename - name is now misleading
     public byte touch_x=-1;
@@ -77,7 +77,7 @@ public class GoBoardView extends View {
     private Bitmap white_stone_bitmap_small=null;
     private Bitmap black_stone_bitmap_small=null;
     
-    private boolean move_stone_mode=false;
+    public boolean move_stone_mode=false;
     
     private boolean regenerate_stones_flag=true;
     
@@ -376,7 +376,7 @@ public class GoBoardView extends View {
 
     
     
-    private void initializeStoneMove() {
+    public void initializeStoneMove() {
     	
     	if (game.getGoMover().isPlayingInThisGame()) // dont allow with a mover
     		return;									 
@@ -399,47 +399,7 @@ public class GoBoardView extends View {
 			}).show();
 		    	
     }
-
-    public void doTouch( MotionEvent event) {
-    	
-    	float virtualTouchX=event.getX()-offset_x;
-    	float virtualTouchY=event.getY()-offset_y;
-    	
-    	float board_size=stone_size*game.getVisualBoard().getSize();
-
-    	if ((virtualTouchY<board_size)&&(virtualTouchX<board_size)) { // if user put his finger on the board
-
-    		// calculate position on the field by position on the touchscreen
-        	touch_x=(byte)(virtualTouchX/stone_size);
-    		touch_y=(byte)(virtualTouchY/stone_size);
-    		
-    		if (event.getAction()==MotionEvent.ACTION_UP) {
-    			
-    			// if pressed on the last stone - initialize a Stone move
-        			if (isZoomed()||(!GoPrefs.getFatFingerEnabled()))	{
-        				if (move_stone_mode) {
-        					// TODO check if this is an illegal move ( e.g. in variants )
-        					game.getActMove().setXY(touch_x, touch_y);
-        					game.refreshBoards();
-        					move_stone_mode=false;
-        					}
-        				else if ((game.getActMove().getX()==touch_x)&&(game.getActMove().getY()==touch_y)) 
-                				initializeStoneMove();
-                			else 
-                				game.do_move(touch_x,touch_y);
-        				
-        				touch_x=-1;
-        				touch_y=-1;
-        				
-        				setZoom(false);
-        			}
-        			else
-        				setZoom(true);
-    		}
-        }
-        invalidate();  // the board looks different after a move (-;
-     }
-    
+   
     public void setRegenerataStonesFlag(boolean new_flag) {
     	regenerate_stones_flag=new_flag;
     }
