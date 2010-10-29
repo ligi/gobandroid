@@ -55,6 +55,7 @@ public class GnuGoMover implements Runnable{
 		this.playing_black=false;
 		this.playing_white=false;
 	}
+
 	public GnuGoMover(Activity activity,GoGame game,boolean playing_black,boolean playing_white,byte level) {
 		this.application=activity.getApplication();
 		this.level=level;

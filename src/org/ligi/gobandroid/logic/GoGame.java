@@ -779,12 +779,9 @@ public class GoGame  {
     	if (ignore_y < calc_board.getSize()-1)
     		if ((!hasGroupLiberties(ignore_x, ignore_y+1))&&(!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x, ignore_y+1)))
     			remove_group((int)ignore_x, ignore_y+1);
-    		
-    		
     }
 
-    public void remove_group(Integer x,Integer y)
-    {
+    public void remove_group(Integer x,Integer y)  {
     	int local_captures = 0;
     	boolean is_black_capture = calc_board.isCellWhite(x, y);
     

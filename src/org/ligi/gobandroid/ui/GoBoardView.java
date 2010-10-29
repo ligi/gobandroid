@@ -33,7 +33,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Paint.FontMetrics;
-import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -80,15 +79,6 @@ public class GoBoardView extends View {
     public boolean move_stone_mode=false;
     
     private boolean regenerate_stones_flag=true;
-    
-   /**
-    private GoBoardOverlay overlay;
-    
-    public GoBoardOverlay getOverlay() {
-    	return overlay;
-    }
-    */
-    
     
     public GoBoardView( Context context,GoGame game) {
         super( context );
@@ -139,13 +129,12 @@ public class GoBoardView extends View {
 
         bitmapPaint=new Paint();
         
-        
         setFocusable(true);   
     }
 
 
 	public Bitmap resize_to_screen(Bitmap orig, float x_scale_, float y_scale_) {
-		// createa matrix for the manipulation
+		// create a matrix for the manipulation
 		Matrix matrix = new Matrix();
 		float x_scale, y_scale;
 		if (y_scale_ != 0f)
@@ -162,7 +151,6 @@ public class GoBoardView extends View {
 		matrix.postScale(x_scale, y_scale);
 		return Bitmap.createBitmap(orig, 0, 0, (int) (orig.getWidth()),
 				(int) (orig.getHeight()), matrix, true);// BitmapContfig.ARGB_8888
-		// );
 	}
     
     public void prepare_keyinput() {
@@ -238,8 +226,6 @@ public class GoBoardView extends View {
             }
         }
                 
-        
-        
         for(byte x=0;x<game.getVisualBoard().getSize();x++)
             for(byte y=0;y<game.getVisualBoard().getSize();y++) {
             	blackPaint.setColor(0xFF000000);
@@ -263,7 +249,6 @@ public class GoBoardView extends View {
                    	if (game.area_assign[x][y]==GoDefinitions.PLAYER_WHITE)
                 		canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
                    		
-                			
                 }
             	
             	blackPaint.setColor(0xFF000000);
@@ -321,13 +306,17 @@ public class GoBoardView extends View {
         
         canvas.restore();
     } // end of onDraw
-    
-    
-    
+ 
+    /**
+     * @return the width/height of the Board in Pixels
+     */
     public float getBoardPixels() {
     	return stone_size*game.getVisualBoard().getSize();
     }
 
+    /**
+     * resize the images regarding to stone_size
+     */
     public void regenerate_images() {
    
     	Log.i("regenerating images to stone size " + stone_size);
@@ -351,7 +340,6 @@ public class GoBoardView extends View {
     
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-       
         if (w<=h)
             stone_size_normal=w/(float)game.getVisualBoard().getSize();
         else
@@ -359,29 +347,15 @@ public class GoBoardView extends View {
        
         stone_size=stone_size_normal;
         stone_size_zoomed=stone_size_normal*2;
-
-        
         regenerate_stones_flag=true;
-        
-		
-        
-
-      /*  if (this.getWidth()>this.getHeight())
-        	overlay.refresh(this.getWidth()-(int)this.getBoardPixels(),this.getHeight(),true);
-        else
-        	overlay.refresh(this.getWidth(),this.getHeight()-(int)this.getBoardPixels(),false);
-        	*/
-    //invalidate(); // needed here or automatically called?
     }
-
-    
     
     public void initializeStoneMove() {
     	
     	if (game.getGoMover().isPlayingInThisGame()) // dont allow with a mover
     		return;									 
     	
-    	if (move_stone_mode)  // allready in the mode
+    	if (move_stone_mode)  // already in the mode
     		return;			  // -> do nothing
 		
     	move_stone_mode=true;
@@ -397,7 +371,6 @@ public class GoBoardView extends View {
 				GoPrefs.setAnnounceMoveActive(false);
 			}
 			}).show();
-		    	
     }
    
     public void setRegenerataStonesFlag(boolean new_flag) {
