@@ -281,13 +281,13 @@ public class GoGame  {
         
         act_move=new GoMove(x,y,act_move);
         
-        act_move.setDidCaptures((tmp_cap!=(captures_black+captures_white)));
-    
         if (!calc_board.isCellWhite(x, y))
    			captures_black += local_captures;
    		else
    			captures_white += local_captures;
-          
+        
+        act_move.setDidCaptures((tmp_cap!=(captures_black+captures_white)));
+
         // if we reached this point this move must be valid
         return MOVE_VALID;
     }
