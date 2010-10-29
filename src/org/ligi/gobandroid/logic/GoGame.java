@@ -794,19 +794,19 @@ public class GoGame  {
     	
     	/* check left */
     	if (ignore_x > 0)
-    		if (!hasGroupLiberties(ignore_x-1, ignore_y))
+    		if ((!hasGroupLiberties(ignore_x-1, ignore_y))&&(!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x-1, ignore_y)))
     			remove_group(ignore_x-1, (int)ignore_y);
     	/* check right */
     	if (ignore_x < calc_board.getSize()-1)
-    		if (!hasGroupLiberties(ignore_x+1, ignore_y))
+    		if ((!hasGroupLiberties(ignore_x+1, ignore_y))&&(!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x+1, ignore_y)))
     			remove_group(ignore_x+1, (int)ignore_y);
     	/* check down */
     	if (ignore_y > 0)
-    		if (!hasGroupLiberties(ignore_x, ignore_y-1))
+    		if ((!hasGroupLiberties(ignore_x, ignore_y-1))&&(!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x, ignore_y-1)))
     			remove_group((int)ignore_x, ignore_y-1);
     	/* check up */
     	if (ignore_y < calc_board.getSize()-1)
-    		if (!hasGroupLiberties(ignore_x, ignore_y+1))
+    		if ((!hasGroupLiberties(ignore_x, ignore_y+1))&&(!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x, ignore_y+1)))
     			remove_group((int)ignore_x, ignore_y+1);
     		
     		
