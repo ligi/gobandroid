@@ -762,36 +762,7 @@ public class GoGame  {
      * 
      * **/
     public void remove_dead(byte ignore_x,byte ignore_y) {
-        /* just need to check last move killed anything        
-        for (int grp=0;grp<=group_count;grp++) // iterate over all groups
-        {
-
-            if (groups[ignore_x][ignore_y]==grp)
-                    continue;
-            
-            boolean grp_living=false;
-            for (int xg = 0; xg < calc_board.getSize(); xg++)
-                for (int yg = 0; yg < calc_board.getSize(); yg++)
-                    if (groups[xg][yg]==grp)
-                        grp_living |= cell_has_liberty(xg,yg);
-                        
-            if (!grp_living) 
-                for (int xg = 0; xg < calc_board.getSize(); xg++)
-                    for (int yg = 0; yg < calc_board.getSize(); yg++)
-                        if (groups[xg][yg]==grp)
-                        	{
-                        	
-                        	if (calc_board.isCellBlack(xg, yg))
-                        			captures_white++;
-                        	else
-                        			captures_black++;
-                        	
-                        	calc_board.setCellFree(xg,yg );
-                        	}
-            
-        }
-        */
-    	
+      	
     	/* check left */
     	if (ignore_x > 0)
     		if ((!hasGroupLiberties(ignore_x-1, ignore_y))&&(!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x-1, ignore_y)))
