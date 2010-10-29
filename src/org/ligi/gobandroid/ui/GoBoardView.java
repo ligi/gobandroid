@@ -19,6 +19,7 @@
 
 package org.ligi.gobandroid.ui;
 
+import org.ligi.gobandroid.R;
 import org.ligi.gobandroid.logic.GoDefinitions;
 import org.ligi.gobandroid.logic.GoGame;
 import org.ligi.gobandroid.logic.GoMarker;
@@ -363,8 +364,8 @@ public class GoBoardView extends View {
     	if (!GoPrefs.isAnnounceMoveActive())
     		return;
     	
-		new AlertDialog.Builder(this.getContext()).setMessage("You tapped on the current stone. This initiates moving a stone which is indicated by a half transparent Stone.")
-		.setPositiveButton("OK", 
+		new AlertDialog.Builder(this.getContext()).setMessage(R.string.hint_stone_move)
+		.setPositiveButton(R.string.ok, 
 		
 		new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {

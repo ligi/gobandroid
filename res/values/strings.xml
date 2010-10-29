@@ -40,4 +40,5 @@
 	<string name="save_sgf">save SGF</string>
 	<string name="invalid_move_ko">KO!</string>
 	<string name="invalid_move_no_liberties">no liberties!</string>
+	<string name="hint_stone_move">You tapped on the current stone. This initiates moving a stone which is indicated by a half transparent Stone.</string>
 </resources>
