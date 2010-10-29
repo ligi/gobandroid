@@ -17,9 +17,7 @@
  * 
  **/
 
-
 package org.ligi.gobandroid.logic;
-
 
 import java.util.Vector;
 import java.util.Stack;
@@ -88,6 +86,15 @@ public class GoGame  {
     byte start_player=GoDefinitions.PLAYER_BLACK;
 
     boolean[][] all_handicap_positions;
+
+    public GoGame( byte size ) {
+    	construct(size);
+    }
+    
+    public GoGame(byte size,byte handicap) {
+    	this.handicap=handicap;
+    	construct(size);
+    }
     
     public float getKomi() {
     	return komi;
@@ -101,17 +108,10 @@ public class GoGame  {
     	return getCapturesBlack()+territory_black;
     }
     
-    public GoGame( byte size ) {
-    	construct(size);
-    }
-    
-    public GoGame(byte size,byte handicap) {
-    	this.handicap=handicap;
-    	construct(size);
-    }
-    
+    /**
+     * set the handicap stones on the calc board 
+     */
     private void apply_handicap() {
-    	
     	calc_board=handicap_board.clone();
     }
 
@@ -387,17 +387,18 @@ public class GoGame  {
     public void jumpFirst() {
     	jump(getFirstMove());
     }
-    
-    public void jumpLast() {
+
+    public GoMove getLastMove() {
     	GoMove move=act_move;
-    	
     	while(true) {
-    		if (!move.hasNextMove()) {
-    			jump(move);
-    			return;
-    		}
+    		if (!move.hasNextMove()) 
+    			return move;
     		move=move.getnextMove(0);
     	}
+    }
+
+    public void jumpLast() {
+    	jump(getLastMove());
     }
     
     public void jump(GoMove move) {
@@ -459,7 +460,6 @@ public class GoGame  {
          ((y != (calc_board.getSize() - 1))&& (calc_board.isCellBlack( x, y + 1 ) ))
         );  
       }
-    
     
     /**
      * check if a group has liberties
@@ -674,7 +674,7 @@ public class GoGame  {
      * the cell with ignore_x and ignore_y is ignored - e.g. last move
      * 
      * **/
-    public void remove_dead(byte ignore_x,byte ignore_y) {
+    private void remove_dead(byte ignore_x,byte ignore_y) {
       	
     	/* check left */
     	if (ignore_x > 0)
@@ -694,7 +694,7 @@ public class GoGame  {
     			remove_group((int)ignore_x, ignore_y+1);
     }
 
-    public void remove_group(Integer x,Integer y)  {
+    private void remove_group(int x,int y)  {
     	int local_captures = 0;
     	boolean is_black_capture = calc_board.isCellWhite(x, y);
     
@@ -742,7 +742,6 @@ public class GoGame  {
 
    			calc_board.setCellFree(newx,newy);
    			local_captures++;
-   		
    		}
  
    		if (is_black_capture)
@@ -765,10 +764,10 @@ public class GoGame  {
     public GoBoard getVisualBoard() {
         return visual_board;
     }
+    
     public GoBoard getCalcBoard() {
         return calc_board;
     }
-
     
     public boolean isLastActionPass() {
     	return last_action_was_pass;
