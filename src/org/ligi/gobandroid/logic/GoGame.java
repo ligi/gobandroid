@@ -192,6 +192,13 @@ public class GoGame  {
     	return dead_stones[x][y];
     }
 */  
+    
+    public final static byte MOVE_VALID=0;
+    public final static byte MOVE_INVALID_NOT_ON_BOARD=1;
+    public final static byte MOVE_INVALID_CELL_NOT_FREE=2;
+    public final static byte MOVE_INVALID_CELL_NO_LIBERTIES=3;
+    public final static byte MOVE_INVALID_IS_KO=4;
+    
     /**
      *  place a stone on the board
      *
@@ -199,98 +206,103 @@ public class GoGame  {
      * @param y
      * @return true if the move was valid - false if invalid move
      */
-    public boolean do_move( byte x, byte y ) {
+    public byte do_move( byte x, byte y ) {
     	Log.i("do_move x:" + x + "  y:" + y );
-        if ((x >= 0) && (x <= calc_board.getSize()) && (y >= 0) && (y < calc_board.getSize())) { // if x and y are inside the board
+    	
+    	// return with INVALID if x and y are inside the board 
+        if ((x < 0) || (x > calc_board.getSize()) || (y < 0) || (y > calc_board.getSize()))
+        	return MOVE_INVALID_NOT_ON_BOARD;
+        
         	
-        	// check if the "new" move is in the variations - to not have 2 equal move as different variations
-        	GoMove matching_move=null;
+        // check if the "new" move is in the variations - to not have 2 equal move as different variations
+        GoMove matching_move=null;
         	
-        	for (GoMove move_matcher:act_move.getNextMoveVariations())
-        		if ((move_matcher.getX()==x)&&(move_matcher.getY()==y))
-        			matching_move=move_matcher;
+        for (GoMove move_matcher:act_move.getNextMoveVariations())
+        	if ((move_matcher.getX()==x)&&(move_matcher.getY()==y))
+        		matching_move=move_matcher;
 
-        	// if there is one matching use this move and we are done
-        	if (matching_move!=null)
-        		{
-        		jump(matching_move);
-        		return true;
-        		}
+        // if there is one matching use this move and we are done
+        if (matching_move!=null) {
+        	jump(matching_move);
+        	return MOVE_VALID;
+        }
         		
-        	if(game_finished)
-        	{ // game is finished - players are marking dead stones
-        		for (int xg = 0; xg < calc_board.getSize(); xg++)
-                    for (int yg = 0; yg < calc_board.getSize(); yg++)
-                        if (groups[xg][yg]==groups[x][y])
-                        	calc_board.toggleCellDead(xg, yg);
-        		buildAreaGroups();
+        if(game_finished) { // game is finished - players are marking dead stones
+        	for (int xg = 0; xg < calc_board.getSize(); xg++)
+        		for (int yg = 0; yg < calc_board.getSize(); yg++)
+                     if (groups[xg][yg]==groups[x][y])
+                      	calc_board.toggleCellDead(xg, yg);
+        	
+        	buildAreaGroups();
     
-        		int _dead_white=0; 
-        	    int _dead_black=0; 
+        	int _dead_white=0; 
+        	int _dead_black=0; 
         	    
-                for (int xg = 0; xg < calc_board.getSize(); xg++)
-                    for (int yg = 0; yg < calc_board.getSize(); yg++)
-                    	if (calc_board.isCellDead(xg, yg))
-                    	{
+            for (int xg = 0; xg < calc_board.getSize(); xg++)
+                for (int yg = 0; yg < calc_board.getSize(); yg++)
+                  	if (calc_board.isCellDead(xg, yg))	{
                     		if (calc_board.isCellDeadBlack(xg, yg))
                     			_dead_black++;
                     		
                     		if (calc_board.isCellDeadWhite(xg, yg))
                     			_dead_white++;
                     	}
-                dead_white=_dead_white;
-                dead_black=_dead_black;
-                
-        	}
-        	else {
-        	
-            if (calc_board.isCellFree( x, y )) { // cant place a stone where another is allready
-                
-            	GoBoard bak_board=calc_board.clone();
-            	
-            	int tmp_cap=captures_black+captures_white;
-            	
-                if (isBlackToMove())
-                    calc_board.setCellBlack( x, y );
-                else
-                    calc_board.setCellWhite( x, y );
-                
-
-            	/* is there any reason to do this before processing the move? -> yea ko&so*/
-                remove_dead(x,y);
-
-                if (hasGroupLiberties(x, y) // if either a field has liberties 
-                		&&!calc_board.equals(pre_last_board)) // and the move is not a ko 
-                { 	// valid move -> do things needed to do after a valid move 
-                
-                    
-                    if (isBlackToMove())
-                    	getGoMover().processBlackMove(x, y);
-                    else
-                    	getGoMover().processWhiteMove(x, y);
-                    
-                    setNextPlayer();
-                    
-                    pre_last_board=last_board.clone();
-                    last_board=calc_board.clone();
-                    visual_board=calc_board.clone();                    
-                    last_action_was_pass=false;
-              
-                    act_move=new GoMove(x,y,act_move);
-                    
-                    act_move.setDidCaptures((tmp_cap!=(captures_black+captures_white)));
-                    return true;
-                    }
-                else { // was an illegal move -> undo
-                	Log.i("illegal move");
-                    calc_board=bak_board.clone();
-                    return false;
-                }
-                
-            }
-            }
+            dead_white=_dead_white;
+            dead_black=_dead_black;
+            
+            return MOVE_VALID;       
         }
-        return false;
+        	
+        
+        if (!calc_board.isCellFree( x, y ))  // cant place a stone where another is allready
+        	return MOVE_INVALID_CELL_NOT_FREE;
+                
+        GoBoard bak_board=calc_board.clone();
+            	
+       	int tmp_cap=captures_black+captures_white;
+            	
+        if (isBlackToMove())
+        	calc_board.setCellBlack( x, y );
+        else
+            calc_board.setCellWhite( x, y );
+        
+        remove_dead(x,y);
+        
+        // move is a KO -> Invalid
+        if (calc_board.equals(pre_last_board)) {
+        	Log.i("illegal move -> KO");
+            calc_board=bak_board.clone();
+            return MOVE_INVALID_IS_KO;
+        }
+        	
+
+        if (!hasGroupLiberties(x, y)) {
+        	Log.i("illegal move -> NO LIBERTIES");
+            calc_board=bak_board.clone();
+        	return MOVE_INVALID_CELL_NO_LIBERTIES;
+        }
+        
+        // if we reach this point it is avalid move 
+        // -> do things needed to do after a valid move 
+        
+                
+        if (isBlackToMove())
+        	getGoMover().processBlackMove(x, y);
+        else
+        	getGoMover().processWhiteMove(x, y);
+        
+        setNextPlayer();
+                    
+        pre_last_board=last_board.clone();
+        last_board=calc_board.clone();
+        visual_board=calc_board.clone();                    
+        last_action_was_pass=false;
+        
+        act_move=new GoMove(x,y,act_move);
+        
+        act_move.setDidCaptures((tmp_cap!=(captures_black+captures_white)));
+        return MOVE_VALID;
+        
     }
 
     
