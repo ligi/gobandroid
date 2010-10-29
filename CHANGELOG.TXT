@@ -1,3 +1,5 @@
+0.57
+   + fix problems with captures
 0.56
    + option for user to edit the comments
    + flattr link
