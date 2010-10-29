@@ -83,9 +83,11 @@ public class GoGame  {
     public final static byte MOVE_INVALID_CELL_NO_LIBERTIES=3;
     public final static byte MOVE_INVALID_IS_KO=4;
 
-    byte start_player=GoDefinitions.PLAYER_BLACK;
+    private byte start_player=GoDefinitions.PLAYER_BLACK;
 
-    boolean[][] all_handicap_positions;
+    private boolean[][] all_handicap_positions;
+
+    private int local_captures = 0;    
 
     public GoGame( byte size ) {
     	construct(size);
@@ -280,7 +282,12 @@ public class GoGame  {
         act_move=new GoMove(x,y,act_move);
         
         act_move.setDidCaptures((tmp_cap!=(captures_black+captures_white)));
-        
+    
+        if (!calc_board.isCellWhite(x, y))
+   			captures_black += local_captures;
+   		else
+   			captures_white += local_captures;
+          
         // if we reached this point this move must be valid
         return MOVE_VALID;
     }
@@ -564,9 +571,8 @@ public class GoGame  {
         
         // reset groups
         for (int x = 0; x < calc_board.getSize(); x++)
-            for (int y = 0; y < calc_board.getSize(); y++) {
+            for (int y = 0; y < calc_board.getSize(); y++) 
                 groups[x][y] = -1;
-            }
 
         Stack <Integer>ptStackX = new Stack<Integer>();
         Stack <Integer>ptStackY = new Stack<Integer>();
@@ -675,7 +681,8 @@ public class GoGame  {
      * 
      * **/
     private void remove_dead(byte ignore_x,byte ignore_y) {
-      	
+    	local_captures = 0;
+    	
     	/* check left */
     	if (ignore_x > 0)
     		if ((!hasGroupLiberties(ignore_x-1, ignore_y))&&(!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x-1, ignore_y)))
@@ -693,11 +700,9 @@ public class GoGame  {
     		if ((!hasGroupLiberties(ignore_x, ignore_y+1))&&(!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x, ignore_y+1)))
     			remove_group((int)ignore_x, ignore_y+1);
     }
-
-    private void remove_group(int x,int y)  {
-    	int local_captures = 0;
-    	boolean is_black_capture = calc_board.isCellWhite(x, y);
     
+    private void remove_group(int x,int y)  {
+    	
         boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board.getSize()];
         Stack <Integer>ptStackX = new Stack<Integer>();
         Stack <Integer>ptStackY = new Stack<Integer>();
@@ -744,10 +749,6 @@ public class GoGame  {
    			local_captures++;
    		}
  
-   		if (is_black_capture)
-   			captures_black += local_captures;
-   		else
-   			captures_white += local_captures;
     }
     
     /** 
