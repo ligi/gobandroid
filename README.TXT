@@ -3,6 +3,4 @@ I'm looking for testers/ideas and graphics / code contributors
  
 2DO:
  - editable zoom levels
- - progress bar on loading
- - share sgf's
  
