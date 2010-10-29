@@ -74,10 +74,11 @@ public class GoGame  {
     
     private GoMove act_move=null;
     
-    
     private GnuGoMover go_mover=null;
     
     private GoGameMetadata metadata=null;
+    
+    private int area_group_count=0;
     
     public float getKomi() {
     	return komi;
@@ -126,7 +127,6 @@ public class GoGame  {
     				all_handicap_positions[GoDefinitions.getHandicapArray(size)[i][0]][GoDefinitions.getHandicapArray(size)[i][1]]=true;
     			}
     		
-    	
         apply_handicap();
         
         visual_board=calc_board.clone();
@@ -138,20 +138,11 @@ public class GoGame  {
         
         area_groups = new int[size][size];
         area_assign = new byte[size][size];
-                
         
         act_move=new GoMove(null);
         act_move.setIsFirstMove();
         
-        //dead_stones=new boolean[size][size];
-        
-        /*for (int x=0;x<size;x++)
-        	for (int y=0;y<size;y++)
-        		dead_stones[x][y]=false;
-        	*/
         reset();	
-        
-        
     }
     
     byte start_player=GoDefinitions.PLAYER_BLACK;
@@ -447,16 +438,9 @@ public class GoGame  {
         	replay_moves.add(replay_moves.lastElement().getParent());
         }
         
-        /*
-        
-        if (moves_history==null)
-        	moves_history=  (Vector<byte[]>)moves.clone();
-         */
-        
         reset();
         act_move=getFirstMove();
         
-        //Log.i("gobandroid"," replaying " + replay_moves.size() +" moves" );
         for (int step=replay_moves.size()-1 ; step>=0;step--)
             do_internal_move(replay_moves.get(step));
         
@@ -615,38 +599,7 @@ public class GoGame  {
             for (int y = 0; y < calc_board.getSize(); y++) {
                 groups[x][y] = -1;
             }
-/*        
-        for (int x = 0; x < calc_board.getSize(); x++)
-            for (int y = 0; y < calc_board.getSize(); y++) {
-                if (!calc_board.isCellFree( x, y )) {
 
-                    if (x > 0) {
-                        if (!calc_board.areCellsEqual( x, y, x - 1, y )) {
-                            group_count++;
-                            groups[x][y] = group_count;
-                        }
-                        else
-                            groups[x][y] = groups[x - 1][y];
-                    }
-                    else {
-                        group_count++;
-                        groups[x][y] = group_count;
-                    }
-                    
-                    if (y > 0) {
-                        if (calc_board.areCellsEqual( x, y, x , y-1 )) {
-                            int from_grp=groups[x][y];
-                            
-                            for (int xg = 0; xg < calc_board.getSize(); xg++)
-                                for (int yg = 0; yg < calc_board.getSize(); yg++)
-                                    if (groups[xg][yg]==from_grp)
-                                        groups[xg][yg]=groups[x][y-1];
-                        }
-                    }
-
-                }
-            }
-*/
         Stack <Integer>ptStackX = new Stack<Integer>();
         Stack <Integer>ptStackY = new Stack<Integer>();
         
@@ -692,7 +645,7 @@ public class GoGame  {
     }
 
     
-    int area_group_count=0;
+    
     
     public void buildAreaGroups() {
         area_group_count=0;
@@ -739,8 +692,7 @@ public class GoGame  {
         territory_white=0;
         for (int x = 0; x < calc_board.getSize(); x++)
             for (int y = 0; y < calc_board.getSize(); y++) {
-            	if (isAreaGroupWhites(area_groups[x][y]))
-        			{ 
+            	if (isAreaGroupWhites(area_groups[x][y])) { 
             		area_assign[x][y]=GoDefinitions.PLAYER_WHITE;
             		territory_white++;
         			}
