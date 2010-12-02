@@ -224,7 +224,7 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 		if (v==((Button)this.findViewById(R.id.InstallAIButton))) {
 			try {
 				this.startActivity(new Intent().setAction(Intent.ACTION_VIEW)
-						.setData(Uri.parse("market://search?q=org.ligi.gobandroid.ai")));
+						.setData(Uri.parse("market://search?q=pname:org.ligi.gobandroid.ai.gnugo")));
 			}
 			catch (Exception e) {
 				new AlertDialog.Builder(this).setTitle(R.string.problem)
