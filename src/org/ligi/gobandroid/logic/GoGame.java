@@ -129,9 +129,10 @@ public class GoGame  {
     	all_handicap_positions=new boolean[size][size];
     	
     	if (GoDefinitions.getHandicapArray(size)!=null)
-    		for (int i=0;i<handicap;i++) {
+    		for (int i=0;i<9;i++) {
     				if (i<handicap)
     					handicap_board.setCellBlack(GoDefinitions.getHandicapArray(size)[i][0], GoDefinitions.getHandicapArray(size)[i][1]);
+    				
     				all_handicap_positions[GoDefinitions.getHandicapArray(size)[i][0]][GoDefinitions.getHandicapArray(size)[i][1]]=true;
     			}
     		
