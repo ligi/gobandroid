@@ -1,3 +1,14 @@
+0.57
+   + fix problems with captures
+0.56
+   + option for user to edit the comments
+   + flattr link
+0.55
+   + link to go rules on wikipedia ( many people asked for the rules )
+0.54
+   F reduce recursion depth from move count to variations - caused stack overflows on long lasting games
+   F crash when handicap > 0 and size not 9 / 13 or 19
+   F crash when small stone size
 0.53
    + option to share SGF after saving
 0.52

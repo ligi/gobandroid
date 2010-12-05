@@ -31,7 +31,7 @@ import org.ligi.tracedroid.logging.Log;
  * This software is licenced with GPLv3 
 **/
 
-public class GoBoard implements GoDefinitions{
+public class GoBoard {
     
     private byte size;
     public byte[][] board;
@@ -50,16 +50,19 @@ public class GoBoard implements GoDefinitions{
         for( int x=0;x<size;x++)
     		for( int y=0;y<size;y++)
     			board[x][y]=predefined_board[x][y];
-        
     }
 
+    /**
+     * clone this board
+     * @return a copy of this board
+     */
     public GoBoard clone() {
         return new GoBoard(size,board);
     }
     
-    /*
+    /**
      * check if two boards are equal
-     */
+     **/
     public boolean equals(GoBoard other) {
     	
     	// cannot be the same if board is null
@@ -70,8 +73,7 @@ public class GoBoard implements GoDefinitions{
     	if (size!=other.size) 
     		return false;
     	
-    	// check if all stones are placed equaly
-    	
+    	// check if all stones are placed equally
     	for( int x=0;x<size;x++)
     		for( int y=0;y<size;y++)
     			if (board[x][y]!=other.board[x][y])
@@ -80,70 +82,74 @@ public class GoBoard implements GoDefinitions{
     	return true;
     }
     
+    /**
+     * print a visual representation of the board via Log.d
+     */
     public void logBoard() {	
     	String tmp_str="";
     	
-    	for( int y=0;y<size;y++)
-    	{
-    	for( int x=0;x<size;x++)
-    		{
-    		if (board[x][y]==0)
-        		tmp_str+=" ";
-    		else if (board[x][y]==1)
-	    		tmp_str+="B";
-    		else if (board[x][y]==2)
-	    		tmp_str+="W";
-    		}
-    	Log.d(tmp_str);
-    	tmp_str="";
+    	for( int y=0;y<size;y++) {
+	    	for( int x=0;x<size;x++) {
+	    		if (board[x][y]==GoDefinitions.STONE_NONE)
+	        		tmp_str+=" ";
+	    		else if (board[x][y]==GoDefinitions.STONE_BLACK)
+		    		tmp_str+="B";
+	    		else if (board[x][y]==GoDefinitions.STONE_WHITE)
+		    		tmp_str+="W";
+	    		else if (board[x][y]==-GoDefinitions.STONE_BLACK)
+		    		tmp_str+="b";
+	    		else if (board[x][y]==-GoDefinitions.STONE_WHITE)
+		    		tmp_str+="w";
+	    		
+	    		}
+	    	Log.d(tmp_str);
+	    	tmp_str="";
     	}
     }
     
+    /**
+     * @return the board size
+     */
     public int getSize() {
         return size;
     }
 
     public boolean isCellFree( int x, int y ) {
-        return (board[x][y]==STONE_NONE) // no stone on board
+        return (board[x][y]==GoDefinitions.STONE_NONE) // no stone on board
         		||(board[x][y]<0);  // or dead stone; 
     }
     public boolean isCellBlack( int x, int y ) {
-        return (board[x][y]==STONE_BLACK); 
+        return (board[x][y]==GoDefinitions.STONE_BLACK); 
     }
     
     public boolean isCellWhite( int x, int y ) {
-        return (board[x][y]==STONE_WHITE); 
+        return (board[x][y]==GoDefinitions.STONE_WHITE); 
     }
 
-    
     public boolean isCellDeadBlack( int x, int y ) {
-        return (-board[x][y]==STONE_BLACK); 
+        return (-board[x][y]==GoDefinitions.STONE_BLACK); 
     }
     
     public boolean isCellDeadWhite( int x, int y ) {
-        return (-board[x][y]==STONE_WHITE); 
+        return (-board[x][y]==GoDefinitions.STONE_WHITE); 
     }
-
 
     public boolean areCellsEqual( int x, int y , int x2 , int y2 ) {
         return ((board[x][y]==board[x2][y2])||
         		(isCellFree(x,y)&&isCellFree(x2,y2)));
     }
 
-
     public void setCellFree( int x, int y ) {
-        board[x][y]=STONE_NONE; 
+        board[x][y]=GoDefinitions.STONE_NONE; 
     }
 
     public void setCellBlack( int x, int y ) {
-        board[x][y]=STONE_BLACK; 
+        board[x][y]=GoDefinitions.STONE_BLACK; 
     }
 
     public void setCellWhite( int x, int y ) {
-        board[x][y]=STONE_WHITE; 
+        board[x][y]=GoDefinitions.STONE_WHITE; 
     }
-    
-    
 
     public void toggleCellDead( int x, int y ) {
         board[x][y]*=-1; 
@@ -152,7 +158,4 @@ public class GoBoard implements GoDefinitions{
     public boolean isCellDead( int x, int y ) {
         return (board[x][y]<0); 
     }
-
-
-
 }

@@ -36,7 +36,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /**
- * This is the main Activity of gobandroid
+ * Activity to load SGF's from SD card
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  *         

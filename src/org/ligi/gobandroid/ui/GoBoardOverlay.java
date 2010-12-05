@@ -1,3 +1,22 @@
+/**
+ * gobandroid 
+ * by Marcus -Ligi- Bueschleb 
+ * http://ligi.de
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as 
+ * published by the Free Software Foundation; 
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * 
+ **/
+
 package org.ligi.gobandroid.ui;
 
 import java.util.Vector;
@@ -15,6 +34,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.FrameLayout;
@@ -22,8 +42,14 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.FrameLayout.LayoutParams;
 
+/**
+ * overlay for the go-board with comments and nav buttons
+ * 
+ * @author ligi
+ *
+ */
 public class GoBoardOverlay implements OnClickListener {
-
+	
 		private TextView comment_tv;
 	    private ScrollView comment_sv;
 	    private LinearLayout outer_lin;
@@ -32,14 +58,15 @@ public class GoBoardOverlay implements OnClickListener {
 		private Context context;
 		private GoBoardView board_view;
 		
-	    public GoBoardOverlay(Context context,GoBoardView board_view,int w,int h,boolean horizontal) {
+	    public GoBoardOverlay(Context context,GoBoardView board_view,boolean horizontal) {
 	    	this.context=context;
 	    	this.board_view=board_view;
 	    	
 	    	comment_tv=new TextView(context);
 	     	comment_tv.setTextColor(0xCC111111);
 	 		comment_tv.setPadding(10, 0, 10, 10);
-	 		comment_tv.setText("foobar");
+	 		comment_tv.setText("test");
+	 		comment_tv.setBackgroundColor(0x00FF00);
 	 		comment_sv=new ScrollView(context);
 	 		comment_sv.addView(comment_tv);
 	 		
@@ -71,98 +98,45 @@ public class GoBoardOverlay implements OnClickListener {
 			control_buttons.add(last);
 
 			outer_lin=new LinearLayout(context);
-			
-			
-			button_container=new LinearLayout(context);
 
+			button_container=new LinearLayout(context);
 						
-			for (ImageButton btn:control_buttons) 
-			{
+			for (ImageButton btn:control_buttons) {
 				btn.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT,1));
 				button_container.addView(btn);
 			}
 
-			//refresh(100,100,true);
+			if (horizontal) {
+				button_container.setOrientation(LinearLayout.VERTICAL);
+				button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT));
+				
+				FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT);
+					
+				bottom_nav_params.gravity=Gravity.RIGHT;
+				outer_lin.setOrientation(LinearLayout.HORIZONTAL);
+				outer_lin.setLayoutParams(bottom_nav_params);
+			}
+			else { //vertical layout
+				
+				button_container.setOrientation(LinearLayout.HORIZONTAL);
+				button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
+				
+				FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
+					
+				bottom_nav_params.gravity=Gravity.BOTTOM| Gravity.CENTER_HORIZONTAL;
+						
+				outer_lin.setLayoutParams(bottom_nav_params);
+				outer_lin.setOrientation(LinearLayout.VERTICAL);
+			}
 			
-			Log.i("refreshing overlay in constructor to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + next.getHeight());
-			/*
-			    	if (horizontal)
-					{
-			        	comment_sv.setLayoutParams(new LinearLayout. LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT));
-						comment_tv.setWidth(w-20-last.getWidth() );
-					}
-			        else */
-						//comment_sv.setLayoutParams(new LinearLayout. LayoutParams(LayoutParams.FILL_PARENT,(h-20-1/*-last.getHeight() */)));
-					//comment_tv.setHeight(board_view.getHeight()-(int)board_view.getBoardPixels()-20-1-last.getHeight());
+			comment_sv.setVisibility(View.VISIBLE);	
 
-			  	
-					if (!horizontal)
-					{
-						
-						button_container.setOrientation(LinearLayout.HORIZONTAL);
-						button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
-				//		outer_lin.setOrientation(LinearLayout.VERTICAL);
-					
-						FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
-						//bottom_nav_params.addRule(FrameLayout.ALIGN_PARENT_BOTTOM);
-					
-						bottom_nav_params.gravity=Gravity.BOTTOM| Gravity.CENTER_HORIZONTAL;
-						
-						outer_lin.setLayoutParams(bottom_nav_params);
-						outer_lin.setOrientation(LinearLayout.VERTICAL);
-//						LinearLayout.LayoutParams bottom_nav_params_i=new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
-//						lin.setLayoutParams(bottom_nav_params_i);
-						back.requestLayout();
-						Log.i("refreshing overlay to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getHeight());
-						comment_sv.setLayoutParams(new LinearLayout.LayoutParams(w, h-w-back.getHeight()));
-						comment_sv.setVisibility(View.VISIBLE);
-					}
-					else
-					{
-						comment_tv.setWidth(w-h-20-back.getWidth());
-						button_container.setOrientation(LinearLayout.VERTICAL);
-						button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT));
-						FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT);
-						//bottom_nav_params.addRule(FrameLayout.ALIGN_PARENT_BOTTOM);
-					
-						bottom_nav_params.gravity=Gravity.RIGHT;
-						outer_lin.setOrientation(LinearLayout.HORIZONTAL);
-						outer_lin.setLayoutParams(bottom_nav_params);
-						comment_sv.setVisibility(View.VISIBLE);	
-					}
-			/*		else {
-						lin.setOrientation(LinearLayout.VERTICAL);
-						
-						outer_lin.setOrientation(LinearLayout.HORIZONTAL);
-						FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT);
-						
-						bottom_nav_params.addRule(FrameLayout.ALIGN_PARENT_RIGHT);
-						outer_lin.setLayoutParams(bottom_nav_params);
-						
-						LinearLayout.LayoutParams bottom_nav_params_i=new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT);
-						
-						lin.setLayoutParams(bottom_nav_params_i);
-						
-					}
-				*/	/*
-				  	comment_sv.requestLayout();
-					comment_tv.requestLayout();
-					comment_sv.invalidate();
-					outer_lin.requestLayout();*/
-					//comment_sv.getParent().requestLayout();
-					//outer_lin.getParent().requestLayout();
-			
-			outer_lin.addView(getCommentScrollView());
-			
+			outer_lin.addView(comment_sv);
 			outer_lin.addView(button_container);
 
-			Log.i("refreshing overlay to" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getMeasuredHeight());
 			updateButtonState();
-			
-			comment_tv.setText(getGameComment());
+			updateCommentText();
 		}
-
-	    int last_w;
 	    
 	    private String getGameComment() {
 	    	if (GoGameProvider.getGame()==null)
@@ -172,47 +146,35 @@ public class GoBoardOverlay implements OnClickListener {
 	    }
 	    
 	    public void updateCommentsSize(int w,int h,boolean horizontal) {
-/*	    	if (last_w==w)
-	    		return;
-	    	last_w=w;
-*/
-	    	Log.i("refreshing overlay in update to --" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getHeight());
-	    	if (!horizontal)
-			{
-				
-				comment_sv.setLayoutParams(new LinearLayout.LayoutParams(w, h-w-back.getHeight()));
-			}
-			else
-			{
-				comment_tv.setWidth(w-h-20-back.getWidth());
-				
-				
-			}
-	    	comment_tv.requestLayout();
-	    	comment_sv.requestLayout();
-			comment_tv.setText(getGameComment());
 
+	    	Log.i("refreshing overlay in update to --" + w + "x" + h + " " + (horizontal?"h":"v") + " " + back.getHeight());
+	    	if (horizontal) 
+	    		comment_tv.setWidth(w-h-20-back.getWidth());
+			else
+				comment_sv.setLayoutParams(new LinearLayout.LayoutParams(w, h-w-back.getHeight()));
+
+	    	updateCommentText();
+	    	comment_sv.requestLayout();
 	    }
+
+	    public void updateCommentText() {
+	    	Log.i("Update Comment Text to " + getGameComment()+"_");
+	    	
+			comment_tv.setText(getGameComment());
+			comment_tv.requestLayout(); // to make the changed text appear on screen 
+	    }
+	    
 	    
 	    public View getView() {
 	    	return outer_lin;
 	    }
 	    
-		public TextView getCommentTextView() {
-	    	return comment_tv;
-	    }
-	    
-	    public ScrollView getCommentScrollView() {
-	    	return comment_sv;
-	    }
-	    
-		@Override
+	    @Override
 		public void onClick(View btn) {
 			final GoGame game=GoGameProvider.getGame();
 			//GoGame game=GoGameProvider.getGame();
 			
-			if (btn==back)
-			{
+			if (btn==back) {
 				// dont do it if the mover has to move at the moment
 				if (game.getGoMover().isMoversMove())
 					return;
@@ -229,8 +191,7 @@ public class GoBoardOverlay implements OnClickListener {
 			}
 			else if (btn==next) {
 							
-				if (game.getPossibleVariationCount()>0)
-					{
+				if (game.getPossibleVariationCount()>0)	{
 					LinearLayout lin=new LinearLayout(context);
 					LinearLayout li=new LinearLayout(context);
 
@@ -250,7 +211,6 @@ public class GoBoardOverlay implements OnClickListener {
 					final Dialog select_dlg=new Dialog(context);
 					final Boolean redoing=false;
 					View.OnClickListener var_select_listener=new View.OnClickListener() {
-						
 						
 						@Override
 						public void onClick(View v) {
@@ -292,36 +252,55 @@ public class GoBoardOverlay implements OnClickListener {
 				}
 				else
 					game.redo(0);
-				
-				
 			}
 			else if (btn==first)
 				game.jumpFirst();
 			else if (btn==last)
 				game.jumpLast();
 			else if (btn==comments) {
-		
-				new AlertDialog.Builder(context).setTitle(R.string.comments)
-				.setMessage(
-						 game.getActMove().getComment()
-			).setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
 				
-				}
-			}).show();
+				new AlertDialog.Builder(context).setTitle(R.string.comments)
+				.setMessage(getGameComment())
+				.setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {	}
+				})
+				.setNeutralButton("Edit", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {	
+				
+					final EditText comment_edit=new EditText(context);
+					comment_edit.setText(getGameComment());
+					
+					new AlertDialog.Builder(context).setTitle(R.string.comments)
+					.setView(comment_edit)
+					.setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							game.getActMove().setComment(comment_edit.getText().toString());
+							updateCommentText();
+						}
+					})
+					.setNegativeButton(R.string.cancel,  new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {	}
+					}).show();
+					
+					}
+				} )
+				.show();
 			}
-			
-			getCommentTextView().setText(game.getActMove().getComment());
+
+			updateCommentText();
 			updateButtonState();
 			board_view.invalidate();
 		}
 		
+		/**
+		 * set the buttons active/inactive depending on the possibility to use them
+		 */
 		public void updateButtonState() {
 			
 			GoGame game=GoGameProvider.getGame();
+
 			// prevent NPE
-			if (game==null)
-				{
+			if (game==null)	{
 				Log.w("no game there when updateControlsStatus");	
 				return;
 				}
@@ -330,9 +309,6 @@ public class GoBoardOverlay implements OnClickListener {
 			first.setEnabled(game.canUndo()&&(!game.getGoMover().isPlayingInThisGame()));
 			next.setEnabled(game.canRedo()&&(!game.getGoMover().isPlayingInThisGame()));
 			last.setEnabled(game.canRedo()&&(!game.getGoMover().isPlayingInThisGame()));
-			comments.setEnabled(game.getActMove().hasComment());
-			
-
+			//comments.setEnabled(game.getActMove().hasComment());
 		}
-	
 }

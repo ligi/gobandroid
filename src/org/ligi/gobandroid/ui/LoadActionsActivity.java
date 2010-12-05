@@ -19,7 +19,6 @@
 
 package org.ligi.gobandroid.ui;
 
-
 import org.ligi.gobandroid.R;
 
 import android.app.ListActivity;
@@ -30,7 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /**
- * This is the main Activity of gobandroid
+ * Activity to select a source from where to load SGF's
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  *         
@@ -61,19 +60,18 @@ public class LoadActionsActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        Intent go_intent;
-            switch (position) {
-                case MENU_SDCARD:
-                    go_intent=new Intent(this,SGFSDCardListActivity.class);
-                    startActivity(go_intent);
-                     break;
-    
-                case MENU_ONLINE:
-                    go_intent=new Intent(this,SGFOnlineListActivity.class);
-                    startActivity(go_intent);
-                    break;
-            }
-      
+        Intent go_intent=null;
+        switch (position) {
+        	case MENU_SDCARD:
+        		go_intent=new Intent(this,SGFSDCardListActivity.class);
+        		break;
+        		
+            case MENU_ONLINE:
+            	go_intent=new Intent(this,SGFOnlineListActivity.class);
+            	break;
+         }
+   
+        startActivity(go_intent);
     }
     
 }

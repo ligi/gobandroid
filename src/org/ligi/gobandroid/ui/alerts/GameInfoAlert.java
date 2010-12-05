@@ -122,14 +122,11 @@ public class GameInfoAlert {
 		game_result_row.addView(game_result_et);
 		
 		table_gameinfo.addView(game_result_row);
-
 		
 		scroll_view.addView(table_gameinfo);
 		
 		new AlertDialog.Builder(ctx).setTitle("Game Info").setView(scroll_view)
-		.setMessage(""
-				 
-		).setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
+		.setMessage("").setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
 			game.getMetaData().setName(game_name_et.getText().toString());
 			game.getMetaData().setBlackName(black_name_et.getText().toString());

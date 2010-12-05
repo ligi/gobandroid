@@ -37,32 +37,46 @@ public class GOSkin {
 	private static boolean do_stone_skin=false;
 	private static String stone_skin_name="none";
 	
-
 	public final static String skin_base_path="/sdcard/gobandroid/skins/";
-	
-	public static void setBoardSkin(String name) {
-		if ((new File(skin_base_path+name).exists())) 
-		{
-			board_skin_name=name;
-			do_board_skin=true;
-		}
+
+
+	/**
+	 * set the current skin for the board
+	 * if the skin does not exist switch of board skin usage
+	 * 
+	 * @param skin_name
+	 * @return success
+	 */
+	public static boolean setBoardSkin(String skin_name) {
+		if ((new File(skin_base_path+skin_name).exists())) {
+			board_skin_name=skin_name;
+			do_board_skin=true;	} 
 		else 
 			do_board_skin=false;
+		
+		return do_board_skin;
 	}
 
 
-	public static void setStoneSkin(String name) {
-		if ((new File(skin_base_path+name).exists())) 
-		{
-			stone_skin_name=name;
-			do_stone_skin=true;
-		}
+	/**
+	 * set the current skin for stones
+	 * if the skin does not exist switch of skin usage for stones
+	 * 
+	 * @param skin_name
+	 * @return success
+	 */
+	public static boolean setStoneSkin(String skin_name) {
+		if ((new File(skin_base_path+skin_name).exists())) {
+			stone_skin_name=skin_name;
+			do_stone_skin=true; } 
 		else 
 			do_stone_skin=false;
+		
+		return do_stone_skin;
 	}
 
 	
-	public static String getBoardFname() {
+	private static String getBoardFname() {
 		return skin_base_path+board_skin_name+"/board.jpg";
 	}
 	
@@ -77,7 +91,6 @@ public class GOSkin {
 			return null;
 	}
 	
-	
 	public static Bitmap getWhiteStone(float size) {
 		return getStone("white",size);
 	}
@@ -86,33 +99,50 @@ public class GOSkin {
 		return getStone("black",size);
 	}
 	
+	/**
+	 * returns a image for a go stone - either a 
+	 * selected ( by color/size ) and scaled image from the skin
+	 * or a drawn circle in the right color ( fallback / no skin )   
+	 * 
+	 * @param name "white" or "black"
+	 * @param size the size in pixels
+	 * 
+	 * @return the scaled image
+	 */
 	public static Bitmap getStone(String name,float size) {
-		if (do_stone_skin) {
+		
+		if (size<1)
+			size=1;	
+		
+		if (do_stone_skin) try {
 				
-		int size_append=17;
-		if (size>23)
-			size_append=32;
-		if (size>50)
-			size_append=64;
+			int size_append=17;
+			
+			if (size>50)
+				size_append=64;
+			else if (size>23)
+				size_append=32;
+			
+			Log.i("scale to size" + size);	
+			Bitmap unscaled_bitmap=BitmapFactory.decodeFile(skin_base_path+stone_skin_name+"/"+name + size_append + ".png");
+			return Bitmap.createScaledBitmap(unscaled_bitmap, (int)size, (int)size, true);
+			}
+		catch (Exception e) {
+			Log.w("problem scaling the " + name + " stone bitmap to" + size );
+		}
+		
+		Bitmap btm=Bitmap.createBitmap((int)size,(int)size,Bitmap.Config.ARGB_4444);
+			
+		Canvas c=new Canvas(btm);
+		Paint mPaint=new Paint();
+		mPaint.setAntiAlias(true);
+		if (name.equals("white"))
+			mPaint.setColor(Color.WHITE);
+		else
+			mPaint.setColor(Color.BLACK);
+			
+		c.drawCircle(c.getWidth()/2, c.getHeight()/2, size/2.0f, mPaint);
+		return btm;
+	} // getStone
 
-		Log.i("scale to size" + size);	
-		return Bitmap.createScaledBitmap(BitmapFactory .decodeFile(skin_base_path+stone_skin_name+"/"+name + size_append + ".png"
-			), (int)size, (int)size, true);
-		}
-		else {
-			Bitmap btm=Bitmap.createBitmap((int)size,(int)size,Bitmap.Config.ARGB_4444);
-			
-			Canvas c=new Canvas(btm);
-			Paint mPaint=new Paint();
-			mPaint.setAntiAlias(true);
-			if (name.equals("white"))
-				mPaint.setColor(Color.WHITE);
-			else
-				mPaint.setColor(Color.BLACK);
-			
-			c.drawCircle(c.getWidth()/2, c.getHeight()/2, size/2.0f, mPaint);
-			return btm;
-		}
-	}
-	
 }

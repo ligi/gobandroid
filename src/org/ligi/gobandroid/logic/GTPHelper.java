@@ -22,7 +22,6 @@ package org.ligi.gobandroid.logic;
 import org.ligi.tracedroid.logging.Log;
 
 public class GTPHelper {
-
 	
 	public static void doMoveByGTPString(String gtp_str,GoGame game) {
 		
@@ -45,8 +44,6 @@ public class GTPHelper {
 			gtp_str=gtp_str.substring(1);
 			byte y= (byte)(game.getBoardSize()-(Byte.parseByte(gtp_str)));
 			game.do_move(x, y); // internal here?
-			
-
 		}
 	}
 }

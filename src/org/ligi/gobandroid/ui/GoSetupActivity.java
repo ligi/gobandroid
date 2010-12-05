@@ -208,7 +208,6 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 		else if ((seekBar==handicap_seek)&&(act_handicap!=(byte)progress))
 			act_handicap=(byte)progress;
 
-
 		refresh_ui();
 	}
 
@@ -225,7 +224,7 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 		if (v==((Button)this.findViewById(R.id.InstallAIButton))) {
 			try {
 				this.startActivity(new Intent().setAction(Intent.ACTION_VIEW)
-						.setData(Uri.parse("market://search?q=org.ligi.gobandroid.ai")));
+						.setData(Uri.parse("market://search?q=pname:org.ligi.gobandroid.ai.gnugo")));
 			}
 			catch (Exception e) {
 				new AlertDialog.Builder(this).setTitle(R.string.problem)
@@ -270,21 +269,19 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 					go_intent.putExtra("black_player",black_player_spinner.getSelectedItemPosition());
 	             
 					startActivity(go_intent);
-					
 				}
 			}
 		
 		refresh_ui();
-		
 	}
 
 	@Override
-	public void onItemSelected(AdapterView<?> arg0, View selected_view, int arg2,
+	public void onItemSelected(AdapterView<?> selected_item, View selected_view, int pos,
 			long arg3) {
-		if (arg0==white_player_spinner)
-			GoPrefs.setLastPlayerWhite((String)arg0.getAdapter().getItem(arg2));
-		if (arg0==black_player_spinner)
-			GoPrefs.setLastPlayerBlack((String)arg0.getAdapter().getItem(arg2));
+		if (selected_item==white_player_spinner)
+			GoPrefs.setLastPlayerWhite((String)selected_item.getAdapter().getItem(pos));
+		if (selected_item==black_player_spinner)
+			GoPrefs.setLastPlayerBlack((String)selected_item.getAdapter().getItem(pos));
 
 	}
 

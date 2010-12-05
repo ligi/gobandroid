@@ -42,7 +42,6 @@ public class GoPrefs {
 	public final static String KEY_DO_LEGEND="do_legend";
 	public final static String KEY_SGF_LEGEND="sgf legend";
 	
-	
 	public final static String KEY_MARKLASTSTONE="mark_last_stone";
 	
 	public final static String KEY_SGF_PATH="sgf_path";
@@ -203,5 +202,4 @@ public class GoPrefs {
 	public static String getAILevelString() {
 		return  getAllAILevelStrings()[getAILevel()-1];
 	}
-
 }

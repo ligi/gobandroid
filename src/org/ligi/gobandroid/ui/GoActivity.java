@@ -144,11 +144,16 @@ public class GoActivity
 			DisplayMetrics dm = new DisplayMetrics();
 			getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-			overlay=new GoBoardOverlay(this,board_view,dm.widthPixels,dm.heightPixels,dm.widthPixels>dm.heightPixels);
+			
+			overlay=new GoBoardOverlay(this,board_view
+					//,board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
+					//,dm.widthPixels,dm.heightPixels,
+					,dm.widthPixels>dm.heightPixels);
 			rel.addView(overlay.getView());
 
 			setContentView(rel);
-			overlay.updateCommentsSize(dm.widthPixels,dm.heightPixels,dm.widthPixels>dm.heightPixels);
+			//overlay.updateCommentsSize(dm.widthPixels,dm.heightPixels,dm.widthPixels>dm.heightPixels);
+			//overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
 		}
 		
 		GoGameProvider.setGame(game);
@@ -166,7 +171,7 @@ public class GoActivity
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		super.onTouchEvent(event);
-		overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
+		//overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
 		updateControlsStatus();
 		return false;
 	}
@@ -178,8 +183,8 @@ public class GoActivity
 	}
 	
 	public void updateControlsStatus() {
-		overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
-		overlay.getCommentTextView().setText(game.getActMove().getComment());
+		//overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
+		overlay.updateCommentText();
 		overlay.updateButtonState();
 	}
 	
@@ -195,7 +200,7 @@ public class GoActivity
 		GOSkin.setBoardSkin(GoPrefs.getBoardSkinName());
 		GOSkin.setStoneSkin(GoPrefs.getStoneSkinName());
 		
-		board_view.regenerate_stones_flag=true;
+		board_view.setRegenerataStonesFlag(true);
 		
 		if (GoPrefs.getFullscreenEnabled())
 			this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -329,11 +334,11 @@ public class GoActivity
 			// Do nothing.
 			}
 			}).show();
-						break;
+			break;
 
 		case MENU_SETTINGS:
-             startActivity(new Intent(this,GoPrefsActivity.class));
-             break;
+            startActivity(new Intent(this,GoPrefsActivity.class));
+            break;
 		}
 		
 		updateControlsStatus() ;
@@ -387,7 +392,7 @@ public class GoActivity
     		break;
     		
     	case KeyEvent.KEYCODE_DPAD_CENTER:
-    		game.do_move(board_view.touch_x,board_view.touch_y);
+    		doMove(board_view.touch_x,board_view.touch_y);
     		board_view.setZoom(false);
     		break;
     		
@@ -478,12 +483,65 @@ public class GoActivity
 		else if (game.getGoMover().isMoversMove())
 			showInfoToast(R.string.not_your_turn);
 		else
-			board_view.doTouch(event);
+			doTouch(event);
 		
     	updateControlsStatus();
     	return true;
     }
+	
+
+    public void doTouch( MotionEvent event) {
+    	
+    	float virtualTouchX=event.getX()-board_view.offset_x;
+    	float virtualTouchY=event.getY()-board_view.offset_y;
+    	
+    	float board_size=board_view.stone_size*game.getVisualBoard().getSize();
+    	
+    	if ((virtualTouchY<board_size)&&(virtualTouchX<board_size)) { // if user put his finger on the board
+
+    		// calculate position on the field by position on the touchscreen
+    		board_view.touch_x=(byte)(virtualTouchX/board_view.stone_size);
+    		board_view.touch_y=(byte)(virtualTouchY/board_view.stone_size);
+    		
+    		if (event.getAction()==MotionEvent.ACTION_UP) {
+    			
+    			// if pressed on the last stone - initialize a Stone move
+        			if (board_view.isZoomed()||(!GoPrefs.getFatFingerEnabled()))	{
+        				if (board_view.move_stone_mode) {
+        					// TODO check if this is an illegal move ( e.g. in variants )
+        					game.getActMove().setXY(board_view.touch_x, board_view.touch_y);
+        					game.refreshBoards();
+        					board_view.move_stone_mode=false;
+        					}
+        				else if ((game.getActMove().getX()==board_view.touch_x)&&(game.getActMove().getY()==board_view.touch_y)) 
+        					board_view.initializeStoneMove();
+                		else 
+                			doMove(board_view.touch_x,board_view.touch_y);
+        				
+        				board_view.touch_x=-1;
+        				board_view.touch_y=-1;
+        				
+        				board_view.setZoom(false);
+        			}
+        			else
+        				board_view.setZoom(true);
+    		}
+        }
+    	board_view.invalidate();  // the board looks different after a move (-;
+     }
  
+ 
+    public void doMove(byte x,byte y) {
+    	info_toast.cancel();
+    	switch(game.do_move(x, y)){
+    		case GoGame.MOVE_INVALID_IS_KO:
+    			showInfoToast(R.string.invalid_move_ko);
+    			break;
+    		case GoGame.MOVE_INVALID_CELL_NO_LIBERTIES:
+    			showInfoToast(R.string.invalid_move_no_liberties);
+    			break;
+    	}
+    }
     
     @Override 
     protected void onRestoreInstanceState(Bundle savedInstanceState) { 
@@ -514,9 +572,19 @@ public class GoActivity
 		}
 	}
 
+	class updaterCommentsSize implements Runnable {
+		@Override
+		public void run() {
+				last_board_size=""+board_view.getWidth()+"x"+board_view.getHeight();
+				overlay.updateCommentsSize(board_view.getWidth(),board_view.getHeight(),board_view.getWidth()>board_view.getHeight());
+		}
+	}
+	
 	private int getBoardViewNeededVisibility() {
 		return board_view.isZoomed()?View.INVISIBLE:View.VISIBLE;
 	}
+	
+	private String last_board_size="";
 	
 	@Override
 	public void run() {
@@ -530,8 +598,12 @@ public class GoActivity
 					act_move_pos=game.getActMove().getMovePos();
 					this.runOnUiThread(new UpdateBoardViewClass());
 					}
+				
 				if (overlay.getView().getVisibility() != getBoardViewNeededVisibility())
 					this.runOnUiThread(new UptateOverlayVisibilityClass());
+				
+				if (!last_board_size.equals(""+board_view.getWidth()+"x"+board_view.getHeight()))
+					this.runOnUiThread(new updaterCommentsSize());
 				
 			}
 		}

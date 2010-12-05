@@ -49,7 +49,7 @@ import org.ligi.gobandroid.logic.SGFHelper;
 import org.ligi.tracedroid.logging.Log;
 
 /**
- * Activity to load a SGF and show a ProgressDialog
+ * Activity to load a SGF with a ProgressDialog showing the Progress
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  * 
@@ -71,6 +71,8 @@ public class SGFLoadActivity
 	private Handler handler=new Handler();
 	private AlertDialog alert_dlg;
 	private TextView message_tv;
+	private String act_message;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,10 +83,7 @@ public class SGFLoadActivity
 		progress.setMax(100);
 		progress.setProgress(10);
 
-
-		
 		LinearLayout lin =new LinearLayout(this);
-		
 		
 		ImageView img=new ImageView(this);
 		img.setImageResource(R.drawable.icon);
@@ -111,7 +110,6 @@ public class SGFLoadActivity
 	@Override
 	public void onResume() {
 		super.onResume();
-		
 	}
 
 	@Override
@@ -119,13 +117,13 @@ public class SGFLoadActivity
 		Looper.prepare();
 		
 		if (game==null) {
-			// if there is a game saved e.g. on rotation use this game
+			/* if there is a game saved in LastNonConfigurationInstance
+			 * e.g. on rotation -> use the game from there */
 			if (getLastNonConfigurationInstance()!=null) 
 				game=(GoGame)getLastNonConfigurationInstance();
-			else {
-				// otherwise create a new game
-		
-				intent_uri=getIntent().getData();
+			else { // otherwise create a new game based on the Intent Data
+				
+				intent_uri=getIntent().getData(); // extract the uri from the intent
 				
 				if (intent_uri!=null) {
 					
@@ -136,20 +134,16 @@ public class SGFLoadActivity
 						if (intent_uri.toString().startsWith("content://"))
 							in = getContentResolver().openInputStream(intent_uri);	
 						else
-						  in= new BufferedInputStream(new URL(""+intent_uri) 
-			              .openStream(), 4096); 
+							in= new BufferedInputStream(new URL(""+intent_uri).openStream(), 4096); 
 						
 						FileOutputStream file_writer =null;
-					    if (intent_uri.toString().startsWith("http"))  
-					    		{
-					    		new File(GoPrefs.getSGFPath()+"/downloads").mkdirs();
-					    							    		
-					      		File f = new File(GoPrefs.getSGFPath()+"/downloads/"+intent_uri.getLastPathSegment()	);
-								f.createNewFile();
 
-								 file_writer = new FileOutputStream(f);
-								
-					    		}
+						if (intent_uri.toString().startsWith("http"))	{
+					    	new File(GoPrefs.getSGFPath()+"/downloads").mkdirs();
+					    	File f = new File(GoPrefs.getSGFPath()+"/downloads/"+intent_uri.getLastPathSegment()	);
+							f.createNewFile();
+							file_writer = new FileOutputStream(f);
+							}
 						
 					    StringBuffer out = new StringBuffer();
 					    byte[] b = new byte[4096];
@@ -161,22 +155,23 @@ public class SGFLoadActivity
 					    if (file_writer!=null)
 				        	file_writer.close();
 					    
-				    
 					    sgf=out.toString();
 						
-						Log.i("got sgf" + sgf);
+						Log.i("got sgf content:" + sgf);
 						game=SGFHelper.sgf2game(sgf,this);
 						
 					} catch (Exception e) {
 						Log.i("exception in load" + e);
 						e.printStackTrace();
 						
+						/* if the sgf loading fails - give the user the option to send this SGF to me - to perhaps fix the 
+						 * parser to load more SGF's - TODO remove this block if all SGF's load fine ;-) */
 						
 						new AlertDialog.Builder(this).setTitle(R.string.results)
 						.setMessage(
 								 "Problem Loading sgf would you like to send ligi this sgf to fix the problem?"
 						).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int whichButton) {
+							public void onClick(DialogInterface dialog, int whichButton) {
 							final  Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 							emailIntent .setType("plain/text");
 							emailIntent .putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"ligi@ligi.de"});
@@ -184,14 +179,12 @@ public class SGFLoadActivity
 							emailIntent .putExtra(android.content.Intent.EXTRA_TEXT, "uri: " + intent_uri + "sgf:\n" + sgf);
 							SGFLoadActivity.this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
 							finish();
-						}
-					}).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
+							}
+							}).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton) {
 							finish();
 						}
-					})
-					
-					.show();
+						}).show();
 						return;
 					}
 					
@@ -212,21 +205,20 @@ public class SGFLoadActivity
 		}
 		
 		GoGameProvider.setGame(game);
-
+ 
 		handler.post(new Runnable() {
-
 			@Override
 			public void run() {
 				alert_dlg.hide();
 				finish();
-			}});
+			}}
+		);
 
      	Intent go_start_intent=new Intent(SGFLoadActivity.this,GoActivity.class);
-    	//go_start_intent.setData(Uri.parse("file://"+files[position].getAbsolutePath()));
     	startActivity(go_start_intent);
 	}
 	
-	String act_message;
+	
 	@Override
 	public void progress(int act, int max, String Message) {
 		act_progress=act;

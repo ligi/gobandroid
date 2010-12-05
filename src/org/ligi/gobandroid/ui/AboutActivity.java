@@ -31,18 +31,21 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /**
- * This is the main Activity of gobandroid
+ * This is the Info Activity of gobandroid
+ * links to some webpages with info's which could be interesting for gobandroid users
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  *         
 **/
 
 public class AboutActivity extends ListActivity {
-    public String[] menu_items= {"Changelog","Credits", "Ligi's Blog"  };
+    public String[] menu_items= {"Go Rules", "Changelog","Credits", "Ligi's Blog","Support"  };
     
-    private final static int MENU_CHANGELOG=0;
-    private final static int MENU_CREDITS=1;
-    private final static int MENU_BLOG=2;
+    private final static int MENU_RULES=0;
+    private final static int MENU_CHANGELOG=1;
+    private final static int MENU_CREDITS=2;
+    private final static int MENU_BLOG=3;
+    private final static int MENU_SUPPORT=4;
     
     /** Called when the activity is first created. */
     @Override
@@ -62,31 +65,29 @@ public class AboutActivity extends ListActivity {
         super.onListItemClick(l, v, position, id);
 
 		switch (position) {
-		case MENU_CHANGELOG:
+			case MENU_RULES:
+				open_uri("http://en.wikipedia.org/wiki/Rules_of_Go");
+				break;
 
-			this
-					.startActivity(new Intent(
-							"android.intent.action.VIEW",
-							Uri
-									.parse("http://github.com/ligi/gobandroid/raw/master/CHANGELOG.TXT")));
+			case MENU_CHANGELOG:
+				open_uri("http://github.com/ligi/gobandroid/raw/master/CHANGELOG.TXT");
+				break;
 
-			break;
+			case MENU_CREDITS:
+				open_uri("http://github.com/ligi/gobandroid/raw/master/CREDITS.TXT");
+				break;
 
-		case MENU_CREDITS:
-			this
-					.startActivity(new Intent(
-							"android.intent.action.VIEW",
-							Uri.parse("http://github.com/ligi/gobandroid/raw/master/CREDITS.TXT")));
+			case MENU_BLOG:
+				open_uri("http://ligi.de");
+				break;
 
-			break;
-
-		case MENU_BLOG:
-			this.startActivity(new Intent("android.intent.action.VIEW", Uri
-					.parse("http://ligi.de")));
-			break;
-
+			case MENU_SUPPORT:
+				open_uri("https://flattr.com/thing/49828/gobandroid");
+				break;
 		}
-  
     }
     
+    public void open_uri(String uri) {
+		this.startActivity(new Intent("android.intent.action.VIEW", Uri.parse(uri)));
+    }
 }

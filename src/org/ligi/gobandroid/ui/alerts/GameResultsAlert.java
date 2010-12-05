@@ -57,7 +57,6 @@ public class GameResultsAlert {
 		img.setPadding(0, 0, 20, 0);
 		
 		row.addView(img);
-
 		
 		img=new ImageView(context);
 		img.setImageBitmap(GOSkin.getWhiteStone(32));
@@ -94,8 +93,6 @@ public class GameResultsAlert {
 		row.addView(filledTextView(context,""+game.getPointsWhite(),true,size2));
 		table.addView(row);
 		
-		
-		
 		String game_fin_txt="";
 		if (game.getPointsBlack()==game.getPointsWhite())
 			 game_fin_txt=context.getResources().getString(R.string.game_ended_in_draw);
@@ -113,9 +110,7 @@ public class GameResultsAlert {
 		
 		new AlertDialog.Builder(context).setTitle(R.string.results).setView(scrollview)
 		.setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-			
-		}
+		public void onClick(DialogInterface dialog, int whichButton) { }
 	}).show();
 	}
 	
