@@ -138,7 +138,8 @@ public class SGFLoadActivity
 						
 						FileOutputStream file_writer =null;
 
-						if (intent_uri.toString().startsWith("http"))	{
+						// if it comes from network
+						if (intent_uri.toString().startsWith("http")) { // https catched also
 					    	new File(GoPrefs.getSGFPath()+"/downloads").mkdirs();
 					    	File f = new File(GoPrefs.getSGFPath()+"/downloads/"+intent_uri.getLastPathSegment()	);
 							f.createNewFile();
