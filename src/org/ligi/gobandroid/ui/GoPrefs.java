@@ -30,6 +30,7 @@ public class GoPrefs {
 	private static SharedPreferences shared_prefs;
 	
 	public final static String KEY_FATFINGER="fatfinger";
+	public final static String KEY_VIEWABLESTONE="viewablestone";
 	public final static String KEY_FULLSCREEN="fullscreen";
 	public final static String KEY_KEEPLIGHT="keeplight";
 	public final static String KEY_BOARD_SKIN="board_skina";
@@ -125,6 +126,10 @@ public class GoPrefs {
 	
 	public static boolean getFatFingerEnabled() {
 		return shared_prefs.getBoolean(KEY_FATFINGER, false);
+	}
+	
+	public static boolean getViewableStoneEnabled() {
+		return shared_prefs.getBoolean(KEY_VIEWABLESTONE, false);
 	}
 	
 	public static boolean getFullscreenEnabled() {

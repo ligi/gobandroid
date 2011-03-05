@@ -56,6 +56,7 @@ public class GoBoardView extends View {
     
     private Paint textPaint;
     private Paint bitmapPaint;
+    private Paint placeStonePaint;
     
     public float stone_size;
     private float stone_size_zoomed;
@@ -129,6 +130,8 @@ public class GoBoardView extends View {
         textPaint.setAntiAlias(false);
 
         bitmapPaint=new Paint();
+        placeStonePaint=new Paint();
+        placeStonePaint.setAlpha(127);
         
         setFocusable(true);   
     }
@@ -208,6 +211,12 @@ public class GoBoardView extends View {
     	
         canvas.translate(offset_x, offset_y);
         
+        // draw stone
+        if (game.isBlackToMove())
+            canvas.drawBitmap(black_stone_bitmap, touch_x*stone_size, touch_y*stone_size, placeStonePaint);
+        else
+        	canvas.drawBitmap(white_stone_bitmap, touch_x*stone_size, touch_y*stone_size, placeStonePaint);
+        
         // draw the vertical lines
         for(int x=0;x<game.getVisualBoard().getSize();x++)
         	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(game.getVisualBoard().getSize()-1) +stone_size/2.0f,(touch_x==x)?gridPaint_h:gridPaint);	
@@ -216,7 +225,6 @@ public class GoBoardView extends View {
         for(int x=0;x<game.getVisualBoard().getSize();x++)
         {
             canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(game.getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size, (touch_y==x)?gridPaint_h:gridPaint);
-            
             if (GoPrefs.getLegendEnabled()) {
             	canvas.drawText("" + (1+x) , 6+ stone_size*(float)(game.getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size+gridPaint.getTextSize()/3,gridPaint);
             	

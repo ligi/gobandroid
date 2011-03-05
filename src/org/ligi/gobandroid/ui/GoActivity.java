@@ -492,9 +492,22 @@ public class GoActivity
 
     public void doTouch( MotionEvent event) {
     	
-    	float virtualTouchX=event.getX()-board_view.offset_x;
-    	float virtualTouchY=event.getY()-board_view.offset_y;
-    	
+    	float virtualTouchX;
+    	float virtualTouchY;
+    	if (!GoPrefs.getViewableStoneEnabled()) {
+    		virtualTouchX=event.getX()-board_view.offset_x;
+			virtualTouchY=event.getY()-board_view.offset_y;
+    	}
+		else 
+			if (board_view.getWidth()<board_view.getHeight()) {
+				virtualTouchX=event.getX()-board_view.offset_x;
+				virtualTouchY=event.getY()-board_view.offset_y - 4*board_view.stone_size;
+			}
+			else {
+				virtualTouchX=event.getX()-board_view.offset_x - 4*board_view.stone_size;
+    			virtualTouchY=event.getY()-board_view.offset_y;
+			}
+				
     	float board_size=board_view.stone_size*game.getVisualBoard().getSize();
     	
     	if ((virtualTouchY<board_size)&&(virtualTouchX<board_size)) { // if user put his finger on the board
