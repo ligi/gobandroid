@@ -69,8 +69,8 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
 
         nextScreenCheckBoxPref = new CheckBoxPreference(this);
         nextScreenCheckBoxPref.setKey(GoPrefs.KEY_VIEWABLESTONE);
-        nextScreenCheckBoxPref.setTitle("place viewable stone");
-        nextScreenCheckBoxPref.setSummary("can see placement");
+        nextScreenCheckBoxPref.setTitle("place stone viewable");
+        nextScreenCheckBoxPref.setSummary("stone above finger to see it");
         inlinePrefCat.addPreference(nextScreenCheckBoxPref);
 
         CheckBoxPreference markLastStoneCheckBoxPref = new CheckBoxPreference(this);
