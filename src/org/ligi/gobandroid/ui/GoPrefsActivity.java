@@ -35,6 +35,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 
 public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceChangeListener {
 
+	private ListPreference viewDistPref;
 	private ListPreference boardSkinPref;
 	private ListPreference stoneSkinPref;
 	private EditTextPreference sgf_path_pref;
@@ -73,6 +74,17 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         nextScreenCheckBoxPref.setSummary("can see placement");
         inlinePrefCat.addPreference(nextScreenCheckBoxPref);
 
+        viewDistPref = new ListPreference(this);
+        viewDistPref.setEntries(GoPrefs.getViewableDistanceStrings());
+        viewDistPref.setEntryValues(GoPrefs.getViewableDistanceStrings());
+        viewDistPref.setDialogTitle("Set Viewable Stone Distance");
+        viewDistPref.setKey(GoPrefs.KEY_VIEW_STONE_DISTANCE);
+        viewDistPref.setTitle("viewable stone distance");
+        viewDistPref.setSummary("How far stone should be");
+        viewDistPref.setOnPreferenceChangeListener(this);
+        viewDistPref.setDefaultValue(GoPrefs.DEFAULT_VIEWABLE_DISTANCE);
+        inlinePrefCat.addPreference(viewDistPref);
+        
         CheckBoxPreference markLastStoneCheckBoxPref = new CheckBoxPreference(this);
         markLastStoneCheckBoxPref.setKey(GoPrefs.KEY_MARKLASTSTONE);
         markLastStoneCheckBoxPref.setTitle("mark last stone");

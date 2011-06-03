@@ -501,10 +501,12 @@ public class GoActivity
 		else 
 			if (board_view.getWidth()<board_view.getHeight()) {
 				virtualTouchX=event.getX()-board_view.offset_x;
-				virtualTouchY=event.getY()-board_view.offset_y - 4*board_view.stone_size;
+				virtualTouchY=event.getY()-board_view.offset_y - 
+					GoPrefs.getViewableDistance()*board_view.stone_size;
 			}
 			else {
-				virtualTouchX=event.getX()-board_view.offset_x - 4*board_view.stone_size;
+				virtualTouchX=event.getX()-board_view.offset_x - 
+					GoPrefs.getViewableDistance()*board_view.stone_size;
     			virtualTouchY=event.getY()-board_view.offset_y;
 			}
 				
