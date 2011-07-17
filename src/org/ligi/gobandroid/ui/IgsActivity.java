@@ -24,6 +24,8 @@ import org.ligi.gobandroid.ui.GoPrefs;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -74,6 +76,8 @@ public class IgsActivity extends ListActivity {
         		
             case MENU_CONSOLE:
             	text = "Console";
+            	Intent go_intent=new Intent(this,IgsConsoleActivity.class);
+            	startActivity(go_intent);
             	break;
 
             case MENU_PREFERENCES:
