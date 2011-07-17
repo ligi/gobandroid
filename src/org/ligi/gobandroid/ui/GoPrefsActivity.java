@@ -64,8 +64,14 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         
         CheckBoxPreference nextScreenCheckBoxPref = new CheckBoxPreference(this);
         nextScreenCheckBoxPref.setKey(GoPrefs.KEY_FATFINGER);
-        nextScreenCheckBoxPref.setTitle("first tap zooms");
-        nextScreenCheckBoxPref.setSummary("aka fat finger mode");
+        nextScreenCheckBoxPref.setTitle(R.string.first_tap_zooms);
+        nextScreenCheckBoxPref.setSummary(R.string.first_tap_zooms_summary);
+        inlinePrefCat.addPreference(nextScreenCheckBoxPref);
+
+        nextScreenCheckBoxPref = new CheckBoxPreference(this);
+        nextScreenCheckBoxPref.setKey(GoPrefs.KEY_VIEWABLESTONE);
+        nextScreenCheckBoxPref.setTitle(R.string.viewable_stone);
+        nextScreenCheckBoxPref.setSummary(R.string.viewable_stone_sum);
         inlinePrefCat.addPreference(nextScreenCheckBoxPref);
 
         nextScreenCheckBoxPref = new CheckBoxPreference(this);
@@ -87,29 +93,29 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         
         CheckBoxPreference markLastStoneCheckBoxPref = new CheckBoxPreference(this);
         markLastStoneCheckBoxPref.setKey(GoPrefs.KEY_MARKLASTSTONE);
-        markLastStoneCheckBoxPref.setTitle("mark last stone");
-        markLastStoneCheckBoxPref.setSummary("little circle showing last stone");
+        markLastStoneCheckBoxPref.setTitle(R.string.mark_last_stone);
+        markLastStoneCheckBoxPref.setSummary(R.string.mark_last_stone_summary);
         inlinePrefCat.addPreference(markLastStoneCheckBoxPref);
         
         /* Skin section */
         PreferenceCategory skinPrefCat = new PreferenceCategory(this);
-        skinPrefCat.setTitle("Skin");
+        skinPrefCat.setTitle(R.string.skin);
         root.addPreference( skinPrefCat);
         
         PreferenceScreen intentPref = getPreferenceManager().createPreferenceScreen(this);
         Intent i=new Intent().setAction(Intent.ACTION_VIEW)
         .setData(Uri.parse("market://search?q=skinstaller"));
         intentPref.setIntent(i);
-        intentPref.setTitle("Install Skins");
-        intentPref.setSummary("get skins from the market");
+        intentPref.setTitle(R.string.install_skins);
+        intentPref.setSummary(R.string.get_skins_from_market);
         skinPrefCat.addPreference(intentPref);
 
         boardSkinPref = new ListPreference(this);
         boardSkinPref.setEntries(GoPrefs.getAllSkinNames());
         boardSkinPref.setEntryValues(GoPrefs.getAllSkinNames());
-        boardSkinPref.setDialogTitle("Set Skin");
+        boardSkinPref.setDialogTitle(R.string.set_skin);
         boardSkinPref.setKey(GoPrefs.KEY_BOARD_SKIN);
-        boardSkinPref.setTitle("Board Skin");
+        boardSkinPref.setTitle(R.string.board_skin);
         boardSkinPref.setSummary(GoPrefs.getBoardSkinName());
         boardSkinPref.setOnPreferenceChangeListener(this);
         boardSkinPref.setDefaultValue(GoPrefs.getBoardSkinName());
@@ -119,9 +125,9 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         stoneSkinPref = new ListPreference(this);
         stoneSkinPref.setEntries(GoPrefs.getAllSkinNames());
         stoneSkinPref.setEntryValues(GoPrefs.getAllSkinNames());
-        stoneSkinPref.setDialogTitle("Set Skin");
+        stoneSkinPref.setDialogTitle(R.string.set_skin);
         stoneSkinPref.setKey(GoPrefs.KEY_STONES_SKIN);
-        stoneSkinPref.setTitle("Stone Skin");
+        stoneSkinPref.setTitle(R.string.stone_skin);
         stoneSkinPref.setSummary(GoPrefs.getStoneSkinName());
         stoneSkinPref.setOnPreferenceChangeListener(this);
         stoneSkinPref.setDefaultValue(GoPrefs.getStoneSkinName());
@@ -129,41 +135,41 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
 
         /* UI section */
         PreferenceCategory uiPrefCat = new PreferenceCategory(this);
-        uiPrefCat.setTitle("Screen");
+        uiPrefCat.setTitle(R.string.screen);
         root.addPreference( uiPrefCat);
 
         CheckBoxPreference fullscreenCheckBoxPref = new CheckBoxPreference(this);
         fullscreenCheckBoxPref.setKey(GoPrefs.KEY_FULLSCREEN);
-        fullscreenCheckBoxPref.setTitle("Fullscreen Board");
-        fullscreenCheckBoxPref.setSummary("see some more Board");
+        fullscreenCheckBoxPref.setTitle(R.string.fullscreen_board);
+        fullscreenCheckBoxPref.setSummary(R.string.fullscreen_board_summary);
        	uiPrefCat.addPreference(fullscreenCheckBoxPref);
 
 
         CheckBoxPreference keepScreenAwakeCheckBoxPref = new CheckBoxPreference(this);
         keepScreenAwakeCheckBoxPref.setKey(GoPrefs.KEY_KEEPLIGHT);
-        keepScreenAwakeCheckBoxPref.setTitle("Constant Light");
-        keepScreenAwakeCheckBoxPref.setSummary("drain your Battery while playing");
+        keepScreenAwakeCheckBoxPref.setTitle(R.string.constant_light);
+        keepScreenAwakeCheckBoxPref.setSummary(R.string.drain_your_battery_while_playing);
        	uiPrefCat.addPreference(keepScreenAwakeCheckBoxPref);
 
         CheckBoxPreference doEmbossCheckBoxPref = new CheckBoxPreference(this);
         doEmbossCheckBoxPref.setKey(GoPrefs.KEY_GRID_EMBOSS);
-        doEmbossCheckBoxPref.setTitle("Grid Emboss");
+        doEmbossCheckBoxPref.setTitle(R.string.grid_emboss);
         doEmbossCheckBoxPref.setDefaultValue(GoPrefs.getGridEmbossEnabled());
-        doEmbossCheckBoxPref.setSummary("emboss the grid or pure black");
+        doEmbossCheckBoxPref.setSummary(R.string.grid_emboss_summary);
        	uiPrefCat.addPreference(doEmbossCheckBoxPref);
 
         doLegendCheckBoxPref = new CheckBoxPreference(this);
         doLegendCheckBoxPref.setKey(GoPrefs.KEY_DO_LEGEND);
-        doLegendCheckBoxPref.setTitle("Show Legend");
-        doLegendCheckBoxPref.setSummary("show legend to see position fast");
+        doLegendCheckBoxPref.setTitle(R.string.show_legend);
+        doLegendCheckBoxPref.setSummary(R.string.show_legend_summary);
         doLegendCheckBoxPref.setDefaultValue(GoPrefs.getLegendEnabled());
         doLegendCheckBoxPref.setOnPreferenceChangeListener(this);
        	uiPrefCat.addPreference(doLegendCheckBoxPref);
 
         SGFLegendCheckBoxPref = new CheckBoxPreference(this);
         SGFLegendCheckBoxPref.setKey(GoPrefs.KEY_SGF_LEGEND);
-        SGFLegendCheckBoxPref.setTitle("SGF Legend");
-        SGFLegendCheckBoxPref.setSummary("GHJKL instead of GHIJKL");
+        SGFLegendCheckBoxPref.setTitle(R.string.sgf_legend);
+        SGFLegendCheckBoxPref.setSummary(R.string.sgf_legend_summary);
         SGFLegendCheckBoxPref.setEnabled(GoPrefs.getLegendEnabled());
         SGFLegendCheckBoxPref.setDefaultValue(GoPrefs.getLegendSGFMode());
         
@@ -171,7 +177,7 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
        	
         /* SGF section */
         PreferenceCategory sgfPrefCat = new PreferenceCategory(this);
-        sgfPrefCat.setTitle("SGF Preferences");
+        sgfPrefCat.setTitle(R.string.sgf_preferences);
         root.addPreference( sgfPrefCat);
 
 
@@ -182,18 +188,18 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         variantHandlePreference.setEntries(variant_option_labels);
         variantHandlePreference.setEntryValues(variant_options);
         
-        variantHandlePreference.setDialogTitle("Variant Handling");
+        variantHandlePreference.setDialogTitle(R.string.variant_mode);
         variantHandlePreference.setKey(GoPrefs.KEY_VARIANT_MODE);
-        variantHandlePreference.setTitle("Variant Handling");
-        variantHandlePreference.setSummary("how to handle variants when undoing");
+        variantHandlePreference.setTitle(R.string.variant_mode);
+        variantHandlePreference.setSummary(R.string.variant_mode_summary);
         variantHandlePreference.setOnPreferenceChangeListener(this);
         variantHandlePreference.setDefaultValue("ask");
         sgfPrefCat.addPreference(variantHandlePreference);
                 
         sgf_path_pref = new EditTextPreference(this);
-        sgf_path_pref.setTitle("Path");
-        sgf_path_pref.setDialogTitle("SGF Path");
-        sgf_path_pref.setDialogMessage("Please enter the Path where the SGF Files should be saved.");
+        sgf_path_pref.setTitle(R.string.path);
+        sgf_path_pref.setDialogTitle(R.string.sgf_path);
+        sgf_path_pref.setDialogMessage(R.string.enter_sgf_path_request);
         sgfPrefCat.addPreference(sgf_path_pref);
         sgf_path_pref.setKey(GoPrefs.KEY_SGF_PATH);
         
@@ -202,10 +208,10 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         sgf_path_pref.setOnPreferenceChangeListener(this);
 
         sgf_fname_pref = new EditTextPreference(this);
-        sgf_fname_pref.setTitle("Filename");
+        sgf_fname_pref.setTitle(R.string.filename);
         sgfPrefCat.addPreference(sgf_fname_pref);
-        sgf_fname_pref.setDialogTitle("SGF Filename");
-        sgf_fname_pref.setDialogMessage("Please enter the default Filename for SGF Files.");
+        sgf_fname_pref.setDialogTitle(R.string.sgf_filename);
+        sgf_fname_pref.setDialogMessage(R.string.enter_default_filename_for_sgf_request);
         sgf_fname_pref.setKey(GoPrefs.KEY_SGF_FNAME);
         //sgf_fname_pref.setDefaultValue(GoPrefs.DEFAULT_SGF_FNAME);        
         sgf_fname_pref.setText(GoPrefs.getSGFFname());
@@ -213,15 +219,15 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         sgf_fname_pref.setOnPreferenceChangeListener(this);
 
         PreferenceCategory aiPrefCat = new PreferenceCategory(this);
-        aiPrefCat.setTitle("A.I. Preferences");
+        aiPrefCat.setTitle(R.string.ai_preferences);
         root.addPreference( aiPrefCat);
         
         aiLevelPref = new ListPreference(this);
         aiLevelPref.setEntries(GoPrefs.getAllAILevelStrings());
         aiLevelPref.setEntryValues(GoPrefs.getAllAILevelStrings());
-        aiLevelPref.setDialogTitle("Set A.I. Strength");
+        aiLevelPref.setDialogTitle(R.string.set_ai_strength);
         aiLevelPref.setKey(GoPrefs.KEY_AI_LEVEL);
-        aiLevelPref.setTitle("A.I. strength");
+        aiLevelPref.setTitle(R.string.ai_strength);
         aiLevelPref.setSummary(GoPrefs.getAILevelString());
         aiLevelPref.setOnPreferenceChangeListener(this);
         aiLevelPref.setDefaultValue(GoPrefs.DEFAULT_AI_LEVEL);

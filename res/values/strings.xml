@@ -41,6 +41,39 @@
 	<string name="invalid_move_ko">KO!</string>
 	<string name="invalid_move_no_liberties">no liberties!</string>
 	<string name="hint_stone_move">You tapped on the current stone. This initiates moving a stone which is indicated by a half transparent Stone.</string>
-
-
+	<string name="mark_last_stone">mark last stone</string>
+	<string name="mark_last_stone_summary">little circle showing last stone</string>
+	<string name="first_tap_zooms">first tap zooms</string>
+	<string name="first_tap_zooms_summary">aka fat finger mode</string>
+	<string name="viewable_stone">place stone viewable</string>
+	<string name="viewable_stone_sum">stone above finger to see it</string>
+	<string name="grid_emboss_summary">emboss the grid or pure black</string>
+	<string name="grid_emboss">Grid Emboss</string>
+	<string name="show_legend">Show Legend</string>
+	<string name="show_legend_summary">show legend to see position fast</string>
+	<string name="variant_mode">Variant Handling</string>
+	<string name="variant_mode_summary">how to handle variants when undoing</string>
+	<string name="path">Path</string>
+	<string name="sgf_path">SGF Path</string>
+	<string name="enter_sgf_path_request">Please enter the Path where the SGF Files should be saved.</string>
+	<string name="set_ai_strength">Set A.I. Strength</string>
+	<string name="ai_strength">A.I. strength</string>
+	<string name="ai_preferences">A.I. Preferences</string>
+	<string name="skin">Skin</string>
+	<string name="install_skins">Install Skins</string>
+	<string name="get_skins_from_market">get skins from the market</string>
+	<string name="set_skin">Set Skin</string>
+	<string name="board_skin">Board Skin</string>
+	<string name="fullscreen_board">Fullscreen Board</string>
+	<string name="fullscreen_board_summary">see some more Board</string>
+	<string name="constant_light">Constant Light</string>
+	<string name="drain_your_battery_while_playing">drain your Battery while playing</string>
+	<string name="stone_skin">Stone Skin</string>
+	<string name="screen">Screen</string>
+	<string name="sgf_legend">SGF Legend</string>
+	<string name="sgf_legend_summary">GHJKL instead of GHIJKL</string>
+	<string name="sgf_preferences">SGF Preferences</string>
+	<string name="filename">Filename</string>
+	<string name="sgf_filename">SGF Filename</string>
+	<string name="enter_default_filename_for_sgf_request">Please enter the default Filename for SGF Files.</string>
 </resources>
