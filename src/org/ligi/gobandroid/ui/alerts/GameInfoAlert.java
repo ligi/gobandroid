@@ -110,6 +110,19 @@ public class GameInfoAlert {
 		
 		table_gameinfo.addView(row_white_rank);
 
+		TableRow game_komi_row=new TableRow(ctx);
+		final EditText game_komi_et=new EditText(ctx);
+		game_komi_et.setText(Float.toString(game.getKomi()));
+		game_komi_et.setPadding(2, 0, 5, 0);
+		TextView game_komi_tv=new TextView(ctx);
+		game_komi_tv.setPadding(2, 0, 5, 0);
+		game_komi_tv.setText("Komi");
+		
+		game_komi_row.addView(game_komi_tv);
+		game_komi_row.addView(game_komi_et);
+		
+		table_gameinfo.addView(game_komi_row);
+		
 		TableRow game_result_row=new TableRow(ctx);
 		final EditText game_result_et=new EditText(ctx);
 		game_result_et.setText(game.getMetaData().getResult());
@@ -133,6 +146,7 @@ public class GameInfoAlert {
 			game.getMetaData().setBlackRank(black_rank_et.getText().toString());
 			game.getMetaData().setWhiteName(white_name_et.getText().toString());
 			game.getMetaData().setWhiteRank(white_rank_et.getText().toString());
+			game.setKomi(new Float(game_komi_et.getText().toString()));
 			game.getMetaData().setResult(game_result_et.getText().toString());
 		}
 		}).show();

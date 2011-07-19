@@ -102,6 +102,10 @@ public class GoGame  {
     	return komi;
     }
 
+    public void setKomi(float newKomi) {
+    	komi=newKomi;
+    }
+
     public float getPointsWhite() {
     	return komi+getCapturesWhite()+territory_white;
     }

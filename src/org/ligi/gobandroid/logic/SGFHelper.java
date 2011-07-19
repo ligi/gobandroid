@@ -87,6 +87,7 @@ public class SGFHelper {
 		res+="PW[" + escapeSGF(game.getMetaData().getWhiteName()) + "]";
 		res+="BR[" + escapeSGF(game.getMetaData().getBlackRank()) + "]";
 		res+="WR[" + escapeSGF(game.getMetaData().getWhiteRank()) + "]";
+		res+="KM[" + escapeSGF(Float.toString(game.getKomi())) + "]";
 		res+="RE[" + escapeSGF(game.getMetaData().getResult()) + "]";
 		res+="\n";
 		
