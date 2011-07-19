@@ -52,10 +52,13 @@ public class SGFHelper {
 					res+="[]";
 				else	
 					res+= "[" + (char)('a'+act_move.getX()) +(char)('a'+act_move.getY())+ "]\n";
-				
+
 				black_to_move=!black_to_move;
 			}
-		
+
+			if (act_move.getComment()!="")
+				res+= "C[" + act_move.getComment() + "]\n";
+			
 			GoMove next_move=null;
 			
 			if (act_move.hasNextMove())	{
