@@ -28,7 +28,11 @@ public class IgsConsoleActivity
 			igs = new Socket("igs.joyjoy.net", 6969);
 			input = new BufferedReader(new InputStreamReader(igs.getInputStream()));
 			Thread.currentThread().sleep(1000);
-			st = input.readLine();
+			String st_1 = input.readLine();
+			while (st_1 != null) {
+				st += st_1;
+				st_1 = input.readLine();
+			}
 			igs.close();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
