@@ -46,10 +46,6 @@ public class TsumegoActivity extends ListActivity {
        
 	private String[] tsumego_list;
 	
-    private final static int MENU_CONNECT=0;
-    private final static int MENU_CONSOLE=1;
-    private final static int MENU_PREFERENCES=2;
-
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +54,7 @@ public class TsumegoActivity extends ListActivity {
         GoPrefs.init(this);
         
         setContentView(R.layout.main);
-        File tsumego_dir = new File("/sdcard/tsumego");
+        File tsumego_dir = new File("/sdcard/SDQ_sgf/sgf/");
         tsumego_list = tsumego_dir.list();
         
         this.setListAdapter(new ArrayAdapter<String>(this,
@@ -72,7 +68,7 @@ public class TsumegoActivity extends ListActivity {
 
         Context context = getApplicationContext();
     	int duration = Toast.LENGTH_SHORT;
-    	String tsumego_pack_str = "/sdcard/tsumego/" + tsumego_list[position] + "/";
+    	String tsumego_pack_str = "/sdcard/SDQ_sgf/sgf/" + tsumego_list[position] + "/";
     	File tsumego_pack = new File(tsumego_pack_str);
     	String[] tsumego_list = tsumego_pack.list();
     	Random generator = new Random();
@@ -84,6 +80,7 @@ public class TsumegoActivity extends ListActivity {
     	
     	Intent go_intent=new Intent(this,SGFLoadActivity.class);
     	go_intent.setData(Uri.parse( "file://" + tsumego));
+    	go_intent.putExtra("tsumego_mode", true);
     	startActivity(go_intent);
     }
 }

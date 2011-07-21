@@ -21,6 +21,7 @@ package org.ligi.gobandroid.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
@@ -34,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -72,6 +74,7 @@ public class SGFLoadActivity
 	private AlertDialog alert_dlg;
 	private TextView message_tv;
 	private String act_message;
+	private boolean tsumego_mode=false;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -204,6 +207,10 @@ public class SGFLoadActivity
 			}
 		
 		}
+		
+		tsumego_mode=getIntent().getBooleanExtra("tsumego_mode", false);
+		if (tsumego_mode)
+			game.setTsumegoMode(tsumego_mode);
 		
 		GoGameProvider.setGame(game);
  

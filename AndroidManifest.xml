@@ -68,9 +68,8 @@
     		
 			<data android:mimeType="application/x-go-sgf" />	
 		</intent-filter>
-		
-		
 		</activity>
+		
 		<activity android:name=".ui.TsumegoActivity"></activity>
 		<activity android:name=".ui.IgsActivity"></activity>
 		<activity android:name=".ui.IgsConsoleActivity"></activity>
@@ -78,10 +77,9 @@
 		<activity android:name=".ui.LoadActionsActivity"></activity>
 		<activity android:name=".ui.SGFOnlineListActivity"></activity>
 		<activity android:name=".ui.AboutActivity"></activity>
-		<activity android:name=".ui.GoActivity">
+		<activity android:name=".ui.GoActivity"></activity>		
 		
 		
-		</activity>
 	</application>
     
 </manifest> 
