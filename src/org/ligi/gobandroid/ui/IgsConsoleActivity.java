@@ -1,55 +1,32 @@
 package org.ligi.gobandroid.ui;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import org.ligi.gobandroid.logic.IgsManager;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class IgsConsoleActivity 
 		extends Activity
 {
 	private TextView message_tv;
+	private ScrollView message_sv;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		GoPrefs.init(this);		
-		Socket igs;
-		BufferedReader input;
-		String st = "";
-		
-		try {
-			igs = new Socket("igs.joyjoy.net", 6969);
-			input = new BufferedReader(new InputStreamReader(igs.getInputStream()));
-			Thread.currentThread().sleep(1000);
-			String st_1 = input.readLine();
-			while (st_1 != null) {
-				st += st_1;
-				st_1 = input.readLine();
-			}
-			igs.close();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		st += "\nOML\n";
-		st += "\n awesome!!\n";
-		
+
 		message_tv = new TextView(this);
-	    message_tv.setText(st);
-	    setContentView(message_tv);
+		message_sv = new ScrollView(this);
+		message_sv.addView(message_tv);
+		
+		message_tv.setTextSize((float) 8);
+		message_tv.setTypeface(Typeface.MONOSPACE);
+		message_tv.setText(IgsManager.getConsoleOutput());
+	    setContentView(message_sv);
 	}
 }

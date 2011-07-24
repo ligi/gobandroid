@@ -20,6 +20,7 @@
 package org.ligi.gobandroid.ui;
 
 import org.ligi.gobandroid.R;
+import org.ligi.gobandroid.logic.IgsManager;
 import org.ligi.gobandroid.ui.GoPrefs;
 
 import android.app.ListActivity;
@@ -40,11 +41,15 @@ import android.widget.Toast;
 
 public class IgsActivity extends ListActivity {
        
-	private String[] menu_items= {"Connect", "Console", "Preferences" };
+	private String[] menu_items= {"Connect", 
+			"Disconnect", 
+			"Console", 
+			"Preferences" };
 
     private final static int MENU_CONNECT=0;
-    private final static int MENU_CONSOLE=1;
-    private final static int MENU_PREFERENCES=2;
+    private final static int MENU_DISCONNECT=1;
+    private final static int MENU_CONSOLE=2;
+    private final static int MENU_PREFERENCES=3;
 
 	/** Called when the activity is first created. */
     @Override
@@ -52,6 +57,9 @@ public class IgsActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         
         GoPrefs.init(this);
+        IgsPrefs.init(this);
+        IgsManager IgsMan = new IgsManager();
+        IgsMan.start();
         
         setContentView(R.layout.main);
         this.setListAdapter(new ArrayAdapter<String>(this,
@@ -70,10 +78,16 @@ public class IgsActivity extends ListActivity {
     	switch (position) {
 
         	case MENU_CONNECT:
+        		IgsManager.connect();
             	text = "Connect";
         		break;
         		
-            case MENU_CONSOLE:
+        	case MENU_DISCONNECT:
+        		IgsManager.disconnect();
+            	text = "Disconnect";
+        		break;
+
+        	case MENU_CONSOLE:
             	text = "Console";
             	Intent go_intent=new Intent(this,IgsConsoleActivity.class);
             	startActivity(go_intent);
@@ -81,6 +95,7 @@ public class IgsActivity extends ListActivity {
 
             case MENU_PREFERENCES:
             	text = "Preferences";
+            	startActivity(new Intent(this,IgsPrefsActivity.class));
             	break;
     	}
 
