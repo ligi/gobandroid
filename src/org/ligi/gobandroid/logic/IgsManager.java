@@ -1,12 +1,15 @@
 package org.ligi.gobandroid.logic;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 import org.ligi.gobandroid.ui.GoPrefs;
+import org.ligi.gobandroid.ui.IgsPrefs;
 import org.ligi.tracedroid.logging.Log;
 
 import android.app.Activity;
@@ -17,6 +20,7 @@ public class IgsManager extends Thread {
 
 	private static Socket igs = null;
 	private static BufferedReader input = null;
+	private static PrintWriter output = null;
 	private static String console_output = "";
 	private static boolean is_connected = false;
 	
@@ -27,6 +31,9 @@ public class IgsManager extends Thread {
 		try {
 			igs = new Socket("igs.joyjoy.net", 6969);
 			input = new BufferedReader(new InputStreamReader(igs.getInputStream()));
+			output = new PrintWriter(igs.getOutputStream(), true);
+			output.println(IgsPrefs.getIgsUserName());
+			output.println(IgsPrefs.getIgsUserPassword());			
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,6 +56,7 @@ public class IgsManager extends Thread {
 			e.printStackTrace();
 		}
 		input = null;
+		output = null;
 		is_connected = false;		
 	}
 
