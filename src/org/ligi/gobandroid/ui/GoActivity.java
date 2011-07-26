@@ -83,7 +83,7 @@ public class GoActivity
 	private static final int MENU_SHOWCONTROLS= 5;
 	private static final int MENU_GAMEINFO = 6;
 
-	private GoGame game=null;
+	private static GoGame game=null;
 	private GoBoardView board_view;
 	private GoBoardOverlay overlay;
 	
@@ -437,10 +437,7 @@ public class GoActivity
     	mWakeLock=null;
     }
 
-    @Override 
-    public void onPause() {
-    	super.onPause();
-    	
+    public static void autosaveSGF() {
 		try {
 			File f=new File(GoPrefs.getSGFPath() + "/autosave.sgf");
 			f.createNewFile();
@@ -455,7 +452,13 @@ public class GoActivity
 			
 		} catch (IOException e) {
 			Log.i(""+e);
-		}
+		}    	
+    }
+    
+    @Override 
+    public void onPause() {
+    	super.onPause();
+    	autosaveSGF();
 	
 		releaseWakeLock();
     }
