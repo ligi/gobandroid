@@ -305,9 +305,6 @@ public class GoGame  {
         act_move.setDidCaptures((tmp_cap!=(captures_black+captures_white)));
 
         // if we reached this point this move must be valid
-        
-        GoActivity.autosaveSGF();
-        
         return MOVE_VALID;
     }
     

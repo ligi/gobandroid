@@ -493,62 +493,63 @@ public class GoActivity
     }
 	
 
-    public void doTouch( MotionEvent event) {
-    	
-    	float virtualTouchX;
-    	float virtualTouchY;
-    	if (!GoPrefs.getViewableStoneEnabled()) {
-    		virtualTouchX=event.getX()-board_view.offset_x;
+	public void doTouch( MotionEvent event) {
+
+		float virtualTouchX;
+		float virtualTouchY;
+		if (!GoPrefs.getViewableStoneEnabled()) {
+			virtualTouchX=event.getX()-board_view.offset_x;
 			virtualTouchY=event.getY()-board_view.offset_y;
-    	}
+		}
 		else 
 			if (board_view.getWidth()<board_view.getHeight()) {
 				virtualTouchX=event.getX()-board_view.offset_x;
 				virtualTouchY=event.getY()-board_view.offset_y - 
-					GoPrefs.getViewableDistance()*board_view.stone_size;
+				GoPrefs.getViewableDistance()*board_view.stone_size;
 			}
 			else {
 				virtualTouchX=event.getX()-board_view.offset_x - 
-					GoPrefs.getViewableDistance()*board_view.stone_size;
-    			virtualTouchY=event.getY()-board_view.offset_y;
+				GoPrefs.getViewableDistance()*board_view.stone_size;
+				virtualTouchY=event.getY()-board_view.offset_y;
 			}
-				
-    	float board_size=board_view.stone_size*game.getVisualBoard().getSize();
-    	
-    	if ((virtualTouchY<board_size)&&(virtualTouchX<board_size)) { // if user put his finger on the board
 
-    		// calculate position on the field by position on the touchscreen
-    		board_view.touch_x=(byte)(virtualTouchX/board_view.stone_size);
-    		board_view.touch_y=(byte)(virtualTouchY/board_view.stone_size);
-    		
-    		if (event.getAction()==MotionEvent.ACTION_UP) {
-    			
-    			// if pressed on the last stone - initialize a Stone move
-        			if (board_view.isZoomed()||(!GoPrefs.getFatFingerEnabled()))	{
-        				if (board_view.move_stone_mode) {
-        					// TODO check if this is an illegal move ( e.g. in variants )
-        					game.getActMove().setXY(board_view.touch_x, board_view.touch_y);
-        					game.refreshBoards();
-        					board_view.move_stone_mode=false;
-        					}
-        				else if ((game.getActMove().getX()==board_view.touch_x)&&(game.getActMove().getY()==board_view.touch_y)) 
-        					board_view.initializeStoneMove();
-                		else 
-                			doMove(board_view.touch_x,board_view.touch_y);
-        				
-        				board_view.touch_x=-1;
-        				board_view.touch_y=-1;
-        				
-        				board_view.setZoom(false);
-        			}
-        			else
-        				board_view.setZoom(true);
-    		}
-        }
-    	board_view.invalidate();  // the board looks different after a move (-;
-     }
- 
- 
+		float board_size=board_view.stone_size*game.getVisualBoard().getSize();
+
+		if ((virtualTouchY<board_size)&&(virtualTouchX<board_size)) { // if user put his finger on the board
+
+			// calculate position on the field by position on the touchscreen
+			board_view.touch_x=(byte)(virtualTouchX/board_view.stone_size);
+			board_view.touch_y=(byte)(virtualTouchY/board_view.stone_size);
+
+			if (event.getAction()==MotionEvent.ACTION_UP) {
+
+				// if pressed on the last stone - initialize a Stone move
+				if (board_view.isZoomed()||(!GoPrefs.getFatFingerEnabled()))	{
+					if (board_view.move_stone_mode) {
+						// TODO check if this is an illegal move ( e.g. in variants )
+						game.getActMove().setXY(board_view.touch_x, board_view.touch_y);
+						game.refreshBoards();
+						board_view.move_stone_mode=false;
+					}
+					else if ((game.getActMove().getX()==board_view.touch_x)&&(game.getActMove().getY()==board_view.touch_y)) 
+						board_view.initializeStoneMove();
+					else 
+						doMove(board_view.touch_x,board_view.touch_y);
+
+					board_view.touch_x=-1;
+					board_view.touch_y=-1;
+
+					board_view.setZoom(false);
+				}
+				else
+					board_view.setZoom(true);
+			}
+		}
+		board_view.invalidate();  // the board looks different after a move (-;
+
+		GoActivity.autosaveSGF();
+	}
+
     public void doMove(byte x,byte y) {
     	info_toast.cancel();
     	switch(game.do_move(x, y)){
