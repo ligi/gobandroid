@@ -83,7 +83,7 @@ public class GoActivity
 	private static final int MENU_SHOWCONTROLS= 5;
 	private static final int MENU_GAMEINFO = 6;
 
-	private static GoGame game=null;
+	private GoGame game=null;
 	private GoBoardView board_view;
 	private GoBoardOverlay overlay;
 	
@@ -437,24 +437,24 @@ public class GoActivity
     	mWakeLock=null;
     }
 
-    public static void autosaveSGF() {
-		try {
-			File f=new File(GoPrefs.getSGFPath() + "/autosave.sgf");
-			f.createNewFile();
-			
-			FileWriter sgf_writer = new FileWriter(f);
-			
-			BufferedWriter out = new BufferedWriter(sgf_writer);
-			
-			out.write(SGFHelper.game2sgf(game));
-			out.close();
-			sgf_writer.close();
-			
-		} catch (IOException e) {
-			Log.i(""+e);
-		}    	
+    public void autosaveSGF() {
+    	try {
+    		File f=new File(GoPrefs.getSGFPath() + "/autosave.sgf");
+    		f.createNewFile();
+
+    		FileWriter sgf_writer = new FileWriter(f);
+
+    		BufferedWriter out = new BufferedWriter(sgf_writer);
+
+    		out.write(SGFHelper.game2sgf(this.game));
+    		out.close();
+    		sgf_writer.close();
+
+    	} catch (IOException e) {
+    		Log.i(""+e);
+    	}    	
     }
-    
+
     @Override 
     public void onPause() {
     	super.onPause();
@@ -543,11 +543,13 @@ public class GoActivity
 				}
 				else
 					board_view.setZoom(true);
+				
+				// Save the move changes here
+				autosaveSGF();
 			}
 		}
 		board_view.invalidate();  // the board looks different after a move (-;
 
-		GoActivity.autosaveSGF();
 	}
 
     public void doMove(byte x,byte y) {

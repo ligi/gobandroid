@@ -226,17 +226,22 @@ public class SGFHelper {
 						game.getActMove().addMarker(new GoMarker(param_x,param_y,"X"));
 					
 					// mark with triangle
-					if (act_cmd.equals("TR"))
-						game.getActMove().addMarker(new GoMarker(param_x,param_y,"△"));
+					if (act_cmd.equals("TR")) {
+						String mark = "\u25b3";
+						game.getActMove().addMarker(new GoMarker(param_x,param_y, mark));
+					}
 					
 					// mark with square
-					if (act_cmd.equals("SQ"))
-						game.getActMove().addMarker(new GoMarker(param_x,param_y,"□"));
+					if (act_cmd.equals("SQ")) {
+						String mark = "\u25a1";
+						game.getActMove().addMarker(new GoMarker(param_x,param_y, mark));
+					}
 					
 					// mark with circle
-					if (act_cmd.equals("CR"))
-						game.getActMove().addMarker(new GoMarker(param_x,param_y,"◯"));
-					
+					if (act_cmd.equals("CR")) {
+						String mark = "\u25cb";
+						game.getActMove().addMarker(new GoMarker(param_x,param_y, mark));
+					}
 					
 					if (act_cmd.equals("GN")) // Game Name
 						metadata.setName(act_param);

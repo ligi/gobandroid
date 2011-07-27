@@ -153,14 +153,14 @@ public class GoBoardOverlay implements OnClickListener {
 			else
 				comment_sv.setLayoutParams(new LinearLayout.LayoutParams(w, h-w-back.getHeight()));
 
-	    	updateCommentText();
+	    	//updateCommentText();
 	    	comment_sv.requestLayout();
 	    }
 
 	    public void updateCommentText() {
 	    	Log.i("Update Comment Text to " + getGameComment()+"_");
 	    	
-			comment_tv.setText(getGameComment());
+	    	comment_tv.setText(getGameComment());
 			comment_tv.requestLayout(); // to make the changed text appear on screen 
 	    }
 	    
