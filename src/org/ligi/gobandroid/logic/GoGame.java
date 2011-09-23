@@ -22,6 +22,7 @@ package org.ligi.gobandroid.logic;
 import java.util.Vector;
 import java.util.Stack;
 
+import org.ligi.gobandroid.ui.GoActivity;
 import org.ligi.tracedroid.logging.Log;
 
 /**
@@ -87,7 +88,9 @@ public class GoGame  {
 
     private boolean[][] all_handicap_positions;
 
-    private int local_captures = 0;    
+    private int local_captures = 0;
+    
+    private boolean tsumego_mode=false;
 
     public GoGame( byte size ) {
     	construct(size);
@@ -100,6 +103,18 @@ public class GoGame  {
     
     public float getKomi() {
     	return komi;
+    }
+
+    public void setKomi(float newKomi) {
+    	komi=newKomi;
+    }
+
+    public boolean getTsumegoMode() {
+    	return tsumego_mode;
+    }
+
+    public void setTsumegoMode(boolean newTsumegoMode) {
+    	tsumego_mode=newTsumegoMode;
     }
 
     public float getPointsWhite() {

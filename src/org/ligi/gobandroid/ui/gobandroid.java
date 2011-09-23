@@ -63,10 +63,18 @@ public class gobandroid extends ListActivity {
 				android.R.drawable.ic_menu_save, new Intent(this,
 						LoadActionsActivity.class)));
 		
+		menu_items_vector.add(new IconicMenuItem(R.string.tsumego,
+				android.R.drawable.ic_menu_compass, new Intent(this,
+						TsumegoActivity.class)));
+
+		menu_items_vector.add(new IconicMenuItem(R.string.igs,
+				android.R.drawable.ic_menu_compass, new Intent(this,
+						IgsActivity.class)));
+
 		menu_items_vector.add(new IconicMenuItem(R.string.settings,
 				android.R.drawable.ic_menu_preferences, new Intent(this,
 						GoPrefsActivity.class)));
-		
+
 		menu_items_vector.add(new IconicMenuItem(R.string.info,
 				android.R.drawable.ic_menu_info_details, new Intent(this,
 						AboutActivity.class)));

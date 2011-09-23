@@ -3,7 +3,8 @@
     <string name="app_name">gobandroid</string>
     <string name="start_game">Start Game</string>
     <string name="load_game">Load Game</string>
-    <string name="info">Info</string>
+    <string name="tsumego">Tsumego</string>
+    <string name="igs">IGS</string><string name="info">Info</string>
     <string name="quit">Quit</string>
 	<string name="quit_confirm">Do you really want to quit this game?</string>
 	<string name="no">No</string>
