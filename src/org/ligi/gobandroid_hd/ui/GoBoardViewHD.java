@@ -31,6 +31,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -334,6 +335,11 @@ public class GoBoardViewHD extends SquareView {
     	return stone_size*game.getVisualBoard().getSize();
     }
 
+    
+    private Bitmap getScaledRes(float size,int resID) {
+    	Bitmap unscaled_bitmap=BitmapFactory.decodeResource(this.getResources(),resID);
+    	return   Bitmap.createScaledBitmap(unscaled_bitmap, (int)size, (int)size, true);
+    }
     /**
      * resize the images regarding to stone_size
      */
@@ -341,10 +347,10 @@ public class GoBoardViewHD extends SquareView {
    
     	Log.i("regenerating images to stone size " + stone_size);
     	float SMALL_STONE_SCALER=0.6f;	
-    	white_stone_bitmap=GOSkin.getWhiteStone(stone_size);
-    	black_stone_bitmap=GOSkin.getBlackStone(stone_size);
-    	white_stone_bitmap_small=GOSkin.getWhiteStone(SMALL_STONE_SCALER*stone_size);
-    	black_stone_bitmap_small=GOSkin.getBlackStone(SMALL_STONE_SCALER*stone_size);
+    	white_stone_bitmap=getScaledRes(stone_size,R.drawable.stone_white);
+    	black_stone_bitmap=getScaledRes(stone_size,R.drawable.stone_black);
+    	white_stone_bitmap_small=getScaledRes(stone_size*SMALL_STONE_SCALER,R.drawable.stone_white);
+    	black_stone_bitmap_small=getScaledRes(stone_size*SMALL_STONE_SCALER,R.drawable.stone_black);
     
     	regenerate_stones_flag=false;
     	
