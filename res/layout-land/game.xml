@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+   	style="@style/default_activity_main">
+   	
+ 	
+	<include layout="@layout/actionbar"/>
+	
+	<LinearLayout android:orientation="horizontal"
+   				  style="@style/default_activity_main">
+   	
+	<org.ligi.gobandroid_hd.ui.GoBoardViewHD android:id="@id/go_board"
+ 		android:layout_width="fill_parent" android:layout_height="fill_parent">
+ 	</org.ligi.gobandroid_hd.ui.GoBoardViewHD>
+ 	
+ 	 		
+ 	<RelativeLayout android:layout_width="fill_parent" android:id="@+id/linearLayout1" android:layout_height="fill_parent" android:orientation="horizontal" android:weightSum="11" >
+
+		<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="blabla dsf sd fds fdsf sdf sdf sdf  dsf sdf sdf sdf sdfsdffsdfsf  sdf d" android:textColor="#FF000000" android:layout_weight="10" android:layout_margin="3dip" android:layout_toLeftOf="@+id/linearLayout1" android:layout_alignParentBottom="true" android:layout_alignParentTop="true"/> 	
+		
+		<LinearLayout android:layout_width="wrap_content" android:id="@+id/linearLayout1" android:layout_height="fill_parent" android:weightSum="4" android:layout_weight="1"
+		android:layout_alignParentRight="true" android:orientation="vertical"
+		>
+			<include layout="@layout/nav_buttons"  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+		</LinearLayout>
+	</RelativeLayout>
+ 	 		
+ </LinearLayout>
+</LinearLayout>
