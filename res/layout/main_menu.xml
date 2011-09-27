@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+   	style="@style/default_activity_main"
+    >
+<include layout="@layout/actionbar"/>
+	
+<com.google.android.apps.iosched.ui.widget.DashboardLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <Button android:id="@+id/home_btn_schedule"
+        style="@style/DashboardButton"
+        android:text="@string/start_game"
+        android:drawableTop="@drawable/stone_black"
+        android:onClick="startGame" />
+    
+    <Button android:id="@+id/home_btn_schedule"
+        style="@style/DashboardButton"
+        android:text="@string/settings"
+        android:drawableTop="@drawable/icon_settings"
+        android:onClick="startSettings" />
+
+    <Button android:id="@+id/home_btn_schedule"
+        style="@style/DashboardButton"
+        android:text="@string/load_game"
+        android:drawableTop="@drawable/icon_floppy" 
+        android:onClick="startLoad" />
+    
+    <Button android:id="@+id/home_btn_schedule"
+        style="@style/DashboardButton"
+        android:text="@string/info"
+        android:drawableTop="@drawable/icon_help" 
+        android:onClick="startHelp" />
+        
+	</com.google.android.apps.iosched.ui.widget.DashboardLayout>
+</LinearLayout>

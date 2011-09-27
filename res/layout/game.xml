@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+   	style="@style/default_activity_main">
+   	
+ 	
+	<include layout="@layout/actionbar"/>
+	
+	<org.ligi.gobandroid_hd.ui.GoBoardViewHD android:id="@+id/go_board"
+ 		android:layout_width="fill_parent" android:layout_height="fill_parent">
+ 	</org.ligi.gobandroid_hd.ui.GoBoardViewHD>
+ 	 		
+ 	<RelativeLayout android:layout_width="fill_parent" android:id="@+id/linearLayout1" android:layout_height="fill_parent" android:orientation="vertical" android:weightSum="11" >
+
+		<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_above="@+id/linearLayout1"> 
+		<TextView android:id="@+id/comments_textview" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="" android:textColor="#FF000000" android:layout_weight="10" android:layout_above="@+id/linearLayout1" android:layout_alignParentTop="true" android:layout_margin="3dip"/> 	
+		</ScrollView>
+		
+		<LinearLayout android:layout_width="fill_parent" android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:weightSum="4" android:layout_weight="1"
+		android:layout_alignParentBottom="true"
+		>
+		
+		 <fragment class="org.ligi.gobandroid_hd.ui.NavigationFragment" android:id="@+id/nav_frag"  android:layout_width="fill_parent" android:layout_height="20mm" />
+		
+		 
+		</LinearLayout>
+	</RelativeLayout>
+ 	 		
+</LinearLayout>

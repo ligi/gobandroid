@@ -4,5 +4,5 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<org.ligi.gobandroid.ui.TopView class="org.ligi.gobandroid.ui.TopView" android:id="@+id/TopView" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+<org.ligi.gobandroid_hd.ui.TopView class="org.ligi.gobandroid.ui.TopView" android:id="@+id/TopView" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 </LinearLayout>
