@@ -162,30 +162,40 @@ public class SGFLoadActivity
 						game=SGFHelper.sgf2game(sgf,this);
 						
 					} catch (Exception e) {
-						Log.i("exception in load" + e);
-						e.printStackTrace();
+						Log.w("exception in load", e);
 						
-						/* if the sgf loading fails - give the user the option to send this SGF to me - to perhaps fix the 
-						 * parser to load more SGF's - TODO remove this block if all SGF's load fine ;-) */
+						handler.post(new Runnable() {
+							
+							@Override
+							/** if the sgf loading fails - give the user the option to send this SGF to me - to perhaps fix the 
+							 * parser to load more SGF's - TODO remove this block if all SGF's load fine ;-) */
+							public void run() {
 						
-						new AlertDialog.Builder(this).setTitle(R.string.results)
-						.setMessage(
-								 "Problem Loading sgf would you like to send ligi this sgf to fix the problem?"
-						).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int whichButton) {
-							final  Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-							emailIntent .setType("plain/text");
-							emailIntent .putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"ligi@ligi.de"});
-							emailIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, "SGF Problem");
-							emailIntent .putExtra(android.content.Intent.EXTRA_TEXT, "uri: " + intent_uri + "sgf:\n" + sgf);
-							SGFLoadActivity.this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-							finish();
-							}
-							}).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int whichButton) {
-							finish();
-						}
-						}).show();
+								
+								alert_dlg.hide();
+								new AlertDialog.Builder(SGFLoadActivity.this).setTitle(R.string.results)
+								.setMessage(
+										 "Problem Loading sgf would you like to send ligi this sgf to fix the problem?"
+								).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int whichButton) {
+									final  Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+									emailIntent .setType("plain/text");
+									emailIntent .putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"ligi@ligi.de"});
+									emailIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, "SGF Problem");
+									emailIntent .putExtra(android.content.Intent.EXTRA_TEXT, "uri: " + intent_uri + "sgf:\n" + sgf + "err:" + Log.getCachedLog());
+									SGFLoadActivity.this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+									finish();
+									}
+									}).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int whichButton) {
+									finish();
+								}
+								}).show();
+							}}
+						);
+						
+						
+					
 						return;
 					}
 					
