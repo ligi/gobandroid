@@ -255,6 +255,7 @@ public class SGFHelper {
 					
 					// size command
 					if (act_cmd.equals("SiZe") || act_cmd.equals("SZ")){
+						act_param=act_param.replaceAll("[^0-9]", ""); // had a case of SiZe[ 19 ] was throwing java.lang.NumberFormatException - so fixing 
 						size=Byte.parseByte(act_param);
 						if ((game==null)||(game.getBoardSize()!=size)) {
 							game=new GoGame(size);
