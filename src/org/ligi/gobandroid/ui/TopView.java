@@ -109,7 +109,11 @@ public class TopView extends View implements Runnable
 		canvas.drawText(white_points_str ,this.getWidth()-white_stone.getWidth()*1.2f-getTextWidth(white_points_str), this
 				.getHeight() - 5, mTextPaintWhite);
 
-		String move_txt=   this.getResources().getString(R.string.move ) + " " + game.getActMove().getMovePos();
+		String move_txt;
+		if (!game.getTsumegoMode())
+			move_txt=   this.getResources().getString(R.string.move ) + " " + game.getActMove().getMovePos();
+		else
+			move_txt=   this.getResources().getString(R.string.tsumego );
 		
 		canvas.drawText(move_txt ,this.getWidth()/2-getTextWidth(move_txt)/2.0f, this
 				.getHeight() - 5, mTextPaintWhite);
@@ -148,7 +152,7 @@ public class TopView extends View implements Runnable
 			if (alpha<70||alpha>253)
 				alpha_dir*=-1;
 			try {
-				Thread.sleep(10);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) { }
 		}
 	}

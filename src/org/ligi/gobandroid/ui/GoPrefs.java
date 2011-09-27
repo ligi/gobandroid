@@ -31,6 +31,7 @@ public class GoPrefs {
 	
 	public final static String KEY_FATFINGER="fatfinger";
 	public final static String KEY_VIEWABLESTONE="viewablestone";
+	public final static String KEY_VIEW_STONE_DISTANCE="view_stone_distance";	
 	public final static String KEY_FULLSCREEN="fullscreen";
 	public final static String KEY_KEEPLIGHT="keeplight";
 	public final static String KEY_BOARD_SKIN="board_skina";
@@ -57,6 +58,8 @@ public class GoPrefs {
 	
 	public final static String KEY_GRID_EMBOSS="grid_emboss";
 	
+	public final static String DEFAULT_VIEWABLE_DISTANCE="1";
+
 	public final static String DEFAULT_AI_LEVEL="5";
 	public final static String DEFAULT_SKIN="no Skin";
 	public final static String DEFAULT_SGF_PATH="/sdcard/gobandroid/sgf";
@@ -132,6 +135,17 @@ public class GoPrefs {
 		return shared_prefs.getBoolean(KEY_VIEWABLESTONE, false);
 	}
 	
+	public static String[] getViewableDistanceStrings() {
+		return new String[] {"1","2","3","4","5"};
+	}
+
+	public static byte getViewableDistance() {
+		String viewdist_str=shared_prefs.getString(
+				KEY_VIEW_STONE_DISTANCE,
+				DEFAULT_VIEWABLE_DISTANCE);
+		return Byte.parseByte(viewdist_str);
+	}
+
 	public static boolean getFullscreenEnabled() {
 		return shared_prefs.getBoolean(KEY_FULLSCREEN, false);
 	}

@@ -3,7 +3,7 @@
       package="org.ligi.gobandroid"
       android:versionName="0.58" android:versionCode="58">
 
-     <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="4" />
+     <uses-sdk android:targetSdkVersion="4" android:minSdkVersion="4"/>
     
      <supports-screens android:largeScreens="true"
 						  android:normalScreens="true" 
@@ -17,7 +17,7 @@
 
     <supports-screens android:anyDensity="true" />
       
-    <application android:icon="@drawable/icon" android:label="@string/app_name">
+    <application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="true">
         <activity android:name=".ui.gobandroid"
                   android:label="@string/app_name">
             <intent-filter>
@@ -68,17 +68,19 @@
     		
 			<data android:mimeType="application/x-go-sgf" />	
 		</intent-filter>
-		
-		
 		</activity>
+		
+		<activity android:name=".ui.TsumegoActivity"></activity>
+		<activity android:name=".ui.IgsActivity"></activity>
+		<activity android:name=".ui.IgsConsoleActivity"></activity>
+		<activity android:name=".ui.IgsPrefsActivity"></activity>
 		<activity android:name=".ui.GoPrefsActivity"></activity>
 		<activity android:name=".ui.LoadActionsActivity"></activity>
 		<activity android:name=".ui.SGFOnlineListActivity"></activity>
 		<activity android:name=".ui.AboutActivity"></activity>
-		<activity android:name=".ui.GoActivity">
+		<activity android:name=".ui.GoActivity"></activity>		
 		
 		
-		</activity>
 	</application>
     
 </manifest> 

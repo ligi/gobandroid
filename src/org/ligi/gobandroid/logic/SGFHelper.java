@@ -52,10 +52,13 @@ public class SGFHelper {
 					res+="[]";
 				else	
 					res+= "[" + (char)('a'+act_move.getX()) +(char)('a'+act_move.getY())+ "]\n";
-				
+
 				black_to_move=!black_to_move;
 			}
-		
+
+			if (act_move.getComment()!="")
+				res+= "C[" + act_move.getComment() + "]\n";
+			
 			GoMove next_move=null;
 			
 			if (act_move.hasNextMove())	{
@@ -87,6 +90,7 @@ public class SGFHelper {
 		res+="PW[" + escapeSGF(game.getMetaData().getWhiteName()) + "]";
 		res+="BR[" + escapeSGF(game.getMetaData().getBlackRank()) + "]";
 		res+="WR[" + escapeSGF(game.getMetaData().getWhiteRank()) + "]";
+		res+="KM[" + escapeSGF(Float.toString(game.getKomi())) + "]";
 		res+="RE[" + escapeSGF(game.getMetaData().getResult()) + "]";
 		res+="\n";
 		
@@ -221,18 +225,23 @@ public class SGFHelper {
 					if (act_cmd.equals("Mark") | act_cmd.equals("MA"))
 						game.getActMove().addMarker(new GoMarker(param_x,param_y,"X"));
 					
-					// mark with triangle - fake by |>
-					if (act_cmd.equals("TR"))
-						game.getActMove().addMarker(new GoMarker(param_x,param_y,"|>"));
+					// mark with triangle
+					if (act_cmd.equals("TR")) {
+						String mark = "\u25b3";
+						game.getActMove().addMarker(new GoMarker(param_x,param_y, mark));
+					}
 					
-					// mark with Square - fake by [] atm
-					if (act_cmd.equals("TR"))
-						game.getActMove().addMarker(new GoMarker(param_x,param_y,"[]"));
+					// mark with square
+					if (act_cmd.equals("SQ")) {
+						String mark = "\u25a1";
+						game.getActMove().addMarker(new GoMarker(param_x,param_y, mark));
+					}
 					
-					// mark with Circle - fake by O atm
-					if (act_cmd.equals("CR"))
-						game.getActMove().addMarker(new GoMarker(param_x,param_y,"O"));
-					
+					// mark with circle
+					if (act_cmd.equals("CR")) {
+						String mark = "\u25cb";
+						game.getActMove().addMarker(new GoMarker(param_x,param_y, mark));
+					}
 					
 					if (act_cmd.equals("GN")) // Game Name
 						metadata.setName(act_param);
