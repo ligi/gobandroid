@@ -23,7 +23,7 @@ public class NavigationFragment extends Fragment implements GoGameChangeListener
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-		View res=inflater.inflate(R.layout.nav_buttons, container, false);
+		View res=inflater.inflate(R.layout.nav_button_container, container, false);
 		first_btn=(Button)res.findViewById(R.id.btn_first);
 		last_btn=(Button)res.findViewById(R.id.btn_last);
 		next_btn=(Button)res.findViewById(R.id.btn_next);

@@ -16,12 +16,14 @@
  	 		
  	<RelativeLayout android:layout_width="fill_parent" android:id="@+id/linearLayout1" android:layout_height="fill_parent" android:orientation="horizontal" android:weightSum="11" >
 
-		<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="blabla dsf sd fds fdsf sdf sdf sdf  dsf sdf sdf sdf sdfsdffsdfsf  sdf d" android:textColor="#FF000000" android:layout_weight="10" android:layout_margin="3dip" android:layout_toLeftOf="@+id/linearLayout1" android:layout_alignParentBottom="true" android:layout_alignParentTop="true"/> 	
-		
+<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_toLeftOf="@+id/linearLayout1" android:layout_alignParentBottom="true" android:layout_alignParentTop="true">
+		<TextView android:id="@+id/comments_textview" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="" android:textColor="#FF000000" android:layout_weight="10" android:layout_margin="3dip" /> 	
+</ScrollView>
 		<LinearLayout android:layout_width="wrap_content" android:id="@+id/linearLayout1" android:layout_height="fill_parent" android:weightSum="4" android:layout_weight="1"
 		android:layout_alignParentRight="true" android:orientation="vertical"
 		>
-			<include layout="@layout/nav_buttons"  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+		 <fragment class="org.ligi.gobandroid_hd.ui.NavigationFragment" android:id="@+id/nav_frag"  android:layout_width="20mm" android:layout_height="fill_parent" />
+		
 		</LinearLayout>
 	</RelativeLayout>
  	 		

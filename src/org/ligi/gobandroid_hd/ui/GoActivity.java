@@ -58,11 +58,15 @@ public 	class GoActivity
 			
 			@Override
 			public void onGoGameChange() {
-				go_board.postInvalidate();
-				comment_tv.setText(game.getActMove().getComment());
+				game2ui();
 			}
 		});
-		
+		game2ui();
+	}
+	
+	public void game2ui() {
+		go_board.postInvalidate();
+		comment_tv.setText(game.getActMove().getComment());
 	}
 
 }
