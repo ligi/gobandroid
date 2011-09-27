@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
-    <Button android:onClick="gameNavFirst" android:layout_weight="1" android:drawableTop="@drawable/nav_first" android:id="@+id/btn_first" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
-    <Button android:onClick="gameNavPrev" android:layout_weight="1" android:drawableTop="@drawable/nav_prev" android:id="@+id/btn_prev" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
-    <Button android:onClick="gameNavNext" android:layout_weight="1" android:drawableTop="@drawable/nav_next" android:id="@+id/btn_next" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
-    <Button android:onClick="gameNavLast" android:layout_weight="1" android:drawableTop="@drawable/nav_last" android:id="@+id/btn_last" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
-</merge>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="wrap_content">
+    <Button android:layout_weight="1" android:drawableTop="@drawable/nav_first" android:id="@+id/btn_first" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+    <Button android:layout_weight="1" android:drawableTop="@drawable/nav_prev" android:id="@+id/btn_prev" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+    <Button android:layout_weight="1" android:drawableTop="@drawable/nav_next" android:id="@+id/btn_next" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+    <Button android:layout_weight="1" android:drawableTop="@drawable/nav_last" android:id="@+id/btn_last" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+</LinearLayout>
 

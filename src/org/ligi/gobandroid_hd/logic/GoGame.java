@@ -45,7 +45,11 @@ public class GoGame  {
 	public void addGoGameChangeListener(GoGameChangeListener new_l) {
 		change_listeners.add(new_l);
 	}
-	
+
+	public void removeGoGameChangeListener(GoGameChangeListener l) {
+		change_listeners.remove(l);
+	}
+
 	private void notifyGameChange() {
 		for (GoGameChangeListener l:change_listeners)
 			if (l!=null) l.onGoGameChange();
