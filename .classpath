@@ -5,5 +5,6 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="lib" path="libs/tracedroid.jar"/>
 	<classpathentry kind="src" path="LigiAndroidCommons_src"/>
+	<classpathentry kind="lib" path="/home/ligi/bin/android-sdk-linux_x86/extras/android/compatibility/v13/android-support-v13.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
