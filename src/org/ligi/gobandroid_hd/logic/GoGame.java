@@ -37,6 +37,20 @@ import org.ligi.tracedroid.logging.Log;
 
 public class GoGame  {
 
+	public interface GoGameChangeListener {
+		public void onGoGameChange();
+	}
+	private Vector<GoGameChangeListener> change_listeners=new Vector<GoGameChangeListener>();
+	
+	public void addGoGameChangeListener(GoGameChangeListener new_l) {
+		change_listeners.add(new_l);
+	}
+	
+	private void notifyGameChange() {
+		for (GoGameChangeListener l:change_listeners)
+			if (l!=null) l.onGoGameChange();
+	}
+	
 	private byte act_player=GoDefinitions.PLAYER_BLACK;
     
     private GoBoard visual_board; // the board to show to the user
@@ -431,6 +445,7 @@ public class GoGame  {
             do_internal_move(replay_moves.get(step));
         
         visual_board=calc_board.clone();    	
+        notifyGameChange();
     }
    
     public boolean cell_has_libertie(int x , int y ) {
