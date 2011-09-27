@@ -53,6 +53,13 @@ public 	class GoActivity
 
 		this.setContentView(R.layout.game);
 		
+		GoGameProvider.getGame().addGoGameChangeListener(new GoGame.GoGameChangeListener() {
+			
+			@Override
+			public void onGoGameChange() {
+				go_board.postInvalidate();
+			}
+		});
 		go_board=(GoBoardViewHD)findViewById(R.id.go_board);
 		Log.i(" Board" + go_board);
 		
@@ -61,12 +68,11 @@ public 	class GoActivity
 
 	public void gameNavFirst(View v) {
 		game.jumpFirst();
-		go_board.invalidate();
 	}
 	
 	public void gameNavNext(View v) {
 		if (!game.canRedo())
-			return game.redo(1); 
+			return ;
 
 		if (game.getPossibleVariationCount()>0)	{
 			LinearLayout lin=new LinearLayout(this);
@@ -100,7 +106,6 @@ public 	class GoActivity
 					game.redo((Integer)(v.getTag()));
 				
 					//updateButtonState();
-					go_board.invalidate();
 				}
 			};
 			
@@ -129,7 +134,6 @@ public 	class GoActivity
 		}
 		else
 			game.redo(0);
-		go_board.invalidate();
 	}
 	
 	public void gameNavPrev(View v) {
@@ -148,11 +152,9 @@ public 	class GoActivity
 			game.undo();	
 	
 		game.getGoMover().paused=false;
-		go_board.invalidate();
 	}
 	
 	public void gameNavLast(View v) {
 		game.jumpLast();
-		go_board.invalidate();
 	}
 }
