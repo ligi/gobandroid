@@ -26,6 +26,7 @@ import org.ligi.tracedroid.logging.Log;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.WindowManager;
 import android.widget.TextView;
 /**
  * Activity for a Go Game
@@ -48,7 +49,12 @@ public 	class GoActivity
 		super.onCreate(savedInstanceState);
 
 		this.setContentView(R.layout.game);
-
+	
+        if (GoPrefs.getFullscreenEnabled())                                                                                                           
+            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                                          
+        else                                                                                                                                          
+            this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                              
+	
 		go_board=(GoBoardViewHD)findViewById(R.id.go_board);
 		comment_tv=(TextView)findViewById(R.id.comments_textview);
 		
