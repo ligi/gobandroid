@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GnuGoMover;
+import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.tracedroid.logging.Log;
 
@@ -260,14 +261,17 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 	    			
 						}
 				else {
-					GoGameProvider.setGame(null);
+					GoGame new_game=new GoGame(act_size,act_handicap);
+					
+					GoGameProvider.setGame(new_game);
 					Intent go_intent=new Intent(this,GoActivity.class);
-					go_intent.putExtra("size",act_size );
+					/*go_intent.putExtra("size",act_size );
 					go_intent.putExtra("handicap",act_handicap );
 	    
 					go_intent.putExtra("white_player",white_player_spinner.getSelectedItemPosition());
 					go_intent.putExtra("black_player",black_player_spinner.getSelectedItemPosition());
-	             
+					 */
+					
 					startActivity(go_intent);
 				}
 			}
