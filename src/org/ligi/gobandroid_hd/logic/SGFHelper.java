@@ -218,9 +218,15 @@ public class SGFHelper {
 					// marker section - infos here http://www.red-bean.com/sgf/properties.html
 					
 					// marker with text
-					if (act_cmd.equals("LB"))
-						game.getActMove().addMarker(new GoMarker(param_x,param_y,act_param.substring(3)));
-
+					if (act_cmd.equals("LB")) {
+						String[] inner=act_param.split(":");
+						String txt="X";
+						if (inner.length>1)
+							txt=inner[1];
+						
+						game.getActMove().addMarker(new GoMarker(param_x,param_y,txt));
+					}
+					
 					// mark with x
 					if (act_cmd.equals("Mark") | act_cmd.equals("MA"))
 						game.getActMove().addMarker(new GoMarker(param_x,param_y,"X"));
