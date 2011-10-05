@@ -75,6 +75,8 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 	
 	private Spinner black_player_spinner;
 	private Spinner white_player_spinner;
+
+	private GoBoardViewHD board;
 	
 	private TextView handicap_text;
 	
@@ -112,6 +114,7 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 	public void onResume() {
 		super.onResume();
 
+		board=(GoBoardViewHD)this.findViewById(R.id.go_board);
 		Log.i("GoSetup Resume");
 		size_seek=(SeekBar)this.findViewById(R.id.size_slider);
 		size_seek.setOnSeekBarChangeListener(this);
@@ -200,6 +203,10 @@ public class GoSetupActivity extends Activity implements OnSeekBarChangeListener
 		
 		GoPrefs.setLastBoardSize(act_size);
 		GoPrefs.setLastHandicap(act_handicap);
+		
+		GoGameProvider.setGame(new GoGame(act_size,act_handicap));
+		board.boardSizeChanged();
+		board.invalidate();
 	}
 	
 	public void onProgressChanged(SeekBar seekBar, int progress,

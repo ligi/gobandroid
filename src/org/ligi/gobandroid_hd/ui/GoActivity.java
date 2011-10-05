@@ -30,10 +30,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 /**
  * Activity for a Go Game
  * 
@@ -49,6 +51,8 @@ public 	class GoActivity
 	private GoBoardViewHD go_board=null;
 	private TextView comment_tv;
 	private GoGame game;
+
+	private Toast info_toast=null;
 	
 	private static final int MENU_UNDO = 0;
     private static final int MENU_PASS = 1;
@@ -64,12 +68,14 @@ public 	class GoActivity
 		super.onCreate(savedInstanceState);
 
 		this.setContentView(R.layout.game);
-	
+			
         if (GoPrefs.getFullscreenEnabled())                                                                                                           
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                                          
         else                                                                                                                                          
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                              
 	
+        info_toast=Toast.makeText(this, "", Toast.LENGTH_LONG);
+        
 		go_board=(GoBoardViewHD)findViewById(R.id.go_board);
 		comment_tv=(TextView)findViewById(R.id.comments_textview);
 		
@@ -156,7 +162,86 @@ public 	class GoActivity
 		
 		return false;
 	}
+    
+    
+    @Override 
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	
+    	switch (keyCode) {
+    	case KeyEvent.KEYCODE_DPAD_UP:
+    		go_board.prepare_keyinput();
+    		if (go_board.touch_y>0) go_board.touch_y--;
+    		break;
+    	
+    	case KeyEvent.KEYCODE_DPAD_LEFT:
+    		go_board.prepare_keyinput();
+    		if (go_board.touch_x>0) go_board.touch_x--;
+    		break;
+    	
+    	case KeyEvent.KEYCODE_DPAD_DOWN:
+    		go_board.prepare_keyinput();
+    		if (go_board.touch_y<game.getVisualBoard().getSize()-1) go_board.touch_y++;
+    		break;
+    	
+    	case KeyEvent.KEYCODE_DPAD_RIGHT:
+    		go_board.prepare_keyinput();
+    		if (go_board.touch_x<game.getVisualBoard().getSize()-1) go_board.touch_x++;
+    		break;
+    		
+    	case KeyEvent.KEYCODE_DPAD_CENTER:
+    		doMoveWithUIFeedback(go_board.touch_x,go_board.touch_y);
+    		go_board.setZoom(false);
+    		break;
+    		
+    	case KeyEvent.KEYCODE_BACK:
+    		if (go_board.isZoomed())
+    			go_board.setZoom(false);
+    		else
+    		{
+    			new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
+    			.setMessage( R.string.quit_confirm
+    			).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
+    			public void onClick(DialogInterface dialog, int whichButton) {
+    				game.getGoMover().stop();
+    				finish();
+    			}
+    		}).setCancelable(true).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
+    			public void onClick(DialogInterface dialog, int whichButton) {
+    				
+    			}
+    		}).show();
+    				
+    		}
+    		return true;
+    		
+    	
+    	}
+    	go_board.postInvalidate();
+    	
+    	return super.onKeyDown(keyCode, event);
+    }
+    
+    /**
+	 * show a the info toast with a specified text from a resource ID
+	 * 
+	 * @param resId
+ 	**/
+    public void showInfoToast(int resId) {
+		info_toast.setText(resId);
+		info_toast.show();
+	}
 
+    public void doMoveWithUIFeedback(byte x,byte y) {
+    	info_toast.cancel();
+    	switch(game.do_move(x, y)){
+    		case GoGame.MOVE_INVALID_IS_KO:
+    			showInfoToast(R.string.invalid_move_ko);
+    			break;
+    		case GoGame.MOVE_INVALID_CELL_NO_LIBERTIES:
+    			showInfoToast(R.string.invalid_move_no_liberties);
+    			break;
+    	}
+    }
 	
 	public void game2ui() {
 		go_board.postInvalidate();

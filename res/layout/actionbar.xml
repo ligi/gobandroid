@@ -7,7 +7,7 @@ android:orientation="vertical"
 android:background="@drawable/top_bg"
 >
 			
-	<ImageView android:id="@+id/ImageView01" android:src="@drawable/icon" android:scaleType="fitCenter" 
+	<ImageView android:id="@+id/ImageView01" android:src="@drawable/ic_launcher" android:scaleType="fitCenter" 
 	 
 	android:layout_height="@dimen/actionbar_height" 
 	android:layout_width="wrap_content"></ImageView>

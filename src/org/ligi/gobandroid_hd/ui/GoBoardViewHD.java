@@ -52,8 +52,6 @@ public class GoBoardViewHD extends SquareView {
 	private boolean mark_last_stone=true;
 	private boolean legend_sgf_mode=true;  //GoPrefs.getLegendSGFMode()
 	
-   	private GoGame game;
-
 	private Paint whitePaint;
 	private Paint blackPaint;
 	private Paint blackTextPaint;
@@ -149,11 +147,14 @@ public class GoBoardViewHD extends SquareView {
         
         setFocusable(true);   
         
-        this.game=GoGameProvider.getGame();
-        if (game==null)
-        	game=new GoGame((byte)19);
+        if (getGame()==null)
+        	GoGameProvider.setGame(new GoGame((byte)19));
     }
 
+    public GoGame getGame() {
+    	return GoGameProvider.getGame();
+    }
+    
 	public Bitmap resize_to_screen(Bitmap orig, float x_scale_, float y_scale_) {
 		// create a matrix for the manipulation
 		Matrix matrix = new Matrix();
@@ -185,15 +186,15 @@ public class GoBoardViewHD extends SquareView {
     	if (zoom_flag) {
     		stone_size=stone_size_zoomed;
 			
-			if (touch_x>= (2*game.getVisualBoard().getSize())/3)
-				offset_x=-stone_size*game.getVisualBoard().getSize()+this.getWidth();
-			else if (touch_x> (game.getVisualBoard().getSize()/3))
-				offset_x=(-stone_size*game.getVisualBoard().getSize()+this.getWidth())/2;	
+			if (touch_x>= (2*getGame().getVisualBoard().getSize())/3)
+				offset_x=-stone_size*getGame().getVisualBoard().getSize()+this.getWidth();
+			else if (touch_x> (getGame().getVisualBoard().getSize()/3))
+				offset_x=(-stone_size*getGame().getVisualBoard().getSize()+this.getWidth())/2;	
 			
-			if (touch_y>= (2*game.getVisualBoard().getSize())/3)
-				offset_y=-stone_size*game.getVisualBoard().getSize()+this.getHeight();
-			else if (touch_y> (game.getVisualBoard().getSize()/3))
-				offset_y=(-stone_size*game.getVisualBoard().getSize()+this.getHeight())/2;	
+			if (touch_y>= (2*getGame().getVisualBoard().getSize())/3)
+				offset_y=-stone_size*getGame().getVisualBoard().getSize()+this.getHeight();
+			else if (touch_y> (getGame().getVisualBoard().getSize()/3))
+				offset_y=(-stone_size*getGame().getVisualBoard().getSize()+this.getHeight())/2;	
     		}
     	else {
 			stone_size=stone_size_normal;
@@ -224,50 +225,50 @@ public class GoBoardViewHD extends SquareView {
         canvas.translate(offset_x, offset_y);
         
         // draw stone
-        if (game.isBlackToMove())
+        if (getGame().isBlackToMove())
             canvas.drawBitmap(black_stone_bitmap, touch_x*stone_size, touch_y*stone_size, placeStonePaint);
         else
         	canvas.drawBitmap(white_stone_bitmap, touch_x*stone_size, touch_y*stone_size, placeStonePaint);
         
         // draw the vertical lines
-        for(int x=0;x<game.getVisualBoard().getSize();x++)
-        	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(game.getVisualBoard().getSize()-1) +stone_size/2.0f,(touch_x==x)?gridPaint_h:gridPaint);	
+        for(int x=0;x<getGame().getVisualBoard().getSize();x++)
+        	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f,(touch_x==x)?gridPaint_h:gridPaint);	
         	
         // draw the horizontal lines and the legend
-        for(int x=0;x<game.getVisualBoard().getSize();x++)
+        for(int x=0;x<getGame().getVisualBoard().getSize();x++)
         {
-            canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(game.getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size, (touch_y==x)?gridPaint_h:gridPaint);
+            canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size, (touch_y==x)?gridPaint_h:gridPaint);
             if (do_legend) {
-            	canvas.drawText("" + (1+x) , 6+ stone_size*(float)(game.getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size+gridPaint.getTextSize()/3,gridPaint);
+            	canvas.drawText("" + (1+x) , 6+ stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size+gridPaint.getTextSize()/3,gridPaint);
             	
             	if ((x>7)&&legend_sgf_mode)
-            		canvas.drawText("" + (char)('A'+(x+1)) , stone_size/2.0f+ x*stone_size,stone_size*(float)(game.getVisualBoard().getSize()-1) +stone_size/2.0f + 1 + gridPaint.getTextSize() ,gridPaint);
+            		canvas.drawText("" + (char)('A'+(x+1)) , stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f + 1 + gridPaint.getTextSize() ,gridPaint);
             	else
-            		canvas.drawText("" + (char)('A'+x) , stone_size/2.0f+ x*stone_size,stone_size*(float)(game.getVisualBoard().getSize()-1) +stone_size/2.0f + 1 + gridPaint.getTextSize() ,gridPaint);
+            		canvas.drawText("" + (char)('A'+x) , stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f + 1 + gridPaint.getTextSize() ,gridPaint);
             }
         }
                 
-        for(byte x=0;x<game.getVisualBoard().getSize();x++)
-            for(byte y=0;y<game.getVisualBoard().getSize();y++) {
+        for(byte x=0;x<getGame().getVisualBoard().getSize();x++)
+            for(byte y=0;y<getGame().getVisualBoard().getSize();y++) {
             	blackPaint.setColor(0xFF000000);
             	blackPaint.setStrokeWidth(stone_size/12);
             	//blackPaint.setStyle(Paint.Style) .setStrokeWidth(stone_size/12);
             	
-            	if (game.isPosHoschi(x, y))
+            	if (getGame().isPosHoschi(x, y))
             		canvas.drawCircle( stone_size/2.0f+ x*stone_size +0.5f ,stone_size/2.0f+y*stone_size+0.5f,stone_size/10,blackPaint );
             	
             	 
             	// paint the territory with alpha transparent stones
-                if (game.isFinished()) { 
+                if (getGame().isFinished()) { 
 
             		blackPaint.setColor(0x77000000);
             		whitePaint.setColor(0x77CCCCCC);
             		
-                	if (game.area_assign[x][y]==GoDefinitions.PLAYER_BLACK)
+                	if (getGame().area_assign[x][y]==GoDefinitions.PLAYER_BLACK)
                 		canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
                 		
                         
-                   	if (game.area_assign[x][y]==GoDefinitions.PLAYER_WHITE)
+                   	if (getGame().area_assign[x][y]==GoDefinitions.PLAYER_WHITE)
                 		canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
                    		
                 }
@@ -275,23 +276,23 @@ public class GoBoardViewHD extends SquareView {
             	blackPaint.setColor(0xFF000000);
         		whitePaint.setColor(0xFFCCCCCC);
         		
-            	if (game.getCalcBoard().isCellDead(x,y)) {
-            		if (game.getVisualBoard().isCellWhite(x,y))
+            	if (getGame().getCalcBoard().isCellDead(x,y)) {
+            		if (getGame().getVisualBoard().isCellWhite(x,y))
             			canvas.drawBitmap(white_stone_bitmap_small, x*stone_size  + (stone_size-white_stone_bitmap_small.getWidth())/2 ,y*stone_size + (stone_size-white_stone_bitmap_small.getHeight())/2,whitePaint );
             		
-            		if (game.getVisualBoard().isCellBlack(x,y))
+            		if (getGame().getVisualBoard().isCellBlack(x,y))
             			canvas.drawBitmap(black_stone_bitmap_small, x*stone_size  + (stone_size-black_stone_bitmap_small.getWidth())/2 ,y*stone_size + (stone_size-black_stone_bitmap_small.getHeight())/2,whitePaint );
             		
             	}
             	else {
-            		if (move_stone_mode&&(x==game.getActMove().getX())&&(y==game.getActMove().getY()))
+            		if (move_stone_mode&&(x==getGame().getActMove().getX())&&(y==getGame().getActMove().getY()))
             			bitmapPaint.setAlpha(0x77);
             		else
             			bitmapPaint.setAlpha(0xFF);
             			
-            		if (game.getVisualBoard().isCellWhite(x,y))
+            		if (getGame().getVisualBoard().isCellWhite(x,y))
             			canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,bitmapPaint );
-            		if (game.getVisualBoard().isCellBlack(x,y))
+            		if (getGame().getVisualBoard().isCellBlack(x,y))
             			canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,bitmapPaint );
             
             		if (mark_last_stone) { // if the last stone should be marked
@@ -300,11 +301,11 @@ public class GoBoardViewHD extends SquareView {
             			whitePaint.setStrokeWidth(2.0f);
             			blackPaint.setStrokeWidth(2.0f);
             		
-            			if ((game.getActMove().getX()==x)&&(game.getActMove().getY()==y))
+            			if ((getGame().getActMove().getX()==x)&&(getGame().getActMove().getY()==y))
             			{
-            				if (game.getVisualBoard().isCellWhite(x,y))
+            				if (getGame().getVisualBoard().isCellWhite(x,y))
             					canvas.drawCircle( stone_size/2.0f+ x*stone_size  ,stone_size/2.0f+y*stone_size,stone_size/4.0f,blackPaint );
-                			if (game.getVisualBoard().isCellBlack(x,y))
+                			if (getGame().getVisualBoard().isCellBlack(x,y))
             					canvas.drawCircle( stone_size/2.0f+ x*stone_size  ,stone_size/2.0f+y*stone_size,stone_size/4.0f,whitePaint );
             	
             			}
@@ -317,9 +318,9 @@ public class GoBoardViewHD extends SquareView {
         FontMetrics fm=whiteTextPaint.getFontMetrics();
         
         // paint the markers
-        for (GoMarker marker:game.getActMove().getMarkers())
+        for (GoMarker marker:getGame().getActMove().getMarkers())
         	        
-        if (game.getVisualBoard().isCellBlack(marker.getX(),marker.getY()))
+        if (getGame().getVisualBoard().isCellBlack(marker.getX(),marker.getY()))
     		canvas.drawText( marker.getText() , marker.getX()*stone_size + stone_size/2.0f ,marker.getY()*stone_size-(fm.top+fm.bottom) ,whiteTextPaint );
     	else
     		canvas.drawText( marker.getText() , marker.getX()*stone_size + stone_size/2.0f ,marker.getY()*stone_size-(fm.top+fm.bottom) ,blackTextPaint );
@@ -332,7 +333,7 @@ public class GoBoardViewHD extends SquareView {
      * @return the width/height of the Board in Pixels
      */
     public float getBoardPixels() {
-    	return stone_size*game.getVisualBoard().getSize();
+    	return stone_size*getGame().getVisualBoard().getSize();
     }
 
     
@@ -365,15 +366,23 @@ public class GoBoardViewHD extends SquareView {
     
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-    	stone_size_normal=((w<h)?w:h)/(float)game.getVisualBoard().getSize();
+        setSize(w,h);
+    }
+    
+    private void setSize(int w,int h) {
+    	stone_size_normal=((w<h)?w:h)/(float)getGame().getVisualBoard().getSize();
         stone_size=stone_size_normal;
         stone_size_zoomed=stone_size_normal*2;
         regenerate_stones_flag=true;
     }
     
+    public void boardSizeChanged() {
+    	setSize(this.getWidth(),this.getHeight());
+    }
+    
     public void initializeStoneMove() {
     	
-    	if (game.getGoMover().isPlayingInThisGame()) // dont allow with a mover
+    	if (getGame().getGoMover().isPlayingInThisGame()) // dont allow with a mover
     		return;									 
     	
     	if (move_stone_mode)  // already in the mode

@@ -78,7 +78,7 @@ public class AboutActivity extends ListActivity {
 				break;
 
 			case MENU_BLOG:
-				open_uri("http://ligi.de");
+				open_uri("http://plus.google.com/104849265443273982798");
 				break;
 
 			case MENU_SUPPORT:
