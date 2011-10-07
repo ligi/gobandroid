@@ -3,6 +3,13 @@
 	<style name="base_theme" parent="android:Theme.NoTitleBar">
 	</style>
 	
+	<style name="topic_divider">
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:background">@drawable/topic_bg</item>
+		<item name="android:paddingLeft">7pt</item>
+	</style>
+	
 	<style name="default_activity_main" parent="@android:style/Theme.NoTitleBar">
 		<item name="android:layout_width">fill_parent</item>
 		<item name="android:layout_height">fill_parent</item>

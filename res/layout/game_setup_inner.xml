@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+			android:id="@+id/ScrollView01" android:layout_height="fill_parent" android:layout_width="fill_parent"><LinearLayout android:orientation="vertical" android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/handicap_slider">
+   
+<TextView 	style="@style/topic_divider"
+			android:text="Game Size 9x9"
+			android:id="@+id/game_size_label"></TextView>
+<SeekBar android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_marginLeft="7pt" android:layout_marginRight="7pt" android:id="@+id/size_slider" android:max="21"></SeekBar><LinearLayout android:id="@+id/LinearLayout02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="7pt" android:layout_marginBottom="4pt"><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="9x9" android:id="@+id/size_button9x9"></Button><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="13x13" android:id="@+id/size_button13x13"></Button><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="19x19" android:id="@+id/size_button19x19"></Button>
+
+</LinearLayout>
+
+<LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone">
+<TextView style="@style/topic_divider"
+		  android:text="Player Setup"></TextView>
+
+<LinearLayout android:id="@+id/LinearLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="7pt">
+<Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/BlackPlayerSpinner"></Spinner>
+<Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/WhitePlayerSpinner"></Spinner>
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Install AI" android:id="@+id/InstallAIButton"></Button>
+</LinearLayout>
+</LinearLayout>
+
+<TextView style="@style/topic_divider" android:text="Handicap" android:id="@+id/handicap_label"></TextView><SeekBar android:layout_height="wrap_content" android:layout_width="fill_parent" android:paddingLeft="7pt" android:paddingRight="7pt" android:id="@+id/handicap_seek" android:max="9" android:paddingBottom="7pt"></SeekBar><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Start" android:layout_gravity="center" android:id="@+id/game_start_button"></Button>
+</LinearLayout>
+</ScrollView>

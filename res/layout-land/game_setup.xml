@@ -4,9 +4,17 @@
    	style="@style/default_activity_main"
     >
 <include layout="@layout/actionbar"/>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+   	android:layout_height="fill_parent"
+   	android:layout_width="fill_parent"
+    >
+    
 <org.ligi.gobandroid_hd.ui.GoBoardViewHD android:id="@+id/go_board" android:layout_width="fill_parent" android:layout_height="wrap_content"></org.ligi.gobandroid_hd.ui.GoBoardViewHD>
 
 <include layout="@layout/game_setup_inner"/>
 
+</LinearLayout>
 
 </LinearLayout>
