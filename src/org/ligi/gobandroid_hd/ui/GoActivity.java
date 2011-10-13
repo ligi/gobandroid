@@ -91,31 +91,21 @@ public 	class GoActivity
 	}
 	
 	
-	public boolean onPrepareOptionsMenu(Menu menu) {                                                                                                      
-      /*  menu.clear();                                                                                                                                 
-                                                                                                                                                      
-        if (!game.isFinished())  {                                                                                                                    
-                if (game.canUndo()&&(!game.getGoMover().isMoversMove()))                                                                              
-                        menu.add(0, MENU_UNDO, 0, R.string.undo).setIcon(android.R.drawable.ic_menu_revert);                                          
-                                                                                                                                                      
-                if (!game.getGoMover().isMoversMove())                                                                                                
-                        menu.add(0, MENU_PASS, 0,R.string.pass).setIcon(android.R.drawable.ic_menu_set_as);                                           
-                }                                                                                                                                     
-        else                                                                                                                                          
-                menu.add(0, MENU_FINISH, 0,R.string.results).setIcon(android.R.drawable.ic_menu_more);                                                
-                                                                                                                                                      
-        menu.add(0, MENU_GAMEINFO, 0,"Game Info").setIcon(android.R.drawable.ic_menu_help);                                                           
-                                                                                                                                                      
-        menu.add(0, MENU_WRITE_SGF, 0,R.string.save_as_sgf).setIcon(android.R.drawable.ic_menu_save);                                                 
-        menu.add(0, MENU_SETTINGS, 0, R.string.settings).setIcon(android.R.drawable.ic_menu_preferences);                                             
-        */                           
-        
-        
-        return super.onPrepareOptionsMenu(menu);                                                                                                                                  
-	}
-	
     @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+/*
+    	if (!game.isFinished())  {                                                                                                                    
+            if (game.canUndo()&&(!game.getGoMover().isMoversMove()))                                                                              
+                    menu.add(0, MENU_UNDO, 0, R.string.undo).setIcon(android.R.drawable.ic_menu_revert);                                          
+                                                                                                                                                  
+            if (!game.getGoMover().isMoversMove())                                                                                                
+                    menu.add(0, MENU_PASS, 0,R.string.pass).setIcon(android.R.drawable.ic_menu_set_as);                                           
+            }                                                                                                                                     
+    else                                                                                                                                          
+            menu.add(0, MENU_FINISH, 0,R.string.results).setIcon(android.R.drawable.ic_menu_more);                                                
+                                                                                                                                                  
+    menu.add(0, MENU_GAMEINFO, 0,"Game Info").setIcon(android.R.drawable.ic_menu_help);                                                           
+*/
     	this.getMenuInflater().inflate(R.menu.ingame_common, menu);
 		
 		return true;//super.onCreateOptionsMenu(menu);
@@ -126,7 +116,7 @@ public 	class GoActivity
         
         switch (item.getItemId()) {                                                                                                                   
                                                                                                                                                       
-        case MENU_GAMEINFO:                                                                                                                           
+        case R.id.menu_game_info:                                                                                                                           
                 GameInfoAlert.show(this,game);                                                                                                        
                 break;                                                                                                                                
                                                                                                                                                       
@@ -160,11 +150,11 @@ public 	class GoActivity
                 game.pass();                                                                                                                          
                 break;                                                                                                                                
                                                                                                                                                       
-        case MENU_WRITE_SGF:                                                                                                                          
+        case R.id.menu_write_sgf:                                                                                                                          
         	SaveSGFDialog.show(this);
         	break;
 
-		case MENU_SETTINGS:
+		case R.id.menu_settings:
             startActivity(new Intent(this,GoPrefsActivity.class));
             break;
 		}

@@ -77,5 +77,6 @@
 	<string name="sgf_preferences">SGF Preferences</string>
 	<string name="filename">Filename</string>
 	<string name="sgf_filename">SGF Filename</string>
+	<string name="game_info">Game Info</string>
 	<string name="enter_default_filename_for_sgf_request">Please enter the default Filename for SGF Files.</string>
 </resources>
