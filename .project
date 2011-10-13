@@ -36,5 +36,10 @@
 			<type>2</type>
 			<locationURI>_android_LigiAndroidCommons_1e40ff98/src</locationURI>
 		</link>
+		<link>
+			<name>com_actionbarsherlock_src</name>
+			<type>2</type>
+			<locationURI>_android_com_actionbarsherlock_22abb7cc/src</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>

@@ -25,14 +25,15 @@ import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
 import org.ligi.gobandroid_hd.ui.alerts.GameResultsAlert;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -93,7 +94,7 @@ public 	class GoActivity
 	
 	
 	public boolean onPrepareOptionsMenu(Menu menu) {                                                                                                      
-        menu.clear();                                                                                                                                 
+      /*  menu.clear();                                                                                                                                 
                                                                                                                                                       
         if (!game.isFinished())  {                                                                                                                    
                 if (game.canUndo()&&(!game.getGoMover().isMoversMove()))                                                                              
@@ -109,11 +110,21 @@ public 	class GoActivity
                                                                                                                                                       
         menu.add(0, MENU_WRITE_SGF, 0,R.string.save_as_sgf).setIcon(android.R.drawable.ic_menu_save);                                                 
         menu.add(0, MENU_SETTINGS, 0, R.string.settings).setIcon(android.R.drawable.ic_menu_preferences);                                             
-                                                                                                                                                      
-        return true;                                                                                                                                  
+        */                           
+        
+        
+        return super.onPrepareOptionsMenu(menu);                                                                                                                                  
 	}
 	
-    public boolean onOptionsItemSelected(MenuItem item) {                                                                                                 
+    @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+    	this.getMenuInflater().inflate(R.menu.ingame_common, menu);
+		
+		return true;//super.onCreateOptionsMenu(menu);
+	}
+
+
+	public boolean onOptionsItemSelected(MenuItem item) {                                                                                                 
         
         switch (item.getItemId()) {                                                                                                                   
                                                                                                                                                       
@@ -162,7 +173,6 @@ public 	class GoActivity
 		
 		return false;
 	}
-    
     
     @Override 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
