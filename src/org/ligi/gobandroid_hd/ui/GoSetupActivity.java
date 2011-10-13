@@ -36,6 +36,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -57,7 +58,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
  * 
  **/
 
-public class GoSetupActivity extends Activity implements OnSeekBarChangeListener, OnClickListener, OnItemSelectedListener{
+public class GoSetupActivity extends FragmentActivity implements OnSeekBarChangeListener, OnClickListener, OnItemSelectedListener{
 
 	private byte act_size=9;
 	private byte act_handicap=0;
