@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<style name="base_theme" parent="android:Theme.NoTitleBar">
+	<style name="base_theme" parent="Theme.Sherlock">
+		<item name="abBackground">@android:color/transparent</item>
+		
 	</style>
 	
 	<style name="topic_divider">

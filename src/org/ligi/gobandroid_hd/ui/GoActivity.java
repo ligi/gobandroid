@@ -24,6 +24,8 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
 import org.ligi.gobandroid_hd.ui.alerts.GameResultsAlert;
+import org.ligi.tracedroid.logging.Log;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +34,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +50,7 @@ import android.widget.Toast;
  **/
 
 public 	class GoActivity 
-		extends FragmentActivity {
+		extends FragmentActivity implements OnTouchListener {
 
 	private GoBoardViewHD go_board=null;
 	private TextView comment_tv;
@@ -76,6 +81,9 @@ public 	class GoActivity
         info_toast=Toast.makeText(this, "", Toast.LENGTH_LONG);
         
 		go_board=(GoBoardViewHD)findViewById(R.id.go_board);
+		
+		go_board.setOnTouchListener(this);
+		
 		comment_tv=(TextView)findViewById(R.id.comments_textview);
 		
 		game=GoGameProvider.getGame();
@@ -103,8 +111,6 @@ public 	class GoActivity
             }                                                                                                                                     
     else                                                                                                                                          
             menu.add(0, MENU_FINISH, 0,R.string.results).setIcon(android.R.drawable.ic_menu_more);                                                
-                                                                                                                                                  
-    menu.add(0, MENU_GAMEINFO, 0,"Game Info").setIcon(android.R.drawable.ic_menu_help);                                                           
 */
     	this.getMenuInflater().inflate(R.menu.ingame_common, menu);
 		
@@ -245,5 +251,73 @@ public 	class GoActivity
 		go_board.postInvalidate();
 		comment_tv.setText(game.getActMove().getComment());
 	}
+	
+	public boolean onTouch( View v, MotionEvent event ) {
+		Log.i("touch");
+		if (!game.getGoMover().isReady())
+			showInfoToast(R.string.wait_gnugo);
+		else if (game.getGoMover().isMoversMove())
+			showInfoToast(R.string.not_your_turn);
+		else
+			doTouch(event);
+		
+    	//updateControlsStatus();
+    	return true;
+    }
+	
+
+    public void doTouch( MotionEvent event) {
+    	
+    	float virtualTouchX;
+    	float virtualTouchY;
+    	if (!GoPrefs.getViewableStoneEnabled()) {
+    		virtualTouchX=event.getX()-go_board.offset_x;
+			virtualTouchY=event.getY()-go_board.offset_y;
+    	}
+		else 
+			if (go_board.getWidth()<go_board.getHeight()) {
+				virtualTouchX=event.getX()-go_board.offset_x;
+				virtualTouchY=event.getY()-go_board.offset_y - go_board.stone_size;
+			}
+			else {
+				virtualTouchX=event.getX()-go_board.offset_x - go_board.stone_size;
+    			virtualTouchY=event.getY()-go_board.offset_y;
+			}
+				
+    	float board_size=go_board.stone_size*game.getVisualBoard().getSize();
+    	
+    	if ((virtualTouchY<board_size)&&(virtualTouchX<board_size)) { // if user put his finger on the board
+
+    		// calculate position on the field by position on the touchscreen
+    		go_board.touch_x=(byte)(virtualTouchX/go_board.stone_size);
+    		go_board.touch_y=(byte)(virtualTouchY/go_board.stone_size);
+    		
+    		if (event.getAction()==MotionEvent.ACTION_UP) {
+    			
+    			// if pressed on the last stone - initialize a Stone move
+        			if (go_board.isZoomed()||(!GoPrefs.getFatFingerEnabled()))	{
+        				if (go_board.move_stone_mode) {
+        					// TODO check if this is an illegal move ( e.g. in variants )
+        					game.getActMove().setXY(go_board.touch_x, go_board.touch_y);
+        					game.refreshBoards();
+        					go_board.move_stone_mode=false;
+        					}
+        				else if ((game.getActMove().getX()==go_board.touch_x)&&(game.getActMove().getY()==go_board.touch_y)) 
+        					go_board.initializeStoneMove();
+                		else 
+                			doMoveWithUIFeedback(go_board.touch_x,go_board.touch_y);
+        				
+        				go_board.touch_x=-1;
+        				go_board.touch_y=-1;
+        				
+        				go_board.setZoom(false);
+        			}
+        			else
+        				go_board.setZoom(true);
+    		}
+        }
+    	go_board.invalidate();  // the board looks different after a move (-;
+     }
+ 
 
 }
