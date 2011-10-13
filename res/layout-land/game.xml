@@ -2,10 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
    	style="@style/default_activity_main">
-   	
- 	
-	<include layout="@layout/actionbar"/>
-	
+
 	<LinearLayout android:orientation="horizontal"
    				  style="@style/default_activity_main">
    	

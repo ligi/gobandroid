@@ -3,9 +3,7 @@
     android:orientation="vertical"
    	style="@style/default_activity_main"
     >
-<include layout="@layout/actionbar"/>
-	
-	
+
 <WebView>
 </WebView>
 

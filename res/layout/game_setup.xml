@@ -3,7 +3,6 @@
     android:orientation="vertical"
    	style="@style/default_activity_main"
     >
-<include layout="@layout/actionbar"/>
 <org.ligi.gobandroid_hd.ui.GoBoardViewHD android:id="@+id/go_board" android:layout_width="fill_parent" android:layout_height="wrap_content"></org.ligi.gobandroid_hd.ui.GoBoardViewHD>
 
 <include layout="@layout/game_setup_inner"/>

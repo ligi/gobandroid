@@ -21,6 +21,7 @@ package org.ligi.gobandroid_hd.ui;
 
 import java.util.List;
 
+import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -37,6 +38,8 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -261,30 +264,29 @@ public class GoSetupActivity extends FragmentActivity implements OnSeekBarChange
 							new AlertDialog.Builder(this).setTitle(R.string.problem)
 							.setMessage(
 	    					 R.string.gnugo_size_problem
-							).setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int whichButton) {
-	    				
-								}
-							}).setCancelable(true).show();
+							).setPositiveButton(R.string.ok,  new DialogDiscarder()).setCancelable(true).show();
 	    			
 						}
-				else {
-					GoGame new_game=new GoGame(act_size,act_handicap);
-					
-					GoGameProvider.setGame(new_game);
-					Intent go_intent=new Intent(this,GoActivity.class);
-					/*go_intent.putExtra("size",act_size );
-					go_intent.putExtra("handicap",act_handicap );
-	    
-					go_intent.putExtra("white_player",white_player_spinner.getSelectedItemPosition());
-					go_intent.putExtra("black_player",black_player_spinner.getSelectedItemPosition());
-					 */
-					
-					startActivity(go_intent);
-				}
+				else 
+					 start_game() ;
 			}
 		
 		refresh_ui();
+	}
+	
+	private void start_game() {
+		GoGame new_game=new GoGame(act_size,act_handicap);
+		
+		GoGameProvider.setGame(new_game);
+		Intent go_intent=new Intent(this,GoActivity.class);
+		/*go_intent.putExtra("size",act_size );
+		go_intent.putExtra("handicap",act_handicap );
+
+		go_intent.putExtra("white_player",white_player_spinner.getSelectedItemPosition());
+		go_intent.putExtra("black_player",black_player_spinner.getSelectedItemPosition());
+		 */
+		
+		startActivity(go_intent);
 	}
 
 	@Override
@@ -300,5 +302,23 @@ public class GoSetupActivity extends FragmentActivity implements OnSeekBarChange
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		this.getMenuInflater().inflate(R.menu.game_setup, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_start:
+			start_game();
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	
 	
 }

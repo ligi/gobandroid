@@ -3,7 +3,6 @@
     android:orientation="vertical"
    	style="@style/default_activity_main"
     >
-<include layout="@layout/actionbar"/>
 	
 <ListView 	android:id="@+id/android:list" 
 			android:layout_width="fill_parent" 
