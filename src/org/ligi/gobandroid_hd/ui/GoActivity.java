@@ -58,15 +58,6 @@ public 	class GoActivity
 
 	private Toast info_toast=null;
 	
-	private static final int MENU_UNDO = 0;
-    private static final int MENU_PASS = 1;
-    private static final int MENU_FINISH = 2;
-    private static final int MENU_WRITE_SGF = 3;
-    private static final int MENU_SETTINGS = 4;
-    private static final int MENU_SHOWCONTROLS= 5;
-    private static final int MENU_GAMEINFO = 6;
-
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -125,7 +116,7 @@ public 	class GoActivity
         case R.id.menu_game_info:                                                                                                                           
                 GameInfoAlert.show(this,game);                                                                                                        
                 break;                                                                                                                                
-                                                                                                                                                      
+        /*                                                                                                                                              
         case MENU_SHOWCONTROLS:                                                                                                                       
                 //review_mode=!review_mode;                                                                                                             
                                                                                                                                                       
@@ -134,7 +125,9 @@ public 	class GoActivity
                 GameResultsAlert.show(this, game);                                                                                                    
                 break;                                                                                                                                
                                                                                                                                                       
-        case MENU_UNDO:                                                                                                                               
+        * imho redundant because of review controls?
+         * case MENU_UNDO:                                                                                                                               
+         
                 if (GoPrefs.isAskVariantEnabled()) {                                                                                                  
                         new AlertDialog.Builder(this).setTitle("Keep Variant?").setMessage("Keep this move as variant?")                              
                         .setPositiveButton(R.string.yes , new DialogInterface.OnClickListener() {                                                     
@@ -151,11 +144,11 @@ public 	class GoActivity
                         game.undo(GoPrefs.isKeepVariantEnabled());                                                                                    
                                                                                                                                                       
                 break;                                                                                                                                
-                                                                                                                                                      
+                                                                                                                                               
         case MENU_PASS:                                                                                                                               
                 game.pass();                                                                                                                          
                 break;                                                                                                                                
-                                                                                                                                                      
+         */                                                                                                                                                    
         case R.id.menu_write_sgf:                                                                                                                          
         	SaveSGFDialog.show(this);
         	break;
@@ -267,57 +260,40 @@ public 	class GoActivity
 	
 
     public void doTouch( MotionEvent event) {
-    	
-    	float virtualTouchX;
-    	float virtualTouchY;
-    	if (!GoPrefs.getViewableStoneEnabled()) {
-    		virtualTouchX=event.getX()-go_board.offset_x;
-			virtualTouchY=event.getY()-go_board.offset_y;
-    	}
-		else 
-			if (go_board.getWidth()<go_board.getHeight()) {
-				virtualTouchX=event.getX()-go_board.offset_x;
-				virtualTouchY=event.getY()-go_board.offset_y - go_board.stone_size;
-			}
-			else {
-				virtualTouchX=event.getX()-go_board.offset_x - go_board.stone_size;
-    			virtualTouchY=event.getY()-go_board.offset_y;
-			}
 				
-    	float board_size=go_board.stone_size*game.getVisualBoard().getSize();
+
+    	// calculate position on the field by position on the touchscreen
+    	go_board.touch_x=(byte)(event.getX()/go_board.stone_size);
+    	go_board.touch_y=(byte)(event.getY()/go_board.stone_size);
+
     	
-    	if ((virtualTouchY<board_size)&&(virtualTouchX<board_size)) { // if user put his finger on the board
+    	if (event.getAction()==MotionEvent.ACTION_UP) {
 
-    		// calculate position on the field by position on the touchscreen
-    		go_board.touch_x=(byte)(virtualTouchX/go_board.stone_size);
-    		go_board.touch_y=(byte)(virtualTouchY/go_board.stone_size);
-    		
-    		if (event.getAction()==MotionEvent.ACTION_UP) {
-    			
-    			// if pressed on the last stone - initialize a Stone move
-        			if (go_board.isZoomed()||(!GoPrefs.getFatFingerEnabled()))	{
-        				if (go_board.move_stone_mode) {
-        					// TODO check if this is an illegal move ( e.g. in variants )
-        					game.getActMove().setXY(go_board.touch_x, go_board.touch_y);
-        					game.refreshBoards();
-        					go_board.move_stone_mode=false;
-        					}
-        				else if ((game.getActMove().getX()==go_board.touch_x)&&(game.getActMove().getY()==go_board.touch_y)) 
-        					go_board.initializeStoneMove();
-                		else 
-                			doMoveWithUIFeedback(go_board.touch_x,go_board.touch_y);
-        				
-        				go_board.touch_x=-1;
-        				go_board.touch_y=-1;
-        				
-        				go_board.setZoom(false);
-        			}
-        			else
-        				go_board.setZoom(true);
-    		}
-        }
-    	go_board.invalidate();  // the board looks different after a move (-;
+    		// if pressed on the last stone - initialize a Stone move
+        		if (go_board.isZoomed()||(!GoPrefs.getFatFingerEnabled()))	{
+        			if (go_board.move_stone_mode) {
+        				// TODO check if this is an illegal move ( e.g. in variants )
+        				game.getActMove().setXY(go_board.touch_x, go_board.touch_y);
+        				game.refreshBoards();
+        				go_board.move_stone_mode=false;
+        				}
+        			else if ((game.getActMove().getX()==go_board.touch_x)&&(game.getActMove().getY()==go_board.touch_y)) 
+        				go_board.initializeStoneMove();
+               		else 
+               			doMoveWithUIFeedback(go_board.touch_x,go_board.touch_y);
+        			
+        			go_board.touch_x=-1;
+        			go_board.touch_y=-1;
+        			
+        			go_board.setZoom(false);
+        		}
+        		else
+        			go_board.setZoom(true);
+
+         
+    	}
+    	
+      	go_board.invalidate();  // the board looks different after a move (-;
+
      }
- 
-
 }
