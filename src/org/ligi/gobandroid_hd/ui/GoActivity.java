@@ -19,23 +19,29 @@
 
 package org.ligi.gobandroid_hd.ui;
 
+import org.ligi.android.common.views.SquareView;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
-import org.ligi.gobandroid_hd.ui.alerts.GameResultsAlert;
 import org.ligi.tracedroid.logging.Log;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
+import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.MeasureSpec;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -62,9 +68,61 @@ public 	class GoActivity
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		this.setContentView(R.layout.game);
+        
+        //Inflate the custom view
+		class CustomTop extends View {
+
+			public CustomTop(Context context) {
+				super(context);
+			}
+
+			@Override
+			protected void onDraw(Canvas canvas) {
+				canvas.drawColor(Color.RED);
+				super.onDraw(canvas);
+			}
 			
-        if (GoPrefs.getFullscreenEnabled())                                                                                                           
+
+			@Override
+			protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+			    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+			    int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
+			    int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
+
+			    this.setMeasuredDimension(5*parentHeight,parentHeight);
+			}
+
+			
+			
+		}
+
+		Log.i("ActionBar" + getSupportActionBar());
+		View customNav =new CustomTop(this);
+		
+		//   View customNav = LayoutInflater.from(this).inflate(R.layout.actionbar_custom_view, null);
+/*
+        //Bind to its state change
+        ((RadioGroup)customNav.findViewById(R.id.radio_nav)).setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Toast.makeText(ActionBarCustomNavigation.this, "Navigation selection changed.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //Attach to the action bar
+        getSupportActionBar().setCustomView(customNav);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+    */
+		
+		this.setContentView(R.layout.game);
+		getSupportActionBar().setCustomView(customNav);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+		
+		
+        if (GoPrefs.getFullscreenEnabled())                
+        	
+        	
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                                          
         else                                                                                                                                          
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                              
@@ -187,14 +245,13 @@ public 	class GoActivity
     		
     	case KeyEvent.KEYCODE_DPAD_CENTER:
     		doMoveWithUIFeedback(go_board.touch_x,go_board.touch_y);
-    		go_board.setZoom(false);
+    		//go_board.setZoom(false);
     		break;
     		
     	case KeyEvent.KEYCODE_BACK:
-    		if (go_board.isZoomed())
+    		/*if (go_board.isZoomed())
     			go_board.setZoom(false);
-    		else
-    		{
+    		else{ */
     			new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
     			.setMessage( R.string.quit_confirm
     			).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
@@ -208,7 +265,7 @@ public 	class GoActivity
     			}
     		}).show();
     				
-    		}
+    		//}
     		return true;
     		
     	
@@ -269,30 +326,22 @@ public 	class GoActivity
     	
     	if (event.getAction()==MotionEvent.ACTION_UP) {
 
-    		// if pressed on the last stone - initialize a Stone move
-        		if (go_board.isZoomed()||(!GoPrefs.getFatFingerEnabled()))	{
-        			if (go_board.move_stone_mode) {
-        				// TODO check if this is an illegal move ( e.g. in variants )
-        				game.getActMove().setXY(go_board.touch_x, go_board.touch_y);
-        				game.refreshBoards();
-        				go_board.move_stone_mode=false;
-        				}
-        			else if ((game.getActMove().getX()==go_board.touch_x)&&(game.getActMove().getY()==go_board.touch_y)) 
-        				go_board.initializeStoneMove();
-               		else 
-               			doMoveWithUIFeedback(go_board.touch_x,go_board.touch_y);
+    		if (go_board.move_stone_mode) {
+    			// TODO check if this is an illegal move ( e.g. in variants )
+    			game.getActMove().setXY(go_board.touch_x, go_board.touch_y);
+    			game.refreshBoards();
+    			go_board.move_stone_mode=false;
+    		}
+    		else if ((game.getActMove().getX()==go_board.touch_x)&&(game.getActMove().getY()==go_board.touch_y)) 
+    			go_board.initializeStoneMove();
+    		else 
+    			doMoveWithUIFeedback(go_board.touch_x,go_board.touch_y);
         			
-        			go_board.touch_x=-1;
-        			go_board.touch_y=-1;
+    		go_board.touch_x=-1;
+    		go_board.touch_y=-1;
         			
-        			go_board.setZoom(false);
-        		}
-        		else
-        			go_board.setZoom(true);
-
-         
     	}
-    	
+
       	go_board.invalidate();  // the board looks different after a move (-;
 
      }

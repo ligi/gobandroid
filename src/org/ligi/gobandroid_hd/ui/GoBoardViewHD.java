@@ -65,12 +65,11 @@ public class GoBoardViewHD extends SquareView {
     private Paint placeStonePaint;
     
     public float stone_size;
-    private float stone_size_zoomed;
     private float stone_size_normal;
     
-    public float offset_x=0.0f;
+/*    public float offset_x=0.0f;
     public float offset_y=0.0f;
-    
+ */  
     //TODO rename - name is now misleading
     public byte touch_x=-1;
     public byte touch_y=-1;
@@ -182,39 +181,6 @@ public class GoBoardViewHD extends SquareView {
     		touch_y=0;
     }
 
-    public void setZoom(boolean zoom_flag) {
-    	if (zoom_flag) {
-    		stone_size=stone_size_zoomed;
-			
-			if (touch_x>= (2*getGame().getVisualBoard().getSize())/3)
-				offset_x=-stone_size*getGame().getVisualBoard().getSize()+this.getWidth();
-			else if (touch_x> (getGame().getVisualBoard().getSize()/3))
-				offset_x=(-stone_size*getGame().getVisualBoard().getSize()+this.getWidth())/2;	
-			
-			if (touch_y>= (2*getGame().getVisualBoard().getSize())/3)
-				offset_y=-stone_size*getGame().getVisualBoard().getSize()+this.getHeight();
-			else if (touch_y> (getGame().getVisualBoard().getSize()/3))
-				offset_y=(-stone_size*getGame().getVisualBoard().getSize()+this.getHeight())/2;	
-    		}
-    	else {
-			stone_size=stone_size_normal;
-			offset_x=0;
-			offset_y=0;
-    		}
-    	
-    	regenerate_images();	
-    	invalidate();
-    }
-
-    /**
-     * check if the Board is Zoomed
-     * 
-     * @return true if zoomed
-     */
-    public boolean isZoomed() {
-    	return (stone_size==stone_size_zoomed);
-    }
-    
     @Override
     protected void onDraw(Canvas canvas) {
     
@@ -222,8 +188,7 @@ public class GoBoardViewHD extends SquareView {
     	if (regenerate_stones_flag)
     		regenerate_images();
     	
-        canvas.translate(offset_x, offset_y);
-        
+     
         // draw stone
         if (getGame().isBlackToMove())
             canvas.drawBitmap(black_stone_bitmap, touch_x*stone_size, touch_y*stone_size, placeStonePaint);
@@ -372,7 +337,6 @@ public class GoBoardViewHD extends SquareView {
     private void setSize(int w,int h) {
     	stone_size_normal=((w<h)?w:h)/(float)getGame().getVisualBoard().getSize();
         stone_size=stone_size_normal;
-        stone_size_zoomed=stone_size_normal*2;
         regenerate_stones_flag=true;
     }
     
