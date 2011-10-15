@@ -28,7 +28,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 /**
- * This is the main Activity of gobandroid which shows an menu 
+ * This is the main Activity of gobandroid which shows an menu/dashboard 
  * with the stuff you can do here 
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
