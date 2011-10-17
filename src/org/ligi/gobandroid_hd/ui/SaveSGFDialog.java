@@ -29,6 +29,7 @@ import android.widget.TextView;
 /**
  * Dialog to save a game to SGF file and ask the user about how in here
  * 
+ * TODO check if file exists
  * 
  * @author ligi
  *
