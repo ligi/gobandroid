@@ -78,5 +78,12 @@
 	<string name="filename">Filename</string>
 	<string name="sgf_filename">SGF Filename</string>
 	<string name="game_info">Game Info</string>
+	<string name="add_to_sgf">Add to FileName:</string>
+	<string name="save_sgf_question">Please instruct me on how the file I will write to %s should be named:</string>
+	<string name="share_question">share after saving?</string>
+	<string name="gamename">GameName</string>
+	<string name="date">Date</string>
+	<string name="players">Players</string>
+	<string name="time">Time</string>
 	<string name="enter_default_filename_for_sgf_request">Please enter the default Filename for SGF Files.</string>
 </resources>

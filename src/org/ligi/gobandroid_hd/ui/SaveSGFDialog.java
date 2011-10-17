@@ -4,9 +4,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.GoGameMetadata;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.tracedroid.logging.Log;
@@ -16,12 +19,16 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
- * TODO do layout via xml
+ * Dialog to save a game to SGF file and ask the user about how in here
+ * 
  * 
  * @author ligi
  *
@@ -30,18 +37,52 @@ public class SaveSGFDialog {
 
 	public static void show(final Activity ctx) {
 
-		LinearLayout lin=new LinearLayout(ctx);
-		lin.setOrientation(LinearLayout.VERTICAL);
+		View form=ctx.getLayoutInflater().inflate(R.layout.save_sgf_dialog, null);
 		
-		final EditText input = new EditText(ctx);   
-		input.setText(GoPrefs.getSGFFname());
+		TextView intro_text=(TextView)form.findViewById(R.id.intro_txt);
+		intro_text.setText(String.format(ctx.getResources().getString(R.string.save_sgf_question),GoPrefs.getSGFPath()));
+		
+		final EditText input = (EditText)form.findViewById(R.id.sgf_name_edittext);
+		final CheckBox share_checkbox=(CheckBox)form.findViewById(R.id.share_checkbox);
+		final GoGameMetadata game_meta=GoGameProvider.getGame().getMetaData();
+		class FileNameAdder implements OnClickListener {
 
-		final CheckBox box=new CheckBox(ctx);
-		box.setText("share after saving?");
-		lin.addView(input);
-		lin.addView(box);
+			@Override
+			public void onClick(View v) {
+				switch (v.getId()) {
+				case R.id.button_add_date:
+					SimpleDateFormat date_formatter = new SimpleDateFormat("dd.MMM.yyyy");
+					input.setText(input.getText()+date_formatter.format(new Date()));
+					break;
+				case R.id.button_add_gamename:
+					input.setText(input.getText()+game_meta.getName());
+					break;
+				case R.id.button_add_players:
+					input.setText(input.getText()+game_meta.getBlackName()+"_vs_"+game_meta.getWhiteName());
+					break;
+				}
+				
+			}
+			
+		}
+		FileNameAdder adder=new FileNameAdder();
 		
-		new AlertDialog.Builder(ctx).setTitle(R.string.save_sgf).setMessage("How should the file I will write to " +GoPrefs.getSGFPath() + " be named?").setView(lin)
+		((Button)(form.findViewById(R.id.button_add_date))).setOnClickListener(adder);
+		Button add_name_btn=((Button)(form.findViewById(R.id.button_add_gamename)));
+		Button players_name_btn=((Button)(form.findViewById(R.id.button_add_players)));
+		
+
+		if (game_meta.getName().equals("") )
+			add_name_btn.setVisibility(View.GONE);
+		else
+			add_name_btn.setOnClickListener(adder);
+		
+		if (game_meta.getBlackName().equals("") && game_meta.getWhiteName().equals("") )
+			players_name_btn.setVisibility(View.GONE);
+		else
+			players_name_btn.setOnClickListener(adder);
+		
+		new AlertDialog.Builder(ctx).setTitle(R.string.save_sgf).setView(form)
 		.setPositiveButton(R.string.ok , new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
 			String value = input.getText().toString(); 
@@ -64,7 +105,7 @@ public class SaveSGFDialog {
 				sgf_writer.close();
 				
 				
-				if (box.isChecked()) {
+				if (share_checkbox.isChecked()) {
 					//add extra
 					Intent it = new Intent(Intent.ACTION_SEND);   
 					it.putExtra(Intent.EXTRA_SUBJECT, "SGF created with gobandroid");   
