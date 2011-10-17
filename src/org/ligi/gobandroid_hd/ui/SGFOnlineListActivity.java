@@ -22,61 +22,28 @@ package org.ligi.gobandroid_hd.ui;
 
 import org.ligi.gobandroid_hd.R;
 
-import android.app.ListActivity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.support.v4.app.FragmentActivity;
 
 /**
+ * 
  * Activity to jump to websites with SGF files
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  *         
 **/
 
-public class SGFOnlineListActivity extends ListActivity {
-	public String[] menu_items= {
-								 "Commented gogameworld sample games",
-								 "Britgo recent", 
-    							 "USGo Problems" ,
-    							 "egoban" ,
-    							 "byheartgo",
-    							 "Judan",
-    							 "companion"};
-    
-	public String[] menu_urls = {
-			"http://gogameworld.com/gophp/pg_samplegames.php",
-			"http://www.britgo.org/bgj/recent.html",
-			"http://www.usgo.org/problems/index.html",
-			"http://egoban.org/@@recent_games",
-			"http://sites.google.com/site/byheartgo/",
-			"http://homepages.cwi.nl/~aeb/go/games/games/Judan/",
-			"http://www.andromeda.com/people/ddyer/age-summer-94/companion.html"
-	};
-    
-    
-    /** Called when the activity is first created. */
+public class SGFOnlineListActivity extends  FragmentActivity{
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    
-        GoPrefs.init(this);
         
         setContentView(R.layout.list);
-        this.setListAdapter(new ArrayAdapter<String>(this,
-                R.layout.list_item, menu_items));
-           
-    }
-    
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
 
-        startActivity(new Intent( "android.intent.action.VIEW",
-        		Uri.parse( menu_urls[position])));     
+        // Create the list fragment and add it as our sole content.
+        if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
+            SGFOnlineListFragment list = new SGFOnlineListFragment();
+            getSupportFragmentManager().beginTransaction().add(android.R.id.content, list).commit();
+        }
     }
-    
 }
