@@ -39,11 +39,13 @@ public class SGFOnlineListActivity extends  FragmentActivity{
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.list);
-
+/*
         // Create the list fragment and add it as our sole content.
-        if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
+        if (getSupportFragmentManager().findFragmentById(android.R.id.list) == null) {
             SGFOnlineListFragment list = new SGFOnlineListFragment();
-            getSupportFragmentManager().beginTransaction().add(android.R.id.content, list).commit();
+            getSupportFragmentManager().beginTransaction().add(android.R.id.list, list).commit();
         }
+*/
     }
+
 }

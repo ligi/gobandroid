@@ -19,6 +19,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -37,11 +39,11 @@ import android.widget.TextView;
 public class SaveSGFDialog {
 
 	public static void show(final Activity ctx) {
-
-		View form=ctx.getLayoutInflater().inflate(R.layout.save_sgf_dialog, null);
+		ContextThemeWrapper themed_ctx=new ContextThemeWrapper(ctx, R.style.dialog_theme);
+		View form=LayoutInflater.from(themed_ctx).inflate(R.layout.save_sgf_dialog, null);
 		
 		TextView intro_text=(TextView)form.findViewById(R.id.intro_txt);
-		intro_text.setText(String.format(ctx.getResources().getString(R.string.save_sgf_question),GoPrefs.getSGFPath()));
+		intro_text.setText(String.format(themed_ctx.getResources().getString(R.string.save_sgf_question),GoPrefs.getSGFPath()));
 		
 		final EditText input = (EditText)form.findViewById(R.id.sgf_name_edittext);
 		final CheckBox share_checkbox=(CheckBox)form.findViewById(R.id.share_checkbox);
@@ -83,7 +85,7 @@ public class SaveSGFDialog {
 		else
 			players_name_btn.setOnClickListener(adder);
 		
-		new AlertDialog.Builder(ctx).setTitle(R.string.save_sgf).setView(form)
+		new AlertDialog.Builder(themed_ctx).setTitle(R.string.save_sgf).setView(form)
 		.setPositiveButton(R.string.ok , new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
 			String value = input.getText().toString(); 

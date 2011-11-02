@@ -55,7 +55,7 @@ import android.widget.Toast;
  * 
  **/
 
-public 	class GoActivity 
+public class GoActivity 
 		extends FragmentActivity implements OnTouchListener {
 
 	private GoBoardViewHD go_board=null;
@@ -67,38 +67,7 @@ public 	class GoActivity
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-        
-        //Inflate the custom view
-		class CustomTop extends View {
-
-			public CustomTop(Context context) {
-				super(context);
-			}
-
-			@Override
-			protected void onDraw(Canvas canvas) {
-				canvas.drawColor(Color.RED);
-				super.onDraw(canvas);
-			}
-			
-
-			@Override
-			protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-			    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-			    int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
-			    int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
-
-			    this.setMeasuredDimension(5*parentHeight,parentHeight);
-			}
-
-			
-			
-		}
-
-		Log.i("ActionBar" + getSupportActionBar());
-		View customNav =new CustomTop(this);
+		View customNav =new InGameActionBarView(this);
 		
 		//   View customNav = LayoutInflater.from(this).inflate(R.layout.actionbar_custom_view, null);
 /*
@@ -121,8 +90,6 @@ public 	class GoActivity
 		
 		
         if (GoPrefs.getFullscreenEnabled())                
-        	
-        	
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                                          
         else                                                                                                                                          
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                              

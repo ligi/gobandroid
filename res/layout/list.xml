@@ -4,9 +4,12 @@
    	style="@style/default_activity_main"
     >
 	
-<ListView 	android:id="@+id/android:list" 
+<fragment 	
+
+			android:name="org.ligi.gobandroid_hd.ui.SGFOnlineListFragment"
 			android:layout_width="fill_parent" 
-			android:layout_height="fill_parent">
-</ListView>
+			android:layout_height="fill_parent"
+			>
+</fragment>
 -
 </LinearLayout>

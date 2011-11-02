@@ -2,9 +2,15 @@
 <resources>
 	<style name="base_theme" parent="Theme.Sherlock">
 		<item name="abBackground">@android:color/transparent</item>
-		
+		<item name="android:textColor">#ff000000</item> 
+		<item name="android:alertDialogStyle">@style/dialog_theme</item>
 	</style>
-	
+
+	<style name="dialog_theme" >
+		<!-- TODO really style this - had a hard time trying to style stuff here - e.g. background - so caution  -->
+		<item name="android:textColor">#FFFFFFFF</item>
+	</style>
+		
 	<style name="topic_divider">
 		<item name="android:layout_width">fill_parent</item>
 		<item name="android:layout_height">wrap_content</item>
@@ -12,7 +18,7 @@
 		<item name="android:paddingLeft">7pt</item>
 	</style>
 	
-	<style name="default_activity_main" parent="@android:style/Theme.NoTitleBar">
+	<style name="default_activity_main" parent="base_theme">
 		<item name="android:layout_width">fill_parent</item>
 		<item name="android:layout_height">fill_parent</item>
 		<item name="android:background">@drawable/shinkaya</item> 

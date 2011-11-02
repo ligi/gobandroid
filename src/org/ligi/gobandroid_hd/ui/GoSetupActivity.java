@@ -21,6 +21,7 @@ package org.ligi.gobandroid_hd.ui;
 
 import java.util.List;
 
+
 import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GnuGoMover;
@@ -310,6 +311,7 @@ public class GoSetupActivity extends FragmentActivity implements OnSeekBarChange
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		Log.i("item sel");
 		switch (item.getItemId()) {
 		case R.id.menu_start:
 			start_game();
