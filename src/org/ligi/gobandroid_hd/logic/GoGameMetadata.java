@@ -30,6 +30,8 @@ public class GoGameMetadata {
 	private String name="";
 	private String result="";
 	
+	private String source="";
+	
 	private String black_name="";
 	private String black_rank="";
 	private String white_name="";
@@ -140,5 +142,13 @@ public class GoGameMetadata {
 	 */
 	public String getResult() {
 		return result;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 }

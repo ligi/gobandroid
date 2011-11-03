@@ -92,6 +92,7 @@ public class SGFHelper {
 		res+="WR[" + escapeSGF(game.getMetaData().getWhiteRank()) + "]";
 		res+="KM[" + escapeSGF(Float.toString(game.getKomi())) + "]";
 		res+="RE[" + escapeSGF(game.getMetaData().getResult()) + "]";
+		res+="SO[" + escapeSGF(game.getMetaData().getSource()) + "]";
 		res+="\n";
 		
 		boolean black_to_move=true;
@@ -265,6 +266,9 @@ public class SGFHelper {
 						metadata.setBlackRank(act_param);
 
 					if (act_cmd.equals("RE")) // Game Result
+						metadata.setResult(act_param);
+
+					if (act_cmd.equals("SO")) // Source
 						metadata.setResult(act_param);
 
 					
