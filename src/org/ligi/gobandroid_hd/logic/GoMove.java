@@ -211,7 +211,7 @@ public class GoMove{
 	
 	public void destroy() {
 		this.getParent().getNextMoveVariations().remove(this);
-		markers.removeAllElements(); // usefull?
-		next_move_variations.removeAllElements(); // usefull?
+		markers.removeAllElements(); // useful?
+		next_move_variations.removeAllElements(); // useful?
 	}
 }
