@@ -16,7 +16,7 @@ public class GoProblemActivity extends GoActivity {
 			if (game.getActMove().hasNextMove())
 				game.jump(game.getActMove().getnextMove(0));
 			else
-				game.getActMove().setComment(game.getActMove().getComment()+"\nOff Path");
+				game.getActMove().addComment("\nOff Path");
 		game.notifyGameChange();
 		return res;
 	}
