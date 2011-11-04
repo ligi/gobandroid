@@ -143,6 +143,10 @@ public class GoMove{
 		return y;
 	}
 	
+	public boolean isOnXY(byte x,byte y) {
+		return ((getX()==x)&&(getY()==y));
+	}
+	
 	public GoMove getParent() {
 		return parent;
 	}
