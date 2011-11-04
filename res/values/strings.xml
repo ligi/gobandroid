@@ -89,4 +89,5 @@
 	<string name="review_game">Review</string>
 	<string name="record_game">Record</string>
 	<string name="dashboard_problems">Problems</string>
+	<string name="hint">Hint</string>
 </resources>
