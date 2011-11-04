@@ -31,6 +31,7 @@ public class GoGameMetadata {
 	private String result="";
 	
 	private String source="";
+	private String filename="";
 	
 	private String black_name="";
 	private String black_rank="";
@@ -150,5 +151,17 @@ public class GoGameMetadata {
 
 	public void setSource(String source) {
 		this.source = source;
+	}
+
+	/**
+	 * if the game is from a SGF we have the filename here ( often a lot of information encoded here )
+	 * @return
+	 */
+	public String getFileName() {
+		return filename;
+	}
+
+	public void setFileName(String filename) {
+		this.filename = filename;
 	}
 }
