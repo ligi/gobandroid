@@ -2,6 +2,7 @@ package org.ligi.gobandroid_hd.ui;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.GoMarker;
 import org.ligi.gobandroid_hd.logic.GoMove;
 
 import android.app.AlertDialog;
@@ -68,8 +69,20 @@ public class GoProblemActivity extends GoActivity {
         
         switch (item.getItemId()) {                                                                                                                   
                                                                                                                                                       
-        case R.id.menu_game_hint:    
+        case R.id.menu_game_hint:  
+        	GoMove myActMove=finishing_move;
+        	int p=myActMove.getMovePos();
+        	while (true) {
+        		if(myActMove.isFirstMove())
+        			break;
+        		finishing_move.addMarker(new GoMarker(myActMove.getX(),myActMove.getY(),""+p));
+        		p--;
+        		myActMove=myActMove.getParent();
+        		
+        	}
+        	
         	game.jump(finishing_move);
+        	
             break;                                                                                                                                
 		}
 		
