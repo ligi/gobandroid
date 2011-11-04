@@ -11,6 +11,8 @@ import android.support.v4.view.MenuItem;
 
 public class GoProblemActivity extends GoActivity {
 	
+	private GoMove finishing_move;
+	
 	public byte doMoveWithUIFeedback(byte x,byte y) {
 		boolean on_path=false;
 		
@@ -30,6 +32,31 @@ public class GoProblemActivity extends GoActivity {
 		return res;
 	}
 
+
+	public GoMove getCorrectMove(GoMove act_mve) {
+		if (act_mve.getComment().equals("Correct"))
+			return act_mve;
+		
+		for (GoMove next_moves:act_mve.getNextMoveVariations()) {
+			GoMove res=getCorrectMove(next_moves);
+			if (res!=null)
+				return res;
+		}
+			
+		return null;
+	}
+	
+    @Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		// try to find the correct solution
+		finishing_move=getCorrectMove(game.getActMove());
+		if (finishing_move==null) 
+			new AlertDialog.Builder(this).setMessage("foo").show();
+		
+    }
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
     	this.getMenuInflater().inflate(R.menu.ingame_tsumego, menu);
@@ -41,7 +68,8 @@ public class GoProblemActivity extends GoActivity {
         
         switch (item.getItemId()) {                                                                                                                   
                                                                                                                                                       
-        case R.id.menu_game_hint:                                                                                                                           
+        case R.id.menu_game_hint:    
+        	game.jump(finishing_move);
             break;                                                                                                                                
 		}
 		
