@@ -56,7 +56,10 @@ public class SGFSDCardListActivity extends ListActivity {
         
         setContentView(R.layout.list);
         
-        String sgf_path=GoPrefs.getSGFPath();
+        String sgf_path=this.getIntent().getExtras().getString("path");
+        
+        if (sgf_path==null)
+        	sgf_path=GoPrefs.getSGFPath();
         
         if (this.getIntent().getData()!=null)
         	dir=new File(this.getIntent().getData().getPath());
@@ -74,7 +77,6 @@ public class SGFSDCardListActivity extends ListActivity {
             }
 
         files=dir.listFiles();
-        
         
         if (files==null){
     		new AlertDialog.Builder(this).setTitle(R.string.problem_listing_sgf).setMessage(getResources().getString(R.string.there_are_no_files_in) + " " +sgf_path )
@@ -97,6 +99,8 @@ public class SGFSDCardListActivity extends ListActivity {
         
         this.setListAdapter(new ArrayAdapter<String>(this,
         		R.layout.list_item, menu_items));
+        
+        //DownloadProblemsDialog.show(this,false,null);
     }
     
     @Override

@@ -60,7 +60,7 @@ public class GoActivity
 
 	private GoBoardViewHD go_board=null;
 	private TextView comment_tv;
-	private GoGame game;
+	public GoGame game;
 
 	private Toast info_toast=null;
 	
@@ -252,9 +252,10 @@ public class GoActivity
 		info_toast.show();
 	}
 
-    public void doMoveWithUIFeedback(byte x,byte y) {
+    public byte doMoveWithUIFeedback(byte x,byte y) {
     	info_toast.cancel();
-    	switch(game.do_move(x, y)){
+    	byte res=game.do_move(x, y);
+    	switch(res){
     		case GoGame.MOVE_INVALID_IS_KO:
     			showInfoToast(R.string.invalid_move_ko);
     			break;
@@ -262,6 +263,7 @@ public class GoActivity
     			showInfoToast(R.string.invalid_move_no_liberties);
     			break;
     	}
+    	return res;
     }
 	
 	public void game2ui() {

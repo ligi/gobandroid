@@ -50,10 +50,9 @@ public class LoadActionsActivity extends ListActivity {
     
         GoPrefs.init(this);
         
-       // setContentView(R.layout.list);
+        setContentView(R.layout.list);
         this.setListAdapter(new ArrayAdapter<String>(this,
         		R.layout.list_item, menu_items));
-           
     }
     
     @Override

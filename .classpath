@@ -6,5 +6,7 @@
 	<classpathentry kind="lib" path="libs/tracedroid.jar"/>
 	<classpathentry kind="src" path="LigiAndroidCommons_src"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="src" path="/LigiAndroidCommons"/>
+	<classpathentry kind="src" path="/ActionBarSherlock"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

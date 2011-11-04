@@ -162,9 +162,15 @@ public class GoMove{
 	public String getComment() {
 		return comment;
 	}
+	
 	public void setComment(String newComment) {
+		comment=newComment;
+	}
+	
+	public void addComment(String newComment) {
 		comment+=newComment;
 	}
+	
 	public boolean didCaptures() {
 		return did_captures;
 	}

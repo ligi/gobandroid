@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<style name="base_theme" parent="Theme.Sherlock">
-		<item name="abBackground">@android:color/transparent</item>
+<!-- 		<item name="Background">@android:color/transparent</item> -->
 		<item name="android:textColor">#ff000000</item> 
 		<item name="android:alertDialogStyle">@style/dialog_theme</item>
 	</style>

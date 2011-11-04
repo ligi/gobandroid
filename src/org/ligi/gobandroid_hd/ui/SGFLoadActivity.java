@@ -230,7 +230,7 @@ public class SGFLoadActivity
 			}}
 		);
 
-     	Intent go_start_intent=new Intent(SGFLoadActivity.this,GoActivity.class);
+     	Intent go_start_intent=new Intent(SGFLoadActivity.this,GoProblemActivity.class);
     	startActivity(go_start_intent);
 	}
 	

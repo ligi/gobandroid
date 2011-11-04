@@ -52,12 +52,14 @@ public class gobandroid extends FragmentActivity {
      * the following start* functions are used in the xml via android:onClick
      */
 
-    public void startGame(View target) {
+    public void recordGame(View target) {
     	this.startActivity(new Intent(this,GoSetupActivity.class));
     }
     
-    public void startLoad(View target) {
-    	this.startActivity(new Intent(this,LoadActionsActivity.class));
+    public void solveProblem(View target) {
+    	Intent i=new Intent(this,SGFSDCardListActivity.class);
+    	i.putExtra("path","/sdcard/gobandroid/sgf/problems");    	
+    	this.startActivity(i);
     }
     
     public void startSettings(View target) {

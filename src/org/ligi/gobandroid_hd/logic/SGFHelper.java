@@ -81,18 +81,24 @@ public class SGFHelper {
 		return txt;
 	}
 	
+	private static String getSGFSnippet(String cmd,String param) {
+		if ((param==null)||(!param.equals(""))||(cmd==null)||(!cmd.equals("")))
+			return "";
+		return cmd+"["+escapeSGF(param) + "]";
+	}
+	
 	public static String game2sgf(GoGame game) {
 		String res="";
 		res="(;FF[4]GM[1]AP[gobandroid:0]"; // header
-		res+="SZ[" + game.getBoardSize() + "]"; // board_size;
-		res+="GN[" + escapeSGF(game.getMetaData().getName()) + "]";
-		res+="PB[" + escapeSGF(game.getMetaData().getBlackName()) + "]";
-		res+="PW[" + escapeSGF(game.getMetaData().getWhiteName()) + "]";
-		res+="BR[" + escapeSGF(game.getMetaData().getBlackRank()) + "]";
-		res+="WR[" + escapeSGF(game.getMetaData().getWhiteRank()) + "]";
-		res+="KM[" + escapeSGF(Float.toString(game.getKomi())) + "]";
-		res+="RE[" + escapeSGF(game.getMetaData().getResult()) + "]";
-		res+="SO[" + escapeSGF(game.getMetaData().getSource()) + "]";
+		res+=getSGFSnippet("SZ" ,""+ game.getBoardSize()); // board_size;
+		res+=getSGFSnippet("GN" , escapeSGF(game.getMetaData().getName()));
+		res+=getSGFSnippet("PB" , escapeSGF(game.getMetaData().getBlackName()));
+		res+=getSGFSnippet("PW" , escapeSGF(game.getMetaData().getWhiteName()));
+		res+=getSGFSnippet("BR" , escapeSGF(game.getMetaData().getBlackRank()));
+		res+=getSGFSnippet("WR" , escapeSGF(game.getMetaData().getWhiteRank()));
+		res+=getSGFSnippet("KM" , escapeSGF(Float.toString(game.getKomi())));
+		res+=getSGFSnippet("RE" , escapeSGF(game.getMetaData().getResult()));
+		res+=getSGFSnippet("SO" , escapeSGF(game.getMetaData().getSource()));
 		res+="\n";
 		
 		boolean black_to_move=true;

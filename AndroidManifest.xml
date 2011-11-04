@@ -34,6 +34,7 @@
     	
 		<activity android:name=".ui.GoSetupActivity"></activity>
 		<activity android:name=".ui.SGFSDCardListActivity"></activity>
+		<activity android:name=".ui.GoProblemActivity"></activity>
 		<activity android:name=".ui.SGFLoadActivity">
 		<intent-filter>
     		<action android:name="android.intent.action.VIEW"/>

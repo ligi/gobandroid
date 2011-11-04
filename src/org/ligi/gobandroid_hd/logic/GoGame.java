@@ -50,7 +50,7 @@ public class GoGame  {
 		change_listeners.remove(l);
 	}
 
-	private void notifyGameChange() {
+	public void notifyGameChange() {
 		for (GoGameChangeListener l:change_listeners)
 			if (l!=null) l.onGoGameChange();
 	}
