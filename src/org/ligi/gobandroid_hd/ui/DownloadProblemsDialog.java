@@ -28,12 +28,12 @@ public class DownloadProblemsDialog {
      * 
      */
     public static void show(Context activity,boolean autoclose,Intent after_connection_intent ) {
-    	int cnt=9;
+    	int cnt=10;
     	final String[] url_lst=new String[3*cnt];
     	for (int i=0;i<cnt;i++) {
-    		url_lst[i*3]=String.format("http://gogameguru.com/i/2011/08/ggg-easy-%02d.sgf",i);
-    		url_lst[i*3+1]=String.format("http://gogameguru.com/i/2011/08/ggg-intermediate-%02d.sgf",i);
-    		url_lst[i*3+2]=String.format("http://gogameguru.com/i/2011/08/ggg-hard-%02d.sgf",i);
+    		url_lst[i*3]=String.format("http://gogameguru.com/i/2011/08/ggg-easy-%02d.sgf",i+1);
+    		url_lst[i*3+1]=String.format("http://gogameguru.com/i/2011/08/ggg-intermediate-%02d.sgf",i+1);
+    		url_lst[i*3+2]=String.format("http://gogameguru.com/i/2011/08/ggg-hard-%02d.sgf",i+1);
     	}
     		
         LinearLayout lin=new LinearLayout(activity);
