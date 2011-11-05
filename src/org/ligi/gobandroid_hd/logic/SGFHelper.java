@@ -149,11 +149,14 @@ public class SGFHelper {
 				case ';':
 				case '\t':
 				case ' ':
-					last_cmd=act_cmd;
+					if (!act_cmd.equals(""))
+							last_cmd=act_cmd;
 					act_cmd="";
 					break;
 
 				case '[':
+					if(act_cmd.equals(""))
+						act_cmd=last_cmd;
 					consuming_param=true;
 					act_param="";
 					break;
