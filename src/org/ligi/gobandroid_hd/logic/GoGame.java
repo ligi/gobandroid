@@ -145,7 +145,7 @@ public class GoGame  {
     /**
      * set the handicap stones on the calc board 
      */
-    private void apply_handicap() {
+    public void apply_handicap() {
     	calc_board=handicap_board.clone();
     }
 
@@ -275,14 +275,16 @@ public class GoGame  {
                 
         GoBoard bak_board=calc_board.clone();
             	
-       	int tmp_cap=captures_black+captures_white;
+       	//int tmp_cap=captures_black+captures_white;
             	
         if (isBlackToMove())
         	calc_board.setCellBlack( x, y );
         else
             calc_board.setCellWhite( x, y );
         
+//        buildGroups();
         remove_dead(x,y);
+//        remove_dead((byte)0,(byte)0);
         
         // move is a KO -> Invalid
         if (calc_board.equals(pre_last_board)) {
@@ -319,7 +321,10 @@ public class GoGame  {
    		else
    			captures_white += local_captures;
         
-        act_move.setDidCaptures((tmp_cap!=(captures_black+captures_white)));
+        
+        //act_move.setDidCaptures((tmp_cap!=(captures_black+captures_white)));
+        act_move.setDidCaptures(local_captures>0);
+        Log.i("cap" + local_captures  + " captures_black " + captures_black + " captures_white" + captures_white + " " + act_move.didCaptures());
 
         notifyGameChange();
         // if we reached this point this move must be valid
@@ -511,11 +516,11 @@ public class GoGame  {
      * 
      */
     public boolean hasGroupLiberties(int x, int y ) {
-		 /* do a depth search first from point */
+		 /* do a depth search first from point
     	if (calc_board.isCellFree(x,y)) 
-    		return true;
+    		return true; */
     	
-        boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board.getSize()];
+    	boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board.getSize()];
         Stack <Integer>ptStackX = new Stack<Integer>();
         Stack <Integer>ptStackY = new Stack<Integer>();
 
@@ -588,10 +593,6 @@ public class GoGame  {
     }
        
     public void clear_calc_board() {
-      
-    	for (byte x = 0; x < calc_board.getSize(); x++)
-            for (byte y = 0; y < calc_board.getSize(); y++) 
-                calc_board.setCellFree(x,y );
         apply_handicap();
     }
   
@@ -727,13 +728,20 @@ public class GoGame  {
     		if ((!hasGroupLiberties(ignore_x+1, ignore_y))&&(!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x+1, ignore_y)))
     			remove_group(ignore_x+1, (int)ignore_y);
     	/* check down */
-    	if (ignore_y > 0)
+    	if (ignore_y > 0) {
     		if ((!hasGroupLiberties(ignore_x, ignore_y-1))&&(!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x, ignore_y-1)))
     			remove_group((int)ignore_x, ignore_y-1);
+    		Log.i("caplib"+hasGroupLiberties(ignore_x, ignore_y-1));
+    		Log.i("capeq"+calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x, ignore_y-1));
+  			Log.i("cap" + calc_board.toString());
+
+    	}
     	/* check up */
-    	if (ignore_y < calc_board.getSize()-1)
+    	if (ignore_y < calc_board.getSize()-1) {
     		if ((!hasGroupLiberties(ignore_x, ignore_y+1))&&(!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x, ignore_y+1)))
     			remove_group((int)ignore_x, ignore_y+1);
+    		
+    	}
     }
     
     private void remove_group(int x,int y)  {
