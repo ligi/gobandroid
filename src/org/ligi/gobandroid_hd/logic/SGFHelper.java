@@ -1,5 +1,5 @@
 /**
- * gobandroid 
+a * gobandroid 
  * by Marcus -Ligi- Bueschleb 
  * http://ligi.de
  *
@@ -305,7 +305,10 @@ public class SGFHelper {
 							game=new GoGame((byte)19);
 							var_vect.add(game.getActMove());
 						}
-				
+
+						if (game.getActMove().isFirstMove())
+							game.apply_handicap();
+						
 						if (act_param.length()==0)
 							game.pass();
 						else {
