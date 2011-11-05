@@ -20,9 +20,6 @@
 
 package org.ligi.gobandroid_hd.logic;
 
-import org.ligi.tracedroid.logging.Log;
-
-
 /**
  * Class to represent a Go Board
  * 
@@ -85,13 +82,13 @@ public class GoBoard {
     /**
      * print a visual representation of the board via Log.d
      */
-    public void logBoard() {	
+    public String toString() {	
+    	String res="";
     	String tmp_str="";
-    	
     	for( int y=0;y<size;y++) {
 	    	for( int x=0;x<size;x++) {
 	    		if (board[x][y]==GoDefinitions.STONE_NONE)
-	        		tmp_str+=" ";
+	        		tmp_str+=".";
 	    		else if (board[x][y]==GoDefinitions.STONE_BLACK)
 		    		tmp_str+="B";
 	    		else if (board[x][y]==GoDefinitions.STONE_WHITE)
@@ -102,9 +99,10 @@ public class GoBoard {
 		    		tmp_str+="w";
 	    		
 	    		}
-	    	Log.d(tmp_str);
+	    	res+=tmp_str+"\n";
 	    	tmp_str="";
     	}
+    	return res;
     }
     
     /**
