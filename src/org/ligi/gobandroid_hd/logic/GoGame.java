@@ -107,8 +107,6 @@ public class GoGame  {
 
     private int local_captures = 0;
     
-    private boolean tsumego_mode=false;
-
     public GoGame( byte size ) {
     	construct(size);
     }
@@ -124,14 +122,6 @@ public class GoGame  {
 
     public void setKomi(float newKomi) {
     	komi=newKomi;
-    }
-
-    public boolean getTsumegoMode() {
-    	return tsumego_mode;
-    }
-
-    public void setTsumegoMode(boolean newTsumegoMode) {
-    	tsumego_mode=newTsumegoMode;
     }
 
     public float getPointsWhite() {

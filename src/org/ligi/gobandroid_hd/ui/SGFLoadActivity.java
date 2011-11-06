@@ -218,8 +218,7 @@ public class SGFLoadActivity
 		}
 		
 		tsumego_mode=getIntent().getBooleanExtra("tsumego_mode", false);
-		if (tsumego_mode)
-			game.setTsumegoMode(tsumego_mode);
+
 		
 		GoGameProvider.setGame(game);
  
@@ -231,7 +230,11 @@ public class SGFLoadActivity
 			}}
 		);
 
-     	Intent go_start_intent=new Intent(SGFLoadActivity.this,TsumegoActivity.class);
+		Intent go_start_intent=new Intent(SGFLoadActivity.this,GoActivity.class);
+    	
+		if (tsumego_mode)
+			go_start_intent=new Intent(SGFLoadActivity.this,TsumegoActivity.class);
+		
     	startActivity(go_start_intent);
 	}
 	
