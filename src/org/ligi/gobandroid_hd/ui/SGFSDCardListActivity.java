@@ -63,19 +63,17 @@ public class SGFSDCardListActivity extends ListActivity {
         else
         	dir=new File(sgf_path);
         
+        AlertDialog.Builder alert=new AlertDialog.Builder(this).setTitle(R.string.problem_listing_sgf).setPositiveButton(R.string.ok,  new ActivityFinishOnClickListener(this));
+        
         if (dir==null){
-    		new AlertDialog.Builder(this).setTitle(R.string.problem_listing_sgf).setMessage(getResources().getString(R.string.sgf_path_invalid) +" " +sgf_path)
-    		.setPositiveButton(R.string.ok,  new ActivityFinishOnClickListener(this)).show();
-
+        	alert.setMessage(getResources().getString(R.string.sgf_path_invalid) +" " +sgf_path).show();
             return;
         }
 
         files=dir.listFiles();
         
         if (files==null){
-    		new AlertDialog.Builder(this).setTitle(R.string.problem_listing_sgf).setMessage(getResources().getString(R.string.there_are_no_files_in) + " " +sgf_path )
-    		.setPositiveButton(R.string.ok,  new ActivityFinishOnClickListener(this)).show();
-
+    		alert.setMessage(getResources().getString(R.string.there_are_no_files_in) + " " +sgf_path ).show();
             return;
         }
         
@@ -83,7 +81,7 @@ public class SGFSDCardListActivity extends ListActivity {
         for(File file:files) 
         	if ((file.getName().endsWith(".sgf"))||(file.isDirectory()))
         		fnames.add(file.getName());
-        
+
         menu_items=(String[])fnames.toArray(new String[fnames.size()]);
         Arrays.sort(menu_items);
         
