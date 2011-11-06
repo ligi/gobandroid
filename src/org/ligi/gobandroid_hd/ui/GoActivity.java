@@ -19,7 +19,6 @@
 
 package org.ligi.gobandroid_hd.ui;
 
-import org.ligi.android.common.views.SquareView;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
@@ -27,21 +26,15 @@ import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
 import org.ligi.tracedroid.logging.Log;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
-import android.util.AttributeSet;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.MeasureSpec;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.TextView;
