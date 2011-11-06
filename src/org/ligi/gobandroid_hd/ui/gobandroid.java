@@ -60,7 +60,7 @@ public class gobandroid extends FragmentActivity {
     public void solveProblem(View target) {
     	Intent i=new Intent(this,SGFSDCardListActivity.class);
     	i.setData(Uri.parse("file:///sdcard/gobandroid/sgf/problems"));
-    		
+    	i.putExtra("tsumego",true);
     	this.startActivity(i);
     }
     

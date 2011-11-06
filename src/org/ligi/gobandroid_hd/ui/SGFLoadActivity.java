@@ -217,7 +217,7 @@ public class SGFLoadActivity
 		
 		}
 		
-		tsumego_mode=getIntent().getBooleanExtra("tsumego_mode", false);
+		tsumego_mode=getIntent().getBooleanExtra("tsumego", false);
 
 		
 		GoGameProvider.setGame(game);

@@ -106,7 +106,7 @@ public class SGFSDCardListActivity extends ListActivity {
         	go_intent=new Intent(this,SGFSDCardListActivity.class);
         
         go_intent.setData(Uri.parse( "file://" + dir.getAbsolutePath() + "/" + menu_items[position]));
-     	
+     	go_intent.putExtra("tsumego",this.getIntent().getBooleanExtra("tsumego", false));
         startActivity(go_intent);
         
     }
