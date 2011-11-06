@@ -46,6 +46,7 @@ import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity;
 import org.ligi.tracedroid.logging.Log;
 
 /**
@@ -230,7 +231,7 @@ public class SGFLoadActivity
 			}}
 		);
 
-     	Intent go_start_intent=new Intent(SGFLoadActivity.this,GoProblemActivity.class);
+     	Intent go_start_intent=new Intent(SGFLoadActivity.this,TsumegoActivity.class);
     	startActivity(go_start_intent);
 	}
 	
