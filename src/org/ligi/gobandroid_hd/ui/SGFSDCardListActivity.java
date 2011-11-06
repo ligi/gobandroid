@@ -23,11 +23,11 @@ import java.io.File;
 import java.util.Vector;
 import java.util.Arrays;
 
+import org.ligi.android.common.dialogs.ActivityFinishOnClickListener;
 import org.ligi.gobandroid_hd.R;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -56,38 +56,28 @@ public class SGFSDCardListActivity extends ListActivity {
         
         setContentView(R.layout.list);
         
-        String sgf_path=this.getIntent().getExtras().getString("path");
-        
-        if (sgf_path==null)
-        	sgf_path=GoPrefs.getSGFPath();
+        String sgf_path=GoPrefs.getSGFPath();
         
         if (this.getIntent().getData()!=null)
         	dir=new File(this.getIntent().getData().getPath());
         else
         	dir=new File(sgf_path);
+        
         if (dir==null){
     		new AlertDialog.Builder(this).setTitle(R.string.problem_listing_sgf).setMessage(getResources().getString(R.string.sgf_path_invalid) +" " +sgf_path)
-    		.setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
-    			public void onClick(DialogInterface dialog, int whichButton) {
-    				finish();
-    			}
-    		}).show();
+    		.setPositiveButton(R.string.ok,  new ActivityFinishOnClickListener(this)).show();
 
             return;
-            }
+        }
 
         files=dir.listFiles();
         
         if (files==null){
     		new AlertDialog.Builder(this).setTitle(R.string.problem_listing_sgf).setMessage(getResources().getString(R.string.there_are_no_files_in) + " " +sgf_path )
-    		.setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
-    			public void onClick(DialogInterface dialog, int whichButton) {
-    			finish();	
-    			}
-    		}).show();
+    		.setPositiveButton(R.string.ok,  new ActivityFinishOnClickListener(this)).show();
 
             return;
-            }
+        }
         
         Vector<String> fnames=new Vector<String>();
         for(File file:files) 
@@ -100,26 +90,20 @@ public class SGFSDCardListActivity extends ListActivity {
         this.setListAdapter(new ArrayAdapter<String>(this,
         		R.layout.list_item, menu_items));
         
-        //DownloadProblemsDialog.show(this,false,null);
     }
     
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-
+    	
+        Intent go_intent=new Intent(this,SGFLoadActivity.class);
+     	
         if (new File(dir.getAbsolutePath() + "/" + menu_items[position]).isDirectory())
-        {
-        	Intent sgf_list_intent=new Intent(this,SGFSDCardListActivity.class);
-        	sgf_list_intent.setData(Uri.parse( "file://" + dir.getAbsolutePath() + "/" + menu_items[position]));
-        	startActivity(sgf_list_intent);
-        	
-        }
-        else
-        {
-        	Intent go_intent=new Intent(this,SGFLoadActivity.class);
-        	go_intent.setData(Uri.parse( "file://" + dir.getAbsolutePath() + "/" + menu_items[position]));
-        	startActivity(go_intent);
-        }
+        	go_intent=new Intent(this,SGFSDCardListActivity.class);
+        
+        go_intent.setData(Uri.parse( "file://" + dir.getAbsolutePath() + "/" + menu_items[position]));
+     	
+        startActivity(go_intent);
         
     }
     
