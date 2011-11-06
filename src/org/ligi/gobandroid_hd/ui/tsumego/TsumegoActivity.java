@@ -2,7 +2,6 @@ package org.ligi.gobandroid_hd.ui.tsumego;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoMarker;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 
@@ -65,41 +64,12 @@ public class TsumegoActivity extends GoActivity {
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	private void show_numbered_solution() {
-
-    	GoMove myActMove=finishing_move;
-    	int p=myActMove.getMovePos();
-    	while (true) {
-    		if(myActMove.isFirstMove())
-    			break;
-    		finishing_move.addMarker(new GoMarker(myActMove.getX(),myActMove.getY(),""+p));
-    		p--;
-    		myActMove=myActMove.getParent();
-    		
-    	}
-    	
-    	game.jump(finishing_move);
-	}
-	
-	private void mark_path() {
-
-    	GoMove myActMove=finishing_move;
-    	while (true) {
-    		if(myActMove.isFirstMove())
-    			break;
-    		myActMove.getParent().addMarker(new GoMarker(myActMove.getX(),myActMove.getY(),"X"));
-    		myActMove=myActMove.getParent();
-    	}
-    	
-    	game.notifyGameChange();
-	}
-	
 	public boolean onOptionsItemSelected(MenuItem item) {                                                                                                 
         if (!super.onOptionsItemSelected(item))
         switch (item.getItemId()) {                                                                                                                   
                                                                                                                                                       
         case R.id.menu_game_hint:  
-        	mark_path();
+        	TsumegoHintAlert.show(this,finishing_move);
             break;                                                                                                                                
 		}
 		
