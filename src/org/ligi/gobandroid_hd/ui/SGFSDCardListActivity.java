@@ -82,6 +82,12 @@ public class SGFSDCardListActivity extends ListActivity {
         	if ((file.getName().endsWith(".sgf"))||(file.isDirectory()))
         		fnames.add(file.getName());
 
+
+        if (fnames.size()==0){
+    		alert.setMessage(getResources().getString(R.string.there_are_no_files_in) + " " +sgf_path ).show();
+            return;
+        }
+        
         menu_items=(String[])fnames.toArray(new String[fnames.size()]);
         Arrays.sort(menu_items);
         
