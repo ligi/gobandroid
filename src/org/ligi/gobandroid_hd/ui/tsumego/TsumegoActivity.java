@@ -75,6 +75,10 @@ public class TsumegoActivity extends GoActivity {
 		
 		return false;
 	}
-    
+	
+    @Override
+	public boolean doAskToKeepVariant() {
+		return false;
+	}
 
 }

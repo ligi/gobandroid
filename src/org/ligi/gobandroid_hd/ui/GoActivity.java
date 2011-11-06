@@ -140,7 +140,30 @@ public class GoActivity
                                                                                                                                                       
         case R.id.menu_game_info:                                                                                                                           
                 GameInfoAlert.show(this,game);                                                                                                        
-                break;                                                                                                                                
+                break;                        
+                
+        case R.id.menu_game_undo:
+	            if (!game.canUndo())
+	            	break;
+	            
+        		if (doAskToKeepVariant()) {                                                                                                  
+	                new AlertDialog.Builder(this).setTitle("Keep Variant?").setMessage("Keep this move as variant?")                              
+	                .setPositiveButton(R.string.yes , new DialogInterface.OnClickListener() {                                                     
+	                public void onClick(DialogInterface dialog, int whichButton) {                                                                
+	                        game.undo(true);                                                                                                      
+	                }                                                                                                                             
+	                }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {                                                     
+	                public void onClick(DialogInterface dialog, int whichButton) {                                                                
+	                        game.undo(false);                                                                                                     
+	                        }                                                                                                                     
+	                }).show();                                                                                                                    
+	            }                                                                                                                                     
+	            else                                                                                                                                  
+	                game.undo(GoPrefs.isKeepVariantEnabled());        
+	            
+
+	            break;
+        		
         /*                                                                                                                                              
         case MENU_SHOWCONTROLS:                                                                                                                       
                 //review_mode=!review_mode;                                                                                                             
@@ -151,25 +174,7 @@ public class GoActivity
                 break;                                                                                                                                
                                                                                                                                                       
         * imho redundant because of review controls?
-         * case MENU_UNDO:                                                                                                                               
-         
-                if (GoPrefs.isAskVariantEnabled()) {                                                                                                  
-                        new AlertDialog.Builder(this).setTitle("Keep Variant?").setMessage("Keep this move as variant?")                              
-                        .setPositiveButton(R.string.yes , new DialogInterface.OnClickListener() {                                                     
-                        public void onClick(DialogInterface dialog, int whichButton) {                                                                
-                                game.undo(true);                                                                                                      
-                        }                                                                                                                             
-                        }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {                                                     
-                        public void onClick(DialogInterface dialog, int whichButton) {                                                                
-                                game.undo(false);                                                                                                     
-                                }                                                                                                                     
-                        }).show();                                                                                                                    
-                }                                                                                                                                     
-                else                                                                                                                                  
-                        game.undo(GoPrefs.isKeepVariantEnabled());                                                                                    
-                                                                                                                                                      
-                break;                                                                                                                                
-                                                                                                                                               
+                                                                                                                     
         case MENU_PASS:                                                                                                                               
                 game.pass();                                                                                                                          
                 break;                                                                                                                                
@@ -314,4 +319,8 @@ public class GoActivity
       	go_board.invalidate();  // the board looks different after a move (-;
 
      }
+    
+    public boolean doAskToKeepVariant() {
+    	return GoPrefs.isAskVariantEnabled();
+    }
 }
