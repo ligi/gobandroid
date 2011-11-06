@@ -1,16 +1,17 @@
-package org.ligi.gobandroid_hd.ui;
+package org.ligi.gobandroid_hd.ui.tsumego;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMarker;
 import org.ligi.gobandroid_hd.logic.GoMove;
+import org.ligi.gobandroid_hd.ui.GoActivity;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
 
-public class GoProblemActivity extends GoActivity {
+public class TsumegoActivity extends GoActivity {
 	
 	private GoMove finishing_move;
 	
