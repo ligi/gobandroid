@@ -87,7 +87,7 @@ public class GoActivity
         else                                                                                                                                          
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                              
 	
-        info_toast=Toast.makeText(this, "", Toast.LENGTH_LONG);
+        info_toast=Toast.makeText(this.getBaseContext(), "", Toast.LENGTH_LONG);
         
 		go_board=(GoBoardViewHD)findViewById(R.id.go_board);
 		
