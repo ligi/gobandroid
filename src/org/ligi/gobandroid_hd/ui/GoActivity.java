@@ -23,13 +23,17 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
+import org.ligi.gobandroid_hd.ui.tsumego.FragmentTest2;
+import org.ligi.gobandroid_hd.ui.tsumego.TsumegoGameExtrasFragment;
 import org.ligi.tracedroid.logging.Log;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
 import android.view.KeyEvent;
@@ -57,11 +61,23 @@ public class GoActivity
 
 	private Toast info_toast=null;
 	
+	private Fragment myZoomFragment;
+	private Fragment actFragment;
+
+	public Fragment getGameExtraFragment() {
+		return new TsumegoGameExtrasFragment();
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		View customNav =new InGameActionBarView(this);
 		
+		FragmentTransaction fragmentTransAction =this.getSupportFragmentManager().beginTransaction();
+		myZoomFragment= new FragmentTest2();
+		
+		fragmentTransAction.add(R.id.game_extra_container, getGameExtraFragment()).commit();
+
 		//   View customNav = LayoutInflater.from(this).inflate(R.layout.actionbar_custom_view, null);
 /*
         //Bind to its state change
@@ -266,10 +282,24 @@ public class GoActivity
 	
 	public void game2ui() {
 		go_board.postInvalidate();
-		comment_tv.setText(game.getActMove().getComment());
+		if (comment_tv!=null)
+			comment_tv.setText(game.getActMove().getComment());
+	}
+	
+	public void setFragment(Fragment newFragment) {
+		if (actFragment==newFragment)
+			return;
+		actFragment=newFragment;
+		FragmentTransaction fragmentTransAction =this.getSupportFragmentManager().beginTransaction();
+		fragmentTransAction.replace(R.id.game_extra_container,actFragment).commit();
 	}
 	
 	public boolean onTouch( View v, MotionEvent event ) {
+		if (event.getAction()==MotionEvent.ACTION_UP)
+			setFragment(getGameExtraFragment());
+		else
+			setFragment(myZoomFragment);
+
 		Log.i("touch");
 		if (!game.getGoMover().isReady())
 			showInfoToast(R.string.wait_gnugo);
