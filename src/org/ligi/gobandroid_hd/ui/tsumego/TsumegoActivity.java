@@ -27,10 +27,11 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
 		// build a on path Vector to do a fast isOnPath() later 
 		on_path_moves=new Vector<GoMove>();
-		recursive_add_on_path_moves(game.getActMove());
-		
+		recursive_add_on_path_moves(game.getFirstMove());
+				
 		// try to find the correct solution
-		finishing_move=getCorrectMove(game.getActMove());
+		finishing_move=getCorrectMove(game.getFirstMove());
+		
 		if (finishing_move==null) 
 			new AlertDialog.Builder(this).setMessage("foo").show();
 
@@ -106,16 +107,18 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
     
     @Override
 	public Fragment getGameExtraFragment() {
-    	if(myTsumegoExtrasFragment==null)
-    		myTsumegoExtrasFragment=new TsumegoGameExtrasFragment();
+    	//if(myTsumegoExtrasFragment==null)
+    	myTsumegoExtrasFragment=new TsumegoGameExtrasFragment();
 
 		return myTsumegoExtrasFragment;
 	}
 
 	@Override
 	public void onGoGameChange() {
-		myTsumegoExtrasFragment.setOffPathVisibility(!isOnPath());
-		myTsumegoExtrasFragment.setCorrectVisibility(game.getActMove().equals(finishing_move));
+		if (myTsumegoExtrasFragment!=null) {
+			myTsumegoExtrasFragment.setOffPathVisibility(!isOnPath());
+			myTsumegoExtrasFragment.setCorrectVisibility(game.getActMove().equals(finishing_move));
+		}
 	}
 
 }

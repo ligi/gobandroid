@@ -13,7 +13,7 @@ public class ZoomGameExtrasFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		board=new GoBoardViewHD(this.getActivity().getBaseContext(),false,3.0f);
+		board=new GoBoardViewHD(this.getActivity(),false,3.0f);
 		
 		return board;
 	}

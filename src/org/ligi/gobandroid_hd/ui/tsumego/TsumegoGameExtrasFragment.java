@@ -32,12 +32,14 @@ public class TsumegoGameExtrasFragment extends Fragment {
 	public void setOffPathVisibility(boolean visible) {
 		off_path_visible=visible;
 		Log.i("visible" + visible);
-		off_path_view.setVisibility(visible?TextView.VISIBLE:TextView.GONE);
+		if(off_path_view!=null)
+			off_path_view.setVisibility(visible?TextView.VISIBLE:TextView.GONE);
 	}
 
 	public void setCorrectVisibility(boolean visible) {
 		correct_visible=visible;
-		correct_view.setVisibility(visible?View.VISIBLE:View.GONE);
+		if(correct_view!=null)
+			correct_view.setVisibility(visible?View.VISIBLE:View.GONE);
 	}
 	
 }

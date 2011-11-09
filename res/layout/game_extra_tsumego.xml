@@ -19,8 +19,8 @@
         android:id="@+id/tsumego_correct_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-		android:text="Correct"
+		android:text="This is correct!"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#00FF00" />
+        android:textColor="#008300" />
 
 </LinearLayout>
