@@ -59,7 +59,7 @@ public class GoActivity
 
 	private Toast info_toast=null;
 	
-	private Fragment myZoomFragment;
+	private ZoomGameExtrasFragment myZoomFragment;
 	private Fragment actFragment;
 
 	public Fragment getGameExtraFragment() {
@@ -204,26 +204,30 @@ public class GoActivity
     	switch (keyCode) {
     	case KeyEvent.KEYCODE_DPAD_UP:
     		go_board.prepare_keyinput();
-    		if (go_board.touch_y>0) go_board.touch_y--;
+    		if (GoInteractionProvider.getTouchY()>0) 
+    			GoInteractionProvider.touch_position-=game.getSize();
     		break;
     	
     	case KeyEvent.KEYCODE_DPAD_LEFT:
     		go_board.prepare_keyinput();
-    		if (go_board.touch_x>0) go_board.touch_x--;
+    		if (GoInteractionProvider.getTouchX()>0) 
+    			GoInteractionProvider.touch_position--;
     		break;
     	
     	case KeyEvent.KEYCODE_DPAD_DOWN:
     		go_board.prepare_keyinput();
-    		if (go_board.touch_y<game.getVisualBoard().getSize()-1) go_board.touch_y++;
+    		if (GoInteractionProvider.getTouchY()<game.getVisualBoard().getSize()-1) 
+    			GoInteractionProvider.touch_position+=game.getSize();
     		break;
     	
     	case KeyEvent.KEYCODE_DPAD_RIGHT:
     		go_board.prepare_keyinput();
-    		if (go_board.touch_x<game.getVisualBoard().getSize()-1) go_board.touch_x++;
+    		if (GoInteractionProvider.getTouchX()<game.getVisualBoard().getSize()-1)
+    			GoInteractionProvider.touch_position++;
     		break;
     		
     	case KeyEvent.KEYCODE_DPAD_CENTER:
-    		doMoveWithUIFeedback(go_board.touch_x,go_board.touch_y);
+    		doMoveWithUIFeedback((byte)GoInteractionProvider.getTouchX(),(byte)GoInteractionProvider.getTouchY());
     		//go_board.setZoom(false);
     		break;
     		
@@ -250,7 +254,9 @@ public class GoActivity
     	
     	}
     	go_board.postInvalidate();
-    	
+      	if (myZoomFragment.getBoard()!=null)
+      		myZoomFragment.getBoard().invalidate();
+      	
     	return super.onKeyDown(keyCode, event);
     }
     
@@ -280,6 +286,8 @@ public class GoActivity
 	
 	public void game2ui() {
 		go_board.postInvalidate();
+      	if (myZoomFragment.getBoard()!=null)
+      		myZoomFragment.getBoard().invalidate();
 		if (comment_tv!=null)
 			comment_tv.setText(game.getActMove().getComment());
 	}
@@ -313,33 +321,29 @@ public class GoActivity
 
     public void doTouch( MotionEvent event) {
 				
-
     	// calculate position on the field by position on the touchscreen
-    	go_board.touch_x=(byte)(event.getX()/go_board.stone_size);
-    	go_board.touch_y=(byte)(event.getY()/go_board.stone_size);
+    	GoInteractionProvider.setTouchPosition((int)(event.getX()/go_board.stone_size) + (int)(event.getY()/go_board.stone_size)*game.getSize());
 
-    	
     	if (event.getAction()==MotionEvent.ACTION_UP) {
 
     		if (go_board.move_stone_mode) {
     			// TODO check if this is an illegal move ( e.g. in variants )
-    			game.getActMove().setXY(go_board.touch_x, go_board.touch_y);
+    			game.getActMove().setXY((byte)GoInteractionProvider.getTouchX(),(byte)GoInteractionProvider.getTouchY());
     			game.refreshBoards();
     			go_board.move_stone_mode=false;
     		}
-    		else if ((game.getActMove().getX()==go_board.touch_x)&&(game.getActMove().getY()==go_board.touch_y)) 
+    		else if ((game.getActMove().getX()==GoInteractionProvider.getTouchX())&&(game.getActMove().getY()==GoInteractionProvider.getTouchY())) 
     			go_board.initializeStoneMove();
     		else 
-    			doMoveWithUIFeedback(go_board.touch_x,go_board.touch_y);
-        			
-    		go_board.touch_x=-1;
-    		go_board.touch_y=-1;
+    			doMoveWithUIFeedback((byte)GoInteractionProvider.getTouchX(),(byte)GoInteractionProvider.getTouchY());
+        		
+    		GoInteractionProvider.setTouchPosition(-1);
         			
     	}
 
-      	go_board.invalidate();  // the board looks different after a move (-;
 
-     }
+    	game.notifyGameChange();
+    }
     
     public boolean doAskToKeepVariant() {
     	return GoPrefs.isAskVariantEnabled();

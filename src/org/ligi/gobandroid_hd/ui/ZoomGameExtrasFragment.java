@@ -5,17 +5,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 public class ZoomGameExtrasFragment extends Fragment {
 
-
+	private GoBoardViewHD board;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		TextView tv=new TextView(this.getActivity());
-		tv.setText("ZOOM");
-		return tv;
+		
+		board=new GoBoardViewHD(this.getActivity().getBaseContext(),false,3.0f);
+		
+		return board;
+	}
+	
+	public GoBoardViewHD getBoard() {
+		return board;
 	}
 
 	

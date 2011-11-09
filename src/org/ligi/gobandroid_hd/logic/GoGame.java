@@ -861,4 +861,8 @@ public class GoGame  {
 	public void setMetadata(GoGameMetadata metadata) {
 		this.metadata=metadata;
 	}
+	
+	public int getSize() {
+		return getVisualBoard().getSize();
+	}
 }

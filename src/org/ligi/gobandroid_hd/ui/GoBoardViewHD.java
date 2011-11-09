@@ -19,7 +19,6 @@
 
 package org.ligi.gobandroid_hd.ui;
 
-import org.ligi.android.common.views.SquareView;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -37,6 +36,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
 import android.util.AttributeSet;
+import android.view.View;
 
 /**
  * Class to visually represent a Go Board in Android
@@ -45,7 +45,7 @@ import android.util.AttributeSet;
  *         
  * This software is licensed with GPLv3 
  */
-public class GoBoardViewHD extends SquareView {
+public class GoBoardViewHD extends View {
 	
 	private boolean grid_embos=true; //  GoPrefs.getGridEmbossEnabled()
 	private boolean do_legend=true; // GoPrefs.getLegendEnabled()
@@ -67,15 +67,6 @@ public class GoBoardViewHD extends SquareView {
     public float stone_size;
     private float stone_size_normal;
     
-/*    public float offset_x=0.0f;
-    public float offset_y=0.0f;
- */  
-    //TODO rename - name is now misleading
-    public byte touch_x=-1;
-    public byte touch_y=-1;
-
-    //public boolean do_zoom=false;
-    
     private Bitmap white_stone_bitmap=null;
     private Bitmap black_stone_bitmap=null;
     private Bitmap white_stone_bitmap_small=null;
@@ -85,8 +76,19 @@ public class GoBoardViewHD extends SquareView {
     
     private boolean regenerate_stones_flag=true;
     
+    private boolean enforce_square=true;
+    
+    private float zoom=1.0f;
+    
     public GoBoardViewHD(Context context) {
     	super( context );
+    	init();
+    }
+    
+    public GoBoardViewHD(Context context,boolean square,float zoom) {
+    	super( context );
+    	this.zoom=zoom;
+    	enforce_square=square;
     	init();
     }
     
@@ -175,15 +177,21 @@ public class GoBoardViewHD extends SquareView {
 	}
     
     public void prepare_keyinput() {
-    	if (touch_x==-1) 
-    		touch_x=0;
-    	if (touch_y==-1) 
-    		touch_y=0;
+    	if (GoInteractionProvider.getTouchPosition()<0)
+    		GoInteractionProvider.setTouchPosition(0);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
     
+    	if ((zoom!=1.0f)&&(GoInteractionProvider.getTouchPosition()>=0)) {
+    		
+    		float move_x=stone_size*(GoInteractionProvider.getTouchX()-getGame().getSize()/2/zoom);
+    		float move_y=stone_size*(GoInteractionProvider.getTouchY()-getGame().getSize()/2/zoom);
+    		
+    		canvas.translate(-move_x,-move_y);
+    	}
+    		
     	Log.i("onDraw");
     	if (regenerate_stones_flag)
     		regenerate_images();
@@ -191,18 +199,18 @@ public class GoBoardViewHD extends SquareView {
      
         // draw stone
         if (getGame().isBlackToMove())
-            canvas.drawBitmap(black_stone_bitmap, touch_x*stone_size, touch_y*stone_size, placeStonePaint);
+            canvas.drawBitmap(black_stone_bitmap, GoInteractionProvider.getTouchX()*stone_size, GoInteractionProvider.getTouchY()*stone_size, placeStonePaint);
         else
-        	canvas.drawBitmap(white_stone_bitmap, touch_x*stone_size, touch_y*stone_size, placeStonePaint);
+        	canvas.drawBitmap(white_stone_bitmap, GoInteractionProvider.getTouchX()*stone_size, GoInteractionProvider.getTouchY()*stone_size, placeStonePaint);
         
         // draw the vertical lines
         for(int x=0;x<getGame().getVisualBoard().getSize();x++)
-        	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f,(touch_x==x)?gridPaint_h:gridPaint);	
+        	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f,(GoInteractionProvider.getTouchX()==x)?gridPaint_h:gridPaint);	
         	
         // draw the horizontal lines and the legend
         for(int x=0;x<getGame().getVisualBoard().getSize();x++)
         {
-            canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size, (touch_y==x)?gridPaint_h:gridPaint);
+            canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size, (GoInteractionProvider.getTouchY()==x)?gridPaint_h:gridPaint);
             if (do_legend) {
             	canvas.drawText("" + (1+x) , 6+ stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size+gridPaint.getTextSize()/3,gridPaint);
             	
@@ -335,7 +343,7 @@ public class GoBoardViewHD extends SquareView {
     }
     
     private void setSize(int w,int h) {
-    	stone_size_normal=((w<h)?w:h)/(float)getGame().getVisualBoard().getSize();
+    	stone_size_normal=zoom*(((w<h)?w:h)/(float)getGame().getVisualBoard().getSize());
         stone_size=stone_size_normal;
         regenerate_stones_flag=true;
     }
@@ -370,4 +378,16 @@ public class GoBoardViewHD extends SquareView {
     public void setRegenerataStonesFlag(boolean new_flag) {
     	regenerate_stones_flag=new_flag;
     }
+    
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+	    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+	    if (enforce_square) {
+		    int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
+		    int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
+		    int size = Math.min(parentWidth, parentHeight);
+		    this.setMeasuredDimension(size,size);
+	    }
+	}
 }
