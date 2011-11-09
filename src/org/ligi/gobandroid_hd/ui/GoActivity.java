@@ -23,8 +23,6 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
-import org.ligi.gobandroid_hd.ui.tsumego.FragmentTest2;
-import org.ligi.gobandroid_hd.ui.tsumego.TsumegoGameExtrasFragment;
 import org.ligi.tracedroid.logging.Log;
 
 import android.app.AlertDialog;
@@ -65,7 +63,7 @@ public class GoActivity
 	private Fragment actFragment;
 
 	public Fragment getGameExtraFragment() {
-		return new TsumegoGameExtrasFragment();
+		return new DefaultGameExtrasFragment();
 	}
 	
 	@Override
@@ -74,7 +72,7 @@ public class GoActivity
 		View customNav =new InGameActionBarView(this);
 		
 		FragmentTransaction fragmentTransAction =this.getSupportFragmentManager().beginTransaction();
-		myZoomFragment= new FragmentTest2();
+		myZoomFragment= new ZoomGameExtrasFragment();
 		
 		fragmentTransAction.add(R.id.game_extra_container, getGameExtraFragment()).commit();
 
