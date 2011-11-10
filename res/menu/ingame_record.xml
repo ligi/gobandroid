@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/save_as_sgf" android:id="@+id/menu_write_sgf" android:icon="@android:drawable/ic_menu_save" android:showAsAction="ifRoom|withText"></item>
+</menu>
