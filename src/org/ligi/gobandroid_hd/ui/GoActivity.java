@@ -23,6 +23,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
+import org.ligi.gobandroid_hd.ui.alerts.GameResultsAlert;
 import org.ligi.tracedroid.logging.Log;
 
 import android.app.AlertDialog;
@@ -69,27 +70,13 @@ public class GoActivity
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		game=GoGameProvider.getGame();
 		View customNav =new InGameActionBarView(this);
 		
 		FragmentTransaction fragmentTransAction =this.getSupportFragmentManager().beginTransaction();
 		myZoomFragment= new ZoomGameExtrasFragment();
 		
 		fragmentTransAction.add(R.id.game_extra_container, getGameExtraFragment()).commit();
-
-		//   View customNav = LayoutInflater.from(this).inflate(R.layout.actionbar_custom_view, null);
-/*
-        //Bind to its state change
-        ((RadioGroup)customNav.findViewById(R.id.radio_nav)).setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Toast.makeText(ActionBarCustomNavigation.this, "Navigation selection changed.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //Attach to the action bar
-        getSupportActionBar().setCustomView(customNav);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-    */
 		
 		this.setContentView(R.layout.game);
 		getSupportActionBar().setCustomView(customNav);
@@ -108,8 +95,7 @@ public class GoActivity
 		go_board.setOnTouchListener(this);
 		
 		comment_tv=(TextView)findViewById(R.id.comments_textview);
-		
-		game=GoGameProvider.getGame();
+
 		
 		game.addGoGameChangeListener(new GoGame.GoGameChangeListener() {
 			
@@ -120,36 +106,28 @@ public class GoActivity
 		});
 		game2ui();
 	}
-	
-	
-    @Override
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-/*
-    	if (!game.isFinished())  {                                                                                                                    
-            if (game.canUndo()&&(!game.getGoMover().isMoversMove()))                                                                              
-                    menu.add(0, MENU_UNDO, 0, R.string.undo).setIcon(android.R.drawable.ic_menu_revert);                                          
-                                                                                                                                                  
-            if (!game.getGoMover().isMoversMove())                                                                                                
-                    menu.add(0, MENU_PASS, 0,R.string.pass).setIcon(android.R.drawable.ic_menu_set_as);                                           
-            }                                                                                                                                     
-    else                                                                                                                                          
-            menu.add(0, MENU_FINISH, 0,R.string.results).setIcon(android.R.drawable.ic_menu_more);                                                
-*/
+		return true;
+	}
+	/*
+    @Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+    	menu.clear();
     	this.getMenuInflater().inflate(R.menu.ingame_common, menu);
-		
 		return true;//super.onCreateOptionsMenu(menu);
 	}
-
-
+*/
 	public boolean onOptionsItemSelected(MenuItem item) {                                                                                                 
         
         switch (item.getItemId()) {                                                                                                                   
                                                                                                                                                       
-        case R.id.menu_game_info:                                                                                                                           
+	        case R.id.menu_game_info:                                                                                                                           
                 GameInfoAlert.show(this,game);                                                                                                        
                 break;                        
-                
-        case R.id.menu_game_undo:
+	                
+	        case R.id.menu_game_undo:
 	            if (!game.canUndo())
 	            	break;
 	            
@@ -167,32 +145,23 @@ public class GoActivity
 	            }                                                                                                                                     
 	            else                                                                                                                                  
 	                game.undo(GoPrefs.isKeepVariantEnabled());        
-	            
-
 	            break;
-        		
-        /*                                                                                                                                              
-        case MENU_SHOWCONTROLS:                                                                                                                       
-                //review_mode=!review_mode;                                                                                                             
-                                                                                                                                                      
-                break;                                                                                                                                
-        case MENU_FINISH:                                                                                                                             
-                GameResultsAlert.show(this, game);                                                                                                    
-                break;                                                                                                                                
-                                                                                                                                                      
-        * imho redundant because of review controls?
-                                                                                                                     
-        case MENU_PASS:                                                                                                                               
-                game.pass();                                                                                                                          
-                break;                                                                                                                                
-         */                                                                                                                                                    
-        case R.id.menu_write_sgf:                                                                                                                          
-        	SaveSGFDialog.show(this);
-        	break;
 
-		case R.id.menu_settings:
-            startActivity(new Intent(this,GoPrefsActivity.class));
-            break;
+  
+	        case R.id.menu_game_pass:
+	        	game.pass();        
+	        	game.notifyGameChange();
+	        	break;
+	        case R.id.menu_game_results:
+	        	GameResultsAlert.show(this, game);                                                                                                    
+	        	break;
+	        case R.id.menu_write_sgf:                                                                                                                          
+	        	SaveSGFDialog.show(this);
+	        	break;
+	
+			case R.id.menu_settings:
+	            startActivity(new Intent(this,GoPrefsActivity.class));
+	            break;
 		}
 		
 		return false;
@@ -228,13 +197,9 @@ public class GoActivity
     		
     	case KeyEvent.KEYCODE_DPAD_CENTER:
     		doMoveWithUIFeedback((byte)GoInteractionProvider.getTouchX(),(byte)GoInteractionProvider.getTouchY());
-    		//go_board.setZoom(false);
     		break;
     		
     	case KeyEvent.KEYCODE_BACK:
-    		/*if (go_board.isZoomed())
-    			go_board.setZoom(false);
-    		else{ */
     			new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
     			.setMessage( R.string.quit_confirm
     			).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {

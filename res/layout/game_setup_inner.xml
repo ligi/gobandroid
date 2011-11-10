@@ -20,6 +20,8 @@
 </LinearLayout>
 </LinearLayout>
 
-<TextView style="@style/topic_divider" android:text="Handicap" android:id="@+id/handicap_label"></TextView><SeekBar android:layout_height="wrap_content" android:layout_width="fill_parent" android:paddingLeft="7pt" android:paddingRight="7pt" android:id="@+id/handicap_seek" android:max="9" android:paddingBottom="7pt"></SeekBar><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Start" android:layout_gravity="center" android:id="@+id/game_start_button"></Button>
+<TextView style="@style/topic_divider" android:text="Handicap" android:id="@+id/handicap_label"></TextView>
+<SeekBar android:layout_height="wrap_content" android:layout_width="fill_parent" android:paddingLeft="7pt" android:paddingRight="7pt" android:id="@+id/handicap_seek" android:max="9" android:paddingBottom="7pt"></SeekBar>
+<!-- <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Start" android:layout_gravity="center" android:id="@+id/game_start_button"/> -->
 </LinearLayout>
 </ScrollView>

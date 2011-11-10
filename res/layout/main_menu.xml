@@ -28,13 +28,13 @@
         android:drawableTop="@drawable/dashboard_review"
         android:onClick="reviewGame" />
     
-    <!-- 
-    <Button android:id="@+id/home_btn_schedule"
+    
+    <Button android:id="@+id/home_btn_links"
         style="@style/DashboardButton"
-        android:text="@string/settings"
-        android:drawableTop="@drawable/icon_settings"
+        android:text="@string/links"
+        android:drawableTop="@drawable/dashboard_links"
         android:onClick="startSettings" />
-
+<!-- 
     <Button android:id="@+id/home_btn_schedule"
         style="@style/DashboardButton"
         android:text="@string/load_game"

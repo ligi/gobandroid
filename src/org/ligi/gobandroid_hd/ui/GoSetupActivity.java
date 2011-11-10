@@ -75,7 +75,6 @@ public class GoSetupActivity extends FragmentActivity implements OnSeekBarChange
 	private Button size_button9x9;
 	private Button size_button13x13;
 	private Button size_button19x19;
-	private Button start_button;
 	
 	private Spinner black_player_spinner;
 	private Spinner white_player_spinner;
@@ -173,10 +172,6 @@ public class GoSetupActivity extends FragmentActivity implements OnSeekBarChange
 					
 		white_player_spinner.setSelection(spinner_pos,true);
 
-	
-		start_button=(Button)this.findViewById(R.id.game_start_button);
-		start_button.setOnClickListener(this);
-		
 		handicap_text=(TextView)this.findViewById(R.id.handicap_label);
 		handicap_seek=(SeekBar)this.findViewById(R.id.handicap_seek);
 		handicap_seek.setOnSeekBarChangeListener(this);
@@ -256,20 +251,6 @@ public class GoSetupActivity extends FragmentActivity implements OnSeekBarChange
 				act_size=13;
 			else if (v==size_button19x19)
 				act_size=19;
-			else if (v==start_button) {
-				
-				
-				if ((act_size>19)&&((black_player_spinner.getSelectedItemPosition()!=0)||(white_player_spinner.getSelectedItemPosition()!=0)))
-						{
-							new AlertDialog.Builder(this).setTitle(R.string.problem)
-							.setMessage(
-	    					 R.string.gnugo_size_problem
-							).setPositiveButton(R.string.ok,  new DialogDiscarder()).setCancelable(true).show();
-	    			
-						}
-				else 
-					 start_game() ;
-			}
 		
 		refresh_ui();
 	}
@@ -278,7 +259,7 @@ public class GoSetupActivity extends FragmentActivity implements OnSeekBarChange
 		GoGame new_game=new GoGame(act_size,act_handicap);
 		
 		GoGameProvider.setGame(new_game);
-		Intent go_intent=new Intent(this,GoActivity.class);
+		Intent go_intent=new Intent(this,GameRecordActivity.class);
 		/*go_intent.putExtra("size",act_size );
 		go_intent.putExtra("handicap",act_handicap );
 
@@ -314,7 +295,18 @@ public class GoSetupActivity extends FragmentActivity implements OnSeekBarChange
 		Log.i("item sel");
 		switch (item.getItemId()) {
 		case R.id.menu_start:
-			start_game();
+			/*
+			if ((act_size>19)&&((black_player_spinner.getSelectedItemPosition()!=0)||(white_player_spinner.getSelectedItemPosition()!=0)))
+					{
+						new AlertDialog.Builder(this).setTitle(R.string.problem)
+						.setMessage(
+    					 R.string.gnugo_size_problem
+						).setPositiveButton(R.string.ok,  new DialogDiscarder()).setCancelable(true).show();
+    			
+					}
+			else  */
+				 start_game() ;
+
 			break;
 		}
 		return super.onOptionsItemSelected(item);
