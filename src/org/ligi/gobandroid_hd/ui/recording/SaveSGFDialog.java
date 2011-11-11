@@ -1,4 +1,4 @@
-package org.ligi.gobandroid_hd.ui;
+package org.ligi.gobandroid_hd.ui.recording;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,9 +12,8 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGameMetadata;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,12 +37,12 @@ import android.widget.TextView;
  */
 public class SaveSGFDialog {
 
-	public static void show(final Activity ctx) {
+	public static void show(final GobandroidFragmentActivity ctx) {
 		ContextThemeWrapper themed_ctx=new ContextThemeWrapper(ctx, R.style.dialog_theme);
 		View form=LayoutInflater.from(themed_ctx).inflate(R.layout.save_sgf_dialog, null);
 		
 		TextView intro_text=(TextView)form.findViewById(R.id.intro_txt);
-		intro_text.setText(String.format(themed_ctx.getResources().getString(R.string.save_sgf_question),GoPrefs.getSGFPath()));
+		intro_text.setText(String.format(themed_ctx.getResources().getString(R.string.save_sgf_question), ctx.getSettings().getSGFSavePath()));
 		
 		final EditText input = (EditText)form.findViewById(R.id.sgf_name_edittext);
 		final CheckBox share_checkbox=(CheckBox)form.findViewById(R.id.share_checkbox);
@@ -90,13 +89,13 @@ public class SaveSGFDialog {
 		public void onClick(DialogInterface dialog, int whichButton) {
 			String value = input.getText().toString(); 
 				
-			File f = new File(GoPrefs.getSGFPath());
+			File f = new File(ctx.getSettings().getSGFSavePath());
 			
 			if (!f.isDirectory())
 				f.mkdirs();
 			
 			try {
-				f=new File(GoPrefs.getSGFPath() + "/"+value+".sgf");
+				f=new File(ctx.getSettings().getSGFSavePath() + "/"+value+".sgf");
 				f.createNewFile();
 				
 				FileWriter sgf_writer = new FileWriter(f);
@@ -112,7 +111,7 @@ public class SaveSGFDialog {
 					//add extra
 					Intent it = new Intent(Intent.ACTION_SEND);   
 					it.putExtra(Intent.EXTRA_SUBJECT, "SGF created with gobandroid");   
-					it.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://"+GoPrefs.getSGFPath() + "/"+value+".sgf"));   
+					it.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://"+ctx.getSettings().getSGFSavePath() + "/"+value+".sgf"));   
 					it.setType("application/x-go-sgf");   
 					ctx.startActivity(Intent.createChooser(it, "Choose how to send the SGF"));
 

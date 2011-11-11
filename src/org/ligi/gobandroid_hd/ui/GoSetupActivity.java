@@ -27,6 +27,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
+import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 import org.ligi.tracedroid.logging.Log;
 
 import android.app.AlertDialog;

@@ -1,14 +1,11 @@
-package org.ligi.gobandroid_hd.ui;
+package org.ligi.gobandroid_hd.ui.recording;
 
 import java.util.Vector;
-
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
-import org.ligi.tracedroid.logging.Log;
-
 import android.os.Bundle;
 import android.support.v4.view.Menu;
 

@@ -24,14 +24,14 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
 import org.ligi.gobandroid_hd.ui.alerts.GameResultsAlert;
+import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.tracedroid.logging.Log;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
@@ -52,7 +52,7 @@ import android.widget.Toast;
  **/
 
 public class GoActivity 
-		extends FragmentActivity implements OnTouchListener {
+		extends GobandroidFragmentActivity implements OnTouchListener {
 
 	private GoBoardViewHD go_board=null;
 	private TextView comment_tv;
