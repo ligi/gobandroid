@@ -81,10 +81,10 @@ public class NavigationFragment extends Fragment implements GoGameChangeListener
 	}
 	
 	private void updateButtonStates() {
-		first_btn.setEnabled( game.canUndo() );
-		prev_btn.setEnabled( game.canUndo() );
-		next_btn.setEnabled( game.canRedo() );
-		last_btn.setEnabled( game.canRedo() );
+		first_btn.setVisibility( game.canUndo()?View.VISIBLE:View.INVISIBLE );
+		prev_btn.setVisibility( game.canUndo()?View.VISIBLE:View.INVISIBLE );
+		next_btn.setVisibility( game.canRedo()?View.VISIBLE:View.INVISIBLE );
+		last_btn.setVisibility( game.canRedo()?View.VISIBLE:View.INVISIBLE );
 	}
 
 	@Override
