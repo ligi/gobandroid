@@ -7,6 +7,7 @@ import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.Menu;
 
 public class GameRecordActivity extends GoActivity  implements GoGameChangeListener {
@@ -68,4 +69,8 @@ public class GameRecordActivity extends GoActivity  implements GoGameChangeListe
 		this.invalidateOptionsMenu();		
 	}
 
+	public Fragment getGameExtraFragment() {
+		return new RecordingGameExtrasFragment();
+	}
+	
 }
