@@ -16,10 +16,10 @@ public class GobandroidSettings {
 	}
 	
 	public String getReviewPath() {
-		return getSGFBasePath()+"games/";
+		return getSGFBasePath()+"review/";
 	}
 	
 	public String getSGFSavePath() {
-		return getSGFBasePath()+"games/saved/";
+		return getSGFBasePath()+"review/saved/";
 	}
 }

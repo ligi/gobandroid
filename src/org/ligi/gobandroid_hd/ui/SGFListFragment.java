@@ -47,6 +47,8 @@ public class SGFListFragment extends ListFragment {
 		
         this.setListAdapter(new ArrayAdapter<String>(this.getActivity(),
         		R.layout.list_item, menu_items));
+        
+        this.getListView().setCacheColorHint(0);
 	}
 	
 	@Override

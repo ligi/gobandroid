@@ -18,12 +18,15 @@
  **/
 
 package org.ligi.gobandroid_hd.ui;
+import java.io.File;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 
 /**
@@ -58,17 +61,34 @@ public class gobandroid extends GobandroidFragmentActivity {
     }
 
     public void solveProblem(View target) {
-    	startLoad(getSettings().getTsumegoPath(),GoInteractionProvider.MODE_TSUMEGO);
+    	if (!unzipSGFifNeeded()) 
+    		startLoad(getSettings().getTsumegoPath(),GoInteractionProvider.MODE_TSUMEGO);
     }
 
     public void reviewGame(View target) {
-    	startLoad(getSettings().getReviewPath(),GoInteractionProvider.MODE_REVIEW);
+    	if (!unzipSGFifNeeded()) 
+    		startLoad(getSettings().getReviewPath(),GoInteractionProvider.MODE_REVIEW);
     }
     
     public void startSettings(View target) {
     	this.startActivity(new Intent(this,GoPrefsActivity.class));
     }
-    
+
+    /**
+     * Downloads SGFs and shows a ProgressDialog when needed
+     * 
+     * @return - weather we had to unzip files
+     */
+    public boolean unzipSGFifNeeded() {
+    	String storrage_state=Environment.getExternalStorageState();
+    	
+    	// we check for the tsumego path as the base path could already be there but no valid tsumego
+    	if ((storrage_state.equals(Environment.MEDIA_MOUNTED)&&(!(new File(getSettings().getTsumegoPath())).isDirectory()))) {
+    		UnzipSGFsDialog.show(this);
+    		return true;
+    	}
+    	return false;
+    }
     public void startLinks(View target) {
     	this.startActivity( new Intent(this,LinksActivity.class));
     }
