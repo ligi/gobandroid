@@ -25,16 +25,10 @@ import java.util.Arrays;
 
 import org.ligi.android.common.dialogs.ActivityFinishOnClickListener;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
 import android.app.AlertDialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.ListFragment;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 /**
  * Activity to load SGF's from SD card
@@ -43,56 +37,20 @@ import android.widget.ListView;
  *         
 **/
 
-public class SGFSDCardListActivity extends FragmentActivity {
+public class SGFSDCardListActivity extends GobandroidFragmentActivity {
     
 	private String[] menu_items;
     private File[] files;
     private File dir;
 
-    class SGFListFragment extends ListFragment {
-
-    	public String[] fnames;
-    	
-    	public SGFListFragment(String[] fnames) {
-    		this.fnames=fnames;
-    	}
-    	
-    	public SGFListFragment() {
-    	}
-    	
-    	@Override
-    	public void onActivityCreated(Bundle savedInstanceState) {
-    		super.onCreate(savedInstanceState);
-
-            this.setListAdapter(new ArrayAdapter<String>(this.getActivity(),
-            		R.layout.list_item, fnames));
-    	}
-    	
-    	@Override
-        public void onListItemClick(ListView l, View v, int position, long id) {
-            super.onListItemClick(l, v, position, id);
-        	
-            Intent go_intent=new Intent(this.getActivity(),SGFLoadActivity.class);
-         	
-            if (new File(dir.getAbsolutePath() + "/" + menu_items[position]).isDirectory())
-            	go_intent=new Intent(this.getActivity(),SGFSDCardListActivity.class);
-            
-            go_intent.setData(Uri.parse( "file://" + dir.getAbsolutePath() + "/" + menu_items[position]));
-         	go_intent.putExtra("tsumego",getIntent().getBooleanExtra("tsumego", false));
-            startActivity(go_intent);
-            
-        }
-    }
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        GoPrefs.init(this);
-        
         setContentView(R.layout.list);
         
-        String sgf_path=GoPrefs.getSGFPath();
+        String sgf_path=getSettings().getSGFBasePath();
         
         if (this.getIntent().getData()!=null)
         	dir=new File(this.getIntent().getData().getPath());
@@ -127,7 +85,7 @@ public class SGFSDCardListActivity extends FragmentActivity {
         menu_items=(String[])fnames.toArray(new String[fnames.size()]);
         Arrays.sort(menu_items);
 
-        this.getSupportFragmentManager().beginTransaction().add(R.id.list_fragment, new SGFListFragment(menu_items)).commit();
+        this.getSupportFragmentManager().beginTransaction().add(R.id.list_fragment, new SGFListFragment(menu_items,dir)).commit();
     }
     
 }

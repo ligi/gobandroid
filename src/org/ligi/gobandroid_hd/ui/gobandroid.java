@@ -21,9 +21,6 @@ package org.ligi.gobandroid_hd.ui;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
-import org.ligi.tracedroid.TraceDroid;
-import org.ligi.tracedroid.logging.Log;
-import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -53,9 +50,10 @@ public class gobandroid extends GobandroidFragmentActivity {
     	this.startActivity(new Intent(this,GoSetupActivity.class));
     }
 
-    private void startLoad(String path,int mode) {
+    private void startLoad(String path,byte mode) {
     	Intent i=new Intent(this,SGFSDCardListActivity.class);    	
     	i.setData((Uri.parse("file://"+path)));
+    	GoInteractionProvider.setMode(mode);
     	this.startActivity(i);
     }
 

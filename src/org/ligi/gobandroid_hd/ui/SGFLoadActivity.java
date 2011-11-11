@@ -46,6 +46,7 @@ import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.ui.review.GameReviewActivity;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity;
 import org.ligi.tracedroid.logging.Log;
 
@@ -73,7 +74,6 @@ public class SGFLoadActivity
 	private AlertDialog alert_dlg;
 	private TextView message_tv;
 	private String act_message;
-	private boolean tsumego_mode=false;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -217,9 +217,6 @@ public class SGFLoadActivity
 		
 		}
 		
-		tsumego_mode=getIntent().getBooleanExtra("tsumego", false);
-
-		
 		GoGameProvider.setGame(game);
  
 		handler.post(new Runnable() {
@@ -232,8 +229,14 @@ public class SGFLoadActivity
 
 		Intent go_start_intent=new Intent(SGFLoadActivity.this,GoActivity.class);
     	
-		if (tsumego_mode)
+		switch (GoInteractionProvider.getMode()) {
+		case GoInteractionProvider.MODE_TSUMEGO:
 			go_start_intent=new Intent(SGFLoadActivity.this,TsumegoActivity.class);
+			break;
+		case GoInteractionProvider.MODE_REVIEW:
+			go_start_intent=new Intent(SGFLoadActivity.this,GameReviewActivity.class);
+			break;
+		}
 		
     	startActivity(go_start_intent);
 	}
@@ -254,6 +257,4 @@ public class SGFLoadActivity
 				message_tv.setText(act_message);
 			}});
 	}
-	
-
 }

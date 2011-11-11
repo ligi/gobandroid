@@ -78,6 +78,8 @@
 		</intent-filter>
 		</activity>
 		<activity android:name=".ui.recording.GameRecordActivity"></activity>
+		<activity android:name=".ui.review.GameReviewActivity"></activity>
+		
 		<activity android:name=".ui.IgsActivity"></activity>
 		<activity android:name=".ui.IgsConsoleActivity"></activity>
 		<activity android:name=".ui.IgsPrefsActivity"></activity>

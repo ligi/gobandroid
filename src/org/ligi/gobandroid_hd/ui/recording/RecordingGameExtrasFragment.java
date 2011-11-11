@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class RecordingGameExtrasFragment extends Fragment implements GoGameChang
 		
 		et.setText(GoGameProvider.getGame().getActMove().getComment());
 		et.setHint("enter your comments here");
+		et.setGravity(Gravity.TOP);
 	
 		et.addTextChangedListener(new TextWatcher() {
 
