@@ -44,22 +44,22 @@ public class LinksActivity extends FragmentActivity implements ActionBar.TabList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.list);
-        //getSupportFragmentManager().beginTransaction().add(R.id.list_fragment,new SGFOnlineListFragment()).commit();
-  
+        
+        this.setTitle(R.string.link_title);
 
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        String[] tabs=new String[] {"About","Help","SGF's"};
-        int i=0;
-        for (String tab_str : tabs ) {
+        int[] tabs=new int[] {R.string.link_tab_about,R.string.link_tab_help,R.string.link_tab_sgf};
+
+        for (int tab_str : tabs ) {
         	ActionBar.Tab tab = getSupportActionBar().newTab();
 			tab.setText(tab_str);
-			tab.setTag(i++);
+			tab.setTag(tab_str); 
 			tab.setTabListener(this);
 			getSupportActionBar().addTab(tab);
         }
 	
         
-        setList(0);
+        setList(R.string.link_tab_about);
     }
 
 	public void changeFragment(Fragment newFragment) {
@@ -70,11 +70,12 @@ public class LinksActivity extends FragmentActivity implements ActionBar.TabList
 		Log.i("list"+ list);
 		LinkWithDescription[] links=null;
 		switch (list) {
-			case 0:
+			case R.string.link_tab_about:
 			links=new LinkWithDescription[] {
 					new LinkWithDescriptionAndTitle("https://plus.google.com/b/106767057593220295403/","for news, infos, feedback","Gobandroid Project Page"),
 					new LinkWithDescriptionAndTitle("https://plus.google.com/104849265443273982798","idea / concept / code ","Ligi on Google+"),
 					new LinkWithDescriptionAndTitle("http://gogameguru.com/","source of default Tsumego and commented game SGF's","gogameguru.com"),
+					new LinkWithDescriptionAndTitle("http://actionbarsherlock.com/","library used for ActionBar backward compatibility ","ActionBarSherlock"),
 					new LinkWithDescriptionAndTitle("https://plus.google.com/116001545198026111276","feedback & patches" , "Oren Laskin on Google+"),
 					new LinkWithDescriptionAndTitle("https://plus.google.com/105303388887291066710","wooden background","Ruth -lironah- Hinckley on Google+"),
 					new LinkWithDescriptionAndTitle("http://www.sente.ch","FreegGoban stones","sente.ch"),
@@ -83,7 +84,7 @@ public class LinksActivity extends FragmentActivity implements ActionBar.TabList
 			};					
 		break;
 	
-		case 2:
+		case R.string.link_tab_help:
 			links=new LinkWithDescription[] {
 
 					// source pro games
@@ -100,7 +101,7 @@ public class LinksActivity extends FragmentActivity implements ActionBar.TabList
 					//dead not there anymore			new LinkWithDescription("http://egoban.org/@@recent_games","egoban"),
 			};
 			break;
-			case 1:
+			case R.string.link_tab_sgf:
 				links=new LinkWithDescription[] {
 						new LinkWithDescription("http://en.wikipedia.org/wiki/Rules_of_Go","Wikipedia Article"),
 						new LinkWithDescription("http://www.youtube.com/watch?v=gECcsSeRcNo","Tutorial on YouTube 1"),

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">gobandroid</string>
+    <string name="app_name">Gobandroid</string>
     <string name="start_game">Start Game</string>
     <string name="start">Start</string>
     <string name="load_game">Load Game</string>
@@ -92,4 +92,10 @@
 	<string name="record_game">Record</string>
 	<string name="dashboard_problems">Tsumego</string>
 	<string name="hint">Hint</string>
+	
+	<string name="link_title">Links</string>
+	<string name="link_tab_about">About</string>
+	<string name="link_tab_help">Help</string>
+	<string name="link_tab_sgf">SGF\'s</string>
+	    
 </resources>
