@@ -23,6 +23,7 @@ import java.io.File;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 
 public class GoPrefs {
@@ -176,7 +177,7 @@ public class GoPrefs {
 	public static String getSGFPath() {
 		return shared_prefs.getString(KEY_SGF_PATH,DEFAULT_SGF_PATH );
 	}
-	
+
 	public static String getSGFFname() {
 		return shared_prefs.getString(KEY_SGF_FNAME,DEFAULT_SGF_FNAME );
 	}

@@ -109,7 +109,7 @@ public class SGFSDCardListActivity extends FragmentActivity {
         files=dir.listFiles();
         
         if (files==null){
-    		alert.setMessage(getResources().getString(R.string.there_are_no_files_in) + " " +sgf_path ).show();
+    		alert.setMessage(getResources().getString(R.string.there_are_no_files_in) + " " +dir.getAbsolutePath() ).show();
             return;
         }
         

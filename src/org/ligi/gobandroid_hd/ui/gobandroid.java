@@ -19,6 +19,7 @@
 
 package org.ligi.gobandroid_hd.ui;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.tracedroid.TraceDroid;
 import org.ligi.tracedroid.logging.Log;
@@ -26,7 +27,6 @@ import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 /**
@@ -37,32 +37,34 @@ import android.view.View;
  *         
 **/
 
-public class gobandroid extends FragmentActivity {
+public class gobandroid extends GobandroidFragmentActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    
-        TraceDroid.init(this);
-        Log.setTAG("gobandroid");
-        TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
-        GoPrefs.init(this);
         setContentView(R.layout.main_menu);
     }
   
-    /****
+    /**
      * the following start* functions are used in the xml via android:onClick
-     */
+     **/
 
     public void recordGame(View target) {
     	this.startActivity(new Intent(this,GoSetupActivity.class));
     }
-    
-    public void solveProblem(View target) {
-    	Intent i=new Intent(this,SGFSDCardListActivity.class);
-    	i.setData(Uri.parse("file:///sdcard/gobandroid/sgf/problems"));
-    	i.putExtra("tsumego",true);
+
+    private void startLoad(String path,int mode) {
+    	Intent i=new Intent(this,SGFSDCardListActivity.class);    	
+    	i.setData((Uri.parse("file://"+path)));
     	this.startActivity(i);
+    }
+
+    public void solveProblem(View target) {
+    	startLoad(getSettings().getTsumegoPath(),GoInteractionProvider.MODE_TSUMEGO);
+    }
+
+    public void reviewGame(View target) {
+    	startLoad(getSettings().getReviewPath(),GoInteractionProvider.MODE_REVIEW);
     }
     
     public void startSettings(View target) {
@@ -72,6 +74,4 @@ public class gobandroid extends FragmentActivity {
     public void startLinks(View target) {
     	this.startActivity( new Intent(this,LinksActivity.class));
     }
-
-
 }
