@@ -90,6 +90,6 @@
 	<string name="enter_default_filename_for_sgf_request">Please enter the default Filename for SGF Files.</string>
 	<string name="review_game">Review</string>
 	<string name="record_game">Record</string>
-	<string name="dashboard_problems">Problems</string>
+	<string name="dashboard_problems">Tsumego</string>
 	<string name="hint">Hint</string>
 </resources>

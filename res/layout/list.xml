@@ -3,17 +3,18 @@
     android:orientation="vertical"
    	style="@style/default_activity_main"
     >
-	<!-- 
-<fragment 	
 
-			android:name="org.ligi.gobandroid_hd.ui.SGFOnlineListFragment"
+<LinearLayout 	
+
+			android:id="@+id/list_fragment"
 			android:layout_width="fill_parent" 
 			android:layout_height="fill_parent"
 			>
-</fragment> -->
+</LinearLayout>
+ <!-- 
 <ListView
     	android:layout_width="fill_parent" 
 			android:layout_height="fill_parent"
     android:id="@+id/android:list" />
-
+ -->
 </LinearLayout>

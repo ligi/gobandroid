@@ -34,6 +34,7 @@
     	
 		<activity android:name=".ui.GoSetupActivity"></activity>
 		<activity android:name=".ui.SGFSDCardListActivity"></activity>
+		<activity android:name=".ui.links.LinksActivity"></activity>
 		<activity android:name=".ui.tsumego.TsumegoActivity"></activity>
 		<activity android:name=".ui.SGFLoadActivity">
 		<intent-filter>
@@ -86,10 +87,7 @@
 		<activity android:name=".ui.GoPrefsActivity"></activity>
 		<activity android:name=".ui.LoadActionsActivity"></activity>
 		<activity android:name=".ui.SGFOnlineListActivity"></activity>
-		<activity android:name=".ui.AboutActivity"></activity>
 		<activity android:name=".ui.GoActivity"></activity>		
-		
-		
 	</application>
     
 </manifest> 

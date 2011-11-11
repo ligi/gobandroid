@@ -33,7 +33,7 @@
         style="@style/DashboardButton"
         android:text="@string/links"
         android:drawableTop="@drawable/dashboard_links"
-        android:onClick="startSettings" />
+        android:onClick="startLinks" />
 <!-- 
     <Button android:id="@+id/home_btn_schedule"
         style="@style/DashboardButton"

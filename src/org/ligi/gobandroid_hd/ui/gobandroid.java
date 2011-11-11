@@ -19,6 +19,7 @@
 
 package org.ligi.gobandroid_hd.ui;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.tracedroid.TraceDroid;
 import org.ligi.tracedroid.logging.Log;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
@@ -68,7 +69,9 @@ public class gobandroid extends FragmentActivity {
     	this.startActivity(new Intent(this,GoPrefsActivity.class));
     }
     
-    public void startHelp(View target) {
-    	this.startActivity( new Intent(this,AboutActivity.class));
+    public void startLinks(View target) {
+    	this.startActivity( new Intent(this,LinksActivity.class));
     }
+
+
 }
