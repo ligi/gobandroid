@@ -106,19 +106,13 @@ public class GoActivity
 		});
 		game2ui();
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		return true;
+		this.getMenuInflater().inflate(R.menu.ingame_common, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
-	/*
-    @Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-    	menu.clear();
-    	this.getMenuInflater().inflate(R.menu.ingame_common, menu);
-		return true;//super.onCreateOptionsMenu(menu);
-	}
-*/
+
 	public boolean onOptionsItemSelected(MenuItem item) {                                                                                                 
         
         switch (item.getItemId()) {                                                                                                                   

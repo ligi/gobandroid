@@ -11,7 +11,6 @@ import org.ligi.tracedroid.logging.Log;
 
 import android.os.Bundle;
 import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 
 public class GameRecordActivity extends GoActivity  implements GoGameChangeListener {
 
@@ -54,22 +53,22 @@ public class GameRecordActivity extends GoActivity  implements GoGameChangeListe
 	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		Log.i("prep opt" + game.isFinished());
-		// TODO Auto-generated method stub
-		menu.clear();
-		if (game.isFinished())
-			this.getMenuInflater().inflate(R.menu.ingame_record_end, menu);
-		else
-			this.getMenuInflater().inflate(R.menu.ingame_record_pass, menu);
-		
-		this.getMenuInflater().inflate(R.menu.ingame_record, menu);
-		this.getMenuInflater().inflate(R.menu.ingame_common, menu);
+		super.onPrepareOptionsMenu(menu);
+
+		menu.findItem(R.id.menu_game_pass).setVisible(!game.isFinished());
+		menu.findItem(R.id.menu_game_results).setVisible(game.isFinished());
 		return true;
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		this.getMenuInflater().inflate(R.menu.ingame_record, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
 	public void onGoGameChange() {
-		//this.invalidateOptionsMenu();		
+		this.invalidateOptionsMenu();		
 	}
 
 }
