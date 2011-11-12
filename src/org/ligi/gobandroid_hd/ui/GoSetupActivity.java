@@ -20,9 +20,6 @@
 package org.ligi.gobandroid_hd.ui;
 
 import java.util.List;
-
-
-import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.logic.GoGame;

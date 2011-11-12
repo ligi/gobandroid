@@ -23,7 +23,6 @@ import java.io.File;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 
 public class GoPrefs {
