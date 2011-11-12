@@ -19,6 +19,7 @@ import android.widget.TextView;
 public class NavigationFragment extends Fragment implements GoGameChangeListener {
 
 	private Button next_btn,prev_btn,first_btn,last_btn;
+	
 	private GoGame game;
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,7 +29,6 @@ public class NavigationFragment extends Fragment implements GoGameChangeListener
 		last_btn=(Button)res.findViewById(R.id.btn_last);
 		next_btn=(Button)res.findViewById(R.id.btn_next);
 		prev_btn=(Button)res.findViewById(R.id.btn_prev);
-		
 
 		game=GoGameProvider.getGame();
 		game.addGoGameChangeListener(this);
@@ -77,7 +77,7 @@ public class NavigationFragment extends Fragment implements GoGameChangeListener
 	
 	@Override
 	public void onGoGameChange() {
-		updateButtonStates();				
+		updateButtonStates();		
 	}
 	
 	private void updateButtonStates() {

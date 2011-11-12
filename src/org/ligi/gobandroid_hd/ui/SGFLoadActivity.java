@@ -18,8 +18,6 @@
  **/
 
 package org.ligi.gobandroid_hd.ui;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -46,8 +44,8 @@ import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
-import org.ligi.gobandroid_hd.ui.review.GameReviewActivity;
-import org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity;
+import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.tracedroid.logging.Log;
 
 /**
@@ -60,7 +58,7 @@ import org.ligi.tracedroid.logging.Log;
  **/
 
 public class SGFLoadActivity 
-		extends Activity 
+		extends GobandroidFragmentActivity 
 		implements Runnable, SGFHelper.ISGFLoadProgressCallback
 {
 
@@ -227,18 +225,7 @@ public class SGFLoadActivity
 			}}
 		);
 
-		Intent go_start_intent=new Intent(SGFLoadActivity.this,GoActivity.class);
-    	
-		switch (GoInteractionProvider.getMode()) {
-		case GoInteractionProvider.MODE_TSUMEGO:
-			go_start_intent=new Intent(SGFLoadActivity.this,TsumegoActivity.class);
-			break;
-		case GoInteractionProvider.MODE_REVIEW:
-			go_start_intent=new Intent(SGFLoadActivity.this,GameReviewActivity.class);
-			break;
-		}
-		
-    	startActivity(go_start_intent);
+		SwitchModeHelper.startGameWithCorrectMode(this);
 	}
 	
 	

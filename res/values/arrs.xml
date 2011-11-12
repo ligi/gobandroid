@@ -5,4 +5,10 @@
         <item>mark path</item>
         <item>numbered end</item>
     </string-array>
+    
+    <string-array name="gamemode_options">
+        <item>Record</item>
+        <item>Review</item>
+        <item>Tsumego</item>
+    </string-array>
 </resources>

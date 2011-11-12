@@ -25,6 +25,7 @@ import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
 import org.ligi.gobandroid_hd.ui.alerts.GameResultsAlert;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.tracedroid.logging.Log;
 import android.app.AlertDialog;
@@ -116,7 +117,11 @@ public class GoActivity
 	public boolean onOptionsItemSelected(MenuItem item) {                                                                                                 
         
         switch (item.getItemId()) {                                                                                                                   
-                                                                                                                                                      
+                           
+	        case R.id.menu_game_switchmode:
+	        	SwitchModeHelper.show(this);
+	        	break;
+	        	
 	        case R.id.menu_game_info:                                                                                                                           
                 GameInfoAlert.show(this,game);                                                                                                        
                 break;                        

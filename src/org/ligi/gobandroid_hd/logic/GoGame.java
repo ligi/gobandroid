@@ -311,12 +311,9 @@ public class GoGame  {
    		else
    			captures_white += local_captures;
         
-        
-        //act_move.setDidCaptures((tmp_cap!=(captures_black+captures_white)));
         act_move.setDidCaptures(local_captures>0);
-        Log.i("cap" + local_captures  + " captures_black " + captures_black + " captures_white" + captures_white + " " + act_move.didCaptures());
-
         notifyGameChange();
+
         // if we reached this point this move must be valid
         return MOVE_VALID;
     }
@@ -721,9 +718,6 @@ public class GoGame  {
     	if (ignore_y > 0) {
     		if ((!hasGroupLiberties(ignore_x, ignore_y-1))&&(!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x, ignore_y-1)))
     			remove_group((int)ignore_x, ignore_y-1);
-    		Log.i("caplib"+hasGroupLiberties(ignore_x, ignore_y-1));
-    		Log.i("capeq"+calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x, ignore_y-1));
-  			Log.i("cap" + calc_board.toString());
 
     	}
     	/* check up */
