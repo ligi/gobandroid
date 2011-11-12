@@ -21,7 +21,7 @@ public class NavigationAndCommentFragment extends Fragment implements GoGameChan
                              Bundle savedInstanceState) {
 		View res=inflater.inflate(R.layout.game_extra_review, container, false);
 
-		//myTextView=(TextView)res.findViewById(R.id.comments_textview);
+		myTextView=(TextView)res.findViewById(R.id.comments_textview);
 
 		game=GoGameProvider.getGame();
 		game.addGoGameChangeListener(this);
