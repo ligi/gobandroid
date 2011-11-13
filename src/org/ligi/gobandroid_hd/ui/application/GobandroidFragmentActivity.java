@@ -33,7 +33,8 @@ public class GobandroidFragmentActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
       super.onDestroy();
-      tracker.stopSession();
+      if (tracker!=null)
+    	  tracker.stopSession();
     }
 
 	public GobandroidSettings getSettings() {
