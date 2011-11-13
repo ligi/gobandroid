@@ -22,12 +22,12 @@ package org.ligi.gobandroid_hd.ui.links;
 import org.ligi.android.common.adapter.LinkWithDescription;
 import org.ligi.android.common.adapter.LinkWithDescriptionAndTitle;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
 
 import android.os.Bundle;
 import android.support.v4.app.ActionBar.Tab;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ActionBar;
 import android.support.v4.app.FragmentTransaction;
 
@@ -38,7 +38,7 @@ import android.support.v4.app.FragmentTransaction;
  *         
 **/
 
-public class LinksActivity extends FragmentActivity implements ActionBar.TabListener{
+public class LinksActivity extends GobandroidFragmentActivity implements ActionBar.TabListener{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,6 +121,7 @@ public class LinksActivity extends FragmentActivity implements ActionBar.TabList
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+    	getTracker().trackPageView("/links/"+tab.getText());
 		setList((Integer)tab.getTag());
 		
 	}
