@@ -435,6 +435,12 @@ public class GoGame  {
     }
     
     public void jump(GoMove move) {
+    	
+    	if (move==null) {
+    		Log.w("move is null #shouldnothappen");
+    		return;
+    	}
+    		
     	last_action_was_pass=false;
         clear_calc_board();
    
