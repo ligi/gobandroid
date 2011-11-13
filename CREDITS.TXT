@@ -1,3 +1,12 @@
+Silvestre Herrera http://www.silvestre.com.ar/
+  icons
+
+David Ormerod http://gogameguru.com/  
+ tsumego + game SGF's
+
+Jake Wharton http://actionbarsherlock.com
+ ActionBarSherlock lib
+
 Oren Laskin
  for:
   a lot of feeback
