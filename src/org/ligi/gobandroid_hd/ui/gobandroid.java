@@ -50,6 +50,7 @@ public class gobandroid extends GobandroidFragmentActivity {
      **/
 
     public void recordGame(View target) {
+    	getTracker().trackPageView("/record");
     	this.startActivity(new Intent(this,GoSetupActivity.class));
     }
 
@@ -61,11 +62,13 @@ public class gobandroid extends GobandroidFragmentActivity {
     }
 
     public void solveProblem(View target) {
+    	getTracker().trackPageView("/tsumego");
     	if (!unzipSGFifNeeded()) 
     		startLoad(getSettings().getTsumegoPath(),GoInteractionProvider.MODE_TSUMEGO);
     }
 
     public void reviewGame(View target) {
+    	getTracker().trackPageView("/review");
     	if (!unzipSGFifNeeded()) 
     		startLoad(getSettings().getReviewPath(),GoInteractionProvider.MODE_REVIEW);
     }
@@ -90,6 +93,7 @@ public class gobandroid extends GobandroidFragmentActivity {
     	return false;
     }
     public void startLinks(View target) {
+    	getTracker().trackPageView("/links");
     	this.startActivity( new Intent(this,LinksActivity.class));
     }
 }

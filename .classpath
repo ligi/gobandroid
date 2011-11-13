@@ -8,5 +8,6 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="src" path="/LigiAndroidCommons"/>
 	<classpathentry kind="src" path="/ActionBarSherlock"/>
+	<classpathentry kind="lib" path="libs/libGoogleAnalytics.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
