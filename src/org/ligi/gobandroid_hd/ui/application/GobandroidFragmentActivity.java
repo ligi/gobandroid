@@ -34,6 +34,7 @@ public class GobandroidFragmentActivity extends FragmentActivity {
     protected void onDestroy() {
       super.onDestroy();
       if (tracker!=null)
+    	  tracker.dispatch();
     	  tracker.stopSession();
     }
 
