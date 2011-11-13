@@ -218,7 +218,7 @@ public class GoGame  {
     	Log.i("do_move x:" + x + "  y:" + y );
     	
     	// return with INVALID if x and y are inside the board 
-        if ((x < 0) || (x > calc_board.getSize()) || (y < 0) || (y > calc_board.getSize()))
+        if ((x < 0) || (x >= calc_board.getSize()) || (y < 0) || (y >= calc_board.getSize()))
         	return MOVE_INVALID_NOT_ON_BOARD;
         
         // check if the "new" move is in the variations - to not have 2 equal move as different variations
