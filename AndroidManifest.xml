@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      android:versionName="0.70" android:versionCode="70" package="org.ligi.gobandroid_hd">
+      android:versionName="0.71" android:versionCode="71" package="org.ligi.gobandroid_hd">
 
      <uses-sdk android:targetSdkVersion="11" android:minSdkVersion="4"/>
     
