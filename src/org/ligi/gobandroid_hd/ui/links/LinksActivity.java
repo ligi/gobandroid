@@ -121,9 +121,8 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-    	getTracker().trackPageView("/links/"+tab.getText());
+		getTracker().trackPageView("/links/"+tab.getText());
 		setList((Integer)tab.getTag());
-		
 	}
 
 	@Override
