@@ -57,8 +57,7 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 			tab.setTabListener(this);
 			getSupportActionBar().addTab(tab);
         }
-	
-        
+	    
         setList(R.string.link_tab_about);
     }
 
@@ -71,7 +70,7 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 		LinkWithDescription[] links=null;
 		switch (list) {
 			case R.string.link_tab_about:
-			links=new LinkWithDescription[] {
+				links=new LinkWithDescription[] {
 					new LinkWithDescriptionAndTitle("https://plus.google.com/b/106767057593220295403/","for news, infos, feedback","Gobandroid Project Page"),
 					new LinkWithDescriptionAndTitle("https://plus.google.com/104849265443273982798","idea / concept / code ","Ligi on Google+"),
 					new LinkWithDescriptionAndTitle("http://gogameguru.com/","source of default Tsumego and commented game SGF's","gogameguru.com"),
@@ -82,11 +81,11 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 					new LinkWithDescriptionAndTitle("http://www.sente.ch","FreegGoban stones","sente.ch"),
 					new LinkWithDescription("https://github.com/ligi/gobandroid","Code/Issues on GitHub"),
 					new LinkWithDescription("http://gplv3.fsf.org/","GPLv3 License")					
-			};					
-		break;
-	
-		case R.string.link_tab_help:
-			links=new LinkWithDescription[] {
+				};					
+			break;
+			
+			case R.string.link_tab_sgf:
+				links=new LinkWithDescription[] {
 
 					// source pro games
 					new LinkWithDescription("http://www.andromeda.com/people/ddyer/age-summer-94/companion.html","Companion"),
@@ -100,24 +99,24 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 					//mixed
 					new LinkWithDescription("http://www.britgo.org/bgj/recent.html","Britgo recent")
 					//dead not there anymore			new LinkWithDescription("http://egoban.org/@@recent_games","egoban"),
-			};
-			break;
-			case R.string.link_tab_sgf:
-				links=new LinkWithDescription[] {
-						new LinkWithDescription("http://en.wikipedia.org/wiki/Rules_of_Go","Wikipedia Article"),
-						new LinkWithDescription("http://www.youtube.com/watch?v=gECcsSeRcNo","Tutorial on YouTube 1"),
-						new LinkWithDescription("http://www.youtube.com/watch?v=UW8822OoihY","Tutorial on YouTube 2"),
-						new LinkWithDescription("http://www.youtube.com/watch?v=t_ZRe3wGIUM","Tutorial on YouTube 3"),
-						new LinkWithDescription("http://www.youtube.com/watch?v=rCi9vgvLdI0","Tutorial on YouTube 3a")
 				};
 			break;
-					}
-		changeFragment(new LinkListFragment(links));	}
+			
+			case R.string.link_tab_help:
+				links=new LinkWithDescription[] {
+					new LinkWithDescription("http://en.wikipedia.org/wiki/Rules_of_Go","Wikipedia Article"),
+					new LinkWithDescription("http://www.youtube.com/watch?v=gECcsSeRcNo","Tutorial on YouTube 1"),
+					new LinkWithDescription("http://www.youtube.com/watch?v=UW8822OoihY","Tutorial on YouTube 2"),
+					new LinkWithDescription("http://www.youtube.com/watch?v=t_ZRe3wGIUM","Tutorial on YouTube 3"),
+					new LinkWithDescription("http://www.youtube.com/watch?v=rCi9vgvLdI0","Tutorial on YouTube 3a")
+				};
+			break;
+		}
+		changeFragment(new LinkListFragment(links));	
+	}
 
 	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		
-	}
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {	}
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
@@ -126,7 +125,6 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 	}
 
 	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-	}
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {}
     
 }
