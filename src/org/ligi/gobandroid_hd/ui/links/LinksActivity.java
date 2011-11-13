@@ -78,6 +78,7 @@ public class LinksActivity extends FragmentActivity implements ActionBar.TabList
 					new LinkWithDescriptionAndTitle("http://actionbarsherlock.com/","library used for ActionBar backward compatibility ","ActionBarSherlock"),
 					new LinkWithDescriptionAndTitle("https://plus.google.com/116001545198026111276","feedback & patches" , "Oren Laskin on Google+"),
 					new LinkWithDescriptionAndTitle("https://plus.google.com/105303388887291066710","wooden background","Ruth -lironah- Hinckley on Google+"),
+					new LinkWithDescriptionAndTitle("http://www.silvestre.com.ar/","GPL'd icons","Silvestre Herrera"),
 					new LinkWithDescriptionAndTitle("http://www.sente.ch","FreegGoban stones","sente.ch"),
 					new LinkWithDescription("https://github.com/ligi/gobandroid","Code/Issues on GitHub"),
 					new LinkWithDescription("http://gplv3.fsf.org/","GPLv3 License")					
