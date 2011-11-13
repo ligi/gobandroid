@@ -104,6 +104,7 @@ public class SGFLoadActivity
 		
 		alert_dlg=new AlertDialog.Builder(this).setCancelable(false).setTitle("Loading SGF").setView(lin).show();
 
+		getTracker().trackPageView("/load/"+ getIntent().getData().toString().replace(":", "").replace("///","/"));
 		getTracker().trackEvent("SGFLoadActivity", "load", getIntent().getData().toString(), -1);
 		new Thread(this).start();
 	}
