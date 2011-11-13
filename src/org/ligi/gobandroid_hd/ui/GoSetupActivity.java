@@ -24,6 +24,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
+import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 import org.ligi.tracedroid.logging.Log;
 
@@ -35,7 +36,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
 import android.view.View;
@@ -59,7 +59,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
  * 
  **/
 
-public class GoSetupActivity extends FragmentActivity implements OnSeekBarChangeListener, OnClickListener, OnItemSelectedListener{
+public class GoSetupActivity extends GobandroidFragmentActivity implements OnSeekBarChangeListener, OnClickListener, OnItemSelectedListener{
 
 	private byte act_size=9;
 	private byte act_handicap=0;
@@ -105,9 +105,7 @@ public class GoSetupActivity extends FragmentActivity implements OnSeekBarChange
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		GoPrefs.init(this);
-		
 		this.setContentView(R.layout.game_setup);
 	}
 	
@@ -264,7 +262,7 @@ public class GoSetupActivity extends FragmentActivity implements OnSeekBarChange
 		go_intent.putExtra("white_player",white_player_spinner.getSelectedItemPosition());
 		go_intent.putExtra("black_player",black_player_spinner.getSelectedItemPosition());
 		 */
-		
+		getTracker().trackPageView("/record/start?size="+act_size);
 		startActivity(go_intent);
 	}
 
@@ -309,7 +307,4 @@ public class GoSetupActivity extends FragmentActivity implements OnSeekBarChange
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	
-	
 }
