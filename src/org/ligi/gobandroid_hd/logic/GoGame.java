@@ -359,6 +359,12 @@ public class GoGame  {
         if (move.didCaptures()) {
         	buildGroups();
         	remove_dead( move.getX(), move.getY() );
+
+            if (!calc_board.isCellWhite(move.getX(), move.getY() ))
+       			captures_black += local_captures;
+       		else
+       			captures_white += local_captures;
+
         }
     }
 
