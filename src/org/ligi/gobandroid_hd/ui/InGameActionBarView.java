@@ -65,7 +65,7 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 	@Override
 	protected void onDraw(Canvas canvas) {
 		
-		active_player_bg_rect.offsetTo(0, getGame().isBlackToMove()?black_stone_bitmap.getHeight():0);
+		active_player_bg_rect.offsetTo(0, getGame().isBlackToMove()?0:black_stone_bitmap.getHeight());
 		
 		canvas.drawRect(active_player_bg_rect, myActiveBGPaint);
 		
