@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      android:versionName="0.75" android:versionCode="75" package="org.ligi.gobandroid_hd">
+      android:versionName="0.77" android:versionCode="77" package="org.ligi.gobandroid_hd">
 
      <uses-sdk android:targetSdkVersion="11" android:minSdkVersion="4"/>
     
@@ -14,6 +14,8 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
     
     <supports-screens android:anyDensity="true" />
       
