@@ -11,28 +11,28 @@
     <Button android:id="@+id/home_btn_schedule"
         style="@style/DashboardButton"
         android:text="@string/record_game"
-        android:drawableTop="@drawable/dashboard_record"
+        android:drawableTop="@drawable/dashboard_record_item"
         android:onClick="recordGame" />
     
     
     <Button android:id="@+id/home_btn_schedule"
         style="@style/DashboardButton"
         android:text="@string/dashboard_problems"
-        android:drawableTop="@drawable/dashboard_solve"
+        android:drawableTop="@drawable/dashboard_tsumego_item"
         android:onClick="solveProblem" />
     
     
     <Button android:id="@+id/home_btn_schedule"
         style="@style/DashboardButton"
         android:text="@string/review_game"
-        android:drawableTop="@drawable/dashboard_review"
+        android:drawableTop="@drawable/dashboard_review_item"
         android:onClick="reviewGame" />
     
     
     <Button android:id="@+id/home_btn_links"
         style="@style/DashboardButton"
         android:text="@string/links"
-        android:drawableTop="@drawable/dashboard_links"
+        android:drawableTop="@drawable/dashboard_links_item"
         android:onClick="startLinks" />
 <!-- 
     <Button android:id="@+id/home_btn_schedule"
