@@ -12,13 +12,11 @@
 		    android:layout_height="match_parent"
 			android:padding="5dip"
 			android:layout_above="@id/container_for_nav">
-		        
-				<TextView
+
+		        <TextView
 			    android:id="@+id/comments_textview"
 			    android:layout_width="fill_parent"
 			    android:layout_height="match_parent"
-	
-				android:layout_above="@id/container_for_nav"
 			    android:layout_alignParentTop="true"
 			    android:layout_margin="3dip"
 			    android:layout_weight="10"
