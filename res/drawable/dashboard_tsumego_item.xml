@@ -2,8 +2,8 @@
      <!-- <item android:state_pressed="true"
            android:drawable="@drawable/button_pressed" />  pressed -->
      <item android:state_focused="true"
-           android:drawable="@drawable/dashboard_review_focus" /> <!-- focused -->
-     <item android:drawable="@drawable/dashboard_review" /> <!-- default -->
+           android:drawable="@drawable/dashboard_tsumego_focus" /> <!-- focused -->
+     <item android:drawable="@drawable/dashboard_tsumego" /> <!-- default -->
      
  </selector>
  
