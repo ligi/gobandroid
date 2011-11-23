@@ -99,4 +99,8 @@
 	<string name="link_tab_sgf">SGF\'s</string>
 	<string name="game_mode">Mode</string>
 	<string name="switch_game_mode">Switch Mode</string>
+
+	<string name="menu_bookmark">Bookmark</string>
+	<string name="menu_autoplay">Autoplay</string>
+	    
 </resources>
