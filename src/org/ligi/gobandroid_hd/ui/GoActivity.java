@@ -260,6 +260,7 @@ public class GoActivity
 	@Override
 	public boolean onKey(View v, int keyCode, KeyEvent event) {
 
+		if (event.getAction()==KeyEvent.ACTION_DOWN)
     	switch (keyCode) {
     	case KeyEvent.KEYCODE_DPAD_UP:
     		go_board.prepare_keyinput();
@@ -320,5 +321,9 @@ public class GoActivity
       	if (myZoomFragment.getBoard()!=null)
       		myZoomFragment.getBoard().invalidate();
       	return true;
+	}
+	
+	public GoBoardViewHD getBoard() {
+		return go_board;
 	}
 }

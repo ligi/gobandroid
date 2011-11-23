@@ -4,6 +4,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
+import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -94,69 +95,7 @@ public class NavigationFragment extends Fragment implements GoGameChangeListener
 	}
 		
 	public void gameNavNext() {
-		if (!game.canRedo())
-			return ;
-
-		if (game.getPossibleVariationCount()>0)	{
-			LinearLayout lin=new LinearLayout(this.getActivity());
-			LinearLayout li=new LinearLayout(this.getActivity());
-
-			TextView txt =new TextView(this.getActivity());
-	
-			// show the comment when there is one - useful for SGF game problems
-			if (game.getActMove().hasComment())
-				txt.setText(game.getActMove().getComment());
-			else
-				txt.setText("" +( game.getPossibleVariationCount()+1) + " Variations found for this move - which should we take?");
-		
-			txt.setPadding(10, 2, 10, 23);
-			lin.addView(txt);
-			lin.addView(li);
-			lin.setOrientation(LinearLayout.VERTICAL);
-			
-			final Dialog select_dlg=new Dialog(this.getActivity());
-			final Boolean redoing=false;
-			View.OnClickListener var_select_listener=new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					if (redoing)
-						return;
-					select_dlg.hide();
-					if (!v.isEnabled()) return;
-					v.setEnabled(false	);
-					
-					game.redo((Integer)(v.getTag()));
-				
-					//updateButtonState();
-				}
-			};
-			
-			li.setWeightSum(1.0f*(game.getPossibleVariationCount()+1));
-			li.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-			
-			for (Integer i=0;i<game.getPossibleVariationCount()+1;i++)
-				{
-				Button var_btn=new Button(this.getActivity());
-				var_btn.setTag(i);
-				var_btn.setOnClickListener(var_select_listener );
-				if (game.getActMove().getnextMove(i).isMarked())
-					var_btn.setText(game.getActMove().getnextMove(i).getMarkText());
-				else
-					var_btn.setText(""+(i+1));
-					
-				li.addView(var_btn);
-		
-				var_btn.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1f));
-				}
-
-			select_dlg.setTitle(R.string.variations);
-			select_dlg.setContentView(lin);
-			
-			select_dlg.show();
-		}
-		else
-			game.redo(0);
+		GameForwardAlert.show(this.getActivity(), game);
 	}
 	
 	public void gameNavPrev() {
