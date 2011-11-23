@@ -39,6 +39,7 @@ import android.support.v4.view.MenuItem;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -53,7 +54,7 @@ import android.widget.Toast;
  **/
 
 public class GoActivity 
-		extends GobandroidFragmentActivity implements OnTouchListener {
+		extends GobandroidFragmentActivity implements OnTouchListener, OnKeyListener {
 
 	private GoBoardViewHD go_board=null;
 	private TextView comment_tv;
@@ -94,6 +95,7 @@ public class GoActivity
 		go_board=(GoBoardViewHD)findViewById(R.id.go_board);
 		
 		go_board.setOnTouchListener(this);
+		go_board.setOnKeyListener(this);
 		
 		comment_tv=(TextView)findViewById(R.id.comments_textview);
 
@@ -165,64 +167,6 @@ public class GoActivity
 		
 		return false;
 	}
-    
-    @Override 
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-    	
-    	switch (keyCode) {
-    	case KeyEvent.KEYCODE_DPAD_UP:
-    		go_board.prepare_keyinput();
-    		if (GoInteractionProvider.getTouchY()>0) 
-    			GoInteractionProvider.touch_position-=game.getSize();
-    		break;
-    	
-    	case KeyEvent.KEYCODE_DPAD_LEFT:
-    		go_board.prepare_keyinput();
-    		if (GoInteractionProvider.getTouchX()>0) 
-    			GoInteractionProvider.touch_position--;
-    		break;
-    	
-    	case KeyEvent.KEYCODE_DPAD_DOWN:
-    		go_board.prepare_keyinput();
-    		if (GoInteractionProvider.getTouchY()<game.getVisualBoard().getSize()-1) 
-    			GoInteractionProvider.touch_position+=game.getSize();
-    		break;
-    	
-    	case KeyEvent.KEYCODE_DPAD_RIGHT:
-    		go_board.prepare_keyinput();
-    		if (GoInteractionProvider.getTouchX()<game.getVisualBoard().getSize()-1)
-    			GoInteractionProvider.touch_position++;
-    		break;
-    		
-    	case KeyEvent.KEYCODE_DPAD_CENTER:
-    		doMoveWithUIFeedback((byte)GoInteractionProvider.getTouchX(),(byte)GoInteractionProvider.getTouchY());
-    		break;
-    		
-    	case KeyEvent.KEYCODE_BACK:
-    			new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
-    			.setMessage( R.string.quit_confirm
-    			).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
-    			public void onClick(DialogInterface dialog, int whichButton) {
-    				game.getGoMover().stop();
-    				finish();
-    			}
-    		}).setCancelable(true).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
-    			public void onClick(DialogInterface dialog, int whichButton) {
-    				
-    			}
-    		}).show();
-    				
-    		//}
-    		return true;
-    		
-    	
-    	}
-    	go_board.postInvalidate();
-      	if (myZoomFragment.getBoard()!=null)
-      		myZoomFragment.getBoard().invalidate();
-      	
-    	return super.onKeyDown(keyCode, event);
-    }
     
     /**
 	 * show a the info toast with a specified text from a resource ID
@@ -312,4 +256,69 @@ public class GoActivity
     public boolean doAskToKeepVariant() {
     	return GoPrefs.isAskVariantEnabled();
     }
+
+	@Override
+	public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+    	switch (keyCode) {
+    	case KeyEvent.KEYCODE_DPAD_UP:
+    		go_board.prepare_keyinput();
+    		if (GoInteractionProvider.getTouchY()>0) 
+    			GoInteractionProvider.touch_position-=game.getSize();
+    		else
+    			return false;
+    		break;
+    		
+    	case KeyEvent.KEYCODE_DPAD_LEFT:
+    		go_board.prepare_keyinput();
+    		if (GoInteractionProvider.getTouchX()>0) 
+    			GoInteractionProvider.touch_position--;
+    		else
+    			return false;
+    		break;
+    		
+    	case KeyEvent.KEYCODE_DPAD_DOWN:
+    		go_board.prepare_keyinput();
+    		if (GoInteractionProvider.getTouchY()<game.getVisualBoard().getSize()-1) 
+    			GoInteractionProvider.touch_position+=game.getSize();
+    		else
+    			return false;
+    		break;
+    		
+    	case KeyEvent.KEYCODE_DPAD_RIGHT:
+    		go_board.prepare_keyinput();
+    		if (GoInteractionProvider.getTouchX()<game.getVisualBoard().getSize()-1)
+    			GoInteractionProvider.touch_position++;
+    		else
+    			return false;
+    		break;
+    		
+    	case KeyEvent.KEYCODE_DPAD_CENTER:
+    		doMoveWithUIFeedback((byte)GoInteractionProvider.getTouchX(),(byte)GoInteractionProvider.getTouchY());
+    		break;
+    		
+    	case KeyEvent.KEYCODE_BACK:
+    			new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
+    			.setMessage( R.string.quit_confirm
+    			).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
+    			public void onClick(DialogInterface dialog, int whichButton) {
+    				game.getGoMover().stop();
+    				finish();
+    			}
+    		}).setCancelable(true).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
+    			public void onClick(DialogInterface dialog, int whichButton) {
+    				
+    			}
+    		}).show();
+    				
+    		//}
+    		return true;
+    		
+    	
+    	}
+    	go_board.postInvalidate();
+      	if (myZoomFragment.getBoard()!=null)
+      		myZoomFragment.getBoard().invalidate();
+      	return true;
+	}
 }
