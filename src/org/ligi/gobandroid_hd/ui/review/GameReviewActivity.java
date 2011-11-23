@@ -53,12 +53,13 @@ public class GameReviewActivity extends GoActivity  {
 		case R.id.menu_bookmark:
 			
 			return true;
-			*/
+
 		case R.id.menu_autoplay:
 			Log.i("gobandroid","automove init");
 			
 			new Thread(new autoPlayRunnable()).start();
 			break;
+		 */
 		}
 		return super.onOptionsItemSelected(item);
 	}
