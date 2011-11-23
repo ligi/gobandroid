@@ -8,6 +8,7 @@ import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,9 +77,19 @@ public class NavigationFragment extends Fragment implements GoGameChangeListener
         return res;
     }
 	
+	private Handler gameChangeHandler=new Handler();
+	
 	@Override
 	public void onGoGameChange() {
-		updateButtonStates();		
+		gameChangeHandler.post(new Runnable () {
+
+			@Override
+			public void run() {
+				updateButtonStates();		
+			}
+			
+		});
+		
 	}
 	
 	private void updateButtonStates() {

@@ -1,10 +1,13 @@
 package org.ligi.gobandroid_hd.ui;
 
+
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,9 +36,18 @@ public class NavigationAndCommentFragment extends Fragment implements GoGameChan
 	
 	@Override
 	public void onGoGameChange() {
-		if (myTextView!=null)
-			myTextView.setText(game.getActMove().getComment());
+		gameChangeHandler.post(new Runnable() {
+
+			@Override
+			public void run() {
+				if (myTextView!=null)
+					myTextView.setText(game.getActMove().getComment());
+			}
+			
+		});
 	}
+	
+	private Handler gameChangeHandler=new Handler();
 	
 	@Override
 	public void onDestroyView() {

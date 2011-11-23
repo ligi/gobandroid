@@ -25,7 +25,7 @@ public class GameReviewActivity extends GoActivity  {
 		public void run() {
 			game=GoGameProvider.getGame();
 			Log.i("gobandroid","automove start" + game.getActMove().getNextMoveVariations().size());
-			while (game.getActMove().getNextMoveVariationCount()>0) {
+			while ( game.getActMove().getNextMoveVariations().size()>0) {
 				Log.i("gobandroid","automove move"+game.getActMove().getNextMoveVariationCount());
 				game.jump(game.getActMove().getnextMove(0));
 				try {
@@ -49,7 +49,6 @@ public class GameReviewActivity extends GoActivity  {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch ( item.getItemId()) {
-		/*
 		case R.id.menu_bookmark:
 			
 			return true;
@@ -59,7 +58,6 @@ public class GameReviewActivity extends GoActivity  {
 			
 			new Thread(new autoPlayRunnable()).start();
 			break;
-		 */
 		}
 		return super.onOptionsItemSelected(item);
 	}
