@@ -25,7 +25,7 @@ public class GameReviewActivity extends GoActivity  {
 		public void run() {
 			game=GoGameProvider.getGame();
 			Log.i("gobandroid","automove start" + game.getActMove().getNextMoveVariations().size());
-			while ( game.getActMove().getNextMoveVariations().size()>0) {
+			while (autoplay_active &&( game.getActMove().getNextMoveVariations().size()>0)) {
 				Log.i("gobandroid","automove move"+game.getActMove().getNextMoveVariationCount());
 				game.jump(game.getActMove().getnextMove(0));
 				try {
@@ -38,6 +38,7 @@ public class GameReviewActivity extends GoActivity  {
 		
 	}
 	
+	boolean autoplay_active=false;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -50,16 +51,24 @@ public class GameReviewActivity extends GoActivity  {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch ( item.getItemId()) {
 		case R.id.menu_bookmark:
-			
+			BookmarkDialog.show(this);
 			return true;
 
 		case R.id.menu_autoplay:
 			Log.i("gobandroid","automove init");
+			autoplay_active=true;
+			new Thread(new autoPlayRunnable()).start();;
 			
-			new Thread(new autoPlayRunnable()).start();
 			break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+
+	@Override
+	protected void onStop() {
+		autoplay_active=false;
+		super.onStop();
 	}
 
 

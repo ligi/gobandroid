@@ -73,7 +73,7 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
         
         Vector<String> fnames=new Vector<String>();
         for(File file:files) 
-        	if ((file.getName().endsWith(".sgf"))||(file.isDirectory()))
+        	if ((file.getName().endsWith(".sgf"))||(file.isDirectory())||(file.getName().endsWith(".golink")))
         		fnames.add(file.getName());
 
 

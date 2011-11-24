@@ -25,6 +25,8 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		this.setTitle(R.string.tsumego);
+		
 		// build a on path Vector to do a fast isOnPath() later 
 		on_path_moves=new Vector<GoMove>();
 		recursive_add_on_path_moves(game.getFirstMove());

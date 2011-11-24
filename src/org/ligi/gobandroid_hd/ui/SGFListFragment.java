@@ -2,6 +2,7 @@ package org.ligi.gobandroid_hd.ui;
 
 import java.io.File;
 
+import org.ligi.android.common.files.FileHelper;
 import org.ligi.gobandroid_hd.R;
 
 import android.content.Intent;
@@ -55,13 +56,31 @@ public class SGFListFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
     	
-        Intent go_intent=new Intent(this.getActivity(),SGFLoadActivity.class);
-     	
-        if (new File(dir + "/" + menu_items[position]).isDirectory())
-        	go_intent=new Intent(this.getActivity(),SGFSDCardListActivity.class);
+        Intent intent2start=new Intent(this.getActivity(),SGFLoadActivity.class);
+        String fname=dir + "/" + menu_items[position];
         
-        go_intent.setData(Uri.parse( "file://" + dir + "/" + menu_items[position]));
-        startActivity(go_intent);
+        
+        if (fname.endsWith(".golink")) {
+        	fname=FileHelper.file2String(new File(fname));
+        }
+        
+        if (fname.contains(":#")) {
+        	String[] arr_content=fname.split(":#");
+        	int move_id=Integer.parseInt(arr_content[1]);
+        	fname=arr_content[0];
+        	intent2start.putExtra("move_num",move_id);
+        }
+        
+        if (!fname.endsWith(".sgf")) {
+        	intent2start=new Intent(this.getActivity(),SGFSDCardListActivity.class);
+        }
+        
+        if (!fname.contains("://"))
+        	fname="file://"+fname;
+                
+        intent2start.setData(Uri.parse( fname));
+        
+        startActivity(intent2start);
         
 	}
 }

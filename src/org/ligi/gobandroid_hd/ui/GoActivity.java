@@ -160,9 +160,6 @@ public class GoActivity
 	        	SaveSGFDialog.show(this);
 	        	break;
 	
-			case R.id.menu_settings:
-	            startActivity(new Intent(this,GoPrefsActivity.class));
-	            break;
 		}
 		
 		return false;

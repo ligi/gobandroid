@@ -117,7 +117,7 @@ public class SGFLoadActivity
 	@Override
 	public void run() {
 		Looper.prepare();
-		
+		String src="";
 		if (game==null) {
 			/* if there is a game saved in LastNonConfigurationInstance
 			 * e.g. on rotation -> use the game from there */
@@ -147,6 +147,8 @@ public class SGFLoadActivity
 							f.createNewFile();
 							file_writer = new FileOutputStream(f);
 							}
+					
+						src=intent_uri.toString();
 						
 					    StringBuffer out = new StringBuffer();
 					    byte[] b = new byte[4096];
@@ -216,9 +218,15 @@ public class SGFLoadActivity
 			}
 		
 		}
+		int move_num = getIntent().getIntExtra("move_num", -1 );
+		
+		if (move_num!=-1)
+			for (int i=0;i<move_num;i++)
+				game.jump(game.getActMove().getnextMove(0));
 		
 		GoGameProvider.setGame(game);
- 
+		game.getMetaData().setFileName(src);
+		
 		handler.post(new Runnable() {
 			@Override
 			public void run() {

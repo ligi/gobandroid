@@ -15,6 +15,10 @@ public class GobandroidSettings {
 		return getSGFBasePath()+"tsumego/";
 	}
 	
+	public String getBookmarkPath() {
+		return getReviewPath()+"bookmarks/";
+	}
+	
 	public String getReviewPath() {
 		return getSGFBasePath()+"review/";
 	}
