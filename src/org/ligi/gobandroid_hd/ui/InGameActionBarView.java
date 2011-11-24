@@ -67,12 +67,29 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 		
 		active_player_bg_rect.offsetTo(0, getGame().isBlackToMove()?0:black_stone_bitmap.getHeight());
 		
+		if (this.getWidth()>active_player_bg_rect.width()*2) {
+		 	canvas.drawText("Move "+ GoGameProvider.getGame().getActMove().getMovePos(), active_player_bg_rect.width() +5, text_offset, mPaint);
+		 	String mode_str="";
+		 	switch(GoInteractionProvider.getMode()) {
+		 	case GoInteractionProvider.MODE_TSUMEGO:
+		 		mode_str="Tsumego";
+		 		break;
+		 	case GoInteractionProvider.MODE_REVIEW:
+		 		mode_str="Review";
+		 		break;
+		 	case GoInteractionProvider.MODE_RECORD:
+		 		mode_str="Record";
+		 		break;
+		 	}
+		 	canvas.drawText(mode_str, active_player_bg_rect.width() +5, this.getHeight()/2+text_offset, mPaint);
+		}
+		
 		canvas.drawRect(active_player_bg_rect, myActiveBGPaint);
 		
     	canvas.drawBitmap(black_stone_bitmap, black_stone_bitmap.getWidth()/2, 0,null);
     	canvas.drawBitmap(white_stone_bitmap, black_stone_bitmap.getWidth()/2, this.getHeight()/2,null);
     	
-    	canvas.drawText(" "+ GoGameProvider.getGame().getCapturesBlack(), (int)(black_stone_bitmap.getWidth()*1.5), text_offset, mPaint);
+     	canvas.drawText(" "+ GoGameProvider.getGame().getCapturesBlack(), (int)(black_stone_bitmap.getWidth()*1.5), text_offset, mPaint);
     	canvas.drawText(" "+ GoGameProvider.getGame().getCapturesWhite(), (int)(black_stone_bitmap.getWidth()*1.5), this.getHeight()/2 +text_offset, mPaint);
 		super.onDraw(canvas);
 	}
