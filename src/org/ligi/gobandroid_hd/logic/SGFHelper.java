@@ -56,7 +56,7 @@ public class SGFHelper {
 				black_to_move=!black_to_move;
 			}
 
-			if (act_move.getComment()!="")
+			if (!act_move.getComment().equals(""))
 				res+= "C[" + act_move.getComment() + "]\n";
 			
 			GoMove next_move=null;
@@ -82,7 +82,7 @@ public class SGFHelper {
 	}
 	
 	private static String getSGFSnippet(String cmd,String param) {
-		if ((param==null)||(!param.equals(""))||(cmd==null)||(!cmd.equals("")))
+		if ((param==null)||(param.equals(""))||(cmd==null)||(cmd.equals("")))
 			return "";
 		return cmd+"["+escapeSGF(param) + "]";
 	}
