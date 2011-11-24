@@ -17,6 +17,8 @@ import android.view.View;
 
 public class GameReviewActivity extends GoActivity  {
 
+	private boolean autoplay_active=false;
+	
 	class autoPlayRunnable implements Runnable {
 
 		GoGame game;
@@ -38,11 +40,13 @@ public class GameReviewActivity extends GoActivity  {
 		
 	}
 	
-	boolean autoplay_active=false;
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
     	this.getMenuInflater().inflate(R.menu.ingame_review, menu);
+    	
+    	menu.findItem(R.id.menu_autoplay).setTitle(autoplay_active?"autoplay off":"autoplay on");
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -56,9 +60,14 @@ public class GameReviewActivity extends GoActivity  {
 
 		case R.id.menu_autoplay:
 			Log.i("gobandroid","automove init");
-			autoplay_active=true;
-			new Thread(new autoPlayRunnable()).start();;
-			
+	
+			if (autoplay_active) {
+				autoplay_active=false;
+			} else {
+				autoplay_active=true;
+				new Thread(new autoPlayRunnable()).start();;
+			}
+			this.invalidateOptionsMenu();
 			break;
 		}
 		return super.onOptionsItemSelected(item);
