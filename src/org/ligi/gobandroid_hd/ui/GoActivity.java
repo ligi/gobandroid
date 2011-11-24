@@ -19,9 +19,15 @@
 
 package org.ligi.gobandroid_hd.ui;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
+import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
 import org.ligi.gobandroid_hd.ui.alerts.GameResultsAlert;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -223,6 +229,28 @@ public class GoActivity
     	return true;
     }
 	
+
+    @Override 
+    public void onPause() {
+    	super.onPause();
+    	
+		try {
+			File f=new File(getSettings().getReviewPath() + "/autosave.sgf");
+			f.createNewFile();
+			
+			FileWriter sgf_writer = new FileWriter(f);
+			
+			BufferedWriter out = new BufferedWriter(sgf_writer);
+			
+			out.write(SGFHelper.game2sgf(game));
+			out.close();
+			sgf_writer.close();
+			
+		} catch (IOException e) {
+			Log.i(""+e);
+		}
+	
+    }
 
     public void doTouch( MotionEvent event) {
 				
