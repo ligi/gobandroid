@@ -45,6 +45,8 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 		mPaint.setTextSize((int)(h/2.5));
+		mPaint.setAntiAlias(true);
+		
 		black_stone_bitmap=getScaledRes(h/2,R.drawable.stone_black);
 		white_stone_bitmap=getScaledRes(h/2,R.drawable.stone_white);
 		active_player_bg_rect=new Rect(0,0,black_stone_bitmap.getWidth()*3,black_stone_bitmap.getHeight());
