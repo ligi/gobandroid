@@ -1,6 +1,7 @@
 GTP Server Connection
 share SGF
-init tracedroid when not came over gobandroid main activity
+
+
 other engines: 
  - http://ricoh51.free.fr/go/engineeng.htm
  - Pachi
@@ -23,6 +24,7 @@ it's still hard to just go through a game from gogameworld.  I'd like
 to adjust the font and be able to fit the comments under the board.
 4) KGS-like stone placement.  I still want to be able to see the stone
 I'm placing.  It seems easy to just float it above the stone.
+
 5) IGS support.  Igoenchi has code that may be able to be used.  This
 would be nice.
 

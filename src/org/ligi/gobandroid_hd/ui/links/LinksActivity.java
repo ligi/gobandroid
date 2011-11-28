@@ -32,7 +32,7 @@ import android.support.v4.app.ActionBar;
 import android.support.v4.app.FragmentTransaction;
 
 /**
- * Activity to load SGF's from SD card
+ * Activity to load present the user GO-Relevant links ( Rules / SGF's / .. )
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  *         
