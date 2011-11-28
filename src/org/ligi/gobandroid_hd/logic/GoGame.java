@@ -457,7 +457,6 @@ public class GoGame  {
         	if (replay_moves.lastElement().isFirstMove()) 
         		break;
         		
-        	Log.i( "adding" + replay_moves.lastElement().toString() );
         	replay_moves.add(replay_moves.lastElement().getParent());
         }
         
