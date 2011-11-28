@@ -88,6 +88,7 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 				links=new LinkWithDescription[] {
 
 					// source pro games
+					new LinkWithDescription("http://gokifu.com/","gokifu"),
 					new LinkWithDescription("http://www.andromeda.com/people/ddyer/age-summer-94/companion.html","Companion"),
 					new LinkWithDescription("http://homepages.cwi.nl/~aeb/go/games/games/Judan/","Judan"),
 					new LinkWithDescription("http://gogameworld.com/gophp/pg_samplegames.php","Commented gogameworld sample games"),
