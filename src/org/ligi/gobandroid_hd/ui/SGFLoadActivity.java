@@ -165,6 +165,8 @@ public class SGFLoadActivity
 						Log.i("got sgf content:" + sgf);
 						game=SGFHelper.sgf2game(sgf,this);
 						
+						if (!src.startsWith("file://")) // educated guess on what the user wants ;-9 - file:// means we come from intern gobandroid
+							GoInteractionProvider.setMode(GoInteractionProvider.MODE_REVIEW);
 					} catch (Exception e) {
 						Log.w("exception in load", e);
 						
