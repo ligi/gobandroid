@@ -1,6 +1,12 @@
+gfx:
+    - off path img 
+   
+code
+   - set right focus when launching record activity
+   - rm the foo msg from tsumego
+
 GTP Server Connection
 share SGF
-
 
 other engines: 
  - http://ricoh51.free.fr/go/engineeng.htm
