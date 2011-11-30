@@ -24,6 +24,8 @@ import java.util.Stack;
 
 import org.ligi.tracedroid.logging.Log;
 
+import android.graphics.Point;
+
 /**
  * 
  * Class to represent a Go Game with its rules
@@ -869,5 +871,9 @@ public class GoGame  {
 	
 	public int getSize() {
 		return getVisualBoard().getSize();
+	}
+	
+	public Point linear_coordinate2Point(int lin) {
+		return new Point(lin%getSize(),lin/getSize());
 	}
 }

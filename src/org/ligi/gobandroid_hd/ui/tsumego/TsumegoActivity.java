@@ -38,6 +38,11 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 			new AlertDialog.Builder(this).setMessage("foo").show();
 
 		game.addGoGameChangeListener(this);
+		
+		float myZoom=2.0f;
+		getBoard().setZoom(myZoom);
+		int poi=game.getSize()-(int)(game.getSize()/2/myZoom)-1;
+		getBoard().setZoomPOI(poi+poi*game.getSize());
     }
     
     private void recursive_add_on_path_moves(GoMove act) {

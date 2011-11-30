@@ -17,6 +17,7 @@ public class GameRecordActivity extends GoActivity  implements GoGameChangeListe
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getBoard().requestFocus();
     }		
     
 	public boolean isOnPath() {

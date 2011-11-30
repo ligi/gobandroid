@@ -35,6 +35,8 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
+import android.graphics.Point;
+import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -46,6 +48,8 @@ import android.view.View;
  * This software is licensed with GPLv3 
  */
 public class GoBoardViewHD extends View {
+	
+	private int zoom_poi=-1;
 	
 	private boolean grid_embos=true; //  GoPrefs.getGridEmbossEnabled()
 	private boolean do_legend=true; // GoPrefs.getLegendEnabled()
@@ -181,18 +185,46 @@ public class GoBoardViewHD extends View {
     		GoInteractionProvider.setTouchPosition(0);
     }
 
+
+    /**
+     * set the zoom factor - 1.0 ( default ) means no zoom 
+     * 
+     * @param zoom
+     */
+    public void setZoom(float zoom) {
+    	this.zoom=zoom;
+    	setSize(this.getWidth(),this.getHeight());
+    }
+    
+    
+    public PointF getZoomTranslate() {
+    	if (zoom<=1.0f)
+    		return new PointF(0,0);
+    	
+		int act_zoom_poi=0;
+		
+		if (zoom_poi>=0) {
+			act_zoom_poi=zoom_poi;
+		} else if (GoInteractionProvider.getTouchPosition()>=0) {
+			act_zoom_poi=GoInteractionProvider.getTouchPosition();
+		} else
+			Log.w("zoom requested but no POI to center around");
+		
+		Point act_zoom_point=getGame().linear_coordinate2Point(act_zoom_poi);
+		PointF res=new PointF( -stone_size*(act_zoom_point.x-getGame().getSize()/2/zoom)
+							  ,-stone_size*(act_zoom_point.y-getGame().getSize()/2/zoom));
+		
+		return res;
+    }
+    
     @Override
     protected void onDraw(Canvas canvas) {
-    
-    	if ((zoom!=1.0f)&&(GoInteractionProvider.getTouchPosition()>=0)) {
-    		
-    		float move_x=stone_size*(GoInteractionProvider.getTouchX()-getGame().getSize()/2/zoom);
-    		float move_y=stone_size*(GoInteractionProvider.getTouchY()-getGame().getSize()/2/zoom);
-    		
-    		canvas.translate(-move_x,-move_y);
+    	
+    	// when we have zoomed in -  center translate the canvas around the POI
+    	if (zoom>1.0f) {
+    		canvas.translate(getZoomTranslate().x,getZoomTranslate().y);
     	}
     		
-    	Log.i("onDraw");
     	if (regenerate_stones_flag)
     		regenerate_images();
     	
@@ -389,5 +421,15 @@ public class GoBoardViewHD extends View {
 		    int size = Math.min(parentWidth, parentHeight);
 		    this.setMeasuredDimension(size,size);
 	    }
+	}
+	
+	public void setZoomPOI(int zoom_poi) {
+		this.zoom_poi=zoom_poi;
+		// TODO check use-cases if we need to invalidate here
+	}
+	
+	public int pixel2boardPos(float x,float y) {
+		return (int)((x-getZoomTranslate().x)/(stone_size) //x
+				+(int)(((y-getZoomTranslate().y))/(stone_size))*getGame().getSize());
 	}
 }

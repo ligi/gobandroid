@@ -254,8 +254,8 @@ public class GoActivity
     public void doTouch( MotionEvent event) {
 				
     	// calculate position on the field by position on the touchscreen
-    	GoInteractionProvider.setTouchPosition((int)(event.getX()/go_board.stone_size) + (int)(event.getY()/go_board.stone_size)*game.getSize());
 
+    	GoInteractionProvider.setTouchPosition(getBoard().pixel2boardPos(event.getX(),event.getY()));
     	if (event.getAction()==MotionEvent.ACTION_UP) {
 
     		if (go_board.move_stone_mode) {
