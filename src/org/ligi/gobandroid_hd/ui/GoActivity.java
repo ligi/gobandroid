@@ -102,9 +102,6 @@ public class GoActivity
 		go_board.setOnTouchListener(this);
 		go_board.setOnKeyListener(this);
 		
-		comment_tv=(TextView)findViewById(R.id.comments_textview);
-
-		
 		game.addGoGameChangeListener(new GoGame.GoGameChangeListener() {
 			
 			@Override
@@ -198,8 +195,6 @@ public class GoActivity
 		go_board.postInvalidate();
       	if (myZoomFragment.getBoard()!=null)
       		myZoomFragment.getBoard().invalidate();
-		if (comment_tv!=null)
-			comment_tv.setText(game.getActMove().getComment());
 	}
 	
 	public void setFragment(Fragment newFragment) {
