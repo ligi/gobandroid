@@ -211,8 +211,8 @@ public class GoBoardViewHD extends View {
 			Log.w("zoom requested but no POI to center around");
 		
 		Point act_zoom_point=getGame().linear_coordinate2Point(act_zoom_poi);
-		PointF res=new PointF( -stone_size*(act_zoom_point.x-getGame().getSize()/2/zoom)
-							  ,-stone_size*(act_zoom_point.y-getGame().getSize()/2/zoom));
+		PointF res=new PointF( -stone_size*(act_zoom_point.x-getGame().getSize()/2.0f/zoom)
+							  ,-stone_size*(act_zoom_point.y-getGame().getSize()/2.0f/zoom));
 		
 		return res;
     }

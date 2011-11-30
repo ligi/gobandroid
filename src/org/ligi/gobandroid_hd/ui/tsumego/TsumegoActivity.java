@@ -7,7 +7,6 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
-
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,10 +38,38 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
 		game.addGoGameChangeListener(this);
 		
-		float myZoom=2.0f;
+		
+		float myZoom=calcZoom();
+		
 		getBoard().setZoom(myZoom);
-		int poi=game.getSize()-(int)(game.getSize()/2/myZoom)-1;
+		int poi=game.getSize()-(int)(game.getSize()/2f/myZoom);
 		getBoard().setZoomPOI(poi+poi*game.getSize());
+    }
+    
+    /**
+     * calculate a Zoom factor so that all stones in handicap fit on bottom right area
+     * 
+     * @return - the calculated Zoom factor
+     */    
+    private float calcZoom() {
+    	int min_x=game.getSize();
+		int min_y=game.getSize();
+		for (int x=0;x<game.getSize();x++)
+			for (int y=0;y<game.getSize();y++) {
+				if ((x<min_x)&&!game.getHandicapBoard().isCellFree(x, y))
+					min_x=x;
+				if ((y<min_y)&&!game.getHandicapBoard().isCellFree(x, y))
+					min_y=y;
+			}
+		
+		int max_span_size=Math.max(game.getSize()-min_x, game.getSize()-min_y);
+	
+		float res=(float)game.getSize()/(max_span_size+2);
+		
+		if (res<1.0f)
+			return 1.0f;
+		else
+			return res;
     }
     
     private void recursive_add_on_path_moves(GoMove act) {
