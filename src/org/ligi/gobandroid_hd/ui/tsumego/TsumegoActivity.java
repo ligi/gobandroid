@@ -136,7 +136,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
     @Override
     public void requestUndo() {
-    	// we do not want to keep variants in tsumego mode
+    	// we do not want to keep user-variations in tsumego mode- but we want to keep tsumego variation
     	game.undo(isOnPath());
     }
     
