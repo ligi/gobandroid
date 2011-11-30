@@ -134,20 +134,7 @@ public class GoActivity
 	            if (!game.canUndo())
 	            	break;
 	            
-        		if (doAskToKeepVariant()) {                                                                                                  
-	                new AlertDialog.Builder(this).setTitle("Keep Variant?").setMessage("Keep this move as variant?")                              
-	                .setPositiveButton(R.string.yes , new DialogInterface.OnClickListener() {                                                     
-	                public void onClick(DialogInterface dialog, int whichButton) {                                                                
-	                        game.undo(true);                                                                                                      
-	                }                                                                                                                             
-	                }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {                                                     
-	                public void onClick(DialogInterface dialog, int whichButton) {                                                                
-	                        game.undo(false);                                                                                                     
-	                        }                                                                                                                     
-	                }).show();                                                                                                                    
-	            }                                                                                                                                     
-	            else                                                                                                                                  
-	                game.undo(GoPrefs.isKeepVariantEnabled());        
+	            requestUndo();
 	            break;
 
   
@@ -344,5 +331,22 @@ public class GoActivity
 	
 	public GoBoardViewHD getBoard() {
 		return go_board;
+	}
+	
+	public void requestUndo() {
+		if (doAskToKeepVariant()) {                                                                                                  
+	        new AlertDialog.Builder(this).setTitle("Keep Variant?").setMessage("Keep this move as variant?")                              
+	        .setPositiveButton(R.string.yes , new DialogInterface.OnClickListener() {                                                     
+	        public void onClick(DialogInterface dialog, int whichButton) {                                                                
+	                game.undo(true);                                                                                                      
+	        }                                                                                                                             
+	        }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {                                                     
+	        public void onClick(DialogInterface dialog, int whichButton) {                                                                
+	                game.undo(false);                                                                                                     
+	                }                                                                                                                     
+	        }).show();                                                                                                                    
+	    }                                                                                                                                     
+	    else                                                                                                                                  
+	        game.undo(GoPrefs.isKeepVariantEnabled());
 	}
 }

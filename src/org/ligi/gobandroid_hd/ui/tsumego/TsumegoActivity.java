@@ -28,6 +28,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		
 		// build a on path Vector to do a fast isOnPath() later 
 		on_path_moves=new Vector<GoMove>();
+		
 		recursive_add_on_path_moves(game.getFirstMove());
 				
 		// try to find the correct solution
@@ -134,10 +135,10 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 	}
 
     @Override
-	public boolean doAskToKeepVariant() {
+    public void requestUndo() {
     	// we do not want to keep variants in tsumego mode
-		return false;
-	}
+    	game.undo(isOnPath());
+    }
     
     @Override
 	public Fragment getGameExtraFragment() {

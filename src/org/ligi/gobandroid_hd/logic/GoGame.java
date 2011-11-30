@@ -378,9 +378,7 @@ public class GoGame  {
      * undo the last move
      */
     public void undo() {
-    	jump(act_move.getParent());
-    	getGoMover().undo();
-    	game_finished=false;
+    	_undo(true);
     }
     
     private void _undo(boolean keep_move) {
@@ -653,7 +651,6 @@ public class GoGame  {
             	}
             }
     }
-
     public void buildAreaGroups() {
         area_group_count=0;
                 
