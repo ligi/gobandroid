@@ -9,6 +9,7 @@ import org.ligi.gobandroid_hd.ui.GoActivity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.Menu;
+import android.view.WindowManager;
 
 public class GameRecordActivity extends GoActivity  implements GoGameChangeListener {
 
@@ -17,7 +18,8 @@ public class GameRecordActivity extends GoActivity  implements GoGameChangeListe
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getBoard().requestFocus();
+		// TODO the next line works but needs investigation - i thought more of getBoard().requestFocus(); - but that was not working ..
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }		
     
 	public boolean isOnPath() {
