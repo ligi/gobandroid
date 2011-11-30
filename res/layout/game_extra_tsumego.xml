@@ -7,19 +7,19 @@
         android:id="@+id/tsumego_off_path_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
->
+	>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Off Path"
+        android:text="@string/tsumego_off_path"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FF0000" />
- </LinearLayout>           
+ 	</LinearLayout>           
         <TextView
         android:id="@+id/tsumego_correct_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-		android:text="This is correct!"
+		android:text="@string/tsumego_correct"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#008300" />
 

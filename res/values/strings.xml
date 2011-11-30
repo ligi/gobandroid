@@ -102,5 +102,6 @@
 
 	<string name="menu_bookmark">Bookmark</string>
 	<string name="menu_autoplay">Autoplay</string>
-	    
+	<string name="tsumego_off_path">Unknown Variation - could mean you are wrong :-(</string>	    
+	<string name="tsumego_correct">Correct !-)</string>	    
 </resources>
