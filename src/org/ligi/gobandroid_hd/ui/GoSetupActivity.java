@@ -51,7 +51,9 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 
 
 /**
- * Activity for a Game
+ * Activity for setting up a game
+ * 
+ * TODO needs cleaning
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  * 
