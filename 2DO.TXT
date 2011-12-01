@@ -2,8 +2,6 @@ gfx:
     - off path img 
    
 code
-   - set right focus when launching record activity
-   - rm the foo msg from tsumego
    - play button in NavigationFragment
    
 GTP Server Connection
