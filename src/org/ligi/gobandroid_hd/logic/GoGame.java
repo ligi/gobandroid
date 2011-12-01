@@ -739,7 +739,10 @@ public class GoGame  {
     }
     
     private void remove_group(int x,int y)  {
-    	
+
+		if (calc_board.isCellFree(x,y)) // this is no "group" in the sense we want
+			return;
+
         boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board.getSize()];
         Stack <Integer>ptStackX = new Stack<Integer>();
         Stack <Integer>ptStackY = new Stack<Integer>();
@@ -782,8 +785,10 @@ public class GoGame  {
    					checked_pos[newx][newy+1]=true;
    				}
 
+			local_captures++;
+   			
    			calc_board.setCellFree(newx,newy);
-   			local_captures++;
+   			
    		}
  
     }
