@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.MenuItem;
+import android.view.WindowManager;
 
 public class GobandroidFragmentActivity extends FragmentActivity {
 
@@ -23,6 +24,16 @@ public class GobandroidFragmentActivity extends FragmentActivity {
         TraceDroid.init(this);
         Log.setTAG("gobandroid");
         TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
+
+        if (doFullScreen())                
+            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                                          
+        else                                                                                                                                          
+            this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                              
+
+    }
+    
+    public boolean doFullScreen() {
+    	return false;
     }
     
     public GoogleAnalyticsTracker getTracker() {

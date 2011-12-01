@@ -118,7 +118,7 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 		super.onResume();
 
 		board=(GoBoardViewHD)this.findViewById(R.id.go_board);
-		board.setOnTouchListener(new OnTouchListener() {
+		if (board!=null) board.setOnTouchListener(new OnTouchListener() {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -213,8 +213,10 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 		GoPrefs.setLastHandicap(act_handicap);
 		
 		GoGameProvider.setGame(new GoGame(act_size,act_handicap));
-		board.boardSizeChanged();
-		board.invalidate();
+		if (board!=null) {
+			board.boardSizeChanged();
+			board.invalidate();
+		}
 	}
 	
 	public void onProgressChanged(SeekBar seekBar, int progress,

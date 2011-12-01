@@ -90,11 +90,7 @@ public class GoActivity
         getSupportActionBar().setDisplayShowCustomEnabled(true);
 		
 		
-        if (GoPrefs.getFullscreenEnabled())                
-            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                                          
-        else                                                                                                                                          
-            this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                              
-	
+     
         info_toast=Toast.makeText(this.getBaseContext(), "", Toast.LENGTH_LONG);
         
 		go_board=(GoBoardViewHD)findViewById(R.id.go_board);
@@ -110,6 +106,11 @@ public class GoActivity
 			}
 		});
 		game2ui();
+	}
+	
+	@Override
+	public boolean doFullScreen() {
+		return getResources().getBoolean(R.bool.force_fullscreen);
 	}
 	
 	@Override
@@ -193,11 +194,17 @@ public class GoActivity
 	}
 	
 	public boolean onTouch( View v, MotionEvent event ) {
-		if (event.getAction()==MotionEvent.ACTION_UP)
+		if (event.getAction()==MotionEvent.ACTION_UP) {
 			setFragment(getGameExtraFragment());
-		else
+			if (getResources().getBoolean(R.bool.small))
+					this.getSupportActionBar().show();
+		}
+		else {
 			setFragment(myZoomFragment);
-
+			if (getResources().getBoolean(R.bool.small))
+				this.getSupportActionBar().hide();
+		}
+			
 		Log.i("touch");
 		if (!game.getGoMover().isReady())
 			showInfoToast(R.string.wait_gnugo);
