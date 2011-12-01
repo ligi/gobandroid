@@ -35,10 +35,9 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		finishing_move=getCorrectMove(game.getFirstMove());
 		
 		if (finishing_move==null) 
-			new AlertDialog.Builder(this).setMessage("foo").show();
+			new AlertDialog.Builder(this).setMessage(R.string.tsumego_sgf_no_solution).show();
 
 		game.addGoGameChangeListener(this);
-		
 		
 		float myZoom=calcZoom();
 		

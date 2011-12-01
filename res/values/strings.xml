@@ -105,5 +105,7 @@
 	<string name="tsumego_off_path">Unknown Variation - usually means that your move is sub-optimal :-(</string>	    
 	<string name="tsumego_correct">Correct !-)</string>	    
 	
+
 	<string name="refresh">refresh</string>	    
+	<string name="tsumego_sgf_no_solution">You are trying to open this SGF as a Tsumego - but I cannot find a marked Solution - you can try anyway but I cannot applaud you when you are correct :-( </string>	    
 </resources>
