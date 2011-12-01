@@ -5,7 +5,7 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 public class DownloadProblemsDialog {
 	
     public static void show(GobandroidFragmentActivity activity) {
-    	
+    	activity.getTracker().trackPageView("/tsumego/refresh");
     	new DownloadTask(activity).execute(
     			new TsumegoSource(activity.getSettings().getTsumegoPath()+"1.easy/","http://gogameguru.com/i/2011/08/","ggg-easy-%02d.sgf"),
     			new TsumegoSource(activity.getSettings().getTsumegoPath()+"2.intermediate/","http://gogameguru.com/i/2011/08/","ggg-intermediate-%02d.sgf"),
