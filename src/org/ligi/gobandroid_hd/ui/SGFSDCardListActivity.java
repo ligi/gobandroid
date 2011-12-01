@@ -96,7 +96,8 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		this.getMenuInflater().inflate(R.menu.refresh_tsumego, menu);
+		if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_TSUMEGO)
+			this.getMenuInflater().inflate(R.menu.refresh_tsumego, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
