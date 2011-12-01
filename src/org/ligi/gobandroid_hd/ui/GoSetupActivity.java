@@ -38,8 +38,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -116,6 +118,15 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 		super.onResume();
 
 		board=(GoBoardViewHD)this.findViewById(R.id.go_board);
+		board.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				start_game();
+				return false;
+			}
+			
+		});
 		Log.i("GoSetup Resume");
 		size_seek=(SeekBar)this.findViewById(R.id.size_slider);
 		size_seek.setOnSeekBarChangeListener(this);
