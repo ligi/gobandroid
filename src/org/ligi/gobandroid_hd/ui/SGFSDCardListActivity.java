@@ -27,7 +27,9 @@ import org.ligi.android.common.dialogs.ActivityFinishOnClickListener;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsDialog;
+import org.ligi.tracedroid.logging.Log;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.view.Menu;
@@ -76,9 +78,12 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
         
         Vector<String> fnames=new Vector<String>();
         for(File file:files) 
-        	if ((file.getName().endsWith(".sgf"))||(file.isDirectory())||(file.getName().endsWith(".golink")))
-        		fnames.add(file.getName());
-
+        	if ((file.getName().endsWith(".sgf"))||(file.isDirectory())||(file.getName().endsWith(".golink"))) {
+        		if (this.getBaseContext().getSharedPreferences("tsumego_stats", Activity.MODE_PRIVATE).getInt("file://"+dir+"/"+file.getName(), -1)>0)
+        			fnames.add(file.getName()+"-");
+        		else
+        			fnames.add(file.getName());
+        	}
 
         if (fnames.size()==0){
     		alert.setMessage(getResources().getString(R.string.there_are_no_files_in) + " " +dir.getAbsolutePath() ).show();

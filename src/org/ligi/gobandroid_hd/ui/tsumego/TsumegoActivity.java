@@ -7,6 +7,9 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
+import org.ligi.tracedroid.logging.Log;
+
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -152,6 +155,11 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		if (myTsumegoExtrasFragment!=null) {
 			myTsumegoExtrasFragment.setOffPathVisibility(!isOnPath());
 			myTsumegoExtrasFragment.setCorrectVisibility(game.getActMove().equals(finishing_move));
+		}
+		if (game.getActMove().equals(finishing_move)) {
+			this.getBaseContext().getSharedPreferences("tsumego_stats", Activity.MODE_PRIVATE)
+			.edit().putInt(game.getMetaData().getFileName(), 100).commit();
+		Log.i("finished"+	game.getMetaData().getFileName());
 		}
 	}
 

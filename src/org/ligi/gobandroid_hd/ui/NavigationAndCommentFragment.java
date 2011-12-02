@@ -2,6 +2,9 @@ package org.ligi.gobandroid_hd.ui;
 
 
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
@@ -9,6 +12,8 @@ import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.text.util.Linkify;
+import android.text.util.Linkify.TransformFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +45,22 @@ public class NavigationAndCommentFragment extends Fragment implements GoGameChan
 
 			@Override
 			public void run() {
-				if (myTextView!=null)
+				if (myTextView!=null) {
 					myTextView.setText(game.getActMove().getComment());
+					Linkify.addLinks(myTextView, Linkify.ALL);
+					
+					TransformFilter mentionFilter = new TransformFilter() {
+					        public final String transformUrl(final Matcher match, String url) {
+					            return match.group(1).toLowerCase();
+					        }
+					    };
+					    
+					for (String key : GoTermsViewActivity.getTerm2resHashMap().keySet()) {
+						Pattern wikiWordMatcher = Pattern.compile("[\\. ]("+key+")[\\. ]",Pattern.CASE_INSENSITIVE);
+						String wikiViewURL =    "goterm://org.ligi.gobandroid_hd.goterms/";
+						Linkify.addLinks(myTextView, wikiWordMatcher, wikiViewURL,null,mentionFilter);
+					}	
+				}
 			}
 			
 		});
