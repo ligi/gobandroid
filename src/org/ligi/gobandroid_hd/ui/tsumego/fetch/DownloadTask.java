@@ -17,7 +17,7 @@ import android.os.AsyncTask;
 
 public class DownloadTask extends AsyncTask<TsumegoSource,String,Integer> {
 
-	private final static int LIMITER=14;
+	private final static int LIMITER=15;
 	
 	private GobandroidFragmentActivity activity;
 	private ProgressDialog progress_dialog;
