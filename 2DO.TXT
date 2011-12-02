@@ -1,35 +1,15 @@
 gfx:
     - off path img 
    
-code
+code:
    - play button in NavigationFragment
-   
-GTP Server Connection
-share SGF
+   - GTP Server Connection
+   - share sgf-link
+   - on horizontal view - review controls to left
 
-other engines: 
- - http://ricoh51.free.fr/go/engineeng.htm
- - Pachi
+try other engines: 
+    - http://ricoh51.free.fr/go/engineeng.htm
+    - Pachi
 
-on horizontal view - review controls to left
-
-from mail by Oren Laskin:
-Hey there.  I have some time to work on the source code coming up.  I
-don't know if you have a list of features, but here are some I'd like
-to see or work on.
-
-1) Save program state.  I'm viewing a game, take a call or check
-email, and I have to find the last game that was open.  It's a little
-annoying.
-2) Tsumego mode.  I have an SGF files with 600 some problems and I
-worked on igoenchi on windows mobile where I could use it for
-homework.  It shouldn't be too difficult to add.
-3) Game viewing mode.  The letters now being put on look great, but
-it's still hard to just go through a game from gogameworld.  I'd like
-to adjust the font and be able to fit the comments under the board.
-4) KGS-like stone placement.  I still want to be able to see the stone
-I'm placing.  It seems easy to just float it above the stone.
-
-5) IGS support.  Igoenchi has code that may be able to be used.  This
-would be nice.
-
+boring tasks:
+   - http://en.wikipedia.org/wiki/Go_terms > strings.xml & GoTermsViewActivity
