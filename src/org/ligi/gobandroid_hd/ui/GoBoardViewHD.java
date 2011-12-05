@@ -19,6 +19,9 @@
 
 package org.ligi.gobandroid_hd.ui;
 
+import java.io.File;
+import java.io.FileOutputStream;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -30,6 +33,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -216,9 +220,32 @@ public class GoBoardViewHD extends View {
 		
 		return res;
     }
-    
+    public void screenshot(String sshot_name) {
+    	Bitmap bmp=Bitmap.createBitmap(this.getWidth(), this.getHeight(), Config.ARGB_8888);
+    	Canvas c=new Canvas(bmp);
+    	draw2canvas(c);
+    	
+    	try {
+    		sshot_name=sshot_name.substring(sshot_name.indexOf("://")+3);
+    		Log.i("writing screenshot " + sshot_name);	
+    		new File (sshot_name.substring(0,sshot_name.lastIndexOf("/"))).mkdirs();
+    		new File (sshot_name).createNewFile();
+    		FileOutputStream out = new FileOutputStream(sshot_name);
+    		bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
+    		out.close();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
+    	draw2canvas(canvas);
+    }
+    
+    protected void draw2canvas(Canvas canvas) {
+    	
+    	canvas.save();
     	
     	// when we have zoomed in -  center translate the canvas around the POI
     	if (zoom>1.0f) {
