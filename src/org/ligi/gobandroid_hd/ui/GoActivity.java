@@ -88,8 +88,7 @@ public class GoActivity
 		this.setContentView(R.layout.game);
 		getSupportActionBar().setCustomView(customNav);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-		
-		
+        customNav.setFocusable(false);
      
         info_toast=Toast.makeText(this.getBaseContext(), "", Toast.LENGTH_LONG);
         
@@ -128,8 +127,10 @@ public class GoActivity
 	        	break;
 	        	
 	        case R.id.menu_game_info:                                                                                                                           
-                GameInfoAlert.show(this,game);                                                                                                        
-                break;                        
+                GameInfoAlert.show(this,game); 
+                
+                getBoard().screenshot(game.getMetaData().getFileName()+".png");
+	        	break;                        
 	                
 	        case R.id.menu_game_undo:
 	            if (!game.canUndo())

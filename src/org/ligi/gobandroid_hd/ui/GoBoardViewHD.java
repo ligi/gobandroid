@@ -55,9 +55,9 @@ public class GoBoardViewHD extends View {
 	
 	private int zoom_poi=-1;
 	
-	private boolean grid_embos=true; //  GoPrefs.getGridEmbossEnabled()
-	private boolean do_legend=true; // GoPrefs.getLegendEnabled()
-	private boolean mark_last_stone=true;
+	public boolean grid_embos=true; //  GoPrefs.getGridEmbossEnabled()
+	public boolean do_legend=true; // GoPrefs.getLegendEnabled()
+	public boolean mark_last_stone=true;
 	private boolean legend_sgf_mode=true;  //GoPrefs.getLegendSGFMode()
 	
 	private Paint whitePaint;
@@ -226,7 +226,8 @@ public class GoBoardViewHD extends View {
     	draw2canvas(c);
     	
     	try {
-    		sshot_name=sshot_name.substring(sshot_name.indexOf("://")+3);
+    		if (sshot_name.indexOf("://")>0)
+    			sshot_name=sshot_name.substring(sshot_name.indexOf("://")+3);
     		Log.i("writing screenshot " + sshot_name);	
     		new File (sshot_name.substring(0,sshot_name.lastIndexOf("/"))).mkdirs();
     		new File (sshot_name).createNewFile();
@@ -244,7 +245,7 @@ public class GoBoardViewHD extends View {
     }
     
     protected void draw2canvas(Canvas canvas) {
-    	
+    	Log.i("draw");
     	canvas.save();
     	
     	// when we have zoomed in -  center translate the canvas around the POI

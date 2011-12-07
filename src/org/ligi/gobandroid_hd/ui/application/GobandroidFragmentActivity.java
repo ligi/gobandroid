@@ -30,6 +30,8 @@ public class GobandroidFragmentActivity extends FragmentActivity {
         else                                                                                                                                          
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                              
 
+        if ((this.getSupportActionBar()!=null) && (this.getSupportActionBar().getCustomView()!=null))
+        	this.getSupportActionBar().getCustomView().setFocusable(false);
     }
     
     public boolean doFullScreen() {

@@ -206,7 +206,7 @@ public class SGFHelper {
 				// consuming param
 				switch(act_char) {
 				case ']':	// closing command parameter -> can process command now
-				if (game!=null)
+				if ((game!=null)&&(callback!=null))
 					callback.progress(p, sgf.length(), "Move " + game.getActMove().getMovePos());
 				if (!escape) {
 					consuming_param=false;

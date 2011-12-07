@@ -79,10 +79,7 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
         Vector<String> fnames=new Vector<String>();
         for(File file:files) 
         	if ((file.getName().endsWith(".sgf"))||(file.isDirectory())||(file.getName().endsWith(".golink"))) {
-        		if (this.getBaseContext().getSharedPreferences("tsumego_stats", Activity.MODE_PRIVATE).getInt("file://"+dir+"/"+file.getName(), -1)>0)
-        			fnames.add(file.getName()+"-");
-        		else
-        			fnames.add(file.getName());
+        		fnames.add(file.getName());
         	}
 
         if (fnames.size()==0){
@@ -111,7 +108,8 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.menu_refresh:
-				DownloadProblemsDialog.show(this);
+		//			DownloadProblemsDialog.show(this);
+				AutoScreenShotDialog.show(this);
 				return true;
 		}
 		return super.onOptionsItemSelected(item);

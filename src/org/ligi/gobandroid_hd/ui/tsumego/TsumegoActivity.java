@@ -42,19 +42,23 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
 		game.addGoGameChangeListener(this);
 		
-		float myZoom=calcZoom();
+		float myZoom=calcZoom(game);
 		
 		getBoard().setZoom(myZoom);
 		int poi=game.getSize()-(int)(game.getSize()/2f/myZoom);
 		getBoard().setZoomPOI(poi+poi*game.getSize());
     }
     
+    public static int calcPOI(GoGame game) {
+    	int poi=game.getSize()-(int)(game.getSize()/2f/calcZoom(game));
+		return poi+poi*game.getSize();
+    }
     /**
      * calculate a Zoom factor so that all stones in handicap fit on bottom right area
      * 
      * @return - the calculated Zoom factor
      */    
-    private float calcZoom() {
+    public static float calcZoom(GoGame game) {
     	int min_x=game.getSize();
 		int min_y=game.getSize();
 		for (int x=0;x<game.getSize();x++)
