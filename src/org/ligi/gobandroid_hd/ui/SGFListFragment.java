@@ -129,6 +129,32 @@ public class SGFListFragment extends ListFragment {
 			// TODO Auto-generated method stub
 			return 0;
 		}
+		
+		public void setImageToGameThumbnail(ImageView img,String thumbnail_fname) {
+			img.setLayoutParams(new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.thumbnail_size),(int) getResources().getDimension(R.dimen.thumbnail_size)));
+
+			Log.i("processing -- " + thumbnail_fname);
+
+			BitmapFactory.Options options=new BitmapFactory.Options();
+			options.inSampleSize = 2;
+			options.inPurgeable=true;
+			
+			Bitmap img_bmp=null;
+			try {
+				img_bmp=BitmapFactory.decodeFile(thumbnail_fname,options);
+			} catch ( OutOfMemoryError e) {
+				System.gc();
+				
+				try {
+				img_bmp=BitmapFactory.decodeFile(thumbnail_fname,options);
+				} catch ( OutOfMemoryError e2) { 
+					// Three Times a Fool ;-)
+					img.setImageResource(R.drawable.dashboard_tsumego);
+				}  
+			}
+			if (img_bmp!=null) {img.setImageBitmap(img_bmp);}
+			img.setScaleType(ScaleType.FIT_XY);
+		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -155,20 +181,7 @@ public class SGFListFragment extends ListFragment {
 						if (fcount>3)
 							break;
 						ImageView img=new ImageView(activity);
-						img.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT));
-						//img.setBackgroundDrawable(d)
-						
-						Log.i("processing -- " + act_file.getPath());
-
-
-						BitmapFactory.Options options=new BitmapFactory.Options();
-						options.inSampleSize = 2;
-						options.inPurgeable=true;
-						Bitmap img_bmp=BitmapFactory.decodeFile(act_file.getPath(),options);
-						//img_bmp=Bitmap.createScaledBitmap(img_bmp, 200, 200, true);
-						//todo cache this resizing - creates a very laggy experience
-						if (img_bmp!=null) {img.setImageBitmap(img_bmp);}
-						img.setScaleType(ScaleType.FIT_XY);
+						setImageToGameThumbnail(img,act_file.getPath());
 						container.addView(img);
 					}
 				
@@ -187,16 +200,7 @@ public class SGFListFragment extends ListFragment {
 			
 			if (new File(img_fname).exists()) {
 				ImageView img=(ImageView)v.findViewById(R.id.thumbnail);
-
-				if (img!=null) {
-					Bitmap img_bmp=BitmapFactory.decodeFile(img_fname);
-					img_bmp=Bitmap.createScaledBitmap(img_bmp, 200, 200, true);
-					//todo cache this resizing - creates a very laggy experience
-					
-					if (img_bmp!=null) {img.setImageBitmap(img_bmp);}
-					Log.i("setting image file://"+img_fname );
-					img.invalidate();
-				}
+				setImageToGameThumbnail(img,img_fname);
 			}
 			
 			
