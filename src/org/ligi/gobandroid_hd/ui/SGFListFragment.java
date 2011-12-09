@@ -10,14 +10,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -29,6 +27,7 @@ public class SGFListFragment extends ListFragment {
 
 	private String[] menu_items;
     private String dir;
+	private PathViewAdapter adapter;
 	
     public SGFListFragment() {
 	}
@@ -36,6 +35,10 @@ public class SGFListFragment extends ListFragment {
 	public SGFListFragment(String[] menu_items,File dir) {
 		this.menu_items=menu_items;
 		this.dir=dir.getAbsolutePath();
+	}
+	
+	public void refresh() {
+		adapter.notifyDataSetChanged();
 	}
 	    	
 	@Override
@@ -49,8 +52,8 @@ public class SGFListFragment extends ListFragment {
 		if(dir==null) 
 			dir=savedInstanceState.getString("dir");
 		
-        this.setListAdapter(new PathViewAdapter(this.getActivity(),
-        		R.layout.list_item, menu_items,dir));
+		adapter=new PathViewAdapter(this.getActivity(),R.layout.list_item, menu_items,dir);
+        this.setListAdapter(adapter);
         
         this.getListView().setCacheColorHint(0);
 	}

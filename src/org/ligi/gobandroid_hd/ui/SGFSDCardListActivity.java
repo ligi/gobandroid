@@ -43,6 +43,7 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
 	private String[] menu_items;
     private File[] files;
     private File dir;
+    private SGFListFragment list_fragment;
 
     
     @Override
@@ -87,8 +88,9 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
         
         menu_items=(String[])fnames.toArray(new String[fnames.size()]);
         Arrays.sort(menu_items);
-
-        this.getSupportFragmentManager().beginTransaction().add(R.id.list_fragment, new SGFListFragment(menu_items,dir)).commit();
+        
+        list_fragment=new SGFListFragment(menu_items,dir);
+        this.getSupportFragmentManager().beginTransaction().add(R.id.list_fragment, list_fragment).commit();
     }
 
 
@@ -111,5 +113,10 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-    
+
+	@Override
+	protected void onResume() {
+	   list_fragment.refresh();
+       super.onResume();
+	}
 }
