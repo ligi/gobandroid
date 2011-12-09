@@ -139,7 +139,7 @@ public class SGFListFragment extends ListFragment {
 			Log.i("processing -- " + thumbnail_fname);
 
 			BitmapFactory.Options options=new BitmapFactory.Options();
-			options.inSampleSize = 2;
+			//options.inSampleSize = 2;
 			options.inPurgeable=true;
 			
 			Bitmap img_bmp=null;
