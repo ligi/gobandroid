@@ -96,8 +96,8 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_TSUMEGO)
-			this.getMenuInflater().inflate(R.menu.refresh_tsumego, menu);
+		//if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_TSUMEGO)
+		this.getMenuInflater().inflate(R.menu.refresh_tsumego, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -107,7 +107,10 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
 		switch (item.getItemId()) {
 			case R.id.menu_refresh:
 		//			DownloadProblemsDialog.show(this);
-				AutoScreenShotDialog.show(this);
+				if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_TSUMEGO)
+					AutoScreenShotDialog.show4tsumego(this);
+				else
+					AutoScreenShotDialog.show4review(this);
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
