@@ -62,7 +62,7 @@ public class AutoScreenShotTask extends AsyncTask<String,String,Integer> {
 		 gbv.setBackgroundResource(R.drawable.shinkaya);
     	 gbv.grid_embos=false; // looks better when scaled down
     	 gbv.do_legend=false; // gets to small in thumb
-    	 
+    	 gbv.do_line_highlight=false;
     	 progress_dialog=new AlertDialog.Builder(activity).setView(v).show();
     	
     	super.onPreExecute();
@@ -90,7 +90,7 @@ public class AutoScreenShotTask extends AsyncTask<String,String,Integer> {
 					if ((sgf_content!=null)&&(!sgf_content.equals(""))) {
 						GoGameProvider.setGame(SGFHelper.sgf2game(FileHelper.file2String(file), null));
 						
-						if (file.getName().contains("tsumego")) {
+						if (file.getPath().contains("tsumego")) {
 							gbv.setZoom(TsumegoActivity.calcZoom(GoGameProvider.getGame()));
 							gbv.setZoomPOI(TsumegoActivity.calcPOI(GoGameProvider.getGame()));
 						} else {
