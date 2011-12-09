@@ -70,7 +70,7 @@ public class AutoScreenShotTask extends AsyncTask<String,String,Integer> {
 
 	@Override
 	protected Integer doInBackground(String... params) {
-		processPath(activity.getSettings().getTsumegoPath());
+		processPath(params[0]);
 		return 2;
 	}		
 	
@@ -90,15 +90,16 @@ public class AutoScreenShotTask extends AsyncTask<String,String,Integer> {
 					if ((sgf_content!=null)&&(!sgf_content.equals(""))) {
 						GoGameProvider.setGame(SGFHelper.sgf2game(FileHelper.file2String(file), null));
 						
-						gbv.setZoom(TsumegoActivity.calcZoom(GoGameProvider.getGame()));
-						gbv.setZoomPOI(TsumegoActivity.calcPOI(GoGameProvider.getGame()));
-						
-						try {
-							Thread.sleep(0);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if (file.getName().contains("tsumego")) {
+							gbv.setZoom(TsumegoActivity.calcZoom(GoGameProvider.getGame()));
+							gbv.setZoomPOI(TsumegoActivity.calcPOI(GoGameProvider.getGame()));
+						} else {
+							for (int i=0;i<42;i++) 
+								try {
+									GoGameProvider.getGame().jump(GoGameProvider.getGame().getActMove().getnextMove(0));
+								} catch ( Exception e ){}
 						}
+						
 						Log.i("doing screenshot" + file.getName());
 						gbv.screenshot(file.getPath()+".png");
 						//this.publishProgress("foo");
