@@ -57,6 +57,7 @@ public class GoBoardViewHD extends View {
 	
 	public boolean grid_embos=true; //  GoPrefs.getGridEmbossEnabled()
 	public boolean do_legend=true; // GoPrefs.getLegendEnabled()
+	public boolean do_line_highlight=true;
 	public boolean mark_last_stone=true;
 	private boolean legend_sgf_mode=true;  //GoPrefs.getLegendSGFMode()
 	
@@ -264,13 +265,13 @@ public class GoBoardViewHD extends View {
         	canvas.drawBitmap(white_stone_bitmap, GoInteractionProvider.getTouchX()*stone_size, GoInteractionProvider.getTouchY()*stone_size, placeStonePaint);
         
         // draw the vertical lines
-        for(int x=0;x<getGame().getVisualBoard().getSize();x++)
-        	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f,(GoInteractionProvider.getTouchX()==x)?gridPaint_h:gridPaint);	
+        for(byte x=0;x<getGame().getVisualBoard().getSize();x++)
+        	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f,(do_line_highlight&&(GoInteractionProvider.getTouchX()==x))?gridPaint_h:gridPaint);	
         	
         // draw the horizontal lines and the legend
-        for(int x=0;x<getGame().getVisualBoard().getSize();x++)
+        for(byte x=0;x<getGame().getVisualBoard().getSize();x++)
         {
-            canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size, (GoInteractionProvider.getTouchY()==x)?gridPaint_h:gridPaint);
+            canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size, (do_line_highlight&&(GoInteractionProvider.getTouchY()==x))?gridPaint_h:gridPaint);
             if (do_legend) {
             	canvas.drawText("" + (1+x) , 6+ stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size+gridPaint.getTextSize()/3,gridPaint);
             	
