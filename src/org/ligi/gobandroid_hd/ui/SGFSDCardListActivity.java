@@ -26,10 +26,6 @@ import java.util.Arrays;
 import org.ligi.android.common.dialogs.ActivityFinishOnClickListener;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsDialog;
-import org.ligi.tracedroid.logging.Log;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.view.Menu;
