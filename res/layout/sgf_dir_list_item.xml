@@ -4,14 +4,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:orientation="horizontal" >
+
+    <ImageView
+        android:layout_width="@dimen/text_size_large"
+        android:layout_height="fill_parent"
+        android:layout_marginRight="3dp"
+        android:src="@drawable/folder" />
+
       <TextView
                 android:id="@+id/filename"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Large Text"
                 android:textColor="@android:color/black"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-    
+                android:textSize="@dimen/text_size_large" />
+      
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/thumb_container"
         android:layout_width="match_parent"
