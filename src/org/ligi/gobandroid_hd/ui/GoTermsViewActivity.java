@@ -2,7 +2,7 @@ package org.ligi.gobandroid_hd.ui;
 
 import java.util.HashMap;
 
-import org.ligi.android.common.dialogs.ActivityFinishOnViewClickListener;
+import org.ligi.android.common.views.ActivityFinishOnViewClickListener;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
@@ -42,6 +42,7 @@ public class GoTermsViewActivity extends GobandroidFragmentActivity {
 		Linkify.addLinks(tv, Linkify.ALL);
 
 		((Button)this.findViewById(R.id.terms_ok_btn)).setOnClickListener(new ActivityFinishOnViewClickListener(this));
+		
 		super.onCreate(savedInstanceState);
 		
 	}
