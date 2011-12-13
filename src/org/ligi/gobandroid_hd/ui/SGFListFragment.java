@@ -1,6 +1,8 @@
 package org.ligi.gobandroid_hd.ui;
 
 import java.io.File;
+import java.io.IOException;
+
 import org.ligi.android.common.files.FileHelper;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.tracedroid.logging.Log;
@@ -70,7 +72,11 @@ public class SGFListFragment extends ListFragment {
         
         
         if (fname.endsWith(".golink")) {
-        	fname=FileHelper.file2String(new File(fname));
+        	try {
+        		fname=FileHelper.file2String(new File(fname));
+        	} catch (IOException e) {
+        		Log.w("problem loading file" + fname.toString());
+        	}
         }
         
         if (fname.contains(":#")) {

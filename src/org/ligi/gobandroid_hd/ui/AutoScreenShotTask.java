@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.android.common.files.FileHelper;
@@ -86,26 +87,32 @@ public class AutoScreenShotTask extends AsyncTask<String,String,Integer> {
 				if (file.isDirectory()) {
 					processPath(file.getPath());
 				} else if (file.getName().endsWith(".sgf")) {
-					String sgf_content=FileHelper.file2String(file);
-					if ((sgf_content!=null)&&(!sgf_content.equals(""))) {
-						GoGameProvider.setGame(SGFHelper.sgf2game(FileHelper.file2String(file), null));
-						
-						if (file.getPath().contains("tsumego")) {
-							gbv.setZoom(TsumegoActivity.calcZoom(GoGameProvider.getGame()));
-							gbv.setZoomPOI(TsumegoActivity.calcPOI(GoGameProvider.getGame()));
-						} else {
-							for (int i=0;i<42;i++) 
-								try {
-									GoGameProvider.getGame().jump(GoGameProvider.getGame().getActMove().getnextMove(0));
-								} catch ( Exception e ){}
+					try {
+						String sgf_content=FileHelper.file2String(file);
+						if ((sgf_content!=null)&&(!sgf_content.equals(""))) {
+							GoGameProvider.setGame(SGFHelper.sgf2game(FileHelper.file2String(file), null));
+							
+							if (file.getPath().contains("tsumego")) {
+								gbv.setZoom(TsumegoActivity.calcZoom(GoGameProvider.getGame()));
+								gbv.setZoomPOI(TsumegoActivity.calcPOI(GoGameProvider.getGame()));
+							} else {
+								for (int i=0;i<42;i++) 
+									try {
+										GoGameProvider.getGame().jump(GoGameProvider.getGame().getActMove().getnextMove(0));
+									} catch ( Exception e ){}
+							}
+							
+							Log.i("doing screenshot" + file.getName());
+							gbv.screenshot(file.getPath()+".png");
+							//this.publishProgress("foo");
+							this.publishProgress("foo");
 						}
-						
-						Log.i("doing screenshot" + file.getName());
-						gbv.screenshot(file.getPath()+".png");
-						//this.publishProgress("foo");
-						this.publishProgress("foo");
 					}
+					catch(IOException e) {
+						// we could not read the SGF - the only thing we can do there at the moment is log that :-(
+						Log.w("Problem reading SGF");
 					}
+				}
 			}
 		}
 
