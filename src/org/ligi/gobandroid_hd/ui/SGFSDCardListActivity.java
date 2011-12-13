@@ -23,7 +23,7 @@ import java.io.File;
 import java.util.Vector;
 import java.util.Arrays;
 
-import org.ligi.android.common.dialogs.ActivityFinishOnClickListener;
+import org.ligi.android.common.dialogs.ActivityFinishOnDialogClickListener;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import android.app.AlertDialog;
@@ -59,7 +59,7 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
         else
         	dir=new File(sgf_path);
         
-        AlertDialog.Builder alert=new AlertDialog.Builder(this).setTitle(R.string.problem_listing_sgf).setPositiveButton(R.string.ok,  new ActivityFinishOnClickListener(this));
+        AlertDialog.Builder alert=new AlertDialog.Builder(this).setTitle(R.string.problem_listing_sgf).setPositiveButton(R.string.ok,  new ActivityFinishOnDialogClickListener(this));
         
         if (dir==null){
         	alert.setMessage(getResources().getString(R.string.sgf_path_invalid) +" " +sgf_path).show();
