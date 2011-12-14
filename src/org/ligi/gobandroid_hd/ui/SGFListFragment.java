@@ -194,6 +194,9 @@ public class SGFListFragment extends ListFragment {
 						container.addView(img);
 					}
 				
+				if (fcount==0) // no thumbnails -> no container
+					container.setVisibility(View.GONE);
+				
 			}
 			else
 				v= inflater.inflate(R.layout.sgf_tsumego_list_item,null);
