@@ -130,5 +130,9 @@
 \nThe opposite of tesuji is zokusuji, which can be translated as \"crude line of play\", and also referred to as anti-suji, or a vulgar move depending on the situation.
 \nTesuji is one of the important aspects of the game in which a player exerts his or her ability to \"read ahead\". In the game of Go, they are used in life and death situations (tsumego), in order to obtain initiative (sente), to capture stones, to gain extra points in the yose, or to otherwise save a seemingly unfavorable situation.
 \n\nhttp://en.wikipedia.org/wiki/Tesuji</string>   
+ 
+	  <string name="working">Working</string>   
+ 
+	  <string name="please_stay_patient">Please stay patient</string>   
 	    
 </resources>
