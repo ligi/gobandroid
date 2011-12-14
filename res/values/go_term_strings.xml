@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    	<string name="goterm_joseki">Joseki jōseki (定石?) are established sequences of play which (locally speaking) are considered to give an optimal result to both players. There are thousands of such lines that have been researched and documented.
+\nOften joseki are played out early in the game and involve dividing the corners. There are also \"mid-game joseki\", dealing with for example an invasion into a common enclosure or framework.
+\nThough joseki have some parallel with chess openings, they differ significantly. Chess openings structure the whole board while joseki deal only with a local position. Therefore the choice of which joseki (of many possible) to play in any given situation should be based on an assessment of the global position. This includes considerations of the direction of play, current balance of territory and influence, and one\'s own game strategy.
+\nIt is also quite possible to deviate from joseki and obtain a good result if the surrounding position allows. In other words, joseki are sensitive to the context in which they are played.
+\n\nhttp://en.wikipedia.org/wiki/Go_terms#Joseki
+</string>
+
+	<string name="goterm_miai">Miai (見合い) in Go are, in the simplest terms, a pair of vacant points on the board that are equivalent in terms of value. For example, if Black plays at A, White can play at B and suffer no disadvantage from the exchange.
+\nThis occurs often. With respect to a group\'s development or survival, pairs of points are frequently seen, such that if one player occupies one of them, his opponent will occupy the other. Miai can be seen in the fuseki stage on a large scale, or in a simple life and death problem, such as a straight four-space eye. This shape is alive because of its two central points a and b: if White plays b, Black can answer with a and vice versa.
+\nThe term originates from the Japanese custom of arranging marriage through a series of meetings (miai) to view prospective spouses (見る miru, \"view\", 合う au, \"meet\").
+\n\nhttp://en.wikipedia.org/wiki/Go_terms#Miai
+</string>
+
+	 <string name="goterm_shape"> Shape is the configuration of stones in terms of their flexibility and efficiency at staying connected, forming eyes, and maintaining liberties. Stones are said to have good shape if they are efficient and flexible, or bad shape if they are inefficient. Classic examples of good shape are the ponnuki (four stones in a diamond created by capturing an enemy stone) and the bamboo joint (a 2x3 pattern of two stones, two spaces and two more stones). Examples of bad shape are the empty triangle (three adjacent stones forming an \'L\') and the dango (large clump of stones not containing any eyes). Joseki is in large part the study of forming good shape with your stones.
+\n\nhttp://en.wikipedia.org/wiki/Shape_(Go)
+ </string>   
+ 
+	  <string name="goterm_tesuji">A Japanese term used in the games of go or Shogi. A tesuji (手筋) is a clever play, the best play in a local position, a skillful move. Tesuji is derived from suji (筋), which means \"line of play\".
+\nThe opposite of tesuji is zokusuji, which can be translated as \"crude line of play\", and also referred to as anti-suji, or a vulgar move depending on the situation.
+\nTesuji is one of the important aspects of the game in which a player exerts his or her ability to \"read ahead\". In the game of Go, they are used in life and death situations (tsumego), in order to obtain initiative (sente), to capture stones, to gain extra points in the yose, or to otherwise save a seemingly unfavorable situation.
+\n\nhttp://en.wikipedia.org/wiki/Tesuji</string>   
+    
+</resources>
