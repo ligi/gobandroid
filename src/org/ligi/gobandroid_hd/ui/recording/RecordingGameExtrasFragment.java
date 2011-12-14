@@ -1,5 +1,6 @@
 package org.ligi.gobandroid_hd.ui.recording;
 
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import android.os.Bundle;
@@ -30,7 +31,8 @@ public class RecordingGameExtrasFragment extends Fragment implements GoGameChang
 		et.setText(GoGameProvider.getGame().getActMove().getComment());
 		et.setHint("enter your comments here");
 		et.setGravity(Gravity.TOP);
-	
+		et.setTextColor(this.getResources().getColor(R.color.text_color_on_board_bg));
+		
 		et.addTextChangedListener(new TextWatcher() {
 
 			@Override
