@@ -4,20 +4,39 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-   <TextView
-      android:id="@+id/filename"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Thumbnail Creation"
-      android:textAppearance="?android:attr/textAppearanceLarge" />
-    
-   
-   <TextView
-      android:id="@+id/desc"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Please stay patient"
-      android:textAppearance="?android:attr/textAppearanceLarge" />
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/filename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thumbnail Creation"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please stay patient"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        </LinearLayout>
+
+    </LinearLayout>
     
     <org.ligi.gobandroid_hd.ui.GoBoardViewHD
         android:id="@+id/board_to_shoot"
