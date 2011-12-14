@@ -113,21 +113,32 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 		this.setContentView(R.layout.game_setup);
 	}
 	
-	@Override
-	public void onResume() {
-		super.onResume();
-
+	public void setup_board() {
 		board=(GoBoardViewHD)this.findViewById(R.id.go_board);
-		if (board!=null) board.setOnTouchListener(new OnTouchListener() {
-
+		
+		if (board==null) 
+			return;
+		
+		board.setOnTouchListener(new OnTouchListener() {
+		
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				start_game();
 				return false;
 			}
-			
 		});
+		
+		board.do_line_highlight=false;
+		
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
 		Log.i("GoSetup Resume");
+		
+		setup_board();
+		
 		size_seek=(SeekBar)this.findViewById(R.id.size_slider);
 		size_seek.setOnSeekBarChangeListener(this);
 		
