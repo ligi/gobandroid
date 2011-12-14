@@ -57,14 +57,17 @@ public class AutoScreenShotTask extends AsyncTask<String,String,Integer> {
 		
 		View v=activity.getLayoutInflater().inflate(R.layout.screenshot_dialog, null);
 		
-		 gbv=(GoBoardViewHD)v.findViewById(R.id.board_to_shoot);//new GoBoardViewHD(activity);
-    	 
-		 
-		 gbv.setBackgroundResource(R.drawable.shinkaya);
-    	 gbv.grid_embos=false; // looks better when scaled down
-    	 gbv.do_legend=false; // gets to small in thumb
-    	 gbv.do_line_highlight=false;
-    	 progress_dialog=new AlertDialog.Builder(activity).setView(v).show();
+		
+		/** set upp the go board view **/
+		gbv=(GoBoardViewHD)v.findViewById(R.id.board_to_shoot);
+		gbv.setBackgroundResource(R.drawable.shinkaya);
+		gbv.grid_embos=false; // looks better when scaled down
+    	gbv.do_legend=false; // gets to small in thumb
+    	gbv.do_line_highlight=false;
+    	
+    	
+    	
+    	progress_dialog=new AlertDialog.Builder(activity).setView(v).show();
     	
     	super.onPreExecute();
 	}
