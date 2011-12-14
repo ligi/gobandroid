@@ -14,6 +14,7 @@ import org.ligi.tracedroid.logging.Log;
 import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.view.View;
+import android.widget.TextView;
 
 /**
  * A task to do ScreenShots of GO-Boards/Situations to use as thumbnail to make a 
@@ -57,7 +58,6 @@ public class AutoScreenShotTask extends AsyncTask<String,String,Integer> {
 		
 		View v=activity.getLayoutInflater().inflate(R.layout.screenshot_dialog, null);
 		
-		
 		/** set upp the go board view **/
 		gbv=(GoBoardViewHD)v.findViewById(R.id.board_to_shoot);
 		gbv.setBackgroundResource(R.drawable.shinkaya);
@@ -65,7 +65,9 @@ public class AutoScreenShotTask extends AsyncTask<String,String,Integer> {
     	gbv.do_legend=false; // gets to small in thumb
     	gbv.do_line_highlight=false;
     	
-    	
+    	/** tell the user what's happening **/
+    	TextView descr_tv=(TextView)v.findViewById(R.id.desc);
+    	descr_tv.setText(R.string.creating_thumbnails);
     	
     	progress_dialog=new AlertDialog.Builder(activity).setView(v).show();
     	
