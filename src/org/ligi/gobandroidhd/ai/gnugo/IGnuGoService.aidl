@@ -1,4 +1,4 @@
-package org.ligi.gobandroid_hd.ai.gnugo;
+package org.ligi.gobandroidhd.ai.gnugo;
 
 interface IGnuGoService {
 
