@@ -1,6 +1,5 @@
 package org.ligi.gobandroid_hd.ui.recording;
 
-import java.util.Vector;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
@@ -13,18 +12,12 @@ import android.view.WindowManager;
 
 public class GameRecordActivity extends GoActivity  implements GoGameChangeListener {
 
-	private Vector<GoMove> on_path_moves;
-	
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// TODO the next line works but needs investigation - i thought more of getBoard().requestFocus(); - but that was not working ..
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }		
-    
-	public boolean isOnPath() {
-		return on_path_moves.contains(game.getActMove());
-    }
     
 	public byte doMoveWithUIFeedback(byte x,byte y) {
 		
