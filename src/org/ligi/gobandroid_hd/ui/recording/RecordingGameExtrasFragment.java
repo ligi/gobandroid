@@ -4,6 +4,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 public class RecordingGameExtrasFragment extends Fragment implements GoGameChangeListener {
 
 	private EditText et;
+	private Handler hndl=new Handler();
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,10 +56,17 @@ public class RecordingGameExtrasFragment extends Fragment implements GoGameChang
 		return et;
 	}
 
+	
 	@Override
 	public void onGoGameChange() {
-		if (et!=null)
-			et.setText(GoGameProvider.getGame().getActMove().getComment());
+		hndl.post(new Runnable() {
+			@Override
+			public void run() {
+				if (et!=null)
+					et.setText(GoGameProvider.getGame().getActMove().getComment());
+			}
+			
+		});
 	}
 	
 }
