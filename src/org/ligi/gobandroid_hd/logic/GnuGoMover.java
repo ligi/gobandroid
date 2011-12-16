@@ -19,7 +19,7 @@
 
 package org.ligi.gobandroid_hd.logic;
 
-import org.ligi.gobandroid_hd.ai.gnugo.IGnuGoService;
+import org.ligi.gobandroidhd.ai.gnugo.IGnuGoService;
 import org.ligi.tracedroid.logging.Log;
 
 import android.app.Activity;
@@ -44,7 +44,7 @@ public class GnuGoMover implements Runnable{
 	public boolean paused=false;
 	public boolean thinking=false;
 	
-	public final static String intent_action_name="org.ligi.gobandroid.ai.gnugo.GnuGoService";
+	public final static String intent_action_name="org.ligi.gobandroidhd.ai.gnugo.GnuGoService";
 	private byte level;
 	private Application application;
 	
@@ -83,7 +83,7 @@ public class GnuGoMover implements Runnable{
 				}
 	        };
 	        
-	        application.bindService(new Intent("org.ligi.gobandroid.ai.gnugo.GnuGoService"), conn, Context.BIND_AUTO_CREATE);
+	        application.bindService(new Intent(intent_action_name), conn, Context.BIND_AUTO_CREATE);
 	        
 	        mover_thread=new Thread(this);
 	        mover_thread.start();
@@ -108,13 +108,17 @@ public class GnuGoMover implements Runnable{
 	public void processWhiteMove(byte x,byte y)   {
 		try {
 			gnu_service.processGTP("white " + coordinates2gtpstr(x,y));
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			Log.w("problem processing white move to " + coordinates2gtpstr(x,y));
+		}
 	}
 	
 	public void processBlackMove(byte x,byte y)   {
 		try {
 			gnu_service.processGTP("black " + coordinates2gtpstr(x,y));
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			Log.w("problem processing black move to " + coordinates2gtpstr(x,y));
+		}
 	}
 	
 	public void stop() {
@@ -125,7 +129,7 @@ public class GnuGoMover implements Runnable{
 			}
 			Log.i( "gugoservice stopping service" + game.isFinished());
 			application.unbindService(conn);
-			application.stopService(new Intent("org.ligi.gobandroid.ai.gnugo.GnuGoService"));
+			application.stopService(new Intent(intent_action_name));
 		}
 		catch (Exception e) {}
 	} 
