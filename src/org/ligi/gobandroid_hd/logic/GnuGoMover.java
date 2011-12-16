@@ -100,7 +100,7 @@ public class GnuGoMover implements Runnable{
 	}
 	
 	public String coordinates2gtpstr(byte x,byte y)  {
-		if (x>8) x++; // I is missing
+		if (x>=8) x++; // "I" is missing decrease human OCR-error but increase computer bugs ... 
 		y=(byte)(game.getBoardSize()-(y));
 		return ""+(char)('A'+x) + ""+(y);
 	}
