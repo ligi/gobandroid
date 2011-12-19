@@ -110,5 +110,7 @@
     <string name="working">Working</string>   
  	<string name="please_stay_patient">Please stay patient</string>   
 	<string name="creating_thumbnails">Creating thumbnails - Please stay patient</string>   
+	<string name="gnugo">gnugo</string>   
+	<string name="preferences">preferences</string>   
 	    
 </resources>

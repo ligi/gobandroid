@@ -7,6 +7,7 @@ public class GoInteractionProvider {
 	public final static byte MODE_RECORD=0;
 	public final static byte MODE_TSUMEGO=1;
 	public final static byte MODE_REVIEW=2;
+	public final static byte MODE_GNUGO=3;
 		
 	public static int touch_position=-1; // negative numbers -> no recent touch
 	private static byte mode;

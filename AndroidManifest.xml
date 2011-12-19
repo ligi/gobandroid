@@ -50,7 +50,7 @@
 		</intent-filter>
 		</activity>
 		
-    			    
+    	<activity android:name="org.ligi.gobandroid_hd.ui.recording.PlayAgainstGnugoActivity"></activity>
 		<activity android:name=".ui.GoSetupActivity"></activity>
 		<activity android:name=".ui.SGFSDCardListActivity"></activity>
 		<activity android:name=".ui.links.LinksActivity"></activity>

@@ -26,6 +26,7 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
+import org.ligi.gobandroid_hd.ui.recording.PlayAgainstGnugoActivity;
 import org.ligi.tracedroid.logging.Log;
 
 import android.app.AlertDialog;
@@ -281,7 +282,15 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 		GoGame new_game=new GoGame(act_size,act_handicap);
 		
 		GoGameProvider.setGame(new_game);
-		Intent go_intent=new Intent(this,GameRecordActivity.class);
+		
+		
+		Intent go_intent;
+		
+		if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_RECORD)
+			go_intent=new Intent(this,GameRecordActivity.class);
+		else
+			go_intent=new Intent(this,PlayAgainstGnugoActivity.class);
+		
 		/*go_intent.putExtra("size",act_size );
 		go_intent.putExtra("handicap",act_handicap );
 

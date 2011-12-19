@@ -51,6 +51,7 @@ public class gobandroid extends GobandroidFragmentActivity {
 
     public void recordGame(View target) {
     	getTracker().trackPageView("/record");
+    	GoInteractionProvider.setMode(GoInteractionProvider.MODE_RECORD);
     	this.startActivity(new Intent(this,GoSetupActivity.class));
     }
 
@@ -92,8 +93,19 @@ public class gobandroid extends GobandroidFragmentActivity {
     	}
     	return false;
     }
+    
     public void startLinks(View target) {
     	getTracker().trackPageView("/links");
     	this.startActivity( new Intent(this,LinksActivity.class));
+    }
+    
+    public void startGnuGoGame(View target) {
+    	getTracker().trackPageView("/gnugo");
+    	GoInteractionProvider.setMode(GoInteractionProvider.MODE_GNUGO);
+    	this.startActivity(new Intent(this,GoSetupActivity.class));
+    }
+    
+    public void startPreferences(View target) {
+    	
     }
 }
