@@ -36,6 +36,8 @@ import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.tracedroid.logging.Log;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -70,6 +72,9 @@ public class GoActivity
 	private ZoomGameExtrasFragment myZoomFragment;
 	private Fragment actFragment;
 
+	public GoSoundManager sound_man ;
+	
+	 
 	public Fragment getGameExtraFragment() {
 		return new DefaultGameExtrasFragment();
 	}
@@ -78,6 +83,9 @@ public class GoActivity
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		game=GoGameProvider.getGame();
+		
+		sound_man=new GoSoundManager(this);
+		
 		View customNav =new InGameActionBarView(this);
 		
 		FragmentTransaction fragmentTransAction =this.getSupportFragmentManager().beginTransaction();
@@ -105,6 +113,7 @@ public class GoActivity
 			}
 		});
 		game2ui();
+		sound_man.playSound(1);
 	}
 	
 	@Override
@@ -155,8 +164,28 @@ public class GoActivity
 		
 		return false;
 	}
+	
+	private boolean intro_sound_played=false;
     
-    /**
+    @Override
+	protected void onResume() {
+    	//sound_man.playSound(GoSoundManager.SOUND_START);
+    	  MediaPlayer mp = MediaPlayer.create(getBaseContext(),
+                  R.raw.go_start);
+          mp.start();
+          mp.setOnCompletionListener(new OnCompletionListener() {
+        	  
+              @Override
+              public void onCompletion(MediaPlayer mp) {
+                  mp.release();
+                  intro_sound_played=true;
+              }
+          });
+          
+		super.onResume();
+	}
+
+	/**
 	 * show a the info toast with a specified text from a resource ID
 	 * 
 	 * @param resId
@@ -195,15 +224,31 @@ public class GoActivity
 	}
 	
 	public boolean onTouch( View v, MotionEvent event ) {
+		
 		if (event.getAction()==MotionEvent.ACTION_UP) {
 			setFragment(getGameExtraFragment());
 			if (getResources().getBoolean(R.bool.small))
 					this.getSupportActionBar().show();
-		}
-		else {
+			
+			if (intro_sound_played) {
+				if (game.isBlackToMove())
+					sound_man.playSound(GoSoundManager.SOUND_PLACE1);
+				else
+					sound_man.playSound(GoSoundManager.SOUND_PLACE2);
+			}
+			
+		}else if (event.getAction()==MotionEvent.ACTION_DOWN)
+		 {
 			setFragment(myZoomFragment);
 			if (getResources().getBoolean(R.bool.small))
 				this.getSupportActionBar().hide();
+			
+			if(intro_sound_played) {
+				if (game.isBlackToMove())
+					sound_man.playSound(GoSoundManager.SOUND_PICKUP1);
+				else
+					sound_man.playSound(GoSoundManager.SOUND_PICKUP2);
+			}
 		}
 			
 		Log.i("touch");
