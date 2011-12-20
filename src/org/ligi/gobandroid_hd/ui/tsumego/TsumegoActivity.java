@@ -171,4 +171,9 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		}
 	}
 
+	@Override
+	public boolean isAsk4QuitEnabled() {
+		return false;
+	}
+	
 }

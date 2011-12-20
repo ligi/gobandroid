@@ -48,7 +48,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
-import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 /**
@@ -165,24 +164,44 @@ public class GoActivity
 		return false;
 	}
 	
+	/**
+	 * control whether we want to ask the user - diffrent in modes
+	 * @return
+	 */
+	public boolean isAsk4QuitEnabled() {
+		return true;
+	}
+	
+	public void shutdown() {
+		sound_man.playSound(GoSoundManager.SOUND_END);
+		game.getGoMover().stop();
+		finish();
+	}
+	
+	public void ask4quit() {
+		if (!isAsk4QuitEnabled()) {
+			shutdown();
+			return;
+		}
+		
+		new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
+		.setMessage( R.string.quit_confirm
+		).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog, int whichButton) {
+			shutdown();
+		}
+		}).setCancelable(true).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog, int whichButton) {
+		}
+		}).show();
+	}
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_BACK:
-				new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
-				.setMessage( R.string.quit_confirm
-				).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					game.getGoMover().stop();
-					finish();
-				}
-				}).setCancelable(true).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					
-				}
-			}).show();
-			return true;
+				ask4quit();
+				return true;
 		}
 		
 		return super.onKeyDown(keyCode, event);
@@ -414,7 +433,6 @@ public class GoActivity
 	@Override
 	public void onBackPressed() {
 //		AlertDialog.Builder(//this)
-		sound_man.playSound(GoSoundManager.SOUND_END);
 		//return false;
 		super.onBackPressed();
 	}

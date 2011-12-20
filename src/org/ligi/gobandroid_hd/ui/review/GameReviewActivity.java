@@ -123,4 +123,9 @@ public class GameReviewActivity extends GoActivity  {
 	    	}
 	    	return super.onKey(v,keyCode, event);
 	 }
+
+	@Override
+	public boolean isAsk4QuitEnabled() {
+		return false;
+	}
 }
