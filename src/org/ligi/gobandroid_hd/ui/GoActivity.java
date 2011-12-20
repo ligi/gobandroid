@@ -165,6 +165,30 @@ public class GoActivity
 		return false;
 	}
 	
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		switch (keyCode) {
+			case KeyEvent.KEYCODE_BACK:
+				new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
+				.setMessage( R.string.quit_confirm
+				).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					game.getGoMover().stop();
+					finish();
+				}
+				}).setCancelable(true).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					
+				}
+			}).show();
+			return true;
+		}
+		
+		return super.onKeyDown(keyCode, event);
+	}
+
+
 	private boolean intro_sound_played=false;
     
     @Override
@@ -318,7 +342,7 @@ public class GoActivity
 
 	@Override
 	public boolean onKey(View v, int keyCode, KeyEvent event) {
-
+		Log.i("key event");
 		if (event.getAction()==KeyEvent.ACTION_DOWN)
     	switch (keyCode) {
     	case KeyEvent.KEYCODE_DPAD_UP:
@@ -357,23 +381,7 @@ public class GoActivity
     		doMoveWithUIFeedback((byte)GoInteractionProvider.getTouchX(),(byte)GoInteractionProvider.getTouchY());
     		break;
     		
-    	case KeyEvent.KEYCODE_BACK:
-    			new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
-    			.setMessage( R.string.quit_confirm
-    			).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
-    			public void onClick(DialogInterface dialog, int whichButton) {
-    				game.getGoMover().stop();
-    				finish();
-    			}
-    		}).setCancelable(true).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
-    			public void onClick(DialogInterface dialog, int whichButton) {
-    				
-    			}
-    		}).show();
-    				
-    		//}
-    		return true;
-    		
+    
     	
     	}
     	go_board.postInvalidate();
@@ -402,4 +410,14 @@ public class GoActivity
 	    else                                                                                                                                  
 	        game.undo(GoPrefs.isKeepVariantEnabled());
 	}
+
+	@Override
+	public void onBackPressed() {
+//		AlertDialog.Builder(//this)
+		sound_man.playSound(GoSoundManager.SOUND_END);
+		//return false;
+		super.onBackPressed();
+	}
+
+	
 }
