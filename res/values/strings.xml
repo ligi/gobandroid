@@ -4,6 +4,7 @@
     <string name="start_game">Start Game</string>
     <string name="start">Start</string>
     <string name="load_game">Load Game</string>
+    <string name="load_tsumego">Load Tsumego</string>
     <string name="tsumego">Tsumego</string>
     <string name="igs">IGS</string><string name="info">Info</string>
     <string name="quit">Quit</string>
@@ -112,5 +113,6 @@
 	<string name="creating_thumbnails">Creating thumbnails - Please stay patient</string>   
 	<string name="gnugo">gnugo</string>   
 	<string name="preferences">preferences</string>   
-	    
+	<string name="board_setup">Board Setup</string>
+	<string name="for_recording">for Recording</string>
 </resources>

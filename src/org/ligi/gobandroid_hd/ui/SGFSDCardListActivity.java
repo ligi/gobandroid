@@ -88,8 +88,13 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
             return;
         }
         
-        this.setTitle(dir.getAbsolutePath());
+        this.getSupportActionBar().setSubtitle(dir.getAbsolutePath());
         
+        if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_TSUMEGO)
+        	this.setTitle(R.string.load_tsumego);
+        else if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_REVIEW)
+        	this.setTitle(R.string.load_game);
+            
         menu_items=(String[])fnames.toArray(new String[fnames.size()]);
         Arrays.sort(menu_items);
         

@@ -112,6 +112,8 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 		super.onCreate(savedInstanceState);
 		GoPrefs.init(this);
 		this.setContentView(R.layout.game_setup);
+		this.setTitle(R.string.board_setup);
+		this.getSupportActionBar().setSubtitle(R.string.for_recording);
 	}
 	
 	public void setup_board() {
