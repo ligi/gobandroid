@@ -111,8 +111,8 @@
     <string name="working">Working</string>   
  	<string name="please_stay_patient">Please stay patient</string>   
 	<string name="creating_thumbnails">Creating thumbnails - Please stay patient</string>   
-	<string name="gnugo">gnugo</string>   
-	<string name="preferences">preferences</string>   
+	<string name="gnugo">GnuGo</string>   
+	<string name="preferences">Preferences</string>   
 	<string name="board_setup">Board Setup</string>
 	<string name="for_recording">for Recording</string>
 </resources>
