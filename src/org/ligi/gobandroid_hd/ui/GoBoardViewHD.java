@@ -256,7 +256,8 @@ public class GoBoardViewHD extends View {
     		
     	if (regenerate_stones_flag)
     		regenerate_images();
-    	
+
+    	boolean line_highlight_condition=do_line_highlight&&GoInteractionProvider.hasValidTouchCoord();
      
         // draw stone
         if (getGame().isBlackToMove())
@@ -266,12 +267,12 @@ public class GoBoardViewHD extends View {
         
         // draw the vertical lines
         for(byte x=0;x<getGame().getVisualBoard().getSize();x++)
-        	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f,(do_line_highlight&&(GoInteractionProvider.getTouchX()==x))?gridPaint_h:gridPaint);	
+        	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f,(line_highlight_condition&&(GoInteractionProvider.getTouchX()==x))?gridPaint_h:gridPaint);	
         	
         // draw the horizontal lines and the legend
         for(byte x=0;x<getGame().getVisualBoard().getSize();x++)
         {
-            canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size, (do_line_highlight&&(GoInteractionProvider.getTouchY()==x))?gridPaint_h:gridPaint);
+            canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size, (line_highlight_condition&&(GoInteractionProvider.getTouchY()==x))?gridPaint_h:gridPaint);
             if (do_legend) {
             	canvas.drawText("" + (1+x) , 6+ stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size+gridPaint.getTextSize()/3,gridPaint);
             	

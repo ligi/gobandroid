@@ -27,6 +27,10 @@ public class GoInteractionProvider {
 	public static int getTouchY() {
 		return touch_position/GoGameProvider.getGame().getSize();
 	}
+	
+	public static boolean hasValidTouchCoord() {
+		return ((touch_position>=0)&&(touch_position<GoGameProvider.getGame().getSize()*GoGameProvider.getGame().getSize()));
+	}
 
 	public static byte getMode() {
 		return mode;
