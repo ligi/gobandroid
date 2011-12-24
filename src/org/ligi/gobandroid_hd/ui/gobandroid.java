@@ -43,6 +43,7 @@ public class gobandroid extends GobandroidFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+        new GoSoundManager(this);
     }
   
     /**
@@ -73,10 +74,6 @@ public class gobandroid extends GobandroidFragmentActivity {
     	if (!unzipSGFifNeeded()) 
     		startLoad(getSettings().getReviewPath(),GoInteractionProvider.MODE_REVIEW);
     }
-    
-    public void startSettings(View target) {
-    	this.startActivity(new Intent(this,GoPrefsActivity.class));
-    }
 
     /**
      * Downloads SGFs and shows a ProgressDialog when needed
@@ -106,6 +103,6 @@ public class gobandroid extends GobandroidFragmentActivity {
     }
     
     public void startPreferences(View target) {
-    	
+    	this.startActivity(new Intent(this,GoPrefsActivity.class));
     }
 }

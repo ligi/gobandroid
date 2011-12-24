@@ -3,17 +3,23 @@ package org.ligi.gobandroid_hd.ui;
 import java.util.HashMap;
 
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.tracedroid.logging.Log;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.media.MediaPlayer.OnCompletionListener;
 
 public class GoSoundManager {
 	 
 	private  SoundPool mSoundPool;
 	private  HashMap<Integer, Integer> mSoundPoolMap;
 	private  AudioManager  mAudioManager;
-	private  Context mContext;
+	private  GobandroidFragmentActivity mContext;
+	
+	private boolean intro_sound_played=false;
 	
 	public final static int SOUND_START=1;
 	public final static int SOUND_END=2;
@@ -22,7 +28,8 @@ public class GoSoundManager {
 	public final static int SOUND_PICKUP1=5;
 	public final static int SOUND_PICKUP2=6;
 	
-	public GoSoundManager (Context theContext) {
+	public GoSoundManager (GobandroidFragmentActivity theContext) {
+		Log.i("sound_man init");
 	    mContext = theContext;
 	    mSoundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 0);
 	    mSoundPoolMap = new HashMap<Integer, Integer> ();
@@ -34,17 +41,34 @@ public class GoSoundManager {
 	    addSound(SOUND_PLACE2,R.raw.go_place2);
 	    addSound(SOUND_PICKUP1,R.raw.go_pickup1);
 	    addSound(SOUND_PICKUP2,R.raw.go_pickup2);
-	    
 	}
 	
 	public void addSound(int index, int SoundID) {
 	    mSoundPoolMap.put(index, mSoundPool.load(mContext, SoundID, 1));
 	}
 	
-	public void playSound(int index)
-	{
-	float streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-	streamVolume = streamVolume / mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+	public void playSound(int index) {
+		if ((!mContext.getSettings().isSoundEnabled())||(!intro_sound_played))
+			return;
+
+		float streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		streamVolume = streamVolume / mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 	    mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume, 1, 0, 1f);
 	}
+		
+	public void playGameIntro() {
+		if (!mContext.getSettings().isSoundEnabled())
+			return;
+
+		MediaPlayer mp = MediaPlayer.create(mContext, R.raw.go_start);
+	    mp.start();
+	    mp.setOnCompletionListener(new OnCompletionListener() {
+	    	@Override
+	        public void onCompletion(MediaPlayer mp) {
+	    		mp.release();
+	    		intro_sound_played=true;
+	        }
+	    });
+	}
+
 }

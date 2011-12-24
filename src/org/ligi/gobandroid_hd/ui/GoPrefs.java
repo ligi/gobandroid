@@ -32,7 +32,7 @@ public class GoPrefs {
 	public final static String KEY_FATFINGER="fatfinger";
 	public final static String KEY_VIEWABLESTONE="viewablestone";
 	public final static String KEY_VIEW_STONE_DISTANCE="view_stone_distance";	
-	public final static String KEY_FULLSCREEN="fullscreen";
+	
 	public final static String KEY_KEEPLIGHT="keeplight";
 	public final static String KEY_BOARD_SKIN="board_skina";
 	public final static String KEY_STONES_SKIN="stones_skina";
@@ -146,9 +146,6 @@ public class GoPrefs {
 		return Byte.parseByte(viewdist_str);
 	}
 
-	public static boolean getFullscreenEnabled() {
-		return shared_prefs.getBoolean(KEY_FULLSCREEN, false);
-	}
 	
 	public static boolean getKeepLightEnabled() {
 		return shared_prefs.getBoolean(KEY_KEEPLIGHT, false);

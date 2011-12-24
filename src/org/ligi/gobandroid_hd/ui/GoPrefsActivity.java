@@ -20,6 +20,7 @@
 package org.ligi.gobandroid_hd.ui;
 
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -32,8 +33,9 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.preference.EditTextPreference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.support.v4.app.SherlockPreferenceActivity;
 
-public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceChangeListener {
+public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPreferenceChangeListener {
 
 	private ListPreference viewDistPref;
 	private ListPreference boardSkinPref;
@@ -61,13 +63,15 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         inlinePrefCat.setTitle(R.string.gameplay);
         root.addPreference(inlinePrefCat);
         
-        
+/*        
         CheckBoxPreference nextScreenCheckBoxPref = new CheckBoxPreference(this);
         nextScreenCheckBoxPref.setKey(GoPrefs.KEY_FATFINGER);
         nextScreenCheckBoxPref.setTitle(R.string.first_tap_zooms);
         nextScreenCheckBoxPref.setSummary(R.string.first_tap_zooms_summary);
         inlinePrefCat.addPreference(nextScreenCheckBoxPref);
 
+        
+        
         nextScreenCheckBoxPref = new CheckBoxPreference(this);
         nextScreenCheckBoxPref.setKey(GoPrefs.KEY_VIEWABLESTONE);
         nextScreenCheckBoxPref.setTitle(R.string.viewable_stone);
@@ -97,7 +101,7 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         markLastStoneCheckBoxPref.setSummary(R.string.mark_last_stone_summary);
         inlinePrefCat.addPreference(markLastStoneCheckBoxPref);
         
-        /* Skin section */
+        // Skin section 
         PreferenceCategory skinPrefCat = new PreferenceCategory(this);
         skinPrefCat.setTitle(R.string.skin);
         root.addPreference( skinPrefCat);
@@ -133,18 +137,42 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         stoneSkinPref.setDefaultValue(GoPrefs.getStoneSkinName());
         skinPrefCat.addPreference(stoneSkinPref);
 
-        /* UI section */
+*/
+        // UI section 
         PreferenceCategory uiPrefCat = new PreferenceCategory(this);
         uiPrefCat.setTitle(R.string.screen);
         root.addPreference( uiPrefCat);
 
+        
+        // TODO do not show this Preference when honeycomb/ICS - as there is no difference
+        
         CheckBoxPreference fullscreenCheckBoxPref = new CheckBoxPreference(this);
-        fullscreenCheckBoxPref.setKey(GoPrefs.KEY_FULLSCREEN);
+        fullscreenCheckBoxPref.setKey(GobandroidSettings.KEY_FULLSCREEN);
         fullscreenCheckBoxPref.setTitle(R.string.fullscreen_board);
         fullscreenCheckBoxPref.setSummary(R.string.fullscreen_board_summary);
        	uiPrefCat.addPreference(fullscreenCheckBoxPref);
 
+       	PreferenceCategory soundPrefCat = new PreferenceCategory(this);
+       	soundPrefCat.setTitle(R.string.sound);
+        root.addPreference( soundPrefCat );
+       	
+        CheckBoxPreference soundCheckBoxPref = new CheckBoxPreference(this);
+        soundCheckBoxPref.setKey(GobandroidSettings.KEY_SOUND);
+        soundCheckBoxPref.setTitle(R.string.enable_sound);
+        soundCheckBoxPref.setSummary(R.string.enable_sound_summary);
+        soundPrefCat.addPreference(soundCheckBoxPref);
+        
 
+        /*
+
+        CheckBoxPreference keepScreenAwakeCheckBoxPref = new CheckBoxPreference(this);
+        keepScreenAwakeCheckBoxPref.setKey(GoPrefs.KEY_KEEPLIGHT);
+        keepScreenAwakeCheckBoxPref.setTitle(R.string.constant_light);
+        keepScreenAwakeCheckBoxPref.setSummary(R.string.drain_your_battery_while_playing);
+       	uiPrefCat.addPreference(keepScreenAwakeCheckBoxPref);
+
+        
+        
         CheckBoxPreference keepScreenAwakeCheckBoxPref = new CheckBoxPreference(this);
         keepScreenAwakeCheckBoxPref.setKey(GoPrefs.KEY_KEEPLIGHT);
         keepScreenAwakeCheckBoxPref.setTitle(R.string.constant_light);
@@ -175,7 +203,7 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         
        	uiPrefCat.addPreference(SGFLegendCheckBoxPref);
        	
-        /* SGF section */
+        // SGF section 
         PreferenceCategory sgfPrefCat = new PreferenceCategory(this);
         sgfPrefCat.setTitle(R.string.sgf_preferences);
         root.addPreference( sgfPrefCat);
@@ -232,21 +260,21 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         aiLevelPref.setOnPreferenceChangeListener(this);
         aiLevelPref.setDefaultValue(GoPrefs.DEFAULT_AI_LEVEL);
         aiPrefCat.addPreference(aiLevelPref);
-        
+        */
         return root;
     }
     
     
     @Override
  	public boolean onPreferenceChange(Preference preference, Object newValue) {
-	  	
+	  	/*
  		if ((preference==sgf_path_pref)||(preference==sgf_fname_pref)
  				||(preference==boardSkinPref)|| (preference==stoneSkinPref)|| (preference==aiLevelPref))
 	  		preference.setSummary((String)newValue);
  		
  		if (preference==doLegendCheckBoxPref)
  			SGFLegendCheckBoxPref.setEnabled((Boolean)newValue);
- 		
+ 		*/
 	  	return true; // return that we are OK with preferences
 	} 	
 }

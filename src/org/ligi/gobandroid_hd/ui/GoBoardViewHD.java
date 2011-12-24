@@ -264,7 +264,7 @@ public class GoBoardViewHD extends View {
             canvas.drawBitmap(black_stone_bitmap, GoInteractionProvider.getTouchX()*stone_size, GoInteractionProvider.getTouchY()*stone_size, placeStonePaint);
         else
         	canvas.drawBitmap(white_stone_bitmap, GoInteractionProvider.getTouchX()*stone_size, GoInteractionProvider.getTouchY()*stone_size, placeStonePaint);
-        
+        	
         // draw the vertical lines
         for(byte x=0;x<getGame().getVisualBoard().getSize();x++)
         	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f,(line_highlight_condition&&(GoInteractionProvider.getTouchX()==x))?gridPaint_h:gridPaint);	

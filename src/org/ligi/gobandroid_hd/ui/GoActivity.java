@@ -208,23 +208,11 @@ public class GoActivity
 	}
 
 
-	private boolean intro_sound_played=false;
-    
+	
     @Override
 	protected void onResume() {
     	//sound_man.playSound(GoSoundManager.SOUND_START);
-    	  MediaPlayer mp = MediaPlayer.create(getBaseContext(),
-                  R.raw.go_start);
-          mp.start();
-          mp.setOnCompletionListener(new OnCompletionListener() {
-        	  
-              @Override
-              public void onCompletion(MediaPlayer mp) {
-                  mp.release();
-                  intro_sound_played=true;
-              }
-          });
-          
+    	sound_man.playGameIntro();
 		super.onResume();
 	}
 
@@ -273,12 +261,10 @@ public class GoActivity
 			if (getResources().getBoolean(R.bool.small))
 					this.getSupportActionBar().show();
 			
-			if (intro_sound_played) {
-				if (game.isBlackToMove())
-					sound_man.playSound(GoSoundManager.SOUND_PLACE1);
-				else
-					sound_man.playSound(GoSoundManager.SOUND_PLACE2);
-			}
+			if (game.isBlackToMove())
+				sound_man.playSound(GoSoundManager.SOUND_PLACE1);
+			else
+				sound_man.playSound(GoSoundManager.SOUND_PLACE2);
 			
 		}else if (event.getAction()==MotionEvent.ACTION_DOWN)
 		 {
@@ -286,12 +272,10 @@ public class GoActivity
 			if (getResources().getBoolean(R.bool.small))
 				this.getSupportActionBar().hide();
 			
-			if(intro_sound_played) {
-				if (game.isBlackToMove())
-					sound_man.playSound(GoSoundManager.SOUND_PICKUP1);
-				else
-					sound_man.playSound(GoSoundManager.SOUND_PICKUP2);
-			}
+			if (game.isBlackToMove())
+				sound_man.playSound(GoSoundManager.SOUND_PICKUP1);
+			else
+				sound_man.playSound(GoSoundManager.SOUND_PICKUP2);
 		}
 			
 		Log.i("touch");

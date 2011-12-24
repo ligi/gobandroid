@@ -115,4 +115,9 @@
 	<string name="preferences">Preferences</string>   
 	<string name="board_setup">Board Setup</string>
 	<string name="for_recording">for Recording</string>
+	<string name="sound">Sound</string>
+	
+	<string name="enable_sound">Enable Sound</string>
+	<string name="enable_sound_summary">Hear the Stones and the Board</string>
+		
 </resources>

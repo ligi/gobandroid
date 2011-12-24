@@ -1,10 +1,25 @@
 package org.ligi.gobandroid_hd.ui.application;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 
 public class GobandroidSettings {
+
+	/* the keys */
+	public final static String KEY_FULLSCREEN="fullscreen";
+	public final static String KEY_SOUND="do_sound";
+	
+	
+	private Context ctx;
+	
 	public GobandroidSettings(Context ctx) {
+		this.ctx=ctx;
+	}
+	
+	public SharedPreferences getPreferences() {
+		return PreferenceManager.getDefaultSharedPreferences(ctx);	
 	}
 	
 	public String getSGFBasePath() {
@@ -26,4 +41,13 @@ public class GobandroidSettings {
 	public String getSGFSavePath() {
 		return getSGFBasePath()+"review/saved/";
 	}
+	
+	public boolean isFullscreenEnabled() {
+		return getPreferences().getBoolean(KEY_FULLSCREEN, false);
+	}
+	
+	public boolean isSoundEnabled() {
+		return getPreferences().getBoolean(KEY_SOUND, false);
+	}
+	
 }
