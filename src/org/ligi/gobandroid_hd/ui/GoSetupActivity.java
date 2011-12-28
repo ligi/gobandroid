@@ -198,8 +198,12 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 		// the checks for change here are important - otherwise samsung moment will die here with stack overflow
 		if ((act_size-size_offset)!=size_seek.getProgress())
 			size_seek.setProgress(act_size-size_offset);
+		
 		if (act_handicap!=handicap_seek.getProgress())
 			handicap_seek.setProgress(act_handicap);
+		
+		if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_GNUGO)
+			size_seek.setMax(19-size_offset);
 		
 		// only enable handicap seeker when the size is 9x9 or 13x13 or 19x19
 		handicap_seek.setEnabled((act_size==9)||(act_size==13)||(act_size==19));
