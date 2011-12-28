@@ -29,7 +29,6 @@
 	<string name="there_are_no_files_in">There are no files in </string>
 	<string name="sgf_path_invalid">The SGF Path is invalid</string>
 	<string name="android_market_problem">Can\'t Access the Android Market - you will have to install manually.</string>
-	<string name="gnugo_size_problem">GnuGo can only play up to 19x19</string>
 	<string name="problem">Problem</string>
 	<string name="gameplay">Gameplay</string>
 	<string name="game_results">Game Results</string>
@@ -111,7 +110,9 @@
     <string name="working">Working</string>   
  	<string name="please_stay_patient">Please stay patient</string>   
 	<string name="creating_thumbnails">Creating thumbnails - Please stay patient</string>   
-	<string name="gnugo">GnuGo</string>   
+	<string name="gnugo">GnuGo</string>
+	<string name="gnugo_not_installed">GnuGo not installed - please go to market and install</string>
+	   
 	<string name="preferences">Preferences</string>   
 	<string name="board_setup">Board Setup</string>
 	<string name="for_recording">for Recording</string>
