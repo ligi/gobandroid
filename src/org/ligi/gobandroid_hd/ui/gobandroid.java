@@ -20,6 +20,7 @@
 package org.ligi.gobandroid_hd.ui;
 import java.io.File;
 
+import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.android.common.intents.IntentHelper;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GnuGoMover;
@@ -27,6 +28,8 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -102,9 +105,22 @@ public class gobandroid extends GobandroidFragmentActivity {
     
     public void startGnuGoGame(View target) {
     
-    	if (!IntentHelper.isServiceAvailable(this.getPackageManager(),new Intent(GnuGoMover.intent_action_name))) {
+    	if (!IntentHelper.isServiceAvailable(new Intent(GnuGoMover.intent_action_name),this.getPackageManager(),0)) {
     		getTracker().trackPageView("/gnugo_missing");
-    		new AlertDialog.Builder(this).setMessage("no gnugo").show();
+    		new AlertDialog.Builder(this)
+    			.setMessage(R.string.gnugo_not_installed)
+    			.setTitle(R.string.problem)
+    			.setNegativeButton("Cancel", new DialogDiscarder())
+    			.setPositiveButton("Market", new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						IntentHelper.goToMarket(gobandroid.this, "org.ligi.gobandroidhd.ai.gnugo");
+					}
+    				
+    			})    			
+    			.show()
+    			;
     		return;
     	}
    
