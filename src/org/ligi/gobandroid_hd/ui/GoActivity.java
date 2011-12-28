@@ -36,8 +36,6 @@ import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.tracedroid.logging.Log;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -48,7 +46,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
-import android.widget.TextView;
 import android.widget.Toast;
 /**
  * Activity for a Go Game
@@ -63,7 +60,6 @@ public class GoActivity
 		extends GobandroidFragmentActivity implements OnTouchListener, OnKeyListener {
 
 	private GoBoardViewHD go_board=null;
-	private TextView comment_tv;
 	public GoGame game;
 
 	private Toast info_toast=null;
@@ -416,8 +412,6 @@ public class GoActivity
 
 	@Override
 	public void onBackPressed() {
-//		AlertDialog.Builder(//this)
-		//return false;
 		super.onBackPressed();
 	}
 
