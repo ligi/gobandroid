@@ -20,9 +20,13 @@
 package org.ligi.gobandroid_hd.ui;
 import java.io.File;
 
+import org.ligi.android.common.intents.IntentHelper;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
+
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -97,6 +101,13 @@ public class gobandroid extends GobandroidFragmentActivity {
     }
     
     public void startGnuGoGame(View target) {
+    
+    	if (!IntentHelper.isServiceAvailable(this.getPackageManager(),new Intent(GnuGoMover.intent_action_name))) {
+    		getTracker().trackPageView("/gnugo_missing");
+    		new AlertDialog.Builder(this).setMessage("no gnugo").show();
+    		return;
+    	}
+   
     	getTracker().trackPageView("/gnugo");
     	GoInteractionProvider.setMode(GoInteractionProvider.MODE_GNUGO);
     	this.startActivity(new Intent(this,GoSetupActivity.class));
