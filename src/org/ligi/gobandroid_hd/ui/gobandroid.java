@@ -115,7 +115,7 @@ public class gobandroid extends GobandroidFragmentActivity {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						IntentHelper.goToMarket(gobandroid.this, "org.ligi.gobandroidhd.ai.gnugo");
+						IntentHelper.goToMarketPackage(gobandroid.this, "org.ligi.gobandroidhd.ai.gnugo");
 					}
     				
     			})    			
