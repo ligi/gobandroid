@@ -146,12 +146,14 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
         
         // TODO do not show this Preference when honeycomb/ICS - as there is no difference
         
-        CheckBoxPreference fullscreenCheckBoxPref = new CheckBoxPreference(this);
-        fullscreenCheckBoxPref.setKey(GobandroidSettings.KEY_FULLSCREEN);
-        fullscreenCheckBoxPref.setTitle(R.string.fullscreen_board);
-        fullscreenCheckBoxPref.setSummary(R.string.fullscreen_board_summary);
-       	uiPrefCat.addPreference(fullscreenCheckBoxPref);
-
+        if (!getResources().getBoolean(R.bool.force_fullscreen)) { // this pref would make no sense when FS is forced
+	        CheckBoxPreference fullscreenCheckBoxPref = new CheckBoxPreference(this);
+	        fullscreenCheckBoxPref.setKey(GobandroidSettings.KEY_FULLSCREEN);
+	        fullscreenCheckBoxPref.setTitle(R.string.fullscreen_board);
+	        fullscreenCheckBoxPref.setSummary(R.string.fullscreen_board_summary);
+	       	uiPrefCat.addPreference(fullscreenCheckBoxPref);
+        }
+        
        	PreferenceCategory soundPrefCat = new PreferenceCategory(this);
        	soundPrefCat.setTitle(R.string.sound);
         root.addPreference( soundPrefCat );
