@@ -113,7 +113,7 @@ public class GoActivity
 	
 	@Override
 	public boolean doFullScreen() {
-		return getResources().getBoolean(R.bool.force_fullscreen);
+		return getSettings().isFullscreenEnabled()|getResources().getBoolean(R.bool.force_fullscreen);
 	}
 	
 	@Override
