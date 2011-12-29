@@ -19,6 +19,7 @@
 
 package org.ligi.gobandroid_hd.ui;
 
+import org.ligi.android.common.preferences.SetPreferenceEnabledByCheckBoxPreferenceState;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 
@@ -53,17 +54,20 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
     }
 	
     private PreferenceScreen createPreferenceHierarchy() {
+    	GobandroidSettings settings=new GobandroidSettings(this);
+
         // Root
         PreferenceScreen root = getPreferenceManager().createPreferenceScreen(this);
         
         root.setPersistent(true);
         
         /* Gameplay section */
+        /*        
         PreferenceCategory inlinePrefCat = new PreferenceCategory(this);
         inlinePrefCat.setTitle(R.string.gameplay);
         root.addPreference(inlinePrefCat);
         
-/*        
+
         CheckBoxPreference nextScreenCheckBoxPref = new CheckBoxPreference(this);
         nextScreenCheckBoxPref.setKey(GoPrefs.KEY_FATFINGER);
         nextScreenCheckBoxPref.setTitle(R.string.first_tap_zooms);
@@ -143,9 +147,7 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
         uiPrefCat.setTitle(R.string.screen);
         root.addPreference( uiPrefCat);
 
-        
         // TODO do not show this Preference when honeycomb/ICS - as there is no difference
-        
         if (!getResources().getBoolean(R.bool.force_fullscreen)) { // this pref would make no sense when FS is forced
 	        CheckBoxPreference fullscreenCheckBoxPref = new CheckBoxPreference(this);
 	        fullscreenCheckBoxPref.setKey(GobandroidSettings.KEY_FULLSCREEN);
@@ -153,7 +155,28 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
 	        fullscreenCheckBoxPref.setSummary(R.string.fullscreen_board_summary);
 	       	uiPrefCat.addPreference(fullscreenCheckBoxPref);
         }
+
         
+        doLegendCheckBoxPref = new CheckBoxPreference(this);
+        doLegendCheckBoxPref.setKey(GobandroidSettings.KEY_DO_LEGEND);
+        doLegendCheckBoxPref.setTitle(R.string.show_legend);
+        doLegendCheckBoxPref.setSummary(R.string.show_legend_summary);
+        doLegendCheckBoxPref.setDefaultValue(settings.isLegendEnabled());
+        doLegendCheckBoxPref.setOnPreferenceChangeListener(this);
+       	uiPrefCat.addPreference(doLegendCheckBoxPref);
+
+       	SGFLegendCheckBoxPref = new CheckBoxPreference(this);
+        SGFLegendCheckBoxPref.setKey(GobandroidSettings.KEY_SGF_LEGEND);
+        SGFLegendCheckBoxPref.setTitle(R.string.sgf_legend);
+        SGFLegendCheckBoxPref.setSummary(R.string.sgf_legend_summary);
+        
+        SGFLegendCheckBoxPref.setDefaultValue(settings.isSGFLegendEnabled());
+        
+       	uiPrefCat.addPreference(SGFLegendCheckBoxPref);
+       	
+       	// the preference that sets SGF mode on Legend only makes sense if there is a Legend in the first place
+       	new SetPreferenceEnabledByCheckBoxPreferenceState(doLegendCheckBoxPref).addPreference2SetEnable(SGFLegendCheckBoxPref);
+       	
        	PreferenceCategory soundPrefCat = new PreferenceCategory(this);
        	soundPrefCat.setTitle(R.string.sound);
         root.addPreference( soundPrefCat );
@@ -188,23 +211,8 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
         doEmbossCheckBoxPref.setSummary(R.string.grid_emboss_summary);
        	uiPrefCat.addPreference(doEmbossCheckBoxPref);
 
-        doLegendCheckBoxPref = new CheckBoxPreference(this);
-        doLegendCheckBoxPref.setKey(GoPrefs.KEY_DO_LEGEND);
-        doLegendCheckBoxPref.setTitle(R.string.show_legend);
-        doLegendCheckBoxPref.setSummary(R.string.show_legend_summary);
-        doLegendCheckBoxPref.setDefaultValue(GoPrefs.getLegendEnabled());
-        doLegendCheckBoxPref.setOnPreferenceChangeListener(this);
-       	uiPrefCat.addPreference(doLegendCheckBoxPref);
 
-        SGFLegendCheckBoxPref = new CheckBoxPreference(this);
-        SGFLegendCheckBoxPref.setKey(GoPrefs.KEY_SGF_LEGEND);
-        SGFLegendCheckBoxPref.setTitle(R.string.sgf_legend);
-        SGFLegendCheckBoxPref.setSummary(R.string.sgf_legend_summary);
-        SGFLegendCheckBoxPref.setEnabled(GoPrefs.getLegendEnabled());
-        SGFLegendCheckBoxPref.setDefaultValue(GoPrefs.getLegendSGFMode());
         
-       	uiPrefCat.addPreference(SGFLegendCheckBoxPref);
-       	
         // SGF section 
         PreferenceCategory sgfPrefCat = new PreferenceCategory(this);
         sgfPrefCat.setTitle(R.string.sgf_preferences);
@@ -273,9 +281,6 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
  		if ((preference==sgf_path_pref)||(preference==sgf_fname_pref)
  				||(preference==boardSkinPref)|| (preference==stoneSkinPref)|| (preference==aiLevelPref))
 	  		preference.setSummary((String)newValue);
- 		
- 		if (preference==doLegendCheckBoxPref)
- 			SGFLegendCheckBoxPref.setEnabled((Boolean)newValue);
  		*/
 	  	return true; // return that we are OK with preferences
 	} 	

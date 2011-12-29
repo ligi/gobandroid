@@ -95,10 +95,23 @@ public class GoActivity
      
         info_toast=Toast.makeText(this.getBaseContext(), "", Toast.LENGTH_LONG);
         
+        setupBoard();
+		
+		game2ui();
+		sound_man.playSound(1);
+	}
+	
+	/**
+	 * find the go board widget and set up some properties 
+	 */
+	private void setupBoard() {
+		
 		go_board=(GoBoardViewHD)findViewById(R.id.go_board);
 		
 		go_board.setOnTouchListener(this);
 		go_board.setOnKeyListener(this);
+		go_board.do_legend=getSettings().isLegendEnabled();
+		go_board.legend_sgf_mode=getSettings().isSGFLegendEnabled();
 		
 		game.addGoGameChangeListener(new GoGame.GoGameChangeListener() {
 			
@@ -107,8 +120,6 @@ public class GoActivity
 				game2ui();
 			}
 		});
-		game2ui();
-		sound_man.playSound(1);
 	}
 	
 	@Override

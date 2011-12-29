@@ -10,7 +10,8 @@ public class GobandroidSettings {
 	/* the keys */
 	public final static String KEY_FULLSCREEN="fullscreen";
 	public final static String KEY_SOUND="do_sound";
-	
+	public final static String KEY_DO_LEGEND="do_legend";
+	public final static String KEY_SGF_LEGEND="sgf_legend";
 	
 	private Context ctx;
 	
@@ -50,4 +51,11 @@ public class GobandroidSettings {
 		return getPreferences().getBoolean(KEY_SOUND, false);
 	}
 	
+	public boolean isLegendEnabled() {
+		return getPreferences().getBoolean(KEY_DO_LEGEND, false);
+	}
+	
+	public boolean isSGFLegendEnabled() {
+		return getPreferences().getBoolean(KEY_SGF_LEGEND, false);
+	}
 }

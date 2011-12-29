@@ -56,10 +56,10 @@ public class GoBoardViewHD extends View {
 	private int zoom_poi=-1;
 	
 	public boolean grid_embos=true; //  GoPrefs.getGridEmbossEnabled()
-	public boolean do_legend=true; // GoPrefs.getLegendEnabled()
+	public boolean do_legend=true; 
 	public boolean do_line_highlight=true;
 	public boolean mark_last_stone=true;
-	private boolean legend_sgf_mode=true;  //GoPrefs.getLegendSGFMode()
+	public boolean legend_sgf_mode=true;  //GoPrefs.getLegendSGFMode()
 	
 	private Paint whitePaint;
 	private Paint blackPaint;
