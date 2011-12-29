@@ -19,8 +19,6 @@
 
 package org.ligi.gobandroid_hd.ui;
 
-import java.util.List;
-
 import org.ligi.android.common.intents.IntentHelper;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GnuGoMover;
@@ -32,11 +30,8 @@ import org.ligi.gobandroid_hd.ui.recording.PlayAgainstGnugoActivity;
 import org.ligi.tracedroid.logging.Log;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.Menu;
