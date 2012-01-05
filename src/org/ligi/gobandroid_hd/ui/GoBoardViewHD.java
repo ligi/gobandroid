@@ -336,8 +336,8 @@ public class GoBoardViewHD extends View {
             			whitePaint.setStrokeWidth(2.0f);
             			blackPaint.setStrokeWidth(2.0f);
             		
-            			if ((getGame().getActMove().getX()==x)&&(getGame().getActMove().getY()==y))
-            			{
+            			/** mark the last move */
+            			if ((getGame().getActMove().getX()==x)&&(getGame().getActMove().getY()==y)) {
             				if (getGame().getVisualBoard().isCellWhite(x,y))
             					canvas.drawCircle( stone_size/2.0f+ x*stone_size  ,stone_size/2.0f+y*stone_size,stone_size/4.0f,blackPaint );
                 			if (getGame().getVisualBoard().isCellBlack(x,y))
