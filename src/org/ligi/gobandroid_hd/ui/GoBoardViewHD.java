@@ -58,6 +58,7 @@ public class GoBoardViewHD extends View {
 	public boolean grid_embos=true; //  GoPrefs.getGridEmbossEnabled()
 	public boolean do_legend=true; 
 	public boolean do_line_highlight=true;
+	public boolean do_mark_act=true;
 	public boolean mark_last_stone=true;
 	public boolean legend_sgf_mode=true;  //GoPrefs.getLegendSGFMode()
 	
@@ -259,12 +260,16 @@ public class GoBoardViewHD extends View {
 
     	boolean line_highlight_condition=do_line_highlight&&GoInteractionProvider.hasValidTouchCoord();
      
-        // draw stone
-        if (getGame().isBlackToMove())
-            canvas.drawBitmap(black_stone_bitmap, GoInteractionProvider.getTouchX()*stone_size, GoInteractionProvider.getTouchY()*stone_size, placeStonePaint);
-        else
-        	canvas.drawBitmap(white_stone_bitmap, GoInteractionProvider.getTouchX()*stone_size, GoInteractionProvider.getTouchY()*stone_size, placeStonePaint);
-        	
+    	
+        // draw semi transparent stone on current touch pos as a shadow
+    	if (do_mark_act) {
+	        if (getGame().isBlackToMove())
+	            canvas.drawBitmap(black_stone_bitmap, GoInteractionProvider.getTouchX()*stone_size, GoInteractionProvider.getTouchY()*stone_size, placeStonePaint);
+	        else
+	        	canvas.drawBitmap(white_stone_bitmap, GoInteractionProvider.getTouchX()*stone_size, GoInteractionProvider.getTouchY()*stone_size, placeStonePaint);
+    	}
+    	
+    	
         // draw the vertical lines
         for(byte x=0;x<getGame().getVisualBoard().getSize();x++)
         	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f,(line_highlight_condition&&(GoInteractionProvider.getTouchX()==x))?gridPaint_h:gridPaint);	
@@ -320,6 +325,7 @@ public class GoBoardViewHD extends View {
             		
             	}
             	else {
+            	
             		if (move_stone_mode&&(x==getGame().getActMove().getX())&&(y==getGame().getActMove().getY()))
             			bitmapPaint.setAlpha(0x77);
             		else
@@ -329,7 +335,7 @@ public class GoBoardViewHD extends View {
             			canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,bitmapPaint );
             		if (getGame().getVisualBoard().isCellBlack(x,y))
             			canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,bitmapPaint );
-            
+            	 
             		if (mark_last_stone) { // if the last stone should be marked
             			blackPaint.setStyle(Paint.Style.STROKE);
             			whitePaint.setStyle(Paint.Style.STROKE);
