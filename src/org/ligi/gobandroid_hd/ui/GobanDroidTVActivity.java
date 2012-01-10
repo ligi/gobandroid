@@ -2,10 +2,7 @@ package org.ligi.gobandroid_hd.ui;
 
 import java.io.File;
 import java.util.Vector;
-
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.gobandroid_hd.ui.review.GameReviewActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
