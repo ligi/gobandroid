@@ -5,6 +5,7 @@ import org.ligi.gobandroid_hd.ui.GoInteractionProvider;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 import org.ligi.gobandroid_hd.ui.review.GameReviewActivity;
+import org.ligi.gobandroid_hd.ui.review.GoGamePlayerActivity;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity;
 
 import android.app.AlertDialog;
@@ -25,6 +26,10 @@ public class SwitchModeHelper {
 			
 		case GoInteractionProvider.MODE_TSUMEGO:
 			go_start_intent=new Intent(activity,TsumegoActivity.class);
+			break;
+			
+		case GoInteractionProvider.MODE_TELEVIZE:
+			go_start_intent=new Intent(activity,GoGamePlayerActivity.class);
 			break;
 		}
 		activity.startActivity(go_start_intent);

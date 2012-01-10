@@ -35,6 +35,18 @@
             </intent-filter>
         </activity>
     	
+        <activity android:name=".ui.GobanDroidTVActivity"
+                  android:label="Gobandroid TV"
+                  android:icon="@drawable/gobandroid_tv">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    	
+        
+        
+        
         <activity android:name=".ui.GoTermsViewActivity"
             android:theme="@android:style/Theme.Dialog"
             android:layout_width="wrap_content"
@@ -52,6 +64,9 @@
 		
     	<activity android:name="org.ligi.gobandroid_hd.ui.recording.PlayAgainstGnugoActivity"></activity>
 		<activity android:name=".ui.GoSetupActivity"></activity>
+		
+		<activity android:name=".ui.review.GoGamePlayerActivity"></activity>
+		
 		<activity android:name=".ui.SGFSDCardListActivity"></activity>
 		<activity android:name=".ui.links.LinksActivity"></activity>
 		<activity android:name=".ui.tsumego.TsumegoActivity"></activity>

@@ -65,7 +65,7 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
         alert.setPositiveButton(R.string.ok,  new ActivityFinishOnDialogClickListener(this));
         alert.setOnCancelListener(new ActivityFinishOnCancelListener(this));
         
-        if (dir==null){
+        if (dir==null) {
         	alert.setMessage(getResources().getString(R.string.sgf_path_invalid) +" " +sgf_path).show();
             return;
         }
