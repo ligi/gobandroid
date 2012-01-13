@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui.review;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
+import org.ligi.gobandroid_hd.ui.CommentAndNowPlayingFragment;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GobanDroidTVActivity;
 import org.ligi.gobandroid_hd.ui.NavigationAndCommentFragment;
@@ -102,7 +103,7 @@ public class GoGamePlayerActivity extends GoActivity  {
 
 
 	public Fragment getGameExtraFragment() {
-		return new NavigationAndCommentFragment();		
+		return new CommentAndNowPlayingFragment();		
 	}
 	
 	
