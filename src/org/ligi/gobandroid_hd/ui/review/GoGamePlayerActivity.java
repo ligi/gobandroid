@@ -4,10 +4,12 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.GoActivity;
+import org.ligi.gobandroid_hd.ui.GobanDroidTVActivity;
 import org.ligi.gobandroid_hd.ui.NavigationAndCommentFragment;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.tracedroid.logging.Log;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.Menu;
@@ -18,7 +20,11 @@ import android.view.View;
 public class GoGamePlayerActivity extends GoActivity  {
 
 	private boolean autoplay_active=true;
-	private boolean finish_when_last_move=true;
+	
+	// timings in ms
+	private int pause_for_last_move=23000;
+	private int pause_between_moves=2300;
+	private int pause_betwen_moves_extra_per_word=500;
 	
 	class autoPlayRunnable implements Runnable {
 
@@ -32,14 +38,22 @@ public class GoGamePlayerActivity extends GoActivity  {
 				Log.i("gobandroid","automove move"+game.getActMove().getNextMoveVariationCount());
 				game.jump(game.getActMove().getnextMove(0));
 				try {
-					Thread.sleep(2000);
+					Thread.sleep(calcTime());
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 			
-			GoGamePlayerActivity.this.finish();
+			try {
+				Thread.sleep( pause_for_last_move );
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			
+			Intent next_intent=new Intent(GoGamePlayerActivity.this,GobanDroidTVActivity.class);
+			GoGamePlayerActivity.this.startActivity(next_intent);
+			
+			GoGamePlayerActivity.this.finish();
 		}
 		
 	}
@@ -138,5 +152,20 @@ public class GoGamePlayerActivity extends GoActivity  {
 	@Override
 	public boolean isAsk4QuitEnabled() {
 		return false;
+	}
+	
+	public int countWords(String sentence) {
+		int words=0;
+		for (int i=0;i<sentence.length();i++)
+			if (sentence.charAt(i)==' ')
+				words++;
+
+		return words;
+	}
+	
+	public int calcTime() {
+		int res=pause_between_moves;
+		res+=pause_betwen_moves_extra_per_word*countWords(game.getActMove().getComment());
+		return res;
 	}
 }
