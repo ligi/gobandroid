@@ -79,6 +79,12 @@ public class GoActivity
 		super.onCreate(savedInstanceState);
 		game=GoGameProvider.getGame();
 		
+		if (game==null) { // cannot do anything without a 
+			finish();
+			return;
+		}
+			
+		
 		sound_man=new GoSoundManager(this);
 		
 		View customNav =new InGameActionBarView(this);
