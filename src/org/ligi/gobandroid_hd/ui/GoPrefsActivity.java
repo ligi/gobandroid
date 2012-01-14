@@ -174,6 +174,14 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
         
        	uiPrefCat.addPreference(SGFLegendCheckBoxPref);
        	
+       	
+       	CheckBoxPreference keepScreenAwakeCheckBoxPref = new CheckBoxPreference(this);
+        keepScreenAwakeCheckBoxPref.setKey(GobandroidSettings.KEY_WAKE_LOCK);
+        keepScreenAwakeCheckBoxPref.setTitle(R.string.constant_light);
+        keepScreenAwakeCheckBoxPref.setSummary(R.string.drain_your_battery_while_playing);
+        keepScreenAwakeCheckBoxPref.setDefaultValue(settings.isWakeLockEnabled());
+        uiPrefCat.addPreference(keepScreenAwakeCheckBoxPref);
+       	
        	// the preference that sets SGF mode on Legend only makes sense if there is a Legend in the first place
        	new SetPreferenceEnabledByCheckBoxPreferenceState(doLegendCheckBoxPref).addPreference2SetEnable(SGFLegendCheckBoxPref);
        	
@@ -190,12 +198,7 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
 
         /*
 
-        CheckBoxPreference keepScreenAwakeCheckBoxPref = new CheckBoxPreference(this);
-        keepScreenAwakeCheckBoxPref.setKey(GoPrefs.KEY_KEEPLIGHT);
-        keepScreenAwakeCheckBoxPref.setTitle(R.string.constant_light);
-        keepScreenAwakeCheckBoxPref.setSummary(R.string.drain_your_battery_while_playing);
-       	uiPrefCat.addPreference(keepScreenAwakeCheckBoxPref);
-
+        
         
         
         CheckBoxPreference keepScreenAwakeCheckBoxPref = new CheckBoxPreference(this);
