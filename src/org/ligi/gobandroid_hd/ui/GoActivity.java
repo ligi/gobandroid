@@ -49,6 +49,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
+import android.view.WindowManager;
 import android.widget.Toast;
 /**
  * Activity for a Go Game
@@ -71,7 +72,6 @@ public class GoActivity
 	private Fragment actFragment;
 
 	public GoSoundManager sound_man ;
-	private WakeLock mWakeLock;
 	 
 	public Fragment getGameExtraFragment() {
 		return new DefaultGameExtrasFragment();
@@ -82,9 +82,7 @@ public class GoActivity
 		super.onCreate(savedInstanceState);
 		
 		if (getSettings().isWakeLockEnabled()) {
-			PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-			mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "My Tag");
-			mWakeLock.acquire();
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		}
 		
 		game=GoGameProvider.getGame();
@@ -316,9 +314,6 @@ public class GoActivity
     @Override 
     public void onPause() {
     	super.onPause();
-    	
-    	if (mWakeLock!=null)
-    		mWakeLock.release();
     	
 		try {
 			File f=new File(getSettings().getReviewPath() + "/autosave.sgf");
