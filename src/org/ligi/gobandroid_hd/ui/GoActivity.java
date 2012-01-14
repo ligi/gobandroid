@@ -35,8 +35,11 @@ import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.tracedroid.logging.Log;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.Menu;
@@ -46,6 +49,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
+import android.view.WindowManager;
 import android.widget.Toast;
 /**
  * Activity for a Go Game
@@ -68,7 +72,6 @@ public class GoActivity
 	private Fragment actFragment;
 
 	public GoSoundManager sound_man ;
-	
 	 
 	public Fragment getGameExtraFragment() {
 		return new DefaultGameExtrasFragment();
@@ -77,6 +80,11 @@ public class GoActivity
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		if (getSettings().isWakeLockEnabled()) {
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		}
+		
 		game=GoGameProvider.getGame();
 		
 		if (game==null) { // cannot do anything without a 
@@ -104,9 +112,10 @@ public class GoActivity
         setupBoard();
 		
 		game2ui();
-		sound_man.playSound(1);
+    	sound_man.playGameIntro();
 	}
 	
+
 	/**
 	 * find the go board widget and set up some properties 
 	 */
@@ -224,8 +233,6 @@ public class GoActivity
 	
     @Override
 	protected void onResume() {
-    	//sound_man.playSound(GoSoundManager.SOUND_START);
-    	sound_man.playGameIntro();
 		super.onResume();
 	}
 

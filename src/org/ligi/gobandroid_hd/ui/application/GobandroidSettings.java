@@ -12,6 +12,7 @@ public class GobandroidSettings {
 	public final static String KEY_SOUND="do_sound";
 	public final static String KEY_DO_LEGEND="do_legend";
 	public final static String KEY_SGF_LEGEND="sgf_legend";
+	private static final String KEY_WAKE_LOCK = "wake_lock";
 	
 	private Context ctx;
 	
@@ -57,5 +58,9 @@ public class GobandroidSettings {
 	
 	public boolean isSGFLegendEnabled() {
 		return getPreferences().getBoolean(KEY_SGF_LEGEND, false);
+	}
+	
+	public boolean isWakeLockEnabled() {
+		return getPreferences().getBoolean(KEY_WAKE_LOCK, true);
 	}
 }
