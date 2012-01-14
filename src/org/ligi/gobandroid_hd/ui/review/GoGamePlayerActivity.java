@@ -29,32 +29,37 @@ public class GoGamePlayerActivity extends GoActivity  {
 	
 	class autoPlayRunnable implements Runnable {
 
-		private GoGame game;
+		//private GoGame game;
 		 
 		@Override
 		public void run() {
-			game=GoGameProvider.getGame();
-			Log.i("gobandroid","automove start" + game.getActMove().getNextMoveVariations().size());
-			while (autoplay_active &&( game.getActMove().getNextMoveVariations().size()>0)) {
-				Log.i("gobandroid","automove move"+game.getActMove().getNextMoveVariationCount());
-				game.jump(game.getActMove().getnextMove(0));
+			//game=;
+			Log.i("gobandroid","automove start" + GoGameProvider.getGame().getActMove().getNextMoveVariations().size());
+			while (autoplay_active &&( GoGameProvider.getGame().getActMove().hasNextMove())) {
+				Log.i("gobandroid","automove move"+GoGameProvider.getGame().getActMove().hasNextMove());
+				GoGameProvider.getGame().jump(GoGameProvider.getGame().getActMove().getnextMove(0));
+				Log.i("gobandroid","automove move"+GoGameProvider.getGame().getActMove().hasNextMove());
 				try {
 					Thread.sleep(calcTime());
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-			
+			Log.i("gobandroid","automove finish " +autoplay_active);
 			try {
 				Thread.sleep( pause_for_last_move );
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
+			Log.i("gobandroid","automove asleep");
 			Intent next_intent=new Intent(GoGamePlayerActivity.this,GobanDroidTVActivity.class);
-			GoGamePlayerActivity.this.startActivity(next_intent);
 			
-			GoGamePlayerActivity.this.finish();
+			if (autoplay_active) {
+				GoGamePlayerActivity.this.startActivity(next_intent);
+				GoGamePlayerActivity.this.finish();
+			}
+			
+			
 		}
 		
 	}
@@ -166,7 +171,8 @@ public class GoGamePlayerActivity extends GoActivity  {
 	
 	public int calcTime() {
 		int res=pause_between_moves;
-		res+=pause_betwen_moves_extra_per_word*countWords(game.getActMove().getComment());
+		if (game.getActMove().hasComment())
+			res+=pause_betwen_moves_extra_per_word*countWords(game.getActMove().getComment());
 		return res;
 	}
 }

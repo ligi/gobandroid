@@ -46,7 +46,7 @@ public class CommentAndNowPlayingFragment extends Fragment implements GoGameChan
 			@Override
 			public void run() {
 				if (myTextView!=null) {
-					myTextView.setText("Now Playing: " + game.getActMove().getComment());
+					myTextView.setText( game.getActMove().getComment());
 					Linkify.addLinks(myTextView, Linkify.ALL);
 					
 					TransformFilter mentionFilter = new TransformFilter() {
