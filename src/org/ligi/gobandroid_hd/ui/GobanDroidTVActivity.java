@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.util.Vector;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import android.content.Intent;
@@ -24,7 +25,9 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 	
 		path_to_play_from=new File("/sdcard/gobandroid/sgf/review/commented_games/");
 		
-		if (path_to_play_from.listFiles()==null) { 
+		getTracker().trackPageView("/gtv");
+		if (path_to_play_from.listFiles()==null) {
+			getTracker().trackPageView("/gtv/unzip");
 			UnzipSGFsDialog.show(this,new Intent(this,GobanDroidTVActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
 		} else {
 			startTV();
@@ -34,6 +37,8 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 
 	private void startTV() {
 
+		
+		
 		Intent start_review_intent=new Intent(this,SGFLoadActivity.class);
 		
 		avail_file_list=new Vector<String>();
@@ -47,6 +52,7 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 		choosen=avail_file_list.get((int)(Math.random()*avail_file_list.size()));
 		
 		start_review_intent.setData(Uri.parse( "file://"+choosen));
+		getTracker().trackPageView("/gtv/play"+URLEncoder.encode(choosen));
 		this.startActivity(start_review_intent);
 
 		finish();
