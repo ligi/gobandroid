@@ -16,20 +16,25 @@ import android.os.Bundle;
 public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 
 	private Vector<String> avail_file_list;
-	
+	private File path_to_play_from;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		GoInteractionProvider.setMode(GoInteractionProvider.MODE_TELEVIZE);
+	
+		path_to_play_from=new File("/sdcard/gobandroid/sgf/review/commented_games/");
+		
+		if (path_to_play_from.listFiles()==null) { 
+			UnzipSGFsDialog.show(this,new Intent(this,GobanDroidTVActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+		} else {
+			startTV();
+		}
+
+	}
+
+	private void startTV() {
 
 		Intent start_review_intent=new Intent(this,SGFLoadActivity.class);
-		
-		File path_to_play_from=new File("/sdcard/gobandroid/sgf/review/commented_games/");
-		
-		if (path_to_play_from.listFiles()==null) {
-			UnzipSGFsDialog.show(this);
-			return;
-		}
 		
 		avail_file_list=new Vector<String>();
 		String choosen;
@@ -45,5 +50,12 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 		this.startActivity(start_review_intent);
 
 		finish();
+
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		startTV();
+		super.onNewIntent(intent);
 	}
 }

@@ -9,6 +9,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.Resources;
 
 public class UnzipSGFsDialog {
@@ -25,11 +26,11 @@ public class UnzipSGFsDialog {
 		  } 
 		 
 		  public void unzip() { 
-		    try  { 
-		      InputStream fin = _zipFile; 
-		      ZipInputStream zin = new ZipInputStream(fin); 
-		      ZipEntry ze = null; 
-		      while ((ze = zin.getNextEntry()) != null) { 
+			  try  { 
+				  InputStream fin = _zipFile; 
+				  ZipInputStream zin = new ZipInputStream(fin); 
+				  ZipEntry ze = null; 
+				  while ((ze = zin.getNextEntry()) != null) { 
 		    	  Log.i("Decompress" + "unzip" + ze.getName()); 
 		        if(ze.isDirectory()) { 
 		          _dirChecker(ze.getName()); 
@@ -65,7 +66,7 @@ public class UnzipSGFsDialog {
      * @param autoclose - if the alert should close when connection is established
      * 
      */
-    public static void show(GobandroidFragmentActivity activity) {
+    public static void show(GobandroidFragmentActivity activity,Intent intent_after_finish) {
     		
     	ProgressDialog dialog = ProgressDialog.show(activity, "", 
                 "Unziping SGF's. Please wait...", true);
@@ -73,11 +74,12 @@ public class UnzipSGFsDialog {
     	 class AlertDialogUpdater implements Runnable {
 
              private ProgressDialog myProgress;
-             GobandroidFragmentActivity activity;
+             private GobandroidFragmentActivity activity;
+             private Intent intent_after_finish;
              
-             public AlertDialogUpdater(GobandroidFragmentActivity activity,ProgressDialog progress) {
+             public AlertDialogUpdater(GobandroidFragmentActivity activity,ProgressDialog progress,Intent intent_after_finish) {
             	 this.activity=activity;
-
+            	 this.intent_after_finish=intent_after_finish;
                  myProgress=progress;
              }
 
@@ -87,10 +89,12 @@ public class UnzipSGFsDialog {
                  InputStream is = resources.openRawResource(R.raw.sgf_pack);
                  new Decompress(is,activity.getSettings().getSGFBasePath()).unzip();
                  
+                 
             	 myProgress.dismiss();
+            	 activity.startActivity(intent_after_finish);
              }
     	 }
-    	 new Thread(new AlertDialogUpdater(activity,dialog)).start();
+    	 new Thread(new AlertDialogUpdater(activity,dialog,intent_after_finish)).start();
     	 
     }
 }

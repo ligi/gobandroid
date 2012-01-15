@@ -63,23 +63,29 @@ public class gobandroid extends GobandroidFragmentActivity {
     	this.startActivity(new Intent(this,GoSetupActivity.class));
     }
 
-    private void startLoad(String path,byte mode) {
+    private Intent startLoad(String path,byte mode) {
     	Intent i=new Intent(this,SGFSDCardListActivity.class);    	
     	i.setData((Uri.parse("file://"+path)));
     	GoInteractionProvider.setMode(mode);
-    	this.startActivity(i);
+    	//this.startActivity(i);
+    	return i;
     }
 
     public void solveProblem(View target) {
     	getTracker().trackPageView("/tsumego");
-    	if (!unzipSGFifNeeded()) 
-    		startLoad(getSettings().getTsumegoPath(),GoInteractionProvider.MODE_TSUMEGO);
+    	
+    	Intent next=startLoad(getSettings().getTsumegoPath(),GoInteractionProvider.MODE_TSUMEGO);
+    	
+    	if (!unzipSGFifNeeded(next)) 
+    		startActivity(next);
     }
 
     public void reviewGame(View target) {
     	getTracker().trackPageView("/review");
-    	if (!unzipSGFifNeeded()) 
-    		startLoad(getSettings().getReviewPath(),GoInteractionProvider.MODE_REVIEW);
+    	Intent next=startLoad(getSettings().getReviewPath(),GoInteractionProvider.MODE_REVIEW);
+    	if (!unzipSGFifNeeded(next))
+    		startActivity(next);
+    		
     }
 
     /**
@@ -87,12 +93,12 @@ public class gobandroid extends GobandroidFragmentActivity {
      * 
      * @return - weather we had to unzip files
      */
-    public boolean unzipSGFifNeeded() {
+    public boolean unzipSGFifNeeded(Intent intent_after) {
     	String storrage_state=Environment.getExternalStorageState();
     	
     	// we check for the tsumego path as the base path could already be there but no valid tsumego
     	if ((storrage_state.equals(Environment.MEDIA_MOUNTED)&&(!(new File(getSettings().getTsumegoPath())).isDirectory()))) {
-    		UnzipSGFsDialog.show(this);
+    		UnzipSGFsDialog.show(this,intent_after);
     		return true;
     	}
     	return false;
