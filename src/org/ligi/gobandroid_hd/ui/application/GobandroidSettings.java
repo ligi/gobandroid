@@ -13,6 +13,7 @@ public class GobandroidSettings {
 	public final static String KEY_DO_LEGEND="do_legend";
 	public final static String KEY_SGF_LEGEND="sgf_legend";
 	public static final String KEY_WAKE_LOCK = "wake_lock";
+	public static final String KEY_GRID_EMBOSS = "grid_emboss";
 	
 	private Context ctx;
 	
@@ -62,5 +63,9 @@ public class GobandroidSettings {
 	
 	public boolean isWakeLockEnabled() {
 		return getPreferences().getBoolean(KEY_WAKE_LOCK, true);
+	}
+	
+	public boolean isGridEmbossEnabled() {
+		return getPreferences().getBoolean(KEY_GRID_EMBOSS, true);
 	}
 }

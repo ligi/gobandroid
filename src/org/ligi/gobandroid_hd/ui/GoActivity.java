@@ -124,6 +124,7 @@ public class GoActivity
 		go_board.setOnKeyListener(this);
 		go_board.do_legend=getSettings().isLegendEnabled();
 		go_board.legend_sgf_mode=getSettings().isSGFLegendEnabled();
+		go_board.grid_embos=getSettings().isGridEmbossEnabled();
 		
 		game.addGoGameChangeListener(new GoGame.GoGameChangeListener() {
 			

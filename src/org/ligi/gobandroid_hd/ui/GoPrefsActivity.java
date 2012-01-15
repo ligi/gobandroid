@@ -175,6 +175,13 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
        	uiPrefCat.addPreference(SGFLegendCheckBoxPref);
        	
        	
+       	CheckBoxPreference doEmbossCheckBoxPref = new CheckBoxPreference(this);
+        doEmbossCheckBoxPref.setKey(GobandroidSettings.KEY_GRID_EMBOSS);
+        doEmbossCheckBoxPref.setTitle(R.string.grid_emboss);
+        doEmbossCheckBoxPref.setDefaultValue(settings.isGridEmbossEnabled());
+        doEmbossCheckBoxPref.setSummary(R.string.grid_emboss_summary);
+       	uiPrefCat.addPreference(doEmbossCheckBoxPref);
+       	
        	CheckBoxPreference keepScreenAwakeCheckBoxPref = new CheckBoxPreference(this);
         keepScreenAwakeCheckBoxPref.setKey(GobandroidSettings.KEY_WAKE_LOCK);
         keepScreenAwakeCheckBoxPref.setTitle(R.string.constant_light);
@@ -207,13 +214,7 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
         keepScreenAwakeCheckBoxPref.setSummary(R.string.drain_your_battery_while_playing);
        	uiPrefCat.addPreference(keepScreenAwakeCheckBoxPref);
 
-        CheckBoxPreference doEmbossCheckBoxPref = new CheckBoxPreference(this);
-        doEmbossCheckBoxPref.setKey(GoPrefs.KEY_GRID_EMBOSS);
-        doEmbossCheckBoxPref.setTitle(R.string.grid_emboss);
-        doEmbossCheckBoxPref.setDefaultValue(GoPrefs.getGridEmbossEnabled());
-        doEmbossCheckBoxPref.setSummary(R.string.grid_emboss_summary);
-       	uiPrefCat.addPreference(doEmbossCheckBoxPref);
-
+        
 
         
         // SGF section 
