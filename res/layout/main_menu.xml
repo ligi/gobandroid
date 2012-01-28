@@ -31,7 +31,7 @@
     <Button android:id="@+id/play_gnugo"
         style="@style/DashboardButton"
         android:text="@string/gnugo"
-        android:drawableTop="@drawable/server"
+        android:drawableTop="@drawable/dashboard_gnugo_item"
         android:onClick="startGnuGoGame" />
     
     
@@ -44,7 +44,7 @@
     <Button android:id="@+id/play_settings"
         style="@style/DashboardButton"
         android:text="@string/preferences"
-        android:drawableTop="@drawable/preferences"
+        android:drawableTop="@drawable/dashboard_preferences_item"
         android:onClick="startPreferences" />
 <!-- 
     <Button android:id="@+id/home_btn_schedule"
