@@ -18,12 +18,13 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 
 	private Vector<String> avail_file_list;
 	private File path_to_play_from;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		GoInteractionProvider.setMode(GoInteractionProvider.MODE_TELEVIZE);
 	
-		path_to_play_from=new File("/sdcard/gobandroid/sgf/review/commented_games/");
+		path_to_play_from=new File(getSettings().getReviewPath()+"/commented_games/");
 		
 		getTracker().trackPageView("/gtv");
 		if (path_to_play_from.listFiles()==null) {
