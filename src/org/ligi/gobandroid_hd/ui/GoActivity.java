@@ -37,6 +37,8 @@ import org.ligi.tracedroid.logging.Log;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.Menu;
@@ -259,9 +261,14 @@ public class GoActivity
     }
 	
 	public void game2ui() {
-		go_board.postInvalidate();
-      	if (myZoomFragment.getBoard()!=null)
-      		myZoomFragment.getBoard().invalidate();
+		new Handler() {
+			@Override
+	         public void  handleMessage(Message msg) {
+				go_board.postInvalidate();
+		      	if (myZoomFragment.getBoard()!=null)
+		      		myZoomFragment.getBoard().invalidate();
+	         }
+		}.sendEmptyMessage(0);
 	}
 	
 	public void setFragment(Fragment newFragment) {
