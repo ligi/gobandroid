@@ -111,7 +111,7 @@
  	<string name="please_stay_patient">Please stay patient</string>   
 	<string name="creating_thumbnails">Creating thumbnails - Please stay patient</string>   
 	<string name="gnugo">GnuGo</string>
-	<string name="gnugo_not_installed">GnuGo not installed - please go to market and install</string>
+	<string name="gnugo_not_installed">GnuGo not installed - to proceed please install!</string>
 	   
 	<string name="preferences">Preferences</string>   
 	<string name="board_setup">Board Setup</string>

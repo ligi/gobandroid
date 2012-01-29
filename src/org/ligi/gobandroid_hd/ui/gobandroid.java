@@ -117,11 +117,18 @@ public class gobandroid extends GobandroidFragmentActivity {
     			.setMessage(R.string.gnugo_not_installed)
     			.setTitle(R.string.problem)
     			.setNegativeButton("Cancel", new DialogDiscarder())
-    			.setPositiveButton("Market", new OnClickListener() {
+    			.setPositiveButton("Install GnuGo", new OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						IntentHelper.goToMarketPackage(gobandroid.this, "org.ligi.gobandroidhd.ai.gnugo");
+						try {
+							IntentHelper.goToMarketPackage(gobandroid.this, "org.ligi.gobandroidhd.ai.gnugo");
+						} catch (Exception e) {
+							Intent fail_intent=new Intent();
+							fail_intent.setAction(Intent.ACTION_VIEW);
+							fail_intent.setData(Uri.parse("http://github.com/downloads/ligi/gobandroid-ai-gnugo/org_ligi_gobandroid_ai_gnugo_0.7.apk"));
+							gobandroid.this.startActivity(fail_intent);
+						}
 					}
     				
     			})    			
