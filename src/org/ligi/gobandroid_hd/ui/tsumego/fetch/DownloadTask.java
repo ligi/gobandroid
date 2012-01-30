@@ -15,8 +15,15 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
+/**
+ * Async tas to download tsumegos 
+ * 
+ * @author ligi
+ *
+ */
 public class DownloadTask extends AsyncTask<TsumegoSource,String,Integer> {
 
+	/** There are sometimes more tsumegos avail **/
 	private final static int LIMITER=15;
 	
 	private GobandroidFragmentActivity activity;
@@ -25,17 +32,21 @@ public class DownloadTask extends AsyncTask<TsumegoSource,String,Integer> {
 	public DownloadTask(GobandroidFragmentActivity activity) {
 		this.activity=activity;
 	}
+
+	@Override
+	protected void onPreExecute() {
+    	progress_dialog = ProgressDialog.show(activity, "Download Status", "Downloading Tsumegos Please wait...", true);
+		super.onPreExecute();
+	}
 	
 	@Override
 	protected Integer doInBackground(TsumegoSource... params) {
 		
 		int download_count=0;  
-        for (TsumegoSource src : params)
-             {
+        for (TsumegoSource src : params)   {
               
                 boolean finished=false;
                 int pos=10;
-                
                 
                 while(!finished) {
 
@@ -75,8 +86,14 @@ public class DownloadTask extends AsyncTask<TsumegoSource,String,Integer> {
             }
 		return download_count;
 	}
-	
-     protected void onPostExecute(Integer result) {
+
+	@Override
+    protected void onProgressUpdate(String... progress) {
+        progress_dialog.setMessage(progress[0]);
+    }
+
+	@Override
+    protected void onPostExecute(Integer result) {
     	 progress_dialog.dismiss();
     	 String msg="No new Tsumegos found :-(";
     	 
@@ -88,13 +105,4 @@ public class DownloadTask extends AsyncTask<TsumegoSource,String,Integer> {
     	 	.setPositiveButton("OK", new DialogDiscarder()).show();
      }
 
-     protected void onProgressUpdate(String... progress) {
-         progress_dialog.setMessage(progress[0]);
-     }
-
-	@Override
-	protected void onPreExecute() {
-    	progress_dialog = ProgressDialog.show(activity, "Download Status", "Downloading Tsumegos Please wait...", true);
-		super.onPreExecute();
-	}
 }
