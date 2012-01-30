@@ -38,6 +38,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -261,14 +262,9 @@ public class GoActivity
     }
 	
 	public void game2ui() {
-		new Handler() {
-			@Override
-	         public void  handleMessage(Message msg) {
-				go_board.postInvalidate();
-		      	if (myZoomFragment.getBoard()!=null)
-		      		myZoomFragment.getBoard().invalidate();
-	         }
-		}.sendEmptyMessage(0);
+		go_board.postInvalidate();
+		if (myZoomFragment.getBoard()!=null)
+			myZoomFragment.getBoard().postInvalidate();
 	}
 	
 	public void setFragment(Fragment newFragment) {
