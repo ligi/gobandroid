@@ -4,12 +4,14 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
 public class DownloadProblemsDialog {
 	
+	private final static String BASE_URL="http://gogameguru.com/i/go-problems/";
+	
     public static void show(GobandroidFragmentActivity activity) {
     	activity.getTracker().trackPageView("/tsumego/refresh");
     	new DownloadTask(activity).execute(
-    			new TsumegoSource(activity.getSettings().getTsumegoPath()+"1.easy/","http://gogameguru.com/i/2011/08/","ggg-easy-%02d.sgf"),
-    			new TsumegoSource(activity.getSettings().getTsumegoPath()+"2.intermediate/","http://gogameguru.com/i/2011/08/","ggg-intermediate-%02d.sgf"),
-    			new TsumegoSource(activity.getSettings().getTsumegoPath()+"3.hard/","http://gogameguru.com/i/2011/08/","ggg-hard-%02d.sgf")
+    			new TsumegoSource(activity.getSettings().getTsumegoPath()+"1.easy/",BASE_URL,"ggg-easy-%02d.sgf"),
+    			new TsumegoSource(activity.getSettings().getTsumegoPath()+"2.intermediate/",BASE_URL,"ggg-intermediate-%02d.sgf"),
+    			new TsumegoSource(activity.getSettings().getTsumegoPath()+"3.hard/",BASE_URL,"ggg-hard-%02d.sgf")
     			);
     }
 }
