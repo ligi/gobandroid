@@ -51,7 +51,7 @@ public class GameInfoAlert {
 		game_name_et.setText(game.getMetaData().getName());
 		game_name_et.setPadding(2, 0, 5, 0);
 		TextView game_name_tv=new TextView(ctx);
-		game_name_tv.setText("Game Name");
+		game_name_tv.setText(R.string.game_name);
 		
 		row_gameinfo.addView(game_name_tv);
 		row_gameinfo.addView(game_name_et);
@@ -64,7 +64,7 @@ public class GameInfoAlert {
 		black_name_et.setPadding(2, 0, 5, 0);
 		TextView black_name_tv=new TextView(ctx);
 		black_name_tv.setPadding(2, 0, 5, 0);
-		black_name_tv.setText("Black Name");
+		black_name_tv.setText(R.string.black_name);
 		
 		row_black_name.addView(black_name_tv);
 		row_black_name.addView(black_name_et);
@@ -77,7 +77,7 @@ public class GameInfoAlert {
 		black_rank_et.setPadding(2, 0, 5, 0);
 		TextView black_rank_tv=new TextView(ctx);
 		black_rank_tv.setPadding(2, 0, 5, 0);
-		black_rank_tv.setText("Black Rank");
+		black_rank_tv.setText(R.string.black_rank);
 		
 		row_black_rank.addView(black_rank_tv);
 		row_black_rank.addView(black_rank_et);
@@ -90,7 +90,7 @@ public class GameInfoAlert {
 		white_name_et.setPadding(2, 0, 5, 0);
 		TextView white_name_tv=new TextView(ctx);
 		white_name_tv.setPadding(2, 0, 5, 0);
-		white_name_tv.setText("White Name");
+		white_name_tv.setText(R.string.white_name);
 		
 		row_white_name.addView(white_name_tv);
 		row_white_name.addView(white_name_et);
@@ -103,7 +103,7 @@ public class GameInfoAlert {
 		white_rank_et.setPadding(2, 0, 5, 0);
 		TextView white_rank_tv=new TextView(ctx);
 		white_rank_tv.setPadding(2, 0, 5, 0);
-		white_rank_tv.setText("White Rank");
+		white_rank_tv.setText(R.string.white_rank);
 		
 		row_white_rank.addView(white_rank_tv);
 		row_white_rank.addView(white_rank_et);
@@ -116,7 +116,7 @@ public class GameInfoAlert {
 		game_komi_et.setPadding(2, 0, 5, 0);
 		TextView game_komi_tv=new TextView(ctx);
 		game_komi_tv.setPadding(2, 0, 5, 0);
-		game_komi_tv.setText("Komi");
+		game_komi_tv.setText(R.string.komi);
 		
 		game_komi_row.addView(game_komi_tv);
 		game_komi_row.addView(game_komi_et);
@@ -129,7 +129,7 @@ public class GameInfoAlert {
 		game_result_et.setPadding(2, 0, 5, 0);
 		TextView game_result_tv=new TextView(ctx);
 		game_result_tv.setPadding(2, 0, 5, 0);
-		game_result_tv.setText("Game Result");
+		game_result_tv.setText(R.string.game_result);
 		
 		game_result_row.addView(game_result_tv);
 		game_result_row.addView(game_result_et);
@@ -138,7 +138,7 @@ public class GameInfoAlert {
 		
 		scroll_view.addView(table_gameinfo);
 		
-		new AlertDialog.Builder(ctx).setTitle("Game Info").setView(scroll_view)
+		new AlertDialog.Builder(ctx).setTitle(R.string.game_info).setView(scroll_view)
 		.setMessage("").setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
 			game.getMetaData().setName(game_name_et.getText().toString());

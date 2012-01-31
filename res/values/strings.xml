@@ -122,5 +122,14 @@
 	<string name="enable_sound_summary">Hear the Stones and the Board</string>
 	<string name="install_gnugo">Install GnuGo</string>
 	<string name="download_report">Download Report</string>
+	<string name="game_name">Game Name</string>
+	<string name="black_name">Black Name</string>
+	<string name="black_rank">Black Rank</string>
+	<string name="white_name">White Name</string>
+	<string name="white_rank">White Rank</string>
+	<string name="game_result">Game Result</string>
+	<string name="black_won_with">"Black won with "</string>
+	<string name="_points_">" Points."</string>
+	<string name="white_won_with_">"White won with "</string>
 		
 </resources>

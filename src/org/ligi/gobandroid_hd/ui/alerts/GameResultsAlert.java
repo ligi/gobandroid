@@ -98,10 +98,10 @@ public class GameResultsAlert {
 			 game_fin_txt=context.getResources().getString(R.string.game_ended_in_draw);
 					
 		if (game.getPointsBlack()>game.getPointsWhite())
-			game_fin_txt=("Black won with " + (game.getPointsBlack()-game.getPointsWhite()) + " Points.");
+			game_fin_txt=(context.getString(R.string.black_won_with) + (game.getPointsBlack()-game.getPointsWhite()) + context.getString(R.string._points_));
 					
 		if (game.getPointsWhite()>game.getPointsBlack())
-			game_fin_txt=("White won with " + (game.getPointsWhite()-game.getPointsBlack()) + " Points.");
+			game_fin_txt=(context.getString(R.string.white_won_with_) + (game.getPointsWhite()-game.getPointsBlack()) + context.getString(R.string._points_));
 		
 		lin.setOrientation(LinearLayout.VERTICAL);	
 		lin.addView(table);
