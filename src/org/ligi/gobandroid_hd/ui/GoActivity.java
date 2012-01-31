@@ -84,12 +84,11 @@ public class GoActivity
 		
 		game=GoGameProvider.getGame();
 		
-		if (game==null) { // cannot do anything without a 
+		if (game==null) { // cannot do anything without a game 
 			finish();
 			return;
 		}
 			
-		
 		sound_man=new GoSoundManager(this);
 		
 		View customNav =new InGameActionBarView(this);

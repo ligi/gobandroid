@@ -43,9 +43,9 @@ public class AutoScreenShotTask extends AsyncTask<String,String,Integer> {
     	 //LinearLayout lin=new LinearLayout(activity);
     	
     	 new AlertDialog.Builder(activity).setMessage(msg)
-    	 	.setTitle("Download Report")
+    	 	.setTitle(R.string.download_report)
     	 	//.setView(gbv)
-    	 	.setPositiveButton("OK", new DialogDiscarder()).show();
+    	 	.setPositiveButton(android.R.string.ok, new DialogDiscarder()).show();
      }
 
      protected void onProgressUpdate(String... progress) {

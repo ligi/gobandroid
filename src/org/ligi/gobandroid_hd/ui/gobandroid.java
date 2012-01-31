@@ -116,8 +116,8 @@ public class gobandroid extends GobandroidFragmentActivity {
     		new AlertDialog.Builder(this)
     			.setMessage(R.string.gnugo_not_installed)
     			.setTitle(R.string.problem)
-    			.setNegativeButton("Cancel", new DialogDiscarder())
-    			.setPositiveButton("Install GnuGo", new OnClickListener() {
+    			.setNegativeButton(android.R.string.cancel, new DialogDiscarder())
+    			.setPositiveButton(R.string.install_gnugo, new OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
