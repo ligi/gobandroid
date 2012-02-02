@@ -131,5 +131,19 @@
 	<string name="black_won_with">"Black won with "</string>
 	<string name="_points_">" Points."</string>
 	<string name="white_won_with_">"White won with "</string>
-		
+	<string name="bookmark_to_write_into">"bookmark to write into "</string>
+	<string name="loading_sgf">Loading SGF</string>
+	<string name="review">Review</string>
+	<string name="record">Record</string>
+    <string name="empty_str"></string>
+    <string name="autoplay_off">autoplay off</string>
+    <string name="autoplay_on">autoplay on</string>
+	<string name="mark_next">mark next</string>
+    <string name="mark_path">mark path</string>
+    <string name="numbered_end">numbered end</string>
+    <string name="handicap">Handicap</string>
+    <string name="size">Size</string>
+    <string name="enter_your_comments_here">enter your comments here</string>
+    <string name="keep_variant_">Keep Variant?</string>
+    <string name="keep_this_move_as_variant_">Keep this move as variant?</string>    
 </resources>

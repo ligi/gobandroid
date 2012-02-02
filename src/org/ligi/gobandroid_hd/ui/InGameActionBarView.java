@@ -70,20 +70,20 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 		active_player_bg_rect.offsetTo(0, getGame().isBlackToMove()?0:black_stone_bitmap.getHeight());
 		
 		if (this.getWidth()>active_player_bg_rect.width()*2) {
-		 	canvas.drawText("Move "+ GoGameProvider.getGame().getActMove().getMovePos(), active_player_bg_rect.width() +5, text_offset, mPaint);
-		 	String mode_str="";
+		 	canvas.drawText(getContext().getString(R.string.move) + " "+ GoGameProvider.getGame().getActMove().getMovePos(), active_player_bg_rect.width() +5, text_offset, mPaint);
+		 	int mode_str=R.string.empty_str;
 		 	switch(GoInteractionProvider.getMode()) {
 		 	case GoInteractionProvider.MODE_TSUMEGO:
-		 		mode_str="Tsumego";
+		 		mode_str=R.string.tsumego;
 		 		break;
 		 	case GoInteractionProvider.MODE_REVIEW:
-		 		mode_str="Review";
+		 		mode_str=R.string.review;
 		 		break;
 		 	case GoInteractionProvider.MODE_RECORD:
-		 		mode_str="Record";
+		 		mode_str=R.string.record;
 		 		break;
 		 	}
-		 	canvas.drawText(mode_str, active_player_bg_rect.width() +5, this.getHeight()/2+text_offset, mPaint);
+		 	canvas.drawText(getContext().getString(mode_str), active_player_bg_rect.width() +5, this.getHeight()/2+text_offset, mPaint);
 		}
 		
 		canvas.drawRect(active_player_bg_rect, myActiveBGPaint);

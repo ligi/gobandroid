@@ -31,7 +31,7 @@ public class RecordingGameExtrasFragment extends Fragment implements GoGameChang
 		GoGameProvider.getGame().addGoGameChangeListener(this);
 		
 		et.setText(GoGameProvider.getGame().getActMove().getComment());
-		et.setHint("enter your comments here");
+		et.setHint(R.string.enter_your_comments_here);
 		et.setGravity(Gravity.TOP);
 		et.setTextColor(this.getResources().getColor(R.color.text_color_on_board_bg));
 		

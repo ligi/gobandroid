@@ -188,8 +188,8 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 	 * refresh the ui elements with values from act_size / act_handicap 
 	 */
 	public void refresh_ui() {
-		size_text.setText("Size "+act_size+"x"+act_size);
-		handicap_text.setText("Handicap " + act_handicap);
+		size_text.setText(getString(R.string.size)+" "+act_size+"x"+act_size);
+		handicap_text.setText(getString(R.string.handicap) +" "+ act_handicap);
 	
 		// the checks for change here are important - otherwise samsung moment will die here with stack overflow
 		if ((act_size-size_offset)!=size_seek.getProgress())

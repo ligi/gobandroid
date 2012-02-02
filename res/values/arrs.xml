@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="hint_options">
-        <item>mark next</item>
-        <item>mark path</item>
-        <item>numbered end</item>
+        <item>@string/mark_next</item>
+        <item>@string/mark_path</item>
+        <item>@string/numbered_end</item>
     </string-array>
     
     <string-array name="gamemode_options">
-        <item>Record</item>
-        <item>Review</item>
-        <item>Tsumego</item>
+        <item>@string/record</item>
+        <item>@string/review</item>
+        <item>@string/tsumego</item>
     </string-array>
 </resources>

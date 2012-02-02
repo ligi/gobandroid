@@ -46,7 +46,7 @@ public class GameReviewActivity extends GoActivity  {
 	public boolean onCreateOptionsMenu(Menu menu) {
     	this.getMenuInflater().inflate(R.menu.ingame_review, menu);
     	
-    	menu.findItem(R.id.menu_autoplay).setTitle(autoplay_active?"autoplay off":"autoplay on");
+    	menu.findItem(R.id.menu_autoplay).setTitle(autoplay_active?R.string.autoplay_off:R.string.autoplay_on);
 		return super.onCreateOptionsMenu(menu);
 	}
 
