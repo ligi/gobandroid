@@ -453,11 +453,15 @@ public class GoGame  {
         Vector <GoMove> replay_moves=new Vector<GoMove>();
         
         replay_moves.add(move);
+        GoMove tmp_move;
         while (true) {
-        	if (replay_moves.lastElement().isFirstMove()) 
+        	
+        	tmp_move=replay_moves.lastElement();
+        	
+        	if (tmp_move.isFirstMove()||(tmp_move.getParent()==null)) 
         		break;
         		
-        	replay_moves.add(replay_moves.lastElement().getParent());
+        	replay_moves.add(tmp_move.getParent());
         }
         
         reset();
