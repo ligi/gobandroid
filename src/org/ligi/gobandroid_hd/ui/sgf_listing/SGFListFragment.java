@@ -1,10 +1,11 @@
-package org.ligi.gobandroid_hd.ui;
+package org.ligi.gobandroid_hd.ui.sgf_listing;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.ligi.android.common.files.FileHelper;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.ui.SGFLoadActivity;
 import org.ligi.tracedroid.logging.Log;
 
 import android.app.Activity;

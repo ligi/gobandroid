@@ -17,7 +17,7 @@
  * 
  **/
 
-package org.ligi.gobandroid_hd.ui;
+package org.ligi.gobandroid_hd.ui.sgf_listing;
 
 import java.io.File;
 import java.util.Vector;
@@ -26,6 +26,8 @@ import java.util.Arrays;
 import org.ligi.android.common.activitys.ActivityFinishOnCancelListener;
 import org.ligi.android.common.dialogs.ActivityFinishOnDialogClickListener;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.ui.AutoScreenShotDialog;
+import org.ligi.gobandroid_hd.ui.GoInteractionProvider;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import android.app.AlertDialog;
 import android.os.Bundle;

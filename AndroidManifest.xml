@@ -67,7 +67,7 @@
 		
 		<activity android:name=".ui.review.GoGamePlayerActivity"></activity>
 		
-		<activity android:name=".ui.SGFSDCardListActivity"></activity>
+		<activity android:name=".ui.sgf_listing.SGFSDCardListActivity"></activity>
 		<activity android:name=".ui.links.LinksActivity"></activity>
 		<activity android:name=".ui.tsumego.TsumegoActivity"></activity>
 		<activity android:name=".ui.SGFLoadActivity">

@@ -20,6 +20,7 @@
 package org.ligi.gobandroid_hd.ui;
 
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
 
 import android.app.ListActivity;
 import android.content.Intent;

@@ -26,6 +26,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
+import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
