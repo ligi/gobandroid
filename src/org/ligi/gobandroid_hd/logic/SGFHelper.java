@@ -119,7 +119,15 @@ public class SGFHelper {
 	}
 	
 	
+	
+	public final static int BREAKON_NOTHING=0;
+	public final static int BREAKON_FIRSTMOVE=1;
+	
 	public static GoGame sgf2game(String sgf,ISGFLoadProgressCallback callback) {
+		return  sgf2game( sgf, callback,BREAKON_NOTHING);
+	}
+	
+	public static GoGame sgf2game(String sgf,ISGFLoadProgressCallback callback,int breakon) {
 
 		Log.i("sgf to process:" + sgf);
 		byte size=-1;
@@ -138,7 +146,9 @@ public class SGFHelper {
 		
 		GoGameMetadata metadata=new GoGameMetadata();
 		
-		for (int p=0;p<sgf.length();p++) {
+		boolean break_pulled=false;
+		
+		for (int p=0;((p<sgf.length())&&(!break_pulled));p++) {
 			char act_char=sgf.charAt(p);
 			
 			if (!consuming_param)
@@ -172,13 +182,17 @@ public class SGFHelper {
 							}
 					
 						opener++;
-					
+
+						
 						// 	push the move we where to the stack to return here after the variation
 					
 						//	if (param_level!=0) break;
 						Log.i("   !!! opening variation" + game);
-						if (game!=null)
+						if (game!=null) {
+							if ((breakon&BREAKON_FIRSTMOVE)>0)
+								break_pulled=true;
 							var_vect.add(game.getActMove());
+						}
 				
 						last_cmd="";
 						act_cmd="";
@@ -370,7 +384,8 @@ public class SGFHelper {
 			
 			
 		}
-		game.setMetadata(metadata);
+		if (game!=null) 
+			game.setMetadata(metadata);
 		return game;
 	}
 	
