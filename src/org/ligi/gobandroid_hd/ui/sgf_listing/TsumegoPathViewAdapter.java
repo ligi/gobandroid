@@ -18,14 +18,14 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-class PathViewAdapter extends BaseAdapter {
+class TsumegoPathViewAdapter extends BaseAdapter {
 	
 	private Activity activity;
 	private int listItem;
 	private String[] menu_items;
 	private String path;
 	
-	public PathViewAdapter(Activity activity, int listItem,
+	public TsumegoPathViewAdapter(Activity activity, int listItem,
 			String[] menu_items,String path) {
 		this.activity=activity;
 		this.listItem=listItem;
@@ -84,7 +84,6 @@ class PathViewAdapter extends BaseAdapter {
 		//View v = activity.getLayoutInflater().inflate(R.layout.sgf_tsumego_list_item,null);
 		String base_fname=path+"/"+menu_items[position];
 		
-		
 		View v;
 		
 		if (new File(base_fname).isDirectory()) {
@@ -124,8 +123,7 @@ class PathViewAdapter extends BaseAdapter {
 		if (new File(img_fname).exists()) {
 			ImageView img=(ImageView)v.findViewById(R.id.thumbnail);
 			setImageToGameThumbnail(img,img_fname);
-		}
-		
+		}		
 		
 		ImageView solve_img=(ImageView)v.findViewById(R.id.solve_status_image);
 		if ((solve_img!=null)&&(activity.getBaseContext().getSharedPreferences("tsumego_stats", Activity.MODE_PRIVATE).getInt("file://"+base_fname, -1)>0)) {

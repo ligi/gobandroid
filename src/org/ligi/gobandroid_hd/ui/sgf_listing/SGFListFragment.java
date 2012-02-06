@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import org.ligi.android.common.files.FileHelper;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.ui.GoInteractionProvider;
 import org.ligi.gobandroid_hd.ui.SGFLoadActivity;
 import org.ligi.tracedroid.logging.Log;
 import android.content.Intent;
@@ -11,13 +12,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 public class SGFListFragment extends ListFragment {
 
 	private String[] menu_items;
     private String dir;
-	private PathViewAdapter adapter;
+	private BaseAdapter adapter;
 	
     public SGFListFragment() {
 	}
@@ -42,7 +44,11 @@ public class SGFListFragment extends ListFragment {
 		if(dir==null) 
 			dir=savedInstanceState.getString("dir");
 		
-		adapter=new PathViewAdapter(this.getActivity(),R.layout.list_item, menu_items,dir);
+		 if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_TSUMEGO)
+			 adapter=new TsumegoPathViewAdapter(this.getActivity(),R.layout.list_item, menu_items,dir);
+		 else if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_REVIEW)
+			 adapter=new ReviewPathViewAdapter(this.getActivity(),R.layout.list_item, menu_items,dir);
+		 
         this.setListAdapter(adapter);
         
         this.getListView().setCacheColorHint(0);
