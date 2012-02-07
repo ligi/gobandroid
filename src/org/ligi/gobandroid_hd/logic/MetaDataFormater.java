@@ -28,9 +28,11 @@ package org.ligi.gobandroid_hd.logic;
 public class MetaDataFormater {
 
 	private GoGameMetadata meta;
+	private GoGame game;
 	
-	public MetaDataFormater(GoGameMetadata meta) {
-		this.meta=meta;
+	public MetaDataFormater(GoGame game) {
+		this.meta=game.getMetaData();
+		this.game=game;
 	}
 	
 	
@@ -52,5 +54,11 @@ public class MetaDataFormater {
 			res.append(" (" + meta.getWhiteRank() + ")");
 		
 		return res.toString();
+	}
+	
+	public String getExtrasString() {
+		String res="Komi:"+game.getKomi()+" Result:" + meta.getResult();
+		
+		return res;
 	}
 }

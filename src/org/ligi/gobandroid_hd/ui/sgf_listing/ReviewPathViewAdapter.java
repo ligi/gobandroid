@@ -84,7 +84,7 @@ class ReviewPathViewAdapter extends BaseAdapter {
 				game=SGFHelper.sgf2game(FileHelper.file2String(new File(base_fname)), null,SGFHelper.BREAKON_FIRSTMOVE);
 
 				if (game!=null) {
-					MetaDataFormater meta=new MetaDataFormater(game.getMetaData());
+					MetaDataFormater meta=new MetaDataFormater(game);
 					
 					TextView player_white_tv=(TextView)v.findViewById(R.id.player_white);
 					
@@ -98,10 +98,10 @@ class ReviewPathViewAdapter extends BaseAdapter {
 						player_black_tv.setText(meta.getBlackPlayerString());
 					}
 					
-					TextView title_tv=(TextView)v.findViewById(R.id.title);
+					TextView title_tv=(TextView)v.findViewById(R.id.game_extra_infos);
 				
 					if (title_tv!=null) {
-						title_tv.setText(menu_items[position].replace(".sgf", ""));
+						title_tv.setText(meta.getExtrasString());
 					}
 				}	
 
