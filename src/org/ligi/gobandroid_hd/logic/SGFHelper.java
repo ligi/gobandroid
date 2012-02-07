@@ -189,8 +189,7 @@ public class SGFHelper {
 						//	if (param_level!=0) break;
 						Log.i("   !!! opening variation" + game);
 						if (game!=null) {
-							if ((breakon&BREAKON_FIRSTMOVE)>0)
-								break_pulled=true;
+						
 							var_vect.add(game.getActMove());
 						}
 				
@@ -320,6 +319,9 @@ public class SGFHelper {
 							var_vect.add(game.getActMove());
 						}
 
+						if ((breakon&BREAKON_FIRSTMOVE)>0)
+							break_pulled=true;
+						
 						if (game.getActMove().isFirstMove())
 							game.apply_handicap();
 						
