@@ -6,35 +6,26 @@ import java.io.IOException;
 import org.ligi.android.common.files.FileHelper;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGameMetadata;
 import org.ligi.gobandroid_hd.logic.MetaDataFormater;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
-import org.ligi.tracedroid.logging.Log;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 class ReviewPathViewAdapter extends BaseAdapter {
 	
 	private Activity activity;
-	private int listItem;
 	private String[] menu_items;
 	private String path;
 	
-	public ReviewPathViewAdapter(Activity activity, int listItem,
-			String[] menu_items,String path) {
+	public ReviewPathViewAdapter(Activity activity,String[] menu_items,String path) {
 		this.activity=activity;
-		this.listItem=listItem;
 		this.menu_items=menu_items;
 		this.path=path;
 	}

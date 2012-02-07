@@ -45,9 +45,9 @@ public class SGFListFragment extends ListFragment {
 			dir=savedInstanceState.getString("dir");
 		
 		 if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_TSUMEGO)
-			 adapter=new TsumegoPathViewAdapter(this.getActivity(),R.layout.list_item, menu_items,dir);
+			 adapter=new TsumegoPathViewAdapter(this.getActivity(), menu_items,dir);
 		 else if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_REVIEW)
-			 adapter=new ReviewPathViewAdapter(this.getActivity(),R.layout.list_item, menu_items,dir);
+			 adapter=new ReviewPathViewAdapter(this.getActivity(), menu_items,dir);
 		 
         this.setListAdapter(adapter);
         

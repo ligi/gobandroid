@@ -21,14 +21,11 @@ import android.widget.TextView;
 class TsumegoPathViewAdapter extends BaseAdapter {
 	
 	private Activity activity;
-	private int listItem;
 	private String[] menu_items;
 	private String path;
 	
-	public TsumegoPathViewAdapter(Activity activity, int listItem,
-			String[] menu_items,String path) {
+	public TsumegoPathViewAdapter(Activity activity,String[] menu_items,String path) {
 		this.activity=activity;
-		this.listItem=listItem;
 		this.menu_items=menu_items;
 		this.path=path;
 	}
