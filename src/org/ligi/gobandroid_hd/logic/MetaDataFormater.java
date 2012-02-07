@@ -57,8 +57,11 @@ public class MetaDataFormater {
 	}
 	
 	public String getExtrasString() {
-		String res="Komi:"+game.getKomi()+" Result:" + meta.getResult();
+		StringBuilder res=new StringBuilder("Komi: "+game.getKomi());
 		
-		return res;
+		if (!meta.getResult().equals(""))
+			res.append(" Result: " + meta.getResult());
+		
+		return res.toString();
 	}
 }

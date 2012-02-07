@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -78,15 +79,25 @@ class ReviewPathViewAdapter extends BaseAdapter {
 					MetaDataFormater meta=new MetaDataFormater(game);
 					
 					TextView player_white_tv=(TextView)v.findViewById(R.id.player_white);
-					
 					if (player_white_tv!=null) {
-						player_white_tv.setText(meta.getWhitePlayerString());
+						if (meta.getWhitePlayerString().equals("")) {
+							((ImageView)v.findViewById(R.id.player_white_stone_img)).setVisibility(View.GONE);
+							player_white_tv.setVisibility(View.GONE);
+						}
+						else
+							player_white_tv.setText(meta.getWhitePlayerString());	
 					}
 					
 					TextView player_black_tv=(TextView)v.findViewById(R.id.player_black);
 					
 					if (player_black_tv!=null) {
-						player_black_tv.setText(meta.getBlackPlayerString());
+						
+						if (meta.getBlackPlayerString().equals("")) {
+							((ImageView)v.findViewById(R.id.player_black_stone_img)).setVisibility(View.GONE);
+							player_black_tv.setVisibility(View.GONE);
+						}
+						else
+							player_black_tv.setText(meta.getBlackPlayerString());	
 					}
 					
 					TextView title_tv=(TextView)v.findViewById(R.id.game_extra_infos);
@@ -100,7 +111,6 @@ class ReviewPathViewAdapter extends BaseAdapter {
 			}
 			
 		}
-		String img_fname=path+"/"+menu_items[position]+".png";
 
 		TextView title_tv=(TextView)v.findViewById(R.id.filename);
 		
