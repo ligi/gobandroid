@@ -2,6 +2,8 @@ package org.ligi.gobandroid_hd.ui.tsumego;
 
 import java.util.Vector;
 
+import org.ligi.android.common.dialogs.ActivityFinishOnDialogClickListener;
+import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
@@ -35,10 +37,12 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		recursive_add_on_path_moves(game.getFirstMove());
 				
 		// try to find the correct solution
-		finishing_move=getCorrectMove(game.getFirstMove());
 		
-		if (finishing_move==null) 
-			new AlertDialog.Builder(this).setMessage(R.string.tsumego_sgf_no_solution).show();
+		if (!isFinishingMoveKnown()) 
+			new AlertDialog.Builder(this).setMessage(R.string.tsumego_sgf_no_solution)
+			.setNegativeButton("OK",new DialogDiscarder())
+			.setPositiveButton("go back",new ActivityFinishOnDialogClickListener(this))
+			.show();
 
 		game.addGoGameChangeListener(this);
 		
@@ -47,6 +51,16 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		getBoard().setZoom(myZoom);
 		int poi=game.getSize()-(int)(game.getSize()/2f/myZoom);
 		getBoard().setZoomPOI(poi+poi*game.getSize());
+    }
+    
+    private GoMove getFinishingMove() {
+    	if (finishing_move==null)
+    		finishing_move=getCorrectMove(game.getFirstMove());
+		
+    	return finishing_move;
+    }
+    private boolean isFinishingMoveKnown() {
+    	return getFinishingMove()!=null;
     }
     
     public static int calcPOI(GoGame game) {
@@ -125,6 +139,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
     	this.getMenuInflater().inflate(R.menu.ingame_tsumego, menu);
+    	menu.findItem(R.id.menu_game_hint).setVisible(isFinishingMoveKnown());
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -132,8 +147,9 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
         if (!super.onOptionsItemSelected(item))
         switch (item.getItemId()) {                                                                                                                   
                                                                                                                                                       
-        case R.id.menu_game_hint:  
-        	TsumegoHintAlert.show(this,finishing_move);
+        case R.id.menu_game_hint:
+        	
+        	TsumegoHintAlert.show(this,getFinishingMove());
             break;                                                                                                                                
 		}
 		
@@ -162,9 +178,9 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 	public void onGoGameChange() {
 		if (myTsumegoExtrasFragment!=null) {
 			myTsumegoExtrasFragment.setOffPathVisibility(!isOnPath());
-			myTsumegoExtrasFragment.setCorrectVisibility(game.getActMove().equals(finishing_move));
+			myTsumegoExtrasFragment.setCorrectVisibility(game.getActMove().equals(getFinishingMove()));
 		}
-		if (game.getActMove().equals(finishing_move)) {
+		if (game.getActMove().equals(getFinishingMove())) {
 			this.getBaseContext().getSharedPreferences("tsumego_stats", Activity.MODE_PRIVATE)
 			.edit().putInt(game.getMetaData().getFileName(), 100).commit();
 		Log.i("finished"+	game.getMetaData().getFileName());
