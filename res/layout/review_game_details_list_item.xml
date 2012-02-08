@@ -59,5 +59,11 @@ android:padding="3dp"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content" android:id="@+id/game_extra_infos" 
 	android:textColor="#000000"/>
-		
+	
+	<TextView 
+	android:textSize="16sp"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content" android:id="@+id/game_link_extra_infos" 
+	android:textColor="#000000"/>
+			
 </LinearLayout> 

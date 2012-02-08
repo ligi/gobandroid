@@ -44,9 +44,6 @@
             </intent-filter>
         </activity>
     	
-        
-        
-        
         <activity android:name=".ui.GoTermsViewActivity"
             android:theme="@android:style/Theme.Dialog"
             android:layout_width="wrap_content"

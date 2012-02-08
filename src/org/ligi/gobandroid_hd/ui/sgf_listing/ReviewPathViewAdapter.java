@@ -73,7 +73,18 @@ class ReviewPathViewAdapter extends BaseAdapter {
 			GoGame game=null;
 			
 			try {
-				game=SGFHelper.sgf2game(FileHelper.file2String(new File(base_fname)), null,SGFHelper.BREAKON_FIRSTMOVE);
+				String sgf_str;
+				
+				if (GoLink.isGoLink(base_fname)) {
+					GoLink gl=new GoLink(base_fname);
+					sgf_str=gl.getSGFString();
+					((TextView)v.findViewById(R.id.game_link_extra_infos)).setText("Move #"+gl.getMoveDepth());
+				} else {
+					((TextView)v.findViewById(R.id.game_link_extra_infos)).setVisibility(View.GONE);
+					sgf_str=FileHelper.file2String(new File(base_fname));
+				}
+				
+				game=SGFHelper.sgf2game(sgf_str, null,SGFHelper.BREAKON_FIRSTMOVE);
 
 				if (game!=null) {
 					MetaDataFormater meta=new MetaDataFormater(game);

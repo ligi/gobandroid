@@ -55,14 +55,10 @@ public class SGFListFragment extends ListFragment {
 	
 	@Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-		Log.i("onlistitemclick p");
 		super.onListItemClick(l, v, position, id);
     	
-        Log.i("onlistitemclick a");
-        
         Intent intent2start=new Intent(this.getActivity(),SGFLoadActivity.class);
         String fname=dir + "/" + menu_items[position];
-        
         
         if (fname.endsWith(".golink")) {
         	try {
