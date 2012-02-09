@@ -226,13 +226,6 @@ public class GoActivity
 		return super.onKeyDown(keyCode, event);
 	}
 
-
-	
-    @Override
-	protected void onResume() {
-		super.onResume();
-	}
-
 	/**
 	 * show a the info toast with a specified text from a resource ID
 	 * 
