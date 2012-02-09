@@ -133,8 +133,7 @@ public class gobandroid extends GobandroidFragmentActivity {
 					}
     				
     			})    			
-    			.show()
-    			;
+    			.show() ;
     		return;
     	}
    

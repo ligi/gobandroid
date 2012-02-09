@@ -23,7 +23,6 @@ public class PlayAgainstGnugoActivity extends GoActivity  implements GoGameChang
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		
 		game.setGoMover(new GnuGoMover(this,game,false,true,(byte)10));
-		
     }		
     
 	public boolean isOnPath() {
