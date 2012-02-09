@@ -26,9 +26,10 @@ import java.util.Arrays;
 import org.ligi.android.common.activitys.ActivityFinishOnCancelListener;
 import org.ligi.android.common.dialogs.ActivityFinishOnDialogClickListener;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.ui.AutoScreenShotDialog;
 import org.ligi.gobandroid_hd.ui.GoInteractionProvider;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsDialog;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.view.Menu;
@@ -118,11 +119,13 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.menu_refresh:
-		//			DownloadProblemsDialog.show(this);
+				DownloadProblemsDialog.show(this);
+				/*
 				if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_TSUMEGO)
 					AutoScreenShotDialog.show4tsumego(this);
 				else
 					AutoScreenShotDialog.show4review(this);
+				*/
 				return true;
 		}
 		return super.onOptionsItemSelected(item);

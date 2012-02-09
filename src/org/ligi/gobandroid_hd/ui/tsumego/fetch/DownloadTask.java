@@ -24,7 +24,7 @@ import android.os.AsyncTask;
 public class DownloadTask extends AsyncTask<TsumegoSource,String,Integer> {
 
 	/** There are sometimes more tsumegos avail **/
-	private final static int LIMITER=15;
+	private final static int LIMITER=23;
 	
 	private GobandroidFragmentActivity activity;
 	private ProgressDialog progress_dialog;
