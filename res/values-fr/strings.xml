@@ -9,14 +9,14 @@
     <string name="igs">IGS</string>
     <string name="info">Info</string>
     <string name="quit">Quitter</string>
-    <string name="quit_confirm">Abandonner la partie ?</string>
+    <string name="quit_confirm">Abandonner la partie ?</string>
     <string name="no">Non</string>
     <string name="yes">Oui</string>
     <string name="end_game_quesstion_title">Quitter</string>
     <string name="comments">Commentaires</string>
     <string name="ok">OK</string>
     <string name="wait_gnugo">GnuGo réfléchit</string>
-    <string name="not_your_turn">Attendez votre tour !</string>
+    <string name="not_your_turn">Attendez votre tour !</string>
     <string name="undo">Annuler</string>
     <string name="redo">Rétablir</string>
     <string name="pass">Passer</string>
@@ -26,7 +26,7 @@
     <string name="links">Liens</string>
     <string name="save_as_sgf">Enregistrer</string>
     <string name="move">Coup</string>
-    <string name="problem_listing_sgf">Erreur : ne peut lister les SGF</string>
+    <string name="problem_listing_sgf">Erreur : ne peut lister les SGF</string>
     <string name="there_are_no_files_in">Aucun fichier trouvé dans </string>
     <string name="sgf_path_invalid">Le chemin d’accès au SGF est invalide</string>
     <string name="android_market_problem">Impossible d'accéder à l'Android Market. Essayez manuellement.</string>
@@ -43,7 +43,7 @@
     <string name="komi">Komi</string>
     <string name="filal_points">Total</string>
     <string name="save_sgf">Sauvegarde du SGF</string>
-    <string name="invalid_move_ko">KO !</string>
+    <string name="invalid_move_ko">KO !</string>
     <string name="invalid_move_no_liberties">Coup suicide</string>
     <string name="hint_stone_move">En sélectionnant cette pierre vous avez la possibilité de la déplacer, comme indiqué par la pierre translucide.</string>
     <string name="mark_last_stone">Marquer le dernier coup</string>
@@ -81,9 +81,9 @@
     <string name="filename">Nom de fichier</string>
     <string name="sgf_filename">Nom de fichier SGF</string>
     <string name="game_info">Metadonnées</string>
-    <string name="add_to_sgf">Rajouter un suffixe ?</string>
-    <string name="save_sgf_question">Le SGF va être créé dans %s.  Nom du fichier :</string>
-    <string name="share_question">publier la partie ?</string>
+    <string name="add_to_sgf">Rajouter un suffixe ?</string>
+    <string name="save_sgf_question">Le SGF va être créé dans %s.  Nom du fichier :</string>
+    <string name="share_question">publier la partie ?</string>
     <string name="gamename">Nom de la partie</string>
     <string name="date">Date</string>
     <string name="players">Joueurs</string>
@@ -104,17 +104,17 @@
     <string name="menu_bookmark">Favori</string>
     <string name="menu_autoplay">Jeu automatique</string>
     <string name="tsumego_off_path">Coup inconnu. Essaie une nouvelle piste.</string>
-    <string name="tsumego_correct">Résolu !</string>
+    <string name="tsumego_correct">Résolu !</string>
 
     <string name="refresh">Actualiser</string>
-    <string name="tsumego_sgf_no_solution">Le fichier SGF sélectionné ne contient pas de solution. L’ouvrir tout de même ?</string>
+    <string name="tsumego_sgf_no_solution">Le fichier SGF sélectionné ne contient pas de solution. L’ouvrir tout de même ?</string>
     <string name="working">Traitement en cours</string>
-    <string name="please_stay_patient">Veuillez patienter</string>   
+    <string name="please_stay_patient">Veuillez patienter</string>
     <string name="creating_thumbnails">Génération des miniatures, veuillez patienter</string>
     <string name="gnugo">GnuGo</string>
-    <string name="gnugo_not_installed">GnuGo est introuvable. Installer GnuGo ?</string>
+    <string name="gnugo_not_installed">GnuGo est introuvable. Installer GnuGo ?</string>
 
-    <string name="preferences">Options</string>   
+    <string name="preferences">Options</string>
     <string name="board_setup">Préférences</string>
     <string name="for_recording">de jeu</string>
     <string name="sound">Son</string>
@@ -145,6 +145,6 @@
     <string name="handicap">Handicap</string>
     <string name="size">Taille</string>
     <string name="enter_your_comments_here">commentaires...</string>
-    <string name="keep_variant_">Conserver la variation ?</string>
-    <string name="keep_this_move_as_variant_">Conserver ce coup comme variation ?</string>
+    <string name="keep_variant_">Conserver la variation ?</string>
+    <string name="keep_this_move_as_variant_">Conserver ce coup comme variation ?</string>
 </resources>
