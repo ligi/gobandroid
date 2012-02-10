@@ -89,7 +89,8 @@ public class GoActivity
 			return;
 		}
 			
-		sound_man=new GoSoundManager(this);
+		if (sound_man==null)
+			sound_man=new GoSoundManager(this);
 		
 		View customNav =new InGameActionBarView(this);
 		

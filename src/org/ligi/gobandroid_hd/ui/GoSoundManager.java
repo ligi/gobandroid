@@ -9,6 +9,8 @@ import org.ligi.tracedroid.logging.Log;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnErrorListener;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.media.SoundPool;
 import android.media.MediaPlayer.OnCompletionListener;
 
@@ -48,9 +50,11 @@ public class GoSoundManager {
 	}
 	
 	public void playSound(int index) {
+	
 		if ((!mContext.getSettings().isSoundEnabled())||(!intro_sound_played))
 			return;
 
+		Log.i("playing sound " + index);
 		float streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 		streamVolume = streamVolume / mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 	    mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume, 1, 0, 1f);
@@ -60,8 +64,11 @@ public class GoSoundManager {
 		if (!mContext.getSettings().isSoundEnabled())
 			return;
 
+		if (intro_sound_played)
+			return;
+		
 		MediaPlayer mp = MediaPlayer.create(mContext, R.raw.go_start);
-	    mp.start();
+		
 	    mp.setOnCompletionListener(new OnCompletionListener() {
 	    	@Override
 	        public void onCompletion(MediaPlayer mp) {
@@ -69,6 +76,30 @@ public class GoSoundManager {
 	    		intro_sound_played=true;
 	        }
 	    });
-	}
+	    
+	    mp.setOnErrorListener(new OnErrorListener() {
 
+			@Override
+			public boolean onError(MediaPlayer mp, int what, int extra) {
+				Log.i("sound_err");
+				return false;
+			}
+	    	
+	    });
+    	mp.setOnPreparedListener(new OnPreparedListener() {
+
+			@Override
+			public void onPrepared(MediaPlayer mp) {
+				mp.start();
+			}
+    		
+    	});
+    	
+	    try {
+			mp.prepareAsync();
+		} catch (IllegalStateException e) {
+			Log.i("sound_err" +e );
+			intro_sound_played=true;
+		}
+	}
 }
