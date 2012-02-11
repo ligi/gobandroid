@@ -29,7 +29,7 @@
     <string name="problem_listing_sgf">Erreur : ne peut lister les SGF</string>
     <string name="there_are_no_files_in">Aucun fichier trouvé dans </string>
     <string name="sgf_path_invalid">Le chemin d’accès au SGF est invalide</string>
-    <string name="android_market_problem">Impossible d'accéder à l'Android Market. Essayez manuellement.</string>
+    <string name="android_market_problem">Impossible d\'accéder à l\'Android Market. Essayez manuellement.</string>
     <string name="problem">Problème</string>
     <string name="gameplay">Mode</string>
     <string name="game_results">Score</string>
