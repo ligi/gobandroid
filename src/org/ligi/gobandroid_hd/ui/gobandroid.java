@@ -35,6 +35,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.view.MenuItem;
 import android.view.View;
 
 /**
@@ -50,7 +51,9 @@ public class gobandroid extends GobandroidFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.main_menu);
+        
         new GoSoundManager(this);
     }
   
@@ -64,7 +67,16 @@ public class gobandroid extends GobandroidFragmentActivity {
     	this.startActivity(new Intent(this,GoSetupActivity.class));
     }
 
-    private Intent startLoad(String path,byte mode) {
+    @Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+    	switch (item.getItemId()) {
+    	case android.R.id.home:
+    		return true;
+    	}
+		return super.onOptionsItemSelected(item);
+	}
+
+	private Intent startLoad(String path,byte mode) {
     	Intent i=new Intent(this,SGFSDCardListActivity.class);    	
     	i.setData((Uri.parse("file://"+path)));
     	GoInteractionProvider.setMode(mode);
