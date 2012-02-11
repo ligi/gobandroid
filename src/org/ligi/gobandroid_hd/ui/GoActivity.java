@@ -95,7 +95,7 @@ public class GoActivity
 		View customNav =new InGameActionBarView(this);
 		
 		FragmentTransaction fragmentTransAction =this.getSupportFragmentManager().beginTransaction();
-		myZoomFragment= new ZoomGameExtrasFragment();
+		
 		
 		fragmentTransAction.add(R.id.game_extra_container, getGameExtraFragment()).commit();
 		
@@ -109,7 +109,7 @@ public class GoActivity
         setupBoard();
 		
 		game2ui();
-    	sound_man.playGameIntro();
+		
 	}
 	
 
@@ -135,6 +135,14 @@ public class GoActivity
 		});
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		sound_man.playGameIntro();
+		Log.i("GoFrag new Zoom Frag");
+		myZoomFragment= new ZoomGameExtrasFragment();
+	}
+
 	@Override
 	public boolean doFullScreen() {
 		return getSettings().isFullscreenEnabled()|getResources().getBoolean(R.bool.force_fullscreen);
@@ -253,13 +261,15 @@ public class GoActivity
 	
 	public void game2ui() {
 		go_board.postInvalidate();
-		if (myZoomFragment.getBoard()!=null)
-			myZoomFragment.getBoard().postInvalidate();
+		refreshZoomFragment();
 	}
 	
 	public void setFragment(Fragment newFragment) {
-		if (actFragment==newFragment)
+		if (actFragment==newFragment) {
+			Log.i("GoFrag same same");
 			return;
+		}
+		Log.i("GoFrag changing" + newFragment);
 		actFragment=newFragment;
 		FragmentTransaction fragmentTransAction =this.getSupportFragmentManager().beginTransaction();
 		fragmentTransAction.replace(R.id.game_extra_container,actFragment).commit();
@@ -399,11 +409,17 @@ public class GoActivity
     	
     	}
     	go_board.postInvalidate();
-      	if (myZoomFragment.getBoard()!=null)
-      		myZoomFragment.getBoard().invalidate();
+    	refreshZoomFragment();
       	return true;
 	}
 	
+	public void refreshZoomFragment() {
+		if (myZoomFragment==null)
+			return;
+	  	if (myZoomFragment.getBoard()!=null)
+      		myZoomFragment.getBoard().postInvalidate();
+    
+	}
 	public GoBoardViewHD getBoard() {
 		return go_board;
 	}
