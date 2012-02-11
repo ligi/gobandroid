@@ -12,7 +12,7 @@
 <string name="quit_confirm">您確定要退出？</string>
 <string name="no">否</string>
 <string name="yes">是</string>
-<string name="end_game_quesstion_title">結束對局？</string>
+<string name="end_game_quesstion_title">結束對局</string>
 <string name="comments">評註</string>
 <string name="ok">確定</string>
 <string name="wait_gnugo">等待 GnuGo 對弈引擎啟動...</string>
