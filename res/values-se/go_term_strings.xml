@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    	<string name="goterm_joseki">Joseki jōseki (定石?) är erkända spelsekvenser som (lokalt) anses vara ett optimalt resultat för båda spelarna. Det finns tusentals sådana sekvenser som har utforskats och dokumenterats. 
+\nOfta spelas joseki i början av partiet och handlar bland annat om att dela upp hörnen. Det finns också joseki som utspelas i mitten av partiet som används för att invadera enklare omslutningar eller ett ramverk (moyo).
+\nÄven om man kan dra paralleller med schacköppningar så är de väldigt olika. Schacköppingar styr hela brädet medans joseki endast styr den lokala positionen. Därför är valet av joseki (från ett stort antal) vid ett givet tillfälle något som bör baseras på en bedömning av det globala läget. T.ex. så måste man ta hänsyn till spelriktning, balansen mellan territorie och influens samt vald strategi.
+\nDet är också möjligt att avvika från joseki och erhålla ett bra resultat om omgivningen tillåter. Med andra ord, joseki är känsligt för sammanhanget de spelas i.
+\n\nhttp://en.wikipedia.org/wiki/Go_terms#Joseki
+</string>
+
+	<string name="goterm_miai">Miai (見合い) inom Go är, enkelt uttryckt, ett par lediga punkter på brädet som har likvärdigt värde. T.ex. om svart spelar A kan vit spela B utan att några nackdelar av utbytet.
+\nDetta händer ofta. När det gäller en grupps överlevnad eller utveckling så finns det ofta två punkter sådana att om den ena spelaren tar den ena punkten så tar den andra spelaren den andra punkten. Miai kan uppstå i fusekin (början av partiet) som stora punkter och i liv och död-problem, t.ex. i rak-fyra ögat. Denna form lever p.g.a. dess två mittpunkter a och b: om vid spelar b så svarar svart a och vise versa.
+\nTermen har sitt ursprung ur det japanska traditionen av att arrangera ett giftermål genom en serie av möten (miai) för att se potentiella partners (見る miru, \"visa\", 合う au, \"anpassa\").
+\n\nhttp://en.wikipedia.org/wiki/Go_terms#Miai
+</string>
+
+	 <string name="goterm_shape">Form är en sammansättning av stenar i förhållande till gruppens felxibilitet och effektivitet när det gäller att sitta ihop, skapa ögon och hålla antalet friheter uppe. Stenar sägs ha god form om de är både effektiva och flexibla. Motsvarande har de dålig form om de är inneffektiva. Två klassiska exempel på god form är ponnuki (fyra stenar i diamantform som bildas när man fångar en fiendesten)  och bambuled (ett mönster av 2x3 stenar med två stenar, två tomrum och två stenar). Exempel på dålig form är tom triangel (tre närliggande stenar som bildar ett \'L\') och dango (stor klump av stenar utan några ögon). Joseki är till stor del läran om att bilda god form med dina stenar.
+\n\nhttp://en.wikipedia.org/wiki/Shape_(Go)
+ </string>   
+ 
+	  <string name="goterm_tesuji">Tesuji (手筋) är en term som används inom go och shogi. En tesuji är ett listigt drag, det bästa draget lokalt eller ett skickligt drag. Tesuji kommer av ordet suji (筋) som är ett svåröversatt ord men betyder något i stil med "stil", "sätt att tänka", "plan", "logik" eller "teknik".
+\nMotsatsen till tesuji är zokusuji vilket kan översättas med "dålig suji". Ibland omnämns det också anti-suji eller ett vulgärt drag.
+\nTesuji är en av de allra viktigaste aspekterna i ett parti när en spelare ska "läsa". I go används de frekvent i liv och död-situationer för att få initativet (sente) i slutet, fånga stenar, få extra poäng i slutspelet (yose) eller för att försöka vända en ofördelaktig situation.
+\n\nhttp://en.wikipedia.org/wiki/Tesuji</string>   
+  
+</resources>
