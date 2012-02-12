@@ -83,6 +83,9 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 					min_y=y;
 			}
 		
+		if ((min_x+min_y)==(game.getSize()*2))
+			return 1.0f;
+		
 		int max_span_size=Math.max(game.getSize()-min_x, game.getSize()-min_y);
 	
 		float res=(float)game.getSize()/(max_span_size+2);
