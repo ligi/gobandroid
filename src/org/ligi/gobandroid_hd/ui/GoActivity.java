@@ -65,12 +65,13 @@ public class GoActivity
 
 	private Toast info_toast=null;
 	
-	private ZoomGameExtrasFragment myZoomFragment;
+	public ZoomGameExtrasFragment myZoomFragment;
 	private Fragment actFragment;
 
 	public GoSoundManager sound_man ;
 	 
 	public Fragment getGameExtraFragment() {
+		
 		return new DefaultGameExtrasFragment();
 	}
 	
@@ -140,7 +141,12 @@ public class GoActivity
 		super.onResume();
 		sound_man.playGameIntro();
 		Log.i("GoFrag new Zoom Frag");
-		myZoomFragment= new ZoomGameExtrasFragment();
+		}
+	
+	public ZoomGameExtrasFragment getZoomFragment() {
+		if (myZoomFragment==null)
+			myZoomFragment=new ZoomGameExtrasFragment(true);
+		return myZoomFragment;
 	}
 
 	@Override
@@ -275,6 +281,7 @@ public class GoActivity
 		fragmentTransAction.replace(R.id.game_extra_container,actFragment).commit();
 	}
 	
+	@Override
 	public boolean onTouch( View v, MotionEvent event ) {
 		
 		if (event.getAction()==MotionEvent.ACTION_UP) {
@@ -289,7 +296,7 @@ public class GoActivity
 			
 		}else if (event.getAction()==MotionEvent.ACTION_DOWN)
 		 {
-			setFragment(myZoomFragment);
+			setFragment(getZoomFragment());
 			if (getResources().getBoolean(R.bool.small))
 				this.getSupportActionBar().hide();
 			
@@ -414,7 +421,7 @@ public class GoActivity
 	}
 	
 	public void refreshZoomFragment() {
-		if (myZoomFragment==null)
+		if (getZoomFragment().getBoard()==null) // nothing we can do
 			return;
 	  	if (myZoomFragment.getBoard()!=null)
       		myZoomFragment.getBoard().postInvalidate();

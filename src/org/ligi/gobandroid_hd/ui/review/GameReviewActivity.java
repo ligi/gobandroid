@@ -5,6 +5,7 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.NavigationAndCommentFragment;
+import org.ligi.gobandroid_hd.ui.ZoomGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.tracedroid.logging.Log;
 
@@ -13,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class GameReviewActivity extends GoActivity  {
@@ -98,7 +100,9 @@ public class GameReviewActivity extends GoActivity  {
 		super.onCreate(savedInstanceState);
 		getBoard().setOnKeyListener(this);
 		getBoard().do_mark_act=false;
+	
 	}
+	
 	
 	@Override
 	public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -124,6 +128,16 @@ public class GameReviewActivity extends GoActivity  {
 	    	}
 	    	return super.onKey(v,keyCode, event);
 	 }
+	
+	public boolean onTouch( View v, MotionEvent event ) {
+		if (event.getAction()==MotionEvent.ACTION_UP) 
+			setFragment(getGameExtraFragment());
+		else if (event.getAction()==MotionEvent.ACTION_DOWN)
+			setFragment(getZoomFragment());
+		
+		return true;
+	}
+	
 
 	@Override
 	public boolean isAsk4QuitEnabled() {
