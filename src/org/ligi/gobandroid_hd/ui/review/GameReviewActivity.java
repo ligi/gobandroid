@@ -135,10 +135,17 @@ public class GameReviewActivity extends GoActivity  {
 		else if (event.getAction()==MotionEvent.ACTION_DOWN)
 			setFragment(getZoomFragment());
 		
+		doTouch(event);
 		return true;
 	}
 	
-
+	@Override
+	public ZoomGameExtrasFragment getZoomFragment() {
+		if (myZoomFragment==null)
+			myZoomFragment=new ZoomGameExtrasFragment(false);
+		return myZoomFragment;
+	}
+	
 	@Override
 	public boolean isAsk4QuitEnabled() {
 		return false;
