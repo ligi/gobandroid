@@ -133,7 +133,7 @@
     <string name="_points_">" points."</string>
     <string name="white_won_with_">"Blanc gagne de "</string>
     <string name="bookmark_to_write_into">"Sauvegarder l’état du plateau dans "</string>
-    <string name="loading_sgf">en chargement...</string>
+    <string name="loading_sgf">en chargement…</string>
     <string name="review">Analyse</string>
     <string name="record">Kifu</string>
     <string name="empty_str"></string>
@@ -144,7 +144,7 @@
     <string name="numbered_end">afficher la solution</string>
     <string name="handicap">Handicap</string>
     <string name="size">Taille</string>
-    <string name="enter_your_comments_here">commentaires...</string>
+    <string name="enter_your_comments_here">commentaires…</string>
     <string name="keep_variant_">Conserver la variation ?</string>
     <string name="keep_this_move_as_variant_">Conserver ce coup comme variation ?</string>
 </resources>
