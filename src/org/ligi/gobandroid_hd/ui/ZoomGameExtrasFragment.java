@@ -11,6 +11,10 @@ public class ZoomGameExtrasFragment extends Fragment {
 	private GoBoardViewHD board;
 	private boolean show_shadow_stone=false;
 	
+	public ZoomGameExtrasFragment() {
+		
+	}
+	
 	public ZoomGameExtrasFragment(boolean _show_shadow_stone) {
 		show_shadow_stone=_show_shadow_stone;
 	}

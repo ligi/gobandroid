@@ -109,8 +109,9 @@ public class GoActivity
         
         setupBoard();
 		
+        
 		game2ui();
-		
+		getZoomFragment();
 	}
 	
 
