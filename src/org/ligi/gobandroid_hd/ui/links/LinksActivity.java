@@ -73,13 +73,18 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 				links=new LinkWithDescription[] {
 					new LinkWithDescriptionAndTitle("https://plus.google.com/b/106767057593220295403/","for news, infos, feedback","Gobandroid Project Page"),
 					new LinkWithDescriptionAndTitle("https://plus.google.com/104849265443273982798","idea / concept / code ","Ligi on Google+"),
+					new LinkWithDescription("https://github.com/ligi/gobandroid","Code/Issues on GitHub"),
 					new LinkWithDescriptionAndTitle("http://gogameguru.com/","source of default Tsumego and commented game SGF's","gogameguru.com"),
 					new LinkWithDescriptionAndTitle("http://actionbarsherlock.com/","library used for ActionBar backward compatibility ","ActionBarSherlock"),
+					new LinkWithDescriptionAndTitle("https://plus.google.com/102354246669329539149","Chinese Translation","Noorudin Ma"),
+					new LinkWithDescriptionAndTitle("http://transimple.de","German Translation","Dirk Blasejezak"),		
+					new LinkWithDescriptionAndTitle("https://plus.google.com/109272815840179446675","French Translation #1","Sylvain Soliman"),
+					new LinkWithDescriptionAndTitle("https://github.com/Zenigata","French Translation #2","Zenigata"),
+					new LinkWithDescriptionAndTitle("https://github.com/p3l","Swedish Translation","Peter Lundqvist"),
 					new LinkWithDescriptionAndTitle("https://plus.google.com/116001545198026111276","feedback & patches" , "Oren Laskin on Google+"),
 					new LinkWithDescriptionAndTitle("https://plus.google.com/105303388887291066710","wooden background","Ruth -lironah- Hinckley on Google+"),
 					new LinkWithDescriptionAndTitle("http://www.silvestre.com.ar/","GPL'd icons","Silvestre Herrera"),
 					new LinkWithDescriptionAndTitle("http://www.sente.ch","FreegGoban stones","sente.ch"),
-					new LinkWithDescription("https://github.com/ligi/gobandroid","Code/Issues on GitHub"),
 					new LinkWithDescription("http://gplv3.fsf.org/","GPLv3 License")					
 				};					
 			break;

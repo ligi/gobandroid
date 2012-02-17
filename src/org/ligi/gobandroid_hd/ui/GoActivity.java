@@ -142,7 +142,7 @@ public class GoActivity
 		super.onResume();
 		sound_man.playGameIntro();
 		Log.i("GoFrag new Zoom Frag");
-		}
+	}
 	
 	public ZoomGameExtrasFragment getZoomFragment() {
 		if (myZoomFragment==null)
@@ -429,6 +429,8 @@ public class GoActivity
     
 	}
 	public GoBoardViewHD getBoard() {
+		if (go_board==null)
+			setupBoard();
 		return go_board;
 	}
 	
