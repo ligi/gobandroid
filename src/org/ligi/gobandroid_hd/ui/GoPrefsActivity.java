@@ -34,9 +34,8 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.preference.EditTextPreference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.support.v4.app.SherlockPreferenceActivity;
 
-public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPreferenceChangeListener {
+public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceChangeListener {
 
 	private ListPreference viewDistPref;
 	private ListPreference boardSkinPref;

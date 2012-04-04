@@ -34,13 +34,15 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.tracedroid.logging.Log;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -157,7 +159,7 @@ public class GoActivity
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		this.getMenuInflater().inflate(R.menu.ingame_common, menu);
+		this.getSupportMenuInflater().inflate(R.menu.ingame_common, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -278,7 +280,7 @@ public class GoActivity
 		}
 		Log.i("GoFrag changing" + newFragment);
 		actFragment=newFragment;
-		FragmentTransaction fragmentTransAction =this.getSupportFragmentManager().beginTransaction();
+		FragmentTransaction fragmentTransAction =getSupportFragmentManager().beginTransaction();
 		fragmentTransAction.replace(R.id.game_extra_container,actFragment).commit();
 	}
 	

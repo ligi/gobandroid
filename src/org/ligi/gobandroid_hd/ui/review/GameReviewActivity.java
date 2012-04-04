@@ -9,10 +9,11 @@ import org.ligi.gobandroid_hd.ui.ZoomGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.tracedroid.logging.Log;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,7 +47,7 @@ public class GameReviewActivity extends GoActivity  {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-    	this.getMenuInflater().inflate(R.menu.ingame_review, menu);
+    	this.getSupportMenuInflater().inflate(R.menu.ingame_review, menu);
     	
     	menu.findItem(R.id.menu_autoplay).setTitle(autoplay_active?R.string.autoplay_off:R.string.autoplay_on);
 		return super.onCreateOptionsMenu(menu);

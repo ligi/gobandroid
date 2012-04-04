@@ -6,6 +6,7 @@ import org.ligi.android.common.files.FileHelper;
 import org.ligi.gobandroid_hd.ui.GoInteractionProvider;
 import org.ligi.gobandroid_hd.ui.SGFLoadActivity;
 import org.ligi.tracedroid.logging.Log;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;

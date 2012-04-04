@@ -1,7 +1,5 @@
 package org.ligi.gobandroid_hd.ui;
 
-
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,6 +7,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;

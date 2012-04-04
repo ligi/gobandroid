@@ -25,11 +25,10 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
 
+import com.actionbarsherlock.app.ActionBar;
+
 import android.os.Bundle;
-import android.support.v4.app.ActionBar.Tab;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ActionBar;
-import android.support.v4.app.FragmentTransaction;
 
 /**
  * Activity to load present the user GO-Relevant links ( Rules / SGF's / .. )
@@ -121,16 +120,22 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 		changeFragment(new LinkListFragment(links));	
 	}
 
-	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction ft) {	}
 
 	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+	public void onTabSelected(com.actionbarsherlock.app.ActionBar.Tab tab,
+			android.support.v4.app.FragmentTransaction ft) {
 		getTracker().trackPageView("/links/"+tab.getText());
 		setList((Integer)tab.getTag());
 	}
 
 	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction ft) {}
+	public void onTabUnselected(com.actionbarsherlock.app.ActionBar.Tab tab,
+			android.support.v4.app.FragmentTransaction ft) {
+	}
+
+	@Override
+	public void onTabReselected(com.actionbarsherlock.app.ActionBar.Tab tab,
+			android.support.v4.app.FragmentTransaction ft) {
+	}
     
 }

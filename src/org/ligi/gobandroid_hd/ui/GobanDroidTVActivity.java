@@ -19,6 +19,10 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 	private Vector<String> avail_file_list;
 	private File path_to_play_from;
 	
+	public Intent getIntent2start() {
+		return new Intent(this,GobanDroidTVActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,7 +33,7 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 		getTracker().trackPageView("/gtv");
 		if (path_to_play_from.listFiles()==null) {
 			getTracker().trackPageView("/gtv/unzip");
-			UnzipSGFsDialog.show(this,new Intent(this,GobanDroidTVActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+			UnzipSGFsDialog.show(this,getIntent2start());
 		} else {
 			startTV();
 		}
@@ -37,8 +41,6 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 	}
 
 	private void startTV() {
-
-		
 		
 		Intent start_review_intent=new Intent(this,SGFLoadActivity.class);
 		

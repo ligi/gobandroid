@@ -5,9 +5,11 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
+
+import com.actionbarsherlock.view.Menu;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.Menu;
 import android.view.WindowManager;
 
 public class GameRecordActivity extends GoActivity  implements GoGameChangeListener {
@@ -56,7 +58,7 @@ public class GameRecordActivity extends GoActivity  implements GoGameChangeListe
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		this.getMenuInflater().inflate(R.menu.ingame_record, menu);
+		this.getSupportMenuInflater().inflate(R.menu.ingame_record, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 

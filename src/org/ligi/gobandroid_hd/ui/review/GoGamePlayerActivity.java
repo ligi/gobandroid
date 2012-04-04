@@ -5,16 +5,17 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.CommentAndNowPlayingFragment;
 import org.ligi.gobandroid_hd.ui.GoActivity;
+import org.ligi.gobandroid_hd.ui.GoInteractionProvider;
 import org.ligi.gobandroid_hd.ui.GobanDroidTVActivity;
-import org.ligi.gobandroid_hd.ui.NavigationAndCommentFragment;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.tracedroid.logging.Log;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -23,8 +24,10 @@ public class GoGamePlayerActivity extends GoActivity  {
 	private boolean autoplay_active=true;
 	
 	// timings in ms
-	private int pause_for_last_move=23000;
-	private int pause_between_moves=2300;
+	private int pause_for_last_move=2300;
+	private int pause_between_moves=230;
+	
+	
 	private int pause_betwen_moves_extra_per_word=500;
 	
 	class autoPlayRunnable implements Runnable {
@@ -52,25 +55,25 @@ public class GoGamePlayerActivity extends GoActivity  {
 				e.printStackTrace();
 			}
 			Log.i("gobandroid","automove asleep");
-			Intent next_intent=new Intent(GoGamePlayerActivity.this,GobanDroidTVActivity.class);
 			
-			if (autoplay_active) {
-				GoGamePlayerActivity.this.startActivity(next_intent);
+			if (!GoInteractionProvider.is_in_noif_mode()) {
+				Intent next_intent=new Intent(GoGamePlayerActivity.this,GobanDroidTVActivity.class);
+			
+				if (autoplay_active) {
+					GoGamePlayerActivity.this.startActivity(next_intent);
+					GoGamePlayerActivity.this.finish();
+				}
+			} else {
+				GoGamePlayerActivity.this.setResult(RESULT_OK);
 				GoGamePlayerActivity.this.finish();
 			}
-			
-			
 		}
 		
 	}
 	
-	
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-    	this.getMenuInflater().inflate(R.menu.ingame_review, menu);
-    	
-    	
+    	this.getSupportMenuInflater().inflate(R.menu.ingame_review, menu);
     	
     	menu.findItem(R.id.menu_autoplay).setTitle(autoplay_active?"autoplay off":"autoplay on");
 		return super.onCreateOptionsMenu(menu);
@@ -162,10 +165,11 @@ public class GoGamePlayerActivity extends GoActivity  {
 	
 	public int countWords(String sentence) {
 		int words=0;
-		for (int i=0;i<sentence.length();i++)
-			if (sentence.charAt(i)==' ')
-				words++;
-
+		if (!GoInteractionProvider.is_in_noif_mode())
+			for (int i=0;i<sentence.length();i++)
+				if (sentence.charAt(i)==' ')
+					words++;
+		
 		return words;
 	}
 	

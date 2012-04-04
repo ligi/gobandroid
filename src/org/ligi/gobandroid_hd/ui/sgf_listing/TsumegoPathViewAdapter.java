@@ -1,8 +1,13 @@
 package org.ligi.gobandroid_hd.ui.sgf_listing;
 
 import java.io.File;
+import java.io.IOException;
 
+import org.ligi.android.common.files.FileHelper;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.ui.PreviewView;
 import org.ligi.tracedroid.logging.Log;
 
 import android.app.Activity;
@@ -47,31 +52,6 @@ class TsumegoPathViewAdapter extends BaseAdapter {
 		return 0;
 	}
 	
-	public void setImageToGameThumbnail(ImageView img,String thumbnail_fname) {
-		img.setLayoutParams(new LinearLayout.LayoutParams((int) activity.getResources().getDimension(R.dimen.thumbnail_size),(int) activity.getResources().getDimension(R.dimen.thumbnail_size)));
-
-		Log.i("processing -- " + thumbnail_fname);
-
-		BitmapFactory.Options options=new BitmapFactory.Options();
-		//options.inSampleSize = 2;
-		options.inPurgeable=true;
-		
-		Bitmap img_bmp=null;
-		try {
-			img_bmp=BitmapFactory.decodeFile(thumbnail_fname,options);
-		} catch ( OutOfMemoryError e) {
-			System.gc();
-			
-			try {
-			img_bmp=BitmapFactory.decodeFile(thumbnail_fname,options);
-			} catch ( OutOfMemoryError e2) { 
-				// Three Times a Fool ;-)
-				img.setImageResource(R.drawable.dashboard_tsumego);
-			}  
-		}
-		if (img_bmp!=null) {img.setImageBitmap(img_bmp);}
-		img.setScaleType(ScaleType.FIT_XY);
-	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -88,7 +68,7 @@ class TsumegoPathViewAdapter extends BaseAdapter {
 			
 			LinearLayout container = (LinearLayout)v.findViewById(R.id.thumb_container);
 			container.setOrientation(LinearLayout.HORIZONTAL);
-			
+			/*
 			int fcount=0;
 			
 			for ( File act_file:new File(base_fname).listFiles())
@@ -102,25 +82,37 @@ class TsumegoPathViewAdapter extends BaseAdapter {
 				}
 			
 			if (fcount==0) // no thumbnails -> no container
-				container.setVisibility(View.GONE);
+				*/
+			container.setVisibility(View.GONE);
 			
 		}
 		else
 			v= inflater.inflate(R.layout.sgf_tsumego_list_item,null);
 			
 		
-		String img_fname=path+"/"+menu_items[position]+".png";
-
 		TextView title_tv=(TextView)v.findViewById(R.id.filename);
 		
 		if (title_tv!=null) {
 			title_tv.setText(menu_items[position].replace(".sgf", ""));
 		}
 		
-		if (new File(img_fname).exists()) {
-			ImageView img=(ImageView)v.findViewById(R.id.thumbnail);
-			setImageToGameThumbnail(img,img_fname);
-		}		
+		String sgf_str="";
+		
+		if (GoLink.isGoLink(base_fname)) {
+			GoLink gl=new GoLink(base_fname);
+			sgf_str=gl.getSGFString();
+		} else {
+			try {
+				sgf_str=FileHelper.file2String(new File(base_fname));
+			} catch (IOException e) {	}
+		}
+		
+		GoGame game=SGFHelper.sgf2game(sgf_str, null,SGFHelper.BREAKON_FIRSTMOVE);
+		LinearLayout container = (LinearLayout)v.findViewById(R.id.thumb_container);
+		if (game!=null)
+			container.addView(new PreviewView(activity,game));
+		
+		Log.i("loadingSGF " + base_fname);
 		
 		ImageView solve_img=(ImageView)v.findViewById(R.id.solve_status_image);
 		if ((solve_img!=null)&&(activity.getBaseContext().getSharedPreferences("tsumego_stats", Activity.MODE_PRIVATE).getInt("file://"+base_fname, -1)>0)) {

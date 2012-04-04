@@ -29,13 +29,14 @@ import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 import org.ligi.gobandroid_hd.ui.recording.PlayAgainstGnugoActivity;
 import org.ligi.tracedroid.logging.Log;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -300,7 +301,7 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		this.getMenuInflater().inflate(R.menu.game_setup, menu);
+		this.getSupportMenuInflater().inflate(R.menu.game_setup, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 

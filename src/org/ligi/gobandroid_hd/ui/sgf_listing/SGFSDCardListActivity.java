@@ -30,10 +30,11 @@ import org.ligi.gobandroid_hd.ui.GoInteractionProvider;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsDialog;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 
 /**
  * Activity to load SGF's from SD card
@@ -102,14 +103,14 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
         Arrays.sort(menu_items);
         
         list_fragment=new SGFListFragment(menu_items,dir);
-        this.getSupportFragmentManager().beginTransaction().add(R.id.list_fragment, list_fragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.list_fragment, list_fragment).commit();
     }
 
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_TSUMEGO)
-			this.getMenuInflater().inflate(R.menu.refresh_tsumego, menu);
+			this.getSupportMenuInflater().inflate(R.menu.refresh_tsumego, menu);
 		
 		return super.onCreateOptionsMenu(menu);
 	}

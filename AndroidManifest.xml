@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      android:versionName="0.84" android:versionCode="84" package="org.ligi.gobandroid_hd">
+      android:versionName="0.85" android:versionCode="85" package="org.ligi.gobandroid_hd">
 
      <uses-sdk android:targetSdkVersion="11" android:minSdkVersion="4"/>
     
@@ -44,6 +44,13 @@
             </intent-filter>
         </activity>
     	
+        <activity android:name=".ui.GobanDroidTVActivityNOIF">
+            <intent-filter>
+                <action android:name="org.ligi.gobandroid.NOIF" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
         <activity android:name=".ui.GoTermsViewActivity"
             android:theme="@android:style/Theme.Dialog"
             android:layout_width="wrap_content"

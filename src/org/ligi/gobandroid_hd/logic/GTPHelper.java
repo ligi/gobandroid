@@ -37,7 +37,6 @@ public class GTPHelper {
 		else if (gtp_str.equals("PASS"))
 			game.pass();
 		else {
-			
 			byte x=(byte) (gtp_str.charAt(0)-'A');
 			if (x>8)
 				x--; // the I is missing ^^ - took me some time to find that out 

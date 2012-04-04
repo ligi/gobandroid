@@ -11,12 +11,13 @@ import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.tracedroid.logging.Log;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 
 public class TsumegoActivity extends GoActivity implements GoGameChangeListener {
 	
@@ -73,27 +74,35 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
      * @return - the calculated Zoom factor
      */    
     public static float calcZoom(GoGame game) {
-    	int min_x=game.getSize();
-		int min_y=game.getSize();
-		for (int x=0;x<game.getSize();x++)
-			for (int y=0;y<game.getSize();y++) {
-				if ((x<min_x)&&!game.getHandicapBoard().isCellFree(x, y))
-					min_x=x;
-				if ((y<min_y)&&!game.getHandicapBoard().isCellFree(x, y))
-					min_y=y;
-			}
-		
-		if ((min_x+min_y)==(game.getSize()*2))
-			return 1.0f;
-		
-		int max_span_size=Math.max(game.getSize()-min_x, game.getSize()-min_y);
+   	
+		int max_span_size=calcSpan(game);
 	
-		float res=(float)game.getSize()/(max_span_size+2);
+		if (max_span_size==0) // no predefined stones -> no zoom
+	 		return 1.0f;
 		
-		if (res<1.0f)
+		float calculated_zoom=(float)game.getSize()/(max_span_size+2);
+		
+		if (calculated_zoom<1.0f)
 			return 1.0f;
 		else
-			return res;
+			return calculated_zoom;
+    }
+    
+    
+    public static int calcSpan(GoGame game) {
+     	int min_x=game.getSize();
+    	int min_y=game.getSize();
+    	for (int x=0;x<game.getSize();x++)
+    		for (int y=0;y<game.getSize();y++) {
+    			if ((x<min_x)&&!game.getHandicapBoard().isCellFree(x, y))
+    				min_x=x;
+    			if ((y<min_y)&&!game.getHandicapBoard().isCellFree(x, y))
+    				min_y=y;
+    		}
+    		
+    	return Math.max(game.getSize()-min_x, game.getSize()-min_y);
+    		
+    	
     }
     
     private void recursive_add_on_path_moves(GoMove act) {
@@ -141,7 +150,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-    	this.getMenuInflater().inflate(R.menu.ingame_tsumego, menu);
+    	this.getSupportMenuInflater().inflate(R.menu.ingame_tsumego, menu);
     	menu.findItem(R.id.menu_game_hint).setVisible(isFinishingMoveKnown());
 		return super.onCreateOptionsMenu(menu);
 	}

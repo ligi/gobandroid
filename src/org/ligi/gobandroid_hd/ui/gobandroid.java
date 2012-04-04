@@ -28,6 +28,8 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
 
+import com.actionbarsherlock.view.MenuItem;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -35,7 +37,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.view.MenuItem;
 import android.view.View;
 
 /**

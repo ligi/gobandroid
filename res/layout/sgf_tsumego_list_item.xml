@@ -10,13 +10,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp" >
 
-        <ImageView
-            android:id="@+id/thumbnail"
+            <LinearLayout
+        android:id="@+id/thumb_container"
             android:layout_width="@dimen/thumbnail_size"
             android:layout_height="@dimen/thumbnail_size"
-            android:src="@drawable/next"
-          />
-
+        android:layout_margin="5dp" 
+        android:orientation="horizontal"
+            />
+        
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"

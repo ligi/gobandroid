@@ -12,6 +12,8 @@ public class GoInteractionProvider {
 		
 	public static int touch_position=-1; // negative numbers -> no recent touch
 	private static byte mode;
+	private static boolean is_noif_mode=false;
+	
 	
 	public static void setTouchPosition(int pos) {
 		touch_position=pos;
@@ -39,5 +41,13 @@ public class GoInteractionProvider {
 
 	public static void setMode(byte mode) {
 		GoInteractionProvider.mode = mode;
+	}
+
+	public static boolean is_in_noif_mode() {
+		return is_noif_mode;
+	}
+
+	public static void setIs_in_noif_mode(boolean is_noif_mode) {
+		GoInteractionProvider.is_noif_mode = is_noif_mode;
 	}
 }

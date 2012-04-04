@@ -4,17 +4,15 @@ import org.ligi.gobandroid_hd.ui.gobandroid;
 import org.ligi.tracedroid.TraceDroid;
 import org.ligi.tracedroid.logging.Log;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
-
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.MenuItem;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 
-public class GobandroidFragmentActivity extends FragmentActivity {
+public class GobandroidFragmentActivity extends SherlockFragmentActivity {
 
 	private GoogleAnalyticsTracker tracker=null;
 	
@@ -70,7 +68,7 @@ public class GobandroidFragmentActivity extends FragmentActivity {
 	            startActivity(intent);
 	            return true;
 	    }
-	    return super.onContextItemSelected(item);
+	    return super.onOptionsItemSelected(item);
 	}
 
 	@Override
