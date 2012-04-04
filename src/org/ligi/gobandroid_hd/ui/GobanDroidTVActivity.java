@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Vector;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -55,7 +56,9 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 		choosen=avail_file_list.get((int)(Math.random()*avail_file_list.size()));
 		
 		start_review_intent.setData(Uri.parse( "file://"+choosen));
-		getTracker().trackPageView("/gtv/play"+URLEncoder.encode(choosen));
+		try {
+			getTracker().trackPageView("/gtv/play"+URLEncoder.encode(choosen,"UTF-8"));
+		} catch (UnsupportedEncodingException e) {	}
 		this.startActivity(start_review_intent);
 
 		finish();
