@@ -23,26 +23,44 @@ import org.ligi.tracedroid.logging.Log;
 
 public class GTPHelper {
 	
-	public static void doMoveByGTPString(String gtp_str,GoGame game) {
+	/**
+	 * @param gtp_str - the GTP string to process
+	 * @param game - the game on which we execute the commands
+	 * @return - true if we understood the command / false if there was a problem 
+	 */
+	public static boolean doMoveByGTPString(String gtp_str,GoGame game) {
 		
 		Log.i("processing gtp str" + gtp_str);
-		gtp_str=gtp_str.replace(" ", "");
-		gtp_str=gtp_str.replace("=", "");
-		gtp_str=gtp_str.replace("\r", "");
-		gtp_str=gtp_str.replace("\n", "");
-		gtp_str=gtp_str.replace("\t", "");
-
-		if (gtp_str.equals("resign"))
-			game.pass(); // TODO handle better
-		else if (gtp_str.equals("PASS"))
+		
+		// remove chars we do not need
+		for (String c:new String[] {" ","=","\r","\n","\t"})
+			gtp_str=gtp_str.replace(c,"");
+		
+		if (gtp_str.equals("resign")) {
+			game.pass(); // TODO handle this case better
+			return true;
+		}
+		
+		else if (gtp_str.equals("PASS")) {
 			game.pass();
-		else {
+			return true;
+		}
+		
+		try {
 			byte x=(byte) (gtp_str.charAt(0)-'A');
 			if (x>8)
 				x--; // the I is missing ^^ - took me some time to find that out 
 			gtp_str=gtp_str.substring(1);
 			byte y= (byte)(game.getBoardSize()-(Byte.parseByte(gtp_str)));
 			game.do_move(x, y); // internal here?
+			return true;
+		} catch (Exception e) {
+			Log.w("Problem parsing coordinates from GTP " + e.toString());
 		}
+
+		// if we got here we could not make sense of the command
+		Log.w("could not make sense of the GTP command: " + gtp_str);
+		return false;
+		
 	}
 }
