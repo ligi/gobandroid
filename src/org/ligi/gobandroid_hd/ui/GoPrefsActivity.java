@@ -23,19 +23,18 @@ import org.ligi.android.common.preferences.SetPreferenceEnabledByCheckBoxPrefere
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 
-import android.content.Intent;
-import android.net.Uri;
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.preference.EditTextPreference;
 import android.preference.Preference.OnPreferenceChangeListener;
 
-public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceChangeListener {
+public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPreferenceChangeListener {
 
 	private ListPreference viewDistPref;
 	private ListPreference boardSkinPref;
