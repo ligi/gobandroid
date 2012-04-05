@@ -29,7 +29,7 @@ public class SGFListFragment extends ListFragment {
 		this.dir=dir.getAbsolutePath();
 	}
 	
-	public void refresh() {
+	private void refresh() {
 		adapter.notifyDataSetChanged();
 	}
 	    	

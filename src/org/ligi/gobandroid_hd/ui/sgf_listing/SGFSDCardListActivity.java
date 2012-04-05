@@ -133,10 +133,4 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
 	}
 
 
-	@Override
-	protected void onResume() {
-		if (list_fragment!=null) // e.g. when dir was empty we have no fragment
-			list_fragment.refresh();
-       super.onResume();
-	}
 }
