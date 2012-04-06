@@ -24,10 +24,6 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
         Log.setTAG("gobandroid");
         TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
 
-        if (doFullScreen())                
-            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                                          
-        else                                                                                                                                          
-            this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                              
 
         if ((this.getSupportActionBar()!=null) && (this.getSupportActionBar().getCustomView()!=null))
         	this.getSupportActionBar().getCustomView().setFocusable(false);
@@ -37,7 +33,17 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
     	return false;
     }
     
-    public GoogleAnalyticsTracker getTracker() {
+    @Override
+	protected void onResume() {
+		super.onResume();
+		
+    	if (doFullScreen())                
+            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                                          
+        else                                                                                                                                          
+            this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                              
+	}
+
+	public GoogleAnalyticsTracker getTracker() {
     	if (tracker==null) {
             tracker = GoogleAnalyticsTracker.getInstance();
             tracker.startNewSession("UA-27002728-1", this);
