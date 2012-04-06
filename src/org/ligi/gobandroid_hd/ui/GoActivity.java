@@ -181,58 +181,68 @@ public class GoActivity
                            
 	        case R.id.menu_game_switchmode:
 	        	SwitchModeHelper.show(this);
-	        	break;
+	        	return true;
 	        	
 	        case R.id.menu_game_info:                                                                                                                           
                 GameInfoAlert.show(this,game); 
                 
                 getBoard().screenshot(game.getMetaData().getFileName()+".png");
-	        	break;                        
+                return true;                  
 	                
 	        case R.id.menu_game_undo:
 	            if (!game.canUndo())
 	            	break;
 	            
 	            requestUndo();
-	            break;
+	            return true;
 
   
 	        case R.id.menu_game_pass:
 	        	game.pass();        
 	        	game.notifyGameChange();
-	        	break;
+	        	return true;
+	        	
 	        case R.id.menu_game_results:
 	        	GameResultsAlert.show(this, game);                                                                                                    
-	        	break;
+	        	return true;
+	        	
 	        case R.id.menu_write_sgf:                                                                                                                          
 	        	SaveSGFDialog.show(this);
-	        	break;
+	        	return true;
 	
 	        case R.id.preferences:
 	        	startActivity(new Intent(this,GoPrefsActivity.class));
-	        	break;
+	        	return true;
+	        	
+	        case android.R.id.home:
+	        	ask4quit(true);
+	        	return true;
 		}
 		
-		return false;
+		return super.onOptionsItemSelected(item);
 	}
 	
 	/**
-	 * control whether we want to ask the user - diffrent in modes
+	 * control whether we want to ask the user - different in modes
 	 * @return
 	 */
 	public boolean isAsk4QuitEnabled() {
 		return true;
 	}
 	
-	public void shutdown() {
+	private void shutdown(boolean toHome) {
 		sound_man.playSound(GoSoundManager.SOUND_END);
 		game.getGoMover().stop();
 		finish();
+		
+		if (toHome) {
+			startActivity(new Intent(this,gobandroid.class));
+		}
 	}
 	
-	public void ask4quit() {
+	private void ask4quit(final boolean toHome) {
 		if (!isAsk4QuitEnabled()) {
-			shutdown();
+			shutdown(toHome);
 			return;
 		}
 		
@@ -240,7 +250,7 @@ public class GoActivity
 		.setMessage( R.string.quit_confirm
 		).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
-			shutdown();
+			shutdown(toHome);
 		}
 		}).setCancelable(true).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
@@ -252,7 +262,7 @@ public class GoActivity
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_BACK:
-				ask4quit();
+				ask4quit(false);
 				return true;
 		}
 		
