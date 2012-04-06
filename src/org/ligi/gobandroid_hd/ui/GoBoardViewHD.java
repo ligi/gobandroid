@@ -223,6 +223,10 @@ public class GoBoardViewHD extends View {
     	draw2canvas(canvas);
     }
     
+    private int getGameSize() {
+    	return getGame().getSize();
+    }
+    
     protected void draw2canvas(Canvas canvas) {
     	Log.i("draw");
     	canvas.save();
@@ -248,7 +252,7 @@ public class GoBoardViewHD extends View {
     	
     	
         // draw the vertical lines
-        for(byte x=0;x<getGame().getVisualBoard().getSize();x++)
+        for(byte x=0;x<getGameSize();x++)
         	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f,(line_highlight_condition&&(GoInteractionProvider.getTouchX()==x))?gridPaint_h:gridPaint);	
         	
         // draw the horizontal lines and the legend
@@ -256,17 +260,17 @@ public class GoBoardViewHD extends View {
         {
             canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size, (line_highlight_condition&&(GoInteractionProvider.getTouchY()==x))?gridPaint_h:gridPaint);
             if (do_legend) {
-            	canvas.drawText("" + (1+x) , 6+ stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size+gridPaint.getTextSize()/3,gridPaint);
+            	canvas.drawText("" + (getGameSize()-x) , 6+ stone_size*(float)(getGameSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size+gridPaint.getTextSize()/3,gridPaint);
             	
             	if ((x>7)&&legend_sgf_mode)
-            		canvas.drawText("" + (char)('A'+(x+1)) , stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f + 1 + gridPaint.getTextSize() ,gridPaint);
+            		canvas.drawText("" + (char)('A'+(x+1)) , stone_size/2.0f+ x*stone_size,stone_size*(float)(getGameSize()-1) +stone_size/2.0f + 1 + gridPaint.getTextSize() ,gridPaint);
             	else
-            		canvas.drawText("" + (char)('A'+x) , stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f + 1 + gridPaint.getTextSize() ,gridPaint);
+            		canvas.drawText("" + (char)('A'+x) , stone_size/2.0f+ x*stone_size,stone_size*(float)(getGameSize()-1) +stone_size/2.0f + 1 + gridPaint.getTextSize() ,gridPaint);
             }
         }
                 
-        for(byte x=0;x<getGame().getVisualBoard().getSize();x++)
-            for(byte y=0;y<getGame().getVisualBoard().getSize();y++) {
+        for(byte x=0;x<getGameSize();x++)
+            for(byte y=0;y<getGameSize();y++) {
             	blackPaint.setColor(0xFF000000);
             	blackPaint.setStrokeWidth(stone_size/12);
             	//blackPaint.setStyle(Paint.Style) .setStrokeWidth(stone_size/12);
@@ -353,7 +357,6 @@ public class GoBoardViewHD extends View {
     public float getBoardPixels() {
     	return stone_size*getGame().getVisualBoard().getSize();
     }
-
     
     private Bitmap getScaledRes(float size,int resID) {
     	Bitmap unscaled_bitmap=BitmapFactory.decodeResource(this.getResources(),resID);
