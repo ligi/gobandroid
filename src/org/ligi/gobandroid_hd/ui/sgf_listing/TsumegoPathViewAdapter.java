@@ -106,8 +106,11 @@ class TsumegoPathViewAdapter extends BaseAdapter {
 		
 		GoGame game=SGFHelper.sgf2game(sgf_str, null,SGFHelper.BREAKON_FIRSTMOVE);
 		LinearLayout container = (LinearLayout)v.findViewById(R.id.thumb_container);
-		if (game!=null)
+		if (game!=null) {
+			game.jump(game.getFirstMove());
 			container.addView(new PreviewView(activity,game));
+		}
+			
 		
 		Log.i("loadingSGF " + base_fname);
 		
