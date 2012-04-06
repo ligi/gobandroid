@@ -54,7 +54,7 @@ public class GoBoardViewHD extends View {
 	
 	private int zoom_poi=-1;
 	
-	public boolean grid_embos=true; //  GoPrefs.getGridEmbossEnabled()
+	//public boolean grid_embos=true; //  GoPrefs.getGridEmbossEnabled()
 	public boolean do_legend=true; 
 	public boolean do_line_highlight=true;
 	public boolean do_mark_act=true;
@@ -66,7 +66,7 @@ public class GoBoardViewHD extends View {
 	private Paint blackTextPaint;
 	private Paint whiteTextPaint;
 	private Paint boardPaint;
-	private Paint gridPaint;
+	private Paint gridPaint=new Paint();
 	private Paint gridPaint_h; // highlighted for cursor
     
     private Paint textPaint;
@@ -134,16 +134,14 @@ public class GoBoardViewHD extends View {
         //boardPaint.setColor(0xFFc6b460);
         boardPaint.setColor(0xFFA77E3D);
         //boardPaint.setColor(0xFFA68064);
-        gridPaint=new Paint();
         
         gridPaint_h=new Paint();
         gridPaint_h.setColor(0xFF0000FF);
         gridPaint_h.setShadowLayer(1,1,1,0xFFFFFFFF );
-        //gridPaint.setColor(0xFFFFFFFF);
-        //gridPaint.setShadowLayer(1,1,1,0xFF000000 );
         
         gridPaint.setColor(0xFF000000);
-        gridPaint.setShadowLayer(1,1,1,0xFFFFFFFF );
+
+        setGridEmboss(true); // default
         gridPaint.setTextAlign(Paint.Align.CENTER );
         gridPaint.setTextSize(12.0f );
     
@@ -378,11 +376,16 @@ public class GoBoardViewHD extends View {
     	whiteTextPaint.setTextSize(stone_size);
     	blackTextPaint.setTextSize(stone_size);
     	
+    	
+    }	
+    
+    
+    public void setGridEmboss(boolean grid_embos) {
     	if (grid_embos)
     		gridPaint.setShadowLayer(1,1,1,0xFFFFFFFF );
     	else
     		gridPaint.setShadowLayer(1,1,1,0xFF000000 );
-    }	
+    }
     
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {

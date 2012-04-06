@@ -21,7 +21,8 @@ import android.widget.TextView;
  * more intuitive and better looking interface 
  * 
  * @author ligi
- *
+ * 
+ * @deprecated - we use PreviewView now
  */
 public class AutoScreenShotTask extends AsyncTask<String,String,Integer> {
 
@@ -61,7 +62,7 @@ public class AutoScreenShotTask extends AsyncTask<String,String,Integer> {
 		/** set upp the go board view **/
 		gbv=(GoBoardViewHD)v.findViewById(R.id.board_to_shoot);
 		gbv.setBackgroundResource(R.drawable.shinkaya);
-		gbv.grid_embos=false; // looks better when scaled down
+		gbv.setGridEmboss(false); // looks better when scaled down
     	gbv.do_legend=false; // gets to small in thumb
     	gbv.do_line_highlight=false;
     	

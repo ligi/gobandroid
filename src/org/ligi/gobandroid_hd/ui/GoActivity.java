@@ -40,6 +40,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -110,7 +111,6 @@ public class GoActivity
         info_toast=Toast.makeText(this.getBaseContext(), "", Toast.LENGTH_LONG);
         
         setupBoard();
-		
         
 		game2ui();
 		getZoomFragment();
@@ -126,10 +126,7 @@ public class GoActivity
 		
 		go_board.setOnTouchListener(this);
 		go_board.setOnKeyListener(this);
-		go_board.do_legend=getSettings().isLegendEnabled();
-		go_board.legend_sgf_mode=getSettings().isSGFLegendEnabled();
-		go_board.grid_embos=getSettings().isGridEmbossEnabled();
-		
+			
 		game.addGoGameChangeListener(new GoGame.GoGameChangeListener() {
 			
 			@Override
@@ -138,12 +135,27 @@ public class GoActivity
 			}
 		});
 	}
+
+	/**
+	 * set some preferences on the go board - intended to be called in onResume
+	 * 
+	 */
+	private void setBoardPreferences() {
+		if (go_board==null) { 
+			Log.w("setBoardPreferences() called with go_board==null - means setupBoard() was propably not called - skipping to not FC");
+			return;
+		}
+
+		go_board.do_legend=getSettings().isLegendEnabled();
+		go_board.legend_sgf_mode=getSettings().isSGFLegendEnabled();
+		go_board.setGridEmboss(getSettings().isGridEmbossEnabled());
+	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
+		setBoardPreferences();
 		sound_man.playGameIntro();
-		Log.i("GoFrag new Zoom Frag");
 	}
 	
 	public ZoomGameExtrasFragment getZoomFragment() {
@@ -196,6 +208,9 @@ public class GoActivity
 	        	SaveSGFDialog.show(this);
 	        	break;
 	
+	        case R.id.preferences:
+	        	startActivity(new Intent(this,GoPrefsActivity.class));
+	        	break;
 		}
 		
 		return false;

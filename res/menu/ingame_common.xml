@@ -6,5 +6,6 @@
 
 <item android:title="@string/game_info" android:id="@+id/menu_game_info" android:icon="@android:drawable/ic_menu_info_details" android:showAsAction="ifRoom|withText"></item>
 <item android:title="@string/game_mode" android:id="@+id/menu_game_switchmode" android:icon="@android:drawable/ic_menu_mylocation" android:showAsAction="ifRoom|withText"></item>
+<item android:id="@+id/preferences" android:title="@string/preferences"></item>
        
 </menu>
