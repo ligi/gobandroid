@@ -65,28 +65,13 @@ class TsumegoPathViewAdapter extends BaseAdapter {
 			
 			LinearLayout container = (LinearLayout)v.findViewById(R.id.thumb_container);
 			container.setOrientation(LinearLayout.HORIZONTAL);
-			/*
-			int fcount=0;
 			
-			for ( File act_file:new File(base_fname).listFiles())
-				if (act_file.getName().endsWith(".png")) {
-					fcount++;
-					if (fcount>3)
-						break;
-					ImageView img=new ImageView(activity);
-					setImageToGameThumbnail(img,act_file.getPath());
-					container.addView(img);
-				}
-			
-			if (fcount==0) // no thumbnails -> no container
-				*/
 			container.setVisibility(View.GONE);
 			
 		}
 		else
 			v= inflater.inflate(R.layout.sgf_tsumego_list_item,null);
-			
-		
+					
 		TextView title_tv=(TextView)v.findViewById(R.id.filename);
 		
 		if (title_tv!=null) {
@@ -118,42 +103,7 @@ class TsumegoPathViewAdapter extends BaseAdapter {
 		if ((solve_img!=null)&&(activity.getBaseContext().getSharedPreferences("tsumego_stats", Activity.MODE_PRIVATE).getInt("file://"+base_fname, -1)>0)) {
 			solve_img.setImageResource(R.drawable.solved);
 		}
-		/*
-		LinearLayout lin=new LinearLayout(activity);
-		lin.setOrientation(LinearLayout.HORIZONTAL);
-		TextView tv=new TextView(activity);
-		tv.setText("!"+menu_items[position]);
-		lin.addView(tv);
 		
-		
-		String base_fname=dir+"/"+menu_items[position];
-		String img_fname=dir+"/"+menu_items[position]+".png";
-		Log.i("checking fname " + img_fname);
-		
-		
-		if (activity.getBaseContext().getSharedPreferences("tsumego_stats", Activity.MODE_PRIVATE).getInt("file://"+base_fname, -1)>0) {
-			TextView tvso=new TextView(activity);
-			tvso.setText("solved!");
-			lin.addView(tvso);
-			
-		}
-		
-		
-		if (new File(img_fname).exists()) {
-			ImageView img=new ImageView(activity);
-			
-			Bitmap img_bmp=BitmapFactory.decodeFile(img_fname);
-			img_bmp=Bitmap.createScaledBitmap(img_bmp, 200, 200, true);
-			// todo replace 200 with dimen
-			
-			if (img_bmp!=null) {
-				img.setImageBitmap(img_bmp);
-				lin.addView(img);
-			}
-		}
-		
-		
-		*/
 		return v;
 	}
 	
