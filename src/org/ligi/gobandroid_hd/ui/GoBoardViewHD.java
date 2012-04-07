@@ -243,11 +243,11 @@ public class GoBoardViewHD extends View {
      
     	
         // draw semi transparent stone on current touch pos as a shadow
-    	if ((!move_stone_mode)&&do_mark_act) {
-	        if (getGame().isBlackToMove())
-	            canvas.drawBitmap(black_stone_bitmap, GoInteractionProvider.getTouchX()*stone_size, GoInteractionProvider.getTouchY()*stone_size, placeStonePaint);
-	        else
-	        	canvas.drawBitmap(white_stone_bitmap, GoInteractionProvider.getTouchX()*stone_size, GoInteractionProvider.getTouchY()*stone_size, placeStonePaint);
+    	if ((!move_stone_mode)&&do_mark_act&&GoInteractionProvider.hasValidTouchCoord()) {
+            	canvas.drawBitmap(((getGame().isBlackToMove())?black_stone_bitmap:white_stone_bitmap),
+           		GoInteractionProvider.getTouchX()*stone_size, 
+           		GoInteractionProvider.getTouchY()*stone_size, 
+           		placeStonePaint);
     	}
     	
     	
