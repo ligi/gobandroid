@@ -38,7 +38,6 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		recursive_add_on_path_moves(game.getFirstMove());
 				
 		// try to find the correct solution
-		
 		if (!isFinishingMoveKnown()) 
 			new AlertDialog.Builder(this).setMessage(R.string.tsumego_sgf_no_solution)
 			.setNegativeButton("OK",new DialogDiscarder())
@@ -47,11 +46,10 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
 		game.addGoGameChangeListener(this);
 		
-		float myZoom=calcZoom(game);
+		float myZoom=TsumegoHelper.calcZoom(game);
 		
 		getBoard().setZoom(myZoom);
-		int poi=game.getSize()-(int)(game.getSize()/2f/myZoom);
-		getBoard().setZoomPOI(poi+poi*game.getSize());
+		getBoard().setZoomPOI(TsumegoHelper.calcPOI( game));
     }
     
     private GoMove getFinishingMove() {
@@ -63,48 +61,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
     private boolean isFinishingMoveKnown() {
     	return getFinishingMove()!=null;
     }
-    
-    public static int calcPOI(GoGame game) {
-    	int poi=game.getSize()-(int)(game.getSize()/2f/calcZoom(game));
-		return poi+poi*game.getSize();
-    }
-    /**
-     * calculate a Zoom factor so that all stones in handicap fit on bottom right area
-     * 
-     * @return - the calculated Zoom factor
-     */    
-    public static float calcZoom(GoGame game) {
-   	
-		int max_span_size=calcSpan(game);
-	
-		if (max_span_size==0) // no predefined stones -> no zoom
-	 		return 1.0f;
-		
-		float calculated_zoom=(float)game.getSize()/(max_span_size+2);
-		
-		if (calculated_zoom<1.0f)
-			return 1.0f;
-		else
-			return calculated_zoom;
-    }
-    
-    
-    public static int calcSpan(GoGame game) {
-     	int min_x=game.getSize();
-    	int min_y=game.getSize();
-    	for (int x=0;x<game.getSize();x++)
-    		for (int y=0;y<game.getSize();y++) {
-    			if ((x<min_x)&&!game.getHandicapBoard().isCellFree(x, y))
-    				min_x=x;
-    			if ((y<min_y)&&!game.getHandicapBoard().isCellFree(x, y))
-    				min_y=y;
-    		}
-    		
-    	return Math.max(game.getSize()-min_x, game.getSize()-min_y);
-    		
-    	
-    }
-    
+      
     private void recursive_add_on_path_moves(GoMove act) {
     	on_path_moves.add(act);
     	if (act.hasNextMove())

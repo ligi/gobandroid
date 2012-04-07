@@ -8,6 +8,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.PreviewView;
+import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 import org.ligi.tracedroid.logging.Log;
 
 import android.app.Activity;
@@ -91,7 +92,14 @@ class TsumegoPathViewAdapter extends BaseAdapter {
 		
 		GoGame game=SGFHelper.sgf2game(sgf_str, null,SGFHelper.BREAKON_FIRSTMOVE);
 		LinearLayout container = (LinearLayout)v.findViewById(R.id.thumb_container);
+		
 		if (game!=null) {
+			
+			int transform=TsumegoHelper.calcTransform(game);
+			
+			if (transform!=SGFHelper.DEFAULT_SGF_TRANSFORM)			
+				game=SGFHelper.sgf2game(sgf_str, null,SGFHelper.BREAKON_FIRSTMOVE,transform);
+			
 			game.jump(game.getFirstMove());
 			container.addView(new PreviewView(activity,game));
 		}
@@ -106,8 +114,5 @@ class TsumegoPathViewAdapter extends BaseAdapter {
 		
 		return v;
 	}
-	
-	
-	
 	
 }

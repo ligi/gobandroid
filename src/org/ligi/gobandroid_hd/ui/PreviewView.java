@@ -1,8 +1,8 @@
 package org.ligi.gobandroid_hd.ui;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity;
-
+import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 
-
 public class PreviewView extends View {
 
 	private GoGame game;
@@ -19,18 +18,11 @@ public class PreviewView extends View {
 	private int span;
 	private int stone_size;
 	private Paint black_line_paint;
-	private boolean overshoot=false;
 	
 	public PreviewView(Context context, GoGame game) {
 		super(context);
 		
-		
-		span=TsumegoActivity.calcSpan(game);
-		
-		overshoot= (span!=(game.getSize()));
-		
-		if (overshoot)
-			span++;
+		span=TsumegoHelper.calcSpan(game)+1;
 		
 		this.game=game;
 		black_line_paint=new Paint();
@@ -57,18 +49,18 @@ public class PreviewView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		int offset=game.getSize()-span;
+		//int offset=game.getSize()-span;
 		
 		for (int x=0;x<span;x++) {
-			canvas.drawLine(overshoot?0.0f:0.5f*stone_size, (0.5f+x)*stone_size, (-0.5f+span)*stone_size, (0.5f+x)*stone_size, black_line_paint);
-			canvas.drawLine((0.5f+x)*stone_size,overshoot?0.0f:0.5f*stone_size, (0.5f+x)*stone_size, (-0.5f+span)*stone_size, black_line_paint);
+			canvas.drawLine(0.5f*stone_size, (0.5f+x)*stone_size, (0.5f+span)*stone_size, (0.5f+x)*stone_size, black_line_paint);
+			canvas.drawLine((0.5f+x)*stone_size,0.5f*stone_size, (0.5f+x)*stone_size, (.5f+span)*stone_size, black_line_paint);
 		}
 		
 		for (int x=0;x<span;x++) 
 			for (int y=0;y<span;y++) {
-				if (game.getVisualBoard().isCellBlack(offset+x,offset+y))
+				if (game.getVisualBoard().isCellBlack(x,y))
 					canvas.drawBitmap(black_stone_bitmap, x*stone_size,y*stone_size, null);
-				if (game.getVisualBoard().isCellWhite(offset+x,offset+y))
+				if (game.getVisualBoard().isCellWhite(x,y))
 					canvas.drawBitmap(white_stone_bitmap, x*stone_size,y*stone_size, null);
 			}
 	}
