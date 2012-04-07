@@ -28,6 +28,7 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
 
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import android.app.AlertDialog;
@@ -58,6 +59,13 @@ public class gobandroid extends GobandroidFragmentActivity {
         new GoSoundManager(this);
     }
   
+    @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		this.getSupportMenuInflater().inflate(R.menu.dashboard, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+    
     /**
      * the following start* functions are used in the xml via android:onClick
      **/
@@ -72,6 +80,11 @@ public class gobandroid extends GobandroidFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
     	case android.R.id.home:
+    		// nothing to do here as we are home
+    		return true;
+    	case R.id.help:
+        	getTracker().trackPageView("/help");
+        	this.startActivity( new Intent(this,LinksActivity.class));
     		return true;
     	}
 		return super.onOptionsItemSelected(item);

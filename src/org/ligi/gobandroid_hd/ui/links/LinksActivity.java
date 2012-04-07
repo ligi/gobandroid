@@ -47,7 +47,7 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
         this.setTitle(R.string.link_title);
 
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        int[] tabs=new int[] {R.string.link_tab_about,R.string.link_tab_help,R.string.link_tab_sgf};
+        int[] tabs=new int[] {R.string.link_tab_help,R.string.link_tab_about,R.string.link_tab_sgf};
 
         for (int tab_str : tabs ) {
         	ActionBar.Tab tab = getSupportActionBar().newTab();
@@ -57,7 +57,7 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 			getSupportActionBar().addTab(tab);
         }
 	    
-        setList(R.string.link_tab_about);
+        setList(tabs[0]);
     }
 
 	public void changeFragment(Fragment newFragment) {
