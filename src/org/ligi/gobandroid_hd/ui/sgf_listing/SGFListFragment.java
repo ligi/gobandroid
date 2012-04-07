@@ -29,8 +29,9 @@ public class SGFListFragment extends ListFragment {
 		this.dir=dir.getAbsolutePath();
 	}
 	
-	private void refresh() {
-		adapter.notifyDataSetChanged();
+	public void refresh() {
+		if (adapter!=null)
+			adapter.notifyDataSetChanged();
 	}
 	    	
 	@Override

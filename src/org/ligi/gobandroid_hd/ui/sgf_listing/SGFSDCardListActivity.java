@@ -132,5 +132,10 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-
+	 @Override
+	 protected void onResume() {
+		 super.onResume();
+		 if (list_fragment!=null) // e.g. when dir was empty we have no fragment
+	       list_fragment.refresh();
+	 }
 }
