@@ -9,7 +9,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity;
+import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 import org.ligi.tracedroid.logging.Log;
 import android.app.AlertDialog;
 import android.os.AsyncTask;
@@ -99,8 +99,8 @@ public class AutoScreenShotTask extends AsyncTask<String,String,Integer> {
 							GoGameProvider.setGame(SGFHelper.sgf2game(FileHelper.file2String(file), null));
 							
 							if (file.getPath().contains("tsumego")) {
-								gbv.setZoom(TsumegoActivity.calcZoom(GoGameProvider.getGame()));
-								gbv.setZoomPOI(TsumegoActivity.calcPOI(GoGameProvider.getGame()));
+								gbv.setZoom(TsumegoHelper.calcZoom(GoGameProvider.getGame()));
+								gbv.setZoomPOI(TsumegoHelper.calcPOI(GoGameProvider.getGame()));
 							} else {
 								for (int i=0;i<42;i++) 
 									try {
