@@ -51,7 +51,7 @@ public class SGFHelper {
 				if (act_move.isPassMove())
 					res+="[]";
 				else	
-					res+= "[" + (char)('a'+act_move.getX()) +(char)('a'+act_move.getY())+ "]\n";
+					res+= coords2SGFFragment(+act_move.getX(),act_move.getY())+"\n";
 
 				black_to_move=!black_to_move;
 			}
@@ -109,7 +109,7 @@ public class SGFHelper {
 			byte[][] handicap_arr= GoDefinitions.getHandicapArray(game.getBoardSize());
 			if (handicap_arr!=null)
 				for ( int handicap=0;handicap<game.getHandicap();handicap++)
-					res+="["+(char)('a' +handicap_arr[handicap][0])+(char)('a' + handicap_arr[handicap][1]) + "]";
+					res+=coords2SGFFragment(handicap_arr[handicap][0], handicap_arr[handicap][1]);
 			res+="\n";
 			}
 
@@ -118,16 +118,29 @@ public class SGFHelper {
 		return res;
 	}
 	
-	
+	private final static String coords2SGFFragment(int x,int y) {
+		return"["+(char)('a' +x)+(char)('a' + y) + "]";
+	}
 	
 	public final static int BREAKON_NOTHING=0;
 	public final static int BREAKON_FIRSTMOVE=1;
 	
 	public static GoGame sgf2game(String sgf,ISGFLoadProgressCallback callback) {
-		return  sgf2game( sgf, callback,BREAKON_NOTHING);
+		return  sgf2game( sgf, callback,BREAKON_NOTHING,1);
 	}
 	
-	public static GoGame sgf2game(String sgf,ISGFLoadProgressCallback callback,int breakon) {
+	public static GoGame sgf2game(String sgf,ISGFLoadProgressCallback callback,int breakon ) {
+		return  sgf2game( sgf, callback,breakon,1);
+	}
+	
+	/**
+	 * @param sgf
+	 * @param callback
+	 * @param breakon
+	 * @param transform - bit 1 => mirror y ; bit 2 => mirror x ; bit 3 => swap x/y
+	 * @return
+	 */
+	public static GoGame sgf2game(String sgf,ISGFLoadProgressCallback callback,int breakon,int transform) {
 
 		Log.i("sgf to process:" + sgf);
 		byte size=-1;
@@ -228,8 +241,15 @@ public class SGFHelper {
 					
 					// if we have a minimum of 2 chars in param - could be coords - so parse
 					if (act_param.length()>=2) {
-						param_x=(byte)(act_param.charAt(0)-'a');
-						param_y=(byte)(act_param.charAt(1)-'a');
+						param_x=(byte)(act_param.charAt(((transform&4)==0)?0:1)-'a');
+						param_y=(byte)(act_param.charAt(((transform&4)==0)?1:0)-'a');
+						
+					if ((transform&1)>0)
+						param_y=(byte)(size-1-param_y);
+					
+					if ((transform&2)>0)
+						param_x=(byte)(size-1-param_x);
+						
 					}
 
 					// if command is empty -> use the last command
