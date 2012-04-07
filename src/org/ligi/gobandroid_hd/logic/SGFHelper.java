@@ -125,12 +125,15 @@ public class SGFHelper {
 	public final static int BREAKON_NOTHING=0;
 	public final static int BREAKON_FIRSTMOVE=1;
 	
+	public final static int DEFAULT_SGF_TRANSFORM=1;
+	
+	
 	public static GoGame sgf2game(String sgf,ISGFLoadProgressCallback callback) {
-		return  sgf2game( sgf, callback,BREAKON_NOTHING,1);
+		return  sgf2game( sgf, callback,BREAKON_NOTHING,DEFAULT_SGF_TRANSFORM);
 	}
 	
 	public static GoGame sgf2game(String sgf,ISGFLoadProgressCallback callback,int breakon ) {
-		return  sgf2game( sgf, callback,breakon,1);
+		return  sgf2game( sgf, callback,breakon,DEFAULT_SGF_TRANSFORM);
 	}
 	
 	/**
