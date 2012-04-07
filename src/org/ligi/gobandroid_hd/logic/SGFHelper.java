@@ -183,6 +183,12 @@ public class SGFHelper {
 				case '[':
 					if(act_cmd.equals(""))
 						act_cmd=last_cmd;
+					
+					// for files without SZ - e.g. ggg-intermediate-11.sgf
+					if ((game==null) && (act_cmd.equals("AB") ||act_cmd.equals("AW")) ) {
+						size=19;
+						game=new GoGame((byte)19);
+					}
 					consuming_param=true;
 					act_param="";
 					break;
@@ -191,8 +197,8 @@ public class SGFHelper {
 					
 					if (!consuming_param) {
 						// for files without SZ
-						if ((opener==1)&&(game==null))
-							{
+						if ((opener==1)&&(game==null)) {
+							size=19;
 							game=new GoGame((byte)19);
 							var_vect.add(game.getActMove());
 							}
