@@ -46,6 +46,7 @@ import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
+import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 import org.ligi.tracedroid.logging.Log;
 
 /**
@@ -164,6 +165,15 @@ public class SGFLoadActivity
 						
 						Log.i("got sgf content:" + sgf);
 						game=SGFHelper.sgf2game(sgf,this);
+						
+						
+						// if it is a tsumego and we need a transformation to right corner -> do so
+						if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_TSUMEGO) {
+							int transform=TsumegoHelper.calcTransform(game);
+						
+							if (transform!=SGFHelper.DEFAULT_SGF_TRANSFORM)			
+								game=SGFHelper.sgf2game(sgf, null,SGFHelper.BREAKON_NOTHING,transform);
+						}
 						
 						if (!src.startsWith("file://")) // educated guess on what the user wants ;-9 - file:// means we come from intern gobandroid
 							GoInteractionProvider.setMode(GoInteractionProvider.MODE_REVIEW);
