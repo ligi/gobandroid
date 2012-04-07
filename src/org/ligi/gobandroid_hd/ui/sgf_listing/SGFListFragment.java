@@ -6,7 +6,6 @@ import org.ligi.android.common.files.FileHelper;
 import org.ligi.gobandroid_hd.ui.GoInteractionProvider;
 import org.ligi.gobandroid_hd.ui.SGFLoadActivity;
 import org.ligi.tracedroid.logging.Log;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +14,7 @@ import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
-public class SGFListFragment extends ListFragment {
+public class SGFListFragment extends ListFragment{
 
 	private String[] menu_items;
     private String dir;
@@ -29,11 +28,7 @@ public class SGFListFragment extends ListFragment {
 		this.dir=dir.getAbsolutePath();
 	}
 	
-	public void refresh() {
-		if (adapter!=null)
-			adapter.notifyDataSetChanged();
-	}
-	    	
+		    	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -96,7 +91,4 @@ public class SGFListFragment extends ListFragment {
 		outState.putStringArray("menu_items", menu_items);
 		outState.putString("dir",dir);
 	 }
-
-	
-
 }

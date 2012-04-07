@@ -8,6 +8,7 @@ import java.net.URLConnection;
 
 import org.apache.http.util.ByteArrayBuffer;
 import org.ligi.android.common.dialogs.DialogDiscarder;
+import org.ligi.gobandroid_hd.ui.Refreshable;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
 
@@ -24,13 +25,15 @@ import android.os.AsyncTask;
 public class DownloadTask extends AsyncTask<TsumegoSource,String,Integer> {
 
 	/** There are sometimes more tsumegos avail **/
-	private final static int LIMITER=24;
+	private final static int LIMITER=15;
 	
 	private GobandroidFragmentActivity activity;
 	private ProgressDialog progress_dialog;
+	private Refreshable refreshable;
 	
-	public DownloadTask(GobandroidFragmentActivity activity) {
+	public DownloadTask(GobandroidFragmentActivity activity,Refreshable refreshable) {
 		this.activity=activity;
+		this.refreshable=refreshable;
 	}
 
 	@Override
@@ -97,8 +100,10 @@ public class DownloadTask extends AsyncTask<TsumegoSource,String,Integer> {
     	 progress_dialog.dismiss();
     	 String msg="No new Tsumegos found :-(";
     	 
-    	 if (result>0)
+    	 if (result>0) {
     		 msg="Downloaded " + result + " new Tsumegos ;-)";
+    		 refreshable.refresh();
+    	 }
     	 
     	 new AlertDialog.Builder(activity).setMessage(msg)
     	 	.setTitle("Download Report")
