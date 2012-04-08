@@ -1,11 +1,9 @@
 package org.ligi.gobandroid_hd.ui.recording;
 
-import java.util.Vector;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
-import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 
 import com.actionbarsherlock.view.Menu;
@@ -15,8 +13,6 @@ import android.view.WindowManager;
 
 public class PlayAgainstGnugoActivity extends GoActivity  implements GoGameChangeListener {
 
-	private Vector<GoMove> on_path_moves;
-	
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,10 +21,6 @@ public class PlayAgainstGnugoActivity extends GoActivity  implements GoGameChang
 		
 		game.setGoMover(new GnuGoMover(this,game,false,true,(byte)10));
     }		
-    
-	public boolean isOnPath() {
-		return on_path_moves.contains(game.getActMove());
-    }
     
 	public byte doMoveWithUIFeedback(byte x,byte y) {
 		
@@ -40,20 +32,6 @@ public class PlayAgainstGnugoActivity extends GoActivity  implements GoGameChang
 
 		game.notifyGameChange();
 		return res;
-	}
-
-
-	public GoMove getCorrectMove(GoMove act_mve) {
-		if (act_mve.getComment().equals("Correct"))
-			return act_mve;
-		
-		for (GoMove next_moves:act_mve.getNextMoveVariations()) {
-			GoMove res=getCorrectMove(next_moves);
-			if (res!=null)
-				return res;
-		}
-			
-		return null;
 	}
 	
 	@Override
