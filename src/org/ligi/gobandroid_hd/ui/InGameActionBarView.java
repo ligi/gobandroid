@@ -57,7 +57,8 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 	public void init() {
 		mPaint.setColor(Color.BLACK);
 		getGame().addGoGameChangeListener(this);
-		myActiveBGPaint.setColor(Color.RED);
+		myActiveBGPaint.setColor(getResources().getColor(R.color.dividing_color));
+		myActiveBGPaint.setStyle(Paint.Style.FILL);
 	}
 
 	private GoGame getGame() {
