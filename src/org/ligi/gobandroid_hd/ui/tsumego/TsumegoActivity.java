@@ -75,7 +75,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
     	super.onDestroy();
     }
 
-	public boolean isOnPath() {
+	private boolean isOnPath() {
 		return on_path_moves.contains(game.getActMove());
     }
     
@@ -83,16 +83,16 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		
 		byte res=super.doMoveWithUIFeedback(x,y);
 		if (res==GoGame.MOVE_VALID)
-			if (game.getActMove().hasNextMove())
+			if (game.getActMove().hasNextMove()) {
 				game.jump(game.getActMove().getnextMove(0));
-			
+			}
 
 		game.notifyGameChange();
 		return res;
 	}
 
 
-	public GoMove getCorrectMove(GoMove act_mve) {
+	private GoMove getCorrectMove(GoMove act_mve) {
 		if (act_mve.getComment().equals("Correct"))
 			return act_mve;
 		
