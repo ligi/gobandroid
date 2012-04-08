@@ -8,6 +8,7 @@ import java.net.URLConnection;
 
 import org.apache.http.util.ByteArrayBuffer;
 import org.ligi.android.common.dialogs.DialogDiscarder;
+import org.ligi.gobandroid_hd.backend.GobandroidBackend;
 import org.ligi.gobandroid_hd.ui.Refreshable;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
@@ -24,8 +25,6 @@ import android.os.AsyncTask;
  */
 public class DownloadTask extends AsyncTask<TsumegoSource,String,Integer> {
 
-	/** There are sometimes more tsumegos avail **/
-	private final static int LIMITER=15;
 	
 	private GobandroidFragmentActivity activity;
 	private ProgressDialog progress_dialog;
@@ -46,7 +45,11 @@ public class DownloadTask extends AsyncTask<TsumegoSource,String,Integer> {
 	protected Integer doInBackground(TsumegoSource... params) {
 		
 		int download_count=0;  
-        for (TsumegoSource src : params)   {
+        
+		int limit=GobandroidBackend.getMaxTsumegos();
+		
+		if (limit!=-1)	
+			for (TsumegoSource src : params)   {
               
                 boolean finished=false;
                 int pos=10;
@@ -58,7 +61,7 @@ public class DownloadTask extends AsyncTask<TsumegoSource,String,Integer> {
                 		pos++;
                 	}
                 	
-                    if (pos>=LIMITER) {
+                    if (pos>=limit) {
                     	finished=true;
                     }
                     else try {
