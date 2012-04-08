@@ -93,7 +93,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
 
 	private GoMove getCorrectMove(GoMove act_mve) {
-		if (act_mve.getComment().equals("Correct"))
+		if (act_mve.getComment().trim().toUpperCase().startsWith("CORRECT"))
 			return act_mve;
 		
 		for (GoMove next_moves:act_mve.getNextMoveVariations()) {
