@@ -62,7 +62,7 @@ import android.widget.Toast;
  **/
 
 public class GoActivity 
-		extends GobandroidFragmentActivity implements OnTouchListener, OnKeyListener {
+		extends GobandroidFragmentActivity implements OnTouchListener, OnKeyListener,  GoGame.GoGameChangeListener {
 
 	private GoBoardViewHD go_board=null;
 	public GoGame game;
@@ -130,13 +130,12 @@ public class GoActivity
 		go_board.setOnTouchListener(this);
 		go_board.setOnKeyListener(this);
 			
-		game.addGoGameChangeListener(new GoGame.GoGameChangeListener() {
-			
-			@Override
-			public void onGoGameChange() {
-				game2ui();
-			}
-		});
+		game.addGoGameChangeListener(this);
+	}
+	
+	@Override
+	public void onGoGameChange() {
+		game2ui();
 	}
 
 	/**

@@ -51,6 +51,8 @@ public class GnuGoMover implements Runnable{
 	private ServiceConnection conn;
 	private Thread mover_thread;
 	
+	private String problem_string=null;
+	
 	public GnuGoMover() {
 		this.playing_black=false;
 		this.playing_white=false;
@@ -176,7 +178,11 @@ public class GnuGoMover implements Runnable{
 					if (game.isFinished())
 						break;
 					
-					GTPHelper.doMoveByGTPString(answer, game);
+					if (!GTPHelper.doMoveByGTPString(answer, game)) {
+						problem_string=answer;
+						problem_string+="\n" + gnu_service.processGTP("showboard");
+						game.pass();
+					}
 					Log.i("gugoservice" + gnu_service.processGTP("showboard"));		
 				} catch (RemoteException e) {}
 			}
@@ -188,7 +194,11 @@ public class GnuGoMover implements Runnable{
 					if (game.isFinished())
 						break;
 					
-					GTPHelper.doMoveByGTPString(answer, game);
+					if (!GTPHelper.doMoveByGTPString(answer, game)) {
+						problem_string=answer;
+						problem_string+="\n" + gnu_service.processGTP("showboard");
+						game.pass();
+					}
 					
 					Log.i("gugoservice" + gnu_service.processGTP("showboard"));
 					
@@ -228,5 +238,9 @@ public class GnuGoMover implements Runnable{
 			return false;
 		return
 			(game.isBlackToMove()&&(playing_black))|| (!game.isBlackToMove()&&(playing_white)) ;
+	}
+	
+	public  String getProblemString() {
+		return problem_string;
 	}
 }

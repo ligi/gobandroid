@@ -203,6 +203,7 @@ public class GoGame  {
             act_move.setToPassMove();
             setNextPlayer();
         }
+        notifyGameChange();
     }
     
     /**
