@@ -2,15 +2,7 @@
 <resources>
 
 	<style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.Light.ActionBar">
-	    
-	    <!--
-	    <item name="android:actionBarDivider">@drawable/list_divider</item>
-	    <item name="android:actionBarItemBackground">@drawable/shinkaya</item>
-	   
-	    
-	    <item name="background">@drawable/shinkaya</item>
-	    <item name="android:background">@drawable/shinkaya</item>
-	    -->  
+
 	    <item name="icon">@drawable/icon</item>
 	    <item name="background">@drawable/actionbar_bg</item>
 	    <item name="android:background">@drawable/actionbar_bg</item>
