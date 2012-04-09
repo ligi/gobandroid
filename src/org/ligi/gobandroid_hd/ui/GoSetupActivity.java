@@ -87,13 +87,16 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		GoPrefs.init(this);
 		this.setContentView(R.layout.game_setup);
 		this.setTitle(R.string.board_setup);
 		this.getSupportActionBar().setSubtitle(R.string.for_recording);
 	}
 	
-	public void setup_board() {
+	private void setup_board() {
 		board=(GoBoardViewHD)this.findViewById(R.id.go_board);
 		
 		if (board==null) 
@@ -111,6 +114,7 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 		board.do_line_highlight=false;
 		board.do_legend=false;
 		board.legend_sgf_mode=false;
+		board.setFocusable(false); // we are not here to interact
 	}
 	
 	@Override
