@@ -2,17 +2,6 @@
 <resources>
 
 	<style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.Light.ActionBar">
-
-	    <item name="icon">@drawable/icon</item>
-	    <item name="background">@drawable/actionbar_bg</item>
-	    <item name="android:background">@drawable/actionbar_bg</item>
-	    
-	    <item name="backgroundStacked">@drawable/actionbar_bg</item>
-        <item name="backgroundSplit">@drawable/actionbar_bg</item>
-
-       	<item name="android:backgroundStacked">@drawable/actionbar_bg</item>
-        <item name="android:backgroundSplit">@drawable/actionbar_bg</item>
-        
 	</style>
 
     

@@ -145,5 +145,6 @@
     <string name="enter_your_comments_here">enter your comments here</string>
     <string name="keep_variant_">Keep Variant?</string>
     <string name="keep_this_move_as_variant_">Keep this move as variant?</string>
-    <string name="numbered_end">number path</string>    
+    <string name="numbered_end">number path</string>
+    <string name="icon">icon</string>    
 </resources>
