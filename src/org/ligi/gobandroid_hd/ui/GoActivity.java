@@ -442,7 +442,9 @@ public class GoActivity
     		doMoveWithUIFeedback((byte)GoInteractionProvider.getTouchX(),(byte)GoInteractionProvider.getTouchY());
     		break;
     		
-    
+    	default:
+    		
+    		return false;
     	
     	}
     	go_board.postInvalidate();
