@@ -50,9 +50,13 @@ public class GameRecordActivity extends GoActivity  implements GoGameChangeListe
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-
-		menu.findItem(R.id.menu_game_pass).setVisible(!game.isFinished());
-		menu.findItem(R.id.menu_game_results).setVisible(game.isFinished());
+		
+		try {
+			menu.findItem(R.id.menu_game_pass).setVisible(!game.isFinished());
+			menu.findItem(R.id.menu_game_results).setVisible(game.isFinished());
+			menu.findItem(R.id.menu_game_undo).setVisible(game.canUndo());
+		} catch ( NullPointerException e ) { } // we do not care when they do not exist
+		
 		return true;
 	}
 
