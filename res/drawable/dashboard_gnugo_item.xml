@@ -1,9 +1,18 @@
- <selector xmlns:android="http://schemas.android.com/apk/res/android">
-     <!-- <item android:state_pressed="true"
-           android:drawable="@drawable/button_pressed" />  pressed -->
-     <item android:state_focused="true"
-           android:drawable="@drawable/dashboard_gnugo_focus" /> <!-- focused -->
-     <item android:drawable="@drawable/server" /> <!-- defaultOD -->
-     
- </selector>
- 
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- pressed  -->
+    <item android:state_pressed="true"><layer-list>
+            <item android:drawable="@drawable/holo_transparent_bg_darker"/>
+            <item android:drawable="@drawable/server"/>
+        </layer-list></item>
+    
+    <!-- focused -->
+    <item android:state_focused="true"><layer-list>
+            <item android:drawable="@drawable/holo_transparent_bg"/>
+            <item android:drawable="@drawable/server"/>
+        </layer-list></item>
+    
+    <!-- default -->
+    <item android:drawable="@drawable/server"/> 
+
+</selector>
