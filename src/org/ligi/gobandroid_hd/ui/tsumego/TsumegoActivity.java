@@ -145,6 +145,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
 	@Override
 	public void onGoGameChange() {
+		super.onGoGameChange();
 		if (myTsumegoExtrasFragment!=null) {
 			myTsumegoExtrasFragment.setOffPathVisibility(!isOnPath());
 			myTsumegoExtrasFragment.setCorrectVisibility(game.getActMove().equals(getFinishingMove()));
