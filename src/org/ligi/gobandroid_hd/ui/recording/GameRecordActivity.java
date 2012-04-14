@@ -21,7 +21,9 @@ public class GameRecordActivity extends GoActivity  implements GoGameChangeListe
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }		
     
+    @Override
 	public byte doMoveWithUIFeedback(byte x,byte y) {
+		super.doMoveWithUIFeedback(x, y);
 		
 		byte res=super.doMoveWithUIFeedback(x,y);
 		if (res==GoGame.MOVE_VALID)
@@ -68,6 +70,7 @@ public class GameRecordActivity extends GoActivity  implements GoGameChangeListe
 
 	@Override
 	public void onGoGameChange() {
+		super.onGoGameChange();
 		this.invalidateOptionsMenu();		
 	}
 
