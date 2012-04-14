@@ -44,6 +44,8 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.list);
         
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
         this.setTitle(R.string.link_title);
 
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);

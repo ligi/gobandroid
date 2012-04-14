@@ -83,6 +83,8 @@ public class GoActivity
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		this.getSupportActionBar().setHomeButtonEnabled(true);
+		
 		ActivityOrientationLocker.disableRotation(this); 
 
 		if (getSettings().isWakeLockEnabled()) {

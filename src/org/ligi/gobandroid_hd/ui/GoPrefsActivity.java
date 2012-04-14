@@ -48,6 +48,9 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
         setPreferenceScreen(createPreferenceHierarchy());
     }
 	

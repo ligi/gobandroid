@@ -57,7 +57,7 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		this.getSupportActionBar().setHomeButtonEnabled(true);
 		setContentView(R.layout.list);
 		getSettings().getSGFBasePath();
 
