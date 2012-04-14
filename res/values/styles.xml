@@ -16,7 +16,7 @@
 		
 	</style>
 
-	<style name="dialog_theme" >
+	<style name="dialog_theme" parent="Theme.Sherlock.Light" >
 		<!-- TODO really style this - had a hard time trying to style stuff here - e.g. background - so caution  -->
 		<item name="android:textColor">#FFFFFFFF</item>
 	</style>
