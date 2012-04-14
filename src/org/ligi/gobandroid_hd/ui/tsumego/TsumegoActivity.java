@@ -108,7 +108,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
     	this.getSupportMenuInflater().inflate(R.menu.ingame_tsumego, menu);
-    	menu.findItem(R.id.menu_game_hint).setVisible(isFinishingMoveKnown());
+    	menu.findItem(R.id.menu_game_hint).setVisible(isFinishingMoveKnown()&&isOnPath());
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -155,11 +155,13 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 			.edit().putInt(game.getMetaData().getFileName(), 100).commit();
 		Log.i("finished"+	game.getMetaData().getFileName());
 		}
+		this.invalidateOptionsMenu();		
 	}
 
 	@Override
 	public boolean isAsk4QuitEnabled() {
 		return false;
 	}
-	
+
+
 }
