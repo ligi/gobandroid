@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      android:versionName="0.86" android:versionCode="86" package="org.ligi.gobandroid_hd">
+      android:versionName="0.87" android:versionCode="87" package="org.ligi.gobandroid_hd">
 
-     <uses-sdk android:targetSdkVersion="13" android:minSdkVersion="5"/>
+     <uses-sdk android:targetSdkVersion="15" android:minSdkVersion="5"/>
     
      <supports-screens android:largeScreens="true"
-						  android:normalScreens="true" 
-						  android:smallScreens="true"
-						  android:anyDensity="true" /> 
+					   android:normalScreens="true" 
+					   android:smallScreens="true"
+					   android:anyDensity="true" /> 
 
     <!-- Permission to keep the screen awake -->  
     <uses-permission android:name="android.permission.WAKE_LOCK" />
