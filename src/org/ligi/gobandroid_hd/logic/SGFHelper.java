@@ -125,7 +125,7 @@ public class SGFHelper {
 	public final static int BREAKON_NOTHING=0;
 	public final static int BREAKON_FIRSTMOVE=1;
 	
-	public final static int DEFAULT_SGF_TRANSFORM=1;
+	public final static int DEFAULT_SGF_TRANSFORM=0;
 	
 	
 	public static GoGame sgf2game(String sgf,ISGFLoadProgressCallback callback) {
