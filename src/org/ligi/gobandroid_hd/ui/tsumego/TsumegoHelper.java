@@ -66,6 +66,7 @@ public class TsumegoHelper {
     }
 
     public static int calcTransform(GoGame game) {
+    	// we count 4 quadrants to find the hot spot
 		int[] count_h=new int[2];
 		int[] count_v=new int[2];
 		
@@ -78,6 +79,6 @@ public class TsumegoHelper {
 			}
 	
 		
-		return ((count_v[0]>count_v[1])?1:0) + ((count_h[0]>count_h[1])?0:2) ;
+		return ((count_v[0]>count_v[1])?0:1) + ((count_h[0]>count_h[1])?0:2) ;
     }
 }
