@@ -36,6 +36,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.Point;
@@ -61,21 +62,12 @@ public class GoBoardViewHD extends View {
 	public boolean mark_last_stone=true;
 	public boolean legend_sgf_mode=true;  //GoPrefs.getLegendSGFMode()
 	
-	private Paint whitePaint;
-	private Paint blackPaint;
-	private Paint blackTextPaint;
-	private Paint whiteTextPaint;
-	private Paint boardPaint;
-	private Paint gridPaint=new Paint();
-	private Paint gridPaint_h; // highlighted for cursor
-    
-    private Paint textPaint;
-    private Paint bitmapPaint;
-    private Paint placeStonePaint;
-    
-    public float stone_size;
-    private float stone_size_normal;
-    
+	// we need a lot of paints, but so we have a efficient onDraw with less calls and the mem does not matter compared to bitmaps
+	private Paint hoshi_paint,legendPaint,blackTextPaint,whiteTextPaint,gridPaint,gridPaint_h,
+				  textPaint,bitmapPaint,placeStonePaint,opaque_paint,whiteLastStoneCirclePaint,blackLastStoneCirclePaint;
+
+    private float stone_size;
+
     private Bitmap white_stone_bitmap=null;
     private Bitmap black_stone_bitmap=null;
     private Bitmap white_stone_bitmap_small=null;
@@ -107,53 +99,62 @@ public class GoBoardViewHD extends View {
     }
     
     public void init() {
+
+    	// these paint init's should be exposed to a designer ^^
     	
-        // set up the paints
-        whitePaint=new Paint();
-        whitePaint.setColor(0xFFCCCCCC);
-        whitePaint.setAntiAlias(true);
-        
+    	// paint to make the stones transparent in game-result mode ( terretory stones ) - also used for stone move and shadow stone 
+    	opaque_paint=new Paint();
+    	opaque_paint.setAlpha(0x77);
+    	
+    	// for marking the last stone
+    	whiteLastStoneCirclePaint=new Paint();
+    	whiteLastStoneCirclePaint.setColor(Color.WHITE);
+		whiteLastStoneCirclePaint.setStyle(Paint.Style.STROKE);
+		whiteLastStoneCirclePaint.setStrokeWidth(2.0f);
+		
+		// make a black one 
+		blackLastStoneCirclePaint=new Paint(whiteLastStoneCirclePaint);
+    	blackLastStoneCirclePaint.setColor(Color.BLACK);
+    	
+    	// for the star or hoshi points
+    	hoshi_paint=new Paint();
+    	hoshi_paint.setColor(Color.BLACK);
+    	hoshi_paint.setStyle(Paint.Style.FILL);
+    	
+        // for drawing on the stones
         whiteTextPaint=new Paint();
-        whiteTextPaint.setColor(0xFFFFFFFF);
+        whiteTextPaint.setColor(Color.WHITE);
         whiteTextPaint.setAntiAlias(true);
         whiteTextPaint.setTextAlign(Paint.Align.CENTER );
-        whiteTextPaint.setShadowLayer(2, 1, 1, 0xFF000000);
+        whiteTextPaint.setShadowLayer(2, 1, 1, Color.BLACK);
         
-        blackTextPaint=new Paint();
-        blackTextPaint.setColor(0xFF000000);
-        blackTextPaint.setAntiAlias(true);
-        blackTextPaint.setTextAlign(Paint.Align.CENTER  ); 
-        blackTextPaint.setShadowLayer(2, 1, 1, 0xFFFFFFFF);
-        
-        blackPaint=new Paint();
-        blackPaint.setColor(0xFF000000);
-       
-        blackPaint.setAntiAlias(true);
-        
-        boardPaint=new Paint();
-        //boardPaint.setColor(0xFFc6b460);
-        boardPaint.setColor(0xFFA77E3D);
-        //boardPaint.setColor(0xFFA68064);
-        
+        blackTextPaint=new Paint(whiteTextPaint);
+        blackTextPaint.setColor(Color.BLACK);
+        blackTextPaint.setShadowLayer(2, 1, 1,Color.WHITE);
+
         gridPaint_h=new Paint();
         gridPaint_h.setColor(0xFF0000FF);
         gridPaint_h.setShadowLayer(1,1,1,0xFFFFFFFF );
         
-        gridPaint.setColor(0xFF000000);
+        gridPaint=new Paint();
+        gridPaint.setColor(Color.BLACK);
 
-        setGridEmboss(true); // default
-        gridPaint.setTextAlign(Paint.Align.CENTER );
-        gridPaint.setTextSize(12.0f );
-    
-        textPaint=new Paint();
-        textPaint.setColor(0xFF000000);
-        textPaint.setAntiAlias(false);
+
+        legendPaint=new Paint();
+        legendPaint.setColor(Color.BLACK);
+        legendPaint.setTextAlign(Paint.Align.CENTER );
+        legendPaint.setTextSize(12.0f );
+        legendPaint.setAntiAlias(true);
+        
+        textPaint=new Paint(legendPaint);
 
         bitmapPaint=new Paint();
         placeStonePaint=new Paint();
         placeStonePaint.setAlpha(127);
         
+        //	defaults
         setFocusable(true);   
+        setGridEmboss(true); 
         
         if (getGame()==null)
         	GoGameProvider.setGame(new GoGame((byte)19));
@@ -199,6 +200,7 @@ public class GoBoardViewHD extends View {
 		
 		return res;
     }
+    
     public void screenshot(String sshot_name) {
     	Bitmap bmp=Bitmap.createBitmap(this.getWidth(), this.getHeight(), Config.ARGB_8888);
     	Canvas c=new Canvas(bmp);
@@ -227,6 +229,13 @@ public class GoBoardViewHD extends View {
     	return getGame().getSize();
     }
     
+    /**
+     * used to make nice code around hoshi and last stone circle
+     */
+    private void drawBoardCircle(Canvas canvas , float x , float y,float size,Paint paint) {
+    	canvas.drawCircle( stone_size/2.0f+ x*stone_size  ,stone_size/2.0f+y*stone_size,size,paint);
+    }
+    
     protected void draw2canvas(Canvas canvas) {
     	Log.i("draw");
     	canvas.save();
@@ -250,7 +259,7 @@ public class GoBoardViewHD extends View {
     	}
     	
     	
-        // draw the vertical lines
+        // draw the vertical lines for the grid
         for(byte x=0;x<getGameSize();x++)
         	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f,(line_highlight_condition&&(GoInteractionProvider.getTouchX()==x))?gridPaint_h:gridPaint);	
         	
@@ -259,76 +268,56 @@ public class GoBoardViewHD extends View {
         {
             canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size, (line_highlight_condition&&(GoInteractionProvider.getTouchY()==x))?gridPaint_h:gridPaint);
             if (do_legend) {
-            	canvas.drawText("" + (getGameSize()-x) , 6+ stone_size*(float)(getGameSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size+gridPaint.getTextSize()/3,gridPaint);
+            	canvas.drawText("" + (getGameSize()-x) , 6+ stone_size*(float)(getGameSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size+gridPaint.getTextSize()/3,legendPaint);
             	
             	if ((x>7)&&legend_sgf_mode)
-            		canvas.drawText("" + (char)('A'+(x+1)) , stone_size/2.0f+ x*stone_size,stone_size*(float)(getGameSize()-1) +stone_size/2.0f + 1 + gridPaint.getTextSize() ,gridPaint);
+            		canvas.drawText("" + (char)('A'+(x+1)) , stone_size/2.0f+ x*stone_size,stone_size*(float)(getGameSize()-1) +stone_size/2.0f + 1 + gridPaint.getTextSize() ,legendPaint);
             	else
-            		canvas.drawText("" + (char)('A'+x) , stone_size/2.0f+ x*stone_size,stone_size*(float)(getGameSize()-1) +stone_size/2.0f + 1 + gridPaint.getTextSize() ,gridPaint);
+            		canvas.drawText("" + (char)('A'+x) , stone_size/2.0f+ x*stone_size,stone_size*(float)(getGameSize()-1) +stone_size/2.0f + 1 + gridPaint.getTextSize() ,legendPaint);
             }
         }
                 
         for(byte x=0;x<getGameSize();x++)
             for(byte y=0;y<getGameSize();y++) {
-            	blackPaint.setColor(0xFF000000);
-            	blackPaint.setStrokeWidth(stone_size/12);
-            	//blackPaint.setStyle(Paint.Style) .setStrokeWidth(stone_size/12);
-            	
             	if (getGame().isPosHoschi(x, y))
-            		canvas.drawCircle( stone_size/2.0f+ x*stone_size +0.5f ,stone_size/2.0f+y*stone_size+0.5f,stone_size/10,blackPaint );
+            		drawBoardCircle(canvas,x,y,2f+stone_size/10,hoshi_paint );
             	
             	 
-            	// paint the territory with alpha transparent stones
+            	// paint the territory with alpha opaque stones
                 if (getGame().isFinished()) { 
-
-            		blackPaint.setColor(0x77000000);
-            		whitePaint.setColor(0x77CCCCCC);
-            		
                 	if (getGame().area_assign[x][y]==GoDefinitions.PLAYER_BLACK)
-                		canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
+                		canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,opaque_paint );
                 		
                         
                    	if (getGame().area_assign[x][y]==GoDefinitions.PLAYER_WHITE)
-                		canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,whitePaint );
+                		canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,opaque_paint );
                    		
                 }
             	
-            	blackPaint.setColor(0xFF000000);
-        		whitePaint.setColor(0xFFCCCCCC);
-        		
             	if (getGame().getCalcBoard().isCellDead(x,y)) {
             		if (getGame().getVisualBoard().isCellWhite(x,y))
-            			canvas.drawBitmap(white_stone_bitmap_small, x*stone_size  + (stone_size-white_stone_bitmap_small.getWidth())/2 ,y*stone_size + (stone_size-white_stone_bitmap_small.getHeight())/2,whitePaint );
+            			canvas.drawBitmap(white_stone_bitmap_small, x*stone_size  + (stone_size-white_stone_bitmap_small.getWidth())/2 ,y*stone_size + (stone_size-white_stone_bitmap_small.getHeight())/2,bitmapPaint );
             		
             		if (getGame().getVisualBoard().isCellBlack(x,y))
-            			canvas.drawBitmap(black_stone_bitmap_small, x*stone_size  + (stone_size-black_stone_bitmap_small.getWidth())/2 ,y*stone_size + (stone_size-black_stone_bitmap_small.getHeight())/2,whitePaint );
+            			canvas.drawBitmap(black_stone_bitmap_small, x*stone_size  + (stone_size-black_stone_bitmap_small.getWidth())/2 ,y*stone_size + (stone_size-black_stone_bitmap_small.getHeight())/2,bitmapPaint );
             		
             	}
             	else {
             	
-            		if (move_stone_mode&&(x==getGame().getActMove().getX())&&(y==getGame().getActMove().getY()))
-            			bitmapPaint.setAlpha(0x77);
-            		else
-            			bitmapPaint.setAlpha(0xFF);
+            		boolean should_draw_opaque= (move_stone_mode&&(x==getGame().getActMove().getX())&&(y==getGame().getActMove().getY()));
             			
             		if (getGame().getVisualBoard().isCellWhite(x,y))
-            			canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,bitmapPaint );
+            			canvas.drawBitmap(white_stone_bitmap, x*stone_size  ,y*stone_size,should_draw_opaque?opaque_paint:bitmapPaint );
             		if (getGame().getVisualBoard().isCellBlack(x,y))
-            			canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,bitmapPaint );
+            			canvas.drawBitmap(black_stone_bitmap, x*stone_size  ,y*stone_size,should_draw_opaque?opaque_paint:bitmapPaint );
             	 
             		if (mark_last_stone) { // if the last stone should be marked
-            			blackPaint.setStyle(Paint.Style.STROKE);
-            			whitePaint.setStyle(Paint.Style.STROKE);
-            			whitePaint.setStrokeWidth(2.0f);
-            			blackPaint.setStrokeWidth(2.0f);
-            		
             			/** mark the last move */
             			if ((getGame().getActMove().getX()==x)&&(getGame().getActMove().getY()==y)) {
             				if (getGame().getVisualBoard().isCellWhite(x,y))
-            					canvas.drawCircle( stone_size/2.0f+ x*stone_size  ,stone_size/2.0f+y*stone_size,stone_size/4.0f,blackPaint );
-                			if (getGame().getVisualBoard().isCellBlack(x,y))
-            					canvas.drawCircle( stone_size/2.0f+ x*stone_size  ,stone_size/2.0f+y*stone_size,stone_size/4.0f,whitePaint );
-            	
+            					drawBoardCircle(canvas,x,y,2f+stone_size/4f,blackLastStoneCirclePaint );
+            				else if (getGame().getVisualBoard().isCellBlack(x,y))
+            					drawBoardCircle(canvas,x,y,2f+stone_size/4f,whiteLastStoneCirclePaint );
             			}
             		}
             	}
@@ -378,7 +367,6 @@ public class GoBoardViewHD extends View {
     	whiteTextPaint.setTextSize(stone_size);
     	blackTextPaint.setTextSize(stone_size);
     	
-    	
     }	
     
     
@@ -395,8 +383,7 @@ public class GoBoardViewHD extends View {
     }
     
     private void setSize(int w,int h) {
-    	stone_size_normal=zoom*(((w<h)?w:h)/(float)getGame().getVisualBoard().getSize());
-        stone_size=stone_size_normal;
+        stone_size=zoom*(((w<h)?w:h)/(float)getGame().getVisualBoard().getSize());
         regenerate_stones_flag=true;
     }
     
