@@ -5,6 +5,9 @@
 	</style>
 
     
+	
+	<style name="dialog_theme" parent="Theme.Sherlock.Light.Dialog">
+    </style>
 
    	<style name="base_theme" parent="Theme.Sherlock.Light">
 		<!--	<item name="Background">@android:color/transparent</item> 
