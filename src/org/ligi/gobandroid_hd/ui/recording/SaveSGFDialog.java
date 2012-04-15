@@ -45,6 +45,14 @@ public class SaveSGFDialog {
 		intro_text.setText(String.format(themed_ctx.getResources().getString(R.string.save_sgf_question), ctx.getSettings().getSGFSavePath()));
 		
 		final EditText input = (EditText)form.findViewById(R.id.sgf_name_edittext);
+		
+		String old_fname=GoGameProvider.getGame().getMetaData().getFileName();
+		
+		if ((old_fname!=null)&&(!old_fname.equals(""))) {
+			input.setText(old_fname.replace(".sgf",""));
+		}
+			
+		
 		final CheckBox share_checkbox=(CheckBox)form.findViewById(R.id.share_checkbox);
 		final GoGameMetadata game_meta=GoGameProvider.getGame().getMetaData();
 		class FileNameAdder implements OnClickListener {
@@ -105,8 +113,9 @@ public class SaveSGFDialog {
 				out.write(SGFHelper.game2sgf(GoGameProvider.getGame()));
 				out.close();
 				sgf_writer.close();
+
 				
-				
+				GoGameProvider.getGame().getMetaData().setFileName(value+".sgf");
 				if (share_checkbox.isChecked()) {
 					//add extra
 					Intent it = new Intent(Intent.ACTION_SEND);   
