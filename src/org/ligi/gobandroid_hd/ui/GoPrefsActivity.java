@@ -24,6 +24,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -281,6 +282,16 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
     
     
     @Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+    	switch (item.getItemId()) {
+    	case android.R.id.home:
+    		finish();
+    		return true;
+    	}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
  	public boolean onPreferenceChange(Preference preference, Object newValue) {
 	  	/*
  		if ((preference==sgf_path_pref)||(preference==sgf_fname_pref)
