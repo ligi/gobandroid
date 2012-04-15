@@ -16,17 +16,21 @@ public class GoTermsViewActivity extends GobandroidFragmentActivity {
 
 	
 	public final static HashMap<String,Integer> getTerm2resHashMap() {
-		HashMap<String,Integer>  res=new HashMap<String,Integer>();
-		res.put("joseki", R.string.goterm_joseki);
-		res.put("miai", R.string.goterm_miai);
-		res.put("shape", R.string.goterm_shape);
-		res.put("tesuji",R.string.goterm_tesuji);
-		return res;
+		return new HashMap<String,Integer>() {{
+			put("joseki", R.string.goterm_joseki);
+			put("miai", R.string.goterm_miai);
+			put("shape", R.string.goterm_shape);
+			put("tesuji",R.string.goterm_tesuji);
+			// missing mojo
+		}};
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
 		String term=this.getIntent().getData().getLastPathSegment();
+		
+		
 		this.setTitle(term);
 		
 		this.setContentView(R.layout.go_terms_view);
