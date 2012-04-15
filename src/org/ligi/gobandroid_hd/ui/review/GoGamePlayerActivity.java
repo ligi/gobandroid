@@ -15,9 +15,11 @@ import com.actionbarsherlock.view.MenuItem;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 
 public class GoGamePlayerActivity extends GoActivity  {
 
@@ -26,9 +28,61 @@ public class GoGamePlayerActivity extends GoActivity  {
 	// timings in ms
 	private int pause_for_last_move=2300;
 	private int pause_between_moves=230;
-	
-	
 	private int pause_betwen_moves_extra_per_word=500;
+	
+	private Handler handler;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_PROGRESS);
+		
+		super.onCreate(savedInstanceState);
+
+		getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
+		
+		getBoard().setOnKeyListener(this);
+		getBoard().do_mark_act=false;
+		
+		if (autoplay_active)
+			new Thread(new autoPlayRunnable()).start();
+		
+		handler=new Handler();
+
+		getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
+	}
+	
+	private Runnable mTimerProgressRunnable=new Runnable() {
+		
+		@Override
+		public void run() {
+			setSupportProgress((int)(Window.PROGRESS_START+progress_to_display*(Window.PROGRESS_END-Window.PROGRESS_START)));
+			Log.i("setting progress to " + progress_to_display);
+		}
+		
+	};
+	
+	
+	float progress_to_display=0.5f;
+	
+	/**
+	 * time in ms
+	 * 
+	 * @param time
+	 */
+	private void sleepWithProgress(int time) {
+		try {
+			long start_time=System.currentTimeMillis();
+			
+			while (System.currentTimeMillis()<start_time+time) { 
+				Thread.sleep(100);
+				progress_to_display=(float)(System.currentTimeMillis()-start_time+1)/time;
+				handler.post(mTimerProgressRunnable);
+			}
+			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	class autoPlayRunnable implements Runnable {
 
@@ -42,11 +96,8 @@ public class GoGamePlayerActivity extends GoActivity  {
 				Log.i("gobandroid","automove move"+GoGameProvider.getGame().getActMove().hasNextMove());
 				GoGameProvider.getGame().jump(GoGameProvider.getGame().getActMove().getnextMove(0));
 				Log.i("gobandroid","automove move"+GoGameProvider.getGame().getActMove().hasNextMove());
-				try {
-					Thread.sleep(calcTime());
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+					sleepWithProgress(calcTime());
+				
 			}
 			Log.i("gobandroid","automove finish " +autoplay_active);
 			try {
@@ -75,7 +126,6 @@ public class GoGamePlayerActivity extends GoActivity  {
 	public boolean onCreateOptionsMenu(Menu menu) {
     	this.getSupportMenuInflater().inflate(R.menu.ingame_review, menu);
     	
-    	menu.findItem(R.id.menu_autoplay).setTitle(autoplay_active?"autoplay off":"autoplay on");
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -86,18 +136,6 @@ public class GoGamePlayerActivity extends GoActivity  {
 		case R.id.menu_bookmark:
 			BookmarkDialog.show(this);
 			return true;
-
-		case R.id.menu_autoplay:
-			Log.i("gobandroid","automove init");
-	
-			if (autoplay_active) {
-				autoplay_active=false;
-			} else {
-				autoplay_active=true;
-				new Thread(new autoPlayRunnable()).start();;
-			}
-			this.invalidateOptionsMenu();
-			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -121,17 +159,6 @@ public class GoGamePlayerActivity extends GoActivity  {
 		return GoGame.MOVE_VALID;
 	}	 
 	
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		getBoard().setOnKeyListener(this);
-		getBoard().do_mark_act=false;
-		
-		if (autoplay_active)
-			new Thread(new autoPlayRunnable()).start();
-		
-	}
 	
 	@Override
 	public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -173,7 +200,7 @@ public class GoGamePlayerActivity extends GoActivity  {
 		return words;
 	}
 	
-	public int calcTime() {
+	private int calcTime() {
 		int res=pause_between_moves;
 		if (game.getActMove().hasComment())
 			res+=pause_betwen_moves_extra_per_word*countWords(game.getActMove().getComment());
