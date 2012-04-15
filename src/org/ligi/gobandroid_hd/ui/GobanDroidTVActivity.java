@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Vector;
+
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import android.content.Intent;
 import android.net.Uri;
@@ -28,7 +30,8 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		GoInteractionProvider.setMode(GoInteractionProvider.MODE_TELEVIZE);
-	
+
+		getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
 		path_to_play_from=new File(getSettings().getReviewPath()+"/commented_games/");
 		
 		getTracker().trackPageView("/gtv");
