@@ -20,37 +20,10 @@ import android.view.View;
 
 public class GameReviewActivity extends GoActivity  {
 
-	private boolean autoplay_active=false;
-	
-	class autoPlayRunnable implements Runnable {
-
-		GoGame game;
-		
-		@Override
-		public void run() {
-			game=GoGameProvider.getGame();
-			Log.i("gobandroid","automove start" + game.getActMove().getNextMoveVariations().size());
-			while (autoplay_active &&( game.getActMove().getNextMoveVariations().size()>0)) {
-				Log.i("gobandroid","automove move"+game.getActMove().getNextMoveVariationCount());
-				game.jump(game.getActMove().getnextMove(0));
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-	}
-	
-	
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
     	this.getSupportMenuInflater().inflate(R.menu.ingame_review, menu);
-    	
-    	menu.findItem(R.id.menu_autoplay).setTitle(autoplay_active?R.string.autoplay_off:R.string.autoplay_on);
-		return super.onCreateOptionsMenu(menu);
+    	return super.onCreateOptionsMenu(menu);
 	}
 
 	
@@ -60,29 +33,9 @@ public class GameReviewActivity extends GoActivity  {
 		case R.id.menu_bookmark:
 			BookmarkDialog.show(this);
 			return true;
-
-		case R.id.menu_autoplay:
-			Log.i("gobandroid","automove init");
-	
-			if (autoplay_active) {
-				autoplay_active=false;
-			} else {
-				autoplay_active=true;
-				new Thread(new autoPlayRunnable()).start();;
-			}
-			this.invalidateOptionsMenu();
-			break;
-		}
+	}
 		return super.onOptionsItemSelected(item);
 	}
-
-
-	@Override
-	protected void onStop() {
-		autoplay_active=false;
-		super.onStop();
-	}
-
 
 	public Fragment getGameExtraFragment() {
 		return new NavigationAndCommentFragment();		
@@ -103,7 +56,6 @@ public class GameReviewActivity extends GoActivity  {
 		getBoard().do_mark_act=false;
 	
 	}
-	
 	
 	@Override
 	public boolean onKey(View v, int keyCode, KeyEvent event) {
