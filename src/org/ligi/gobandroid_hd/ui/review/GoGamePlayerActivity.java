@@ -131,17 +131,6 @@ public class GoGamePlayerActivity extends GoActivity  {
 
 	
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch ( item.getItemId()) {
-		case R.id.menu_bookmark:
-			BookmarkDialog.show(this);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-
-	@Override
 	protected void onStop() {
 		autoplay_active=false;
 		super.onStop();
