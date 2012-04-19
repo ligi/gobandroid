@@ -20,17 +20,8 @@ package org.ligi.gobandroid_hd.ui.alerts;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.ui.GOSkin;
-
-import android.app.AlertDialog;
+import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.view.Gravity;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 /**
@@ -41,8 +32,42 @@ import android.widget.TextView;
  * License: This software is licensed with GPLv3
  * 
  **/
-public class GameResultsAlert {
+public class GameResultsAlert extends GobandroidDialog {
 
+	
+	public GameResultsAlert(Context context,GoGame game) {
+		super(context);
+		setTitle(R.string.results);
+		setIconResource(R.drawable.info);
+
+		
+		setContentView(R.layout.game_result);
+		
+		String game_fin_txt="";
+		if (game.getPointsBlack()==game.getPointsWhite())
+			 game_fin_txt=context.getResources().getString(R.string.game_ended_in_draw);
+					
+		if (game.getPointsBlack()>game.getPointsWhite())
+			game_fin_txt=(context.getString(R.string.black_won_with) + (game.getPointsBlack()-game.getPointsWhite()) + context.getString(R.string._points_));
+					
+		if (game.getPointsWhite()>game.getPointsBlack())
+			game_fin_txt=(context.getString(R.string.white_won_with_) + (game.getPointsWhite()-game.getPointsBlack()) + context.getString(R.string._points_));
+		
+		
+		((TextView)findViewById(R.id.result_txt)).setText(game_fin_txt);
+		
+		((TextView)findViewById(R.id.territory_black)).setText(""+game.territory_black);
+		((TextView)findViewById(R.id.territory_white)).setText(""+game.territory_white);
+		
+		((TextView)findViewById(R.id.captures_black)).setText(""+game.getCapturesBlack());
+		((TextView)findViewById(R.id.captures_white)).setText(""+game.getCapturesWhite());
+		
+		((TextView)findViewById(R.id.komi)).setText(""+game.getKomi());
+		
+		((TextView)findViewById(R.id.final_black)).setText(""+game.getPointsBlack());
+		((TextView)findViewById(R.id.final_white)).setText(""+game.getPointsWhite());
+	}
+/*
 	public static void show(Context context,GoGame game) {
 		ScrollView scrollview=new ScrollView(context);
 		LinearLayout lin=new LinearLayout(context);
@@ -93,15 +118,6 @@ public class GameResultsAlert {
 		row.addView(filledTextView(context,""+game.getPointsWhite(),true,size2));
 		table.addView(row);
 		
-		String game_fin_txt="";
-		if (game.getPointsBlack()==game.getPointsWhite())
-			 game_fin_txt=context.getResources().getString(R.string.game_ended_in_draw);
-					
-		if (game.getPointsBlack()>game.getPointsWhite())
-			game_fin_txt=(context.getString(R.string.black_won_with) + (game.getPointsBlack()-game.getPointsWhite()) + context.getString(R.string._points_));
-					
-		if (game.getPointsWhite()>game.getPointsBlack())
-			game_fin_txt=(context.getString(R.string.white_won_with_) + (game.getPointsWhite()-game.getPointsBlack()) + context.getString(R.string._points_));
 		
 		lin.setOrientation(LinearLayout.VERTICAL);	
 		lin.addView(table);
@@ -127,4 +143,5 @@ public class GameResultsAlert {
 	private static TextView filledTextView(Context ctx,int txt_id,boolean center,float size) {
 		return filledTextView(ctx,ctx.getResources().getString(txt_id),center,size);
 	}
+	*/
 }

@@ -23,12 +23,12 @@ import java.io.IOException;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
+import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.widget.EditText;
+import android.widget.TextView;
 /**
  * Dialog to show when user wants to set a BookMark
  * 
@@ -37,35 +37,44 @@ import android.widget.EditText;
  * License: This software is licensed with GPLv3
  * 
  **/
-public class BookmarkDialog {
+public class BookmarkDialog extends GobandroidDialog {
 
-	public static void show(final GobandroidFragmentActivity ctx) {
-		final EditText fname_edit=new EditText(ctx);
+	public BookmarkDialog(final GobandroidFragmentActivity context) {
+		super(context);
+		
 		
 		String fname=GoGameProvider.getGame().getMetaData().getFileName();
 		if ((fname==null)||	(fname.equals("")))
-			return; // need that to make sense
+			return; // need that to make sense - todo we should do a a save with some hashed filename here for the rescue
 		
+		
+		setTitle(R.string.menu_bookmark);
+		setIconResource(R.drawable.bookmark);
+		setContentView(R.layout.save_bookmark);
+		
+
 		String[] path_components=fname.split("/");
 		String inner_fname=path_components[path_components.length-1].replace(".sgf", "");
-	    fname_edit.setText(inner_fname);
 		
-		new AlertDialog.Builder(ctx).setTitle(R.string.menu_bookmark)
-		.setMessage(ctx.getResources().getString(R.string.bookmark_to_write_into) + " " + ctx.getSettings().getBookmarkPath())
-		.setView(fname_edit)
-		.setPositiveButton(android.R.string.ok, new OnClickListener() {
+		final EditText fname_edit=(EditText)findViewById(R.id.bookmark_name);
+		((TextView)findViewById(R.id.message))
+		.setText(context.getResources().getString(R.string.bookmark_to_write_into) + " " + context.getSettings().getBookmarkPath());
+	    fname_edit.setText(inner_fname);
+	    
+	    
+	    class SaveBookmarkOnClickListener implements OnClickListener {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				int move_pos=GoGameProvider.getGame().getActMove().getMovePos();
-			
-				File f = new File(ctx.getSettings().getBookmarkPath());
+				
+				File f = new File(context.getSettings().getBookmarkPath());
 				
 				if (!f.isDirectory())
 					f.mkdirs();
 				
 				try {
-					f=new File(ctx.getSettings().getBookmarkPath() + "/"+fname_edit.getText().toString()+".golink");
+					f=new File(context.getSettings().getBookmarkPath() + "/"+fname_edit.getText().toString()+".golink");
 					f.createNewFile();
 					
 					FileWriter sgf_writer = new FileWriter(f);
@@ -79,9 +88,12 @@ public class BookmarkDialog {
 				catch (IOException e) {
 					Log.i(""+e);
 				}
+				
+				dialog.dismiss();
 			}
-			
-		})
-		.show();
+	    	
+	    }
+	    setOnOKClick(new SaveBookmarkOnClickListener());
 	}
+
 }

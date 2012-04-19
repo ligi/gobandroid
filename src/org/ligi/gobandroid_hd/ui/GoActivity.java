@@ -129,6 +129,9 @@ public class GoActivity
 		
 		go_board=(GoBoardViewHD)findViewById(R.id.go_board);
 		
+		if (go_board==null)
+			return; // had an NPE here - TODO figure out why exactly and if this fix has some disadvantage
+		
 		go_board.setOnTouchListener(this);
 		go_board.setOnKeyListener(this);
 			
@@ -188,9 +191,7 @@ public class GoActivity
 	        	return true;
 	        	
 	        case R.id.menu_game_info:                                                                                                                           
-                GameInfoAlert.show(this,game); 
-                
-                getBoard().screenshot(game.getMetaData().getFileName()+".png");
+                new GameInfoAlert(this,game).show(); 
                 return true;                  
 	                
 	        case R.id.menu_game_undo:
@@ -207,11 +208,11 @@ public class GoActivity
 	        	return true;
 	        	
 	        case R.id.menu_game_results:
-	        	GameResultsAlert.show(this, game);                                                                                                    
+	        	new GameResultsAlert(this,game).show();                                                                                                    
 	        	return true;
 	        	
 	        case R.id.menu_write_sgf:                                                                                                                          
-	        	SaveSGFDialog.show(this);
+	        	new SaveSGFDialog(this).show();
 	        	return true;
 	
 	        case R.id.preferences:

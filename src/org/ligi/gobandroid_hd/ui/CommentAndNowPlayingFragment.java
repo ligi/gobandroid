@@ -7,6 +7,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoGameProvider;
+import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,7 +55,7 @@ public class CommentAndNowPlayingFragment extends Fragment implements GoGameChan
 					        }
 					    };
 					    
-					for (String key : GoTermsViewActivity.getTerm2resHashMap().keySet()) {
+					for (String key : GoTerminologyViewActivity.getTerm2resHashMap().keySet()) {
 						Pattern wikiWordMatcher = Pattern.compile("[\\. ]("+key+")[\\. ]",Pattern.CASE_INSENSITIVE);
 						String wikiViewURL =    "goterm://org.ligi.gobandroid_hd.goterms/";
 						Linkify.addLinks(myTextView, wikiWordMatcher, wikiViewURL,null,mentionFilter);

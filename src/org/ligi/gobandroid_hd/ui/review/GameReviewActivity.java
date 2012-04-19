@@ -28,7 +28,7 @@ public class GameReviewActivity extends GoActivity  {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch ( item.getItemId()) {
 		case R.id.menu_bookmark:
-			BookmarkDialog.show(this);
+			new BookmarkDialog(this).show();
 			return true;
 	}
 		return super.onOptionsItemSelected(item);

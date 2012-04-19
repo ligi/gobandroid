@@ -21,15 +21,10 @@ package org.ligi.gobandroid_hd.ui.alerts;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-
-import android.app.AlertDialog;
+import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.EditText;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 /**
  * Class to show an Alert with the Game Info ( who plays / rank / game name .. )
  * 
@@ -38,117 +33,48 @@ import android.widget.TextView;
  * License: This software is licensed with GPLv3
  * 
  **/
-public class GameInfoAlert {
+public class GameInfoAlert extends GobandroidDialog {
 
-	public static void show(Context ctx,final GoGame game) {
-		ScrollView scroll_view=new ScrollView(ctx);
-		TableLayout table_gameinfo=new TableLayout(ctx);
-		TableRow row_gameinfo=new TableRow(ctx);
-		
-		table_gameinfo.setColumnStretchable(1, true);
-		
-		final EditText game_name_et=new EditText(ctx);
+	public GameInfoAlert(Context context,final GoGame game) {
+		super(context);
+		setTitle(R.string.game_info);
+		setIconResource(R.drawable.info);
+		setContentView(R.layout.game_info);
+
+		final EditText game_name_et=(EditText)findViewById(R.id.game_name_et);
 		game_name_et.setText(game.getMetaData().getName());
-		game_name_et.setPadding(2, 0, 5, 0);
-		TextView game_name_tv=new TextView(ctx);
-		game_name_tv.setText(R.string.game_name);
 		
-		row_gameinfo.addView(game_name_tv);
-		row_gameinfo.addView(game_name_et);
-		
-		table_gameinfo.addView(row_gameinfo);
-
-		TableRow row_black_name=new TableRow(ctx);
-		final EditText black_name_et=new EditText(ctx);
+		final EditText black_name_et=(EditText)findViewById(R.id.black_name_et);
 		black_name_et.setText(game.getMetaData().getBlackName());
-		black_name_et.setPadding(2, 0, 5, 0);
-		TextView black_name_tv=new TextView(ctx);
-		black_name_tv.setPadding(2, 0, 5, 0);
-		black_name_tv.setText(R.string.black_name);
-		
-		row_black_name.addView(black_name_tv);
-		row_black_name.addView(black_name_et);
-		
-		table_gameinfo.addView(row_black_name);
 
-		TableRow row_black_rank=new TableRow(ctx);
-		final EditText black_rank_et=new EditText(ctx);
+		final EditText black_rank_et=(EditText)findViewById(R.id.black_rank_et);
 		black_rank_et.setText(game.getMetaData().getBlackRank());
-		black_rank_et.setPadding(2, 0, 5, 0);
-		TextView black_rank_tv=new TextView(ctx);
-		black_rank_tv.setPadding(2, 0, 5, 0);
-		black_rank_tv.setText(R.string.black_rank);
-		
-		row_black_rank.addView(black_rank_tv);
-		row_black_rank.addView(black_rank_et);
-		
-		table_gameinfo.addView(row_black_rank);
 
-		TableRow row_white_name=new TableRow(ctx);
-		final  EditText white_name_et=new EditText(ctx);
+		final EditText white_name_et=(EditText)findViewById(R.id.white_name_et);
 		white_name_et.setText(game.getMetaData().getWhiteName());
-		white_name_et.setPadding(2, 0, 5, 0);
-		TextView white_name_tv=new TextView(ctx);
-		white_name_tv.setPadding(2, 0, 5, 0);
-		white_name_tv.setText(R.string.white_name);
-		
-		row_white_name.addView(white_name_tv);
-		row_white_name.addView(white_name_et);
-		
-		table_gameinfo.addView(row_white_name);
 
-		TableRow row_white_rank=new TableRow(ctx);
-		final EditText white_rank_et=new EditText(ctx);
+		final EditText white_rank_et=(EditText)findViewById(R.id.white_rank_et);
 		white_rank_et.setText(game.getMetaData().getWhiteRank());
-		white_rank_et.setPadding(2, 0, 5, 0);
-		TextView white_rank_tv=new TextView(ctx);
-		white_rank_tv.setPadding(2, 0, 5, 0);
-		white_rank_tv.setText(R.string.white_rank);
-		
-		row_white_rank.addView(white_rank_tv);
-		row_white_rank.addView(white_rank_et);
-		
-		table_gameinfo.addView(row_white_rank);
 
-		TableRow game_komi_row=new TableRow(ctx);
-		final EditText game_komi_et=new EditText(ctx);
-		game_komi_et.setText(Float.toString(game.getKomi()));
-		game_komi_et.setPadding(2, 0, 5, 0);
-		TextView game_komi_tv=new TextView(ctx);
-		game_komi_tv.setPadding(2, 0, 5, 0);
-		game_komi_tv.setText(R.string.komi);
+		final EditText game_komi_et=(EditText)findViewById(R.id.komi_et);
+		game_komi_et.setText(""+game.getKomi());
 		
-		game_komi_row.addView(game_komi_tv);
-		game_komi_row.addView(game_komi_et);
-		
-		table_gameinfo.addView(game_komi_row);
-		
-		TableRow game_result_row=new TableRow(ctx);
-		final EditText game_result_et=new EditText(ctx);
+		final EditText game_result_et=(EditText)findViewById(R.id.game_result_et);
 		game_result_et.setText(game.getMetaData().getResult());
-		game_result_et.setPadding(2, 0, 5, 0);
-		TextView game_result_tv=new TextView(ctx);
-		game_result_tv.setPadding(2, 0, 5, 0);
-		game_result_tv.setText(R.string.game_result);
 		
-		game_result_row.addView(game_result_tv);
-		game_result_row.addView(game_result_et);
-		
-		table_gameinfo.addView(game_result_row);
-		
-		scroll_view.addView(table_gameinfo);
-		
-		new AlertDialog.Builder(ctx).setTitle(R.string.game_info).setView(scroll_view)
-		.setMessage("").setPositiveButton(R.string.ok,  new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-			game.getMetaData().setName(game_name_et.getText().toString());
-			game.getMetaData().setBlackName(black_name_et.getText().toString());
-			game.getMetaData().setBlackRank(black_rank_et.getText().toString());
-			game.getMetaData().setWhiteName(white_name_et.getText().toString());
-			game.getMetaData().setWhiteRank(white_rank_et.getText().toString());
-			game.setKomi(new Float(game_komi_et.getText().toString()));
-			game.getMetaData().setResult(game_result_et.getText().toString());
+		class SaveChangesOnClick implements DialogInterface.OnClickListener {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				game.getMetaData().setName(game_name_et.getText().toString());
+				game.getMetaData().setBlackName(black_name_et.getText().toString());
+				game.getMetaData().setBlackRank(black_rank_et.getText().toString());
+				game.getMetaData().setWhiteName(white_name_et.getText().toString());
+				game.getMetaData().setWhiteRank(white_rank_et.getText().toString());
+				game.setKomi(new Float(game_komi_et.getText().toString()));
+				game.getMetaData().setResult(game_result_et.getText().toString());
+				dialog.dismiss();
+			}
 		}
-		}).show();
+		
+		this.setOnOKClick(new SaveChangesOnClick());
 	}
 }
