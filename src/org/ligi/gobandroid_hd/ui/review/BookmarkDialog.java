@@ -51,7 +51,7 @@ public class BookmarkDialog {
 	    fname_edit.setText(inner_fname);
 		
 		new AlertDialog.Builder(ctx).setTitle(R.string.menu_bookmark)
-		.setMessage(R.string.bookmark_to_write_into + " " + ctx.getSettings().getBookmarkPath())
+		.setMessage(ctx.getResources().getString(R.string.bookmark_to_write_into) + " " + ctx.getSettings().getBookmarkPath())
 		.setView(fname_edit)
 		.setPositiveButton(android.R.string.ok, new OnClickListener() {
 
