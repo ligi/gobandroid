@@ -3,8 +3,17 @@
     android:orientation="vertical" 
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:padding="7dp"
     >
 
+    <TextView
+        android:id="@+id/game_comment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FF000000" />
+    
     <TextView
         android:id="@+id/tsumego_off_path_view"
         android:layout_width="fill_parent"
