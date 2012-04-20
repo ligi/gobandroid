@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      android:versionName="0.87" android:versionCode="87" package="org.ligi.gobandroid_hd">
+      android:versionName="0.88" android:versionCode="88" package="org.ligi.gobandroid_hd">
 
      <uses-sdk android:targetSdkVersion="15" android:minSdkVersion="5"/>
     
@@ -51,8 +51,8 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".ui.GoTermsViewActivity"
-            android:theme="@style/dialog_theme"
+        <activity android:name=".ui.go_terminology.GoTerminologyViewActivity"
+            android:theme="@style/Theme.Transparent"
             
             android:layout_width="wrap_content"
        		android:layout_height="wrap_content"
