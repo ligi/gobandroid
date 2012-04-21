@@ -175,9 +175,7 @@ public class SGFLoadActivity
 								game=SGFHelper.sgf2game(sgf, null,SGFHelper.BREAKON_NOTHING,transform);
 						}
 						
-						if (!src.startsWith("file://")) // educated guess on what the user wants ;-9 - file:// means we come from intern gobandroid
-							getApp().getInteractionScope().setMode(InteractionScope.MODE_REVIEW);
-					} catch (Exception e) {
+				} catch (Exception e) {
 						Log.w("exception in load", e);
 						
 						handler.post(new Runnable() {

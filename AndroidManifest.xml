@@ -76,45 +76,46 @@
 		<activity android:name=".ui.sgf_listing.SGFSDCardListActivity"></activity>
 		<activity android:name=".ui.links.LinksActivity"></activity>
 		<activity android:name=".ui.tsumego.TsumegoActivity"></activity>
-		<activity android:name=".ui.SGFLoadActivity">
-		<intent-filter>
-    		<action android:name="android.intent.action.VIEW"/>
-    		<category android:name="android.intent.category.DEFAULT"/>
-    		<category android:name="android.intent.category.BROWSABLE"/>
-       		
-       		<data android:scheme="http"   android:host="*"  android:pathPattern=".*\\.sgf"/>
-		</intent-filter>
-		<intent-filter>
-    		<action android:name="android.intent.action.VIEW"/>
-    		<category android:name="android.intent.category.DEFAULT"/>
-    		<category android:name="android.intent.category.BROWSABLE"/>
-       	
-			<data android:scheme="https"  android:host="*" android:pathPattern=".*\\.sgf"/>
-		</intent-filter>
-		
-		<intent-filter>
-			<action android:name="android.intent.action.VIEW"/>
-    		<category android:name="android.intent.category.DEFAULT"/>
-    		<category android:name="android.intent.category.BROWSABLE"/>
-    		<data android:scheme="file"  android:host="*" android:pathPattern=".*\\.sgf"/>
+		<activity android:name=".ui.SGFLoadActivity"/>
+		<activity android:name=".ui.SGFLoadFromExternalActivity">
+			<intent-filter>
+	    		<action android:name="android.intent.action.VIEW"/>
+	    		<category android:name="android.intent.category.DEFAULT"/>
+	    		<category android:name="android.intent.category.BROWSABLE"/>
+	       		
+	       		<data android:scheme="http"   android:host="*"  android:pathPattern=".*\\.sgf"/>
+			</intent-filter>
+			<intent-filter>
+	    		<action android:name="android.intent.action.VIEW"/>
+	    		<category android:name="android.intent.category.DEFAULT"/>
+	    		<category android:name="android.intent.category.BROWSABLE"/>
+	       	
+				<data android:scheme="https"  android:host="*" android:pathPattern=".*\\.sgf"/>
+			</intent-filter>
 			
-		</intent-filter>
-		
-		<intent-filter>
-			<action android:name="android.intent.action.VIEW"/>
-    		<category android:name="android.intent.category.DEFAULT"/>
-    		<category android:name="android.intent.category.BROWSABLE"/>
-    		<data android:scheme="content"  android:host="*" android:pathPattern=".*\\.sgf"/>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+	    		<category android:name="android.intent.category.DEFAULT"/>
+	    		<category android:name="android.intent.category.BROWSABLE"/>
+	    		<data android:scheme="file"  android:host="*" android:pathPattern=".*\\.sgf"/>
+				
+			</intent-filter>
 			
-		</intent-filter>
-		
-		<intent-filter>
-			<action android:name="android.intent.action.VIEW"/>
-    		<category android:name="android.intent.category.DEFAULT"/>
-    		<category android:name="android.intent.category.BROWSABLE"/>
-    		
-			<data android:mimeType="application/x-go-sgf" />	
-		</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+	    		<category android:name="android.intent.category.DEFAULT"/>
+	    		<category android:name="android.intent.category.BROWSABLE"/>
+	    		<data android:scheme="content"  android:host="*" android:pathPattern=".*\\.sgf"/>
+				
+			</intent-filter>
+			
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+	    		<category android:name="android.intent.category.DEFAULT"/>
+	    		<category android:name="android.intent.category.BROWSABLE"/>
+	    		
+				<data android:mimeType="application/x-go-sgf" />	
+			</intent-filter>
 		</activity>
 		<activity android:name=".ui.recording.GameRecordActivity"></activity>
 		<activity android:name=".ui.review.GameReviewActivity"></activity>
