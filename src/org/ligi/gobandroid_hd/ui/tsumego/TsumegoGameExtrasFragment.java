@@ -1,9 +1,9 @@
 package org.ligi.gobandroid_hd.ui.tsumego;
 
 
+import org.ligi.gobandroid_hd.GobandroidFragment;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.tracedroid.logging.Log;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class TsumegoGameExtrasFragment extends Fragment  {
+public class TsumegoGameExtrasFragment extends GobandroidFragment  {
 
 	private View off_path_view,correct_view,res;
 	private boolean off_path_visible=false,correct_visible=false;
@@ -32,7 +32,7 @@ public class TsumegoGameExtrasFragment extends Fragment  {
 		setOffPathVisibility(off_path_visible);
 		setCorrectVisibility(correct_visible);
 		
-		game=GoGameProvider.getGame();
+		game=getGame();
 
 		if (!correct_visible)
 			comment.setText(game.getActMove().getComment());

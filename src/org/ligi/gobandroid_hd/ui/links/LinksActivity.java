@@ -73,7 +73,7 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 			case R.string.link_tab_about:
 				links=new LinkWithDescription[] {
 					new LinkWithDescriptionAndTitle("http://plus.google.com/b/106767057593220295403/","for news, infos, feedback","Gobandroid Project Page"),
-					new LinkWithDescriptionAndTitle("http://plus.google.com/104849265443273982798","idea / concept / code ","Ligi on Google+"),
+					new LinkWithDescriptionAndTitle("https://plus.google.com/104849265443273982798","idea / concept / code ","Ligi on Google+"),
 					new LinkWithDescription("http://github.com/ligi/gobandroid","Code/Issues on GitHub"),
 					new LinkWithDescriptionAndTitle("http://gogameguru.com/","source of default Tsumego and commented game SGF's","gogameguru.com"),
 					new LinkWithDescriptionAndTitle("http://actionbarsherlock.com/","library used for ActionBar backward compatibility ","ActionBarSherlock"),

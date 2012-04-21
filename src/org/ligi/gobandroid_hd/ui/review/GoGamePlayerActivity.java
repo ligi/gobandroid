@@ -2,10 +2,8 @@ package org.ligi.gobandroid_hd.ui.review;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.CommentAndNowPlayingFragment;
 import org.ligi.gobandroid_hd.ui.GoActivity;
-import org.ligi.gobandroid_hd.ui.GoInteractionProvider;
 import org.ligi.gobandroid_hd.ui.GobanDroidTVActivity;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.tracedroid.logging.Log;
@@ -91,11 +89,11 @@ public class GoGamePlayerActivity extends GoActivity  {
 		@Override
 		public void run() {
 			//game=;
-			Log.i("gobandroid","automove start" + GoGameProvider.getGame().getActMove().getNextMoveVariations().size());
-			while (autoplay_active &&( GoGameProvider.getGame().getActMove().hasNextMove())) {
-				Log.i("gobandroid","automove move"+GoGameProvider.getGame().getActMove().hasNextMove());
-				GoGameProvider.getGame().jump(GoGameProvider.getGame().getActMove().getnextMove(0));
-				Log.i("gobandroid","automove move"+GoGameProvider.getGame().getActMove().hasNextMove());
+			Log.i("gobandroid","automove start" + getGame().getActMove().getNextMoveVariations().size());
+			while (autoplay_active &&( getGame().getActMove().hasNextMove())) {
+				Log.i("gobandroid","automove move"+getGame().getActMove().hasNextMove());
+				getGame().jump(getGame().getActMove().getnextMove(0));
+				Log.i("gobandroid","automove move"+getGame().getActMove().hasNextMove());
 					sleepWithProgress(calcTime());
 				
 			}
@@ -107,7 +105,7 @@ public class GoGamePlayerActivity extends GoActivity  {
 			}
 			Log.i("gobandroid","automove asleep");
 			
-			if (!GoInteractionProvider.is_in_noif_mode()) {
+			if (!getApp().getInteractionScope().is_in_noif_mode()) {
 				Intent next_intent=new Intent(GoGamePlayerActivity.this,GobanDroidTVActivity.class);
 			
 				if (autoplay_active) {
@@ -181,7 +179,7 @@ public class GoGamePlayerActivity extends GoActivity  {
 	
 	public int countWords(String sentence) {
 		int words=0;
-		if (!GoInteractionProvider.is_in_noif_mode())
+		if (!getApp().getInteractionScope().is_in_noif_mode())
 			for (int i=0;i<sentence.length();i++)
 				if (sentence.charAt(i)==' ')
 					words++;

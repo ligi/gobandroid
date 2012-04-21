@@ -2,10 +2,11 @@ package org.ligi.gobandroid_hd.ui;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
-import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity;
 
 import android.os.Bundle;
@@ -26,11 +27,12 @@ public class NavigationAndCommentFragment extends Fragment implements GoGameChan
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+		
 		View res=inflater.inflate(R.layout.game_extra_review, container, false);
 
 		myTextView=(TextView)res.findViewById(R.id.comments_textview);
 
-		game=GoGameProvider.getGame();
+		game=((GobandroidApp)(getActivity().getApplicationContext())).getGame();
 		game.addGoGameChangeListener(this);
 
 		

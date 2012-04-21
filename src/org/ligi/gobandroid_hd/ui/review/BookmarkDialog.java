@@ -22,7 +22,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
@@ -42,8 +41,7 @@ public class BookmarkDialog extends GobandroidDialog {
 	public BookmarkDialog(final GobandroidFragmentActivity context) {
 		super(context);
 		
-		
-		String fname=GoGameProvider.getGame().getMetaData().getFileName();
+		String fname=context.getApp().getGame().getMetaData().getFileName();
 		if ((fname==null)||	(fname.equals("")))
 			return; // need that to make sense - todo we should do a a save with some hashed filename here for the rescue
 		
@@ -66,7 +64,7 @@ public class BookmarkDialog extends GobandroidDialog {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				int move_pos=GoGameProvider.getGame().getActMove().getMovePos();
+				int move_pos=context.getApp().getGame().getActMove().getMovePos();
 				
 				File f = new File(context.getSettings().getBookmarkPath());
 				
@@ -81,7 +79,7 @@ public class BookmarkDialog extends GobandroidDialog {
 					
 					BufferedWriter out = new BufferedWriter(sgf_writer);
 					
-					out.write(GoGameProvider.getGame().getMetaData().getFileName()+":#"+move_pos);
+					out.write(context.getApp().getGame().getMetaData().getFileName()+":#"+move_pos);
 					out.close();
 					sgf_writer.close();
 				}

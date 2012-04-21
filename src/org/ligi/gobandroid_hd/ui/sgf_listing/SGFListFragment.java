@@ -3,7 +3,8 @@ package org.ligi.gobandroid_hd.ui.sgf_listing;
 import java.io.File;
 import java.io.IOException;
 import org.ligi.android.common.files.FileHelper;
-import org.ligi.gobandroid_hd.ui.GoInteractionProvider;
+import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.ui.SGFLoadActivity;
 import org.ligi.tracedroid.logging.Log;
 import android.content.Intent;
@@ -32,7 +33,8 @@ public class SGFListFragment extends ListFragment{
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
+		InteractionScope interaction_scope=((GobandroidApp)(getActivity().getApplicationContext())).getInteractionScope();
 		
 		if(menu_items==null) 
 			menu_items=savedInstanceState.getStringArray("menu_items");
@@ -40,9 +42,9 @@ public class SGFListFragment extends ListFragment{
 		if(dir==null) 
 			dir=savedInstanceState.getString("dir");
 		
-		 if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_TSUMEGO)
+		 if (interaction_scope.getMode()==InteractionScope.MODE_TSUMEGO)
 			 adapter=new TsumegoPathViewAdapter(this.getActivity(), menu_items,dir);
-		 else if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_REVIEW)
+		 else if (interaction_scope.getMode()==InteractionScope.MODE_REVIEW)
 			 adapter=new ReviewPathViewAdapter(this.getActivity(), menu_items,dir);
 		 
         this.setListAdapter(adapter);

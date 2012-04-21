@@ -1,8 +1,9 @@
 package org.ligi.gobandroid_hd.ui;
 
+import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.tracedroid.logging.Log;
 
 import android.content.Context;
@@ -25,6 +26,7 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 	private Paint myActiveBGPaint=new Paint();
 	private FontMetrics fm;
 	private float text_offset;
+	private GobandroidApp app;
 	
     private Bitmap getScaledRes(float size,int resID) {
     	Bitmap unscaled_bitmap=BitmapFactory.decodeResource(this.getResources(),resID);
@@ -37,7 +39,11 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 	}
 
 	public InGameActionBarView(Context context) {
+		
 		super(context);
+		
+		app =(GobandroidApp)context.getApplicationContext();
+		
 		init();
 	}
 	
@@ -62,7 +68,7 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 	}
 
 	private GoGame getGame() {
-		return GoGameProvider.getGame();
+		return app.getGame();
 	}
 	
 	@Override
@@ -71,20 +77,20 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 		active_player_bg_rect.offsetTo(0, getGame().isBlackToMove()?0:black_stone_bitmap.getHeight());
 		
 		if (this.getWidth()>active_player_bg_rect.width()*2) {
-			String move_text=getContext().getString(R.string.move) + " "+ GoGameProvider.getGame().getActMove().getMovePos();
+			String move_text=getContext().getString(R.string.move) + " "+ app.getGame().getActMove().getMovePos();
 			
 		 	int mode_str=R.string.empty_str;
-		 	switch(GoInteractionProvider.getMode()) {
-		 	case GoInteractionProvider.MODE_TSUMEGO:
+		 	switch(app.getInteractionScope().getMode()) {
+		 	case InteractionScope.MODE_TSUMEGO:
 		 		mode_str=R.string.tsumego;
 		 		break;
-		 	case GoInteractionProvider.MODE_REVIEW:
+		 	case InteractionScope.MODE_REVIEW:
 		 		mode_str=R.string.review;
 		 		break;
-		 	case GoInteractionProvider.MODE_RECORD:
+		 	case InteractionScope.MODE_RECORD:
 		 		mode_str=R.string.record;
 		 		break;
-		 	case GoInteractionProvider.MODE_TELEVIZE:
+		 	case InteractionScope.MODE_TELEVIZE:
 		 		mode_str=R.string.go_tv;
 		 		//move_text+=""+GoGameProvider.getGame().getLastMove().getDepth();
 		 		break;
@@ -102,8 +108,8 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
     	canvas.drawBitmap(black_stone_bitmap, black_stone_bitmap.getWidth()/2, 0,null);
     	canvas.drawBitmap(white_stone_bitmap, black_stone_bitmap.getWidth()/2, this.getHeight()/2,null);
     	
-     	canvas.drawText(" "+ GoGameProvider.getGame().getCapturesBlack(), (int)(black_stone_bitmap.getWidth()*1.5), text_offset, mPaint);
-    	canvas.drawText(" "+ GoGameProvider.getGame().getCapturesWhite(), (int)(black_stone_bitmap.getWidth()*1.5), this.getHeight()/2 +text_offset, mPaint);
+     	canvas.drawText(" "+ app.getGame().getCapturesBlack(), (int)(black_stone_bitmap.getWidth()*1.5), text_offset, mPaint);
+    	canvas.drawText(" "+ app.getGame().getCapturesWhite(), (int)(black_stone_bitmap.getWidth()*1.5), this.getHeight()/2 +text_offset, mPaint);
 		super.onDraw(canvas);
 	}
 

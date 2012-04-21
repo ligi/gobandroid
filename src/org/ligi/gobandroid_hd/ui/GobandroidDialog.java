@@ -1,5 +1,6 @@
 package org.ligi.gobandroid_hd.ui;
 
+import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 
 import android.app.Dialog;
@@ -36,6 +37,10 @@ public class GobandroidDialog extends Dialog implements android.view.View.OnClic
 		// this sounds misleading but behaves right - we just do not want to start with keyboard open 
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+	}
+	
+	public GobandroidApp getApp() {
+		return (GobandroidApp)ctx.getApplicationContext();
 	}
 
 	public void setIconResource(int ico_res) {

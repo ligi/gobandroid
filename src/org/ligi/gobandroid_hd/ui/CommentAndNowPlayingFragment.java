@@ -3,10 +3,10 @@ package org.ligi.gobandroid_hd.ui;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.ligi.gobandroid_hd.GobandroidFragment;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
-import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity;
 
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class CommentAndNowPlayingFragment extends Fragment implements GoGameChangeListener {
+public class CommentAndNowPlayingFragment extends GobandroidFragment implements GoGameChangeListener {
 
 	private TextView myTextView;
 	
@@ -31,7 +31,7 @@ public class CommentAndNowPlayingFragment extends Fragment implements GoGameChan
 
 		myTextView=(TextView)res.findViewById(R.id.comments_textview);
 
-		game=GoGameProvider.getGame();
+		game=getGame();
 		game.addGoGameChangeListener(this);
 
 		//getFragmentManager().beginTransaction().replace(R.id.container_for_nav, new NavigationFragment()).commit();

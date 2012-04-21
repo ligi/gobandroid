@@ -39,10 +39,10 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
@@ -168,7 +168,7 @@ public class SGFLoadActivity
 						
 						
 						// if it is a tsumego and we need a transformation to right corner -> do so
-						if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_TSUMEGO) {
+						if (getApp().getInteractionScope().getMode()==InteractionScope.MODE_TSUMEGO) {
 							int transform=TsumegoHelper.calcTransform(game);
 						
 							if (transform!=SGFHelper.DEFAULT_SGF_TRANSFORM)			
@@ -176,7 +176,7 @@ public class SGFLoadActivity
 						}
 						
 						if (!src.startsWith("file://")) // educated guess on what the user wants ;-9 - file:// means we come from intern gobandroid
-							GoInteractionProvider.setMode(GoInteractionProvider.MODE_REVIEW);
+							getApp().getInteractionScope().setMode(InteractionScope.MODE_REVIEW);
 					} catch (Exception e) {
 						Log.w("exception in load", e);
 						
@@ -236,7 +236,7 @@ public class SGFLoadActivity
 			for (int i=0;i<move_num;i++)
 				game.jump(game.getActMove().getnextMove(0));
 		
-		GoGameProvider.setGame(game);
+		getApp().getInteractionScope().setGame(game);
 		game.getMetaData().setFileName(src);
 		
 		handler.post(new Runnable() {

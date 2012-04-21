@@ -21,9 +21,9 @@ package org.ligi.gobandroid_hd.ui;
 
 import java.util.Vector;
 
+import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.tracedroid.logging.Log;
 
 import android.app.AlertDialog;
@@ -138,11 +138,16 @@ public class GoBoardOverlay implements OnClickListener {
 			updateCommentText();
 		}
 	    
+
+		public GobandroidApp getApp() {
+			return (GobandroidApp)context.getApplicationContext();
+		}
+		
 	    private String getGameComment() {
-	    	if (GoGameProvider.getGame()==null)
+	    	if (getApp().getGame()==null)
 				return "";
 			else
-				return GoGameProvider.getGame().getActMove().getComment();
+				return getApp().getGame().getActMove().getComment();
 	    }
 	    
 	    public void updateCommentsSize(int w,int h,boolean horizontal) {
@@ -171,7 +176,7 @@ public class GoBoardOverlay implements OnClickListener {
 	    
 	    @Override
 		public void onClick(View btn) {
-			final GoGame game=GoGameProvider.getGame();
+			final GoGame game=getApp().getGame();
 			//GoGame game=GoGameProvider.getGame();
 			
 			if (btn==back) {
@@ -297,7 +302,7 @@ public class GoBoardOverlay implements OnClickListener {
 		 */
 		public void updateButtonState() {
 			
-			GoGame game=GoGameProvider.getGame();
+			GoGame game=getApp().getGame();
 
 			// prevent NPE
 			if (game==null)	{

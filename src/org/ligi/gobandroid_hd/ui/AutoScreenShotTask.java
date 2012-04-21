@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.android.common.files.FileHelper;
+import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
@@ -28,10 +28,15 @@ public class AutoScreenShotTask extends AsyncTask<String,String,Integer> {
 
 	private GobandroidFragmentActivity activity;
 	private AlertDialog progress_dialog;
-	GoBoardViewHD gbv;
+	private GoBoardViewHD gbv;
 	
 	public AutoScreenShotTask(GobandroidFragmentActivity activity) {
 		this.activity=activity;
+	}
+	
+
+	public GobandroidApp getApp() {
+		return (GobandroidApp)activity.getApplicationContext();
 	}
 	
      protected void onPostExecute(Integer result) {
@@ -96,15 +101,15 @@ public class AutoScreenShotTask extends AsyncTask<String,String,Integer> {
 					try {
 						String sgf_content=FileHelper.file2String(file);
 						if ((sgf_content!=null)&&(!sgf_content.equals(""))) {
-							GoGameProvider.setGame(SGFHelper.sgf2game(FileHelper.file2String(file), null));
+							getApp().getInteractionScope().setGame(SGFHelper.sgf2game(FileHelper.file2String(file), null));
 							
 							if (file.getPath().contains("tsumego")) {
-								gbv.setZoom(TsumegoHelper.calcZoom(GoGameProvider.getGame()));
-								gbv.setZoomPOI(TsumegoHelper.calcPOI(GoGameProvider.getGame()));
+								gbv.setZoom(TsumegoHelper.calcZoom(getApp().getGame()));
+								gbv.setZoomPOI(TsumegoHelper.calcPOI(getApp().getGame()));
 							} else {
 								for (int i=0;i<42;i++) 
 									try {
-										GoGameProvider.getGame().jump(GoGameProvider.getGame().getActMove().getnextMove(0));
+										getApp().getGame().jump(getApp().getGame().getActMove().getnextMove(0));
 									} catch ( Exception e ){}
 							}
 							

@@ -2,9 +2,10 @@ package org.ligi.gobandroid_hd.ui.tsumego;
 
 
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.GoGameProvider;
+import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMarker;
 import org.ligi.gobandroid_hd.logic.GoMove;
+import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,7 +13,7 @@ import android.content.DialogInterface;
 
 public class TsumegoHintAlert {
 	
-	public static void show(Activity activity,final GoMove finishing_move) {
+	public static void show(final GobandroidFragmentActivity activity,final GoMove finishing_move) {
 		
 		new AlertDialog.Builder(activity)
 			.setTitle(R.string.hint)
@@ -20,15 +21,15 @@ public class TsumegoHintAlert {
         		public void onClick(DialogInterface dialog, int item) {
         			switch(item) {
         			case 0:
-        				mark_path(finishing_move,true);
+        				mark_path(finishing_move,true,activity.getGame());
         				break;
 
         			case 1:
-        				mark_path(finishing_move,true);
+        				mark_path(finishing_move,true,activity.getGame());
         				break;
         				
         			case 2:
-        				show_numbered_solution(finishing_move);
+        				show_numbered_solution(finishing_move,activity.getGame());
         				break;
         			}
          	    }
@@ -39,7 +40,7 @@ public class TsumegoHintAlert {
 	}
 	
 
-	private static void show_numbered_solution(GoMove finishing_move) {
+	private static void show_numbered_solution(GoMove finishing_move,GoGame game) {
 
     	GoMove myActMove=finishing_move;
     	int p=myActMove.getMovePos();
@@ -52,21 +53,21 @@ public class TsumegoHintAlert {
     		
     	}
     	
-    	GoGameProvider.getGame().jump(finishing_move);
+    	game.jump(finishing_move);
 	}
 	
-	private static void mark_path(GoMove finishing_move,boolean complete) {
+	private static void mark_path(GoMove finishing_move,boolean complete,GoGame game) {
 
     	GoMove myActMove=finishing_move;
     	while (true) {
     		if(myActMove.isFirstMove())
     			break;
-    		if (complete||( myActMove.getParent()==GoGameProvider.getGame().getActMove()))
+    		if (complete||( myActMove.getParent()==game.getActMove()))
     			myActMove.getParent().addMarker(new GoMarker(myActMove.getX(),myActMove.getY(),"X"));
     		myActMove=myActMove.getParent();
     	}
     	
-    	GoGameProvider.getGame().notifyGameChange();
+    	game.notifyGameChange();
 	}
 	
 }

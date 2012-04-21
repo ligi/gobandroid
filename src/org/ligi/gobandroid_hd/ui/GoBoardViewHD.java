@@ -22,10 +22,10 @@ package org.ligi.gobandroid_hd.ui;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.logic.GoMarker;
 import org.ligi.tracedroid.logging.Log;
 
@@ -98,6 +98,11 @@ public class GoBoardViewHD extends View {
     	init();
     }
     
+	public GobandroidApp getApp() {
+		return (GobandroidApp)getContext().getApplicationContext();
+	}
+	
+    
     public void init() {
 
     	// these paint init's should be exposed to a designer ^^
@@ -157,16 +162,16 @@ public class GoBoardViewHD extends View {
         setGridEmboss(true); 
         
         if (getGame()==null)
-        	GoGameProvider.setGame(new GoGame((byte)19));
+        	getApp().getInteractionScope().setGame(new GoGame((byte)19));
     }
 
     public GoGame getGame() {
-    	return GoGameProvider.getGame();
+    	return getApp().getGame();
     }
     
 	public void prepare_keyinput() {
-    	if (GoInteractionProvider.getTouchPosition()<0)
-    		GoInteractionProvider.setTouchPosition(0);
+    	if ( getApp().getInteractionScope().getTouchPosition()<0)
+    		getApp().getInteractionScope().setTouchPosition(0);
     }
 
 
@@ -189,8 +194,8 @@ public class GoBoardViewHD extends View {
 		
 		if (zoom_poi>=0) {
 			act_zoom_poi=zoom_poi;
-		} else if (GoInteractionProvider.getTouchPosition()>=0) {
-			act_zoom_poi=GoInteractionProvider.getTouchPosition();
+		} else if (getApp().getInteractionScope().getTouchPosition()>=0) {
+			act_zoom_poi=getApp().getInteractionScope().getTouchPosition();
 		} else
 			Log.w("zoom requested but no POI to center around");
 		
@@ -248,25 +253,25 @@ public class GoBoardViewHD extends View {
     	if (regenerate_stones_flag)
     		regenerate_images();
 
-    	boolean line_highlight_condition=do_line_highlight&&GoInteractionProvider.hasValidTouchCoord()&&this.isFocused();
+    	boolean line_highlight_condition=do_line_highlight&&getApp().getInteractionScope().hasValidTouchCoord()&&this.isFocused();
     	
         // draw semi transparent stone on current touch pos as a shadow
-    	if ((!move_stone_mode)&&do_mark_act&&GoInteractionProvider.hasValidTouchCoord()&&this.isFocused()) {
+    	if ((!move_stone_mode)&&do_mark_act&&getApp().getInteractionScope().hasValidTouchCoord()&&this.isFocused()) {
             	canvas.drawBitmap(((getGame().isBlackToMove())?black_stone_bitmap:white_stone_bitmap),
-           		GoInteractionProvider.getTouchX()*stone_size, 
-           		GoInteractionProvider.getTouchY()*stone_size, 
+            			getApp().getInteractionScope().getTouchX()*stone_size, 
+            			getApp().getInteractionScope().getTouchY()*stone_size, 
            		placeStonePaint);
     	}
     	
     	
         // draw the vertical lines for the grid
         for(byte x=0;x<getGameSize();x++)
-        	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f,(line_highlight_condition&&(GoInteractionProvider.getTouchX()==x))?gridPaint_h:gridPaint);	
+        	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f,(line_highlight_condition&&(getApp().getInteractionScope().getTouchX()==x))?gridPaint_h:gridPaint);	
         	
         // draw the horizontal lines and the legend
         for(byte x=0;x<getGame().getVisualBoard().getSize();x++)
         {
-            canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size, (line_highlight_condition&&(GoInteractionProvider.getTouchY()==x))?gridPaint_h:gridPaint);
+            canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size, (line_highlight_condition&&(getApp().getInteractionScope().getTouchY()==x))?gridPaint_h:gridPaint);
             if (do_legend) {
             	canvas.drawText("" + (getGameSize()-x) , 6+ stone_size*(float)(getGameSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size+gridPaint.getTextSize()/3,legendPaint);
             	

@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGameMetadata;
-import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -43,7 +42,7 @@ public class SaveSGFDialog extends GobandroidDialog {
 		
 		final EditText input = (EditText)findViewById(R.id.sgf_name_edittext);
 		
-		String old_fname=GoGameProvider.getGame().getMetaData().getFileName();
+		String old_fname=getApp().getGame().getMetaData().getFileName();
 		
 		if ((old_fname!=null)&&(!old_fname.equals(""))) {
 			input.setText(old_fname.replace(".sgf",""));
@@ -51,7 +50,7 @@ public class SaveSGFDialog extends GobandroidDialog {
 			
 		
 		final CheckBox share_checkbox=(CheckBox)findViewById(R.id.share_checkbox);
-		final GoGameMetadata game_meta=GoGameProvider.getGame().getMetaData();
+		final GoGameMetadata game_meta=getApp().getGame().getMetaData();
 
 		/**
 		 * this is a OnClickListener  to add Stuff to the FileName like date/gamename/...
@@ -111,12 +110,12 @@ public class SaveSGFDialog extends GobandroidDialog {
 					
 					BufferedWriter out = new BufferedWriter(sgf_writer);
 					
-					out.write(SGFHelper.game2sgf(GoGameProvider.getGame()));
+					out.write(SGFHelper.game2sgf(getApp().getGame()));
 					out.close();
 					sgf_writer.close();
 
 					
-					GoGameProvider.getGame().getMetaData().setFileName(value+".sgf");
+					getApp().getGame().getMetaData().setFileName(value+".sgf");
 					if (share_checkbox.isChecked()) {
 						//add extra
 						Intent it = new Intent(Intent.ACTION_SEND);   

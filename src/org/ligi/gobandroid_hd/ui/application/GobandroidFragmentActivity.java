@@ -1,9 +1,8 @@
 package org.ligi.gobandroid_hd.ui.application;
 
+import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.gobandroid;
-import org.ligi.tracedroid.TraceDroid;
-import org.ligi.tracedroid.logging.Log;
-import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
@@ -14,17 +13,11 @@ import android.view.WindowManager;
 
 public class GobandroidFragmentActivity extends SherlockFragmentActivity {
 
-	private GoogleAnalyticsTracker tracker=null;
-	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TraceDroid.init(this);
-        Log.setTAG("gobandroid");
-        TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
-
-
+        // we do not want focus on custom views ( mainly for GTV )
         if ((this.getSupportActionBar()!=null) && (this.getSupportActionBar().getCustomView()!=null))
         	this.getSupportActionBar().getCustomView().setFocusable(false);
     }
@@ -44,21 +37,16 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
 	}
 
 	public GoogleAnalyticsTracker getTracker() {
-    	if (tracker==null) {
-            tracker = GoogleAnalyticsTracker.getInstance();
-            tracker.startNewSession("UA-27002728-1", this);
-    	}
-    	return tracker;
+    	return getApp().getTracker();
     }
     
-    @Override
-    protected void onDestroy() {
-      super.onDestroy();
-      if (tracker!=null) {
-    	  tracker.dispatch();
-    	  tracker.stopSession();
-      }
-    }
+	public GobandroidApp getApp() {
+		return (GobandroidApp)getApplicationContext();
+	}
+	
+	public GoGame getGame() {
+		return getApp().getGame();
+	}
 
 	public GobandroidSettings getSettings() {
 		return new GobandroidSettings(this);
@@ -83,4 +71,9 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
 			return false;
 		return super.onKeyDown(keyCode, event);
 	}
+	
+	// very nice hint by Jake Wharton by twitter
+	@SuppressWarnings("unchecked") 
+	public <T> T findById(int id) { return (T) findViewById(id); }
+	
 }

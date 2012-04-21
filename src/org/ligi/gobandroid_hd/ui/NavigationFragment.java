@@ -1,9 +1,9 @@
 package org.ligi.gobandroid_hd.ui;
 
+import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
-import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,8 +27,7 @@ public class NavigationFragment extends Fragment implements GoGameChangeListener
 		last_btn=(Button)res.findViewById(R.id.btn_last);
 		next_btn=(Button)res.findViewById(R.id.btn_next);
 		prev_btn=(Button)res.findViewById(R.id.btn_prev);
-
-		game=GoGameProvider.getGame();
+		game=((GobandroidApp)(getActivity().getApplicationContext())).getGame();
 		game.addGoGameChangeListener(this);
 
 		first_btn.setOnClickListener(new OnClickListener(){

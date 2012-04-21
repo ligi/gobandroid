@@ -22,11 +22,13 @@ import java.io.File;
 
 import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.android.common.intents.IntentHelper;
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
+import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -53,10 +55,7 @@ public class gobandroid extends GobandroidFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
         setContentView(R.layout.main_menu);
-        
-        new GoSoundManager(this);
     }
   
     @Override
@@ -72,16 +71,16 @@ public class gobandroid extends GobandroidFragmentActivity {
 
     public void recordGame(View target) {
     	getTracker().trackPageView("/record");
-    	GoInteractionProvider.setMode(GoInteractionProvider.MODE_RECORD);
+    	getApp().getInteractionScope().setMode(InteractionScope.MODE_RECORD);
     	this.startActivity(new Intent(this,GoSetupActivity.class));
+    	
+    	// if we have stacktraces - give user option to send them
+	    TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
     }
 
     @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
-    	case android.R.id.home:
-    		// nothing to do here as we are home
-    		return true;
     	case R.id.help:
         	getTracker().trackPageView("/help");
         	this.startActivity( new Intent(this,LinksActivity.class));
@@ -93,15 +92,14 @@ public class gobandroid extends GobandroidFragmentActivity {
 	private Intent startLoad(String path,byte mode) {
     	Intent i=new Intent(this,SGFSDCardListActivity.class);    	
     	i.setData((Uri.parse("file://"+path)));
-    	GoInteractionProvider.setMode(mode);
-    	//this.startActivity(i);
+    	getApp().getInteractionScope().setMode(mode);
     	return i;
     }
 
     public void solveProblem(View target) {
     	getTracker().trackPageView("/tsumego");
     	
-    	Intent next=startLoad(getSettings().getTsumegoPath(),GoInteractionProvider.MODE_TSUMEGO);
+    	Intent next=startLoad(getSettings().getTsumegoPath(),InteractionScope.MODE_TSUMEGO);
     	
     	if (!unzipSGFifNeeded(next)) 
     		startActivity(next);
@@ -109,7 +107,7 @@ public class gobandroid extends GobandroidFragmentActivity {
 
     public void reviewGame(View target) {
     	getTracker().trackPageView("/review");
-    	Intent next=startLoad(getSettings().getReviewPath(),GoInteractionProvider.MODE_REVIEW);
+    	Intent next=startLoad(getSettings().getReviewPath(),InteractionScope.MODE_REVIEW);
     	if (!unzipSGFifNeeded(next))
     		startActivity(next);
     		
@@ -164,7 +162,7 @@ public class gobandroid extends GobandroidFragmentActivity {
     	}
    
     	getTracker().trackPageView("/gnugo");
-    	GoInteractionProvider.setMode(GoInteractionProvider.MODE_GNUGO);
+    	getApp().getInteractionScope().setMode(InteractionScope.MODE_GNUGO);
     	this.startActivity(new Intent(this,GoSetupActivity.class));
     }
     

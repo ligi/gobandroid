@@ -25,8 +25,8 @@ import java.util.Arrays;
 
 import org.ligi.android.common.activitys.ActivityFinishOnCancelListener;
 import org.ligi.android.common.dialogs.ActivityFinishOnDialogClickListener;
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.ui.GoInteractionProvider;
 import org.ligi.gobandroid_hd.ui.Refreshable;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsDialog;
@@ -69,8 +69,11 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_TSUMEGO)
+		if (getApp().getInteractionScope().getMode()==InteractionScope.MODE_TSUMEGO)
 			this.getSupportMenuInflater().inflate(R.menu.refresh_tsumego, menu);
+
+		if (getApp().getInteractionScope().getMode()==InteractionScope.MODE_REVIEW)
+			this.getSupportMenuInflater().inflate(R.menu.review_menu, menu);
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -81,7 +84,6 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity implements
 		switch (item.getItemId()) {
 		case R.id.menu_refresh:
 			DownloadProblemsDialog.show(this,(Refreshable)this);
-
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -127,9 +129,9 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity implements
 
 		this.getSupportActionBar().setSubtitle(dir.getAbsolutePath());
 
-		if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_TSUMEGO)
+		if (getApp().getInteractionScope().getMode()==InteractionScope.MODE_TSUMEGO)
 			this.setTitle(R.string.load_tsumego);
-		else if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_REVIEW)
+		else if (getApp().getInteractionScope().getMode()==InteractionScope.MODE_REVIEW)
 			this.setTitle(R.string.load_game);
 
 		menu_items=(String[])fnames.toArray(new String[fnames.size()]);

@@ -24,9 +24,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
 import org.ligi.gobandroid_hd.ui.alerts.GameResultsAlert;
@@ -73,7 +73,10 @@ public class GoActivity
 	private Fragment actFragment;
 
 	public GoSoundManager sound_man ;
-	 
+	
+	private InteractionScope interaction_scope;
+	
+	
 	public Fragment getGameExtraFragment() {
 		
 		return new DefaultGameExtrasFragment();
@@ -83,6 +86,7 @@ public class GoActivity
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		interaction_scope=getApp().getInteractionScope();
 		this.getSupportActionBar().setHomeButtonEnabled(true);
 		
 		ActivityOrientationLocker.disableRotation(this); 
@@ -91,7 +95,7 @@ public class GoActivity
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		}
 		
-		game=GoGameProvider.getGame();
+		game=getGame();
 		
 		if (game==null) { // cannot do anything without a game 
 			finish();
@@ -378,21 +382,22 @@ public class GoActivity
 				
     	// calculate position on the field by position on the touchscreen
 
-    	GoInteractionProvider.setTouchPosition(getBoard().pixel2boardPos(event.getX(),event.getY()));
+    	
+    	interaction_scope.setTouchPosition(getBoard().pixel2boardPos(event.getX(),event.getY()));
     	if (event.getAction()==MotionEvent.ACTION_UP) {
 
     		if (go_board.move_stone_mode) {
     			// TODO check if this is an illegal move ( e.g. in variants )
-    			game.getActMove().setXY((byte)GoInteractionProvider.getTouchX(),(byte)GoInteractionProvider.getTouchY());
+    			game.getActMove().setXY((byte)interaction_scope.getTouchX(),(byte)interaction_scope.getTouchY());
     			game.refreshBoards();
     			go_board.move_stone_mode=false;
     		}
-    		else if ((game.getActMove().getX()==GoInteractionProvider.getTouchX())&&(game.getActMove().getY()==GoInteractionProvider.getTouchY())) 
+    		else if ((game.getActMove().getX()==interaction_scope.getTouchX())&&(game.getActMove().getY()==interaction_scope.getTouchY())) 
     			go_board.initializeStoneMove();
     		else 
-    			doMoveWithUIFeedback((byte)GoInteractionProvider.getTouchX(),(byte)GoInteractionProvider.getTouchY());
+    			doMoveWithUIFeedback((byte)interaction_scope.getTouchX(),(byte)interaction_scope.getTouchY());
         		
-    		GoInteractionProvider.setTouchPosition(-1);
+    		interaction_scope.setTouchPosition(-1);
         			
     	}
 
@@ -411,38 +416,38 @@ public class GoActivity
     	switch (keyCode) {
     	case KeyEvent.KEYCODE_DPAD_UP:
     		go_board.prepare_keyinput();
-    		if (GoInteractionProvider.getTouchY()>0) 
-    			GoInteractionProvider.touch_position-=game.getSize();
+    		if (interaction_scope.getTouchY()>0) 
+    			interaction_scope.touch_position-=game.getSize();
     		else
     			return false;
     		break;
     		
     	case KeyEvent.KEYCODE_DPAD_LEFT:
     		go_board.prepare_keyinput();
-    		if (GoInteractionProvider.getTouchX()>0) 
-    			GoInteractionProvider.touch_position--;
+    		if (interaction_scope.getTouchX()>0) 
+    			interaction_scope.touch_position--;
     		else
     			return false;
     		break;
     		
     	case KeyEvent.KEYCODE_DPAD_DOWN:
     		go_board.prepare_keyinput();
-    		if (GoInteractionProvider.getTouchY()<game.getVisualBoard().getSize()-1) 
-    			GoInteractionProvider.touch_position+=game.getSize();
+    		if (interaction_scope.getTouchY()<game.getVisualBoard().getSize()-1) 
+    			interaction_scope.touch_position+=game.getSize();
     		else
     			return false;
     		break;
     		
     	case KeyEvent.KEYCODE_DPAD_RIGHT:
     		go_board.prepare_keyinput();
-    		if (GoInteractionProvider.getTouchX()<game.getVisualBoard().getSize()-1)
-    			GoInteractionProvider.touch_position++;
+    		if (interaction_scope.getTouchX()<game.getVisualBoard().getSize()-1)
+    			interaction_scope.touch_position++;
     		else
     			return false;
     		break;
     		
     	case KeyEvent.KEYCODE_DPAD_CENTER:
-    		doMoveWithUIFeedback((byte)GoInteractionProvider.getTouchX(),(byte)GoInteractionProvider.getTouchY());
+    		doMoveWithUIFeedback((byte)interaction_scope.getTouchX(),(byte)interaction_scope.getTouchY());
     		break;
     		
     	default:

@@ -3,8 +3,7 @@
 	<style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.Light.ActionBar">
 	</style>
 
-    
-	<style name="dialog_theme" parent="Theme.Sherlock.Light">
+    <style name="dialog_theme" parent="Theme.Sherlock.Light">
 	
 	</style>
 	

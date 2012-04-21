@@ -20,10 +20,10 @@
 package org.ligi.gobandroid_hd.ui;
 
 import org.ligi.android.common.intents.IntentHelper;
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGameProvider;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 import org.ligi.gobandroid_hd.ui.recording.PlayAgainstGnugoActivity;
@@ -97,7 +97,7 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 	}
 	
 	private void setup_board() {
-		board=(GoBoardViewHD)this.findViewById(R.id.go_board);
+		board=findById(R.id.go_board);
 		
 		if (board==null) 
 			return;
@@ -124,26 +124,26 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 		
 		setup_board();
 		
-		size_seek=(SeekBar)this.findViewById(R.id.size_slider);
+		size_seek=findById(R.id.size_slider);
 		size_seek.setOnSeekBarChangeListener(this);
 		
-		size_text=(TextView)this.findViewById(R.id.game_size_label);
+		size_text=findById(R.id.game_size_label);
 		
-		size_button9x9=(Button)this.findViewById(R.id.size_button9x9);
+		size_button9x9=findById(R.id.size_button9x9);
 		size_button9x9.setOnClickListener(this);
 
 
-		((Button)this.findViewById(R.id.InstallAIButton)).setOnClickListener(this);
+		((Button)findById(R.id.InstallAIButton)).setOnClickListener(this);
 		
-		size_button13x13=(Button)this.findViewById(R.id.size_button13x13);
+		size_button13x13=findById(R.id.size_button13x13);
 		size_button13x13.setOnClickListener(this);
 
 		
-		size_button19x19=(Button)this.findViewById(R.id.size_button19x19);
+		size_button19x19=findById(R.id.size_button19x19);
 		size_button19x19.setOnClickListener(this);
 		
 		
-		black_player_spinner=(Spinner)this.findViewById(R.id.BlackPlayerSpinner);
+		black_player_spinner=findById(R.id.BlackPlayerSpinner);
 	
 		String[] player_strings;
 		if (IntentHelper.isIntentAvailable(this.getPackageManager() ,new Intent(GnuGoMover.intent_action_name)))
@@ -156,7 +156,7 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 
  		spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
- 		white_player_spinner=(Spinner)this.findViewById(R.id.WhitePlayerSpinner);
+ 		white_player_spinner=findById(R.id.WhitePlayerSpinner);
  		
 		black_player_spinner.setAdapter(spinner_adapter);
 		white_player_spinner.setAdapter(spinner_adapter);
@@ -177,8 +177,8 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 					
 		white_player_spinner.setSelection(spinner_pos,true);
 
-		handicap_text=(TextView)this.findViewById(R.id.handicap_label);
-		handicap_seek=(SeekBar)this.findViewById(R.id.handicap_seek);
+		handicap_text=findById(R.id.handicap_label);
+		handicap_seek=findById(R.id.handicap_seek);
 		handicap_seek.setOnSeekBarChangeListener(this);
 		
 		// set defaults
@@ -203,7 +203,7 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 		if (act_handicap!=handicap_seek.getProgress())
 			handicap_seek.setProgress(act_handicap);
 		
-		if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_GNUGO)
+		if (getApp().getInteractionScope().getMode()==InteractionScope.MODE_GNUGO)
 			size_seek.setMax(19-size_offset);
 		
 		// only enable handicap seeker when the size is 9x9 or 13x13 or 19x19
@@ -212,7 +212,7 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 		GoPrefs.setLastBoardSize(act_size);
 		GoPrefs.setLastHandicap(act_handicap);
 		
-		GoGameProvider.setGame(new GoGame(act_size,act_handicap));
+		getApp().getInteractionScope().setGame(new GoGame(act_size,act_handicap));
 		if (board!=null) {
 			board.boardSizeChanged();
 			board.invalidate();
@@ -239,7 +239,7 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 	}
 	@Override
 	public void onClick(View v) {
-		if (v==((Button)this.findViewById(R.id.InstallAIButton))) {
+		if (v==(findById(R.id.InstallAIButton))) {
 			try {
 				this.startActivity(new Intent().setAction(Intent.ACTION_VIEW)
 						.setData(Uri.parse("market://search?q=pname:org.ligi.gobandroid.ai.gnugo")));
@@ -269,12 +269,12 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 	private void start_game() {
 		GoGame new_game=new GoGame(act_size,act_handicap);
 		
-		GoGameProvider.setGame(new_game);
+		getApp().getInteractionScope().setGame(new_game);
 		
 		
 		Intent go_intent;
 		
-		if (GoInteractionProvider.getMode()==GoInteractionProvider.MODE_RECORD)
+		if (getApp().getInteractionScope().getMode()==InteractionScope.MODE_RECORD)
 			go_intent=new Intent(this,GameRecordActivity.class);
 		else
 			go_intent=new Intent(this,PlayAgainstGnugoActivity.class);
