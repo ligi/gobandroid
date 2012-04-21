@@ -60,6 +60,11 @@ public class SwitchModeHelper {
         				activity.finish();
         				startGame(activity,GoInteractionProvider.MODE_TSUMEGO);
         				break;
+
+        			case 3:
+        				activity.finish();
+        				startGame(activity,GoInteractionProvider.MODE_TELEVIZE);
+        				break;
         			}
         		}
 

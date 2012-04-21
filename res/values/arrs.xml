@@ -10,5 +10,6 @@
         <item>@string/record</item>
         <item>@string/review</item>
         <item>@string/tsumego</item>
+        <item>televize</item>
     </string-array>
 </resources>
