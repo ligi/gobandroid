@@ -1,4 +1,4 @@
-package org.ligi.gobandroid_hd.ui;
+package org.ligi.gobandroid_hd.ui.fragments;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

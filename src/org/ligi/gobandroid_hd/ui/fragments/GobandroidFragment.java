@@ -1,5 +1,6 @@
-package org.ligi.gobandroid_hd;
+package org.ligi.gobandroid_hd.ui.fragments;
 
+import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.tracedroid.logging.Log;
 

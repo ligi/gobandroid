@@ -3,9 +3,10 @@ package org.ligi.gobandroid_hd.ui.review;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GoActivity;
-import org.ligi.gobandroid_hd.ui.NavigationAndCommentFragment;
-import org.ligi.gobandroid_hd.ui.ZoomGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
+import org.ligi.gobandroid_hd.ui.fragments.NavigationAndCommentFragment;
+import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
+
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 

@@ -31,6 +31,8 @@ import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
 import org.ligi.gobandroid_hd.ui.alerts.GameResultsAlert;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.fragments.DefaultGameExtrasFragment;
+import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.tracedroid.logging.Log;

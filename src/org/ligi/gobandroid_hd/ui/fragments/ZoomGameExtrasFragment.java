@@ -1,4 +1,6 @@
-package org.ligi.gobandroid_hd.ui;
+package org.ligi.gobandroid_hd.ui.fragments;
+import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;

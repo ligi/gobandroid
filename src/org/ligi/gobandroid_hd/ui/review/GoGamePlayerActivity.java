@@ -2,10 +2,10 @@ package org.ligi.gobandroid_hd.ui.review;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.ui.CommentAndNowPlayingFragment;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GobanDroidTVActivity;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
+import org.ligi.gobandroid_hd.ui.fragments.CommentAndNowPlayingFragment;
 import org.ligi.tracedroid.logging.Log;
 
 import com.actionbarsherlock.view.Menu;

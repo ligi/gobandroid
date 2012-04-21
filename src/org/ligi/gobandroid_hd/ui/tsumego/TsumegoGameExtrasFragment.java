@@ -1,9 +1,9 @@
 package org.ligi.gobandroid_hd.ui.tsumego;
 
 
-import org.ligi.gobandroid_hd.GobandroidFragment;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 import org.ligi.tracedroid.logging.Log;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

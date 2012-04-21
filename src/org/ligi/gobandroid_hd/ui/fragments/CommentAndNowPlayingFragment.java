@@ -1,9 +1,7 @@
-package org.ligi.gobandroid_hd.ui;
+package org.ligi.gobandroid_hd.ui.fragments;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.ligi.gobandroid_hd.GobandroidFragment;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
@@ -11,7 +9,6 @@ import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.text.util.Linkify;
 import android.text.util.Linkify.TransformFilter;
 import android.view.LayoutInflater;

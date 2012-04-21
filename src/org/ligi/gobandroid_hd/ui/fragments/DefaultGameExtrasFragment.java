@@ -1,4 +1,4 @@
-package org.ligi.gobandroid_hd.ui;
+package org.ligi.gobandroid_hd.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

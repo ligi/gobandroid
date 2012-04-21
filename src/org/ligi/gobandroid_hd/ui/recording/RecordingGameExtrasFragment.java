@@ -1,8 +1,9 @@
 package org.ligi.gobandroid_hd.ui.recording;
 
-import org.ligi.gobandroid_hd.GobandroidFragment;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
+import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
