@@ -71,7 +71,8 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 		active_player_bg_rect.offsetTo(0, getGame().isBlackToMove()?0:black_stone_bitmap.getHeight());
 		
 		if (this.getWidth()>active_player_bg_rect.width()*2) {
-		 	canvas.drawText(getContext().getString(R.string.move) + " "+ GoGameProvider.getGame().getActMove().getMovePos(), active_player_bg_rect.width() +5, text_offset, mPaint);
+			String move_text=getContext().getString(R.string.move) + " "+ GoGameProvider.getGame().getActMove().getMovePos();
+			
 		 	int mode_str=R.string.empty_str;
 		 	switch(GoInteractionProvider.getMode()) {
 		 	case GoInteractionProvider.MODE_TSUMEGO:
@@ -83,7 +84,16 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 		 	case GoInteractionProvider.MODE_RECORD:
 		 		mode_str=R.string.record;
 		 		break;
+		 	case GoInteractionProvider.MODE_TELEVIZE:
+		 		mode_str=R.string.go_tv;
+		 		//move_text+=""+GoGameProvider.getGame().getLastMove().getDepth();
+		 		break;
+		 	
 		 	}
+		 	
+		 	
+		 	canvas.drawText(move_text, active_player_bg_rect.width() +5, text_offset, mPaint);
+		 	
 		 	canvas.drawText(getContext().getString(mode_str), active_player_bg_rect.width() +5, this.getHeight()/2+text_offset, mPaint);
 		}
 		
