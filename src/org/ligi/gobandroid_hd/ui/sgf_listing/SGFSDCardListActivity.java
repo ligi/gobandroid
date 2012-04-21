@@ -97,6 +97,21 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity implements
 	
 	@Override
 	public void refresh(){
+		
+		switch (getApp().getInteractionScope().getMode()) {
+			case InteractionScope.MODE_TSUMEGO:
+				this.setTitle(R.string.load_tsumego);
+				break;
+			default:
+				// we can only show stuff for tsumego and review - if in doubt - trade as review
+				getApp().getInteractionScope().setMode(InteractionScope.MODE_REVIEW);
+				// fall wanted
+				
+			case InteractionScope.MODE_REVIEW:
+				this.setTitle(R.string.load_game);
+				break;
+		}
+			
 		Log.i("refresh list");
 		AlertDialog.Builder alert=new AlertDialog.Builder(this).setTitle(R.string.problem_listing_sgf);
 
@@ -129,11 +144,7 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity implements
 
 		this.getSupportActionBar().setSubtitle(dir.getAbsolutePath());
 
-		if (getApp().getInteractionScope().getMode()==InteractionScope.MODE_TSUMEGO)
-			this.setTitle(R.string.load_tsumego);
-		else if (getApp().getInteractionScope().getMode()==InteractionScope.MODE_REVIEW)
-			this.setTitle(R.string.load_game);
-
+		
 		menu_items=(String[])fnames.toArray(new String[fnames.size()]);
 		Arrays.sort(menu_items);
 
