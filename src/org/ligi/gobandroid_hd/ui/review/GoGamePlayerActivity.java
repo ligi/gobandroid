@@ -11,7 +11,7 @@ import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.tracedroid.logging.Log;
 
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,16 +19,15 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 
 public class GoGamePlayerActivity extends GoActivity  {
 
 	private boolean autoplay_active=true;
 	
 	// timings in ms
-	private int pause_for_last_move=2300;
-	private int pause_between_moves=230;
-	private int pause_betwen_moves_extra_per_word=500;
+	private int pause_for_last_move=30000;
+	private int pause_between_moves=2300;
+	private int pause_betwen_moves_extra_per_word=200;
 	
 	private Handler handler;
 
@@ -49,6 +48,7 @@ public class GoGamePlayerActivity extends GoActivity  {
 		handler=new Handler();
 
 		getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
+		
 	}
 	
 	private Runnable mTimerProgressRunnable=new Runnable() {
@@ -75,7 +75,7 @@ public class GoGamePlayerActivity extends GoActivity  {
 			
 			while (System.currentTimeMillis()<start_time+time) { 
 				Thread.sleep(100);
-				progress_to_display=(float)(System.currentTimeMillis()-start_time+1)/time;
+				progress_to_display=1f-((float)(System.currentTimeMillis()-start_time+1)/time);
 				handler.post(mTimerProgressRunnable);
 			}
 			
