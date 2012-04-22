@@ -22,7 +22,8 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
     private Bitmap white_stone_bitmap=null;
     private Bitmap black_stone_bitmap=null;
     private Paint mPaint=new Paint();
-    private Rect active_player_bg_rect=new Rect();
+    private Rect black_bg_rect=new Rect();
+    private Rect white_bg_rect=new Rect();
 	private Paint myActiveBGPaint=new Paint();
 	private FontMetrics fm;
 	private float text_offset;
@@ -55,7 +56,9 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 		
 		black_stone_bitmap=getScaledRes(h/2,R.drawable.stone_black);
 		white_stone_bitmap=getScaledRes(h/2,R.drawable.stone_white);
-		active_player_bg_rect=new Rect(0,0,black_stone_bitmap.getWidth()*3,black_stone_bitmap.getHeight());
+		black_bg_rect=new Rect(0,0,black_stone_bitmap.getWidth()*3,black_stone_bitmap.getHeight());
+		white_bg_rect=new Rect(black_bg_rect);
+		white_bg_rect.offsetTo(0,black_stone_bitmap.getHeight());
 		fm=mPaint.getFontMetrics();
 		text_offset=(black_stone_bitmap.getHeight()-mPaint.getTextSize())/2-(fm.top+fm.bottom);
 	}
@@ -74,10 +77,8 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 	@Override
 	protected void onDraw(Canvas canvas) {
 		
-		active_player_bg_rect.offsetTo(0, getGame().isBlackToMove()?0:black_stone_bitmap.getHeight());
-		
-		if (this.getWidth()>active_player_bg_rect.width()*2) {
-			String move_text=getContext().getString(R.string.move) + " "+ app.getGame().getActMove().getMovePos();
+		if (this.getWidth()>white_bg_rect.width()*2) {
+			String move_text=getContext().getString(R.string.move) + " "+ getGame().getActMove().getMovePos();
 			
 		 	int mode_str=R.string.empty_str;
 		 	switch(app.getInteractionScope().getMode()) {
@@ -98,18 +99,22 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 		 	}
 		 	
 		 	
-		 	canvas.drawText(move_text, active_player_bg_rect.width() +5, text_offset, mPaint);
+		 	canvas.drawText(move_text, white_bg_rect.width() +5, text_offset, mPaint);
 		 	
-		 	canvas.drawText(getContext().getString(mode_str), active_player_bg_rect.width() +5, this.getHeight()/2+text_offset, mPaint);
+		 	canvas.drawText(getContext().getString(mode_str), white_bg_rect.width() +5, getHeight()/2+text_offset, mPaint);
 		}
 		
-		canvas.drawRect(active_player_bg_rect, myActiveBGPaint);
+		if (getGame().isBlackToMove()||getGame().isFinished())
+			canvas.drawRect(black_bg_rect, myActiveBGPaint);
+		
+		if ((!getGame().isBlackToMove())||getGame().isFinished())
+			canvas.drawRect(white_bg_rect, myActiveBGPaint);
 		
     	canvas.drawBitmap(black_stone_bitmap, black_stone_bitmap.getWidth()/2, 0,null);
-    	canvas.drawBitmap(white_stone_bitmap, black_stone_bitmap.getWidth()/2, this.getHeight()/2,null);
+    	canvas.drawBitmap(white_stone_bitmap, black_stone_bitmap.getWidth()/2, getHeight()/2,null);
     	
-     	canvas.drawText(" "+ app.getGame().getCapturesBlack(), (int)(black_stone_bitmap.getWidth()*1.5), text_offset, mPaint);
-    	canvas.drawText(" "+ app.getGame().getCapturesWhite(), (int)(black_stone_bitmap.getWidth()*1.5), this.getHeight()/2 +text_offset, mPaint);
+     	canvas.drawText(" "+ getGame().getCapturesBlack(), (int)(black_stone_bitmap.getWidth()*1.5), text_offset, mPaint);
+    	canvas.drawText(" "+ getGame().getCapturesWhite(), (int)(black_stone_bitmap.getWidth()*1.5), getHeight()/2 +text_offset, mPaint);
 		super.onDraw(canvas);
 	}
 
