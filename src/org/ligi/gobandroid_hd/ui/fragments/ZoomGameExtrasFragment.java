@@ -25,7 +25,8 @@ public class ZoomGameExtrasFragment extends Fragment {
 			Bundle savedInstanceState) {
 		
 		board=new GoBoardViewHD(this.getActivity(),false,3.0f);
-		board.do_mark_act=show_shadow_stone;
+		board.do_actpos_highlight=show_shadow_stone;
+		board.do_actpos_highlight_ony_if_active=false;
 		return board;
 	}
 	

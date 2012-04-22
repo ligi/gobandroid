@@ -70,7 +70,7 @@ public class AutoScreenShotTask extends AsyncTask<String,String,Integer> {
 		gbv.setBackgroundResource(R.drawable.shinkaya);
 		gbv.setGridEmboss(false); // looks better when scaled down
     	gbv.do_legend=false; // gets to small in thumb
-    	gbv.do_line_highlight=false;
+    	gbv.do_actpos_highlight=false;
     	
     	/** tell the user what's happening **/
     	TextView descr_tv=(TextView)v.findViewById(R.id.desc);

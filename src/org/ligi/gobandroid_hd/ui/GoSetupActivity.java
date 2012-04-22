@@ -111,7 +111,7 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 			}
 		});
 		
-		board.do_line_highlight=false;
+		board.do_actpos_highlight=false;
 		board.do_legend=false;
 		board.legend_sgf_mode=false;
 		board.setFocusable(false); // we are not here to interact

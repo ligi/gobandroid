@@ -51,7 +51,7 @@ public class GameReviewActivity extends GoActivity  {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getBoard().setOnKeyListener(this);
-		getBoard().do_mark_act=false;
+		getBoard().do_actpos_highlight=false;
 	
 	}
 	

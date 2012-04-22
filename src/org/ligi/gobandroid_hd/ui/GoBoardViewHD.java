@@ -57,14 +57,15 @@ public class GoBoardViewHD extends View {
 	
 	//public boolean grid_embos=true; //  GoPrefs.getGridEmbossEnabled()
 	public boolean do_legend=true; 
-	public boolean do_line_highlight=true;
-	public boolean do_mark_act=true;
+	public boolean do_actpos_highlight=true;
+	public boolean do_actpos_highlight_ony_if_active=true;
+	//public boolean do_mark_act=true;
 	public boolean mark_last_stone=true;
 	public boolean legend_sgf_mode=true;  //GoPrefs.getLegendSGFMode()
 	
 	// we need a lot of paints, but so we have a efficient onDraw with less calls and the mem does not matter compared to bitmaps
 	private Paint hoshi_paint,legendPaint,blackTextPaint,whiteTextPaint,gridPaint,gridPaint_h,
-				  textPaint,bitmapPaint,placeStonePaint,opaque_paint,whiteLastStoneCirclePaint,blackLastStoneCirclePaint;
+				  bitmapPaint,placeStonePaint,opaque_paint,whiteLastStoneCirclePaint,blackLastStoneCirclePaint;
 
     private float stone_size;
 
@@ -150,8 +151,6 @@ public class GoBoardViewHD extends View {
         legendPaint.setTextAlign(Paint.Align.CENTER );
         legendPaint.setTextSize(12.0f );
         legendPaint.setAntiAlias(true);
-        
-        textPaint=new Paint(legendPaint);
 
         bitmapPaint=new Paint();
         placeStonePaint=new Paint();
@@ -253,10 +252,14 @@ public class GoBoardViewHD extends View {
     	if (regenerate_stones_flag)
     		regenerate_images();
 
-    	boolean line_highlight_condition=do_line_highlight&&getApp().getInteractionScope().hasValidTouchCoord()&&this.isFocused();
+    	boolean actpos_highlight_condition=false;
+    	
+    	if (!(do_actpos_highlight_ony_if_active&&(!isFocused()))) {
+    		actpos_highlight_condition=do_actpos_highlight&&getApp().getInteractionScope().hasValidTouchCoord();
+    	}
     	
         // draw semi transparent stone on current touch pos as a shadow
-    	if ((!move_stone_mode)&&do_mark_act&&getApp().getInteractionScope().hasValidTouchCoord()&&this.isFocused()) {
+    	if ((!move_stone_mode)&&actpos_highlight_condition) {
             	canvas.drawBitmap(((getGame().isBlackToMove())?black_stone_bitmap:white_stone_bitmap),
             			getApp().getInteractionScope().getTouchX()*stone_size, 
             			getApp().getInteractionScope().getTouchY()*stone_size, 
@@ -266,12 +269,12 @@ public class GoBoardViewHD extends View {
     	
         // draw the vertical lines for the grid
         for(byte x=0;x<getGameSize();x++)
-        	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f,(line_highlight_condition&&(getApp().getInteractionScope().getTouchX()==x))?gridPaint_h:gridPaint);	
+        	canvas.drawLine(stone_size/2.0f   + x*stone_size , stone_size/2.0f, stone_size/2.0f+ x*stone_size,stone_size*(float)(getGame().getVisualBoard().getSize()-1) +stone_size/2.0f,(actpos_highlight_condition&&(getApp().getInteractionScope().getTouchX()==x))?gridPaint_h:gridPaint);	
         	
         // draw the horizontal lines and the legend
         for(byte x=0;x<getGame().getVisualBoard().getSize();x++)
         {
-            canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size, (line_highlight_condition&&(getApp().getInteractionScope().getTouchY()==x))?gridPaint_h:gridPaint);
+            canvas.drawLine(stone_size/2.0f , stone_size/2.0f + x*stone_size , stone_size*(float)(getGame().getVisualBoard().getSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size, (actpos_highlight_condition&&(getApp().getInteractionScope().getTouchY()==x))?gridPaint_h:gridPaint);
             if (do_legend) {
             	canvas.drawText("" + (getGameSize()-x) , 6+ stone_size*(float)(getGameSize()-1)+stone_size/2.0f ,stone_size/2.0f+ x*stone_size+gridPaint.getTextSize()/3,legendPaint);
             	

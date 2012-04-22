@@ -38,7 +38,7 @@ public class GoGamePlayerActivity extends GoActivity  {
 		getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
 		
 		getBoard().setOnKeyListener(this);
-		getBoard().do_mark_act=false;
+		getBoard().do_actpos_highlight=false;
 		
 		if (autoplay_active)
 			new Thread(new autoPlayRunnable()).start();
