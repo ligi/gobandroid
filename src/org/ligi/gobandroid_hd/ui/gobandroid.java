@@ -56,6 +56,10 @@ public class gobandroid extends GobandroidFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+        
+    	// if we have stacktraces - give user option to send them
+	    TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
+
     }
   
     @Override
@@ -73,9 +77,7 @@ public class gobandroid extends GobandroidFragmentActivity {
     	getTracker().trackPageView("/record");
     	getApp().getInteractionScope().setMode(InteractionScope.MODE_RECORD);
     	this.startActivity(new Intent(this,GoSetupActivity.class));
-    	
-    	// if we have stacktraces - give user option to send them
-	    TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
+   	
     }
 
     @Override

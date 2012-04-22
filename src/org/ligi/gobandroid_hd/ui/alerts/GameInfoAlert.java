@@ -75,6 +75,6 @@ public class GameInfoAlert extends GobandroidDialog {
 			}
 		}
 		
-		this.setOnOKClick(new SaveChangesOnClick());
+		setPositiveButton(android.R.string.ok,new SaveChangesOnClick());
 	}
 }

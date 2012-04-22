@@ -408,7 +408,7 @@ public class GoActivity
     }
     
     public boolean doAskToKeepVariant() {
-    	return GoPrefs.isAskVariantEnabled();
+    	return GoPrefs.isAskVariantEnabled()&&getApp().getInteractionScope().ask_variant_session;
     }
 
 	@Override
@@ -476,8 +476,13 @@ public class GoActivity
 	}
 	
 	public void requestUndo() {
+		
+		
 		if (doAskToKeepVariant()) {                                                                                                  
-	        new AlertDialog.Builder(this).setTitle(R.string.keep_variant_).setMessage(R.string.keep_this_move_as_variant_)                              
+			new UndoWithVariationDialog(this).show();
+			
+			/*
+			new AlertDialog.Builder(this).setTitle(R.string.keep_variant_).setMessage(R.string.keep_this_move_as_variant_)                              
 	        .setPositiveButton(R.string.yes , new DialogInterface.OnClickListener() {                                                     
 	        public void onClick(DialogInterface dialog, int whichButton) {                                                                
 	                game.undo(true);                                                                                                      
@@ -486,7 +491,7 @@ public class GoActivity
 	        public void onClick(DialogInterface dialog, int whichButton) {                                                                
 	                game.undo(false);                                                                                                     
 	                }                                                                                                                     
-	        }).show();                                                                                                                    
+	        }).show();*/                                                                                                                    
 	    }                                                                                                                                     
 	    else                                                                                                                                  
 	        game.undo(GoPrefs.isKeepVariantEnabled());

@@ -27,7 +27,7 @@ public class GoTerminologyViewActivity extends GobandroidFragmentActivity {
 		
 		String term=this.getIntent().getData().getLastPathSegment();
 		GoTerminologyDialog dialog=new GoTerminologyDialog(this,term);
-		dialog.setOnOKClick(new MyOnClickListener());
+		dialog.setPositiveButton(android.R.string.ok,new MyOnClickListener());
 		dialog.setOnCancelListener(new OnCancelListener() {
 
 			@Override

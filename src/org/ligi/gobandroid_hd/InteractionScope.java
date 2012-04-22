@@ -10,6 +10,7 @@ public class InteractionScope {
 	 * 
 	 */
 	public void setGame(GoGame p_game) {
+		ask_variant_session=true;
 		game=p_game;
 	}
 	
@@ -30,6 +31,9 @@ public class InteractionScope {
 	public int touch_position=-1; // negative numbers -> no recent touch
 	private byte mode;
 	private boolean is_noif_mode=false;
+	
+	
+	public boolean ask_variant_session=true;
 	
 	private GoGame game; // we will most likely interact with a game ;-)
 	

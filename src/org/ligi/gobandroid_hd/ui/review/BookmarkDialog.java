@@ -50,6 +50,7 @@ public class BookmarkDialog extends GobandroidDialog {
 		setIconResource(R.drawable.bookmark);
 		setContentView(R.layout.save_bookmark);
 		
+		setIsSmallDialog();
 
 		String[] path_components=fname.split("/");
 		String inner_fname=path_components[path_components.length-1].replace(".sgf", "");
@@ -91,7 +92,7 @@ public class BookmarkDialog extends GobandroidDialog {
 			}
 	    	
 	    }
-	    setOnOKClick(new SaveBookmarkOnClickListener());
+	    setPositiveButton(android.R.string.ok,new SaveBookmarkOnClickListener());
 	}
 
 }

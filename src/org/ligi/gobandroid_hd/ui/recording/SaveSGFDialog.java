@@ -134,7 +134,7 @@ public class SaveSGFDialog extends GobandroidDialog {
 			
 		}
 		
-		setOnOKClick(new SaveSGFOnClickListener());
+		setPositiveButton(android.R.string.ok,new SaveSGFOnClickListener());
 	
 	}
 	

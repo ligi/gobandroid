@@ -43,6 +43,8 @@ public class GameResultsAlert extends GobandroidDialog {
 		
 		setContentView(R.layout.game_result);
 		
+		setPositiveButton(android.R.string.ok);
+		
 		String game_fin_txt="";
 		if (game.getPointsBlack()==game.getPointsWhite())
 			 game_fin_txt=context.getResources().getString(R.string.game_ended_in_draw);

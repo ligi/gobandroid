@@ -4,7 +4,9 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:background="@drawable/shinkaya"
+    android:id="@+id/dialog_main_container"
      >
+     
      <LinearLayout 
          android:layout_width="wrap_content"
     	 android:layout_height="wrap_content"
@@ -44,14 +46,12 @@
 	     	>
 	
 	 </LinearLayout>
-	               
-	  <Button   
+	  
+	 <LinearLayout 
 	        android:layout_width="fill_parent"
 	    	android:layout_height="wrap_content"
-	    	android:text="OK"
-	   		android:id="@+id/dialog_ok_btn"
-	   />
-
- 
+	    	android:id="@+id/button_container"
+	    	android:orientation="horizontal"
+	     ></LinearLayout>
 
 </LinearLayout>

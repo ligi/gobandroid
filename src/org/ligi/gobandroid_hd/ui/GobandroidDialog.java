@@ -17,11 +17,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class GobandroidDialog extends Dialog implements android.view.View.OnClickListener {
+public class GobandroidDialog extends Dialog {
 
 	private ContextThemeWrapper ctx;
 	private LayoutInflater inflater;
-	private OnClickListener myOKOnClickListener;
+	
+	private Button positive_btn;
+	private Button negative_btn;
+	
+	private LinearLayout button_container;
 	
 	public GobandroidDialog(Context context) {
 		super(context);
@@ -31,12 +35,15 @@ public class GobandroidDialog extends Dialog implements android.view.View.OnClic
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.setContentView(inflater.inflate(R.layout.gobandroid_dialog,null));
 
-		((Button)findViewById(R.id.dialog_ok_btn)).setOnClickListener(this);
-		myOKOnClickListener=new DefaultOnClickListener();
-
 		// this sounds misleading but behaves right - we just do not want to start with keyboard open 
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+		button_container=(LinearLayout)findViewById(R.id.button_container);
+	}
+	
+	// dirty hack - but works and finding another workaround costed me hours without success in sight ..
+	public void setIsSmallDialog() {
+		findViewById(R.id.dialog_main_container).setBackgroundResource(R.drawable.shinkaya_half);
 	}
 	
 	public GobandroidApp getApp() {
@@ -55,9 +62,6 @@ public class GobandroidDialog extends Dialog implements android.view.View.OnClic
 		
 	}
 	
-	public void setOnOKClick(OnClickListener listener) {
-		myOKOnClickListener=listener;
-	}
 	
 	class DefaultOnClickListener implements OnClickListener {
 
@@ -65,7 +69,7 @@ public class GobandroidDialog extends Dialog implements android.view.View.OnClic
 		public void onClick(DialogInterface dialog, int which) {
 			dismiss();	
 		}
-		
+	
 	}
 
 	@Override
@@ -73,12 +77,64 @@ public class GobandroidDialog extends Dialog implements android.view.View.OnClic
 		((TextView)this.findViewById(R.id.dialog_title)).setText(title);
 	}
 	
-	@Override
-	public void onClick(View v) {
-		myOKOnClickListener.onClick(this,0);
-	}
-	
 	public Context getThemedContext() {
 		return ctx;
+	}
+	
+	class DialogOnClickWrapper implements View.OnClickListener {
+
+		private DialogInterface.OnClickListener listener;
+		
+		public DialogOnClickWrapper(DialogInterface.OnClickListener listener) {
+			this.listener=listener;
+		}
+		
+		@Override
+		public void onClick(View v) {
+			listener.onClick(GobandroidDialog.this, 0);
+		}
+		
+	}
+	
+	public void setPositiveButton(int text_stringres) {
+		getPositiveButton().setText(text_stringres);
+		getPositiveButton().setOnClickListener(new DialogOnClickWrapper(new DefaultOnClickListener()));
+	}
+	
+	public void setPositiveButton(int text_stringres,DialogInterface.OnClickListener listener) {
+		getPositiveButton().setText(text_stringres);
+		getPositiveButton().setOnClickListener(new DialogOnClickWrapper(listener));
+	}
+	
+	
+	private Button getPositiveButton() {
+		if (positive_btn==null) {
+			positive_btn=new Button(getContext());
+			LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,LinearLayout.LayoutParams.FILL_PARENT,1f);
+			positive_btn.setLayoutParams(lp);
+			button_container.addView(positive_btn);
+		}
+		return positive_btn;
+	}
+	
+	public void setNegativeButton(int text_stringres) {
+		getNegativeButton().setText(text_stringres);
+		getNegativeButton().setOnClickListener(new DialogOnClickWrapper(new DefaultOnClickListener()));
+	}
+	
+	public void setNegativeButton(int text_stringres,DialogInterface.OnClickListener listener) {
+		getNegativeButton().setText(text_stringres);
+		getNegativeButton().setOnClickListener(new DialogOnClickWrapper(listener));
+	}
+	
+	
+	private Button getNegativeButton() {
+		if (negative_btn==null) {
+			negative_btn=new Button(getContext());
+			LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,LinearLayout.LayoutParams.FILL_PARENT,1f);
+			negative_btn.setLayoutParams(lp);
+			button_container.addView(negative_btn);
+		}
+		return negative_btn;
 	}
 }
