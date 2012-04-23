@@ -46,6 +46,8 @@ public class SGFLoadFromExternalActivity
 		Intent fwd_intent=getIntent();
 		fwd_intent.setClass(this, SGFLoadActivity.class);
 		startActivity(fwd_intent);
+		
+		finish(); // we are done
 	}
 
 }

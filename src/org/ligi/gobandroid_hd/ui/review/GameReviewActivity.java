@@ -98,7 +98,7 @@ public class GameReviewActivity extends GoActivity  {
 	}
 	
 	@Override
-	public boolean isAsk4QuitEnabled() {
-		return false;
+	public void quit(final boolean toHome) {
+			new EndReviewDialog(this).show();
 	}
 }

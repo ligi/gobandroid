@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd;
 
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.tracedroid.TraceDroid;
 import org.ligi.tracedroid.logging.Log;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
@@ -52,5 +53,10 @@ public class GobandroidApp extends Application {
 	
 	public GoGame getGame() {
 		return getInteractionScope().getGame();
+	}
+	
+
+	public GobandroidSettings getSettings() {
+		return new GobandroidSettings(this);
 	}
 }

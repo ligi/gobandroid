@@ -35,13 +35,16 @@ import android.widget.TextView;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.ligi.android.common.files.FileHelper;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -64,7 +67,7 @@ public class SGFLoadActivity
 {
 
 	private GoGame game=null;
-	private Uri intent_uri;
+	//private Uri intent_uri;
 	private String sgf;
 	private ProgressBar progress;
 	private int act_progress;
@@ -115,119 +118,116 @@ public class SGFLoadActivity
 		super.onResume();
 	}
 
+	public String contentToString(String url) throws IOException {
+		String res="";
+		
+		if (url.startsWith("/"))
+			return FileHelper.file2String(new File(url));
+		
+		return res;
+	}
+	
+	public String uri2string(Uri intent_uri) throws FileNotFoundException,MalformedURLException, IOException{
+		
+		if (intent_uri.toString().startsWith("/"))
+			return FileHelper.file2String(new File(intent_uri.toString()));
+		
+		InputStream in;
+		
+		if (intent_uri.toString().startsWith("content://"))
+			in = getContentResolver().openInputStream(intent_uri);	
+		else
+			in= new BufferedInputStream(new URL(""+intent_uri).openStream(), 4096); 
+					
+		FileOutputStream file_writer =null;
+
+		// if it comes from network
+		if (intent_uri.toString().startsWith("http")) { // https catched also
+		   	new File(GoPrefs.getSGFPath()+"/downloads").mkdirs();
+		   	File f = new File(GoPrefs.getSGFPath()+"/downloads/"+intent_uri.getLastPathSegment()	);
+			f.createNewFile();
+			file_writer = new FileOutputStream(f);
+		}
+					
+		StringBuffer out = new StringBuffer();
+		byte[] b = new byte[4096];
+		for (int n; (n = in.read(b)) != -1;) {
+			out.append(new String(b, 0, n));
+			if (file_writer!=null)
+				file_writer.write(b, 0, n);
+		}
+		if (file_writer!=null)
+			file_writer.close();
+		 
+		
+		return out.toString();
+	}
+
 	@Override
 	public void run() {
 		Looper.prepare();
-		String src="";
-		if (game==null) {
-			/* if there is a game saved in LastNonConfigurationInstance
-			 * e.g. on rotation -> use the game from there */
-			if (getLastNonConfigurationInstance()!=null) 
-				game=(GoGame)getLastNonConfigurationInstance();
-			else { // otherwise create a new game based on the Intent Data
-				
-				intent_uri=getIntent().getData(); // extract the uri from the intent
-				
-				if (intent_uri!=null) {
-					
-					try {
-						
-						InputStream in;
-						Log.i("load" + intent_uri);
-						if (intent_uri.toString().startsWith("content://"))
-							in = getContentResolver().openInputStream(intent_uri);	
-						else
-							in= new BufferedInputStream(new URL(""+intent_uri).openStream(), 4096); 
-						
-						FileOutputStream file_writer =null;
 
-						// if it comes from network
-						if (intent_uri.toString().startsWith("http")) { // https catched also
-					    	new File(GoPrefs.getSGFPath()+"/downloads").mkdirs();
-					    	File f = new File(GoPrefs.getSGFPath()+"/downloads/"+intent_uri.getLastPathSegment()	);
-							f.createNewFile();
-							file_writer = new FileOutputStream(f);
-							}
+		final Uri intent_uri=getIntent().getData(); // extract the uri from the intent
+				
+		if (intent_uri==null) {
+			Log.e("SGFLoadActivity with intent_uri==null");
+			return;
+		}
 					
-						src=intent_uri.toString();
-						
-					    StringBuffer out = new StringBuffer();
-					    byte[] b = new byte[4096];
-					    for (int n; (n = in.read(b)) != -1;) {
-					        out.append(new String(b, 0, n));
-					        if (file_writer!=null)
-					        	file_writer.write(b, 0, n);
-					    }
-					    if (file_writer!=null)
-				        	file_writer.close();
-					    
-					    sgf=out.toString();
-						
-						Log.i("got sgf content:" + sgf);
-						game=SGFHelper.sgf2game(sgf,this);
-						
-						
-						// if it is a tsumego and we need a transformation to right corner -> do so
-						if (getApp().getInteractionScope().getMode()==InteractionScope.MODE_TSUMEGO) {
-							int transform=TsumegoHelper.calcTransform(game);
-						
-							if (transform!=SGFHelper.DEFAULT_SGF_TRANSFORM)			
-								game=SGFHelper.sgf2game(sgf, null,SGFHelper.BREAKON_NOTHING,transform);
-						}
-						
-				} catch (Exception e) {
-						Log.w("exception in load", e);
-						
-						handler.post(new Runnable() {
-							
-							@Override
-							/** if the sgf loading fails - give the user the option to send this SGF to me - to perhaps fix the 
-							 * parser to load more SGF's - TODO remove this block if all SGF's load fine ;-) */
-							public void run() {
-						
-								
-								alert_dlg.hide();
-								new AlertDialog.Builder(SGFLoadActivity.this).setTitle(R.string.results)
-								.setMessage(
-										 "Problem Loading sgf would you like to send ligi this sgf to fix the problem?"
+		try {
+					
+			Log.i("load" + intent_uri);
+			
+			sgf=uri2string(intent_uri);
+			
+			Log.i("got sgf content:" + sgf);
+			game=SGFHelper.sgf2game(sgf,this);
+			
+			// if it is a tsumego and we need a transformation to right corner -> do so
+			if (getApp().getInteractionScope().getMode()==InteractionScope.MODE_TSUMEGO) {
+				int transform=TsumegoHelper.calcTransform(game);
+				
+				if (transform!=SGFHelper.DEFAULT_SGF_TRANSFORM)			
+					game=SGFHelper.sgf2game(sgf, null,SGFHelper.BREAKON_NOTHING,transform);
+			}
+			
+			} catch (Exception e) {
+				Log.w("exception in load", e);
+				
+			handler.post(new Runnable() {
+					
+					@Override
+					/** if the sgf loading fails - give the user the option to send this SGF to me - to perhaps fix the 
+					 * parser to load more SGF's - TODO remove this block if all SGF's load fine ;-) */
+					public void run() {
+						alert_dlg.hide();
+						new AlertDialog.Builder(SGFLoadActivity.this).setTitle(R.string.results)
+						.setMessage(
+								"Problem Loading sgf would you like to send ligi this sgf to fix the problem?"
 								).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog, int whichButton) {
-									final  Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-									emailIntent .setType("plain/text");
-									emailIntent .putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"ligi@ligi.de"});
-									emailIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, "SGF Problem");
-									emailIntent .putExtra(android.content.Intent.EXTRA_TEXT, "uri: " + intent_uri + "sgf:\n" + sgf + "err:" + Log.getCachedLog());
-									SGFLoadActivity.this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-									finish();
+										final  Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+											emailIntent .setType("plain/text");
+											emailIntent .putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"ligi@ligi.de"});
+											emailIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, "SGF Problem");
+											emailIntent .putExtra(android.content.Intent.EXTRA_TEXT, "uri: " + intent_uri + " sgf:\n" + sgf + "err:" + Log.getCachedLog());
+											SGFLoadActivity.this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+											finish();
+										}
+										}).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int whichButton) {
+										finish();
 									}
-									}).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int whichButton) {
-									finish();
-								}
-								}).show();
-							}}
-						);
+									}).show();
+								}}
+							);
+							
+							
 						
-						
-					
-						return;
-					}
-					
-				}
-				else {
-					byte size = getIntent().getByteExtra("size", (byte) 9);
-					byte handicap = getIntent().getByteExtra("handicap", (byte) 0);
-		
-					int white_player=getIntent().getIntExtra("white_player", 0);
-					int black_player=getIntent().getIntExtra("black_player", 0);
-					
-					game = new GoGame(size,handicap);
-					
-					game.setGoMover(new GnuGoMover(this,game,black_player!=0,white_player!=0,GoPrefs.getAILevel()));
-				}
-			}
-		
+			return;
 		}
+			
+		
 		int move_num = getIntent().getIntExtra("move_num", -1 );
 		
 		if (move_num!=-1)
@@ -235,7 +235,7 @@ public class SGFLoadActivity
 				game.jump(game.getActMove().getnextMove(0));
 		
 		getApp().getInteractionScope().setGame(game);
-		game.getMetaData().setFileName(src);
+		game.getMetaData().setFileName(intent_uri.toString());
 		
 		handler.post(new Runnable() {
 			@Override

@@ -226,7 +226,7 @@ public class GoActivity
 	        	return true;
 	        	
 	        case android.R.id.home:
-	        	ask4quit(true);
+	        	quit(true);
 	        	return true;
 		}
 		
@@ -251,7 +251,7 @@ public class GoActivity
 		}
 	}
 	
-	private void ask4quit(final boolean toHome) {
+	public void quit(final boolean toHome) {
 		if (!isAsk4QuitEnabled()) {
 			shutdown(toHome);
 			return;
@@ -273,7 +273,7 @@ public class GoActivity
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_BACK:
-				ask4quit(false);
+				quit(false);
 				return true;
 		}
 		

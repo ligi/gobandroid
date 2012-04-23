@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameMetadata;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
@@ -95,39 +96,18 @@ public class SaveSGFDialog extends GobandroidDialog {
 		
 		class SaveSGFOnClickListener implements DialogInterface.OnClickListener {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				String value = input.getText().toString(); 
+				String fname = input.getText().toString()+".sgf"; 
 					
-				File f = new File(context.getSettings().getSGFSavePath());
-				
-				if (!f.isDirectory())
-					f.mkdirs();
-				
-				try {
-					f=new File(context.getSettings().getSGFSavePath() + "/"+value+".sgf");
-					f.createNewFile();
-					
-					FileWriter sgf_writer = new FileWriter(f);
-					
-					BufferedWriter out = new BufferedWriter(sgf_writer);
-					
-					out.write(SGFHelper.game2sgf(getApp().getGame()));
-					out.close();
-					sgf_writer.close();
-
-					
-					getApp().getGame().getMetaData().setFileName(value+".sgf");
-					if (share_checkbox.isChecked()) {
+				if (saveSGF(getApp().getGame(),context.getSettings().getSGFSavePath() ,fname)&&
+					(share_checkbox.isChecked())) {
 						//add extra
 						Intent it = new Intent(Intent.ACTION_SEND);   
 						it.putExtra(Intent.EXTRA_SUBJECT, "SGF created with gobandroid");   
-						it.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://"+context.getSettings().getSGFSavePath() + "/"+value+".sgf"));   
+						it.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://"+context.getSettings().getSGFSavePath() + "/"+fname));   
 						it.setType("application/x-go-sgf");   
 						context.startActivity(Intent.createChooser(it, "Choose how to send the SGF"));
 
 					}
-				} catch (IOException e) {
-					Log.i(""+e);
-				}
 				
 				dialog.dismiss();
 			}
@@ -138,4 +118,33 @@ public class SaveSGFDialog extends GobandroidDialog {
 	
 	}
 	
+	
+	public static boolean saveSGF(GoGame game,String path,String fname) {
+
+		File f = new File(path);
+		
+		if (!f.isDirectory())
+			f.mkdirs();
+		
+		try {
+			f=new File(path+ "/"+fname);
+			f.createNewFile();
+			
+			FileWriter sgf_writer = new FileWriter(f);
+			
+			BufferedWriter out = new BufferedWriter(sgf_writer);
+			
+			out.write(SGFHelper.game2sgf(game));
+			out.close();
+			sgf_writer.close();
+
+		} catch (IOException e) {
+			Log.i(""+e);
+			return false;
+		}
+		
+		game.getMetaData().setFileName(path+"/"+fname);
+		return true;
+		
+	}
 }
