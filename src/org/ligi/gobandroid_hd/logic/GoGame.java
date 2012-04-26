@@ -146,19 +146,33 @@ public class GoGame  {
 
     	metadata=new GoGameMetadata();
     	
+    	if (handicap>0)
+    		setKomi(0.5);
+    	
     	calc_board = new GoBoard( size );
         
     	handicap_board=calc_board.clone();
     	    
     	all_handicap_positions=new boolean[size][size];
     	
-    	if (GoDefinitions.getHandicapArray(size)!=null)
-    		for (int i=0;i<9;i++) {
-    				if (i<handicap)
-    					handicap_board.setCellBlack(GoDefinitions.getHandicapArray(size)[i][0], GoDefinitions.getHandicapArray(size)[i][1]);
-    				
-    				all_handicap_positions[GoDefinitions.getHandicapArray(size)[i][0]][GoDefinitions.getHandicapArray(size)[i][1]]=true;
+    	if (GoDefinitions.getHandicapArray(size)!=null) {
+    		static byte[][] handicapArray = GoDefinitions.getHandicapArray(size);
+    			for (int i=0;i<9;i++) {
+    				if (i<handicap) {
+    					if (size!=19 || i<5)
+    						handicap_board.setCellBlack(handicapArray[i][0], handicapArray[i][1]);
+    					else if(i==5 || i == 7) {
+    						handicap_board.setCellFree(handicapArray[4][0], handicapArray[4][1]);
+    						handicap_board.setCellBlack(handicapArray[i][0], handicapArray[i][1]);
+    						handicap_board.setCellBlack(handicapArray[i+1][0], handicapArray[i+1][1]);
+    					} else
+    						handicap_board.setCellBlack(handicapArray[4][0], handicapArray[4][1]);
+    				}
+    			
+	    			all_handicap_positions[handicapArray[i][0]][handicapArray[i][1]]=true;
     			}
+    		}
+    	}
     		
         apply_handicap();
         
