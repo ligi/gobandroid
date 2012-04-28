@@ -8,6 +8,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.MetaDataFormater;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 class ReviewPathViewAdapter extends BaseAdapter {
@@ -77,15 +79,18 @@ class ReviewPathViewAdapter extends BaseAdapter {
 				
 				if (GoLink.isGoLink(base_fname)) {
 					GoLink gl=new GoLink(base_fname);
-					sgf_str=gl.getSGFString();
+					
+					base_fname=gl.getFileName();
 					((TextView)v.findViewById(R.id.game_link_extra_infos)).setText("Move #"+gl.getMoveDepth());
 				} else {
 					((TextView)v.findViewById(R.id.game_link_extra_infos)).setVisibility(View.GONE);
-					sgf_str=FileHelper.file2String(new File(base_fname));
+					
 				}
 				
+				sgf_str=FileHelper.file2String(new File(base_fname));
 				game=SGFHelper.sgf2game(sgf_str, null,SGFHelper.BREAKON_FIRSTMOVE);
-
+				SGFMetaData sgf_meta=new SGFMetaData(base_fname+SGFMetaData.FNAME_ENDING);
+				
 				if (game!=null) {
 					MetaDataFormater meta=new MetaDataFormater(game);
 					
@@ -116,6 +121,13 @@ class ReviewPathViewAdapter extends BaseAdapter {
 					if (title_tv!=null) {
 						title_tv.setText(meta.getExtrasString());
 					}
+					
+					RatingBar rating_bar=(RatingBar)v.findViewById(R.id.game_rating);
+					if (!sgf_meta.hasData())
+						rating_bar.setVisibility(View.GONE);
+					else 
+						if (sgf_meta.getRating()!=null)
+							rating_bar.setRating(.5f*sgf_meta.getRating());
 				}	
 
 			} catch (IOException e) {

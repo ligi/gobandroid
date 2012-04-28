@@ -27,6 +27,7 @@ import org.ligi.android.common.activitys.ActivityFinishOnCancelListener;
 import org.ligi.android.common.dialogs.ActivityFinishOnDialogClickListener;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.Refreshable;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsDialog;
@@ -61,7 +62,10 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity implements
 		setContentView(R.layout.list);
 		getSettings().getSGFBasePath();
 
-		if (this.getIntent().getData()!=null)
+		if (getIntent().getBooleanExtra(GobandroidNotifications.BOOL_FROM_NOTIFICATION_EXTRA_KEY,false))
+			GobandroidNotifications.cancelNewTsumegosNotification(this);
+		
+		if (getIntent().getData()!=null)
 			dir=new File(this.getIntent().getData().getPath());
 		else
 			dir=new File(sgf_path);

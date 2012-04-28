@@ -5,13 +5,14 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.tracedroid.TraceDroid;
 import org.ligi.tracedroid.logging.Log;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+import com.google.android.c2dm.C2DMessaging;
+
 import android.app.Application;
 
 public class GobandroidApp extends Application {
 
 	private GoogleAnalyticsTracker tracker=null;  // noticed that some analytics really helps
 	private InteractionScope interaction_scope;   // holds things like mode/act game between activitysw
-	
 	
 	@Override
 	public void onCreate() {
@@ -20,9 +21,12 @@ public class GobandroidApp extends Application {
 	    Log.setTAG("gobandroid");
 	    
 	    tracker = GoogleAnalyticsTracker.getInstance();
+		
         tracker.startNewSession("UA-27002728-1", this);
         
         interaction_scope=new InteractionScope();
+        
+        C2DMessaging.register(this, "marcus.bueschleb@googlemail.com");
 	}
 
 	@Override
@@ -42,7 +46,7 @@ public class GobandroidApp extends Application {
 
 	public GoogleAnalyticsTracker getTracker() {
     	if (tracker==null) {
-          
+          Log.w("tracker is null");
     	}
     	return tracker;
     }

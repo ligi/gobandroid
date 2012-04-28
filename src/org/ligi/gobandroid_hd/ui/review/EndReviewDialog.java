@@ -24,10 +24,12 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink;
 
 import android.content.DialogInterface;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.RatingBar;
 
 
 /**
@@ -43,10 +45,19 @@ public class EndReviewDialog extends GobandroidDialog {
 	private CheckBox bookmark_notification;
 	private CheckBox save_bookmark_cp;
 	private EditText bookmark_name;
+	private RatingBar rating_bar;
+	private SGFMetaData meta;
+	
+	public void saveSGFMeta() {
+		
+		meta.setRating((int)(rating_bar.getRating()*2));
+		meta.persist();
+	}
 	
 	public EndReviewDialog(final GobandroidFragmentActivity context) {
 		super(context);
 		
+		meta=new SGFMetaData(this.getApp());
 		setContentView(R.layout.end_review_dialog);
 		
 		setTitle(R.string.end_review);
@@ -58,6 +69,12 @@ public class EndReviewDialog extends GobandroidDialog {
 		bookmark_notification=(CheckBox)findViewById(R.id.bookmark_notification_cb);
 		bookmark_name=(EditText)findViewById(R.id.bookmark_name_et);
 		bookmark_name.setText(BookmarkDialog.getCleanEnsuredFilename(context));
+		
+		
+		rating_bar = (RatingBar)findViewById(R.id.game_rating);
+		
+		if (meta.getRating()!=null)
+			rating_bar.setRating(.5f*meta.getRating());
 		
 		save_bookmark_cp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -82,12 +99,22 @@ public class EndReviewDialog extends GobandroidDialog {
 					GobandroidNotifications.addGoLinkNotification(context, context.getSettings().getBookmarkPath()+"/"+bookmark_name.getText().toString()+".golink");
 				}
 
+				saveSGFMeta();
 				context.finish();
 			}
 		}
 		
+		class NegativeOnClickListener implements OnClickListener {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				saveSGFMeta();
+			}
+		}
+		
 		setPositiveButton(R.string.yes,new PositiveOnClickListener());
-		setNegativeButton(R.string.no);
+		setNegativeButton(R.string.no,new NegativeOnClickListener());
 	}
 
 }
