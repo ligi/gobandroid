@@ -516,17 +516,6 @@ public class GoActivity
 		if (doAskToKeepVariant()) {                                                                                                  
 			new UndoWithVariationDialog(this).show();
 			
-			/*
-			new AlertDialog.Builder(this).setTitle(R.string.keep_variant_).setMessage(R.string.keep_this_move_as_variant_)                              
-	        .setPositiveButton(R.string.yes , new DialogInterface.OnClickListener() {                                                     
-	        public void onClick(DialogInterface dialog, int whichButton) {                                                                
-	                game.undo(true);                                                                                                      
-	        }                                                                                                                             
-	        }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {                                                     
-	        public void onClick(DialogInterface dialog, int whichButton) {                                                                
-	                game.undo(false);                                                                                                     
-	                }                                                                                                                     
-	        }).show();*/                                                                                                                    
 	    }                                                                                                                                     
 	    else                                                                                                                                  
 	        game.undo(GoPrefs.isKeepVariantEnabled());
