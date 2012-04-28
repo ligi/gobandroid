@@ -156,4 +156,5 @@
 	<string name="youtube_tutorial_link">http://www.youtube.com/watch?v=gECcsSeRcNo</string>    
 	<string name="wikipedia_rules">Article on Wikipedia</string>
 	<string name="wikipedia_rules_link">http://en.wikipedia.org/wiki/Go_(game)</string>
+    <string name="televize">Televize</string>
 </resources>

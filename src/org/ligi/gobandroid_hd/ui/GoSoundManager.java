@@ -16,9 +16,7 @@ public class GoSoundManager {
 	private  HashMap<Integer, Integer> mSoundPoolMap;
 	private  AudioManager  mAudioManager;
 	private  GobandroidFragmentActivity mContext;
-	
-	private boolean intro_sound_played=false;
-	
+		
 	public final static int SOUND_START=1;
 	public final static int SOUND_END=2;
 	public final static int SOUND_PLACE1=3;
@@ -46,25 +44,12 @@ public class GoSoundManager {
 	}
 	
 	public void playSound(int index) {
-		Log.i("sound play call");
-		//if ((!mContext.getSettings().isSoundEnabled())||(!intro_sound_played))
-		//	return;
+		if (!mContext.getSettings().isSoundEnabled())
+			return; // user does not want sound
 
-		Log.i("playing sound " + index);
 		float streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 		streamVolume = streamVolume / mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 	    mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume, 1, 0, 1f);
 	}
-		
-	public void playGameIntro() {
-		if (!mContext.getSettings().isSoundEnabled())
-			return;
-
-		if (intro_sound_played)
-			return;
-		
-		playSound(SOUND_START);
-		
-		intro_sound_played=true;
-	}
+	
 }

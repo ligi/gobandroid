@@ -33,7 +33,6 @@ import org.ligi.gobandroid_hd.ui.alerts.GameResultsAlert;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.fragments.DefaultGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
-import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.tracedroid.logging.Log;
 
@@ -206,7 +205,7 @@ public class GoActivity
 
 			@Override
 			public void run() {
-				sound_man.playGameIntro();
+				sound_man.playSound(GoSoundManager.SOUND_START);
 			}
 			
 		}, 100);
@@ -234,7 +233,7 @@ public class GoActivity
         switch (item.getItemId()) {                                                                                                                   
                            
 	        case R.id.menu_game_switchmode:
-	        	SwitchModeHelper.show(this);
+	        	new SwitchModeDialog(this).show();
 	        	return true;
 	        	
 	        case R.id.menu_game_info:                                                                                                                           
