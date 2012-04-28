@@ -168,7 +168,7 @@ public class GoActivity
 		else
 			game.addGoGameChangeListener(this);
 		
-		super.onDestroy();
+		super.onStart();
 	}
 
 	
@@ -179,7 +179,7 @@ public class GoActivity
 		else
 			game.removeGoGameChangeListener(this);
 		
-		super.onDestroy();
+		super.onStop();
 	}
 
 	/**
