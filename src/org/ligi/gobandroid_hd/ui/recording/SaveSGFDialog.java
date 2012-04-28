@@ -59,19 +59,27 @@ public class SaveSGFDialog extends GobandroidDialog {
 		class FileNameAdder implements View.OnClickListener {
 			@Override
 			public void onClick(View v) {
+				String toAdd = "";
 				switch (v.getId()) {
-				case R.id.button_add_date:
-					SimpleDateFormat date_formatter = new SimpleDateFormat("dd.MMM.yyyy");
-					input.setText(input.getText()+date_formatter.format(new Date()));
-					break;
-				case R.id.button_add_gamename:
-					input.setText(input.getText()+game_meta.getName());
-					break;
-				case R.id.button_add_players:
-					input.setText(input.getText()+game_meta.getBlackName()+"_vs_"+game_meta.getWhiteName());
-					break;
+					case R.id.button_add_date:
+						SimpleDateFormat date_formatter = new SimpleDateFormat("yyyy.MM.dd");
+						toAdd = date_formatter.format(new Date());
+						break;
+					case R.id.button_add_gamename:
+						toAdd = game_meta.getName();
+						break;
+					case R.id.button_add_players:
+						toAdd = game_meta.getBlackName()+"_vs_"+game_meta.getWhiteName();
+						break;
 				}
-				
+				if(toAdd != "") {
+					String text = input.getText().toString();
+					int cursorPos = input.getSelectionStart();
+					StringBuilder sb = new StringBuilder();
+					sb.append(text.substring(0, cursorPos)).append(toAdd).append(text.substring(cursorPos,input.length()));
+					input.setText(sb.toString());
+					input.setSelection(cursorPos + toAdd.length());
+				}
 			}
 			
 		}
