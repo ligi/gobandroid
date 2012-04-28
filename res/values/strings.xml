@@ -95,6 +95,7 @@
 	
 	<string name="link_title">Links</string>
 	<string name="link_tab_about">About</string>
+	<string name="link_tab_credits">Credits</string>
 	<string name="link_tab_help">Help</string>
 	<string name="link_tab_sgf">SGF\'s</string>
 	<string name="game_mode">Mode</string>
@@ -151,5 +152,8 @@
     <string name="i_do_not_want_to_keep_variants_for_this_game">I do not want to keep variations in this game</string>
     <string name="end_review">End review?</string>
     <string name="komi_must_be_a_number">Komi must be a number</string>    
-    
+	<string name="youtube_tutorial">Tutorial on YouTube</string>    
+	<string name="youtube_tutorial_link">http://www.youtube.com/watch?v=gECcsSeRcNo</string>    
+	<string name="wikipedia_rules">Article on Wikipedia</string>
+	<string name="wikipedia_rules_link">http://en.wikipedia.org/wiki/Go_(game)</string>
 </resources>

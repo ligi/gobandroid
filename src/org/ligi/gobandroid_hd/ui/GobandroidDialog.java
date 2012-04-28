@@ -6,10 +6,13 @@ import org.ligi.gobandroid_hd.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -62,6 +65,44 @@ public class GobandroidDialog extends Dialog {
 		
 	}
 	
+	
+	public void addItem(int image_resId,int str_resid,final OnClickListener listener){
+		LinearLayout container=(LinearLayout)this.findViewById(R.id.dialog_content);
+		Log.i("","container" + container + " inflater" + inflater);
+		View v=inflater.inflate(R.layout.dialog_item, null);
+		((TextView)v.findViewById(R.id.text)).setText(str_resid);
+		((ImageView)v.findViewById(R.id.image)).setImageResource(image_resId);
+		
+		v.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					v.setBackgroundResource(R.drawable.holo_transparent_bg);
+					return true;
+				case MotionEvent.ACTION_UP:
+					v.setBackgroundDrawable(null);
+					listener.onClick(GobandroidDialog.this, 0);
+					return true;
+				}
+				return false;
+			}
+			
+		});
+		
+		v.setOnClickListener(new View.OnClickListener() {
+
+
+			@Override
+			public void onClick(View v) {
+				v.setBackgroundColor(Color.RED);
+			}
+			
+		});
+		container.addView(v);
+		
+	}
 	
 	class DefaultOnClickListener implements OnClickListener {
 

@@ -99,8 +99,8 @@ public class gobandroid extends GobandroidFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
     	case R.id.help:
+    		new HelpDialog(this).show();
         	getTracker().trackPageView("/help");
-        	this.startActivity( new Intent(this,LinksActivity.class));
     		return true;
     	}
 		return super.onOptionsItemSelected(item);

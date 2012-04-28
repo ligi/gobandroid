@@ -49,7 +49,7 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
         this.setTitle(R.string.link_title);
 
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        int[] tabs=new int[] {R.string.link_tab_help,R.string.link_tab_about,R.string.link_tab_sgf};
+        int[] tabs=new int[] {R.string.link_tab_about,R.string.link_tab_credits,R.string.link_tab_sgf};
 
         for (int tab_str : tabs ) {
         	ActionBar.Tab tab = getSupportActionBar().newTab();
@@ -70,24 +70,32 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 		Log.i("list"+ list);
 		LinkWithDescription[] links=null;
 		switch (list) {
+			case R.string.link_tab_credits:
+				links=new LinkWithDescription[] {
+						new LinkWithDescriptionAndTitle("http://plus.google.com/104849265443273982798","idea / concept / code ","Ligi"),
+						
+						new LinkWithDescriptionAndTitle("http://gogameguru.com/","source of default Tsumego and commented game SGF's","gogameguru.com"),
+						new LinkWithDescriptionAndTitle("http://actionbarsherlock.com/","library used for ActionBar backward compatibility ","ActionBarSherlock"),
+						new LinkWithDescriptionAndTitle("http://plus.google.com/107941390233680026764","Sounds","Sebastian Blumtritt"),
+						new LinkWithDescriptionAndTitle("http://plus.google.com/107473613683165260026","Japanese Translation","Hiroki Ino"),
+						new LinkWithDescriptionAndTitle("http://plus.google.com/102354246669329539149","Chinese Translation","Noorudin Ma"),
+						new LinkWithDescriptionAndTitle("http://transimple.de","German Translation","Dirk Blasejezak"),		
+						new LinkWithDescriptionAndTitle("http://plus.google.com/109272815840179446675","French Translation #1","Sylvain Soliman"),
+						new LinkWithDescriptionAndTitle("http://github.com/Zenigata","French Translation #2","Zenigata"),
+						new LinkWithDescriptionAndTitle("http://github.com/p3l","Swedish Translation","Peter Lundqvist"),
+						new LinkWithDescriptionAndTitle("http://plus.google.com/116001545198026111276","feedback & patches" , "Oren Laskin on Google+"),
+						new LinkWithDescriptionAndTitle("http://plus.google.com/105303388887291066710","wooden background","Ruth -lironah- Hinckley on Google+"),
+						new LinkWithDescriptionAndTitle("http://www.silvestre.com.ar/","GPL'd icons","Silvestre Herrera"),
+						new LinkWithDescriptionAndTitle("http://www.sente.ch","FreegGoban stones","sente.ch"),
+				};
+			
+				break;
+				
 			case R.string.link_tab_about:
 				links=new LinkWithDescription[] {
 					new LinkWithDescriptionAndTitle("http://plus.google.com/106767057593220295403","for news, infos, feedback","Gobandroid Project Page"),
-					new LinkWithDescriptionAndTitle("https://plus.google.com/104849265443273982798","idea / concept / code ","Ligi on Google+"),
 					new LinkWithDescription("http://github.com/ligi/gobandroid","Code/Issues on GitHub"),
-					new LinkWithDescriptionAndTitle("http://gogameguru.com/","source of default Tsumego and commented game SGF's","gogameguru.com"),
-					new LinkWithDescriptionAndTitle("http://actionbarsherlock.com/","library used for ActionBar backward compatibility ","ActionBarSherlock"),
-					new LinkWithDescriptionAndTitle("http://plus.google.com/107941390233680026764","Sounds","Sebastian Blumtritt"),
-					new LinkWithDescriptionAndTitle("http://plus.google.com/107473613683165260026","Japanese Translation","Hiroki Ino"),
-					new LinkWithDescriptionAndTitle("http://plus.google.com/102354246669329539149","Chinese Translation","Noorudin Ma"),
-					new LinkWithDescriptionAndTitle("http://transimple.de","German Translation","Dirk Blasejezak"),		
-					new LinkWithDescriptionAndTitle("http://plus.google.com/109272815840179446675","French Translation #1","Sylvain Soliman"),
-					new LinkWithDescriptionAndTitle("http://github.com/Zenigata","French Translation #2","Zenigata"),
-					new LinkWithDescriptionAndTitle("http://github.com/p3l","Swedish Translation","Peter Lundqvist"),
-					new LinkWithDescriptionAndTitle("http://plus.google.com/116001545198026111276","feedback & patches" , "Oren Laskin on Google+"),
-					new LinkWithDescriptionAndTitle("http://plus.google.com/105303388887291066710","wooden background","Ruth -lironah- Hinckley on Google+"),
-					new LinkWithDescriptionAndTitle("http://www.silvestre.com.ar/","GPL'd icons","Silvestre Herrera"),
-					new LinkWithDescriptionAndTitle("http://www.sente.ch","FreegGoban stones","sente.ch"),
+					new LinkWithDescription("http://play.google.com/store/apps/details?id=org.ligi.gobandroid_hd","Google Play link"),
 					new LinkWithDescription("http://gplv3.fsf.org/","GPLv3 License")					
 				};					
 			break;
@@ -112,16 +120,7 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 					//dead not there anymore			new LinkWithDescription("http://egoban.org/@@recent_games","egoban"),
 				};
 			break;
-			
-			case R.string.link_tab_help:
-				links=new LinkWithDescription[] {
-					new LinkWithDescription("http://en.wikipedia.org/wiki/Rules_of_Go","Wikipedia Article"),
-					new LinkWithDescription("http://www.youtube.com/watch?v=gECcsSeRcNo","Tutorial on YouTube 1"),
-					new LinkWithDescription("http://www.youtube.com/watch?v=UW8822OoihY","Tutorial on YouTube 2"),
-					new LinkWithDescription("http://www.youtube.com/watch?v=t_ZRe3wGIUM","Tutorial on YouTube 3"),
-					new LinkWithDescription("http://www.youtube.com/watch?v=rCi9vgvLdI0","Tutorial on YouTube 3a")
-				};
-			break;
+		
 		}
 		changeFragment(new LinkListFragment(links));	
 	}

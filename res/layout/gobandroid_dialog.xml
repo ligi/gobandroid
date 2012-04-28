@@ -38,10 +38,11 @@
      
 	 <LinearLayout 
 	        android:id="@+id/dialog_content"
-	    	android:layout_width="wrap_content"
+	    	android:layout_width="fill_parent"
 	    	android:layout_height="wrap_content"
 	    	android:padding="5dp"
 	    	android:layout_weight="1"
+	    	android:orientation="vertical"
 	     	>
 	
 	 </LinearLayout>
