@@ -142,7 +142,7 @@ public class GoActivity
 		go_board.setOnTouchListener(this);
 		go_board.setOnKeyListener(this);
 			
-		game.addGoGameChangeListener(this);
+	
 	}
 	
 	private int last_processed_move_change_num=0;
@@ -157,6 +157,29 @@ public class GoActivity
 		}
 		last_processed_move_change_num=getGame().getActMove().getMovePos();
 		game2ui();
+	}
+	
+	
+
+	@Override 
+	protected void onStart() {
+		if (game==null)
+			Log.w("we do not have a game in onStart of a GoGame activity - thats crazy!");
+		else
+			game.addGoGameChangeListener(this);
+		
+		super.onDestroy();
+	}
+
+	
+	@Override
+	protected void onStop() {
+		if (game==null)
+			Log.w("we do not have a game (anymore) in onStop of a GoGame activity - thats crazy!");
+		else
+			game.removeGoGameChangeListener(this);
+		
+		super.onDestroy();
 	}
 
 	/**
