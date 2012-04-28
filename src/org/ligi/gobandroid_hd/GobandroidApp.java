@@ -22,7 +22,7 @@ public class GobandroidApp extends Application {
 	    
 	    tracker = GoogleAnalyticsTracker.getInstance();
 		
-        tracker.startNewSession("UA-27002728-1", this);
+        tracker.startNewSession("UA-27002728-1", 30,this);
         
         interaction_scope=new InteractionScope();
         
