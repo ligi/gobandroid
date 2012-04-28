@@ -3,7 +3,6 @@ package org.ligi.gobandroid_hd.ui.recording;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
-import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 
 import com.actionbarsherlock.view.Menu;
@@ -12,6 +11,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.WindowManager;
 
+/**
+ * Activity to record a Game - or play on one device
+ * 
+ * @author ligi
+ *
+ */
 public class GameRecordActivity extends GoActivity  implements GoGameChangeListener {
 
     @Override
@@ -33,20 +38,6 @@ public class GameRecordActivity extends GoActivity  implements GoGameChangeListe
 
 		game.notifyGameChange();
 		return res;
-	}
-
-
-	public GoMove getCorrectMove(GoMove act_mve) {
-		if (act_mve.getComment().equals("Correct"))
-			return act_mve;
-		
-		for (GoMove next_moves:act_mve.getNextMoveVariations()) {
-			GoMove res=getCorrectMove(next_moves);
-			if (res!=null)
-				return res;
-		}
-			
-		return null;
 	}
 	
 	@Override
