@@ -45,6 +45,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -168,7 +169,15 @@ public class GoActivity
 	protected void onResume() {
 		super.onResume();
 		setBoardPreferences();
-		sound_man.playGameIntro();
+
+		new Handler().postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				sound_man.playGameIntro();
+			}
+			
+		}, 100);
 	}
 	
 	public ZoomGameExtrasFragment getZoomFragment() {
