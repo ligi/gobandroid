@@ -57,22 +57,29 @@ public class SaveSGFDialog extends GobandroidDialog {
 		 * this is a OnClickListener  to add Stuff to the FileName like date/gamename/...
 		 */
 		class FileNameAdder implements View.OnClickListener {
+			
+			private String getTextByButtonId(int btn_resId) {
+				switch (btn_resId) {
+				case R.id.button_add_date:
+					SimpleDateFormat date_formatter = new SimpleDateFormat("yyyy.MM.dd");
+					return date_formatter.format(new Date());
+				case R.id.button_add_time:
+					SimpleDateFormat time_formatter = new SimpleDateFormat("H'h'm'm'");
+					return time_formatter.format(new Date());
+				case R.id.button_add_gamename:
+					return game_meta.getName();
+				case R.id.button_add_players:
+					return game_meta.getBlackName()+"_vs_"+game_meta.getWhiteName();
+			
+				default:
+					return null;
+				}
+			}
+
 			@Override
 			public void onClick(View v) {
-				String toAdd = "";
-				switch (v.getId()) {
-					case R.id.button_add_date:
-						SimpleDateFormat date_formatter = new SimpleDateFormat("yyyy.MM.dd");
-						toAdd = date_formatter.format(new Date());
-						break;
-					case R.id.button_add_gamename:
-						toAdd = game_meta.getName();
-						break;
-					case R.id.button_add_players:
-						toAdd = game_meta.getBlackName()+"_vs_"+game_meta.getWhiteName();
-						break;
-				}
-				if(toAdd != "") {
+				String toAdd = getTextByButtonId(v.getId());
+				if(toAdd != null) {
 					String text = input.getText().toString();
 					int cursorPos = input.getSelectionStart();
 					StringBuilder sb = new StringBuilder();
@@ -86,6 +93,7 @@ public class SaveSGFDialog extends GobandroidDialog {
 		FileNameAdder adder=new FileNameAdder();
 		
 		((Button)(findViewById(R.id.button_add_date))).setOnClickListener(adder);
+		((Button)(findViewById(R.id.button_add_time))).setOnClickListener(adder);
 		Button add_name_btn=((Button)(findViewById(R.id.button_add_gamename)));
 		Button players_name_btn=((Button)(findViewById(R.id.button_add_players)));
 		
