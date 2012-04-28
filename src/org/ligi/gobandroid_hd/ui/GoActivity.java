@@ -145,8 +145,17 @@ public class GoActivity
 		game.addGoGameChangeListener(this);
 	}
 	
+	private int last_processed_move_change_num=0;
+	
 	@Override
 	public void onGoGameChange() {
+		if (getGame().getActMove().getMovePos()>last_processed_move_change_num) {
+			if (game.isBlackToMove())
+				sound_man.playSound(GoSoundManager.SOUND_PLACE1);
+			else
+				sound_man.playSound(GoSoundManager.SOUND_PLACE2);
+		}
+		last_processed_move_change_num=getGame().getActMove().getMovePos();
 		game2ui();
 	}
 
@@ -337,13 +346,7 @@ public class GoActivity
 			if (getResources().getBoolean(R.bool.small))
 					this.getSupportActionBar().show();
 			
-			if (game.isBlackToMove())
-				sound_man.playSound(GoSoundManager.SOUND_PLACE1);
-			else
-				sound_man.playSound(GoSoundManager.SOUND_PLACE2);
-			
-		}else if (event.getAction()==MotionEvent.ACTION_DOWN)
-		 {
+		}else if (event.getAction()==MotionEvent.ACTION_DOWN) {
 			setFragment(getZoomFragment());
 			if (getResources().getBoolean(R.bool.small))
 				this.getSupportActionBar().hide();
