@@ -7,43 +7,29 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import org.apache.http.util.ByteArrayBuffer;
-import org.ligi.android.common.dialogs.DialogDiscarder;
+import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.backend.GobandroidBackend;
-import org.ligi.gobandroid_hd.ui.Refreshable;
-import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
 
-/**
- * Async tas to download tsumegos 
- * 
- * @author ligi
- *
- */
-public class DownloadTask extends AsyncTask<TsumegoSource,String,Integer> {
+public class TsumegoDownloadHelper {
 
+
+	private final static String BASE_URL="http://gogameguru.com/i/go-problems/";
 	
-	private GobandroidFragmentActivity activity;
-	private ProgressDialog progress_dialog;
-	private Refreshable refreshable;
-	
-	public DownloadTask(GobandroidFragmentActivity activity,Refreshable refreshable) {
-		this.activity=activity;
-		this.refreshable=refreshable;
+	public static TsumegoSource[] getDefaultList(GobandroidApp app) {
+		return new TsumegoSource[] {
+			new TsumegoSource(app.getSettings().getTsumegoPath()+"1.easy/",BASE_URL,"ggg-easy-%02d.sgf"),
+			new TsumegoSource(app.getSettings().getTsumegoPath()+"2.intermediate/",BASE_URL,"ggg-intermediate-%02d.sgf"),
+			new TsumegoSource(app.getSettings().getTsumegoPath()+"3.hard/",BASE_URL,"ggg-hard-%02d.sgf")
+		};
 	}
 
-	@Override
-	protected void onPreExecute() {
-    	progress_dialog = ProgressDialog.show(activity, "Download Status", "Downloading Tsumegos Please wait...", true);
-		super.onPreExecute();
+	public static int doDownloadDefault(GobandroidApp app) {
+		return doDownload(getDefaultList(app));
 	}
 	
-	@Override
-	protected Integer doInBackground(TsumegoSource... params) {
-		
+	public static int doDownload(TsumegoSource[] params) {
 		int download_count=0;  
         
 		int limit=GobandroidBackend.getMaxTsumegos();
@@ -57,7 +43,7 @@ public class DownloadTask extends AsyncTask<TsumegoSource,String,Integer> {
                 while(!finished) {
 
                     while (new File(src.local_path+src.getFnameByPos(pos)).exists()) {
-                    	this.publishProgress("Processing " + src.getFnameByPos(pos));
+                    		
                 		pos++;
                 	}
                 	
@@ -92,25 +78,4 @@ public class DownloadTask extends AsyncTask<TsumegoSource,String,Integer> {
             }
 		return download_count;
 	}
-
-	@Override
-    protected void onProgressUpdate(String... progress) {
-        progress_dialog.setMessage(progress[0]);
-    }
-
-	@Override
-    protected void onPostExecute(Integer result) {
-    	 progress_dialog.dismiss();
-    	 String msg="No new Tsumegos found :-(";
-    	 
-    	 if (result>0) {
-    		 msg="Downloaded " + result + " new Tsumegos ;-)";
-    		 refreshable.refresh();
-    	 }
-    	 
-    	 new AlertDialog.Builder(activity).setMessage(msg)
-    	 	.setTitle("Download Report")
-    	 	.setPositiveButton("OK", new DialogDiscarder()).show();
-     }
-
 }

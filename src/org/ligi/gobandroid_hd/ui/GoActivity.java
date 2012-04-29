@@ -45,6 +45,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -144,8 +145,17 @@ public class GoActivity
 		game.addGoGameChangeListener(this);
 	}
 	
+	private int last_processed_move_change_num=0;
+	
 	@Override
 	public void onGoGameChange() {
+		if (getGame().getActMove().getMovePos()>last_processed_move_change_num) {
+			if (game.isBlackToMove())
+				sound_man.playSound(GoSoundManager.SOUND_PLACE1);
+			else
+				sound_man.playSound(GoSoundManager.SOUND_PLACE2);
+		}
+		last_processed_move_change_num=getGame().getActMove().getMovePos();
 		game2ui();
 	}
 
@@ -168,7 +178,15 @@ public class GoActivity
 	protected void onResume() {
 		super.onResume();
 		setBoardPreferences();
-		sound_man.playGameIntro();
+
+		new Handler().postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				sound_man.playGameIntro();
+			}
+			
+		}, 100);
 	}
 	
 	public ZoomGameExtrasFragment getZoomFragment() {
@@ -226,7 +244,7 @@ public class GoActivity
 	        	return true;
 	        	
 	        case android.R.id.home:
-	        	ask4quit(true);
+	        	quit(true);
 	        	return true;
 		}
 		
@@ -251,7 +269,7 @@ public class GoActivity
 		}
 	}
 	
-	private void ask4quit(final boolean toHome) {
+	public void quit(final boolean toHome) {
 		if (!isAsk4QuitEnabled()) {
 			shutdown(toHome);
 			return;
@@ -273,7 +291,7 @@ public class GoActivity
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_BACK:
-				ask4quit(false);
+				quit(false);
 				return true;
 		}
 		
@@ -328,13 +346,7 @@ public class GoActivity
 			if (getResources().getBoolean(R.bool.small))
 					this.getSupportActionBar().show();
 			
-			if (game.isBlackToMove())
-				sound_man.playSound(GoSoundManager.SOUND_PLACE1);
-			else
-				sound_man.playSound(GoSoundManager.SOUND_PLACE2);
-			
-		}else if (event.getAction()==MotionEvent.ACTION_DOWN)
-		 {
+		}else if (event.getAction()==MotionEvent.ACTION_DOWN) {
 			setFragment(getZoomFragment());
 			if (getResources().getBoolean(R.bool.small))
 				this.getSupportActionBar().hide();

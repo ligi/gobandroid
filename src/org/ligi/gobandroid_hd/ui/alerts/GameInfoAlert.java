@@ -19,9 +19,12 @@
 
 package org.ligi.gobandroid_hd.ui.alerts;
 
+import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
+
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.EditText;
@@ -35,7 +38,7 @@ import android.widget.EditText;
  **/
 public class GameInfoAlert extends GobandroidDialog {
 
-	public GameInfoAlert(Context context,final GoGame game) {
+	public GameInfoAlert(final Context context,final GoGame game) {
 		super(context);
 		setTitle(R.string.game_info);
 		setIconResource(R.drawable.info);
@@ -69,7 +72,16 @@ public class GameInfoAlert extends GobandroidDialog {
 				game.getMetaData().setBlackRank(black_rank_et.getText().toString());
 				game.getMetaData().setWhiteName(white_name_et.getText().toString());
 				game.getMetaData().setWhiteRank(white_rank_et.getText().toString());
-				game.setKomi(new Float(game_komi_et.getText().toString()));
+				
+				try {
+					game.setKomi(new Float(game_komi_et.getText().toString()));
+				} catch (NumberFormatException ne) {
+					new AlertDialog.Builder(context).setMessage(R.string.komi_must_be_a_number)
+					.setPositiveButton(android.R.string.ok, new DialogDiscarder())
+					.setTitle(R.string.problem).show();
+					return;
+				}
+				
 				game.getMetaData().setResult(game_result_et.getText().toString());
 				dialog.dismiss();
 			}

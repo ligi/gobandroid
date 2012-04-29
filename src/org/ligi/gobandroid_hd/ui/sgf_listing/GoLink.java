@@ -1,9 +1,12 @@
 package org.ligi.gobandroid_hd.ui.sgf_listing;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-
 import org.ligi.android.common.files.FileHelper;
+import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.tracedroid.logging.Log;
 
 public class GoLink {
 
@@ -15,7 +18,7 @@ public class GoLink {
 	private int move_pos=0;
 	
 	public GoLink(String fname) {
-		this(new File(fname));
+		this(new File(fname.replace("file://", "")));
 	}
 	
 	public GoLink(File file) {
@@ -40,6 +43,11 @@ public class GoLink {
 		return move_pos;
 	}
 	
+	
+	public boolean linksToDirectory() {
+		return new File(fname).isDirectory();
+	}
+	
 	/**
 	 * TODO care for remote content
 	 * 
@@ -50,6 +58,36 @@ public class GoLink {
 			return FileHelper.file2String(new File(fname));
 		} catch (IOException e) {
 			return "";
+		}
+	}
+	
+	public String getFileName() {
+		return fname;
+	}
+	
+	public static void saveGameToGoLink(GoGame game,String golink_path,String golink_fname) {
+
+		int move_pos=game.getActMove().getMovePos();
+		
+		File f = new File(golink_path);
+		
+		if (!f.isDirectory())
+			f.mkdirs();
+		
+		try {
+			f.createNewFile();
+			f=new File(golink_path + "/"+golink_fname);
+			
+			FileWriter sgf_writer = new FileWriter(f);
+			
+			BufferedWriter out = new BufferedWriter(sgf_writer);
+			
+			out.write(game.getMetaData().getFileName()+":#"+move_pos);
+			out.close();
+			sgf_writer.close();
+		}
+		catch (IOException e) {
+			Log.i(""+e);
 		}
 	}
 }

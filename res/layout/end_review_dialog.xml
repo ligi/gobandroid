@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+    <CheckBox
+        android:id="@+id/save_bookmark_cp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="save Bookmark" />
+
+    <EditText
+        android:id="@+id/bookmark_name_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <CheckBox
+        android:id="@+id/bookmark_notification_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="keep open as notification" />
+    
+        
+    <RatingBar
+        android:id="@+id/game_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

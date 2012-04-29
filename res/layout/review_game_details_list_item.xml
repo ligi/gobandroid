@@ -65,5 +65,13 @@ android:padding="3dp"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content" android:id="@+id/game_link_extra_infos" 
 	android:textColor="#000000"/>
+
+	<RatingBar
+	    android:id="@+id/game_rating"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" 
+	    android:isIndicator="true"
+	    android:layout_marginBottom="5dp"
+	    />
 			
 </LinearLayout> 

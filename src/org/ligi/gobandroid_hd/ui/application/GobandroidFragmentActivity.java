@@ -49,7 +49,7 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
 	}
 
 	public GobandroidSettings getSettings() {
-		return new GobandroidSettings(this);
+		return getApp().getSettings();
 	}
 	
 	@Override

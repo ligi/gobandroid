@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      android:versionName="0.88" android:versionCode="88" package="org.ligi.gobandroid_hd">
+      android:versionName="0.89" android:versionCode="89" package="org.ligi.gobandroid_hd">
 
      <uses-sdk android:targetSdkVersion="15" android:minSdkVersion="5"/>
     
@@ -15,7 +15,19 @@
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	
+	
+	<!-- Only this application can receive the messages and registration result --> 
+    <permission android:name="org.ligi.gobandroid_hd.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="org.ligi.gobandroid_hd.permission.C2D_MESSAGE" />
+
+    <!-- This app has permission to register and receive message -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+   
+   
+	
     <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
+    
+    
     
     <supports-screens android:anyDensity="true" />
       
@@ -117,6 +129,15 @@
 				<data android:mimeType="application/x-go-sgf" />	
 			</intent-filter>
 		</activity>
+		<activity android:name=".ui.GoLinkLoadActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+	    		<category android:name="android.intent.category.DEFAULT"/>
+	    		<category android:name="android.intent.category.BROWSABLE"/>
+	    		<data android:scheme="file"  android:host="*" android:pathPattern=".*\\.golink"/>
+			</intent-filter>
+		</activity>
+
 		<activity android:name=".ui.recording.GameRecordActivity"></activity>
 		<activity android:name=".ui.review.GameReviewActivity"></activity>
 		
@@ -124,6 +145,22 @@
 		<activity android:name=".ui.LoadActionsActivity"></activity>
 		<activity android:name=".ui.SGFOnlineListActivity"></activity>
 		<activity android:name=".ui.GoActivity"></activity>		
+		
+		<service android:name=".C2DMReceiver" />
+        
+        <receiver android:name="com.google.android.c2dm.C2DMBroadcastReceiver"  android:permission="com.google.android.c2dm.permission.SEND">
+          <!-- Receive the actual message -->
+          <intent-filter>
+              <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+              <category android:name="org.ligi.gobandroid_hd" />
+          </intent-filter>
+          <!-- Receive the registration id -->
+          <intent-filter>
+              <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+              <category android:name="org.ligi.gobandroid_hd" />
+          </intent-filter>
+      </receiver>
+      
 	</application>
     
 </manifest> 

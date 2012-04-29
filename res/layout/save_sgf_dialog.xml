@@ -16,6 +16,8 @@
         android:layout_height="wrap_content">
     
         <Button android:text="@string/date" android:id="@+id/button_add_date" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+        <Button android:text="@string/time" android:id="@+id/button_add_time" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+        
         <Button android:text="@string/gamename" android:id="@+id/button_add_gamename" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
         <Button android:text="@string/players" android:id="@+id/button_add_players" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
     </LinearLayout>
