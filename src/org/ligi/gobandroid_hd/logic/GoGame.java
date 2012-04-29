@@ -159,16 +159,14 @@ public class GoGame  {
     		byte[][] handicapArray = GoDefinitions.getHandicapArray(size);
     		for (int i=0;i<9;i++) {
     			if (i<handicap) {
-    				if (i<5)
-    					handicap_board.setCellBlack(handicapArray[i][0], handicapArray[i][1]);
-    				else if(i==5 || i == 7) {
+   					handicap_board.setCellBlack(handicapArray[i][0], handicapArray[i][1]);
+    				if(i==5 || i == 7) {
     					handicap_board.setCellFree(handicapArray[4][0], handicapArray[4][1]);
-    					handicap_board.setCellBlack(handicapArray[i][0], handicapArray[i][1]);
     					handicap_board.setCellBlack(handicapArray[i+1][0], handicapArray[i+1][1]);
-    				} else
+    				}
+    				else if(i == 6 || i == 8)
     					handicap_board.setCellBlack(handicapArray[4][0], handicapArray[4][1]);
     			}
-    			
 	    		all_handicap_positions[handicapArray[i][0]][handicapArray[i][1]]=true;
     		}
     	}
