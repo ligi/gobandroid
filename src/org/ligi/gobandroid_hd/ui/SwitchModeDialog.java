@@ -36,7 +36,8 @@ public class SwitchModeDialog extends GobandroidDialog {
 		addModeItem(InteractionScope.MODE_REVIEW,R.string.review,R.drawable.dashboard_review);
 		addModeItem(InteractionScope.MODE_TELEVIZE,R.string.televize,R.drawable.gobandroid_tv);
 		addModeItem(InteractionScope.MODE_TSUMEGO,R.string.tsumego,R.drawable.dashboard_tsumego);
-		
+		//addModeItem(InteractionScope.MODE_COUNT,R.string.count,R.drawable.count);
+			
 		this.setPositiveButton(R.string.cancel);
 		
 		
