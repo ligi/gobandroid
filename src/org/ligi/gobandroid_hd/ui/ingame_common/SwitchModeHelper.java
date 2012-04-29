@@ -2,6 +2,7 @@ package org.ligi.gobandroid_hd.ui.ingame_common;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.counting.CountGameActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 import org.ligi.gobandroid_hd.ui.review.GameReviewActivity;
 import org.ligi.gobandroid_hd.ui.review.GoGamePlayerActivity;
@@ -26,6 +27,10 @@ public class SwitchModeHelper {
 			
 		case InteractionScope.MODE_TELEVIZE:
 			go_start_intent=new Intent(activity,GoGamePlayerActivity.class);
+			break;
+			
+		case InteractionScope.MODE_COUNT:
+			go_start_intent=new Intent(activity,CountGameActivity.class);
 			break;
 		}
 		activity.startActivity(go_start_intent);
