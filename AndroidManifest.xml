@@ -89,6 +89,8 @@
 		<activity android:name=".ui.links.LinksActivity"></activity>
 		<activity android:name=".ui.tsumego.TsumegoActivity"></activity>
 		<activity android:name=".ui.SGFLoadActivity"/>
+		
+		
 		<activity android:name=".ui.SGFLoadFromExternalActivity">
 			<intent-filter>
 	    		<action android:name="android.intent.action.VIEW"/>
@@ -140,6 +142,8 @@
 
 		<activity android:name=".ui.recording.GameRecordActivity"></activity>
 		<activity android:name=".ui.review.GameReviewActivity"></activity>
+		
+		<activity android:name=".ui.counting.CountGameActivity"/>
 		
 		<activity android:name=".ui.GoPrefsActivity"></activity>
 		<activity android:name=".ui.LoadActionsActivity"></activity>
