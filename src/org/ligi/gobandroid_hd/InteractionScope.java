@@ -27,6 +27,7 @@ public class InteractionScope {
 	public final static byte MODE_REVIEW=2;
 	public final static byte MODE_GNUGO=3;
 	public final static byte MODE_TELEVIZE=4;
+	public final static byte MODE_COUNT=5;
 		
 	public int touch_position=-1; // negative numbers -> no recent touch
 	private byte mode;

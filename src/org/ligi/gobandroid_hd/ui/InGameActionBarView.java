@@ -93,7 +93,10 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 		 		break;
 		 	case InteractionScope.MODE_TELEVIZE:
 		 		mode_str=R.string.go_tv;
-		 		//move_text+=""+GoGameProvider.getGame().getLastMove().getDepth();
+		 		break;
+		 		
+		 	case InteractionScope.MODE_COUNT:
+		 		mode_str=R.string.count;
 		 		break;
 		 	
 		 	}
