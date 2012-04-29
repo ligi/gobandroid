@@ -1,12 +1,17 @@
 package org.ligi.gobandroid_hd.backend;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 
 import org.ligi.android.common.net.NetHelper;
+import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.tracedroid.Log;
 
+import com.google.android.c2dm.C2DMessaging;
+
+import android.os.Build;
 import android.provider.Settings.Secure;
 
 public class GobandroidBackend {
@@ -28,11 +33,40 @@ public class GobandroidBackend {
 		}
 	}
 	
+
+	private static String getURLParamSnippet(String key,String val) {
+		try {
+			return key+"="+URLEncoder.encode(val,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			Log.w("encoding problem");
+			return key+"="+val;
+		}
+	}
 	
-	public final static boolean registerPush(String device_id,String push_id) {
+	public final static boolean registerDevice(GobandroidApp app) {
 		try {
 			
-			URL url=new URL("http://"+GobandroidConfiguration.backend_domain+"/push/register?device_id="+URLEncoder.encode(device_id,"UTF-8")+"&push_key="+URLEncoder.encode(push_id,"UTF-8"));
+			String device_id=Secure.getString( app.getContentResolver(), Secure.ANDROID_ID);
+			String push_id=C2DMessaging.getRegistrationId(app);
+			if (push_id.equals(""))
+				push_id="unknown";
+			
+			String url_str="https://"+GobandroidConfiguration.backend_domain+"/push/register?";
+			url_str+=getURLParamSnippet("device_id",device_id);
+			url_str+="&"+getURLParamSnippet("push_key",push_id);
+			url_str+="&"+getURLParamSnippet("app_version",app.getAppVersion());
+			
+			String wanted_pushs="";
+			if (app.getSettings().isTsumegoPushEnabled())
+				wanted_pushs+="tsumego";
+			if (wanted_pushs.equals(""))
+				wanted_pushs="none";
+			
+			url_str+="&"+getURLParamSnippet("wanted_pushs",wanted_pushs);
+			url_str+="&"+getURLParamSnippet("device_str",Build.VERSION.RELEASE + " | " + Build.MANUFACTURER + " | " + Build.DEVICE  + " | " + Build.MODEL + " | " + Build.DISPLAY + " | " + Build.CPU_ABI +" | "+Build.TYPE + " | " +Build.TAGS);
+			
+			
+			URL url=new URL(url_str);
 			return NetHelper.downloadURL2String(url).replace("\n","").replace("\r","").equals("saved");
 		} catch (Exception e) {
 			Log.w("cannot register push" +e );

@@ -1,15 +1,10 @@
 package org.ligi.gobandroid_hd;
 
 import java.io.IOException;
-
-import org.ligi.gobandroid_hd.backend.GobandroidBackend;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsForNotification;
 import org.ligi.tracedroid.logging.Log;
-
 import android.content.Context;
 import android.content.Intent;
-import android.provider.Settings.Secure;
-
 import com.google.android.c2dm.C2DMBaseReceiver;
 
 /**
@@ -29,9 +24,7 @@ public class C2DMReceiver extends C2DMBaseReceiver {
 	public void onRegistered(Context context, String registrationId)
 			throws IOException {
 		super.onRegistered(context, registrationId);
-		String device_id=Secure.getString( getApplicationContext().getContentResolver(), Secure.ANDROID_ID);
-		boolean res=GobandroidBackend.registerPush(device_id, registrationId);
-		Log.i("C2DM registered" + registrationId + " regid:" + res + " device_id" + device_id) ;
+		Log.i("C2DM registered" + registrationId + " regid:" + registrationId ) ;
 	}
 
 	@Override

@@ -63,17 +63,6 @@ public class gobandroid extends GobandroidFragmentActivity {
         
     	// if we have stacktraces - give user option to send them
 	    TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
-	    
-	    String app_ver="vX";
-	    try {
-		    app_ver = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
-		}
-		catch (NameNotFoundException e) {
-			Log.w("cannot determine app version - that's strange but not critical");
-		}
-	    
-	    getTracker().setDebug(true);
-	    getTracker().trackPageView("/enter/v"+app_ver);
 	
     }
   

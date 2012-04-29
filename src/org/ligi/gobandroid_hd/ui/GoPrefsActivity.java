@@ -202,9 +202,21 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
         soundCheckBoxPref.setKey(GobandroidSettings.KEY_SOUND);
         soundCheckBoxPref.setTitle(R.string.enable_sound);
         soundCheckBoxPref.setSummary(R.string.enable_sound_summary);
+        soundCheckBoxPref.setDefaultValue(settings.isSoundEnabled());
         soundPrefCat.addPreference(soundCheckBoxPref);
         
-
+       	PreferenceCategory notificationsPrefsCat = new PreferenceCategory(this);
+       	notificationsPrefsCat.setTitle(R.string.notifications);
+    	root.addPreference(notificationsPrefsCat);
+    	
+        CheckBoxPreference notifyTsumegoCheckBoxPref = new CheckBoxPreference(this);
+        notifyTsumegoCheckBoxPref.setKey(GobandroidSettings.KEY_TSUMEGO_PUSH);
+        notifyTsumegoCheckBoxPref.setTitle(R.string.push_tsumego);
+        notifyTsumegoCheckBoxPref.setSummary(R.string.push_tsumego_extra);
+        notifyTsumegoCheckBoxPref.setDefaultValue(settings.isTsumegoPushEnabled());
+        notificationsPrefsCat.addPreference(notifyTsumegoCheckBoxPref);
+       	
+       
         /*
 
         

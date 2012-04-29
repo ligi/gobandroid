@@ -158,5 +158,9 @@
 	<string name="wikipedia_rules_link">http://en.wikipedia.org/wiki/Go_(game)</string>
     <string name="televize">Televize</string>
     <string name="count">Count</string>
+    <string name="notifications">Notifications</string>
+
+    <string name="push_tsumego">Push Tsumego</string>
+    <string name="push_tsumego_extra">more tsumego to solve every week</string>
     
 </resources>

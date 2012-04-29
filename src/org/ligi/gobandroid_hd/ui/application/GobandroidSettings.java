@@ -14,6 +14,7 @@ public class GobandroidSettings {
 	public final static String KEY_SGF_LEGEND="sgf_legend";
 	public static final String KEY_WAKE_LOCK = "wake_lock";
 	public static final String KEY_GRID_EMBOSS = "grid_emboss";
+	public static final String KEY_TSUMEGO_PUSH = "push_tsumego";;
 	
 	private Context ctx;
 	
@@ -67,5 +68,9 @@ public class GobandroidSettings {
 	
 	public boolean isGridEmbossEnabled() {
 		return getPreferences().getBoolean(KEY_GRID_EMBOSS, true);
+	}
+
+	public boolean isTsumegoPushEnabled() {
+		return getPreferences().getBoolean(KEY_TSUMEGO_PUSH, false);
 	}
 }

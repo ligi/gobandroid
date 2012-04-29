@@ -1,5 +1,6 @@
 package org.ligi.gobandroid_hd;
 
+import org.ligi.gobandroid_hd.backend.GobandroidBackend;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.tracedroid.TraceDroid;
@@ -8,11 +9,23 @@ import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.android.c2dm.C2DMessaging;
 
 import android.app.Application;
+import android.content.pm.PackageManager.NameNotFoundException;
 
 public class GobandroidApp extends Application {
 
 	private GoogleAnalyticsTracker tracker=null;  // noticed that some analytics really helps
 	private InteractionScope interaction_scope;   // holds things like mode/act game between activitysw
+	
+	public String getAppVersion() {
+	    try {
+		    return getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
+		}
+		catch (NameNotFoundException e) {
+			Log.w("cannot determine app version - that's strange but not critical");
+			return "vX.Y";
+		}
+	    
+	}
 	
 	@Override
 	public void onCreate() {
@@ -27,6 +40,10 @@ public class GobandroidApp extends Application {
         interaction_scope=new InteractionScope();
         
         C2DMessaging.register(this, "marcus.bueschleb@googlemail.com");
+        
+	    getTracker().trackPageView("/enter/v"+getAppVersion());
+	
+	    GobandroidBackend.registerDevice(this);
 	}
 
 	@Override
@@ -46,7 +63,7 @@ public class GobandroidApp extends Application {
 
 	public GoogleAnalyticsTracker getTracker() {
     	if (tracker==null) {
-          Log.w("tracker is null");
+          Log.w("tracker is null - thats weird");
     	}
     	return tracker;
     }
