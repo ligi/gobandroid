@@ -28,8 +28,6 @@ public class GameRecordActivity extends GoActivity  implements GoGameChangeListe
     
     @Override
 	public byte doMoveWithUIFeedback(byte x,byte y) {
-		super.doMoveWithUIFeedback(x, y);
-		
 		byte res=super.doMoveWithUIFeedback(x,y);
 		if (res==GoGame.MOVE_VALID)
 			if (game.getActMove().hasNextMove())
