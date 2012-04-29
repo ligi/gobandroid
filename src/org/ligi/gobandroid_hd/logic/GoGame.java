@@ -229,7 +229,7 @@ public class GoGame  {
      *         	MOVE_INVALID_IS_KO
      */
     public byte do_move( byte x, byte y ) {
-    	Log.i("do_move x:" + x + "  y:" + y );
+    	Log.i("do_move x:" + x + " y:" + y );
     	
     	// return with INVALID if x and y are inside the board 
         if ((x < 0) || (x >= calc_board.getSize()) || (y < 0) || (y >= calc_board.getSize()))
@@ -249,11 +249,13 @@ public class GoGame  {
         }
         		
         if(game_finished) { // game is finished - players are marking dead stones
-        	for (int xg = 0; xg < calc_board.getSize(); xg++)
-        		for (int yg = 0; yg < calc_board.getSize(); yg++)
-                     if (groups[xg][yg]==groups[x][y])
-                      	calc_board.toggleCellDead(xg, yg);
         	
+        	if (!calc_board.isCellFree(x, y)) // if there is a stone/group
+	        	for (int xg = 0; xg < calc_board.getSize(); xg++) // toggle the whole group dead TODO: should better be done via flood-fill than group compare
+	        		for (int yg = 0; yg < calc_board.getSize(); yg++)
+	                     if (groups[xg][yg]==groups[x][y])
+	                    	 calc_board.toggleCellDead(xg, yg);
+	        	
         	buildAreaGroups();
     
         	int _dead_white=0; 
