@@ -8,6 +8,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.PreviewView;
+import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 import org.ligi.tracedroid.logging.Log;
 
@@ -108,7 +109,9 @@ class TsumegoPathViewAdapter extends BaseAdapter {
 		Log.i("loadingSGF " + base_fname);
 		
 		ImageView solve_img=(ImageView)v.findViewById(R.id.solve_status_image);
-		if ((solve_img!=null)&&(activity.getBaseContext().getSharedPreferences("tsumego_stats", Activity.MODE_PRIVATE).getInt("file://"+base_fname, -1)>0)) {
+		
+		
+		if ((solve_img!=null)&&(new SGFMetaData(base_fname).getIsSolved())) {
 			solve_img.setImageResource(R.drawable.solved);
 		}
 		

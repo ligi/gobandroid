@@ -9,6 +9,7 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
+import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.tracedroid.logging.Log;
 
 import com.actionbarsherlock.view.Menu;
@@ -94,7 +95,8 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
 	private GoMove getCorrectMove(GoMove act_mve) {
 		if (act_mve.getComment().trim().toUpperCase().startsWith("CORRECT") || // gogameguru style 
-			act_mve.getComment().trim().toUpperCase().startsWith("RIGHT") // goproblem.com
+			//act_mve.getComment().trim().toUpperCase().startsWith("RIGHT") || // goproblem.com
+			act_mve.getComment().contains("RIGHT")  // goproblem.com
 				)
 			return act_mve;
 		
@@ -153,9 +155,12 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 			myTsumegoExtrasFragment.setCorrectVisibility(game.getActMove().equals(getFinishingMove()));
 		}
 		if (game.getActMove().equals(getFinishingMove())) {
-			this.getBaseContext().getSharedPreferences("tsumego_stats", Activity.MODE_PRIVATE)
-			.edit().putInt(game.getMetaData().getFileName(), 100).commit();
-		Log.i("finished"+	game.getMetaData().getFileName());
+			SGFMetaData meta=new SGFMetaData(game.getMetaData().getFileName());
+			meta.setIsSolved(true);
+			meta.persist();
+			/*this.getBaseContext().getSharedPreferences("tsumego_stats", Activity.MODE_PRIVATE)
+			.edit().putInt(game.getMetaData().getFileName(), 100).commit();*/
+			Log.i("written finished"+	game.getMetaData().getFileName());
 		}
 		this.invalidateOptionsMenu();		
 	}
