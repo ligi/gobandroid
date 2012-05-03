@@ -171,6 +171,15 @@ public class SGFLoadActivity
 				
 		if (intent_uri==null) {
 			Log.e("SGFLoadActivity with intent_uri==null");
+			finish();
+			return;
+		}
+		
+		if (intent_uri.toString().endsWith(".golink")) {
+			Intent i=getIntent();
+			i.setClass(this, GoLinkLoadActivity.class);
+			this.startActivity(i);
+			finish();
 			return;
 		}
 					
@@ -235,6 +244,7 @@ public class SGFLoadActivity
 				game.jump(game.getActMove().getnextMove(0));
 		
 		getApp().getInteractionScope().setGame(game);
+		
 		game.getMetaData().setFileName(intent_uri.toString());
 		
 		handler.post(new Runnable() {
