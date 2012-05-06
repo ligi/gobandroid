@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui;
 
 import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink;
+import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
 import org.ligi.tracedroid.logging.Log;
 import android.app.Activity;
 import android.content.Intent;
@@ -13,7 +14,6 @@ public class GoLinkLoadActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		
 		Uri intent_uri=getIntent().getData(); // extract the uri from the intent
 		
 		GobandroidNotifications.cancelGoLinkNotification(this);
@@ -23,14 +23,20 @@ public class GoLinkLoadActivity extends Activity {
 			finish();
 			return;
 		}
-		
+
 		GoLink link=new GoLink(intent_uri.toString());
-		
-		
+
 		Intent intent=getIntent();
 		intent.setData(Uri.parse(link.getFileName()));
-		intent.putExtra("move_num",link.getMoveDepth());
-		intent.setClass(this,SGFLoadActivity.class);
+
+		if (link.linksToDirectory()) {
+			intent.setClass(this,SGFSDCardListActivity.class);
+		} else {
+			// we got some sgf - go to sgfload
+			intent.putExtra("move_num",link.getMoveDepth());
+			intent.setClass(this,SGFLoadActivity.class);
+		}
+		
 		startActivity(intent);
 		finish();
 		//new AlertDialog.Builder(this).setTitle("golink" + intent_uri).show();

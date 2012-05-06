@@ -25,6 +25,7 @@ public class GoLink {
 		
 		try {
 			String go_lnk=FileHelper.file2String(file);
+			go_lnk=go_lnk.replace("\n","").replace("\r","");
 			fname=go_lnk; // backup
 			String[] arr_content=go_lnk.split(":#");
 		   	fname=arr_content[0];

@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui.sgf_listing;
 import java.io.File;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.InteractionScope;
+import org.ligi.gobandroid_hd.ui.GoLinkLoadActivity;
 import org.ligi.gobandroid_hd.ui.SGFLoadActivity;
 import android.content.Intent;
 import android.net.Uri;
@@ -59,8 +60,7 @@ public class SGFListFragment extends ListFragment{
         
         // check if it is directory behind golink or general
         if (GoLink.isGoLink(fname) ) {
-        	if (new GoLink(fname).linksToDirectory())
-        		intent2start.setClass(getActivity(), SGFSDCardListActivity.class);
+        	intent2start.setClass(getActivity(), GoLinkLoadActivity.class);
         } else if (!fname.endsWith(".sgf")) {
         	intent2start.setClass(getActivity(), SGFSDCardListActivity.class);
         }
