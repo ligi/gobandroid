@@ -6,7 +6,7 @@
     <string name="load_game">棋譜読み込み</string>
     <string name="load_tsumego">詰碁読み込み</string>
     <string name="tsumego">詰碁</string>
-    <string name="igs">IGS</string>
+    <string name="igs">IGS</string><string name="info">情報</string>
     <string name="quit">終了</string>
 	<string name="quit_confirm">本当にこの対局を終了しますか？</string>
 	<string name="no">いいえ</string>
