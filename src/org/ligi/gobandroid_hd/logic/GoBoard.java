@@ -113,8 +113,8 @@ public class GoBoard {
     }
 
     public boolean isCellFree( int x, int y ) {
-        return board[x][y]==GoDefinitions.STONE_NONE; // no stone on board
-        		//||(board[x][y]<0);  // or dead stone; 
+        return board[x][y]==GoDefinitions.STONE_NONE // no stone on board
+        		||(board[x][y]<0);  // or dead stone; 
     }
     
     
