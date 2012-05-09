@@ -34,18 +34,6 @@ public class PlayAgainstGnugoActivity extends GoActivity  implements GoGameChang
 		myHandler=new Handler();
     }		
     
-	public byte doMoveWithUIFeedback(byte x,byte y) {
-		
-		byte res=super.doMoveWithUIFeedback(x,y);
-		if (res==GoGame.MOVE_VALID)
-			if (game.getActMove().hasNextMove())
-				game.jump(game.getActMove().getnextMove(0));
-			
-
-		game.notifyGameChange();
-		return res;
-	}
-	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
