@@ -67,7 +67,7 @@ public class GobandroidDialog extends Dialog {
 	
 	
 	public void addItem(int image_resId,int str_resid,final OnClickListener listener){
-		LinearLayout container=(LinearLayout)this.findViewById(R.id.dialog_content);
+		LinearLayout container=(LinearLayout)this.findViewById(R.id.dialog_items);
 		Log.i("","container" + container + " inflater" + inflater);
 		View v=inflater.inflate(R.layout.dialog_item, null);
 		((TextView)v.findViewById(R.id.text)).setText(str_resid);
@@ -91,15 +91,6 @@ public class GobandroidDialog extends Dialog {
 			
 		});
 		
-		v.setOnClickListener(new View.OnClickListener() {
-
-
-			@Override
-			public void onClick(View v) {
-				v.setBackgroundColor(Color.RED);
-			}
-			
-		});
 		container.addView(v);
 		
 	}
