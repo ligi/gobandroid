@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
 
 public class GobandroidDialog extends Dialog {
 
@@ -60,11 +61,15 @@ public class GobandroidDialog extends Dialog {
 	@Override
 	public void setContentView(int content){
 		LinearLayout container=(LinearLayout)this.findViewById(R.id.dialog_content);
+		
 		Log.i("","container" + container + " inflater" + inflater);
 		container.addView(inflater.inflate(content, null));
-		
 	}
 	
+	public void setContentFill(){
+		LinearLayout container=(LinearLayout)this.findViewById(R.id.dialog_content);
+		container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
+	}
 	
 	public void addItem(int image_resId,int str_resid,final OnClickListener listener){
 		LinearLayout container=(LinearLayout)this.findViewById(R.id.dialog_items);

@@ -98,7 +98,11 @@ public class InGameActionBarView extends View implements GoGame.GoGameChangeList
 		 	case InteractionScope.MODE_COUNT:
 		 		mode_str=R.string.count;
 		 		break;
-		 	
+
+		 	case InteractionScope.MODE_GNUGO:
+		 		mode_str=R.string.gnugo;
+		 		break;
+
 		 	}
 		 	
 		 	

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GnuGo plays:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <RadioGroup 
+        android:layout_width="wrap_content"
+	    android:layout_height="wrap_content">
+	    
+	    <RadioButton
+	        android:id="@+id/gnugo_plays_black_radio"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Black" />
+	
+	    <RadioButton
+	        android:id="@+id/gnugo_plays_white_radio"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="White" />
+	    
+	    <RadioButton
+			android:id="@+id/gnugo_plays_both_radio"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Black &amp; White" />
+
+    </RadioGroup>
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GnuGo strength:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+      
+    <SeekBar
+        android:id="@+id/gnugo_strength_seek"
+        android:max="9"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

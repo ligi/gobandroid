@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      android:versionName="0.91" 
-      android:versionCode="91" 
+      android:versionName="0.92beta1" 
+      android:versionCode="92" 
       package="org.ligi.gobandroid_hd"
       android:installLocation="auto"
       >
 
      <uses-sdk android:targetSdkVersion="15" android:minSdkVersion="5"/>
-    
+    a
      <supports-screens android:largeScreens="true"
 					   android:normalScreens="true" 
 					   android:smallScreens="true"
@@ -80,7 +80,7 @@
 		</intent-filter>
 		</activity>
 		
-    	<activity android:name="org.ligi.gobandroid_hd.ui.recording.PlayAgainstGnugoActivity"></activity>
+    	<activity android:name=".ui.gnugo.PlayAgainstGnugoActivity"></activity>
 		<activity android:name=".ui.GoSetupActivity"></activity>
 		
 		<activity android:name=".ui.review.GoGamePlayerActivity"></activity>
