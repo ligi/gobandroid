@@ -26,7 +26,7 @@ import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
-import org.ligi.gobandroid_hd.ui.recording.PlayAgainstGnugoActivity;
+import org.ligi.gobandroid_hd.ui.gnugo.PlayAgainstGnugoActivity;
 import org.ligi.tracedroid.logging.Log;
 
 import com.actionbarsherlock.view.Menu;

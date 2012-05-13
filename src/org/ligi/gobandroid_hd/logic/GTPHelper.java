@@ -36,12 +36,13 @@ public class GTPHelper {
 		for (String c:new String[] {" ","=","\r","\n","\t"})
 			gtp_str=gtp_str.replace(c,"");
 		
-		if (gtp_str.equals("resign")) {
+		if (gtp_str.toUpperCase().equals("RESIGN")) {
 			game.pass(); // TODO handle this case better
 			return true;
 		}
 		
-		else if (gtp_str.equals("PASS")) {
+		else if (gtp_str.toUpperCase().equals("PASS")) {
+			game.getActMove().setComment(game.getActMove().getComment()+"passes");
 			game.pass();
 			return true;
 		}

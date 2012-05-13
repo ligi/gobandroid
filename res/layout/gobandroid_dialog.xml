@@ -15,8 +15,8 @@
          
      <ImageView 
          android:id="@+id/dialog_icon"
-         android:layout_width="wrap_content"
-    	 android:layout_height="wrap_content"
+         android:layout_width="42dp"
+         android:layout_height="42dp"
 		 android:src="@null"
 		 android:padding="3dp"
          />
@@ -38,13 +38,20 @@
      
 	 <LinearLayout 
 	        android:id="@+id/dialog_content"
-	    	android:layout_width="fill_parent"
+	    	android:layout_width="wrap_content"
 	    	android:layout_height="wrap_content"
 	    	android:padding="5dp"
 	    	android:layout_weight="1"
-	    	android:orientation="vertical"
-	     	>
-	
+	    	android:orientation="vertical">
+	 </LinearLayout>
+	 
+	 
+	 <LinearLayout 
+	        android:id="@+id/dialog_items"
+	    	android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+	    	android:padding="5dp"
+	    	android:orientation="vertical">
 	 </LinearLayout>
 	  
 	 <LinearLayout 
@@ -52,6 +59,6 @@
 	    	android:layout_height="wrap_content"
 	    	android:id="@+id/button_container"
 	    	android:orientation="horizontal"
-	     ></LinearLayout>
+	 ></LinearLayout>
 
 </LinearLayout>

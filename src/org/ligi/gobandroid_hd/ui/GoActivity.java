@@ -510,11 +510,8 @@ public class GoActivity
 	}
 	
 	public void requestUndo() {
-		
-		
 		if (doAskToKeepVariant()) {                                                                                                  
 			new UndoWithVariationDialog(this).show();
-			
 	    }                                                                                                                                     
 	    else                                                                                                                                  
 	        game.undo(GoPrefs.isKeepVariantEnabled());

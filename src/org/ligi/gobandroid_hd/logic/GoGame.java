@@ -248,9 +248,9 @@ public class GoGame  {
         	return MOVE_VALID;
         }
         		
-        if(game_finished) { // game is finished - players are marking dead stones
+        if(game_finished) { // game is finished - players are amarking dead stones
         	
-        	if (!calc_board.isCellFree(x, y)) // if there is a stone/group
+        	if ((!calc_board.isCellFree(x, y))||calc_board.isCellDead(x, y)) // if there is a stone/group
 	        	for (int xg = 0; xg < calc_board.getSize(); xg++) // toggle the whole group dead TODO: should better be done via flood-fill than group compare
 	        		for (int yg = 0; yg < calc_board.getSize(); yg++)
 	                     if (groups[xg][yg]==groups[x][y])

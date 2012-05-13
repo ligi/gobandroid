@@ -158,7 +158,6 @@ public class GnuGoMover implements Runnable{
 					// set the size
 					gnu_service.processGTP("boardsize " + game.getBoardSize());
 									
-					
 					for (byte x=0;x<game.getBoardSize();x++)
 						for (byte y=0;y<game.getBoardSize();y++)
 							if (game.getHandicapBoard().isCellBlack(x, y))

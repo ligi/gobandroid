@@ -1,3 +1,21 @@
+0.91
+ F counting of dead stones
+ F better remember solved tsumegos
+ + support goproblem.com style of marking correct move in tsumego
+ F bookmark loading fix
+
+0.90
+  F Sound fixes ( e.g. placing sound now also played from external events like tsumego counter move or A.I. )
+  F make tsumego-push configurable in settings ( please do - is off by default )
+  F Handicap fixes with tengen only on 5,7 and 9 - thanks to gthazmatt 
+  F komi fix from 6.5 to 0.5 if there is a handicap -  thanks to gthazmatt 
+  F date format at saving more sort-friendly - thanks to gthazmatt 
+  F nicer help with option to link to the right wikipedia articles per languagea
+  F nicer switching between modes
+  F fix problem with marking dead stones in end-game
+
+[..] the missing years - a lot happened here ;-)
+
 0.57
    + fix problems with captures
 0.56
