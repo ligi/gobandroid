@@ -6,8 +6,7 @@
     <string name="load_game">棋譜読み込み</string>
     <string name="load_tsumego">詰碁読み込み</string>
     <string name="tsumego">詰碁</string>
-    <string name="igs">IGS</string>
-    <string name="info">情報</string>
+    <string name="igs">IGS</string><string name="info">情報</string>
     <string name="quit">終了</string>
 	<string name="quit_confirm">本当にこの対局を終了しますか？</string>
 	<string name="no">いいえ</string>
@@ -45,7 +44,7 @@
 	<string name="save_sgf">SGF保存</string>
 	<string name="invalid_move_ko">コウ!</string>
 	<string name="invalid_move_no_liberties">自殺手!</string>
-	<string name="hint_stone_move">現在の着手をタップしました. 半透明の石を着手することを教えます。</string>
+	<string name="hint_stone_move">現在の着手をタップしました. 半透明の石を移動します。</string>
 	<string name="mark_last_stone">最後の石をマークします</string>
 	<string name="mark_last_stone_summary">最終手に小円を表示します</string>
 	<string name="first_tap_zooms">最初のタップで拡大します</string>
@@ -96,6 +95,7 @@
 
 	<string name="link_title">リンク</string>
 	<string name="link_tab_about">Gobandroidについて</string>
+	<string name="link_tab_credits">謝辞</string>
 	<string name="link_tab_help">ヘルプ</string>
 	<string name="link_tab_sgf">SGF</string>
 	<string name="game_mode">モード</string>
@@ -147,4 +147,20 @@
     <string name="keep_variant_">変化図保持？</string>
     <string name="keep_this_move_as_variant_">この着手を変化図として保持しますか？</string>
     <string name="numbered_end">正解手順</string>
+    <string name="icon">アイコン</string>
+    <string name="go_tv">自動再生</string>
+    <string name="i_do_not_want_to_keep_variants_for_this_game">この対局の変化図を保持しない</string>
+    <string name="end_review">鑑賞を終了しますか?</string>
+    <string name="komi_must_be_a_number">コミは数値でなければなりません</string>
+	<string name="youtube_tutorial">YouTubeでのチュートリアル</string>
+	<string name="youtube_tutorial_link">http://www.youtube.com/watch?v=gECcsSeRcNo</string>
+	<string name="wikipedia_rules">Wikipediaの記事</string>
+	<string name="wikipedia_rules_link">http://en.wikipedia.org/wiki/Go_(game)</string>
+	<string name="televize">自動再生</string>
+    <string name="count">カウント</string>
+    <string name="notifications">通知</string>
+
+    <string name="push_tsumego">詰碁のプッシュ受信</string>
+    <string name="push_tsumego_extra">毎週詰碁受信します</string>
+
 </resources>
