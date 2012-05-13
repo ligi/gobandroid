@@ -28,7 +28,6 @@ import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
-import org.ligi.tracedroid.logging.Log;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 
 import com.actionbarsherlock.view.Menu;
@@ -37,8 +36,8 @@ import com.actionbarsherlock.view.MenuItem;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -60,7 +59,7 @@ public class gobandroid extends GobandroidFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
-        
+        setTitle("Gobandroid " + getVersionCode());
     	// if we have stacktraces - give user option to send them
 	    TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
 	
@@ -175,4 +174,15 @@ public class gobandroid extends GobandroidFragmentActivity {
     public void startPreferences(View target) {
     	this.startActivity(new Intent(this,GoPrefsActivity.class));
     }
+    
+    private String getVersionCode() {
+		try
+		{
+			return "v"+getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
+		}
+		catch (NameNotFoundException e)
+		{
+		    return "v?";
+		}
+	}
 }
