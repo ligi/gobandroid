@@ -162,5 +162,10 @@
 
     <string name="push_tsumego">Push Tsumego</string>
     <string name="push_tsumego_extra">more tsumego to solve every week</string>
+    <string name="gnugo_strength">GnuGo strength:</string>
+    <string name="gnugo_plays">GnuGo plays:</string>
+    <string name="black">Black</string>
+    <string name="white">White</string>
+    <string name="black_and_white">Black &amp;amp; White</string>
     
 </resources>
