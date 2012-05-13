@@ -162,5 +162,10 @@
 
     <string name="push_tsumego">詰碁のプッシュ受信</string>
     <string name="push_tsumego_extra">毎週詰碁受信します</string>
+    <string name="gnugo_strength">GnuGoの強さ:</string>
+    <string name="gnugo_plays">GnuGoの手番:</string>
+    <string name="black">黒</string>
+    <string name="white">白</string>
+    <string name="black_and_white">黒と白</string>
 
 </resources>
