@@ -36,7 +36,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		// build a on path Vector to do a fast isOnPath() later 
 		on_path_moves=new Vector<GoMove>();
 		
-		recursive_add_on_path_moves(game.getFirstMove());
+		recursive_add_on_path_moves(getGame().getFirstMove());
 				
 		// try to find the correct solution
 		if (!isFinishingMoveKnown()) 
@@ -45,17 +45,17 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 			.setPositiveButton("go back",new ActivityFinishOnDialogClickListener(this))
 			.show();
 
-		game.addGoGameChangeListener(this);
+		getGame().addGoGameChangeListener(this);
 		
-		float myZoom=TsumegoHelper.calcZoom(game);
+		float myZoom=TsumegoHelper.calcZoom(getGame());
 		
 		getBoard().setZoom(myZoom);
-		getBoard().setZoomPOI(TsumegoHelper.calcPOI( game));
+		getBoard().setZoomPOI(TsumegoHelper.calcPOI( getGame()));
     }
     
     private GoMove getFinishingMove() {
     	if (finishing_move==null)
-    		finishing_move=getCorrectMove(game.getFirstMove());
+    		finishing_move=getCorrectMove(getGame().getFirstMove());
 		
     	return finishing_move;
     }
@@ -72,23 +72,23 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
     
     @Override
 	protected void onDestroy() {
-    	game.removeGoGameChangeListener(this);
+    	getGame().removeGoGameChangeListener(this);
     	super.onDestroy();
     }
 
 	private boolean isOnPath() {
-		return on_path_moves.contains(game.getActMove());
+		return on_path_moves.contains(getGame().getActMove());
     }
     
 	public byte doMoveWithUIFeedback(byte x,byte y) {
 		
 		byte res=super.doMoveWithUIFeedback(x,y);
 		if (res==GoGame.MOVE_VALID)
-			if (game.getActMove().hasNextMove()) {
-				game.jump(game.getActMove().getnextMove(0));
+			if (getGame().getActMove().hasNextMove()) {
+				getGame().jump(getGame().getActMove().getnextMove(0));
 			}
 
-		game.notifyGameChange();
+		getGame().notifyGameChange();
 		return res;
 	}
 
@@ -132,11 +132,11 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
     @Override
     public void requestUndo() {
     	// we do not want to keep user-variations in tsumego mode- but we want to keep tsumego variation
-    	game.undo(isOnPath());
+    	getGame().undo(isOnPath());
     	
     	// remove the counter-move if any
-    	if (!game.isBlackToMove())
-    		game.undo(isOnPath());
+    	if (!getGame().isBlackToMove())
+    		getGame().undo(isOnPath());
     }
     
     @Override
@@ -152,15 +152,15 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		super.onGoGameChange();
 		if (myTsumegoExtrasFragment!=null) {
 			myTsumegoExtrasFragment.setOffPathVisibility(!isOnPath());
-			myTsumegoExtrasFragment.setCorrectVisibility(game.getActMove().equals(getFinishingMove()));
+			myTsumegoExtrasFragment.setCorrectVisibility(getGame().getActMove().equals(getFinishingMove()));
 		}
-		if (game.getActMove().equals(getFinishingMove())) {
-			SGFMetaData meta=new SGFMetaData(game.getMetaData().getFileName());
+		if (getGame().getActMove().equals(getFinishingMove())) {
+			SGFMetaData meta=new SGFMetaData(getGame().getMetaData().getFileName());
 			meta.setIsSolved(true);
 			meta.persist();
 			/*this.getBaseContext().getSharedPreferences("tsumego_stats", Activity.MODE_PRIVATE)
 			.edit().putInt(game.getMetaData().getFileName(), 100).commit();*/
-			Log.i("written finished"+	game.getMetaData().getFileName());
+			Log.i("written finished"+	getGame().getMetaData().getFileName());
 		}
 		this.invalidateOptionsMenu();		
 	}
