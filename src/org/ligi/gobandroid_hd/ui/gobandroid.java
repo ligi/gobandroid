@@ -52,14 +52,15 @@ import android.view.View;
 **/
 
 public class gobandroid extends GobandroidFragmentActivity {
-
-	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
-        setTitle("Gobandroid " + getVersionCode());
+        
+        if ( getVersionCode().contains("eta")) // only show in Beta
+        	setTitle("Gobandroid " + getVersionCode());
+        
     	// if we have stacktraces - give user option to send them
 	    TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
 	
