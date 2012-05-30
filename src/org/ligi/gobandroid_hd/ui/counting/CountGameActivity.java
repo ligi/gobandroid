@@ -33,11 +33,11 @@ public class CountGameActivity extends GoActivity  implements GoGameChangeListen
 		
 		byte res=super.doMoveWithUIFeedback(x,y);
 		if (res==GoGame.MOVE_VALID)
-			if (game.getActMove().hasNextMove())
-				game.jump(game.getActMove().getnextMove(0));
+			if (getGame().getActMove().hasNextMove())
+				getGame().jump(getGame().getActMove().getnextMove(0));
 			
 
-		game.notifyGameChange();
+		getGame().notifyGameChange();
 		return res;
 	}
 	
@@ -46,9 +46,9 @@ public class CountGameActivity extends GoActivity  implements GoGameChangeListen
 		super.onPrepareOptionsMenu(menu);
 		
 		try {
-			menu.findItem(R.id.menu_game_pass).setVisible(!game.isFinished());
-			menu.findItem(R.id.menu_game_results).setVisible(game.isFinished());
-			menu.findItem(R.id.menu_game_undo).setVisible(game.canUndo());
+			menu.findItem(R.id.menu_game_pass).setVisible(!getGame().isFinished());
+			menu.findItem(R.id.menu_game_results).setVisible(getGame().isFinished());
+			menu.findItem(R.id.menu_game_undo).setVisible(getGame().canUndo());
 		} catch ( NullPointerException e ) { } // we do not care when they do not exist
 		
 		return true;

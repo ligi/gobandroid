@@ -67,7 +67,6 @@ public class GoActivity
 		extends GobandroidFragmentActivity implements OnTouchListener, OnKeyListener,  GoGame.GoGameChangeListener {
 
 	private GoBoardViewHD go_board=null;
-	public GoGame game;
 
 	private Toast info_toast=null;
 	
@@ -97,9 +96,8 @@ public class GoActivity
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		}
 		
-		game=getGame();
 		
-		if (game==null) { // cannot do anything without a game 
+		if (getGame()==null) { // cannot do anything without a game 
 			finish();
 			return;
 		}
@@ -149,7 +147,7 @@ public class GoActivity
 	@Override
 	public void onGoGameChange() {
 		if (getGame().getActMove().getMovePos()>last_processed_move_change_num) {
-			if (game.isBlackToMove())
+			if (getGame().isBlackToMove())
 				sound_man.playSound(GoSoundManager.SOUND_PLACE1);
 			else
 				sound_man.playSound(GoSoundManager.SOUND_PLACE2);
@@ -162,10 +160,10 @@ public class GoActivity
 
 	@Override 
 	protected void onStart() {
-		if (game==null)
+		if (getGame()==null)
 			Log.w("we do not have a game in onStart of a GoGame activity - thats crazy!");
 		else
-			game.addGoGameChangeListener(this);
+			getGame().addGoGameChangeListener(this);
 		
 		super.onStart();
 	}
@@ -173,10 +171,10 @@ public class GoActivity
 	
 	@Override
 	protected void onStop() {
-		if (game==null)
+		if (getGame()==null)
 			Log.w("we do not have a game (anymore) in onStop of a GoGame activity - thats crazy!");
 		else
-			game.removeGoGameChangeListener(this);
+			getGame().removeGoGameChangeListener(this);
 		
 		super.onStop();
 	}
@@ -237,11 +235,11 @@ public class GoActivity
 	        	return true;
 	        	
 	        case R.id.menu_game_info:                                                                                                                           
-                new GameInfoAlert(this,game).show(); 
+                new GameInfoAlert(this,getGame()).show(); 
                 return true;                  
 	                
 	        case R.id.menu_game_undo:
-	            if (!game.canUndo())
+	            if (!getGame().canUndo())
 	            	break;
 	            
 	            requestUndo();
@@ -249,12 +247,12 @@ public class GoActivity
 
   
 	        case R.id.menu_game_pass:
-	        	game.pass();        
-	        	game.notifyGameChange();
+	        	getGame().pass();        
+	        	getGame().notifyGameChange();
 	        	return true;
 	        	
 	        case R.id.menu_game_results:
-	        	new GameResultsAlert(this,game).show();                                                                                                    
+	        	new GameResultsAlert(this,getGame()).show();                                                                                                    
 	        	return true;
 	        	
 	        case R.id.menu_write_sgf:                                                                                                                          
@@ -283,7 +281,7 @@ public class GoActivity
 	
 	private void shutdown(boolean toHome) {
 		sound_man.playSound(GoSoundManager.SOUND_END);
-		game.getGoMover().stop();
+		getGame().getGoMover().stop();
 		finish();
 		
 		if (toHome) {
@@ -332,7 +330,7 @@ public class GoActivity
 
     public byte doMoveWithUIFeedback(byte x,byte y) {
     	info_toast.cancel();
-    	byte res=game.do_move(x, y);
+    	byte res=getGame().do_move(x, y);
     	switch(res){
     		case GoGame.MOVE_INVALID_IS_KO:
     			showInfoToast(R.string.invalid_move_ko);
@@ -373,16 +371,16 @@ public class GoActivity
 			if (getResources().getBoolean(R.bool.small))
 				this.getSupportActionBar().hide();
 			
-			if (game.isBlackToMove())
+			if (getGame().isBlackToMove())
 				sound_man.playSound(GoSoundManager.SOUND_PICKUP1);
 			else
 				sound_man.playSound(GoSoundManager.SOUND_PICKUP2);
 		}
 			
 		Log.i("touch");
-		if (!game.getGoMover().isReady())
+		if (!getGame().getGoMover().isReady())
 			showInfoToast(R.string.wait_gnugo);
-		else if (game.getGoMover().isMoversMove())
+		else if (getGame().getGoMover().isMoversMove())
 			showInfoToast(R.string.not_your_turn);
 		else
 			doTouch(event);
@@ -404,7 +402,7 @@ public class GoActivity
 			
 			BufferedWriter out = new BufferedWriter(sgf_writer);
 			
-			out.write(SGFHelper.game2sgf(game));
+			out.write(SGFHelper.game2sgf(getGame()));
 			out.close();
 			sgf_writer.close();
 			
@@ -424,11 +422,11 @@ public class GoActivity
 
     		if (go_board.move_stone_mode) {
     			// TODO check if this is an illegal move ( e.g. in variants )
-    			game.getActMove().setXY((byte)interaction_scope.getTouchX(),(byte)interaction_scope.getTouchY());
-    			game.refreshBoards();
+    			getGame().getActMove().setXY((byte)interaction_scope.getTouchX(),(byte)interaction_scope.getTouchY());
+    			getGame().refreshBoards();
     			go_board.move_stone_mode=false;
     		}
-    		else if ((game.getActMove().getX()==interaction_scope.getTouchX())&&(game.getActMove().getY()==interaction_scope.getTouchY())) 
+    		else if ((getGame().getActMove().getX()==interaction_scope.getTouchX())&&(getGame().getActMove().getY()==interaction_scope.getTouchY())) 
     			go_board.initializeStoneMove();
     		else 
     			doMoveWithUIFeedback((byte)interaction_scope.getTouchX(),(byte)interaction_scope.getTouchY());
@@ -438,7 +436,7 @@ public class GoActivity
     	}
 
 
-    	game.notifyGameChange();
+    	getGame().notifyGameChange();
     }
     
     public boolean doAskToKeepVariant() {
@@ -453,7 +451,7 @@ public class GoActivity
     	case KeyEvent.KEYCODE_DPAD_UP:
     		go_board.prepare_keyinput();
     		if (interaction_scope.getTouchY()>0) 
-    			interaction_scope.touch_position-=game.getSize();
+    			interaction_scope.touch_position-=getGame().getSize();
     		else
     			return false;
     		break;
@@ -468,15 +466,15 @@ public class GoActivity
     		
     	case KeyEvent.KEYCODE_DPAD_DOWN:
     		go_board.prepare_keyinput();
-    		if (interaction_scope.getTouchY()<game.getVisualBoard().getSize()-1) 
-    			interaction_scope.touch_position+=game.getSize();
+    		if (interaction_scope.getTouchY()<getGame().getVisualBoard().getSize()-1) 
+    			interaction_scope.touch_position+=getGame().getSize();
     		else
     			return false;
     		break;
     		
     	case KeyEvent.KEYCODE_DPAD_RIGHT:
     		go_board.prepare_keyinput();
-    		if (interaction_scope.getTouchX()<game.getVisualBoard().getSize()-1)
+    		if (interaction_scope.getTouchX()<getGame().getVisualBoard().getSize()-1)
     			interaction_scope.touch_position++;
     		else
     			return false;
@@ -514,7 +512,7 @@ public class GoActivity
 			new UndoWithVariationDialog(this).show();
 	    }                                                                                                                                     
 	    else                                                                                                                                  
-	        game.undo(GoPrefs.isKeepVariantEnabled());
+	    	getGame().undo(GoPrefs.isKeepVariantEnabled());
 	}
 
 	@Override

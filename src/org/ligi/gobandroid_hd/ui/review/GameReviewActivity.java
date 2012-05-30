@@ -62,14 +62,14 @@ public class GameReviewActivity extends GoActivity  {
 	    	switch (keyCode) {
 	    	case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
 	    	case KeyEvent.KEYCODE_DPAD_LEFT:
-	    		if (!game.canUndo())
+	    		if (!getGame().canUndo())
 	    			return true;
-	    		game.undo();
+	    		getGame().undo();
 	    		return true;
 	    		
 	    	case KeyEvent.KEYCODE_DPAD_RIGHT:
 	    	case KeyEvent.KEYCODE_MEDIA_NEXT:
-	    		GameForwardAlert.show(this, game);
+	    		GameForwardAlert.show(this, getGame());
 	    		return true;
 	    		
 	    	case KeyEvent.KEYCODE_DPAD_UP:
