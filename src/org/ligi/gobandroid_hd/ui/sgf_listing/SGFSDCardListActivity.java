@@ -20,6 +20,7 @@
 package org.ligi.gobandroid_hd.ui.sgf_listing;
 
 import java.io.File;
+import org.ligi.android.common.arrays.ArrayHelper;
 import java.util.Vector;
 import java.util.Arrays;
 
@@ -30,6 +31,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.Refreshable;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsDialog;
 import org.ligi.tracedroid.logging.Log;
 
@@ -149,8 +151,25 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity implements
 		this.getSupportActionBar().setSubtitle(dir.getAbsolutePath());
 
 		
-		menu_items=(String[])fnames.toArray(new String[fnames.size()]);
-		Arrays.sort(menu_items);
+		
+		
+		if (getApp().getInteractionScope().getMode()==InteractionScope.MODE_TSUMEGO) {
+			Vector<String> done=new Vector<String>(),undone=new Vector<String>(); 
+			for (String fname:fnames)
+				if (new SGFMetaData(dir.getAbsolutePath()+"/"+fname).is_solved)
+					done.add(fname);
+				else
+					undone.add(fname);
+
+			String[] undone_arr=(String[])undone.toArray(new String[undone.size()]),done_arr=(String[])done.toArray(new String[done.size()]);
+			Arrays.sort(undone_arr);
+			Arrays.sort(done_arr);
+			menu_items=ArrayHelper.concat(undone_arr,done_arr);
+		}
+		else {
+			menu_items=(String[])fnames.toArray(new String[fnames.size()]);
+			Arrays.sort(menu_items);
+		}
 
 		list_fragment=new SGFListFragment(menu_items,dir);
 		getSupportFragmentManager().beginTransaction().replace(R.id.list_fragment, list_fragment).commit();
