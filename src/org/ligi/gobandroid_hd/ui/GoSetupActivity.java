@@ -93,7 +93,22 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 		GoPrefs.init(this);
 		this.setContentView(R.layout.game_setup);
 		this.setTitle(R.string.board_setup);
-		this.getSupportActionBar().setSubtitle(R.string.for_recording);
+		
+		
+		switch (getApp().getInteractionScope().getMode()) {
+			case InteractionScope.MODE_GNUGO:
+				getSupportActionBar().setSubtitle(R.string.for_gnugo);
+				break;
+				
+			default: 
+				Log.w("Setting up a GoBoard for a weird mode");
+				
+			case InteractionScope.MODE_RECORD:
+				getSupportActionBar().setSubtitle(R.string.for_recording);
+				break;
+		}
+					
+			
 	}
 	
 	private void setup_board() {
