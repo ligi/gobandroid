@@ -11,6 +11,7 @@ import org.ligi.tracedroid.Log;
 
 import com.google.android.c2dm.C2DMessaging;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.Settings.Secure;
@@ -22,9 +23,9 @@ public class GobandroidBackend {
 	 * 
 	 * @return the count or -1 on any error 
 	 */
-	public final static int getMaxTsumegos() {
+	public final static int getMaxTsumegos(Context ctx) {
 		try {
-			URL url=new URL("http://"+GobandroidConfiguration.backend_domain+"/tsumegos/max");
+			URL url=new URL("http://"+GobandroidConfiguration.backend_domain+"/tsumegos/max?device_id="+Secure.getString( ctx.getContentResolver(), Secure.ANDROID_ID));
 			String count_str=NetHelper.downloadURL2String(url);
 			count_str=count_str.replace("\n", "").replace("\r","").trim(); // clean the string
 			return Integer.parseInt(count_str);

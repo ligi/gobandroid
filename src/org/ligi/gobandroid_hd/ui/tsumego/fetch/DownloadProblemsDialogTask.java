@@ -62,7 +62,7 @@ public class DownloadProblemsDialogTask extends AsyncTask<TsumegoSource[],String
 
 	@Override
 	protected Integer doInBackground(TsumegoSource[]... params) {
-		return TsumegoDownloadHelper.doDownload(params[0]);
+		return TsumegoDownloadHelper.doDownload(ctx,params[0]);
 	}
 
 }

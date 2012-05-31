@@ -11,6 +11,8 @@ import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.backend.GobandroidBackend;
 import org.ligi.tracedroid.logging.Log;
 
+import android.content.Context;
+
 
 public class TsumegoDownloadHelper {
 
@@ -26,13 +28,13 @@ public class TsumegoDownloadHelper {
 	}
 
 	public static int doDownloadDefault(GobandroidApp app) {
-		return doDownload(getDefaultList(app));
+		return doDownload(app,getDefaultList(app));
 	}
 	
-	public static int doDownload(TsumegoSource[] params) {
+	public static int doDownload(Context ctx,TsumegoSource[] params) {
 		int download_count=0;  
         
-		int limit=GobandroidBackend.getMaxTsumegos();
+		int limit=GobandroidBackend.getMaxTsumegos(ctx);
 		
 		if (limit!=-1)	
 			for (TsumegoSource src : params)   {
