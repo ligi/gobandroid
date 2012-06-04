@@ -11,11 +11,8 @@ import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.tracedroid.logging.Log;
-
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -162,7 +159,12 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 			.edit().putInt(game.getMetaData().getFileName(), 100).commit();*/
 			Log.i("written finished"+	getGame().getMetaData().getFileName());
 		}
-		this.invalidateOptionsMenu();		
+		this.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				invalidateOptionsMenu();		
+			}
+		});
 	}
 
 	@Override
