@@ -1,5 +1,5 @@
 /**
-a * gobandroid 
+ * gobandroid 
  * by Marcus -Ligi- Bueschleb 
  * http://ligi.de
  *
@@ -185,7 +185,7 @@ public class SGFHelper {
 						act_cmd=last_cmd;
 					
 					// for files without SZ - e.g. ggg-intermediate-11.sgf
-					if ((game==null) && (act_cmd.equals("AB") ||act_cmd.equals("AW")) ) {
+					if ((game==null) && (act_cmd.equals("AB") ||act_cmd.equals("AW") || act_cmd.equals("TR") || act_cmd.equals("SQ") || act_cmd.equals("LB") || act_cmd.equals("MA")) ) {
 						size=19;
 						game=new GoGame((byte)19);
 					}
@@ -321,7 +321,6 @@ public class SGFHelper {
 
 					if (act_cmd.equals("SO")) // Source
 						metadata.setResult(act_param);
-
 					
 					// size command
 					if (act_cmd.equals("SiZe") || act_cmd.equals("SZ")){
