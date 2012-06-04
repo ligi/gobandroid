@@ -91,10 +91,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
 
 	private GoMove getCorrectMove(GoMove act_mve) {
-		if (act_mve.getComment().trim().toUpperCase().startsWith("CORRECT") || // gogameguru style 
-			//act_mve.getComment().trim().toUpperCase().startsWith("RIGHT") || // goproblem.com
-			act_mve.getComment().contains("RIGHT")  // goproblem.com
-				)
+		if (isCorrectMove(act_mve))
 			return act_mve;
 		
 		for (GoMove next_moves:act_mve.getNextMoveVariations()) {
@@ -144,14 +141,21 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		return myTsumegoExtrasFragment;
 	}
 
+    private boolean isCorrectMove(GoMove move) {
+    	return  (move.getComment().trim().toUpperCase().startsWith("CORRECT") || // gogameguru style 
+    			//act_mve.getComment().trim().toUpperCase().startsWith("RIGHT") || // goproblem.com
+    			 move.getComment().contains("RIGHT")  // goproblem.com
+    			);
+    }
+    
 	@Override
 	public void onGoGameChange() {
 		super.onGoGameChange();
 		if (myTsumegoExtrasFragment!=null) {
 			myTsumegoExtrasFragment.setOffPathVisibility(!isOnPath());
-			myTsumegoExtrasFragment.setCorrectVisibility(getGame().getActMove().equals(getFinishingMove()));
+			myTsumegoExtrasFragment.setCorrectVisibility(isCorrectMove(getGame().getActMove()));
 		}
-		if (getGame().getActMove().equals(getFinishingMove())) {
+		if (isCorrectMove(getGame().getActMove())) {
 			SGFMetaData meta=new SGFMetaData(getGame().getMetaData().getFileName());
 			meta.setIsSolved(true);
 			meta.persist();
