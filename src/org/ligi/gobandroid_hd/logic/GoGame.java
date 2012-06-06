@@ -110,12 +110,60 @@ public class GoGame  {
     private int local_captures = 0;
     
     public GoGame( byte size ) {
-    	construct(size);
+    	this(size,(byte)0);
     }
     
     public GoGame(byte size,byte handicap) {
+
     	this.handicap=handicap;
-    	construct(size);
+    	
+    	// create the boards
+
+    	metadata=new GoGameMetadata();
+    	
+    	calc_board = new GoBoard( size );
+        
+    	handicap_board=calc_board.clone();
+    	    
+    	all_handicap_positions=new boolean[size][size];
+    	
+        
+    	if (handicap>0)
+    		setKomi(0.5f);
+    	
+    	 if (GoDefinitions.getHandicapArray(size)!=null) {
+             byte[][] handicapArray = GoDefinitions.getHandicapArray(size);
+             for (int i=0;i<9;i++) {
+                 if (i<handicap) {
+    	                handicap_board.setCellBlack(handicapArray[i][0], handicapArray[i][1]);
+                     if(i==5 || i == 7) {
+                         handicap_board.setCellFree(handicapArray[4][0], handicapArray[4][1]);
+                         handicap_board.setCellBlack(handicapArray[i+1][0], handicapArray[i+1][1]);
+                     }
+                     else if(i == 6 || i == 8)
+                         handicap_board.setCellBlack(handicapArray[4][0], handicapArray[4][1]);
+                 }
+                 all_handicap_positions[handicapArray[i][0]][handicapArray[i][1]]=true;
+             }
+         }
+     		
+         apply_handicap();
+         
+
+         visual_board=calc_board.clone();
+         last_board=calc_board.clone();
+         pre_last_board=null;
+         
+         // create the array for group calculations
+         groups = new int[size][size];
+         
+         area_groups = new int[size][size];
+         area_assign = new byte[size][size];
+         
+         act_move=new GoMove(null);
+         act_move.setIsFirstMove();
+         
+         reset();
     }
     
     public float getKomi() {
@@ -139,54 +187,6 @@ public class GoGame  {
      */
     public void apply_handicap() {
     	calc_board=handicap_board.clone();
-    }
-
-    private void construct(byte size) {
-    	// create the boards
-
-    	metadata=new GoGameMetadata();
-    	
-    	if (handicap>0)
-    		setKomi(0.5f);
-    	
-    	calc_board = new GoBoard( size );
-        
-    	handicap_board=calc_board.clone();
-    	    
-    	all_handicap_positions=new boolean[size][size];
-    	
-        if (GoDefinitions.getHandicapArray(size)!=null) {
-            byte[][] handicapArray = GoDefinitions.getHandicapArray(size);
-            for (int i=0;i<9;i++) {
-                if (i<handicap) {
-   	                handicap_board.setCellBlack(handicapArray[i][0], handicapArray[i][1]);
-                    if(i==5 || i == 7) {
-                        handicap_board.setCellFree(handicapArray[4][0], handicapArray[4][1]);
-                        handicap_board.setCellBlack(handicapArray[i+1][0], handicapArray[i+1][1]);
-                    }
-                    else if(i == 6 || i == 8)
-                        handicap_board.setCellBlack(handicapArray[4][0], handicapArray[4][1]);
-                }
-                all_handicap_positions[handicapArray[i][0]][handicapArray[i][1]]=true;
-            }
-        }
-    		
-        apply_handicap();
-        
-        visual_board=calc_board.clone();
-        last_board=calc_board.clone();
-        pre_last_board=null;
-        
-        // create the array for group calculations
-        groups = new int[size][size];
-        
-        area_groups = new int[size][size];
-        area_assign = new byte[size][size];
-        
-        act_move=new GoMove(null);
-        act_move.setIsFirstMove();
-        
-        reset();	
     }
     
     public void reset() {
@@ -424,7 +424,7 @@ public class GoGame  {
      * @return the first move of the game 
      */
     public GoMove getFirstMove() {
-    	GoMove move=act_move;
+    	GoMove move=getActMove();
     	
     	while(true)	{
     		if (move.isFirstMove()) 
@@ -442,7 +442,7 @@ public class GoGame  {
     }
 
     public GoMove getLastMove() {
-    	GoMove move=act_move;
+    	GoMove move=getActMove();
     	while(true) {
     		if (!move.hasNextMove()) 
     			return move;

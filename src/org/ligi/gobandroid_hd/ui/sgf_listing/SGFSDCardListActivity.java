@@ -149,8 +149,6 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity implements
 		}
 
 		this.getSupportActionBar().setSubtitle(dir.getAbsolutePath());
-
-		
 		
 		
 		if (getApp().getInteractionScope().getMode()==InteractionScope.MODE_TSUMEGO) {
