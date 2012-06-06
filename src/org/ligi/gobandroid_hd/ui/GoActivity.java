@@ -138,8 +138,7 @@ public class GoActivity
 		
 		go_board.setOnTouchListener(this);
 		go_board.setOnKeyListener(this);
-			
-	
+		go_board.move_stone_mode=false;
 	}
 	
 	private int last_processed_move_change_num=0;
@@ -435,7 +434,6 @@ public class GoActivity
         			
     	}
 
-
     	getGame().notifyGameChange();
     }
     
@@ -445,7 +443,6 @@ public class GoActivity
 
 	@Override
 	public boolean onKey(View v, int keyCode, KeyEvent event) {
-		Log.i("key event");
 		if (event.getAction()==KeyEvent.ACTION_DOWN)
     	switch (keyCode) {
     	case KeyEvent.KEYCODE_DPAD_UP:
@@ -508,6 +505,7 @@ public class GoActivity
 	}
 	
 	public void requestUndo() {
+		go_board.move_stone_mode=false;
 		if (doAskToKeepVariant()) {                                                                                                  
 			new UndoWithVariationDialog(this).show();
 	    }                                                                                                                                     
