@@ -2,6 +2,7 @@ package org.ligi.gobandroid_hd.ui.review;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GobanDroidTVActivity;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
@@ -96,7 +97,8 @@ public class GoGamePlayerActivity extends GoActivity  {
 			Log.i("gobandroid","automove start" + getGame().getActMove().getNextMoveVariations().size());
 			while (autoplay_active &&( getGame().getActMove().hasNextMove())) {
 				Log.i("gobandroid","automove move"+getGame().getActMove().hasNextMove());
-				getGame().jump(getGame().getActMove().getnextMove(0));
+				GoMove next_mve=getGame().getActMove().getnextMove(0);
+				getGame().jump(next_mve);
 				Log.i("gobandroid","automove move"+getGame().getActMove().hasNextMove());
 					sleepWithProgress(calcTime());
 				
