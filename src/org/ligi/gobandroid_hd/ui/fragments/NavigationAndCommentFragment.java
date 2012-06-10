@@ -49,19 +49,8 @@ public class NavigationAndCommentFragment extends Fragment implements GoGameChan
 			public void run() {
 				if (myTextView!=null) {
 					myTextView.setText(game.getActMove().getComment());
-					Linkify.addLinks(myTextView, Linkify.ALL);
-					
-					TransformFilter mentionFilter = new TransformFilter() {
-					        public final String transformUrl(final Matcher match, String url) {
-					            return match.group(1).toLowerCase();
-					        }
-					    };
-					    
-					for (String key : GoTerminologyViewActivity.getTerm2resHashMap().keySet()) {
-						Pattern wikiWordMatcher = Pattern.compile("[\\. ]("+key+")[\\. ]",Pattern.CASE_INSENSITIVE);
-						String wikiViewURL =    "goterm://org.ligi.gobandroid_hd.goterms/";
-						Linkify.addLinks(myTextView, wikiWordMatcher, wikiViewURL,null,mentionFilter);
-					}	
+					CommentHelper.linkifyCommentTextView(myTextView);
+						
 				}
 			}
 			

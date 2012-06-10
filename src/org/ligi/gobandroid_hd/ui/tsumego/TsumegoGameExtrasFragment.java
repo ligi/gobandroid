@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui.tsumego;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.ui.fragments.CommentHelper;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 import org.ligi.tracedroid.logging.Log;
 import android.os.Bundle;
@@ -34,9 +35,11 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment  {
 		
 		game=getGame();
 
-		if (!correct_visible)
+		if (!correct_visible || game.getActMove().getComment().length()>10) { // the 10 is a bit of a magic number - just want to show comments that have extras here to prevent double comment written - but sometimes there is more info in the comment
 			comment.setText(game.getActMove().getComment());
-		
+			if (!game.getActMove().getComment().equals(""))
+				CommentHelper.linkifyCommentTextView(comment);
+		}
 		return res;
 	}
 	
