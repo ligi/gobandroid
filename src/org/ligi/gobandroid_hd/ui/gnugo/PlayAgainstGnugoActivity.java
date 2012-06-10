@@ -265,8 +265,9 @@ public class PlayAgainstGnugoActivity extends GoActivity  implements GoGameChang
 			}
 				
 			
-		} catch (RemoteException e) {
-			
+		} catch (Exception e) {
+			Log.w("exception in check of gnugo sync " + e);
+			return false;
 		}
 		return true;
 	}
