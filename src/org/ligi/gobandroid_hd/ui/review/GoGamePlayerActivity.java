@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class GoGamePlayerActivity extends GoActivity  {
@@ -40,21 +41,24 @@ public class GoGamePlayerActivity extends GoActivity  {
 		getBoard().setOnKeyListener(this);
 		getBoard().do_actpos_highlight=false;
 		
-		if (autoplay_active)
-			new Thread(new autoPlayRunnable()).start();
-		
 		handler=new Handler();
 
 		getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
 		
 	}
 	
+	@Override
+	protected void onStart() {
+		if (autoplay_active)
+			new Thread(new autoPlayRunnable()).start();
+		super.onStart();
+	}
+
 	private Runnable mTimerProgressRunnable=new Runnable() {
 		
 		@Override
 		public void run() {
 			setSupportProgress((int)(Window.PROGRESS_START+progress_to_display*(Window.PROGRESS_END-Window.PROGRESS_START)));
-			Log.i("setting progress to " + progress_to_display);
 		}
 		
 	};
@@ -192,5 +196,11 @@ public class GoGamePlayerActivity extends GoActivity  {
 		if (getGame().getActMove().hasComment())
 			res+=pause_betwen_moves_extra_per_word*countWords(getGame().getActMove().getComment());
 		return res;
+	}
+
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		return true; // this is a player - we do not want interaction
 	}
 }
