@@ -114,7 +114,7 @@ public class SaveSGFDialog extends GobandroidDialog {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String fname = input.getText().toString()+".sgf"; 
 					
-				if (saveSGF(getApp().getGame(),context.getSettings().getSGFSavePath() ,fname)&&
+				if (saveSGF(getApp().getGame(),context.getSettings().getSGFSavePath() +fname)&&
 					(share_checkbox.isChecked())) {
 						//add extra
 						Intent it = new Intent(Intent.ACTION_SEND);   
@@ -135,15 +135,22 @@ public class SaveSGFDialog extends GobandroidDialog {
 	}
 	
 	
-	public static boolean saveSGF(GoGame game,String path,String fname) {
+	public static boolean saveSGF(GoGame game,String fname) {
 
-		File f = new File(path);
 		
-		if (!f.isDirectory())
-			f.mkdirs();
+		File f = new File(fname);
+		
+		if (f.isDirectory())
+			throw new IllegalArgumentException("cannot write - fname is a directory");
+		
+		if (f.getParentFile()==null) // not really sure when this can be the case ( perhaps only / ) - but the doc says it can be null and I would get NPE then
+			throw new IllegalArgumentException("bad filename");
+		
+		if (f.getParentFile()!=null && !f.getParentFile().isDirectory()) // if the path is not there yet
+			f.getParentFile().mkdirs();
 		
 		try {
-			f=new File(path+ "/"+fname);
+			//f=new File(path+ "/"+fname);
 			f.createNewFile();
 			
 			FileWriter sgf_writer = new FileWriter(f);
@@ -159,7 +166,7 @@ public class SaveSGFDialog extends GobandroidDialog {
 			return false;
 		}
 		
-		game.getMetaData().setFileName(path+"/"+fname);
+		game.getMetaData().setFileName(fname);
 		return true;
 		
 	}
