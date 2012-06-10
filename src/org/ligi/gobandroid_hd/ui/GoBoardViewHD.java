@@ -117,6 +117,7 @@ public class GoBoardViewHD extends View {
     	whiteLastStoneCirclePaint.setColor(Color.WHITE);
 		whiteLastStoneCirclePaint.setStyle(Paint.Style.STROKE);
 		whiteLastStoneCirclePaint.setStrokeWidth(2.0f);
+		whiteLastStoneCirclePaint.setAntiAlias(true);
 		
 		// make a black one 
 		blackLastStoneCirclePaint=new Paint(whiteLastStoneCirclePaint);
@@ -126,6 +127,7 @@ public class GoBoardViewHD extends View {
     	hoshi_paint=new Paint();
     	hoshi_paint.setColor(Color.BLACK);
     	hoshi_paint.setStyle(Paint.Style.FILL);
+    	hoshi_paint.setAntiAlias(true);
     	
         // for drawing on the stones
         whiteTextPaint=new Paint();
