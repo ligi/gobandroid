@@ -1,15 +1,11 @@
 package org.ligi.gobandroid_hd.ui.review;
 
-import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.gobandroid_hd.ui.fragments.NavigationAndCommentFragment;
 import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
-
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
@@ -19,18 +15,9 @@ import android.view.View;
 public class GameReviewActivity extends GoActivity  {
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-    	this.getSupportMenuInflater().inflate(R.menu.ingame_review, menu);
-    	return super.onCreateOptionsMenu(menu);
-	}
-
-	
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch ( item.getItemId()) {
-		case R.id.menu_bookmark:
-			new BookmarkDialog(this).show();
-			return true;
+		
 	}
 		return super.onOptionsItemSelected(item);
 	}

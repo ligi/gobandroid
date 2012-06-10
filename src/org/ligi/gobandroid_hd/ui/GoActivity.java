@@ -34,6 +34,7 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.fragments.DefaultGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
+import org.ligi.gobandroid_hd.ui.review.BookmarkDialog;
 import org.ligi.tracedroid.logging.Log;
 
 import org.ligi.android.common.activitys.ActivityOrientationLocker;
@@ -265,6 +266,10 @@ public class GoActivity
 	        case android.R.id.home:
 	        	quit(true);
 	        	return true;
+	        	
+	        case R.id.menu_bookmark:
+				new BookmarkDialog(this).show();
+				return true;
 		}
 		
 		return super.onOptionsItemSelected(item);
