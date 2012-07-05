@@ -62,15 +62,19 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity implements
 
 		this.getSupportActionBar().setHomeButtonEnabled(true);
 		setContentView(R.layout.list);
-		getSettings().getSGFBasePath();
+		sgf_path=getSettings().getSGFBasePath();
 
 		if (getIntent().getBooleanExtra(GobandroidNotifications.BOOL_FROM_NOTIFICATION_EXTRA_KEY,false))
 			GobandroidNotifications.cancelNewTsumegosNotification(this);
 		
 		if (getIntent().getData()!=null)
-			dir=new File(this.getIntent().getData().getPath());
-		else
-			dir=new File(sgf_path);
+			sgf_path=getIntent().getData().getPath();
+
+		if (sgf_path.substring(sgf_path.indexOf('/')).startsWith(getSettings().getTsumegoPath().substring(sgf_path.indexOf('/'))))
+			this.getApp().getInteractionScope().setMode(InteractionScope.MODE_TSUMEGO);
+		if (sgf_path.substring(sgf_path.indexOf('/')).startsWith(getSettings().getReviewPath().substring(sgf_path.indexOf('/'))))
+			this.getApp().getInteractionScope().setMode(InteractionScope.MODE_REVIEW);
+		dir=new File(sgf_path);
 	}
 
 	@Override
