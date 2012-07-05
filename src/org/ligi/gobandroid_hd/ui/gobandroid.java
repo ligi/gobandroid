@@ -95,17 +95,16 @@ public class gobandroid extends GobandroidFragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private Intent startLoad(String path,byte mode) {
+	private Intent startLoad(String path) {
     	Intent i=new Intent(this,SGFSDCardListActivity.class);    	
     	i.setData((Uri.parse("file://"+path)));
-    	getApp().getInteractionScope().setMode(mode);
     	return i;
     }
 
     public void solveProblem(View target) {
     	getTracker().trackPageView("/tsumego");
     	
-    	Intent next=startLoad(getSettings().getTsumegoPath(),InteractionScope.MODE_TSUMEGO);
+    	Intent next=startLoad(getSettings().getTsumegoPath());
     	
     	if (!unzipSGFifNeeded(next)) 
     		startActivity(next);
@@ -113,10 +112,9 @@ public class gobandroid extends GobandroidFragmentActivity {
 
     public void reviewGame(View target) {
     	getTracker().trackPageView("/review");
-    	Intent next=startLoad(getSettings().getReviewPath(),InteractionScope.MODE_REVIEW);
+    	Intent next=startLoad(getSettings().getReviewPath());
     	if (!unzipSGFifNeeded(next))
     		startActivity(next);
-    		
     }
 
     /**
