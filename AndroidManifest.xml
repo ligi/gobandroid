@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      android:versionName="0.94" 
-      android:versionCode="94" 
+      android:versionName="0.95" 
+      android:versionCode="95" 
       package="org.ligi.gobandroid_hd"
       android:installLocation="auto"
       >
@@ -29,8 +29,6 @@
    
     <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
     
-    <supports-screens android:anyDensity="true" />
-      
     <application 
     android:icon="@drawable/ic_launcher"
     android:logo="@drawable/ic_launcher"
