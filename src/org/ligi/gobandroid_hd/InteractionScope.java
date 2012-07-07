@@ -74,4 +74,26 @@ public class InteractionScope {
 		this.is_noif_mode = is_noif_mode;
 	}
 	
+	public static int getModeStringRes(int mode) {
+		
+		switch(mode) {
+	 	case InteractionScope.MODE_TSUMEGO:
+	 		return R.string.tsumego;
+	 	case InteractionScope.MODE_REVIEW:
+	 		return R.string.review;
+	 	case InteractionScope.MODE_RECORD:
+	 		return R.string.record;
+	 	case InteractionScope.MODE_TELEVIZE:
+	 		return R.string.go_tv;
+	 	case InteractionScope.MODE_COUNT:
+	 		return R.string.count;
+	 	case InteractionScope.MODE_GNUGO:
+	 	
+	 		return R.string.gnugo;
+	 		
+	 	default:
+	 		return R.string.empty_str;
+	 	}
+	 	
+	}
 }
