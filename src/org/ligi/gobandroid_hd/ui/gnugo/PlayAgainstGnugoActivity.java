@@ -10,6 +10,8 @@ import org.ligi.gobandroid_hd.ui.recording.RecordingGameExtrasFragment;
 import org.ligi.gobandroidhd.ai.gnugo.IGnuGoService;
 import org.ligi.tracedroid.logging.Log;
 import com.actionbarsherlock.view.Menu;
+import com.google.analytics.tracking.android.EasyTracker;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -44,7 +46,7 @@ public class PlayAgainstGnugoActivity extends GoActivity  implements GoGameChang
 		// TODO the next line works but needs investigation - i thought more of getBoard().requestFocus(); - but that was not working ..
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		
-		getTracker().trackPageView("/gnugo/play");
+		EasyTracker.getTracker().trackEvent("ui_action","gnugo", "play", null);
 		
 		dlg=new GnuGoSetupDialog(this);
 		

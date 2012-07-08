@@ -163,6 +163,13 @@
           </intent-filter>
       </receiver>
       
+        <!-- Used for install referrer tracking-->
+		<receiver android:name="com.google.analytics.tracking.android.AnalyticsReceiver" android:exported="true">
+		  <intent-filter>
+		    <action android:name="com.android.vending.INSTALL_REFERRER" />
+		  </intent-filter>
+		</receiver>
+
 	</application>
     
 </manifest> 

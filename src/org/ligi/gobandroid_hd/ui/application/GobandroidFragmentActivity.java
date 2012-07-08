@@ -3,13 +3,15 @@ package org.ligi.gobandroid_hd.ui.application;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.gobandroid;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
-import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.WindowManager;
+
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class GobandroidFragmentActivity extends SherlockFragmentActivity {
 
@@ -36,10 +38,6 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);                                                              
 	}
 
-	public GoogleAnalyticsTracker getTracker() {
-    	return getApp().getTracker();
-    }
-    
 	public GobandroidApp getApp() {
 		return (GobandroidApp)getApplicationContext();
 	}
@@ -75,5 +73,17 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
 	// very nice hint by Jake Wharton by twitter
 	@SuppressWarnings("unchecked") 
 	public <T> T findById(int id) { return (T) findViewById(id); }
-	
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this); // Add this method.
+	}
+	@Override
+	protected void onStart() {
+		super.onStart();
+		   
+		EasyTracker.getInstance().activityStart(this); // Add this method
+}
 }

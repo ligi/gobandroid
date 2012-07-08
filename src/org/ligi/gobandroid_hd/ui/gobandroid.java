@@ -33,6 +33,7 @@ import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -79,7 +80,7 @@ public class gobandroid extends GobandroidFragmentActivity {
      **/
 
     public void recordGame(View target) {
-    	getTracker().trackPageView("/record");
+    	EasyTracker.getTracker().trackEvent("ui_action","dashboard", "record", null);
     	getApp().getInteractionScope().setMode(InteractionScope.MODE_RECORD);
     	this.startActivity(new Intent(this,GoSetupActivity.class));
    	
@@ -90,7 +91,8 @@ public class gobandroid extends GobandroidFragmentActivity {
     	switch (item.getItemId()) {
     	case R.id.help:
     		new HelpDialog(this).show();
-        	getTracker().trackPageView("/help");
+    		EasyTracker.getTracker().trackEvent("ui_action","dashboard", "help", null);
+
     		return true;
     	}
 		return super.onOptionsItemSelected(item);
@@ -103,8 +105,7 @@ public class gobandroid extends GobandroidFragmentActivity {
     }
 
     public void solveProblem(View target) {
-    	getTracker().trackPageView("/tsumego");
-    	
+    	EasyTracker.getTracker().trackEvent("ui_action","dashboard", "tsumego", null);    	
     	Intent next=startLoad(getSettings().getTsumegoPath());
     	
     	if (!unzipSGFifNeeded(next)) 
@@ -112,7 +113,7 @@ public class gobandroid extends GobandroidFragmentActivity {
     }
 
     public void reviewGame(View target) {
-    	getTracker().trackPageView("/review");
+    	EasyTracker.getTracker().trackEvent("ui_action","dashboard", "review", null);
     	Intent next=startLoad(getSettings().getReviewPath());
     	if (!unzipSGFifNeeded(next))
     		startActivity(next);
@@ -135,14 +136,14 @@ public class gobandroid extends GobandroidFragmentActivity {
     }
     
     public void startLinks(View target) {
-    	getTracker().trackPageView("/links");
+    	EasyTracker.getTracker().trackEvent("ui_action","dashboard", "links", null);
     	this.startActivity( new Intent(this,LinksActivity.class));
     }
     
     public void startGnuGoGame(View target) {
     
     	if (!GnuGoHelper.isGnuGoAvail(this)) {
-    		getTracker().trackPageView("/gnugo_missing");
+    		EasyTracker.getTracker().trackEvent("ui_action","intern", "gnugo_missing", null);
     		new AlertDialog.Builder(this)
     			.setMessage(R.string.gnugo_not_installed)
     			.setTitle(R.string.problem)
@@ -165,8 +166,8 @@ public class gobandroid extends GobandroidFragmentActivity {
     			.show() ;
     		return;
     	}
-   
-    	getTracker().trackPageView("/gnugo");
+    	EasyTracker.getTracker().trackEvent("ui_action","dashboard", "gnugo", null);
+
     	getApp().getInteractionScope().setMode(InteractionScope.MODE_GNUGO);
     	this.startActivity(new Intent(this,GoSetupActivity.class));
     }

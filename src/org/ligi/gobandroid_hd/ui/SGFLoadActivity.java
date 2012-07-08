@@ -52,6 +52,8 @@ import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 import org.ligi.tracedroid.logging.Log;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 /**
  * Activity to load a SGF with a ProgressDialog showing the Progress
  * 
@@ -108,8 +110,9 @@ public class SGFLoadActivity
 		
 		alert_dlg=new AlertDialog.Builder(this).setCancelable(false).setTitle(R.string.loading_sgf).setView(lin).show();
 
-		getTracker().trackPageView("/load/"+ getIntent().getData().toString().replace(":", "").replace("///","/"));
-		getTracker().trackEvent("SGFLoadActivity", "load", getIntent().getData().toString(), -1);
+
+		
+		EasyTracker.getTracker().trackEvent("ui_action", "load_sgf", getIntent().getData().toString(),null);
 		new Thread(this).start();
 	}
 

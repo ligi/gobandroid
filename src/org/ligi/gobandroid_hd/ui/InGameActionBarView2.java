@@ -12,7 +12,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -168,17 +167,6 @@ public class InGameActionBarView2 extends LinearLayout implements
 		public int mode;
 
 	}
-
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (popup != null)
-				popup.dismiss();
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
-	}
-
 
 	@Override
 	public void onGoGameChange() {

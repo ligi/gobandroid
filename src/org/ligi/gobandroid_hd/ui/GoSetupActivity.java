@@ -31,6 +31,7 @@ import org.ligi.tracedroid.logging.Log;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -300,7 +301,7 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements OnSee
 		go_intent.putExtra("white_player",white_player_spinner.getSelectedItemPosition());
 		go_intent.putExtra("black_player",black_player_spinner.getSelectedItemPosition());
 		 */
-		getTracker().trackPageView("/record/start?size="+act_size);
+		EasyTracker.getTracker().trackEvent("ui_event", "setup_board",""+act_size,null);
 		startActivity(go_intent);
 	}
 

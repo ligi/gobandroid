@@ -40,6 +40,7 @@ import org.ligi.tracedroid.logging.Log;
 import org.ligi.android.common.activitys.ActivityOrientationLocker;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -109,7 +110,6 @@ public class GoActivity
 		View customNav =new InGameActionBarView2(this);
 		
 		FragmentTransaction fragmentTransAction =this.getSupportFragmentManager().beginTransaction();
-		
 		
 		fragmentTransAction.add(R.id.game_extra_container, getGameExtraFragment()).commit();
 		
@@ -233,10 +233,10 @@ public class GoActivity
 	public boolean onOptionsItemSelected(MenuItem item) {                                                                                                 
         
         switch (item.getItemId()) {                                                                                                                   
-                           
+                           /*
 	        case R.id.menu_game_switchmode:
 	        	new SwitchModeDialog(this).show();
-	        	return true;
+	        	return true;*/
 	        	
 	        case R.id.menu_game_info:                                                                                                                           
                 new GameInfoAlert(this,getGame()).show(); 
@@ -452,52 +452,55 @@ public class GoActivity
 
 	@Override
 	public boolean onKey(View v, int keyCode, KeyEvent event) {
-		if (event.getAction()==KeyEvent.ACTION_DOWN)
-    	switch (keyCode) {
-    	case KeyEvent.KEYCODE_DPAD_UP:
-    		go_board.prepare_keyinput();
-    		if (interaction_scope.getTouchY()>0) 
-    			interaction_scope.touch_position-=getGame().getSize();
-    		else
-    			return false;
-    		break;
-    		
-    	case KeyEvent.KEYCODE_DPAD_LEFT:
-    		go_board.prepare_keyinput();
-    		if (interaction_scope.getTouchX()>0) 
-    			interaction_scope.touch_position--;
-    		else
-    			return false;
-    		break;
-    		
-    	case KeyEvent.KEYCODE_DPAD_DOWN:
-    		go_board.prepare_keyinput();
-    		if (interaction_scope.getTouchY()<getGame().getVisualBoard().getSize()-1) 
-    			interaction_scope.touch_position+=getGame().getSize();
-    		else
-    			return false;
-    		break;
-    		
-    	case KeyEvent.KEYCODE_DPAD_RIGHT:
-    		go_board.prepare_keyinput();
-    		if (interaction_scope.getTouchX()<getGame().getVisualBoard().getSize()-1)
-    			interaction_scope.touch_position++;
-    		else
-    			return false;
-    		break;
-    		
-    	case KeyEvent.KEYCODE_DPAD_CENTER:
-    		doMoveWithUIFeedback((byte)interaction_scope.getTouchX(),(byte)interaction_scope.getTouchY());
-    		break;
-    		
-    	default:
-    		
-    		return false;
-    	
-    	}
-    	go_board.postInvalidate();
-    	refreshZoomFragment();
-      	return true;
+		if (event.getAction()==KeyEvent.ACTION_DOWN) {
+	    	switch (keyCode) {
+	    	case KeyEvent.KEYCODE_DPAD_UP:
+	    		go_board.prepare_keyinput();
+	    		if (interaction_scope.getTouchY()>0) 
+	    			interaction_scope.touch_position-=getGame().getSize();
+	    		else
+	    			return false;
+	    		break;
+	    		
+	    	case KeyEvent.KEYCODE_DPAD_LEFT:
+	    		go_board.prepare_keyinput();
+	    		if (interaction_scope.getTouchX()>0) 
+	    			interaction_scope.touch_position--;
+	    		else
+	    			return false;
+	    		break;
+	    		
+	    	case KeyEvent.KEYCODE_DPAD_DOWN:
+	    		go_board.prepare_keyinput();
+	    		if (interaction_scope.getTouchY()<getGame().getVisualBoard().getSize()-1) 
+	    			interaction_scope.touch_position+=getGame().getSize();
+	    		else
+	    			return false;
+	    		break;
+	    		
+	    	case KeyEvent.KEYCODE_DPAD_RIGHT:
+	    		go_board.prepare_keyinput();
+	    		if (interaction_scope.getTouchX()<getGame().getVisualBoard().getSize()-1)
+	    			interaction_scope.touch_position++;
+	    		else
+	    			return false;
+	    		break;
+	    		
+	    	case KeyEvent.KEYCODE_DPAD_CENTER:
+	    		doMoveWithUIFeedback((byte)interaction_scope.getTouchX(),(byte)interaction_scope.getTouchY());
+	    		break;
+	    		
+	    	default:
+	    		
+	    		return false;
+	    	
+	    	}
+			
+	    	go_board.postInvalidate();
+	    	refreshZoomFragment();
+	    	return true; 
+	    	}
+		return false;
 	}
 	
 	public void refreshZoomFragment() {

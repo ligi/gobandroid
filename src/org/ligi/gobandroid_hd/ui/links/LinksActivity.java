@@ -26,6 +26,7 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,6 +40,7 @@ import android.support.v4.app.Fragment;
 
 public class LinksActivity extends GobandroidFragmentActivity implements ActionBar.TabListener{
 
+	private String act_tab_str_for_analytics="";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +73,7 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 		LinkWithDescription[] links=null;
 		switch (list) {
 			case R.string.link_tab_credits:
+				act_tab_str_for_analytics="credits";
 				links=new LinkWithDescription[] {
 						new LinkWithDescriptionAndTitle("http://plus.google.com/104849265443273982798","idea / concept / code ","Ligi"),
 						
@@ -92,6 +95,7 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 				break;
 				
 			case R.string.link_tab_about:
+				act_tab_str_for_analytics="about";
 				links=new LinkWithDescription[] {
 					new LinkWithDescriptionAndTitle("http://plus.google.com/106767057593220295403","for news, infos, feedback","Gobandroid Project Page"),
 					new LinkWithDescription("http://github.com/ligi/gobandroid","Code/Issues on GitHub"),
@@ -101,6 +105,7 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 			break;
 			
 			case R.string.link_tab_sgf:
+				act_tab_str_for_analytics="sgf";
 				links=new LinkWithDescription[] {
 
 					// source pro games
@@ -129,7 +134,8 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 	@Override
 	public void onTabSelected(com.actionbarsherlock.app.ActionBar.Tab tab,
 			android.support.v4.app.FragmentTransaction ft) {
-		getTracker().trackPageView("/links/"+tab.getText());
+		EasyTracker.getTracker().trackEvent("ui_action", "links",act_tab_str_for_analytics,null);
+		
 		setList((Integer)tab.getTag());
 	}
 

@@ -16,7 +16,7 @@
 		<item name="android:textColor">@android:color/black</item>
      </style>
  -->
-	<style name="base_theme" parent="Theme.Sherlock.Light.ForceOverflow">
+	<style name="base_theme" parent="Theme.Sherlock.Light">
 		<!--	<item name="Background">@android:color/transparent</item> 
 		<item name="android:textColor">#ff000000</item> -->
 		<item name="android:alertDialogStyle">@style/dialog_theme</item>

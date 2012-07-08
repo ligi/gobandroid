@@ -1,16 +1,17 @@
 package org.ligi.gobandroid_hd.ui;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Vector;
 
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
+import com.google.analytics.tracking.android.EasyTracker;
 
 /**
  * TODO subdirs
@@ -35,9 +36,9 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 		getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
 		path_to_play_from=new File(getSettings().getReviewPath()+"/commented_games/");
 		
-		getTracker().trackPageView("/gtv");
 		if (path_to_play_from.listFiles()==null) {
-			getTracker().trackPageView("/gtv/unzip");
+			
+			EasyTracker.getTracker().trackEvent("intern", "unzip", "gtv",null);
 			UnzipSGFsDialog.show(this,getIntent2start());
 		} else {
 			startTV();
@@ -60,9 +61,9 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 		choosen=avail_file_list.get((int)(Math.random()*avail_file_list.size()));
 		
 		start_review_intent.setData(Uri.parse( "file://"+choosen));
-		try {
-			getTracker().trackPageView("/gtv/play"+URLEncoder.encode(choosen,"UTF-8"));
-		} catch (UnsupportedEncodingException e) {	}
+
+		EasyTracker.getTracker().trackEvent("ui_event", "gtv_play", choosen,null);
+	
 		this.startActivity(start_review_intent);
 
 		finish();
