@@ -235,7 +235,7 @@ public class PlayAgainstGnugoActivity extends GoActivity  implements GoGameChang
 		}
 		stop();
 	
-		Log.i("a stopthread " + conn);
+		Log.i("a stopthread  " + conn);
 	}
 	
 	public boolean checkGnuGoSync() {

@@ -26,6 +26,7 @@ import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GnuGoMover;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.gnugo.GnuGoHelper;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
@@ -140,7 +141,7 @@ public class gobandroid extends GobandroidFragmentActivity {
     
     public void startGnuGoGame(View target) {
     
-    	if (!IntentHelper.isServiceAvailable(new Intent(GnuGoMover.intent_action_name),this.getPackageManager(),0)) {
+    	if (!GnuGoHelper.isGnuGoAvail(this)) {
     		getTracker().trackPageView("/gnugo_missing");
     		new AlertDialog.Builder(this)
     			.setMessage(R.string.gnugo_not_installed)

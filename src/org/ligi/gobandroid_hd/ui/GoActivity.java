@@ -106,7 +106,7 @@ public class GoActivity
 		if (sound_man==null)
 			sound_man=new GoSoundManager(this);
 		
-		View customNav =new InGameActionBarView(this);
+		View customNav =new InGameActionBarView2(this);
 		
 		FragmentTransaction fragmentTransAction =this.getSupportFragmentManager().beginTransaction();
 		
@@ -124,6 +124,8 @@ public class GoActivity
         
 		game2ui();
 		getZoomFragment();
+		
+		
 	}
 	
 
@@ -166,6 +168,8 @@ public class GoActivity
 			getGame().addGoGameChangeListener(this);
 		
 		super.onStart();
+		go_board.setFocusableInTouchMode(true);
+		go_board.requestFocus();
 	}
 
 	

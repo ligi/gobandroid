@@ -97,8 +97,15 @@ public class GoGamePlayerActivity extends GoActivity  {
 			Log.i("gobandroid","automove start" + getGame().getActMove().getNextMoveVariations().size());
 			while (autoplay_active &&( getGame().getActMove().hasNextMove())) {
 				Log.i("gobandroid","automove move"+getGame().getActMove().hasNextMove());
-				GoMove next_mve=getGame().getActMove().getnextMove(0);
-				getGame().jump(next_mve);
+				
+				handler.post(new Runnable () {
+
+					@Override
+					public void run() {
+						GoMove next_mve=getGame().getActMove().getnextMove(0);
+						getGame().jump(next_mve);
+					}
+				});
 				Log.i("gobandroid","automove move"+getGame().getActMove().hasNextMove());
 					sleepWithProgress(calcTime());
 				
