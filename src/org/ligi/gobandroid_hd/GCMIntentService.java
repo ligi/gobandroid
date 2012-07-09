@@ -1,11 +1,12 @@
 package org.ligi.gobandroid_hd;
 
-import java.io.IOException;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsForNotification;
 import org.ligi.tracedroid.logging.Log;
+
+import com.google.android.gcm.GCMBaseIntentService;
+
 import android.content.Context;
 import android.content.Intent;
-import com.google.android.c2dm.C2DMBaseReceiver;
 
 /**
  * interface to the C2DM service utilizing the classes from
@@ -14,16 +15,15 @@ import com.google.android.c2dm.C2DMBaseReceiver;
  * @author ligi
  *
  */
-public class C2DMReceiver extends C2DMBaseReceiver {
+public class GCMIntentService extends GCMBaseIntentService  {
 
-	public C2DMReceiver() {
+	public GCMIntentService() {
 		super("marcus.bueschleb@googlemail.com"); // init with our ID
 	}
 
+
 	@Override
-	public void onRegistered(Context context, String registrationId)
-			throws IOException {
-		super.onRegistered(context, registrationId);
+	public void onRegistered(Context context, String registrationId) {
 		Log.i("C2DM registered" + registrationId + " regid:" + registrationId ) ;
 	}
 
@@ -42,5 +42,10 @@ public class C2DMReceiver extends C2DMBaseReceiver {
 	@Override 
 	public void onError(Context context, String errorId) {
 		Log.e("Error in C2DM" + errorId);
+	}
+	
+	@Override
+	protected void onUnregistered(Context arg0, String arg1) {
+		
 	}
 }

@@ -9,7 +9,7 @@ import org.ligi.tracedroid.logging.Log;
 import android.app.Application;
 import android.content.pm.PackageManager.NameNotFoundException;
 
-import com.google.android.c2dm.C2DMessaging;
+import com.google.android.gcm.GCMRegistrar;
 
 public class GobandroidApp extends Application {
 
@@ -27,6 +27,8 @@ public class GobandroidApp extends Application {
 	    
 	}
 	
+	public final static String SENDER_ID="280756770711";
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -34,8 +36,20 @@ public class GobandroidApp extends Application {
 	    Log.setTAG("gobandroid");
         
         interaction_scope=new InteractionScope();
+
+        // Make sure the device has the proper dependencies.                                                                
+        GCMRegistrar.checkDevice(this);
+        // Make sure the manifest was properly set - comment out this line                                                  
+        // while developing the app, then uncomment it when it's ready.                                                     
+        GCMRegistrar.checkManifest(this);
+        //setContentView(R.layout.main);
         
-        C2DMessaging.register(this, "marcus.bueschleb@googlemail.com");
+        final String regId = GCMRegistrar.getRegistrationId(this);
+        if (regId.equals("")) {
+            // Automatically registers application on startup.                                                              
+            GCMRegistrar.register(this, SENDER_ID);
+        }
+        Log.i("gobandroid GCM regid  " + regId);
         
 	    GobandroidBackend.registerDevice(this);
 	}

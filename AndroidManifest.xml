@@ -148,16 +148,14 @@
 		<activity android:name=".ui.SGFOnlineListActivity"></activity>
 		<activity android:name=".ui.GoActivity"></activity>		
 		
-		<service android:name=".C2DMReceiver" />
+		<service android:name=".GCMIntentService" />
         
-        <receiver android:name="com.google.android.c2dm.C2DMBroadcastReceiver"  android:permission="com.google.android.c2dm.permission.SEND">
+        <receiver android:name="com.google.android.gcm.GCMBroadcastReceiver" 
+                  android:permission="com.google.android.c2dm.permission.SEND">
           <!-- Receive the actual message -->
           <intent-filter>
               <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-              <category android:name="org.ligi.gobandroid_hd" />
-          </intent-filter>
-          <!-- Receive the registration id -->
-          <intent-filter>
+              <!-- Receive the registration id -->
               <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
               <category android:name="org.ligi.gobandroid_hd" />
           </intent-filter>

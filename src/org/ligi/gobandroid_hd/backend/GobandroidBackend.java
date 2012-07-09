@@ -9,7 +9,7 @@ import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.tracedroid.Log;
 
-import com.google.android.c2dm.C2DMessaging;
+import com.google.android.gcm.GCMRegistrar;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -30,7 +30,7 @@ public class GobandroidBackend {
 			count_str=count_str.replace("\n", "").replace("\r","").trim(); // clean the string
 			return Integer.parseInt(count_str);
 		} catch (Exception e) {
-			Log.w("cannot fetch the tsumego count" +e );
+			Log.w("cannot fetch the tsumego count " +e );
 			return -1;
 		}
 	}
@@ -58,22 +58,19 @@ public class GobandroidBackend {
 			try {
 				
 				String device_id=Secure.getString( app.getContentResolver(), Secure.ANDROID_ID);
-				String push_id=C2DMessaging.getRegistrationId(app);
+				String push_id=GCMRegistrar.getRegistrationId(app);
 				if (push_id.equals(""))
 					push_id="unknown";
 				
-				String url_str="https://"+GobandroidConfiguration.backend_domain+"/push/register?";
+				String url_str="https://"+GobandroidConfiguration.backend_domain+"/gcm/register?";
 				url_str+=getURLParamSnippet("device_id",device_id);
 				url_str+="&"+getURLParamSnippet("push_key",push_id);
 				url_str+="&"+getURLParamSnippet("app_version",app.getAppVersion());
 				
-				String wanted_pushs="";
 				if (app.getSettings().isTsumegoPushEnabled())
-					wanted_pushs+="tsumego";
-				if (wanted_pushs.equals(""))
-					wanted_pushs="none";
+					url_str+="&"+getURLParamSnippet("want_tsumego","t");
 				
-				url_str+="&"+getURLParamSnippet("wanted_pushs",wanted_pushs);
+				// TODO not send every time
 				url_str+="&"+getURLParamSnippet("device_str",Build.VERSION.RELEASE + " | " + Build.MANUFACTURER + " | " + Build.DEVICE  + " | " + Build.MODEL + " | " + Build.DISPLAY + " | " + Build.CPU_ABI +" | "+Build.TYPE + " | " +Build.TAGS);
 				
 				
