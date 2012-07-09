@@ -33,12 +33,14 @@ import org.ligi.gobandroid_hd.ui.Refreshable;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsDialog;
+import org.ligi.gobandroid_hd.ui.tsumego.fetch.TsumegoSource;
 import org.ligi.tracedroid.logging.Log;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import android.app.AlertDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 /**
@@ -55,7 +57,8 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity implements
 	private File dir;
 	private SGFListFragment list_fragment;
 	private String sgf_path;
-
+	private AsyncTask<TsumegoSource[],String,Integer> my_task=null;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -78,6 +81,13 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity implements
 	}
 
 	@Override
+	protected void onStop() {
+		if (my_task!=null)
+			my_task.cancel(true);
+		super.onStop();
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (getApp().getInteractionScope().getMode()==InteractionScope.MODE_TSUMEGO)
 			this.getSupportMenuInflater().inflate(R.menu.refresh_tsumego, menu);
@@ -88,12 +98,13 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity implements
 		return super.onCreateOptionsMenu(menu);
 	}
 
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_refresh:
-			DownloadProblemsDialog.show(this,(Refreshable)this);
+			my_task=DownloadProblemsDialog.getAndRunTask(this,(Refreshable)this);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
