@@ -166,6 +166,6 @@
     <string name="gnugo_plays">GnuGo plays:</string>
     <string name="black">black</string>
     <string name="white">white</string>
-    <string name="black_and_white">Black &amp;amp; White</string>
+    <string name="black_and_white">Black &amp; White</string>
     <string name="for_gnugo">for GnuGo</string>
 </resources>
