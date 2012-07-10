@@ -181,6 +181,7 @@ public class GoActivity
 			getGame().removeGoGameChangeListener(this);
 		
 		super.onStop();
+		go_board.move_stone_mode=false;
 	}
 
 	/**
@@ -525,6 +526,7 @@ public class GoActivity
 	    	getGame().undo(GoPrefs.isKeepVariantEnabled());
 	}
 
+	
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
