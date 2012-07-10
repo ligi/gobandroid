@@ -9,11 +9,15 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
+import org.ligi.gobandroid_hd.ui.gobandroid;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.tracedroid.logging.Log;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
+
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
@@ -30,9 +34,16 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
 		this.setTitle(R.string.tsumego);
 		
-		// build a on path Vector to do a fast isOnPath() later 
 		on_path_moves=new Vector<GoMove>();
 		
+		if (getGame()==null) { // there was no game - fallback to main menu
+			EasyTracker.getTracker().trackException("tsumego start getGame() returned null",false);
+			finish();
+			startActivity(new Intent(this,gobandroid.class));
+			return;
+		} 
+
+		// build a on path Vector to do a fast isOnPath() later 
 		recursive_add_on_path_moves(getGame().getFirstMove());
 				
 		// try to find the correct solution
@@ -175,6 +186,5 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 	public boolean isAsk4QuitEnabled() {
 		return false;
 	}
-
 
 }
