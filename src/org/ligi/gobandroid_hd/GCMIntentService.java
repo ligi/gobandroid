@@ -7,6 +7,7 @@ import com.google.android.gcm.GCMBaseIntentService;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 /**
  * interface to the C2DM service utilizing the classes from
@@ -29,11 +30,11 @@ public class GCMIntentService extends GCMBaseIntentService  {
 
 	@Override
 	protected void onMessage(Context context, Intent intent) {
-		String msg=intent.getExtras().getString("message");
+		if (intent.getExtras()==null)
+			return;
+		Bundle e=intent.getExtras();
 		
-		Log.i("C2DM Message " + msg);
-		
-		if (msg.equals("new_tsumegos")) {
+		if (e.getString("max_tsumego")!=null) { // todo use the supplied value here
 			Log.i("C2DM starting DownloadProblemsForNotification " );
 			DownloadProblemsForNotification.show(context);
 		}
