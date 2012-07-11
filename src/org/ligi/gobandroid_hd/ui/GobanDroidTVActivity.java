@@ -62,12 +62,9 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 		
 		start_review_intent.setData(Uri.parse( "file://"+choosen));
 
-		EasyTracker.getTracker().trackEvent("ui_event", "gtv_play", choosen,null);
-	
 		this.startActivity(start_review_intent);
 
 		finish();
-
 	}
 
 	@Override
