@@ -36,8 +36,9 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 		getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
 		path_to_play_from=new File(getSettings().getReviewPath()+"/commented_games/");
 		
+		EasyTracker.getInstance().setContext(this);
+		
 		if (path_to_play_from.listFiles()==null) {
-			
 			EasyTracker.getTracker().trackEvent("intern", "unzip", "gtv",null);
 			UnzipSGFsDialog.show(this,getIntent2start());
 		} else {
@@ -59,6 +60,8 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 		}
 			 
 		choosen=avail_file_list.get((int)(Math.random()*avail_file_list.size()));
+		
+		EasyTracker.getTracker().trackEvent("gtv", "start_play_file", choosen,null);
 		
 		start_review_intent.setData(Uri.parse( "file://"+choosen));
 
