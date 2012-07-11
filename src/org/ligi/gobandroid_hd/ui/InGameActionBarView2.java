@@ -12,12 +12,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 public class InGameActionBarView2 extends LinearLayout implements
@@ -33,6 +33,10 @@ public class InGameActionBarView2 extends LinearLayout implements
 	private GobandroidApp app;
 	private Activity activity;
 
+	public InGameActionBarView2(Context ctx,AttributeSet attrs) {
+		super(ctx,attrs);
+	}
+	
 	@Override
 	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
@@ -106,8 +110,6 @@ public class InGameActionBarView2 extends LinearLayout implements
 		container.addView(v);
 	}
 
-	private PopupWindow popup;
-
 	private void addModeItem(LinearLayout container, final byte mode,
 			int string_res, int icon_res) {
 		if (mode == app.getInteractionScope().getMode())
@@ -130,8 +132,6 @@ public class InGameActionBarView2 extends LinearLayout implements
 
 	private void showModePopup(Context ctx) {
 
-
-	
 		LinearLayout content_view = new LinearLayout(ctx);
 		content_view.setOrientation(LinearLayout.VERTICAL);
 		content_view.setBackgroundDrawable(new BitmapDrawableNoMinimumSize(
