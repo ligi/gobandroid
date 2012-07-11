@@ -38,6 +38,7 @@ import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.gobandroid_hd.ui.review.BookmarkDialog;
 import org.ligi.tracedroid.logging.Log;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -117,16 +118,18 @@ public class GoActivity
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         customNav.setFocusable(false);
      
-        info_toast=Toast.makeText(this.getBaseContext(), "", Toast.LENGTH_LONG);
+        createInfoToast();
         
         setupBoard();
         
 		game2ui();
 		getZoomFragment();
-		
-		
 	}
 	
+	@SuppressLint("ShowToast") // this is correct - we do not want to show the toast at this stage
+	private void createInfoToast() {
+		info_toast=Toast.makeText(this.getBaseContext(), "", Toast.LENGTH_LONG);
+	}
 
 	/**
 	 * find the go board widget and set up some properties 
