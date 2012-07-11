@@ -108,9 +108,9 @@ public class GoBoardOverlay implements OnClickListener {
 
 			if (horizontal) {
 				button_container.setOrientation(LinearLayout.VERTICAL);
-				button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT));
+				button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.MATCH_PARENT));
 				
-				FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT);
+				FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.MATCH_PARENT);
 					
 				bottom_nav_params.gravity=Gravity.RIGHT;
 				outer_lin.setOrientation(LinearLayout.HORIZONTAL);
@@ -119,9 +119,9 @@ public class GoBoardOverlay implements OnClickListener {
 			else { //vertical layout
 				
 				button_container.setOrientation(LinearLayout.HORIZONTAL);
-				button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
+				button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
 				
-				FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
+				FrameLayout.LayoutParams bottom_nav_params=new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
 					
 				bottom_nav_params.gravity=Gravity.BOTTOM| Gravity.CENTER_HORIZONTAL;
 						
@@ -233,7 +233,7 @@ public class GoBoardOverlay implements OnClickListener {
 					};
 					
 					li.setWeightSum(1.0f*(game.getPossibleVariationCount()+1));
-					li.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+					li.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 					
 					for (Integer i=0;i<game.getPossibleVariationCount()+1;i++)
 						{

@@ -6,7 +6,6 @@ import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -26,7 +25,7 @@ public class RecordingGameExtrasFragment extends GobandroidFragment implements G
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 	
-		LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT);
+		LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
 		et=new EditText(getActivity());
 		
 		getGame().addGoGameChangeListener(this);

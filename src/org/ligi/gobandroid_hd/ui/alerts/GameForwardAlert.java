@@ -73,7 +73,7 @@ public class GameForwardAlert {
 		};
 		
 		li.setWeightSum(1.0f*(game.getPossibleVariationCount()+1));
-		li.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+		li.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 		
 		for (Integer i=0;i<game.getPossibleVariationCount()+1;i++)
 			{

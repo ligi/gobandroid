@@ -93,7 +93,7 @@ public class SGFLoadActivity
 		
 		ImageView img=new ImageView(this);
 		img.setImageResource(R.drawable.ic_launcher);
-		img.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
+		img.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
 		lin.setOrientation(LinearLayout.VERTICAL);
 		
 		lin.addView(img);

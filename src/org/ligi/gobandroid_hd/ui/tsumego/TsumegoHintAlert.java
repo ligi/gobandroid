@@ -7,7 +7,6 @@ import org.ligi.gobandroid_hd.logic.GoMarker;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 

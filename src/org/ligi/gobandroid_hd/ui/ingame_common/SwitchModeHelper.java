@@ -1,6 +1,5 @@
 package org.ligi.gobandroid_hd.ui.ingame_common;
 import org.ligi.gobandroid_hd.InteractionScope;
-import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.counting.CountGameActivity;
 import org.ligi.gobandroid_hd.ui.gnugo.PlayAgainstGnugoActivity;
@@ -39,7 +38,6 @@ public class SwitchModeHelper {
 	}
 	public static void startGame(GobandroidFragmentActivity activity,byte mode) {
 		activity.getApp().getInteractionScope().setMode(mode);
-		Intent go_start_intent=new Intent(activity,GoActivity.class);	
 		activity.startActivity(getIntentByMode(activity, mode));
 	}
 	
