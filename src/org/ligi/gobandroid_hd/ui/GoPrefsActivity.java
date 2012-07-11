@@ -25,7 +25,9 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.android.gcm.GCMRegistrar;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -205,17 +207,19 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
         soundCheckBoxPref.setDefaultValue(settings.isSoundEnabled());
         soundPrefCat.addPreference(soundCheckBoxPref);
         
-       	PreferenceCategory notificationsPrefsCat = new PreferenceCategory(this);
-       	notificationsPrefsCat.setTitle(R.string.notifications);
-    	root.addPreference(notificationsPrefsCat);
-    	
-        CheckBoxPreference notifyTsumegoCheckBoxPref = new CheckBoxPreference(this);
-        notifyTsumegoCheckBoxPref.setKey(GobandroidSettings.KEY_TSUMEGO_PUSH);
-        notifyTsumegoCheckBoxPref.setTitle(R.string.push_tsumego);
-        notifyTsumegoCheckBoxPref.setSummary(R.string.push_tsumego_extra);
-        notifyTsumegoCheckBoxPref.setDefaultValue(settings.isTsumegoPushEnabled());
-        notificationsPrefsCat.addPreference(notifyTsumegoCheckBoxPref);
-       	
+        
+        if (!GCMRegistrar.getRegistrationId(this).equals("")) {
+	       	PreferenceCategory notificationsPrefsCat = new PreferenceCategory(this);
+	       	notificationsPrefsCat.setTitle(R.string.notifications);
+	    	root.addPreference(notificationsPrefsCat);
+	    	
+	        CheckBoxPreference notifyTsumegoCheckBoxPref = new CheckBoxPreference(this);
+	        notifyTsumegoCheckBoxPref.setKey(GobandroidSettings.KEY_TSUMEGO_PUSH);
+	        notifyTsumegoCheckBoxPref.setTitle(R.string.push_tsumego);
+	        notifyTsumegoCheckBoxPref.setSummary(R.string.push_tsumego_extra);
+	        notifyTsumegoCheckBoxPref.setDefaultValue(settings.isTsumegoPushEnabled());
+	        notificationsPrefsCat.addPreference(notifyTsumegoCheckBoxPref);
+        }
        
         /*
 
