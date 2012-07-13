@@ -63,9 +63,6 @@
 	<string name="set_ai_strength">Set A.I. Strength</string>
 	<string name="ai_strength">A.I. strength</string>
 	<string name="ai_preferences">A.I. Preferences</string>
-	<string name="skin">Skin</string>
-	<string name="install_skins">Install Skins</string>
-	<string name="get_skins_from_market">get skins from the market</string>
 	<string name="set_skin">Set Skin</string>
 	<string name="board_skin">Board Skin</string>
 	<string name="fullscreen_board">Fullscreen Board</string>
@@ -92,7 +89,6 @@
 	<string name="record_game">Record</string>
 	<string name="dashboard_problems">Tsumego</string>
 	<string name="hint">Hint</string>
-	
 	<string name="link_title">Links</string>
 	<string name="link_tab_about">About</string>
 	<string name="link_tab_credits">Credits</string>
@@ -100,12 +96,10 @@
 	<string name="link_tab_sgf">SGF\'s</string>
 	<string name="game_mode">Mode</string>
 	<string name="switch_game_mode">Switch Mode</string>
-
 	<string name="menu_bookmark">Bookmark</string>
 	<string name="menu_autoplay">Autoplay</string>
 	<string name="tsumego_off_path">Unknown Variation - usually means that your move is sub-optimal :-(</string>	    
 	<string name="tsumego_correct">Correct !-)</string>	    
-
 	<string name="refresh">sync</string>	    
 	<string name="tsumego_sgf_no_solution">You are trying to open this SGF as a Tsumego - but I cannot find a marked Solution - you can try anyway but I cannot applaud you when you are correct :-( </string>	    
     <string name="working">Working</string>   
@@ -113,12 +107,10 @@
 	<string name="creating_thumbnails">Creating thumbnails - Please stay patient</string>   
 	<string name="gnugo">GnuGo</string>
 	<string name="gnugo_not_installed">GnuGo not installed - to proceed please install!</string>
-	   
 	<string name="preferences">Preferences</string>   
 	<string name="board_setup">Board Setup</string>
 	<string name="for_recording">for Recording</string>
 	<string name="sound">Sound</string>
-	
 	<string name="enable_sound">Enable Sound</string>
 	<string name="enable_sound_summary">Hear the Stones and the Board</string>
 	<string name="install_gnugo">Install GnuGo</string>
@@ -159,7 +151,6 @@
     <string name="televize">Televize</string>
     <string name="count">Count</string>
     <string name="notifications">Notifications</string>
-
     <string name="push_tsumego">Push Tsumego</string>
     <string name="push_tsumego_extra">more tsumego to solve every week</string>
     <string name="gnugo_strength">GnuGo strength:</string>
