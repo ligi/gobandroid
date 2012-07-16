@@ -215,13 +215,13 @@ public class SGFLoadActivity
 						alert_dlg.hide();
 						new AlertDialog.Builder(SGFLoadActivity.this).setTitle(R.string.results)
 						.setMessage(
-								"Problem Loading sgf would you like to send ligi this sgf to fix the problem?"
+								R.string.problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem
 								).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog, int whichButton) {
 										final  Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 											emailIntent .setType("plain/text");
 											emailIntent .putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"ligi@ligi.de"});
-											emailIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, "SGF Problem");
+											emailIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, "SGF Problem" + gobandroid.getVersionCode(SGFLoadActivity.this));
 											emailIntent .putExtra(android.content.Intent.EXTRA_TEXT, "uri: " + intent_uri + " sgf:\n" + sgf + "err:" + Log.getCachedLog());
 											SGFLoadActivity.this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
 											finish();
@@ -263,10 +263,10 @@ public class SGFLoadActivity
 	
 	
 	@Override
-	public void progress(int act, int max, String Message) {
+	public void progress(int act, int max, int progress_val) {
 		act_progress=act;
 		max_progress=max;
-		act_message=Message;
+		act_message=getResources().getString(R.string.move) +  " " + progress_val;
 		
 		handler.post(new Runnable() {
 
