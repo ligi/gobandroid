@@ -159,4 +159,11 @@
     <string name="white">white</string>
     <string name="black_and_white">Black &amp; White</string>
     <string name="for_gnugo">for GnuGo</string>
+    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">Problem Loading sgf would you like to send ligi this sgf to fix the problem?</string>
+    <string name="go_back">go back</string>
+    <string name="download_status">Download Status</string>
+    <string name="downloading_tsumegos_please_wait">Downloading Tsumegos Please wait...</string>
+    <string name="no_new_tsumegos_found">No new Tsumegos found :-(</string>
+    <string name="downloaded_n_tsumego">Downloaded %d new Tsumegos ;-)</string>
+    
 </resources>
