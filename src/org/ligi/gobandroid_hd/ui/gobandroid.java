@@ -31,6 +31,7 @@ import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -174,11 +175,15 @@ public class gobandroid extends GobandroidFragmentActivity {
     public void startPreferences(View target) {
     	this.startActivity(new Intent(this,GoPrefsActivity.class));
     }
-    
+
     private String getVersionCode() {
+		return getVersionCode(this);
+	}
+
+    public static String getVersionCode(Context ctx) {
 		try
 		{
-			return "v"+getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
+			return "v"+ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0).versionName;
 		}
 		catch (NameNotFoundException e)
 		{
