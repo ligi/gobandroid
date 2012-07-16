@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsForNotification;
 import org.ligi.tracedroid.logging.Log;
 
+import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gcm.GCMBaseIntentService;
 
 import android.content.Context;
@@ -30,6 +31,7 @@ public class GCMIntentService extends GCMBaseIntentService  {
 
 	@Override
 	protected void onMessage(Context context, Intent intent) {
+		EasyTracker.getInstance().setContext(context);
 		if (intent.getExtras()==null)
 			return;
 		Bundle e=intent.getExtras();
