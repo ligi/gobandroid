@@ -49,8 +49,8 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		// try to find the correct solution
 		if (!isFinishingMoveKnown()) 
 			new AlertDialog.Builder(this).setMessage(R.string.tsumego_sgf_no_solution)
-			.setNegativeButton("OK",new DialogDiscarder())
-			.setPositiveButton("go back",new ActivityFinishOnDialogClickListener(this))
+			.setNegativeButton(R.string.ok,new DialogDiscarder())
+			.setPositiveButton(R.string.go_back,new ActivityFinishOnDialogClickListener(this))
 			.show();
 
 		getGame().addGoGameChangeListener(this);
