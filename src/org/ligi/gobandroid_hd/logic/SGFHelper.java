@@ -166,7 +166,6 @@ public class SGFHelper {
 		
 		for (int p=0;((p<sgf.length())&&(!break_pulled));p++) {
 			char act_char=sgf.charAt(p);
-			
 			if (!consuming_param)
 				// consuming command
 				switch(act_char) {
@@ -237,12 +236,13 @@ public class SGFHelper {
 					act_cmd+=	sgf.charAt(p);
 						
 				}
-			else
+			else {
+			
 				// consuming param
 				switch(act_char) {
 				case ']':	// closing command parameter -> can process command now
 				if ((game!=null)&&(callback!=null))
-					callback.progress(p, sgf.length(), "Move " + game.getActMove().getMovePos());
+					callback.progress(p, sgf.length(), game.getActMove().getMovePos());
 				if (!escape) {
 					consuming_param=false;
 					
@@ -265,8 +265,6 @@ public class SGFHelper {
 					if (act_cmd.length()==0)
 						act_cmd=last_cmd;
 				
-					Log.i("   command " + act_cmd + " -  act param" + act_param);
-					
 					// marker section - infos here http://www.red-bean.com/sgf/properties.html
 					
 					// marker with text
@@ -397,6 +395,7 @@ public class SGFHelper {
 				act_param="";
 				
 				} 
+				break;
 				case '\\':
 				if (escape) {
 					act_param+=(char)act_char;
@@ -411,7 +410,7 @@ public class SGFHelper {
 				break;
 				
 			}
-			
+			}
 			
 		}
 		if (game!=null) 
@@ -420,6 +419,6 @@ public class SGFHelper {
 	}
 	
 	public interface ISGFLoadProgressCallback {
-		public void progress(int act,int max,String Message);
+		public void progress(int act,int max,int progress_val);
 	}
 }
