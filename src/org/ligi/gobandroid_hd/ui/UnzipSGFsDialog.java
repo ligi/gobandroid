@@ -30,16 +30,21 @@ public class UnzipSGFsDialog {
 				  InputStream fin = _zipFile; 
 				  ZipInputStream zin = new ZipInputStream(fin); 
 				  ZipEntry ze = null; 
+				  byte[] readData = new byte[1024];
 				  while ((ze = zin.getNextEntry()) != null) { 
 		    	  Log.i("Decompress" + "unzip" + ze.getName()); 
 		        if(ze.isDirectory()) { 
 		          _dirChecker(ze.getName()); 
 		        } else { 
 		          FileOutputStream fout = new FileOutputStream(_location + ze.getName()); 
-		          for (int c = zin.read(); c != -1; c = zin.read()) { 
-		            fout.write(c); 
-		          } 
-		 
+		         
+		       	 int i2 = zin.read(readData);
+
+				      while (i2 != -1) {
+				      	fout.write(readData, 0, i2);
+				        i2 = zin.read(readData);
+				      }
+				   
 		          zin.closeEntry(); 
 		          fout.close(); 
 		        } 
