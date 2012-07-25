@@ -138,8 +138,11 @@ public class GoActivity
 		
 		go_board=(GoBoardViewHD)findViewById(R.id.go_board);
 		
-		if (go_board==null)
+		if (go_board==null) {
+			Log.w("requesting board and none there");
 			return; // had an NPE here - TODO figure out why exactly and if this fix has some disadvantage
+		}
+			
 		
 		go_board.setOnTouchListener(this);
 		go_board.setOnKeyListener(this);
