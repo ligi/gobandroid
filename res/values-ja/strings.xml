@@ -63,9 +63,6 @@
 	<string name="set_ai_strength">人工知能の強さの設定</string>
 	<string name="ai_strength">人工知能の強さ</string>
 	<string name="ai_preferences">人工知能の初期設定</string>
-	<string name="skin">スキン</string>
-	<string name="install_skins">スキンのインストール</string>
-	<string name="get_skins_from_market">マーケットからスキンを得る</string>
 	<string name="set_skin">スキンを設定する</string>
 	<string name="board_skin">碁盤のスキン</string>
 	<string name="fullscreen_board">碁盤の全画面表示</string>
@@ -92,7 +89,6 @@
 	<string name="record_game">記録</string>
 	<string name="dashboard_problems">詰碁</string>
 	<string name="hint">ヒント</string>
-
 	<string name="link_title">リンク</string>
 	<string name="link_tab_about">Gobandroidについて</string>
 	<string name="link_tab_credits">謝辞</string>
@@ -100,12 +96,10 @@
 	<string name="link_tab_sgf">SGF</string>
 	<string name="game_mode">モード</string>
 	<string name="switch_game_mode">モード切替</string>
-
 	<string name="menu_bookmark">ブックマーク</string>
 	<string name="menu_autoplay">自動再生</string>
 	<string name="tsumego_off_path">不明な手順です。最適な正解手順ではありません。 :-(</string>
 	<string name="tsumego_correct">正解 !-)</string>
-
 	<string name="refresh">同期</string>
 	<string name="tsumego_sgf_no_solution">詰碁のSGFを開こうとしていますが、解答が含まれていませんでした。詰碁を解くことはできますが、正解した時に確認することができません。 :-(</string>
     <string name="working">Working</string>
@@ -113,12 +107,10 @@
 	<string name="creating_thumbnails">サムネイルを作成しています。しばらくお待ちください。</string>
 	<string name="gnugo">GnuGo</string>
 	<string name="gnugo_not_installed">GnuGoがインストールされていません。続けるにはインストールして下さい。</string>
-
 	<string name="preferences">初期設定</string>
 	<string name="board_setup">碁盤設定</string>
 	<string name="for_recording">記録用</string>
 	<string name="sound">音</string>
-
 	<string name="enable_sound">音の有効化</string>
 	<string name="enable_sound_summary">石音を聞こえるようにします</string>
 	<string name="install_gnugo">GnuGoのインストール</string>
@@ -145,7 +137,7 @@
     <string name="size">サイズ</string>
     <string name="enter_your_comments_here">ここにコメントを入力して下さい</string>
     <string name="keep_variant_">変化図保持？</string>
-    <string name="keep_this_move_as_variant_">この着手を変化図として保持しますか？</string>
+    <string name="keep_this_move_as_variation">この着手を変化図として保持しますか？</string>
     <string name="numbered_end">正解手順</string>
     <string name="icon">アイコン</string>
     <string name="go_tv">自動再生</string>
@@ -159,7 +151,6 @@
 	<string name="televize">自動再生</string>
     <string name="count">カウント</string>
     <string name="notifications">通知</string>
-
     <string name="push_tsumego">詰碁のプッシュ受信</string>
     <string name="push_tsumego_extra">毎週詰碁受信します</string>
     <string name="gnugo_strength">GnuGoの強さ:</string>
@@ -167,5 +158,12 @@
     <string name="black">黒</string>
     <string name="white">白</string>
     <string name="black_and_white">黒と白</string>
+    <string name="for_gnugo">GnuGo用</string>
+    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">sgfのロード中に問題が発生。問題を修正するためにligiへsgfを送りますか?</string>
+    <string name="go_back">戻る</string>
+    <string name="download_status">ダウンロードの状態</string>
+    <string name="downloading_tsumegos_please_wait">詰碁のダウンロード中。お待ち下さい。</string>
+    <string name="no_new_tsumegos_found">新しい詰碁が見つかりませんでした :-(</string>
+    <string name="downloaded_n_tsumego">%d個の新しい詰碁をダウンロードしました ;-)</string>
 
 </resources>
