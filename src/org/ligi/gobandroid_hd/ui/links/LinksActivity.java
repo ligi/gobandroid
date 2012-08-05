@@ -87,6 +87,8 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 						new LinkWithDescriptionAndTitle("http://github.com/Zenigata","French Translation #2","Zenigata"),
 						new LinkWithDescriptionAndTitle("http://github.com/p3l","Swedish Translation","Peter Lundqvist"),
 						new LinkWithDescriptionAndTitle("http://plus.google.com/108208532767895844741","Russian Translation","Dmitriy Sklyar"),
+						new LinkWithDescriptionAndTitle("http://plus.google.com/104678898719261371574","Spanish and Catalan","Toni Garcia-Die"),
+						new LinkWithDescriptionAndTitle("http://plus.google.com/105766576009856509183","Italian Translation","Livio Lo Verso"),
 						new LinkWithDescriptionAndTitle("http://plus.google.com/116001545198026111276","feedback & patches" , "Oren Laskin on Google+"),
 						new LinkWithDescriptionAndTitle("http://plus.google.com/105303388887291066710","wooden background","Ruth -lironah- Hinckley on Google+"),
 						new LinkWithDescriptionAndTitle("http://www.silvestre.com.ar/","GPL'd icons","Silvestre Herrera"),
