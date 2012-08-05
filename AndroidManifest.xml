@@ -1,173 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      android:versionName="0.97" 
-      android:versionCode="97" 
-      package="org.ligi.gobandroid_hd"
-      android:installLocation="auto"
-      >
+    package="org.ligi.gobandroid_hd"
+    android:installLocation="auto"
+    android:versionCode="99"
+    android:versionName="0.99" >
 
-     <uses-sdk android:targetSdkVersion="15" android:minSdkVersion="5"/>
-    
-     <supports-screens android:largeScreens="true"
-					   android:normalScreens="true" 
-					   android:smallScreens="true"
-					   android:anyDensity="true" /> 
+    <uses-sdk
+        android:minSdkVersion="5"
+        android:targetSdkVersion="15" />
 
-    <!-- Permission to keep the screen awake -->  
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
+    <!-- Permission to keep the screen awake -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	
-	
-	<!-- Only this application can receive the messages and registration result --> 
-    <permission android:name="org.ligi.gobandroid_hd.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Only this application can receive the messages and registration result -->
+    <permission
+        android:name="org.ligi.gobandroid_hd.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
     <uses-permission android:name="org.ligi.gobandroid_hd.permission.C2D_MESSAGE" />
 
     <!-- This app has permission to register and receive message -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-   
-    <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
-    
-    <application 
-    android:icon="@drawable/ic_launcher"
-    android:logo="@drawable/ic_launcher"
-    android:label="@string/app_name"
-    
-    android:theme="@style/base_theme"
-    android:name=".GobandroidApp"
-    >
 
-        <activity android:name=".ui.gobandroid"
-                  android:label="@string/app_name">
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <application
+        android:name=".GobandroidApp"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:logo="@drawable/ic_launcher"
+        android:theme="@style/base_theme" >
+        <activity
+            android:name=".ui.gobandroid"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    	
-        <activity android:name=".ui.GobanDroidTVActivity"
-                  android:label="Gobandroid TV"
-                  android:icon="@drawable/gobandroid_tv">
+        <activity
+            android:name=".ui.GobanDroidTVActivity"
+            android:icon="@drawable/gobandroid_tv"
+            android:label="Gobandroid TV" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    	
-        <activity android:name=".ui.GobanDroidTVActivityNOIF">
+        <activity android:name=".ui.GobanDroidTVActivityNOIF" >
             <intent-filter>
                 <action android:name="org.ligi.gobandroid.NOIF" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-        <activity android:name=".ui.go_terminology.GoTerminologyViewActivity"
-            android:theme="@style/Theme.Transparent"
-            
+        <activity
+            android:name=".ui.go_terminology.GoTerminologyViewActivity"
             android:layout_width="wrap_content"
-       		android:layout_height="wrap_content"
-       >
-        
-    	<intent-filter>
-			<action android:name="android.intent.action.VIEW"/>
-    		<category android:name="android.intent.category.DEFAULT"/>
-    		<category android:name="android.intent.category.BROWSABLE"/>
-    		<data android:scheme="goterm"  android:host="org.ligi.gobandroid_hd.goterms" />
-			
-		</intent-filter>
-		</activity>
-		
-    	<activity android:name=".ui.gnugo.PlayAgainstGnugoActivity"></activity>
-		<activity android:name=".ui.GoSetupActivity"></activity>
-		
-		<activity android:name=".ui.review.GoGamePlayerActivity"></activity>
-		
-		<activity android:name=".ui.sgf_listing.SGFSDCardListActivity"></activity>
-		<activity android:name=".ui.links.LinksActivity"></activity>
-		<activity android:name=".ui.tsumego.TsumegoActivity"></activity>
-		<activity android:name=".ui.SGFLoadActivity"/>
-		
-		
-		<activity android:name=".ui.SGFLoadFromExternalActivity">
-			<intent-filter>
-	    		<action android:name="android.intent.action.VIEW"/>
-	    		<category android:name="android.intent.category.DEFAULT"/>
-	    		<category android:name="android.intent.category.BROWSABLE"/>
-	       		
-	       		<data android:scheme="http"   android:host="*"  android:pathPattern=".*\\.sgf"/>
-			</intent-filter>
-			<intent-filter>
-	    		<action android:name="android.intent.action.VIEW"/>
-	    		<category android:name="android.intent.category.DEFAULT"/>
-	    		<category android:name="android.intent.category.BROWSABLE"/>
-	       	
-				<data android:scheme="https"  android:host="*" android:pathPattern=".*\\.sgf"/>
-			</intent-filter>
-			
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-	    		<category android:name="android.intent.category.DEFAULT"/>
-	    		<category android:name="android.intent.category.BROWSABLE"/>
-	    		<data android:scheme="file"  android:host="*" android:pathPattern=".*\\.sgf"/>
-				
-			</intent-filter>
-			
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-	    		<category android:name="android.intent.category.DEFAULT"/>
-	    		<category android:name="android.intent.category.BROWSABLE"/>
-	    		<data android:scheme="content"  android:host="*" android:pathPattern=".*\\.sgf"/>
-				
-			</intent-filter>
-			
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-	    		<category android:name="android.intent.category.DEFAULT"/>
-	    		<category android:name="android.intent.category.BROWSABLE"/>
-	    		
-				<data android:mimeType="application/x-go-sgf" />	
-			</intent-filter>
-		</activity>
-		<activity android:name=".ui.GoLinkLoadActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-	    		<category android:name="android.intent.category.DEFAULT"/>
-	    		<category android:name="android.intent.category.BROWSABLE"/>
-	    		<data android:scheme="file"  android:host="*" android:pathPattern=".*\\.golink"/>
-			</intent-filter>
-		</activity>
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.Transparent" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-		<activity android:name=".ui.recording.GameRecordActivity"></activity>
-		<activity android:name=".ui.review.GameReviewActivity"></activity>
-		
-		<activity android:name=".ui.counting.CountGameActivity"/>
-		
-		<activity android:name=".ui.GoPrefsActivity"></activity>
-		<activity android:name=".ui.LoadActionsActivity"></activity>
-		<activity android:name=".ui.SGFOnlineListActivity"></activity>
-		<activity android:name=".ui.GoActivity"></activity>		
-		
-		<service android:name=".GCMIntentService" />
-        
-        <receiver android:name="com.google.android.gcm.GCMBroadcastReceiver" 
-                  android:permission="com.google.android.c2dm.permission.SEND">
-          <!-- Receive the actual message -->
-          <intent-filter>
-              <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-              <!-- Receive the registration id -->
-              <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-              <category android:name="org.ligi.gobandroid_hd" />
-          </intent-filter>
-      </receiver>
-      
-        <!-- Used for install referrer tracking-->
-		<receiver android:name="com.google.analytics.tracking.android.AnalyticsReceiver" android:exported="true">
-		  <intent-filter>
-		    <action android:name="com.android.vending.INSTALL_REFERRER" />
-		  </intent-filter>
-		</receiver>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-	</application>
-    
-</manifest> 
+                <data
+                    android:host="org.ligi.gobandroid_hd.goterms"
+                    android:scheme="goterm" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.gnugo.PlayAgainstGnugoActivity" >
+        </activity>
+        <activity android:name=".ui.GoSetupActivity" >
+        </activity>
+        <activity android:name=".ui.review.GoGamePlayerActivity" >
+        </activity>
+        <activity android:name=".ui.sgf_listing.SGFSDCardListActivity" >
+        </activity>
+        <activity android:name=".ui.links.LinksActivity" >
+        </activity>
+        <activity android:name=".ui.tsumego.TsumegoActivity" >
+        </activity>
+        <activity android:name=".ui.SGFLoadActivity" />
+        <activity android:name=".ui.SGFLoadFromExternalActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:pathPattern=".*\\.sgf"
+                    android:scheme="http" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:pathPattern=".*\\.sgf"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:pathPattern=".*\\.sgf"
+                    android:scheme="file" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:pathPattern=".*\\.sgf"
+                    android:scheme="content" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:mimeType="application/x-go-sgf" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.GoLinkLoadActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:pathPattern=".*\\.golink"
+                    android:scheme="file" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.recording.GameRecordActivity" >
+        </activity>
+        <activity android:name=".ui.review.GameReviewActivity" >
+        </activity>
+        <activity android:name=".ui.counting.CountGameActivity" />
+        <activity android:name=".ui.GoPrefsActivity" >
+        </activity>
+        <activity android:name=".ui.LoadActionsActivity" >
+        </activity>
+        <activity android:name=".ui.SGFOnlineListActivity" >
+        </activity>
+        <activity android:name=".ui.GoActivity" >
+        </activity>
+
+        <service android:name=".GCMIntentService" />
+
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+
+            <!-- Receive the actual message -->
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <!-- Receive the registration id -->
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="org.ligi.gobandroid_hd" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Used for install referrer tracking -->
+        <receiver
+            android:name="com.google.analytics.tracking.android.AnalyticsReceiver"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
