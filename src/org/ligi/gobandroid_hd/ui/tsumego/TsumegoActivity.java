@@ -37,7 +37,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		on_path_moves=new Vector<GoMove>();
 		
 		if (getGame()==null) { // there was no game - fallback to main menu
-			EasyTracker.getTracker().trackException("tsumego start getGame() returned null",false);
+			EasyTracker.getTracker().trackException("tsumego start getGame() returned null in onCreate",false);
 			finish();
 			startActivity(new Intent(this,gobandroid.class));
 			return;
@@ -116,8 +116,16 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-    	this.getSupportMenuInflater().inflate(R.menu.ingame_tsumego, menu);
-    	menu.findItem(R.id.menu_game_hint).setVisible(isFinishingMoveKnown()&&isOnPath());
+		
+		if (getGame()==null) { // there was no game - fallback to main menu
+			EasyTracker.getTracker().trackException("tsumego start getGame() returned null in onCreate",false);
+			finish();
+			startActivity(new Intent(this,gobandroid.class));
+			return super.onCreateOptionsMenu(menu);
+		} 
+    
+		this.getSupportMenuInflater().inflate(R.menu.ingame_tsumego, menu);
+    menu.findItem(R.id.menu_game_hint).setVisible(isFinishingMoveKnown()&&isOnPath());
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -127,7 +135,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
                                                                                                                                                       
         case R.id.menu_game_hint:
         	
-        	TsumegoHintAlert.show(this,getFinishingMove());
+				TsumegoHintAlert.show(this, getFinishingMove());
             break;                                                                                                                                
 		}
 		
@@ -188,4 +196,6 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		return false;
 	}
 
+	
+	
 }
