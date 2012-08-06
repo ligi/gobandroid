@@ -86,4 +86,9 @@ public class GameReviewActivity extends GoActivity {
 	public void quit(final boolean toHome) {
 		new EndReviewDialog(this).show();
 	}
+
+	@Override
+	public void initializeStoneMove() {		
+		// we do not want this behaviour so we override and do nothing 
+	}
 }

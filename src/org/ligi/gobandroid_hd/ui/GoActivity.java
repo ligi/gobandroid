@@ -455,7 +455,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 					.getTouchX())
 					&& (getGame().getActMove().getY() == interaction_scope
 							.getTouchY()))
-				go_board.initializeStoneMove();
+				initializeStoneMove();
 			else
 				doMoveWithUIFeedback((byte) interaction_scope.getTouchX(),
 						(byte) interaction_scope.getTouchY());
@@ -467,6 +467,32 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		getGame().notifyGameChange();
 	}
 
+	public void initializeStoneMove() {
+
+		if (getGame().getGoMover().isPlayingInThisGame()) // dont allow with a
+															// mover
+			return;
+
+		if (go_board.move_stone_mode) // already in the mode
+			return; // -> do nothing
+
+		go_board.move_stone_mode = true;
+
+		// TODO check if we only want this in certain modes
+		if (GoPrefs.isAnnounceMoveActive()) {
+
+			new AlertDialog.Builder(this)
+					.setMessage(R.string.hint_stone_move)
+					.setPositiveButton(R.string.ok,
+
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							GoPrefs.setAnnounceMoveActive(false);
+						}
+					}).show();
+		}
+	}
 	public boolean doAskToKeepVariant() {
 		return GoPrefs.isAskVariantEnabled()
 				&& getApp().getInteractionScope().ask_variant_session;

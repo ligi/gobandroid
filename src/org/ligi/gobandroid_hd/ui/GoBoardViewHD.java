@@ -475,32 +475,7 @@ public class GoBoardViewHD extends View {
 		setSize(this.getWidth(), this.getHeight());
 	}
 
-	public void initializeStoneMove() {
-
-		if (getGame().getGoMover().isPlayingInThisGame()) // dont allow with a
-															// mover
-			return;
-
-		if (move_stone_mode) // already in the mode
-			return; // -> do nothing
-
-		move_stone_mode = true;
-
-		// TODO check if we only want this in certain modes
-		if (GoPrefs.isAnnounceMoveActive()) {
-
-			new AlertDialog.Builder(this.getContext())
-					.setMessage(R.string.hint_stone_move)
-					.setPositiveButton(R.string.ok,
-
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-							GoPrefs.setAnnounceMoveActive(false);
-						}
-					}).show();
-		}
-	}
+	
 
 	public void setRegenerataStonesFlag(boolean new_flag) {
 		regenerate_stones_flag = new_flag;
