@@ -18,6 +18,7 @@
  **/
 
 package org.ligi.gobandroid_hd.ui;
+
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import android.content.Intent;
@@ -28,25 +29,23 @@ import android.os.Bundle;
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  * 
- * License: This software is licensed with GPLv3
+ *         License: This software is licensed with GPLv3
  * 
  **/
 
-public class SGFLoadFromExternalActivity 
-	extends GobandroidFragmentActivity
-{
+public class SGFLoadFromExternalActivity extends GobandroidFragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		// thats the main reason why we build this fwd activity 
+
+		// thats the main reason why we build this fwd activity
 		getApp().getInteractionScope().setMode(InteractionScope.MODE_REVIEW);
 
 		// take the original intent and change the class - the rest stays
-		Intent fwd_intent=getIntent();
+		Intent fwd_intent = getIntent();
 		fwd_intent.setClass(this, SGFLoadActivity.class);
 		startActivity(fwd_intent);
-		
+
 		finish(); // we are done
 	}
 

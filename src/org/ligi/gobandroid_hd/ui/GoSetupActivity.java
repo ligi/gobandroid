@@ -53,7 +53,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 
 
 /**
- * Activity for setting up a game
+ * Activity for setting up a game ( board size / handicap / .. )
  * 
  * TODO needs cleaning
  * 

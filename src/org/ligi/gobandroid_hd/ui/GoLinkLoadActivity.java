@@ -7,7 +7,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
+/**
+* Activity to load a go Link
+* 
+* @author <a href="http://ligi.de">Marcus -LiGi- Bueschleb </a>
+* 
+*         This software is licenced with GPLv3
+*/
 public class GoLinkLoadActivity extends Activity {
 
 	@Override

@@ -18,6 +18,7 @@
  **/
 
 package org.ligi.gobandroid_hd.ui;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -59,60 +60,60 @@ import com.google.analytics.tracking.android.EasyTracker;
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  * 
- * License: This software is licensed with GPLv3
+ *         License: This software is licensed with GPLv3
  * 
  **/
 
-public class SGFLoadActivity 
-		extends GobandroidFragmentActivity 
-		implements Runnable, SGFHelper.ISGFLoadProgressCallback
-{
+public class SGFLoadActivity extends GobandroidFragmentActivity implements
+		Runnable, SGFHelper.ISGFLoadProgressCallback {
 
-	private GoGame game=null;
-	//private Uri intent_uri;
+	private GoGame game = null;
+	// private Uri intent_uri;
 	private String sgf;
 	private ProgressBar progress;
 	private int act_progress;
 	private int max_progress;
-	private Handler handler=new Handler();
+	private Handler handler = new Handler();
 	private AlertDialog alert_dlg;
 	private TextView message_tv;
 	private String act_message;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		GoPrefs.init(this);	
+		GoPrefs.init(this);
 
-		progress=new ProgressBar(this,null, android.R.attr.progressBarStyleHorizontal);
+		progress = new ProgressBar(this, null,
+				android.R.attr.progressBarStyleHorizontal);
 		progress.setMax(100);
 		progress.setProgress(10);
 
-		LinearLayout lin =new LinearLayout(this);
-		
-		ImageView img=new ImageView(this);
+		LinearLayout lin = new LinearLayout(this);
+
+		ImageView img = new ImageView(this);
 		img.setImageResource(R.drawable.ic_launcher);
-		img.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
+		img.setLayoutParams(new LinearLayout.LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		lin.setOrientation(LinearLayout.VERTICAL);
-		
+
 		lin.addView(img);
-		
-		FrameLayout frame=new FrameLayout(this);
+
+		FrameLayout frame = new FrameLayout(this);
 		frame.addView(progress);
-		message_tv=new TextView(this);
+		message_tv = new TextView(this);
 		message_tv.setText("starting");
 		message_tv.setTextColor(0xFF000000);
 		message_tv.setPadding(7, 0, 0, 0);
 		frame.addView(message_tv);
-		
+
 		lin.addView(frame);
-		
-		alert_dlg=new AlertDialog.Builder(this).setCancelable(false).setTitle(R.string.loading_sgf).setView(lin).show();
 
+		alert_dlg = new AlertDialog.Builder(this).setCancelable(false)
+				.setTitle(R.string.loading_sgf).setView(lin).show();
 
-		
-		EasyTracker.getTracker().trackEvent("ui_action", "load_sgf", getIntent().getData().toString(),null);
+		EasyTracker.getTracker().trackEvent("ui_action", "load_sgf",
+				getIntent().getData().toString(), null);
 		new Thread(this).start();
 	}
 
@@ -122,47 +123,49 @@ public class SGFLoadActivity
 	}
 
 	public String contentToString(String url) throws IOException {
-		String res="";
-		
+		String res = "";
+
 		if (url.startsWith("/"))
 			return FileHelper.file2String(new File(url));
-		
+
 		return res;
 	}
-	
-	public String uri2string(Uri intent_uri) throws FileNotFoundException,MalformedURLException, IOException{
-		
+
+	public String uri2string(Uri intent_uri) throws FileNotFoundException,
+			MalformedURLException, IOException {
+
 		if (intent_uri.toString().startsWith("/"))
 			return FileHelper.file2String(new File(intent_uri.toString()));
-		
+
 		InputStream in;
-		
+
 		if (intent_uri.toString().startsWith("content://"))
-			in = getContentResolver().openInputStream(intent_uri);	
+			in = getContentResolver().openInputStream(intent_uri);
 		else
-			in= new BufferedInputStream(new URL(""+intent_uri).openStream(), 4096); 
-					
-		FileOutputStream file_writer =null;
+			in = new BufferedInputStream(new URL("" + intent_uri).openStream(),
+					4096);
+
+		FileOutputStream file_writer = null;
 
 		// if it comes from network
 		if (intent_uri.toString().startsWith("http")) { // https catched also
-		   	new File(GoPrefs.getSGFPath()+"/downloads").mkdirs();
-		   	File f = new File(GoPrefs.getSGFPath()+"/downloads/"+intent_uri.getLastPathSegment()	);
+			new File(GoPrefs.getSGFPath() + "/downloads").mkdirs();
+			File f = new File(GoPrefs.getSGFPath() + "/downloads/"
+					+ intent_uri.getLastPathSegment());
 			f.createNewFile();
 			file_writer = new FileOutputStream(f);
 		}
-					
+
 		StringBuffer out = new StringBuffer();
 		byte[] b = new byte[4096];
 		for (int n; (n = in.read(b)) != -1;) {
 			out.append(new String(b, 0, n));
-			if (file_writer!=null)
+			if (file_writer != null)
 				file_writer.write(b, 0, n);
 		}
-		if (file_writer!=null)
+		if (file_writer != null)
 			file_writer.close();
-		 
-		
+
 		return out.toString();
 	}
 
@@ -170,104 +173,131 @@ public class SGFLoadActivity
 	public void run() {
 		Looper.prepare();
 
-		final Uri intent_uri=getIntent().getData(); // extract the uri from the intent
-				
-		if (intent_uri==null) {
+		final Uri intent_uri = getIntent().getData(); // extract the uri from
+														// the intent
+
+		if (intent_uri == null) {
 			Log.e("SGFLoadActivity with intent_uri==null");
 			finish();
 			return;
 		}
-		
+
 		if (intent_uri.toString().endsWith(".golink")) {
-			Intent i=getIntent();
+			Intent i = getIntent();
 			i.setClass(this, GoLinkLoadActivity.class);
 			this.startActivity(i);
 			finish();
 			return;
 		}
-					
+
 		try {
-					
+
 			Log.i("load" + intent_uri);
-			
-			sgf=uri2string(intent_uri);
-			
+
+			sgf = uri2string(intent_uri);
+
 			Log.i("got sgf content:" + sgf);
-			game=SGFHelper.sgf2game(sgf,this);
-			
-			// if it is a tsumego and we need a transformation to right corner -> do so
-			if (getApp().getInteractionScope().getMode()==InteractionScope.MODE_TSUMEGO) {
-				int transform=TsumegoHelper.calcTransform(game);
-				
-				if (transform!=SGFHelper.DEFAULT_SGF_TRANSFORM)			
-					game=SGFHelper.sgf2game(sgf, null,SGFHelper.BREAKON_NOTHING,transform);
+			game = SGFHelper.sgf2game(sgf, this);
+
+			// if it is a tsumego and we need a transformation to right corner
+			// -> do so
+			if (getApp().getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
+				int transform = TsumegoHelper.calcTransform(game);
+
+				if (transform != SGFHelper.DEFAULT_SGF_TRANSFORM)
+					game = SGFHelper.sgf2game(sgf, null,
+							SGFHelper.BREAKON_NOTHING, transform);
 			}
-			
-			} catch (Exception e) {
-				Log.w("exception in load", e);
-				
+
+		} catch (Exception e) {
+			Log.w("exception in load", e);
+
 			handler.post(new Runnable() {
-					
-					@Override
-					/** if the sgf loading fails - give the user the option to send this SGF to me - to perhaps fix the 
-					 * parser to load more SGF's - TODO remove this block if all SGF's load fine ;-) */
-					public void run() {
-						alert_dlg.hide();
-						new AlertDialog.Builder(SGFLoadActivity.this).setTitle(R.string.results)
-						.setMessage(
-								R.string.problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem
-								).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog, int whichButton) {
-										final  Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-											emailIntent .setType("plain/text");
-											emailIntent .putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"ligi@ligi.de"});
-											emailIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, "SGF Problem" + gobandroid.getVersionCode(SGFLoadActivity.this));
-											emailIntent .putExtra(android.content.Intent.EXTRA_TEXT, "uri: " + intent_uri + " sgf:\n" + sgf + "err:" + Log.getCachedLog());
-											SGFLoadActivity.this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+
+				@Override
+				/** if the sgf loading fails - give the user the option to send this SGF to me - to perhaps fix the 
+				 * parser to load more SGF's - TODO remove this block if all SGF's load fine ;-) */
+				public void run() {
+					alert_dlg.hide();
+					new AlertDialog.Builder(SGFLoadActivity.this)
+							.setTitle(R.string.results)
+							.setMessage(
+									R.string.problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem)
+							.setPositiveButton(R.string.yes,
+									new DialogInterface.OnClickListener() {
+										public void onClick(
+												DialogInterface dialog,
+												int whichButton) {
+											final Intent emailIntent = new Intent(
+													android.content.Intent.ACTION_SEND);
+											emailIntent.setType("plain/text");
+											emailIntent
+													.putExtra(
+															android.content.Intent.EXTRA_EMAIL,
+															new String[] { "ligi@ligi.de" });
+											emailIntent
+													.putExtra(
+															android.content.Intent.EXTRA_SUBJECT,
+															"SGF Problem"
+																	+ gobandroid
+																			.getVersionCode(SGFLoadActivity.this));
+											emailIntent
+													.putExtra(
+															android.content.Intent.EXTRA_TEXT,
+															"uri: "
+																	+ intent_uri
+																	+ " sgf:\n"
+																	+ sgf
+																	+ "err:"
+																	+ Log.getCachedLog());
+											SGFLoadActivity.this.startActivity(Intent
+													.createChooser(emailIntent,
+															"Send mail..."));
 											finish();
 										}
-										}).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog, int whichButton) {
-										finish();
-									}
+									})
+							.setNegativeButton(R.string.no,
+									new DialogInterface.OnClickListener() {
+										public void onClick(
+												DialogInterface dialog,
+												int whichButton) {
+											finish();
+										}
 									}).show();
-								}}
-							);
-							
-							
-						
+				}
+			});
+
 			return;
 		}
-			
-		
-		int move_num = getIntent().getIntExtra("move_num", -1 );
-		
-		if (move_num!=-1)
-			for (int i=0;i<move_num;i++)
+
+		int move_num = getIntent().getIntExtra("move_num", -1);
+
+		if (move_num != -1)
+			for (int i = 0; i < move_num; i++)
 				game.jump(game.getActMove().getnextMove(0));
-		
+
 		getApp().getInteractionScope().setGame(game);
-		
+
 		game.getMetaData().setFileName(intent_uri.toString());
-		
+
 		handler.post(new Runnable() {
 			@Override
 			public void run() {
 				alert_dlg.hide();
 				finish();
-			}}
-		);
+			}
+		});
 
 		SwitchModeHelper.startGameWithCorrectMode(this);
 	}
-	
-	
+
 	@Override
 	public void progress(int act, int max, int progress_val) {
-		act_progress=act;
-		max_progress=max;
-		act_message=getResources().getString(R.string.move) +  " " + progress_val;
-		
+		act_progress = act;
+		max_progress = max;
+		act_message = getResources().getString(R.string.move) + " "
+				+ progress_val;
+
 		handler.post(new Runnable() {
 
 			@Override
@@ -275,6 +305,7 @@ public class SGFLoadActivity
 				progress.setProgress(act_progress);
 				progress.setMax(max_progress);
 				message_tv.setText(act_message);
-			}});
+			}
+		});
 	}
 }

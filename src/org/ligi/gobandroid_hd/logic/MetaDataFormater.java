@@ -20,48 +20,48 @@
 package org.ligi.gobandroid_hd.logic;
 
 /**
- * store the metadata ( such as player names/ranks) for a game 
+ * store the metadata ( such as player names/ranks) for a game
  * 
  * @author Marcus -ligi- Bueschleb
- *
+ * 
+ *         This software is licenced with GPLv3
  */
 public class MetaDataFormater {
 
 	private GoGameMetadata meta;
 	private GoGame game;
-	
+
 	public MetaDataFormater(GoGame game) {
-		this.meta=game.getMetaData();
-		this.game=game;
+		this.meta = game.getMetaData();
+		this.game = game;
 	}
-	
-	
+
 	public String getBlackPlayerString() {
-		StringBuilder res=new StringBuilder();
+		StringBuilder res = new StringBuilder();
 		res.append(meta.getBlackName());
-		
+
 		if (!meta.getBlackRank().equals(""))
 			res.append(" (" + meta.getBlackRank() + ")");
-		
+
 		return res.toString();
 	}
-	
+
 	public String getWhitePlayerString() {
-		StringBuilder res=new StringBuilder();
+		StringBuilder res = new StringBuilder();
 		res.append(meta.getWhiteName());
-		
+
 		if (!meta.getWhiteRank().equals(""))
 			res.append(" (" + meta.getWhiteRank() + ")");
-		
+
 		return res.toString();
 	}
-	
+
 	public String getExtrasString() {
-		StringBuilder res=new StringBuilder("Komi: "+game.getKomi());
-		
+		StringBuilder res = new StringBuilder("Komi: " + game.getKomi());
+
 		if (!meta.getResult().equals(""))
 			res.append(" Result: " + meta.getResult());
-		
+
 		return res.toString();
 	}
 }

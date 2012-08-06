@@ -3,11 +3,16 @@ package org.ligi.gobandroid_hd.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+/**
+ * Activity to  have the TV mode in NOIF ( No Interaction and Finite ) style to e.g. use in BISMO
+ * 
+ * @author <a href="http://ligi.de">Marcus -LiGi- Bueschleb </a>
+ * 
+ *         This software is licenced with GPLv3
+*/
 
 public class GobanDroidTVActivityNOIF extends GobanDroidTVActivity {
 
-
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		getApp().getInteractionScope().setIs_in_noif_mode(true);

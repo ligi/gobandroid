@@ -19,7 +19,6 @@
 
 package org.ligi.gobandroid_hd.ui;
 
-
 import org.ligi.gobandroid_hd.R;
 
 import android.os.Bundle;
@@ -30,22 +29,22 @@ import android.support.v4.app.FragmentActivity;
  * Activity to jump to websites with SGF files
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
- *         
-**/
+ * 
+ **/
 
-public class SGFOnlineListActivity extends  FragmentActivity{
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        setContentView(R.layout.list);
-/*
-        // Create the list fragment and add it as our sole content.
-        if (getSupportFragmentManager().findFragmentById(android.R.id.list) == null) {
-            SGFOnlineListFragment list = new SGFOnlineListFragment();
-            getSupportFragmentManager().beginTransaction().add(android.R.id.list, list).commit();
-        }
-*/
-    }
+public class SGFOnlineListActivity extends FragmentActivity {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		setContentView(R.layout.list);
+		/*
+		 * // Create the list fragment and add it as our sole content. if
+		 * (getSupportFragmentManager().findFragmentById(android.R.id.list) ==
+		 * null) { SGFOnlineListFragment list = new SGFOnlineListFragment();
+		 * getSupportFragmentManager().beginTransaction().add(android.R.id.list,
+		 * list).commit(); }
+		 */
+	}
 
 }

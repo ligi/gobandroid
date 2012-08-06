@@ -56,137 +56,138 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+
 /**
  * Activity for a Go Game
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  * 
- * License: This software is licensed with GPLv3
+ *         License: This software is licensed with GPLv3
  * 
  **/
 
-public class GoActivity 
-		extends GobandroidFragmentActivity implements OnTouchListener, OnKeyListener,  GoGame.GoGameChangeListener {
+public class GoActivity extends GobandroidFragmentActivity implements
+		OnTouchListener, OnKeyListener, GoGame.GoGameChangeListener {
 
-	private GoBoardViewHD go_board=null;
+	private GoBoardViewHD go_board = null;
 
-	private Toast info_toast=null;
-	
+	private Toast info_toast = null;
+
 	public ZoomGameExtrasFragment myZoomFragment;
 	private Fragment actFragment;
 
-	public GoSoundManager sound_man ;
-	
+	public GoSoundManager sound_man;
+
 	private InteractionScope interaction_scope;
-	
-	
+
 	public Fragment getGameExtraFragment() {
-		
+
 		return new DefaultGameExtrasFragment();
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		interaction_scope=getApp().getInteractionScope();
+		interaction_scope = getApp().getInteractionScope();
 		this.getSupportActionBar().setHomeButtonEnabled(true);
-		
-		ActivityOrientationLocker.disableRotation(this); 
+
+		ActivityOrientationLocker.disableRotation(this);
 
 		if (getSettings().isWakeLockEnabled()) {
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+			getWindow()
+					.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		}
-		
-		
-		if (getGame()==null) { // cannot do anything without a game 
+
+		if (getGame() == null) { // cannot do anything without a game
 			finish();
 			return;
 		}
-			
-		if (sound_man==null)
-			sound_man=new GoSoundManager(this);
-		
-		View customNav =new InGameActionBarView2(this);
-		
-		FragmentTransaction fragmentTransAction =this.getSupportFragmentManager().beginTransaction();
-		
-		fragmentTransAction.add(R.id.game_extra_container, getGameExtraFragment()).commit();
-		
+
+		if (sound_man == null)
+			sound_man = new GoSoundManager(this);
+
+		View customNav = new InGameActionBarView2(this);
+
+		FragmentTransaction fragmentTransAction = this
+				.getSupportFragmentManager().beginTransaction();
+
+		fragmentTransAction.add(R.id.game_extra_container,
+				getGameExtraFragment()).commit();
+
 		this.setContentView(R.layout.game);
 		getSupportActionBar().setCustomView(customNav);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        customNav.setFocusable(false);
-     
-        createInfoToast();
-        
-        setupBoard();
-        
+		getSupportActionBar().setDisplayShowCustomEnabled(true);
+		customNav.setFocusable(false);
+
+		createInfoToast();
+
+		setupBoard();
+
 		game2ui();
 		getZoomFragment();
 	}
-	
-	@SuppressLint("ShowToast") // this is correct - we do not want to show the toast at this stage
+
+	@SuppressLint("ShowToast")
+	// this is correct - we do not want to show the toast at this stage
 	private void createInfoToast() {
-		info_toast=Toast.makeText(this.getBaseContext(), "", Toast.LENGTH_LONG);
+		info_toast = Toast.makeText(this.getBaseContext(), "",
+				Toast.LENGTH_LONG);
 	}
 
 	/**
-	 * find the go board widget and set up some properties 
+	 * find the go board widget and set up some properties
 	 */
 	private void setupBoard() {
-		
-		go_board=(GoBoardViewHD)findViewById(R.id.go_board);
-		
-		if (go_board==null) {
+
+		go_board = (GoBoardViewHD) findViewById(R.id.go_board);
+
+		if (go_board == null) {
 			Log.w("requesting board and none there");
-			return; // had an NPE here - TODO figure out why exactly and if this fix has some disadvantage
+			return; // had an NPE here - TODO figure out why exactly and if this
+					// fix has some disadvantage
 		}
-			
-		
+
 		go_board.setOnTouchListener(this);
 		go_board.setOnKeyListener(this);
-		go_board.move_stone_mode=false;
+		go_board.move_stone_mode = false;
 	}
-	
-	private int last_processed_move_change_num=0;
-	
+
+	private int last_processed_move_change_num = 0;
+
 	@Override
 	public void onGoGameChange() {
-		if (getGame().getActMove().getMovePos()>last_processed_move_change_num) {
+		if (getGame().getActMove().getMovePos() > last_processed_move_change_num) {
 			if (getGame().isBlackToMove())
 				sound_man.playSound(GoSoundManager.SOUND_PLACE1);
 			else
 				sound_man.playSound(GoSoundManager.SOUND_PLACE2);
 		}
-		last_processed_move_change_num=getGame().getActMove().getMovePos();
+		last_processed_move_change_num = getGame().getActMove().getMovePos();
 		game2ui();
 	}
-	
-	
 
-	@Override 
+	@Override
 	protected void onStart() {
-		if (getGame()==null)
+		if (getGame() == null)
 			Log.w("we do not have a game in onStart of a GoGame activity - thats crazy!");
 		else
 			getGame().addGoGameChangeListener(this);
-		
+
 		super.onStart();
 		go_board.setFocusableInTouchMode(true);
 		go_board.requestFocus();
 	}
 
-	
 	@Override
 	protected void onStop() {
-		if (getGame()==null)
+		if (getGame() == null)
 			Log.w("we do not have a game (anymore) in onStop of a GoGame activity - thats crazy!");
 		else
 			getGame().removeGoGameChangeListener(this);
-		
+
 		super.onStop();
-		go_board.move_stone_mode=false;
+		go_board.move_stone_mode = false;
 	}
 
 	/**
@@ -194,16 +195,16 @@ public class GoActivity
 	 * 
 	 */
 	private void setBoardPreferences() {
-		if (go_board==null) { 
+		if (go_board == null) {
 			Log.w("setBoardPreferences() called with go_board==null - means setupBoard() was propably not called - skipping to not FC");
 			return;
 		}
 
-		go_board.do_legend=getSettings().isLegendEnabled();
-		go_board.legend_sgf_mode=getSettings().isSGFLegendEnabled();
+		go_board.do_legend = getSettings().isLegendEnabled();
+		go_board.legend_sgf_mode = getSettings().isSGFLegendEnabled();
 		go_board.setGridEmboss(getSettings().isGridEmbossEnabled());
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -215,120 +216,128 @@ public class GoActivity
 			public void run() {
 				sound_man.playSound(GoSoundManager.SOUND_START);
 			}
-			
+
 		}, 100);
 	}
-	
+
 	public ZoomGameExtrasFragment getZoomFragment() {
-		if (myZoomFragment==null)
-			myZoomFragment=new ZoomGameExtrasFragment(true);
+		if (myZoomFragment == null)
+			myZoomFragment = new ZoomGameExtrasFragment(true);
 		return myZoomFragment;
 	}
 
 	@Override
 	public boolean doFullScreen() {
-		return getSettings().isFullscreenEnabled()|getResources().getBoolean(R.bool.force_fullscreen);
+		return getSettings().isFullscreenEnabled()
+				| getResources().getBoolean(R.bool.force_fullscreen);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		this.getSupportMenuInflater().inflate(R.menu.ingame_common, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	public boolean onOptionsItemSelected(MenuItem item) {                                                                                                 
-        
-        switch (item.getItemId()) {                                                                                                                   
-                           /*
-	        case R.id.menu_game_switchmode:
-	        	new SwitchModeDialog(this).show();
-	        	return true;*/
-	        	
-	        case R.id.menu_game_info:                                                                                                                           
-                new GameInfoAlert(this,getGame()).show(); 
-                return true;                  
-	                
-	        case R.id.menu_game_undo:
-	            if (!getGame().canUndo())
-	            	break;
-	            
-	            requestUndo();
-	            return true;
+	public boolean onOptionsItemSelected(MenuItem item) {
 
-  
-	        case R.id.menu_game_pass:
-	        	getGame().pass();        
-	        	getGame().notifyGameChange();
-	        	return true;
-	        	
-	        case R.id.menu_game_results:
-	        	new GameResultsAlert(this,getGame()).show();                                                                                                    
-	        	return true;
-	        	
-	        case R.id.menu_write_sgf:                                                                                                                          
-	        	new SaveSGFDialog(this).show();
-	        	return true;
-	
-	        case R.id.preferences:
-	        	startActivity(new Intent(this,GoPrefsActivity.class));
-	        	return true;
-	        	
-	        case android.R.id.home:
-	        	quit(true);
-	        	return true;
-	        	
-	        case R.id.menu_bookmark:
-				new BookmarkDialog(this).show();
-				return true;
+		switch (item.getItemId()) {
+		/*
+		 * case R.id.menu_game_switchmode: new SwitchModeDialog(this).show();
+		 * return true;
+		 */
+
+		case R.id.menu_game_info:
+			new GameInfoAlert(this, getGame()).show();
+			return true;
+
+		case R.id.menu_game_undo:
+			if (!getGame().canUndo())
+				break;
+
+			requestUndo();
+			return true;
+
+		case R.id.menu_game_pass:
+			getGame().pass();
+			getGame().notifyGameChange();
+			return true;
+
+		case R.id.menu_game_results:
+			new GameResultsAlert(this, getGame()).show();
+			return true;
+
+		case R.id.menu_write_sgf:
+			new SaveSGFDialog(this).show();
+			return true;
+
+		case R.id.preferences:
+			startActivity(new Intent(this, GoPrefsActivity.class));
+			return true;
+
+		case android.R.id.home:
+			quit(true);
+			return true;
+
+		case R.id.menu_bookmark:
+			new BookmarkDialog(this).show();
+			return true;
 		}
-		
+
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	/**
 	 * control whether we want to ask the user - different in modes
+	 * 
 	 * @return
 	 */
 	public boolean isAsk4QuitEnabled() {
 		return true;
 	}
-	
+
 	private void shutdown(boolean toHome) {
 		sound_man.playSound(GoSoundManager.SOUND_END);
 		getGame().getGoMover().stop();
 		finish();
-		
+
 		if (toHome) {
-			startActivity(new Intent(this,gobandroid.class));
+			startActivity(new Intent(this, gobandroid.class));
 		}
 	}
-	
+
 	public void quit(final boolean toHome) {
 		if (!isAsk4QuitEnabled()) {
 			shutdown(toHome);
 			return;
 		}
-		
-		new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
-		.setMessage( R.string.quit_confirm
-		).setPositiveButton(R.string.yes,  new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-			shutdown(toHome);
-		}
-		}).setCancelable(true).setNegativeButton(R.string.no,  new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-		}
-		}).show();
+
+		new AlertDialog.Builder(this)
+				.setTitle(R.string.end_game_quesstion_title)
+				.setMessage(R.string.quit_confirm)
+				.setPositiveButton(R.string.yes,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+								shutdown(toHome);
+							}
+						})
+				.setCancelable(true)
+				.setNegativeButton(R.string.no,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+							}
+						}).show();
 	}
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
-			case KeyEvent.KEYCODE_BACK:
-				quit(false);
-				return true;
+		case KeyEvent.KEYCODE_BACK:
+			quit(false);
+			return true;
 		}
-		
+
 		return super.onKeyDown(keyCode, event);
 	}
 
@@ -336,61 +345,63 @@ public class GoActivity
 	 * show a the info toast with a specified text from a resource ID
 	 * 
 	 * @param resId
- 	**/
-    public void showInfoToast(int resId) {
+	 **/
+	public void showInfoToast(int resId) {
 		info_toast.setText(resId);
 		info_toast.show();
 	}
 
-    public byte doMoveWithUIFeedback(byte x,byte y) {
-    	info_toast.cancel();
-    	byte res=getGame().do_move(x, y);
-    	switch(res){
-    		case GoGame.MOVE_INVALID_IS_KO:
-    			showInfoToast(R.string.invalid_move_ko);
-    			break;
-    		case GoGame.MOVE_INVALID_CELL_NO_LIBERTIES:
-    			showInfoToast(R.string.invalid_move_no_liberties);
-    			break;
-    	}
-    	return res;
-    }
-	
+	public byte doMoveWithUIFeedback(byte x, byte y) {
+		info_toast.cancel();
+		byte res = getGame().do_move(x, y);
+		switch (res) {
+		case GoGame.MOVE_INVALID_IS_KO:
+			showInfoToast(R.string.invalid_move_ko);
+			break;
+		case GoGame.MOVE_INVALID_CELL_NO_LIBERTIES:
+			showInfoToast(R.string.invalid_move_no_liberties);
+			break;
+		}
+		return res;
+	}
+
 	public void game2ui() {
 		go_board.postInvalidate();
 		refreshZoomFragment();
 	}
-	
+
 	public void setFragment(Fragment newFragment) {
-		if (actFragment==newFragment) {
+		if (actFragment == newFragment) {
 			Log.i("GoFrag same same");
 			return;
 		}
 		Log.i("GoFrag changing" + newFragment);
-		actFragment=newFragment;
-		FragmentTransaction fragmentTransAction =getSupportFragmentManager().beginTransaction();
-		fragmentTransAction.replace(R.id.game_extra_container,actFragment).commit();
+		actFragment = newFragment;
+		FragmentTransaction fragmentTransAction = getSupportFragmentManager()
+				.beginTransaction();
+		fragmentTransAction.replace(R.id.game_extra_container, actFragment)
+				.commit();
 	}
-	
+
 	@Override
-	public boolean onTouch( View v, MotionEvent event ) {
-		
-		if (event.getAction()==MotionEvent.ACTION_UP) {
+	public boolean onTouch(View v, MotionEvent event) {
+
+		if (event.getAction() == MotionEvent.ACTION_UP) {
 			setFragment(getGameExtraFragment());
 			if (getResources().getBoolean(R.bool.small))
-					this.getSupportActionBar().show();
-			
-		}else if (event.getAction()==MotionEvent.ACTION_DOWN) {
+				this.getSupportActionBar().show();
+
+		} else if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			setFragment(getZoomFragment());
 			if (getResources().getBoolean(R.bool.small))
 				this.getSupportActionBar().hide();
-			
+
 			if (getGame().isBlackToMove())
 				sound_man.playSound(GoSoundManager.SOUND_PICKUP1);
 			else
 				sound_man.playSound(GoSoundManager.SOUND_PICKUP2);
 		}
-			
+
 		Log.i("touch");
 		if (!getGame().getGoMover().isReady())
 			showInfoToast(R.string.wait_gnugo);
@@ -398,144 +409,150 @@ public class GoActivity
 			showInfoToast(R.string.not_your_turn);
 		else
 			doTouch(event);
-		
-    	//updateControlsStatus();
-    	return true;
-    }
-	
 
-    @Override 
-    public void onPause() {
-    	super.onPause();
-    	
+		// updateControlsStatus();
+		return true;
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+
 		try {
-			File f=new File(getSettings().getReviewPath() + "/autosave.sgf");
+			File f = new File(getSettings().getReviewPath() + "/autosave.sgf");
 			f.createNewFile();
-			
+
 			FileWriter sgf_writer = new FileWriter(f);
-			
+
 			BufferedWriter out = new BufferedWriter(sgf_writer);
-			
+
 			out.write(SGFHelper.game2sgf(getGame()));
 			out.close();
 			sgf_writer.close();
-			
+
 		} catch (IOException e) {
-			Log.i(""+e);
+			Log.i("" + e);
 		}
-	
-    }
 
-    public void doTouch( MotionEvent event) {
-				
-    	// calculate position on the field by position on the touchscreen
+	}
 
-    	
-    	interaction_scope.setTouchPosition(getBoard().pixel2boardPos(event.getX(),event.getY()));
-    	if (event.getAction()==MotionEvent.ACTION_UP) {
+	public void doTouch(MotionEvent event) {
 
-    		if (go_board.move_stone_mode) {
-    			// TODO check if this is an illegal move ( e.g. in variants )
-    			getGame().getActMove().setXY((byte)interaction_scope.getTouchX(),(byte)interaction_scope.getTouchY());
-    			getGame().refreshBoards();
-    			go_board.move_stone_mode=false;
-    		}
-    		else if ((getGame().getActMove().getX()==interaction_scope.getTouchX())&&(getGame().getActMove().getY()==interaction_scope.getTouchY())) 
-    			go_board.initializeStoneMove();
-    		else 
-    			doMoveWithUIFeedback((byte)interaction_scope.getTouchX(),(byte)interaction_scope.getTouchY());
-        		
-    		interaction_scope.setTouchPosition(-1);
-        			
-    	}
+		// calculate position on the field by position on the touchscreen
 
-    	getGame().notifyGameChange();
-    }
-    
-    public boolean doAskToKeepVariant() {
-    	return GoPrefs.isAskVariantEnabled()&&getApp().getInteractionScope().ask_variant_session;
-    }
+		interaction_scope.setTouchPosition(getBoard().pixel2boardPos(
+				event.getX(), event.getY()));
+		if (event.getAction() == MotionEvent.ACTION_UP) {
+
+			if (go_board.move_stone_mode) {
+				// TODO check if this is an illegal move ( e.g. in variants )
+				getGame().getActMove().setXY(
+						(byte) interaction_scope.getTouchX(),
+						(byte) interaction_scope.getTouchY());
+				getGame().refreshBoards();
+				go_board.move_stone_mode = false;
+			} else if ((getGame().getActMove().getX() == interaction_scope
+					.getTouchX())
+					&& (getGame().getActMove().getY() == interaction_scope
+							.getTouchY()))
+				go_board.initializeStoneMove();
+			else
+				doMoveWithUIFeedback((byte) interaction_scope.getTouchX(),
+						(byte) interaction_scope.getTouchY());
+
+			interaction_scope.setTouchPosition(-1);
+
+		}
+
+		getGame().notifyGameChange();
+	}
+
+	public boolean doAskToKeepVariant() {
+		return GoPrefs.isAskVariantEnabled()
+				&& getApp().getInteractionScope().ask_variant_session;
+	}
 
 	@Override
 	public boolean onKey(View v, int keyCode, KeyEvent event) {
-		if (event.getAction()==KeyEvent.ACTION_DOWN) {
-	    	switch (keyCode) {
-	    	case KeyEvent.KEYCODE_DPAD_UP:
-	    		go_board.prepare_keyinput();
-	    		if (interaction_scope.getTouchY()>0) 
-	    			interaction_scope.touch_position-=getGame().getSize();
-	    		else
-	    			return false;
-	    		break;
-	    		
-	    	case KeyEvent.KEYCODE_DPAD_LEFT:
-	    		go_board.prepare_keyinput();
-	    		if (interaction_scope.getTouchX()>0) 
-	    			interaction_scope.touch_position--;
-	    		else
-	    			return false;
-	    		break;
-	    		
-	    	case KeyEvent.KEYCODE_DPAD_DOWN:
-	    		go_board.prepare_keyinput();
-	    		if (interaction_scope.getTouchY()<getGame().getVisualBoard().getSize()-1) 
-	    			interaction_scope.touch_position+=getGame().getSize();
-	    		else
-	    			return false;
-	    		break;
-	    		
-	    	case KeyEvent.KEYCODE_DPAD_RIGHT:
-	    		go_board.prepare_keyinput();
-	    		if (interaction_scope.getTouchX()<getGame().getVisualBoard().getSize()-1)
-	    			interaction_scope.touch_position++;
-	    		else
-	    			return false;
-	    		break;
-	    		
-	    	case KeyEvent.KEYCODE_DPAD_CENTER:
-	    		doMoveWithUIFeedback((byte)interaction_scope.getTouchX(),(byte)interaction_scope.getTouchY());
-	    		break;
-	    		
-	    	default:
-	    		
-	    		return false;
-	    	
-	    	}
-			
-	    	go_board.postInvalidate();
-	    	refreshZoomFragment();
-	    	return true; 
-	    	}
+		if (event.getAction() == KeyEvent.ACTION_DOWN) {
+			switch (keyCode) {
+			case KeyEvent.KEYCODE_DPAD_UP:
+				go_board.prepare_keyinput();
+				if (interaction_scope.getTouchY() > 0)
+					interaction_scope.touch_position -= getGame().getSize();
+				else
+					return false;
+				break;
+
+			case KeyEvent.KEYCODE_DPAD_LEFT:
+				go_board.prepare_keyinput();
+				if (interaction_scope.getTouchX() > 0)
+					interaction_scope.touch_position--;
+				else
+					return false;
+				break;
+
+			case KeyEvent.KEYCODE_DPAD_DOWN:
+				go_board.prepare_keyinput();
+				if (interaction_scope.getTouchY() < getGame().getVisualBoard()
+						.getSize() - 1)
+					interaction_scope.touch_position += getGame().getSize();
+				else
+					return false;
+				break;
+
+			case KeyEvent.KEYCODE_DPAD_RIGHT:
+				go_board.prepare_keyinput();
+				if (interaction_scope.getTouchX() < getGame().getVisualBoard()
+						.getSize() - 1)
+					interaction_scope.touch_position++;
+				else
+					return false;
+				break;
+
+			case KeyEvent.KEYCODE_DPAD_CENTER:
+				doMoveWithUIFeedback((byte) interaction_scope.getTouchX(),
+						(byte) interaction_scope.getTouchY());
+				break;
+
+			default:
+
+				return false;
+
+			}
+
+			go_board.postInvalidate();
+			refreshZoomFragment();
+			return true;
+		}
 		return false;
 	}
-	
+
 	public void refreshZoomFragment() {
-		if (getZoomFragment().getBoard()==null) // nothing we can do
+		if (getZoomFragment().getBoard() == null) // nothing we can do
 			return;
-	  	if (myZoomFragment.getBoard()!=null)
-      		myZoomFragment.getBoard().postInvalidate();
-    
+		if (myZoomFragment.getBoard() != null)
+			myZoomFragment.getBoard().postInvalidate();
+
 	}
+
 	public GoBoardViewHD getBoard() {
-		if (go_board==null)
+		if (go_board == null)
 			setupBoard();
 		return go_board;
 	}
-	
+
 	public void requestUndo() {
-		go_board.move_stone_mode=false;
-		if (doAskToKeepVariant()) {                                                                                                  
+		go_board.move_stone_mode = false;
+		if (doAskToKeepVariant()) {
 			new UndoWithVariationDialog(this).show();
-	    }                                                                                                                                     
-	    else                                                                                                                                  
-	    	getGame().undo(GoPrefs.isKeepVariantEnabled());
+		} else
+			getGame().undo(GoPrefs.isKeepVariantEnabled());
 	}
 
-	
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
 	}
 
-	
 }

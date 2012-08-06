@@ -33,10 +33,10 @@ public class InGameActionBarView2 extends LinearLayout implements
 	private GobandroidApp app;
 	private Activity activity;
 
-	public InGameActionBarView2(Context ctx,AttributeSet attrs) {
-		super(ctx,attrs);
+	public InGameActionBarView2(Context ctx, AttributeSet attrs) {
+		super(ctx, attrs);
 	}
-	
+
 	@Override
 	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
@@ -51,8 +51,8 @@ public class InGameActionBarView2 extends LinearLayout implements
 
 	public InGameActionBarView2(Activity _activity) {
 		super(_activity);
-		
-		activity=_activity;
+
+		activity = _activity;
 		app = (GobandroidApp) _activity.getApplicationContext();
 
 		inflater = (LayoutInflater) _activity
@@ -81,12 +81,11 @@ public class InGameActionBarView2 extends LinearLayout implements
 						// TODO Auto-generated method stub
 						showModePopup(v.getContext());
 					}
-					
+
 				});
-		
-		
+
 		this.addView(top_view);
-	
+
 		refresh();
 
 	}
@@ -98,15 +97,16 @@ public class InGameActionBarView2 extends LinearLayout implements
 		View v = inflater.inflate(R.layout.dropdown_item, null);
 		((TextView) v.findViewById(R.id.text)).setText(str_resid);
 		((ImageView) v.findViewById(R.id.image)).setImageResource(image_resId);
-		
-		v.findViewById(R.id.click_container).setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				listener.onClick(InGameActionBarView2.this, 0);
-				
-			}
-		});
+
+		v.findViewById(R.id.click_container).setOnClickListener(
+				new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						listener.onClick(InGameActionBarView2.this, 0);
+
+					}
+				});
 		container.addView(v);
 	}
 
@@ -121,7 +121,7 @@ public class InGameActionBarView2 extends LinearLayout implements
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						activity.finish();
-						Log.i("settingmode"+mode);
+						Log.i("settingmode" + mode);
 						app.getInteractionScope().setMode(mode);
 						Intent i = SwitchModeHelper.getIntentByMode(app, mode);
 						activity.startActivity(i);
@@ -134,8 +134,8 @@ public class InGameActionBarView2 extends LinearLayout implements
 
 		LinearLayout content_view = new LinearLayout(ctx);
 		content_view.setOrientation(LinearLayout.VERTICAL);
-		content_view.setBackgroundDrawable(new BitmapDrawableNoMinimumSize(
-				ctx.getResources(), R.drawable.wood_bg));
+		content_view.setBackgroundDrawable(new BitmapDrawableNoMinimumSize(ctx
+				.getResources(), R.drawable.wood_bg));
 
 		addModeItem(content_view, InteractionScope.MODE_RECORD,
 				R.string.record, R.drawable.dashboard_record);
@@ -147,14 +147,14 @@ public class InGameActionBarView2 extends LinearLayout implements
 				R.string.tsumego, R.drawable.dashboard_tsumego);
 		if (GnuGoHelper.isGnuGoAvail(ctx))
 			addModeItem(content_view, InteractionScope.MODE_GNUGO,
-				R.string.gnugo, R.drawable.dashboard_gnugo_item);
+					R.string.gnugo, R.drawable.dashboard_gnugo_item);
 
 		BetterPopupWindow pop = new BetterPopupWindow(mode_tv);
 		pop.setContentView(content_view);
-		
+
 		pop.showLikePopDownMenu();
 	}
-	
+
 	class IconTextAndMode {
 		public IconTextAndMode(int mode, int text_res, int icon_res) {
 			this.icon_res = icon_res;
@@ -194,8 +194,8 @@ public class InGameActionBarView2 extends LinearLayout implements
 				black_info_container.setBackgroundColor(app.getGame()
 						.isBlackToMove() ? highlight_color
 						: android.R.color.transparent);
-				move_tv.setText(app.getResources().getString(R.string.move) + " "
-						+ app.getGame().getActMove().getMovePos());
+				move_tv.setText(app.getResources().getString(R.string.move)
+						+ " " + app.getGame().getActMove().getMovePos());
 
 			}
 		});

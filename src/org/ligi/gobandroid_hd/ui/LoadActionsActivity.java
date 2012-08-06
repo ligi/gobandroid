@@ -33,45 +33,44 @@ import android.widget.ListView;
  * Activity to select a source from where to load SGF's
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
- *         
-**/
+ * 
+ **/
 
 public class LoadActionsActivity extends ListActivity {
-    
-	private String[] menu_items= {"SD Card", "Online" };
-    
-    private final static int MENU_SDCARD=0;
-    private final static int MENU_ONLINE=1;
-    
-    
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    
-        GoPrefs.init(this);
-        
-        setContentView(R.layout.list);
-        this.setListAdapter(new ArrayAdapter<String>(this,
-        		R.layout.list_item, menu_items));
-    }
-    
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
 
-        Intent go_intent=null;
-        switch (position) {
-        	case MENU_SDCARD:
-        		go_intent=new Intent(this,SGFSDCardListActivity.class);
-        		break;
-        		
-            case MENU_ONLINE:
-            	go_intent=new Intent(this,SGFOnlineListActivity.class);
-            	break;
-         }
-   
-        startActivity(go_intent);
-    }
-    
+	private String[] menu_items = { "SD Card", "Online" };
+
+	private final static int MENU_SDCARD = 0;
+	private final static int MENU_ONLINE = 1;
+
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		GoPrefs.init(this);
+
+		setContentView(R.layout.list);
+		this.setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item,
+				menu_items));
+	}
+
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+
+		Intent go_intent = null;
+		switch (position) {
+		case MENU_SDCARD:
+			go_intent = new Intent(this, SGFSDCardListActivity.class);
+			break;
+
+		case MENU_ONLINE:
+			go_intent = new Intent(this, SGFOnlineListActivity.class);
+			break;
+		}
+
+		startActivity(go_intent);
+	}
+
 }

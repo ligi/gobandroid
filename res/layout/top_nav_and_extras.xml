@@ -88,6 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dip"
             android:layout_weight="1"
+            android:lines="1"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
@@ -95,6 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dip"
             android:layout_weight="1"
+            android:lines="1"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 

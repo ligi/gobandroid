@@ -39,6 +39,7 @@ public class GoGamePlayerActivity extends GoActivity  {
 
 		getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
 		
+		
 		getBoard().setOnKeyListener(this);
 		getBoard().do_actpos_highlight=false;
 		

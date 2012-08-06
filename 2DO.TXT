@@ -13,3 +13,8 @@ try other engines:
 
 boring tasks:
    - http://en.wikipedia.org/wiki/Go_terms > strings.xml & GoTermsViewActivity
+
+
+----- 
+
+  remove the old go board view / GOSkin / the old ingame actionbar view

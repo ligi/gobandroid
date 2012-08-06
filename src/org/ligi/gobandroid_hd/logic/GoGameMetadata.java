@@ -20,50 +20,54 @@
 package org.ligi.gobandroid_hd.logic;
 
 /**
- * store the metadata ( such as player names/ranks) for a game 
+ * store the metadata ( such as player names/ranks) for a game
  * 
- * @author Marcus -ligi- Bueschleb
- *
+ * 
+ * @author <a href="http://ligi.de">Marcus -LiGi- Bueschleb </a>
+ * 
+ *         This software is licenced with GPLv3
  */
 public class GoGameMetadata {
 
-	private String name="";
-	private String result="";
-	
-	private String source="";
-	private String filename="";
-	
-	private String black_name="";
-	private String black_rank="";
-	private String white_name="";
-	private String white_rank="";
-	
+	private String name = "";
+	private String result = "";
+
+	private String source = "";
+	private String filename = "";
+
+	private String black_name = "";
+	private String black_rank = "";
+	private String white_name = "";
+	private String white_rank = "";
+
 	/**
 	 * set the game name
+	 * 
 	 * @param name
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	/**
-	 * get the game name 
+	 * get the game name
 	 * 
 	 * @return the game name
 	 */
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * set the white rank
 	 * 
-	 * @param white_rank - rank of white
+	 * @param white_rank
+	 *            - rank of white
 	 */
 	public void setWhiteRank(String white_rank) {
 		this.white_rank = white_rank;
 	}
-	
+
 	/**
 	 * get whites rank
 	 * 
@@ -72,7 +76,7 @@ public class GoGameMetadata {
 	public String getWhiteRank() {
 		return white_rank;
 	}
-	
+
 	/**
 	 * set the name of white
 	 * 
@@ -81,7 +85,7 @@ public class GoGameMetadata {
 	public void setWhiteName(String white_name) {
 		this.white_name = white_name;
 	}
-	
+
 	/**
 	 * get whites name
 	 * 
@@ -90,16 +94,17 @@ public class GoGameMetadata {
 	public String getWhiteName() {
 		return white_name;
 	}
-	
+
 	/**
 	 * set blacks name
 	 * 
-	 * @param black_name the name of black
+	 * @param black_name
+	 *            the name of black
 	 */
 	public void setBlackName(String black_name) {
 		this.black_name = black_name;
 	}
-	
+
 	/**
 	 * get blacks name
 	 * 
@@ -108,16 +113,17 @@ public class GoGameMetadata {
 	public String getBlackName() {
 		return black_name;
 	}
-	
+
 	/**
 	 * set blacks rank
 	 * 
-	 * @param black_rank the rank of black
+	 * @param black_rank
+	 *            the rank of black
 	 */
 	public void setBlackRank(String black_rank) {
 		this.black_rank = black_rank;
 	}
-	
+
 	/**
 	 * get the rank of black
 	 * 
@@ -126,16 +132,17 @@ public class GoGameMetadata {
 	public String getBlackRank() {
 		return black_rank;
 	}
-	
+
 	/**
 	 * set the result of the game
 	 * 
-	 * @param result the games result
+	 * @param result
+	 *            the games result
 	 */
 	public void setResult(String result) {
 		this.result = result;
 	}
-	
+
 	/**
 	 * get the result of the game
 	 * 
@@ -154,7 +161,9 @@ public class GoGameMetadata {
 	}
 
 	/**
-	 * if the game is from a SGF we have the filename here ( often a lot of information encoded here )
+	 * if the game is from a SGF we have the filename here ( often a lot of
+	 * information encoded here )
+	 * 
 	 * @return
 	 */
 	public String getFileName() {

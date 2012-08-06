@@ -30,37 +30,43 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * Adapter with a label and a icon - used in some ListViews
+ * 
+ * @author <a href="http://ligi.de">Marcus -LiGi- Bueschleb </a>
+ * 
+ *         This software is licenced with GPLv3
+ */
+public class IconicAdapter extends ArrayAdapter<Object> {
 
-public class IconicAdapter extends ArrayAdapter<Object> { 
- 
-		private Activity context; 
-        private Object[] items;
-        
-        public IconicAdapter(Activity context,Object[] items) {
-        	super(context, R .layout.icon_and_text, items);
-        	this.items=items;
-            this.context=context; 
-        } 
- 
-        public View getView(int position, View convertView, ViewGroup parent) { 
-        	 LayoutInflater vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        	 
-            View row=vi.inflate(R.layout.icon_and_text, null); 
-            TextView label=(TextView)row.findViewById(R.id.TextView01); 
-            
-            IconicMenuItem item=(IconicMenuItem)items[position];
-           
-            if (item.label!=null)
-            	label.setText(item.label); 
-            else
-            	label.setText(item.label_resId);
-            
-            if ((items.length>position)&&(item.drawable!=-1)) { 
-                ImageView icon=(ImageView)row.findViewById(R.id.ImageView01); 
-                icon.setImageResource(item.drawable ); 
-            }    
- 
-            return(row); 
-        } 
-    }
+	private Activity context;
+	private Object[] items;
 
+	public IconicAdapter(Activity context, Object[] items) {
+		super(context, R.layout.icon_and_text, items);
+		this.items = items;
+		this.context = context;
+	}
+
+	public View getView(int position, View convertView, ViewGroup parent) {
+		LayoutInflater vi = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+		View row = vi.inflate(R.layout.icon_and_text, null);
+		TextView label = (TextView) row.findViewById(R.id.TextView01);
+
+		IconicMenuItem item = (IconicMenuItem) items[position];
+
+		if (item.label != null)
+			label.setText(item.label);
+		else
+			label.setText(item.label_resId);
+
+		if ((items.length > position) && (item.drawable != -1)) {
+			ImageView icon = (ImageView) row.findViewById(R.id.ImageView01);
+			icon.setImageResource(item.drawable);
+		}
+
+		return (row);
+	}
+}

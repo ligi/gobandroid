@@ -18,6 +18,7 @@
  **/
 
 package org.ligi.gobandroid_hd.ui;
+
 import java.io.File;
 
 import org.ligi.android.common.dialogs.DialogDiscarder;
@@ -46,148 +47,170 @@ import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 
 /**
- * This is the main Activity of gobandroid which shows an menu/dashboard 
- * with the stuff you can do here 
+ * This is the main Activity of gobandroid which shows an menu/dashboard with
+ * the stuff you can do here
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
- *         
-**/
+ * 
+ **/
 
 public class gobandroid extends GobandroidFragmentActivity {
-	
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_menu);
-        
-        if ( getVersionCode().contains("eta")) // only show in Beta
-        	setTitle("Gobandroid " + getVersionCode());
-        
-    	// if we have stacktraces - give user option to send them
-	    TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
-	
-    }
-  
-    @Override
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main_menu);
+
+		if (getVersionCode().contains("eta")) // only show in Beta
+			setTitle("Gobandroid " + getVersionCode());
+
+		// if we have stacktraces - give user option to send them
+		TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
+		/*
+		 * Intent intent = new Intent(Intent.ACTION_PICK,
+		 * ContactsContract.Contacts.CONTENT_URI);
+		 * 
+		 * // Intent intent = new Intent(Intent.ACTION_PICK,
+		 * Contacts.People.CONTENT_URI); startActivityForResult(intent, 1);
+		 */
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		this.getSupportMenuInflater().inflate(R.menu.dashboard, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
-    
-    /**
-     * the following start* functions are used in the xml via android:onClick
-     **/
+	/**
+	 * the following start* functions are used in the xml via android:onClick
+	 **/
 
-    public void recordGame(View target) {
-    	EasyTracker.getTracker().trackEvent("ui_action","dashboard", "record", null);
-    	getApp().getInteractionScope().setMode(InteractionScope.MODE_RECORD);
-    	this.startActivity(new Intent(this,GoSetupActivity.class));
-   	
-    }
+	public void recordGame(View target) {
+		EasyTracker.getTracker().trackEvent("ui_action", "dashboard", "record",
+				null);
+		getApp().getInteractionScope().setMode(InteractionScope.MODE_RECORD);
+		this.startActivity(new Intent(this, GoSetupActivity.class));
 
-    @Override
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-    	switch (item.getItemId()) {
-    	case R.id.help:
-    		new HelpDialog(this).show();
-    		EasyTracker.getTracker().trackEvent("ui_action","dashboard", "help", null);
+		switch (item.getItemId()) {
+		case R.id.help:
+			new HelpDialog(this).show();
+			EasyTracker.getTracker().trackEvent("ui_action", "dashboard",
+					"help", null);
 
-    		return true;
-    	}
+			return true;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	private Intent startLoad(String path) {
-    	Intent i=new Intent(this,SGFSDCardListActivity.class);    	
-    	i.setData((Uri.parse("file://"+path)));
-    	return i;
-    }
+		Intent i = new Intent(this, SGFSDCardListActivity.class);
+		i.setData((Uri.parse("file://" + path)));
+		return i;
+	}
 
-    public void solveProblem(View target) {
-    	EasyTracker.getTracker().trackEvent("ui_action","dashboard", "tsumego", null);    	
-    	Intent next=startLoad(getSettings().getTsumegoPath());
-    	
-    	if (!unzipSGFifNeeded(next)) 
-    		startActivity(next);
-    }
+	public void solveProblem(View target) {
+		EasyTracker.getTracker().trackEvent("ui_action", "dashboard",
+				"tsumego", null);
+		Intent next = startLoad(getSettings().getTsumegoPath());
 
-    public void reviewGame(View target) {
-    	EasyTracker.getTracker().trackEvent("ui_action","dashboard", "review", null);
-    	Intent next=startLoad(getSettings().getReviewPath());
-    	if (!unzipSGFifNeeded(next))
-    		startActivity(next);
-    }
+		if (!unzipSGFifNeeded(next))
+			startActivity(next);
+	}
 
-    /**
-     * Downloads SGFs and shows a ProgressDialog when needed
-     * 
-     * @return - weather we had to unzip files
-     */
-    public boolean unzipSGFifNeeded(Intent intent_after) {
-    	String storrage_state=Environment.getExternalStorageState();
-    	
-    	// we check for the tsumego path as the base path could already be there but no valid tsumego
-    	if ((storrage_state.equals(Environment.MEDIA_MOUNTED)&&(!(new File(getSettings().getTsumegoPath())).isDirectory()))) {
-    		UnzipSGFsDialog.show(this,intent_after);
-    		return true;
-    	}
-    	return false;
-    }
-    
-    public void startLinks(View target) {
-    	EasyTracker.getTracker().trackEvent("ui_action","dashboard", "links", null);
-    	this.startActivity( new Intent(this,LinksActivity.class));
-    }
-    
-    public void startGnuGoGame(View target) {
-    
-    	if (!GnuGoHelper.isGnuGoAvail(this)) {
-    		EasyTracker.getTracker().trackEvent("ui_action","intern", "gnugo_missing", null);
-    		new AlertDialog.Builder(this)
-    			.setMessage(R.string.gnugo_not_installed)
-    			.setTitle(R.string.problem)
-    			.setNegativeButton(android.R.string.cancel, new DialogDiscarder())
-    			.setPositiveButton(R.string.install_gnugo, new OnClickListener() {
+	public void reviewGame(View target) {
+		EasyTracker.getTracker().trackEvent("ui_action", "dashboard", "review",
+				null);
+		Intent next = startLoad(getSettings().getReviewPath());
+		if (!unzipSGFifNeeded(next))
+			startActivity(next);
+	}
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						try {
-							IntentHelper.goToMarketPackage(gobandroid.this, "org.ligi.gobandroidhd.ai.gnugo");
-						} catch (Exception e) {
-							Intent fail_intent=new Intent();
-							fail_intent.setAction(Intent.ACTION_VIEW);
-							fail_intent.setData(Uri.parse("http://github.com/downloads/ligi/gobandroid-ai-gnugo/org_ligi_gobandroid_ai_gnugo_0.7.apk"));
-							gobandroid.this.startActivity(fail_intent);
-						}
-					}
-    				
-    			})    			
-    			.show() ;
-    		return;
-    	}
-    	EasyTracker.getTracker().trackEvent("ui_action","dashboard", "gnugo", null);
+	/**
+	 * Downloads SGFs and shows a ProgressDialog when needed
+	 * 
+	 * @return - weather we had to unzip files
+	 */
+	public boolean unzipSGFifNeeded(Intent intent_after) {
+		String storrage_state = Environment.getExternalStorageState();
 
-    	getApp().getInteractionScope().setMode(InteractionScope.MODE_GNUGO);
-    	this.startActivity(new Intent(this,GoSetupActivity.class));
-    }
-    
-    public void startPreferences(View target) {
-    	this.startActivity(new Intent(this,GoPrefsActivity.class));
-    }
+		// we check for the tsumego path as the base path could already be there
+		// but
+		// no valid tsumego
+		if ((storrage_state.equals(Environment.MEDIA_MOUNTED) && (!(new File(
+				getSettings().getTsumegoPath())).isDirectory()))) {
+			UnzipSGFsDialog.show(this, intent_after);
+			return true;
+		}
+		return false;
+	}
 
-    private String getVersionCode() {
+	public void startLinks(View target) {
+		EasyTracker.getTracker().trackEvent("ui_action", "dashboard", "links",
+				null);
+		this.startActivity(new Intent(this, LinksActivity.class));
+	}
+
+	public void startGnuGoGame(View target) {
+
+		if (!GnuGoHelper.isGnuGoAvail(this)) {
+			EasyTracker.getTracker().trackEvent("ui_action", "intern",
+					"gnugo_missing", null);
+			new AlertDialog.Builder(this)
+					.setMessage(R.string.gnugo_not_installed)
+					.setTitle(R.string.problem)
+					.setNegativeButton(android.R.string.cancel,
+							new DialogDiscarder())
+					.setPositiveButton(R.string.install_gnugo,
+							new OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									try {
+										IntentHelper
+												.goToMarketPackage(
+														gobandroid.this,
+														"org.ligi.gobandroidhd.ai.gnugo");
+									} catch (Exception e) {
+										Intent fail_intent = new Intent();
+										fail_intent
+												.setAction(Intent.ACTION_VIEW);
+										fail_intent.setData(Uri
+												.parse("http://github.com/downloads/ligi/gobandroid-ai-gnugo/org_ligi_gobandroid_ai_gnugo_0.7.apk"));
+										gobandroid.this
+												.startActivity(fail_intent);
+									}
+								}
+
+							}).show();
+			return;
+		}
+		EasyTracker.getTracker().trackEvent("ui_action", "dashboard", "gnugo",
+				null);
+
+		getApp().getInteractionScope().setMode(InteractionScope.MODE_GNUGO);
+		this.startActivity(new Intent(this, GoSetupActivity.class));
+	}
+
+	public void startPreferences(View target) {
+		this.startActivity(new Intent(this, GoPrefsActivity.class));
+	}
+
+	private String getVersionCode() {
 		return getVersionCode(this);
 	}
 
-    public static String getVersionCode(Context ctx) {
-		try
-		{
-			return "v"+ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0).versionName;
-		}
-		catch (NameNotFoundException e)
-		{
-		    return "v?";
+	public static String getVersionCode(Context ctx) {
+		try {
+			return "v"
+					+ ctx.getPackageManager().getPackageInfo(
+							ctx.getPackageName(), 0).versionName;
+		} catch (NameNotFoundException e) {
+			return "v?";
 		}
 	}
 }
