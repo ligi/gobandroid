@@ -97,6 +97,10 @@
   <string name="link_tab_help">Ajuda</string>
   <string name="link_tab_sgf">SGFs</string>
   <string name="game_mode">Mode</string>
+  <string name="switch_game_mode">Canviar mode</string>
+  <string name="menu_bookmark">Senyalar</string>
+  <string name="menu_autoplay">Reproducció automàtica</string>
+  <string name="tsumego_off_path">Variació desconeguda - generalment vol dir que el moviment és sub-òptim :-(</string>
   <string name="tsumego_correct">Correcte!-)</string>
   <string name="refresh">Sync</string>
   <string name="tsumego_sgf_no_solution">Estàs mirant obrir aquest SGF com un Tsumego - però no puc trobar una solució marcada - pots continuar de totes maneres però no et podré aplaudir quan l\'encertis :-( </string>
@@ -126,6 +130,7 @@
   <string name="loading_sgf">S\'està carregant SGF</string>
   <string name="review">Revisió</string>
   <string name="record">Registre</string>
+  <string name="empty_str"> </string>
   <string name="autoplay_off">reproducció aut. no</string>
   <string name="autoplay_on">reproducció aut. sí</string>
   <string name="mark_next">marcar següent</string>
@@ -144,8 +149,21 @@
   <string name="youtube_tutorial">Tutorial en anglès a YouTube</string>
   <string name="youtube_tutorial_link">http://www.youtube.com/watch?v=gECcsSeRcNo</string>
   <string name="wikipedia_rules">Article en anglès a la Viquipèdia</string>
+  <string name="wikipedia_rules_link">http://en.wikipedia.org/wiki/Go_(game)</string>
   <string name="televize">Televize</string>
   <string name="count">Comptar</string>
+  <string name="notifications">Notificacions</string>
+  <string name="push_tsumego">Rep Tsumegos</string>
+  <string name="push_tsumego_extra">més tsumegos per resoldre cada setmana</string>
+  <string name="gnugo_strength">GnuGo Nivell:</string>
+  <string name="gnugo_plays">GnuGo juga amb:</string>
+  <string name="black">Negres</string>
+  <string name="white">Blanques</string>
+  <string name="black_and_white">Negres &amp; Blanques</string>
+  <string name="for_gnugo">per GnuGo</string>
+  <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">Problema al carregar SGF vol enviar aquesta SGF a ligi per mirar d\'arreglar el problema?</string>
+  <string name="go_back">tornar enrere</string>
+  <string name="download_status">Estat de la descàrrega</string>
   <string name="downloading_tsumegos_please_wait">Descarregant Tsumegos sis-plau espera...</string>
   <string name="no_new_tsumegos_found">No he trobat Tsumegos nous :-(</string>
   <string name="downloaded_n_tsumego">Descarregats %d Tsumegos nous ;-)</string>

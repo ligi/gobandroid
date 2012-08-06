@@ -149,16 +149,18 @@
   <string name="youtube_tutorial_link">http://www.youtube.com/watch?v=gECcsSeRcNo</string>
   <string name="wikipedia_rules">Article sur Wikipedia</string>
   <string name="wikipedia_rules_link">http://fr.wikipedia.org/wiki/Jeu_de_go</string>
+  <string name="televize">Diaporama</string>
   <string name="count">Comptage</string>
   <string name="notifications">Notifications</string>
   <string name="gnugo_strength">Niveau de l\'ordinateur :</string>
+  <string name="gnugo_plays">GnuGo joue :</string>
   <string name="black">noir</string>
   <string name="white">blanc</string>
   <string name="black_and_white">Noir &amp; Blanc</string>
   <string name="for_gnugo">pour GnuGo</string>
   <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">Erreur de lecture du SGF. Demander une correction du fichier ?</string>
   <string name="go_back">revenir en arrière</string>
-  <string name="download_status">État du téléchargement</string>
+  <string name="download_status">Téléchargement...</string>
   <string name="downloading_tsumegos_please_wait">Téléchargement de nouveaux problèmes de vie et mort en cours...</string>
   <string name="no_new_tsumegos_found">Pas de nouveau tsumego disponible</string>
   <string name="downloaded_n_tsumego">%d tsumego téléchargés !</string>

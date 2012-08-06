@@ -133,6 +133,7 @@
   <string name="size">サイズ</string>
   <string name="enter_your_comments_here">ここにコメントを入力して下さい</string>
   <string name="keep_variant_">変化図保持？</string>
+  <string name="keep_this_move_as_variation">この着手を変化図として保持しますか？</string>
   <string name="numbered_end">正解手順</string>
   <string name="icon">アイコン</string>
   <string name="go_tv">自動再生</string>
@@ -151,4 +152,11 @@
   <string name="black">黒</string>
   <string name="white">白</string>
   <string name="black_and_white">黒と白</string>
+  <string name="for_gnugo">GnuGo用</string>
+  <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">sgfのロード中に問題が発生。問題を修正するためにligiへsgfを送りますか?</string>
+  <string name="go_back">戻る</string>
+  <string name="download_status">ダウンロードの状態</string>
+  <string name="downloading_tsumegos_please_wait">詰碁のダウンロード中。お待ち下さい。</string>
+  <string name="no_new_tsumegos_found">新しい詰碁が見つかりませんでした :-(</string>
+  <string name="downloaded_n_tsumego">%d個の新しい詰碁をダウンロードしました ;-)</string>
 </resources>

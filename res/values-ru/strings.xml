@@ -116,7 +116,7 @@
   <string name="enable_sound">Включить звук</string>
   <string name="enable_sound_summary">Услышать звук камней и доски</string>
   <string name="install_gnugo">Усатновить GnuGo</string>
-  <string name="download_report">Загрузить отчет</string>
+  <string name="download_report">Отчет о загрузке</string>
   <string name="game_name">Название игры</string>
   <string name="black_name">Имя игрока черными</string>
   <string name="black_rank">Ранг игрока черными</string>
