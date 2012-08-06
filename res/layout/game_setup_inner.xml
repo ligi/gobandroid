@@ -1,22 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-			android:id="@+id/ScrollView01" android:layout_height="fill_parent" android:layout_width="fill_parent"><LinearLayout android:orientation="vertical" android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/handicap_slider">
-   
-<TextView 	style="@style/topic_divider"
-			android:text="Game Size 9x9"
-			android:id="@+id/game_size_label"></TextView>
-<SeekBar android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_marginLeft="7pt" android:layout_marginRight="7pt" android:id="@+id/size_slider" android:max="21"></SeekBar>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-<LinearLayout android:id="@+id/LinearLayout02" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="7pt" android:layout_marginBottom="4pt">
-    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1" android:text="9x9" android:id="@+id/size_button9x9"></Button>
-    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1" android:text="13x13" android:id="@+id/size_button13x13"></Button>
-    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1" android:text="19x19" android:id="@+id/size_button19x19"></Button>
+    <LinearLayout
+        android:id="@+id/handicap_slider"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/game_size_label"
+            style="@style/topic_divider" >
+        </TextView>
 
+        <SeekBar
+            android:id="@+id/size_slider"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7pt"
+            android:layout_marginRight="7pt"
+            android:max="21" >
+        </SeekBar>
 
-<TextView style="@style/topic_divider" android:text="Handicap" android:id="@+id/handicap_label"></TextView>
-<SeekBar android:layout_height="wrap_content" android:layout_width="fill_parent" android:paddingLeft="7pt" android:paddingRight="7pt" android:id="@+id/handicap_seek" android:max="9" android:paddingBottom="7pt"></SeekBar>
-<!-- <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Start" android:layout_gravity="center" android:id="@+id/game_start_button"/> -->
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/LinearLayout02"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4pt"
+            android:layout_marginLeft="7pt" >
+
+            <Button
+                android:id="@+id/size_button9x9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="9x9"
+                tools:ignore="HardcodedText" >
+            </Button>
+
+            <Button
+                android:id="@+id/size_button13x13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="13x13"
+                tools:ignore="HardcodedText" >
+            </Button>
+
+            <Button
+                android:id="@+id/size_button19x19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="19x19"
+                tools:ignore="HardcodedText" >
+            </Button>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/handicap_label"
+            style="@style/topic_divider" >
+        </TextView>
+
+        <SeekBar
+            android:id="@+id/handicap_seek"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:max="9"
+            android:paddingBottom="7pt"
+            android:paddingLeft="7pt"
+            android:paddingRight="7pt" >
+        </SeekBar>
+        <!-- <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Start" android:layout_gravity="center" android:id="@+id/game_start_button"/> -->
+    </LinearLayout>
+
 </ScrollView>
