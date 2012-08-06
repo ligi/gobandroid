@@ -95,6 +95,8 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 	public byte doMoveWithUIFeedback(byte x, byte y) {
 
 		byte res = super.doMoveWithUIFeedback(x, y);
+		
+		// if the move was valid and we have a counter move -> we will play it 
 		if (res == GoGame.MOVE_VALID)
 			if (getGame().getActMove().hasNextMove()) {
 				getGame().jump(getGame().getActMove().getnextMove(0));
