@@ -15,39 +15,44 @@ import android.view.WindowManager;
  * Activity to record a Game - or play on one device
  * 
  * @author ligi
- *
+ * 
  */
-public class GameRecordActivity extends GoActivity  implements GoGameChangeListener {
+public class GameRecordActivity extends GoActivity implements
+		GoGameChangeListener {
 
-    @Override
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// TODO the next line works but needs investigation - i thought more of getBoard().requestFocus(); - but that was not working ..
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-    }		
-    
-    @Override
-	public byte doMoveWithUIFeedback(byte x,byte y) {
-		byte res=super.doMoveWithUIFeedback(x,y);
-		if (res==GoGame.MOVE_VALID)
+		// TODO the next line works but needs investigation - i thought more of
+		// getBoard().requestFocus(); - but that was not working ..
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+	}
+
+	@Override
+	public byte doMoveWithUIFeedback(byte x, byte y) {
+		byte res = super.doMoveWithUIFeedback(x, y);
+		if (res == GoGame.MOVE_VALID)
 			if (getGame().getActMove().hasNextMove())
 				getGame().jump(getGame().getActMove().getnextMove(0));
-			
 
 		getGame().notifyGameChange();
 		return res;
 	}
-	
+
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		
+
 		try {
-			menu.findItem(R.id.menu_game_pass).setVisible(!getGame().isFinished());
-			menu.findItem(R.id.menu_game_results).setVisible(getGame().isFinished());
+			menu.findItem(R.id.menu_game_pass).setVisible(
+					!getGame().isFinished());
+			menu.findItem(R.id.menu_game_results).setVisible(
+					getGame().isFinished());
 			menu.findItem(R.id.menu_game_undo).setVisible(getGame().canUndo());
-		} catch ( NullPointerException e ) { } // we do not care when they do not exist
-		
+		} catch (NullPointerException e) {
+		} // we do not care when they do not exist
+
 		return true;
 	}
 
@@ -60,11 +65,11 @@ public class GameRecordActivity extends GoActivity  implements GoGameChangeListe
 	@Override
 	public void onGoGameChange() {
 		super.onGoGameChange();
-		this.invalidateOptionsMenu();		
+		this.invalidateOptionsMenu();
 	}
 
 	public Fragment getGameExtraFragment() {
 		return new RecordingGameExtrasFragment();
 	}
-	
+
 }
