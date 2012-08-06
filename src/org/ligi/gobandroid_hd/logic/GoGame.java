@@ -279,6 +279,8 @@ public class GoGame {
 
 		GoBoard bak_board = calc_board.clone();
 
+		act_move = new GoMove(x, y, act_move);
+		
 		// int tmp_cap=captures_black+captures_white;
 
 		if (isBlackToMove())
@@ -316,7 +318,7 @@ public class GoGame {
 		visual_board = calc_board.clone();
 		last_action_was_pass = false;
 
-		act_move = new GoMove(x, y, act_move);
+		
 
 		if (!calc_board.isCellWhite(x, y))
 			captures_black += local_captures;
