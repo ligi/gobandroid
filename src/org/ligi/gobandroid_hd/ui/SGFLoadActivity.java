@@ -211,7 +211,10 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
 		} catch (Exception e) {
 			Log.w("exception in load", e);
-
+			game=null;
+		}
+		
+		if (game==null) {
 			handler.post(new Runnable() {
 
 				@Override
