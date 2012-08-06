@@ -18,12 +18,7 @@ import android.os.Bundle;
  *
  */
 public class GCMIntentService extends GCMBaseIntentService  {
-
-	public GCMIntentService() {
-		super("marcus.bueschleb@googlemail.com"); // init with our ID
-	}
-
-
+	      
 	@Override
 	public void onRegistered(Context context, String registrationId) {
 		Log.i("C2DM registered" + registrationId + " regid:" + registrationId ) ;
