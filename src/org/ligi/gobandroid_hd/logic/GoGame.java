@@ -57,8 +57,6 @@ public class GoGame {
 				l.onGoGameChange();
 	}
 
-	private byte act_player = GoDefinitions.PLAYER_BLACK;
-
 	private GoBoard visual_board; // the board to show to the user
 	private GoBoard calc_board; // the board calculations are done in
 	private GoBoard last_board; // board to detect KO situations
@@ -103,8 +101,6 @@ public class GoGame {
 	public final static byte MOVE_INVALID_CELL_NOT_FREE = 2;
 	public final static byte MOVE_INVALID_CELL_NO_LIBERTIES = 3;
 	public final static byte MOVE_INVALID_IS_KO = 4;
-
-	public byte start_player = GoDefinitions.PLAYER_BLACK;
 
 	private boolean[][] all_handicap_positions;
 
@@ -164,7 +160,7 @@ public class GoGame {
 
 		act_move = new GoMove(null);
 		act_move.setIsFirstMove();
-
+		act_move.setIsBlackToMove(true);
 		reset();
 	}
 
@@ -192,11 +188,6 @@ public class GoGame {
 	}
 
 	public void reset() {
-		if (handicap != 0)
-			start_player = GoDefinitions.PLAYER_WHITE;
-
-		act_player = start_player;
-
 		pre_last_board = null;
 
 		captures_black = 0;
@@ -213,7 +204,6 @@ public class GoGame {
 
 			act_move = new GoMove(act_move);
 			act_move.setToPassMove();
-			setNextPlayer();
 		}
 		notifyGameChange();
 	}
@@ -321,8 +311,6 @@ public class GoGame {
 		else
 			getGoMover().processWhiteMove(x, y);
 
-		setNextPlayer();
-
 		pre_last_board = last_board.clone();
 		last_board = calc_board.clone();
 		visual_board = calc_board.clone();
@@ -367,7 +355,6 @@ public class GoGame {
 			return;
 
 		if (move.isPassMove()) {
-			setNextPlayer();
 			return;
 		}
 
@@ -375,8 +362,6 @@ public class GoGame {
 			calc_board.setCellBlack(move.getX(), move.getY());
 		else
 			calc_board.setCellWhite(move.getX(), move.getY());
-
-		setNextPlayer();
 
 		if (move.didCaptures()) {
 			buildGroups();
@@ -863,7 +848,7 @@ public class GoGame {
 	}
 
 	public boolean isBlackToMove() {
-		return (act_player == GoDefinitions.PLAYER_BLACK);
+		return (act_move.isBlackToMove());
 	}
 
 	public int getCapturesBlack() {
@@ -882,12 +867,7 @@ public class GoGame {
 		return groups[x][y];
 	}
 
-	public void setNextPlayer() {
-		act_player = (act_player == GoDefinitions.PLAYER_BLACK) ? GoDefinitions.PLAYER_WHITE
-				: GoDefinitions.PLAYER_BLACK;
-	}
-
-	public byte getHandicap() {
+		private byte getHandicap() {
 		return handicap;
 	}
 
