@@ -447,12 +447,14 @@ public class GoActivity extends GobandroidFragmentActivity implements
 			if (go_board.move_stone_mode) {
 				// TODO check if this is an illegal move ( e.g. in variants )
 				
-				getGame().getActMove().setXY(
-						(byte) interaction_scope.getTouchX(),
-						(byte) interaction_scope.getTouchY());
-				getGame().getActMove().setDidCaptures(true); // TODO check if we harm sth with that 
-				getGame().refreshBoards();
-				go_board.move_stone_mode = false;
+				if (getGame().getVisualBoard().isCellFree(interaction_scope.getTouchX(), interaction_scope.getTouchY())) {
+					getGame().getActMove().setXY(
+							(byte) interaction_scope.getTouchX(),
+							(byte) interaction_scope.getTouchY());
+					getGame().getActMove().setDidCaptures(true); // TODO check if we harm sth with that 
+					getGame().refreshBoards();
+					go_board.move_stone_mode = false;
+				}
 			} else if ((getGame().getActMove().getX() == interaction_scope
 					.getTouchX())
 					&& (getGame().getActMove().getY() == interaction_scope
