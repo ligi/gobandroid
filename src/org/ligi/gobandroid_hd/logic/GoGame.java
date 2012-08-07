@@ -160,7 +160,7 @@ public class GoGame {
 
 		act_move = new GoMove(null);
 		act_move.setIsFirstMove();
-		act_move.setIsBlackToMove(true);
+		act_move.setIsBlackToMove(handicap!=0); // if handicap==null set black to move next - else set white to move next
 		reset();
 	}
 
@@ -279,7 +279,6 @@ public class GoGame {
 
 		GoBoard bak_board = calc_board.clone();
 
-		act_move = new GoMove(x, y, act_move);
 		
 		// int tmp_cap=captures_black+captures_white;
 
@@ -318,8 +317,8 @@ public class GoGame {
 		visual_board = calc_board.clone();
 		last_action_was_pass = false;
 
+		act_move = new GoMove(x, y, act_move);
 		
-
 		if (!calc_board.isCellWhite(x, y))
 			captures_black += local_captures;
 		else
@@ -360,7 +359,7 @@ public class GoGame {
 			return;
 		}
 
-		if (isBlackToMove())
+		if (move.isBlackToMove())
 			calc_board.setCellBlack(move.getX(), move.getY());
 		else
 			calc_board.setCellWhite(move.getX(), move.getY());
@@ -849,8 +848,11 @@ public class GoGame {
 		return game_finished;
 	}
 
+	/**
+	 * @return who has to do the next move
+	 */
 	public boolean isBlackToMove() {
-		return (act_move.isBlackToMove());
+		return (!act_move.isBlackToMove()); // the opposite of wo was to move before
 	}
 
 	public int getCapturesBlack() {
