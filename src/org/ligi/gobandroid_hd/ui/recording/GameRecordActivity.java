@@ -47,8 +47,8 @@ public class GameRecordActivity extends GoActivity implements
 		try {
 			menu.findItem(R.id.menu_game_pass).setVisible(
 					!getGame().isFinished());
-			menu.findItem(R.id.menu_game_results).setVisible(
-					getGame().isFinished());
+			/*menu.findItem(R.id.menu_game_results).setVisible(
+					getGame().isFinished());*/
 			menu.findItem(R.id.menu_game_undo).setVisible(getGame().canUndo());
 		} catch (NullPointerException e) {
 		} // we do not care when they do not exist

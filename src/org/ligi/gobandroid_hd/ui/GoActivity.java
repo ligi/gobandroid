@@ -268,10 +268,10 @@ public class GoActivity extends GobandroidFragmentActivity implements
 			}
 			return true;
 
-		case R.id.menu_game_results:
+		/*case R.id.menu_game_results:
 			new GameResultsAlert(this, getGame()).show();
 			return true;
-
+		 */
 		case R.id.menu_write_sgf:
 			new SaveSGFDialog(this).show();
 			return true;
