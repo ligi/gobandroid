@@ -31,6 +31,7 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
 import org.ligi.gobandroid_hd.ui.alerts.GameResultsAlert;
+import org.ligi.gobandroid_hd.ui.alerts.ShareSGFDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.fragments.DefaultGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
@@ -280,6 +281,11 @@ public class GoActivity extends GobandroidFragmentActivity implements
 
 		case R.id.menu_bookmark:
 			new BookmarkDialog(this).show();
+			return true;
+			
+			
+		case R.id.menu_game_share:
+			new ShareSGFDialog(this).show();
 			return true;
 		}
 

@@ -166,4 +166,6 @@
   <string name="downloading_tsumegos_please_wait">Downloading Tsumegos Please wait...</string>
   <string name="no_new_tsumegos_found">No new Tsumegos found :-(</string>
   <string name="downloaded_n_tsumego">Downloaded %d new Tsumegos ;-)</string>
+  <string name="overwrite_existing_file">Overwrite existing File</string>
+  <string name="share">Share</string>
 </resources>

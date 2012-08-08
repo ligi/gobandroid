@@ -21,6 +21,7 @@ import java.util.Date;
 
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
@@ -56,7 +57,7 @@ public class BookmarkDialog extends GobandroidDialog {
 			// was not saved before - do it now ( needed for a bookmark )
 
 			fname = getDefaultFilename();
-			SaveSGFDialog.saveSGF(app.getGame(), app.getSettings()
+			SGFHelper.saveSGF(app.getGame(), app.getSettings()
 					.getSGFSavePath() + "/autosave/" + fname);
 		}
 

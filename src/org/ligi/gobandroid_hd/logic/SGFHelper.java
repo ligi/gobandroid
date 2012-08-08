@@ -19,6 +19,10 @@
 
 package org.ligi.gobandroid_hd.logic;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Vector;
 import org.ligi.tracedroid.logging.Log;
 
@@ -388,14 +392,15 @@ public class SGFHelper {
 								if (game.getActMove().isFirstMove())
 									game.apply_handicap();
 
-
 								if (act_param.length() == 0)
 									game.pass();
-								else 
+								else
 									game.do_move(param_x, param_y);
 
-								game.getActMove().setIsBlackToMove(act_cmd.equals("Black") || act_cmd.equals("B"));
-								
+								game.getActMove().setIsBlackToMove(
+										act_cmd.equals("Black")
+												|| act_cmd.equals("B"));
+
 							}
 
 							// TODO support AddEmpty
@@ -467,5 +472,50 @@ public class SGFHelper {
 
 	public interface ISGFLoadProgressCallback {
 		public void progress(int act, int max, int progress_val);
+	}
+
+	public static boolean saveSGF(GoGame game, String fname) {
+
+		File f = new File(fname);
+
+		if (f.isDirectory())
+			throw new IllegalArgumentException(
+					"cannot write - fname is a directory");
+
+		if (f.getParentFile() == null) // not really sure when this can be the
+										// case ( perhaps only / ) - but the doc
+										// says it can be null and I would get
+										// NPE then
+			throw new IllegalArgumentException("bad filename " + fname);
+
+		if (f.getParentFile() != null && !f.getParentFile().isDirectory()) // if
+																			// the
+																			// path
+																			// is
+																			// not
+																			// there
+																			// yet
+			f.getParentFile().mkdirs();
+
+		try {
+			// f=new File(path+ "/"+fname);
+			f.createNewFile();
+
+			FileWriter sgf_writer = new FileWriter(f);
+
+			BufferedWriter out = new BufferedWriter(sgf_writer);
+
+			out.write(SGFHelper.game2sgf(game));
+			out.close();
+			sgf_writer.close();
+
+		} catch (IOException e) {
+			Log.i("" + e);
+			return false;
+		}
+
+		game.getMetaData().setFileName(fname);
+		return true;
+
 	}
 }

@@ -1,25 +1,23 @@
 package org.ligi.gobandroid_hd.ui.recording;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameMetadata;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.tracedroid.logging.Log;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -33,27 +31,82 @@ import android.widget.TextView;
  */
 public class SaveSGFDialog extends GobandroidDialog {
 
-	public SaveSGFDialog(final GobandroidFragmentActivity context) {
-		super(context);
+	
+	private EditText fname_et;
+	private GobandroidFragmentActivity context;
+	private CheckBox override_checkbox;
+	
+	public SaveSGFDialog(GobandroidFragmentActivity _context) {
+		super(_context);
+		
+		context=_context;
+		
 		setContentView(R.layout.save_sgf_dialog);
 		
 		setIconResource(R.drawable.save);
 		TextView intro_text=(TextView)findViewById(R.id.intro_txt);
+		
+		override_checkbox=(CheckBox)findViewById(R.id.override_checkbox);
+		
 		intro_text.setText(String.format(context.getResources().getString(R.string.save_sgf_question), context.getSettings().getSGFSavePath()));
 		
-		final EditText input = (EditText)findViewById(R.id.sgf_name_edittext);
+		fname_et = (EditText)findViewById(R.id.sgf_name_edittext);
 		
+		
+		class SaveSGFOnClickListener implements DialogInterface.OnClickListener {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				String fname=getCompleteFileName();	
+				SGFHelper.saveSGF(getApp().getGame(),fname);
+				
+				dialog.dismiss();
+			}
+			
+		}
+		
+		setPositiveButton(android.R.string.ok,new SaveSGFOnClickListener());
+		
+		fname_et.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				setPositiveButtonAndOverrideCheckboxEnabledByExistenceOfFile();				
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+			}
+			
+		});
+		
+		override_checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				setPositiveButtonAndOverrideCheckboxEnabledByExistenceOfFile();
+			
+			}
+			
+		});
+		
+		
+		// get the old filename from the metadata
 		String old_fname=getApp().getGame().getMetaData().getFileName();
 		
 		if ((old_fname!=null)&&(!old_fname.equals(""))) {
 			String suggested_name=old_fname.replace(".sgf","");
 			if (suggested_name.startsWith(context.getSettings().getSGFSavePath()))
 				suggested_name=suggested_name.substring(context.getSettings().getSGFSavePath().length());
-			input.setText(suggested_name);
+			fname_et.setText(suggested_name);
 		}
 			
 		
-		final CheckBox share_checkbox=(CheckBox)findViewById(R.id.share_checkbox);
 		final GoGameMetadata game_meta=getApp().getGame().getMetaData();
 
 		/**
@@ -83,12 +136,12 @@ public class SaveSGFDialog extends GobandroidDialog {
 			public void onClick(View v) {
 				String toAdd = getTextByButtonId(v.getId());
 				if(toAdd != null) {
-					String text = input.getText().toString();
-					int cursorPos = input.getSelectionStart();
+					String text = fname_et.getText().toString();
+					int cursorPos = fname_et.getSelectionStart();
 					StringBuilder sb = new StringBuilder();
-					sb.append(text.substring(0, cursorPos)).append(toAdd).append(text.substring(cursorPos,input.length()));
-					input.setText(sb.toString());
-					input.setSelection(cursorPos + toAdd.length());
+					sb.append(text.substring(0, cursorPos)).append(toAdd).append(text.substring(cursorPos,fname_et.length()));
+					fname_et.setText(sb.toString());
+					fname_et.setSelection(cursorPos + toAdd.length());
 				}
 			}
 			
@@ -113,69 +166,48 @@ public class SaveSGFDialog extends GobandroidDialog {
 		
 		setTitle(R.string.save_sgf);
 		
-		class SaveSGFOnClickListener implements DialogInterface.OnClickListener {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				String fname=input.getText().toString();
-				
-				if (fname.startsWith("/"))
-					fname= input.getText().toString()+".sgf";
-				else
-					fname= context.getSettings().getSGFSavePath() +input.getText().toString()+".sgf";	
-				
-				if (saveSGF(getApp().getGame(),fname)&&
-					(share_checkbox.isChecked())) {
-						//add extra
-						Intent it = new Intent(Intent.ACTION_SEND);   
-						it.putExtra(Intent.EXTRA_SUBJECT, "SGF created with gobandroid");   
-						it.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://"+context.getSettings().getSGFSavePath() + "/"+fname));   
-						it.setType("application/x-go-sgf");   
-						context.startActivity(Intent.createChooser(it, "Choose how to send the SGF"));
-
-					}
-				
-				dialog.dismiss();
-			}
-			
-		}
-		
-		setPositiveButton(android.R.string.ok,new SaveSGFOnClickListener());
+		setPositiveButtonAndOverrideCheckboxEnabledByExistenceOfFile();
 	
 	}
 	
 	
-	public static boolean saveSGF(GoGame game,String fname) {
-
+	private void setPositiveButtonAndOverrideCheckboxEnabledByExistenceOfFile() {
 		
-		File f = new File(fname);
+		String fname=getCompleteFileName();
 		
-		if (f.isDirectory())
-			throw new IllegalArgumentException("cannot write - fname is a directory");
-		
-		if (f.getParentFile()==null) // not really sure when this can be the case ( perhaps only / ) - but the doc says it can be null and I would get NPE then
-			throw new IllegalArgumentException("bad filename " + fname);
-		
-		if (f.getParentFile()!=null && !f.getParentFile().isDirectory()) // if the path is not there yet
-			f.getParentFile().mkdirs();
-		
-		try {
-			//f=new File(path+ "/"+fname);
-			f.createNewFile();
+		if (fname==null) { // we got no filename from user
 			
-			FileWriter sgf_writer = new FileWriter(f);
-			
-			BufferedWriter out = new BufferedWriter(sgf_writer);
-			
-			out.write(SGFHelper.game2sgf(game));
-			out.close();
-			sgf_writer.close();
-
-		} catch (IOException e) {
-			Log.i(""+e);
-			return false;
+			override_checkbox.setVisibility(View.GONE); // no overwrite without filename
+			getPositiveButton().setEnabled(false);	// should not save without a filename
+			return;
 		}
 		
-		game.getMetaData().setFileName(fname);
-		return true;
-		
+		File wanted_file=new File(getCompleteFileName());
+		boolean target_file_exist= wanted_file.exists() ;
+		override_checkbox.setVisibility((target_file_exist && !wanted_file.isDirectory())?View.VISIBLE:View.GONE);
+		getPositiveButton().setEnabled(!target_file_exist || override_checkbox.isChecked());
 	}
+
+
+	/**
+	 * @return the filename with path and file extension - returns null when there is no filename given
+	 *  
+	 */
+	private String getCompleteFileName() {
+		String fname=fname_et.getText().toString();
+		
+		
+		if (fname.length()==0)
+			return null;
+		
+		fname+=".sgf"; // append filename extension
+		
+		if (fname.startsWith("/"))
+			return fname;
+		else
+			return context.getSettings().getSGFSavePath() +fname;
+	}
+
+
+	
 }

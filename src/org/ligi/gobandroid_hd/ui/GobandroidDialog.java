@@ -162,7 +162,7 @@ public class GobandroidDialog extends Dialog {
 				new DialogOnClickWrapper(listener));
 	}
 
-	private Button getPositiveButton() {
+	public Button getPositiveButton() {
 		if (positive_btn == null) {
 			positive_btn = new Button(getContext());
 			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
