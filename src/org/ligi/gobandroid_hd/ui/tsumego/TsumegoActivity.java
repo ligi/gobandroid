@@ -84,7 +84,8 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
 	@Override
 	protected void onDestroy() {
-		getGame().removeGoGameChangeListener(this);
+		if (getGame()!=null) // TODO investigate when game can be null here
+			getGame().removeGoGameChangeListener(this);
 		super.onDestroy();
 	}
 
