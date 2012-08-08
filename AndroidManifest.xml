@@ -163,8 +163,8 @@
                     android:scheme="file" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.recording.GameRecordActivity" >
-        </activity>
+        <activity android:name=".ui.recording.GameRecordActivity" />
+        <activity android:name=".ui.scoring.GameScoringActivity" />
         <activity android:name=".ui.review.GameReviewActivity" >
         </activity>
         <activity android:name=".ui.counting.CountGameActivity" />

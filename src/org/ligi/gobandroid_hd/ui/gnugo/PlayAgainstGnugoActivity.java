@@ -232,7 +232,9 @@ public class PlayAgainstGnugoActivity extends GoActivity  implements GoGameChang
 				} catch (Exception e) {}
 			}
 			
-			
+			if (getGame().isFinished()) {
+				switchToCounting();
+			}
 			
 		}
 		stop();

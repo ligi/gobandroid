@@ -29,9 +29,7 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMarker;
 import org.ligi.tracedroid.logging.Log;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -62,7 +60,8 @@ public class GoBoardViewHD extends View {
 	// public boolean do_mark_act=true;
 	public boolean mark_last_stone = true;
 	public boolean legend_sgf_mode = true; // GoPrefs.getLegendSGFMode()
-
+	public boolean show_area_stones = false;
+	
 	// we need a lot of paints, but so we have a efficient onDraw with less
 	// calls and the mem does not matter compared to bitmaps
 	private Paint hoshi_paint, legendPaint, blackTextPaint, whiteTextPaint,
@@ -329,7 +328,7 @@ public class GoBoardViewHD extends View {
 							hoshi_paint);
 
 				// paint the territory with alpha opaque stones
-				if (getGame().isFinished()) {
+				if (show_area_stones) {
 					if (getGame().area_assign[x][y] == GoDefinitions.PLAYER_BLACK)
 						canvas.drawBitmap(black_stone_bitmap, x * stone_size, y
 								* stone_size, opaque_paint);

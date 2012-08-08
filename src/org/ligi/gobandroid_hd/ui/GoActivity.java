@@ -37,6 +37,7 @@ import org.ligi.gobandroid_hd.ui.fragments.DefaultGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.gobandroid_hd.ui.review.BookmarkDialog;
+import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
 import org.ligi.tracedroid.logging.Log;
 
 import android.annotation.SuppressLint;
@@ -261,6 +262,10 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		case R.id.menu_game_pass:
 			getGame().pass();
 			getGame().notifyGameChange();
+
+			if (getGame().isFinished()) {
+				switchToCounting();
+			}
 			return true;
 
 		case R.id.menu_game_results:
@@ -282,14 +287,21 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		case R.id.menu_bookmark:
 			new BookmarkDialog(this).show();
 			return true;
-			
-			
+
 		case R.id.menu_game_share:
 			new ShareSGFDialog(this).show();
 			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	public void switchToCounting() {
+
+		getApp().getInteractionScope().setMode(InteractionScope.MODE_COUNT);
+		startActivity(new Intent(this, GameScoringActivity.class));
+		finish();
+
 	}
 
 	/**
@@ -425,7 +437,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		super.onPause();
 
 		try {
-			File f = new File(getSettings().getReviewPath() + "/autosave.sgf");
+			File f = new File(getSettings().getSGFSavePath() + "/autosave.sgf");
 			f.createNewFile();
 
 			FileWriter sgf_writer = new FileWriter(f);
@@ -452,12 +464,17 @@ public class GoActivity extends GobandroidFragmentActivity implements
 
 			if (go_board.move_stone_mode) {
 				// TODO check if this is an illegal move ( e.g. in variants )
-				
-				if (getGame().getVisualBoard().isCellFree(interaction_scope.getTouchX(), interaction_scope.getTouchY())) {
+
+				if (getGame().getVisualBoard().isCellFree(
+						interaction_scope.getTouchX(),
+						interaction_scope.getTouchY())) {
 					getGame().getActMove().setXY(
 							(byte) interaction_scope.getTouchX(),
 							(byte) interaction_scope.getTouchY());
-					getGame().getActMove().setDidCaptures(true); // TODO check if we harm sth with that 
+					getGame().getActMove().setDidCaptures(true); // TODO check
+																	// if we
+																	// harm sth
+																	// with that
 					getGame().refreshBoards();
 					go_board.move_stone_mode = false;
 				}
@@ -491,8 +508,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		// TODO check if we only want this in certain modes
 		if (GoPrefs.isAnnounceMoveActive()) {
 
-			new AlertDialog.Builder(this)
-					.setMessage(R.string.hint_stone_move)
+			new AlertDialog.Builder(this).setMessage(R.string.hint_stone_move)
 					.setPositiveButton(R.string.ok,
 
 					new DialogInterface.OnClickListener() {
@@ -503,6 +519,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 					}).show();
 		}
 	}
+
 	public boolean doAskToKeepVariant() {
 		return GoPrefs.isAskVariantEnabled()
 				&& getApp().getInteractionScope().ask_variant_session;

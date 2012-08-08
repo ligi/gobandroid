@@ -88,8 +88,8 @@ public class InteractionScope {
 		case InteractionScope.MODE_COUNT:
 			return R.string.count;
 		case InteractionScope.MODE_GNUGO:
-
 			return R.string.gnugo;
+
 
 		default:
 			return R.string.empty_str;

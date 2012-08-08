@@ -139,6 +139,9 @@ public class InGameActionBarView2 extends LinearLayout implements
 
 		addModeItem(content_view, InteractionScope.MODE_RECORD,
 				R.string.record, R.drawable.dashboard_record);
+		addModeItem(content_view, InteractionScope.MODE_COUNT,
+				R.string.score, R.drawable.dashboard_score);
+		
 		addModeItem(content_view, InteractionScope.MODE_REVIEW,
 				R.string.review, R.drawable.dashboard_review);
 		addModeItem(content_view, InteractionScope.MODE_TELEVIZE,

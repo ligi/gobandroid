@@ -241,34 +241,6 @@ public class GoGame {
 		if (game_finished) { // game is finished - players are amarking dead
 								// stones
 
-			if ((!calc_board.isCellFree(x, y)) || calc_board.isCellDead(x, y)) // if
-																				// there
-																				// is
-																				// a
-																				// stone/group
-				for (int xg = 0; xg < calc_board.getSize(); xg++)
-					// toggle the whole group dead TODO: should better be done
-					// via flood-fill than group compare
-					for (int yg = 0; yg < calc_board.getSize(); yg++)
-						if (groups[xg][yg] == groups[x][y])
-							calc_board.toggleCellDead(xg, yg);
-
-			buildAreaGroups();
-
-			int _dead_white = 0;
-			int _dead_black = 0;
-
-			for (int xg = 0; xg < calc_board.getSize(); xg++)
-				for (int yg = 0; yg < calc_board.getSize(); yg++)
-					if (calc_board.isCellDead(xg, yg)) {
-						if (calc_board.isCellDeadBlack(xg, yg))
-							_dead_black++;
-
-						if (calc_board.isCellDeadWhite(xg, yg))
-							_dead_white++;
-					}
-			dead_white = _dead_white;
-			dead_black = _dead_black;
 
 			return MOVE_VALID;
 		}
@@ -330,6 +302,7 @@ public class GoGame {
 		// if we reached this point this move must be valid
 		return MOVE_VALID;
 	}
+
 
 	public GoMove getActMove() {
 		return act_move;
@@ -871,7 +844,7 @@ public class GoGame {
 		return groups[x][y];
 	}
 
-		private byte getHandicap() {
+	private byte getHandicap() {
 		return handicap;
 	}
 
@@ -904,5 +877,13 @@ public class GoGame {
 
 	public Point linear_coordinate2Point(int lin) {
 		return new Point(lin % getSize(), lin / getSize());
+	}
+
+	public void setDeadWhite(int _dead_white) {
+		dead_white=_dead_white;		
+	}
+	
+	public void setDeadBlack(int _dead_white) {
+		dead_white=_dead_white;		
 	}
 }

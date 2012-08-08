@@ -227,11 +227,17 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements
 
 		Intent go_intent;
 
-		if (getApp().getInteractionScope().getMode() == InteractionScope.MODE_GNUGO)
+		switch (getApp().getInteractionScope().getMode()) {
+		
+		case InteractionScope.MODE_GNUGO:
 			go_intent = new Intent(this, PlayAgainstGnugoActivity.class);
-		else
+			break;
+		
+		default:
 			go_intent = new Intent(this, GameRecordActivity.class);
-
+			getApp().getInteractionScope().setMode(InteractionScope.MODE_RECORD);
+		}
+			
 		/*
 		 * go_intent.putExtra("size",act_size );
 		 * go_intent.putExtra("handicap",act_handicap );
