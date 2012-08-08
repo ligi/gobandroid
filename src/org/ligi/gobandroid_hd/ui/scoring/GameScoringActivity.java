@@ -81,6 +81,7 @@ public class GameScoringActivity extends GoActivity implements
 				}
 	}
 
+	@Override
 	public Fragment getGameExtraFragment() {
 		return new GameScoringExtrasFragment();
 	}
