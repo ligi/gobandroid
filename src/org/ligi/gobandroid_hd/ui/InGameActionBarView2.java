@@ -192,10 +192,10 @@ public class InGameActionBarView2 extends LinearLayout implements
 				int highlight_color = app.getResources().getColor(
 						R.color.dividing_color);
 				white_info_container.setBackgroundColor(app.getGame()
-						.isBlackToMove() ? android.R.color.transparent
+						.isBlackToMove() && (!app.getGame().isFinished())? android.R.color.transparent
 						: highlight_color);
 				black_info_container.setBackgroundColor(app.getGame()
-						.isBlackToMove() ? highlight_color
+						.isBlackToMove() || app.getGame().isFinished()? highlight_color
 						: android.R.color.transparent);
 				move_tv.setText(app.getResources().getString(R.string.move)
 						+ " " + app.getGame().getActMove().getMovePos());
