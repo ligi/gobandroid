@@ -1,5 +1,6 @@
 package org.ligi.gobandroid_hd;
 
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 
 public class InteractionScope {

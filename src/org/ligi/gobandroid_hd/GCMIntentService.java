@@ -1,5 +1,6 @@
 package org.ligi.gobandroid_hd;
 
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsForNotification;
 import org.ligi.tracedroid.logging.Log;
 
