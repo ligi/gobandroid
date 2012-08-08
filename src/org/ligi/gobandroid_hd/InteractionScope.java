@@ -3,6 +3,21 @@ package org.ligi.gobandroid_hd;
 import org.ligi.gobandroid_hd.logic.GoGame;
 
 public class InteractionScope {
+	public final static byte MODE_RECORD = 0;
+	public final static byte MODE_TSUMEGO = 1;
+	public final static byte MODE_REVIEW = 2;
+	public final static byte MODE_GNUGO = 3;
+	public final static byte MODE_TELEVIZE = 4;
+	public final static byte MODE_COUNT = 5;
+
+	public int touch_position = -1; // negative numbers -> no recent touch
+	private byte mode;
+	private boolean is_noif_mode = false;
+
+	public boolean ask_variant_session = true;
+
+	private GoGame game; // we will most likely interact with a game ;-)
+	
 	/**
 	 * set the game instance
 	 * 
@@ -21,21 +36,6 @@ public class InteractionScope {
 	public GoGame getGame() {
 		return game;
 	}
-
-	public final static byte MODE_RECORD = 0;
-	public final static byte MODE_TSUMEGO = 1;
-	public final static byte MODE_REVIEW = 2;
-	public final static byte MODE_GNUGO = 3;
-	public final static byte MODE_TELEVIZE = 4;
-	public final static byte MODE_COUNT = 5;
-
-	public int touch_position = -1; // negative numbers -> no recent touch
-	private byte mode;
-	private boolean is_noif_mode = false;
-
-	public boolean ask_variant_session = true;
-
-	private GoGame game; // we will most likely interact with a game ;-)
 
 	public void setTouchPosition(int pos) {
 		touch_position = pos;
