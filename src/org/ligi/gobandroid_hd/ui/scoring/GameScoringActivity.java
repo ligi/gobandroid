@@ -4,6 +4,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.GoActivity;
+import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
 
 import com.actionbarsherlock.view.Menu;
 
@@ -34,14 +35,28 @@ public class GameScoringActivity extends GoActivity implements
 	}
 
 	public void doTouch(MotionEvent event) {
+		super.doTouch(event);
+		
+		if (event.getAction() == MotionEvent.ACTION_UP)
+			setFragment(getGameExtraFragment());
+		else if (event.getAction() == MotionEvent.ACTION_DOWN)
+			setFragment(getZoomFragment());
+
 		// calculate position on the field by position on the touchscreen
-		getApp().getInteractionScope().setTouchPosition(getBoard().pixel2boardPos(
+	/*	getApp().getInteractionScope().setTouchPosition(getBoard().pixel2boardPos(
 				event.getX(), event.getY()));
-		if (event.getAction() == MotionEvent.ACTION_UP) {
+	*/	if (event.getAction() == MotionEvent.ACTION_UP) {
 			doMoveWithUIFeedback((byte) getApp().getInteractionScope().getTouchX(),
 					(byte) getApp().getInteractionScope().getTouchY());	
-			getApp().getInteractionScope().setTouchPosition(-1);
+		//	getApp().getInteractionScope().setTouchPosition(-1);
 		}
+	}
+	
+	@Override
+	public ZoomGameExtrasFragment getZoomFragment() {
+		if (myZoomFragment == null)
+			myZoomFragment = new ZoomGameExtrasFragment(false);
+		return myZoomFragment;
 	}
 	
 	@Override
@@ -88,6 +103,9 @@ public class GameScoringActivity extends GoActivity implements
 	
 	
 	public void do_score_touch(byte x,byte y) {
+		if ((x < 0) || (x >= getGame().getCalcBoard().getSize()) || (y < 0)
+				|| (y >= getGame().getCalcBoard().getSize()))
+		return; // not on board
 		
 		getGame().buildGroups();
 		
