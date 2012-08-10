@@ -476,8 +476,9 @@ public class GoActivity extends GobandroidFragmentActivity implements
 																	// harm sth
 																	// with that
 					getGame().refreshBoards();
-					go_board.move_stone_mode = false;
+				
 				}
+				go_board.move_stone_mode = false;
 			} else if ((getGame().getActMove().getX() == interaction_scope
 					.getTouchX())
 					&& (getGame().getActMove().getY() == interaction_scope
