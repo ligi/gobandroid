@@ -37,18 +37,22 @@ public class GameScoringActivity extends GoActivity implements
 	public void doTouch(MotionEvent event) {
 		super.doTouch(event);
 		
+		getApp().getInteractionScope().setTouchPosition(getBoard().pixel2boardPos(
+				event.getX(), event.getY()));
+		
 		if (event.getAction() == MotionEvent.ACTION_UP)
 			setFragment(getGameExtraFragment());
 		else if (event.getAction() == MotionEvent.ACTION_DOWN)
 			setFragment(getZoomFragment());
-
+		
+		refreshZoomFragment();
+		
 		// calculate position on the field by position on the touchscreen
-	/*	getApp().getInteractionScope().setTouchPosition(getBoard().pixel2boardPos(
-				event.getX(), event.getY()));
-	*/	if (event.getAction() == MotionEvent.ACTION_UP) {
+		
+		if (event.getAction() == MotionEvent.ACTION_UP) {
 			doMoveWithUIFeedback((byte) getApp().getInteractionScope().getTouchX(),
 					(byte) getApp().getInteractionScope().getTouchY());	
-		//	getApp().getInteractionScope().setTouchPosition(-1);
+			getApp().getInteractionScope().setTouchPosition(-1);
 		}
 	}
 	
