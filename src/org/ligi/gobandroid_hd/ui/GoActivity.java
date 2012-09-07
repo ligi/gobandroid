@@ -30,7 +30,6 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
-import org.ligi.gobandroid_hd.ui.alerts.GameResultsAlert;
 import org.ligi.gobandroid_hd.ui.alerts.ShareSGFDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.fragments.DefaultGameExtrasFragment;
@@ -411,6 +410,8 @@ public class GoActivity extends GobandroidFragmentActivity implements
 
 		} else if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			setFragment(getZoomFragment());
+
+			// for very small devices we want to hide the ActionBar to actually see something in the Zoom-Fragment 
 			if (getResources().getBoolean(R.bool.small))
 				this.getSupportActionBar().hide();
 
