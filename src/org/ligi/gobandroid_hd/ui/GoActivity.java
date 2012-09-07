@@ -222,6 +222,8 @@ public class GoActivity extends GobandroidFragmentActivity implements
 	}
 
 	public ZoomGameExtrasFragment getZoomFragment() {
+		
+		
 		if (myZoomFragment == null)
 			myZoomFragment = new ZoomGameExtrasFragment(true);
 		return myZoomFragment;
@@ -388,16 +390,23 @@ public class GoActivity extends GobandroidFragmentActivity implements
 	}
 
 	public void setFragment(Fragment newFragment) {
+		
+		FragmentTransaction fragmentTransAction = getSupportFragmentManager()
+				.beginTransaction();
+		
 		if (actFragment == newFragment) {
 			Log.i("GoFrag same same");
 			return;
 		}
-		Log.i("GoFrag changing" + newFragment);
+		
+		if (actFragment!=null)
+			fragmentTransAction.remove(actFragment);
+		
+		fragmentTransAction.replace(R.id.game_extra_container, newFragment);
+		
+		fragmentTransAction.commit();
+		
 		actFragment = newFragment;
-		FragmentTransaction fragmentTransAction = getSupportFragmentManager()
-				.beginTransaction();
-		fragmentTransAction.replace(R.id.game_extra_container, actFragment)
-				.commit();
 	}
 
 	@Override
@@ -421,7 +430,6 @@ public class GoActivity extends GobandroidFragmentActivity implements
 				sound_man.playSound(GoSoundManager.SOUND_PICKUP2);
 		}
 
-		Log.i("touch");
 		if (!getGame().getGoMover().isReady())
 			showInfoToast(R.string.wait_gnugo);
 		else if (getGame().getGoMover().isMoversMove())
@@ -586,9 +594,9 @@ public class GoActivity extends GobandroidFragmentActivity implements
 	public void refreshZoomFragment() {
 		if (getZoomFragment().getBoard() == null) // nothing we can do
 			return;
+
 		if (myZoomFragment.getBoard() != null)
 			myZoomFragment.getBoard().postInvalidate();
-
 	}
 
 	public GoBoardViewHD getBoard() {
