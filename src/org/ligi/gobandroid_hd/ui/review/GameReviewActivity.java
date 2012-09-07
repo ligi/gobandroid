@@ -76,13 +76,6 @@ public class GameReviewActivity extends GoActivity {
 	}
 
 	@Override
-	public ZoomGameExtrasFragment getZoomFragment() {
-		if (myZoomFragment == null)
-			myZoomFragment = new ZoomGameExtrasFragment(false);
-		return myZoomFragment;
-	}
-
-	@Override
 	public void quit(final boolean toHome) {
 		new EndReviewDialog(this).show();
 	}
