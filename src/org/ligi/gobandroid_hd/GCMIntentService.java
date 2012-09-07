@@ -1,6 +1,6 @@
 package org.ligi.gobandroid_hd;
 
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsForNotification;
 import org.ligi.tracedroid.logging.Log;
 
@@ -20,6 +20,10 @@ import android.os.Bundle;
  */
 public class GCMIntentService extends GCMBaseIntentService  {
 	      
+  public GCMIntentService() {
+    super(GobandroidConfiguration.GCM_SENDER_ID);
+  }
+  
 	@Override
 	public void onRegistered(Context context, String registrationId) {
 		Log.i("C2DM registered" + registrationId + " regid:" + registrationId ) ;
@@ -47,4 +51,5 @@ public class GCMIntentService extends GCMBaseIntentService  {
 	protected void onUnregistered(Context arg0, String arg1) {
 		
 	}
+	
 }
