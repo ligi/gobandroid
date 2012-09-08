@@ -57,6 +57,7 @@ public class PlayAgainstGnugoActivity extends GoActivity  implements GoGameChang
 				playing_black=dlg.isBlackActive() | dlg.isBothActive();
 				playing_white=dlg.isWhiteActive() | dlg.isBothActive();
 				level=(byte)dlg.getStrength();
+				dlg.saveRecentAsDefault();
 				dialog.dismiss();
 			}
 			
