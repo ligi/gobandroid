@@ -13,7 +13,8 @@
 
         <TextView
             android:id="@+id/game_size_label"
-            style="@style/topic_divider" >
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
         </TextView>
 
         <SeekBar
@@ -60,9 +61,12 @@
             </Button>
         </LinearLayout>
 
+        <include layout="@layout/horizontal_divider" />
+
         <TextView
             android:id="@+id/handicap_label"
-            style="@style/topic_divider" >
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
         </TextView>
 
         <SeekBar

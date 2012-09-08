@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.ligi.gobandroid_hd"
     android:installLocation="auto"
-    android:versionCode="101"
-    android:versionName="1.01" >
+    android:versionCode="103"
+    android:versionName="1.03" >
 
     <uses-sdk
         android:minSdkVersion="5"
@@ -36,13 +36,13 @@
         android:required="false" />
 
     <application
-        android:name=".GobandroidApp"
+        android:name="org.ligi.gobandroid_hd.GobandroidApp"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:logo="@drawable/ic_launcher"
         android:theme="@style/base_theme" >
         <activity
-            android:name=".ui.gobandroid"
+            android:name="org.ligi.gobandroid_hd.ui.gobandroid"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,7 +51,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.GobanDroidTVActivity"
+            android:name="org.ligi.gobandroid_hd.ui.GobanDroidTVActivity"
             android:icon="@drawable/gobandroid_tv"
             android:label="Gobandroid TV" >
             <intent-filter>
@@ -60,7 +60,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.GobanDroidTVActivityNOIF" >
+        <activity android:name="org.ligi.gobandroid_hd.ui.GobanDroidTVActivityNOIF" >
             <intent-filter>
                 <action android:name="org.ligi.gobandroid.NOIF" />
 
@@ -68,7 +68,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.go_terminology.GoTerminologyViewActivity"
+            android:name="org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.Transparent" >
@@ -83,20 +83,22 @@
                     android:scheme="goterm" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.gnugo.PlayAgainstGnugoActivity" >
+        <activity android:name="org.ligi.gobandroid_hd.ui.gnugo.PlayAgainstGnugoActivity" >
         </activity>
-        <activity android:name=".ui.GoSetupActivity" >
+        <activity android:name="org.ligi.gobandroid_hd.ui.GoSetupActivity" 
+            android:noHistory="true">
         </activity>
-        <activity android:name=".ui.review.GoGamePlayerActivity" >
+        <activity android:name="org.ligi.gobandroid_hd.ui.review.GoGamePlayerActivity" >
         </activity>
-        <activity android:name=".ui.sgf_listing.SGFSDCardListActivity" >
+        <activity android:name="org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity" >
         </activity>
-        <activity android:name=".ui.links.LinksActivity" >
+        <activity android:name="org.ligi.gobandroid_hd.ui.links.LinksActivity" >
         </activity>
-        <activity android:name=".ui.tsumego.TsumegoActivity" >
+        <activity android:name="org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity" 
+            android:exported="true">
         </activity>
-        <activity android:name=".ui.SGFLoadActivity" />
-        <activity android:name=".ui.SGFLoadFromExternalActivity" >
+        <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadActivity" />
+        <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadFromExternalActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -150,7 +152,7 @@
                 <data android:mimeType="application/x-go-sgf" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.GoLinkLoadActivity" >
+        <activity android:name="org.ligi.gobandroid_hd.ui.GoLinkLoadActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -163,21 +165,21 @@
                     android:scheme="file" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.recording.GameRecordActivity" />
-        <activity android:name=".ui.scoring.GameScoringActivity" />
-        <activity android:name=".ui.review.GameReviewActivity" >
+        <activity android:name="org.ligi.gobandroid_hd.ui.recording.GameRecordActivity" />
+        <activity android:name="org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity" />
+        <activity android:name="org.ligi.gobandroid_hd.ui.review.GameReviewActivity" >
         </activity>
-        <activity android:name=".ui.counting.CountGameActivity" />
-        <activity android:name=".ui.GoPrefsActivity" >
+        <activity android:name="org.ligi.gobandroid_hd.ui.counting.CountGameActivity" />
+        <activity android:name="org.ligi.gobandroid_hd.ui.GoPrefsActivity" >
         </activity>
-        <activity android:name=".ui.LoadActionsActivity" >
+        <activity android:name="org.ligi.gobandroid_hd.ui.LoadActionsActivity" >
         </activity>
-        <activity android:name=".ui.SGFOnlineListActivity" >
+        <activity android:name="org.ligi.gobandroid_hd.ui.SGFOnlineListActivity" >
         </activity>
-        <activity android:name=".ui.GoActivity" >
+        <activity android:name="org.ligi.gobandroid_hd.ui.GoActivity" >
         </activity>
 
-        <service android:name=".GCMIntentService" />
+        <service android:name="org.ligi.gobandroid_hd.GCMIntentService" />
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"

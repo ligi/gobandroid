@@ -83,21 +83,11 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements
 		this.setContentView(R.layout.game_setup);
 		this.setTitle(R.string.board_setup);
 
-		switch (getApp().getInteractionScope().getMode()) {
-		case InteractionScope.MODE_GNUGO:
-			getSupportActionBar().setSubtitle(R.string.for_gnugo);
-			break;
 
-		default:
-			Log.w("Setting up a GoBoard for a weird mode");
-
-		case InteractionScope.MODE_RECORD:
-			getSupportActionBar().setSubtitle(R.string.for_recording);
-			break;
-		}
 
 	}
 
+	
 	private void setup_board() {
 		board = findById(R.id.go_board);
 
@@ -122,8 +112,20 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.i("GoSetup Resume");
 
+		switch (getApp().getInteractionScope().getMode()) {
+		case InteractionScope.MODE_GNUGO:
+			getSupportActionBar().setSubtitle(R.string.for_gnugo);
+			break;
+
+		default:
+			Log.w("Setting up a GoBoard for a weird mode");
+
+		case InteractionScope.MODE_RECORD:
+			getSupportActionBar().setSubtitle(R.string.for_recording);
+			break;
+		}
+		
 		setup_board();
 
 		size_seek = findById(R.id.size_slider);
@@ -249,6 +251,8 @@ public class GoSetupActivity extends GobandroidFragmentActivity implements
 		 */
 		EasyTracker.getTracker().trackEvent("ui_event", "setup_board",
 				"" + act_size, null);
+		go_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		go_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(go_intent);
 	}
 

@@ -74,4 +74,6 @@ android:padding="3dp"
 	    android:layout_marginBottom="5dp"
 	    />
 			
+	include layout="@layout/horizontal_divider" />
+	
 </LinearLayout> 
