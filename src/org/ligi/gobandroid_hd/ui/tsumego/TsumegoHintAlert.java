@@ -20,7 +20,7 @@ public class TsumegoHintAlert {
         		public void onClick(DialogInterface dialog, int item) {
         			switch(item) {
         			case 0:
-        				mark_path(finishing_move,true,activity.getGame());
+        				mark_path(finishing_move,false,activity.getGame());
         				break;
 
         			case 1:
