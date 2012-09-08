@@ -12,3 +12,7 @@
 <img src="https://lh4.ggpht.com/x1AoZrUxV0UfDIlqZ2B8UQsJY2FDslSrzoU5BakcHr8DRJgBQqiwRIdZaG760cPZ-rU"/>
 <img src="https://lh5.ggpht.com/bSZvYYpXr8uOgr7mTZbWdw_rCPf2Z82BvIhwJfWVgGYxbELdRJMpeL71P7Foo33tvKg"/>
 <img src="https://lh5.ggpht.com/72-MjQ7q30fH1fljIjJJMaNJ65YkJePxBwLgiwXPpfFtU0HB6qApjRYH-bm2xaK4Uw"/>
+
+### Build / Dependencies
+
+ gobandroid depends on ActionbarSherlock 4.1.0 https://github.com/JakeWharton/ActionBarSherlock
