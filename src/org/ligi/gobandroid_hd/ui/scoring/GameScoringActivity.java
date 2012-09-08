@@ -5,6 +5,7 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
+import org.ligi.tracedroid.Log;
 
 import com.actionbarsherlock.view.Menu;
 
@@ -35,7 +36,7 @@ public class GameScoringActivity extends GoActivity implements
 	}
 
 	public void doTouch(MotionEvent event) {
-		super.doTouch(event);
+		//super.doTouch(event); - Do not call! Not needed and breaks marking dead stones
 		
 		getApp().getInteractionScope().setTouchPosition(getBoard().pixel2boardPos(
 				event.getX(), event.getY()));
@@ -54,6 +55,8 @@ public class GameScoringActivity extends GoActivity implements
 					(byte) getApp().getInteractionScope().getTouchY());	
 			getApp().getInteractionScope().setTouchPosition(-1);
 		}
+		
+ 
 	}
 	
 	@Override
@@ -108,22 +111,22 @@ public class GameScoringActivity extends GoActivity implements
 	
 	public void do_score_touch(byte x,byte y) {
 		if ((x < 0) || (x >= getGame().getCalcBoard().getSize()) || (y < 0)
-				|| (y >= getGame().getCalcBoard().getSize()))
-		return; // not on board
+				|| (y >= getGame().getCalcBoard().getSize())) {
+			Log.w("score touch not on board");
+			return; // not on board
+		}
 		
 		getGame().buildGroups();
 		
 		if ((!getGame().getCalcBoard().isCellFree(x, y)) || getGame().getCalcBoard().isCellDead(x, y)) // if
-																			// there
-																			// is
-																			// a
-																			// stone/group
+																			// there is a stone/group
 			for (byte xg = 0; xg < getGame().getCalcBoard().getSize(); xg++)
 				// toggle the whole group dead TODO: should better be done
 				// via flood-fill than group compare
 				for (byte yg = 0; yg < getGame().getCalcBoard().getSize(); yg++)
-					if (getGame().getGroup(xg,yg) == getGame().getGroup(x,y))
+					if (getGame().getGroup(xg,yg) == getGame().getGroup(x,y)) {
 						getGame().getCalcBoard().toggleCellDead(xg, yg);
+					}
 
 		getGame().buildAreaGroups();
 
