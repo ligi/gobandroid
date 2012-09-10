@@ -21,6 +21,7 @@ package org.ligi.gobandroid_hd.logic;
 
 import java.util.Vector;
 
+import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.tracedroid.logging.Log;
 
 /**

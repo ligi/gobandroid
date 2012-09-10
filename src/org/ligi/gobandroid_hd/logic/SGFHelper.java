@@ -24,6 +24,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Vector;
+
+import org.ligi.gobandroid_hd.logic.markers.CircleMarker;
+import org.ligi.gobandroid_hd.logic.markers.GoMarker;
+import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
+import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
 import org.ligi.tracedroid.logging.Log;
 
 /**
@@ -303,23 +308,20 @@ public class SGFHelper {
 
 							// mark with triangle
 							if (act_cmd.equals("TR")) {
-								String mark = "\u25b3";
 								game.getActMove().addMarker(
-										new GoMarker(param_x, param_y, mark));
+										new TriangleMarker(param_x, param_y));
 							}
 
 							// mark with square
 							if (act_cmd.equals("SQ")) {
-								String mark = "\u25a1";
 								game.getActMove().addMarker(
-										new GoMarker(param_x, param_y, mark));
+										new SquareMarker(param_x, param_y));
 							}
 
 							// mark with circle
 							if (act_cmd.equals("CR")) {
-								String mark = "\u25cb";
 								game.getActMove().addMarker(
-										new GoMarker(param_x, param_y, mark));
+										new CircleMarker(param_x, param_y));
 							}
 
 							if (act_cmd.equals("GN")) // Game Name
