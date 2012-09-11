@@ -3,8 +3,8 @@ package org.ligi.gobandroid_hd.ui.tsumego;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoMarker;
 import org.ligi.gobandroid_hd.logic.GoMove;
+import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
 import android.app.AlertDialog;
