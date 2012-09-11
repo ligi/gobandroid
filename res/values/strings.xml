@@ -169,4 +169,6 @@
   <string name="overwrite_existing_file">Overwrite existing File</string>
   <string name="share">Share</string>
   <string name="score">Score</string>
+  <string name="edit">Edit</string>
+  <string name="play">Play</string>
 </resources>

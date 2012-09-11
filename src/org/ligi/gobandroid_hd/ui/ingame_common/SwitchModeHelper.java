@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui.ingame_common;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.editing.EditGameActivity;
 import org.ligi.gobandroid_hd.ui.gnugo.PlayAgainstGnugoActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 import org.ligi.gobandroid_hd.ui.review.GameReviewActivity;
@@ -15,6 +16,10 @@ public class SwitchModeHelper {
 	
 	public static Intent getIntentByMode(Context ctx,int mode) {
 		switch (mode) {
+
+		case InteractionScope.MODE_EDIT:
+			return  new Intent(ctx,EditGameActivity.class);
+
 		case InteractionScope.MODE_RECORD:
 			return  new Intent(ctx,GameRecordActivity.class);
 

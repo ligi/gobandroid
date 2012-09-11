@@ -90,6 +90,8 @@
         </activity>
         <activity android:name="org.ligi.gobandroid_hd.ui.review.GoGamePlayerActivity" >
         </activity>
+        <activity android:name="org.ligi.gobandroid_hd.ui.editing.EditGameActivity" >
+        </activity>
         <activity android:name="org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity" >
         </activity>
         <activity android:name="org.ligi.gobandroid_hd.ui.links.LinksActivity" >

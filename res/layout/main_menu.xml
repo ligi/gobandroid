@@ -10,7 +10,7 @@
 
     <Button android:id="@+id/home_btn_record"
         style="@style/DashboardButton"
-        android:text="@string/record_game"
+        android:text="@string/play"
         android:drawableTop="@drawable/dashboard_record_item"
         android:onClick="recordGame" />
     

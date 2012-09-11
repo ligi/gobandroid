@@ -10,6 +10,8 @@ public class InteractionScope {
 	public final static byte MODE_GNUGO = 3;
 	public final static byte MODE_TELEVIZE = 4;
 	public final static byte MODE_COUNT = 5;
+	public final static byte MODE_EDIT = 6;
+	
 
 	public int touch_position = -1; // negative numbers -> no recent touch
 	private byte mode;
@@ -83,15 +85,15 @@ public class InteractionScope {
 		case InteractionScope.MODE_REVIEW:
 			return R.string.review;
 		case InteractionScope.MODE_RECORD:
-			return R.string.record;
+			return R.string.play;
 		case InteractionScope.MODE_TELEVIZE:
 			return R.string.go_tv;
 		case InteractionScope.MODE_COUNT:
 			return R.string.count;
 		case InteractionScope.MODE_GNUGO:
 			return R.string.gnugo;
-
-
+		case InteractionScope.MODE_EDIT:
+			return R.string.edit;
 		default:
 			return R.string.empty_str;
 		}
