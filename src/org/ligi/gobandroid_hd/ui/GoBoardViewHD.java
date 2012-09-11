@@ -26,7 +26,7 @@ import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoMarker;
+import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.tracedroid.logging.Log;
 
 import android.content.Context;
