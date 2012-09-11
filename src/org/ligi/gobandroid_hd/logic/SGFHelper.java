@@ -62,7 +62,7 @@ public class SGFHelper {
 				if (act_move.isPassMove())
 					res += "[]";
 				else
-					res += coords2SGFFragment(+act_move.getX(), act_move.getY())
+					res += coords2SGFFragment(act_move.getX(), act_move.getY())
 							+ "\n";
 			}
 
@@ -70,6 +70,19 @@ public class SGFHelper {
 			if (!act_move.getComment().equals(""))
 				res += "C[" + act_move.getComment() + "]\n";
 
+			// add markers
+			for(GoMarker marker : act_move.getMarkers()) {
+				if (marker instanceof SquareMarker) {
+					res += "SQ" +coords2SGFFragment(marker.getX(),marker.getY());
+				} else if (marker instanceof TriangleMarker) {
+						res += "TR" +coords2SGFFragment(marker.getX(),marker.getY());
+				} else if (marker instanceof CircleMarker) {
+					res += "CR" +coords2SGFFragment(marker.getX(),marker.getY());
+				} else {
+					res += "LB" +coords2SGFFragment(marker.getX(),marker.getY()).replace("]",":"+marker.getText()+"]");
+				}
+			}
+			
 			GoMove next_move = null;
 
 			if (act_move.hasNextMove()) {
@@ -294,8 +307,8 @@ public class SGFHelper {
 							if (act_cmd.equals("LB")) {
 								String[] inner = act_param.split(":");
 								String txt = "X";
-								if (inner.length > 1)
-									txt = inner[1];
+								//if (inner.length > 1) TODO check why this was done once
+								txt = inner[1];
 
 								game.getActMove().addMarker(
 										new GoMarker(param_x, param_y, txt));
