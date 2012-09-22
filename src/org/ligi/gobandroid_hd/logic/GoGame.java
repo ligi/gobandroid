@@ -883,7 +883,7 @@ public class GoGame {
 		dead_white=_dead_white;		
 	}
 	
-	public void setDeadBlack(int _dead_white) {
-		dead_white=_dead_white;		
+	public void setDeadBlack(int _dead_black) {
+		dead_black=_dead_black;		
 	}
 }
