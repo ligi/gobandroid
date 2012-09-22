@@ -171,4 +171,6 @@
   <string name="score">Score</string>
   <string name="edit">Edit</string>
   <string name="play">Play</string>
+  <string name="setup">Setup</string>
+  <string name="load">Load</string>
 </resources>

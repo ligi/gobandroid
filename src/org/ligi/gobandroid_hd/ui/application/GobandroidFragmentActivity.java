@@ -71,9 +71,10 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
 	    switch (item.getItemId()) {
 	        case android.R.id.home:
 	            // app icon in action bar clicked; go home
-	            Intent intent = new Intent(this, gobandroid.class);
+	            /*Intent intent = new Intent(this, gobandroid.class);
 	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	            startActivity(intent);
+	            startActivity(intent);*/
+	        		finish();
 	            return true;
 	    }
 	    return super.onOptionsItemSelected(item);

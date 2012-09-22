@@ -2,7 +2,7 @@ package org.ligi.gobandroid_hd;
 
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsForNotification;
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.tracedroid.logging.Log;
 
 import com.google.analytics.tracking.android.EasyTracker;

@@ -63,8 +63,6 @@ public class GoGame {
 	private GoBoard pre_last_board; // board to detect KO situations
 	private GoBoard handicap_board;
 
-	private boolean last_action_was_pass = false;
-
 	private boolean game_finished = false;
 
 	private int[][] groups; // array to build groups
@@ -106,11 +104,30 @@ public class GoGame {
 
 	private int local_captures = 0;
 
+	public void setGame(GoGame game) {
+		all_handicap_positions=game.all_handicap_positions;
+		handicap=game.handicap;
+		komi=game.komi;
+		visual_board=game.visual_board;
+		calc_board=game.calc_board;
+		last_board=game.last_board;
+		pre_last_board=game.pre_last_board;
+		handicap_board=game.handicap_board;
+		act_move=game.act_move;
+		groups=game.groups;
+		area_groups=game.area_groups; 
+		area_assign=game.area_assign; 
+	}
+	
 	public GoGame(byte size) {
 		this(size, (byte) 0);
 	}
 
 	public GoGame(byte size, byte handicap) {
+		init(size,handicap);
+	}
+	
+	public void init(byte size, byte handicap) {
 
 		this.handicap = handicap;
 
@@ -195,12 +212,11 @@ public class GoGame {
 	}
 
 	public void pass() {
-		if (last_action_was_pass) { // finish game if both passed
+		if (act_move.isPassMove()) { // finish game if both passed
 			game_finished = true;
 			buildGroups();
 			buildAreaGroups();
 		} else {
-			last_action_was_pass = true;
 
 			act_move = new GoMove(act_move);
 			act_move.setToPassMove();
@@ -287,7 +303,6 @@ public class GoGame {
 		pre_last_board = last_board.clone();
 		last_board = calc_board.clone();
 		visual_board = calc_board.clone();
-		last_action_was_pass = false;
 
 		act_move = new GoMove(x, y, act_move);
 		
@@ -426,7 +441,6 @@ public class GoGame {
 			return;
 		}
 
-		last_action_was_pass = false;
 		clear_calc_board();
 
 		Vector<GoMove> replay_moves = new Vector<GoMove>();
@@ -813,10 +827,6 @@ public class GoGame {
 		return calc_board;
 	}
 
-	public boolean isLastActionPass() {
-		return last_action_was_pass;
-	}
-
 	public boolean isFinished() {
 		return game_finished;
 	}
@@ -844,7 +854,7 @@ public class GoGame {
 		return groups[x][y];
 	}
 
-	private byte getHandicap() {
+	public byte getHandicap() {
 		return handicap;
 	}
 

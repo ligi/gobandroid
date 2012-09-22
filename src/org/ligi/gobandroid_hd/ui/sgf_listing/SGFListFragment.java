@@ -2,7 +2,7 @@ package org.ligi.gobandroid_hd.ui.sgf_listing;
 
 import java.io.File;
 
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.ui.GoLinkLoadActivity;

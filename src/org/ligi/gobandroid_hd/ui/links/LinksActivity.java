@@ -21,7 +21,7 @@ package org.ligi.gobandroid_hd.ui.links;
 
 import org.ligi.android.common.adapter.LinkWithDescription;
 import org.ligi.android.common.adapter.LinkWithDescriptionAndTitle;
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
 

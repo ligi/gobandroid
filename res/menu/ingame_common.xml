@@ -7,7 +7,10 @@
 <item android:title="@string/game_info" android:id="@+id/menu_game_info" android:icon="@drawable/info" android:showAsAction="ifRoom|withText"></item>
 <!-- 
 <item android:title="@string/game_mode" android:id="@+id/menu_game_switchmode" android:icon="@drawable/mode" android:showAsAction="ifRoom|withText"></item>
+
  -->
-<item android:id="@+id/preferences" android:title="@string/preferences" android:icon="@android:drawable/ic_menu_preferences"></item>
-       
+<item android:id="@+id/load_game" android:title="@string/load" android:showAsAction="never"/>
+<item android:id="@+id/preferences" android:title="@string/preferences" android:showAsAction="never"/>
+<item android:id="@+id/links" android:title="@string/links" android:showAsAction="never"/>
+
 </menu>

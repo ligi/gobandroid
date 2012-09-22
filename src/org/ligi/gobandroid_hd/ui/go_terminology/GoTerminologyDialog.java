@@ -1,7 +1,7 @@
 package org.ligi.gobandroid_hd.ui.go_terminology;
 
 import java.util.HashMap;
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.tracedroid.logging.Log;
 import android.app.Activity;

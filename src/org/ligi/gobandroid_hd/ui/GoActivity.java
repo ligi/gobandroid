@@ -26,7 +26,7 @@ import java.io.IOException;
 
 import org.ligi.android.common.activitys.ActivityOrientationLocker;
 import org.ligi.gobandroid_hd.InteractionScope;
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
@@ -34,15 +34,18 @@ import org.ligi.gobandroid_hd.ui.alerts.ShareSGFDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.fragments.DefaultGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
+import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.gobandroid_hd.ui.review.BookmarkDialog;
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
+import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
 import org.ligi.tracedroid.logging.Log;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -101,6 +104,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		}
 
 		if (getGame() == null) { // cannot do anything without a game
+			Log.w("finish()ing " + this + " cuz getGame()==null");
 			finish();
 			return;
 		}
@@ -215,15 +219,13 @@ public class GoActivity extends GobandroidFragmentActivity implements
 
 			@Override
 			public void run() {
-				sound_man.playSound(GoSoundManager.SOUND_START);
+				//sound_man.playSound(GoSoundManager.SOUND_START);
 			}
 
 		}, 100);
 	}
 
 	public ZoomGameExtrasFragment getZoomFragment() {
-		
-		
 		if (myZoomFragment == null)
 			myZoomFragment = new ZoomGameExtrasFragment(true);
 		return myZoomFragment;
@@ -252,6 +254,18 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		case R.id.menu_game_info:
 			new GameInfoAlert(this, getGame()).show();
 			return true;
+			
+		case R.id.load_game:
+			Intent i = new Intent(this, SGFSDCardListActivity.class);
+			i.setData((Uri.parse("file://" + getApp().getSettings().getSGFBasePath())));
+			startActivity(i);
+			finish();
+			break;
+
+		case R.id.links:
+			startActivity(new Intent(this, LinksActivity.class));
+			finish();
+			break;
 
 		case R.id.menu_game_undo:
 			if (!getGame().canUndo())
@@ -315,12 +329,12 @@ public class GoActivity extends GobandroidFragmentActivity implements
 	}
 
 	private void shutdown(boolean toHome) {
-		sound_man.playSound(GoSoundManager.SOUND_END);
+		//sound_man.playSound(GoSoundManager.SOUND_END);
 		getGame().getGoMover().stop();
 		finish();
 
 		if (toHome) {
-			startActivity(new Intent(this, gobandroid.class));
+			//startActivity(new Intent(this, gobandroid.class));
 		}
 	}
 
@@ -365,12 +379,12 @@ public class GoActivity extends GobandroidFragmentActivity implements
 	 * 
 	 * @param resId
 	 **/
-	public void showInfoToast(int resId) {
+	protected void showInfoToast(int resId) {
 		info_toast.setText(resId);
 		info_toast.show();
 	}
 
-	public byte doMoveWithUIFeedback(byte x, byte y) {
+	protected byte doMoveWithUIFeedback(byte x, byte y) {
 		info_toast.cancel();
 		byte res = getGame().do_move(x, y);
 		switch (res) {
@@ -419,7 +433,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 
 		} else if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			setFragment(getZoomFragment());
-
+			
 			// for very small devices we want to hide the ActionBar to actually see something in the Zoom-Fragment 
 			if (getResources().getBoolean(R.bool.small))
 				this.getSupportActionBar().hide();
@@ -437,7 +451,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		else
 			doTouch(event);
 
-		// updateControlsStatus();
+		//refreshZoomFragment();
 		return true;
 	}
 
@@ -500,7 +514,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 			interaction_scope.setTouchPosition(-1);
 
 		}
-
+		
 		getGame().notifyGameChange();
 	}
 
@@ -613,9 +627,5 @@ public class GoActivity extends GobandroidFragmentActivity implements
 			getGame().undo(GoPrefs.isKeepVariantEnabled());
 	}
 
-	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
-	}
-
+	
 }

@@ -1,6 +1,6 @@
 package org.ligi.gobandroid_hd.ui.gnugo;
 
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import android.content.Context;
 import android.content.SharedPreferences;

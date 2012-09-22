@@ -19,7 +19,7 @@
 
 package org.ligi.gobandroid_hd.ui;
 
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 
 import android.app.Activity;
 import android.content.Context;

@@ -23,7 +23,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import org.ligi.gobandroid_hd.GobandroidApp;
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
@@ -162,8 +162,9 @@ public class GoBoardViewHD extends View {
 		setFocusable(true);
 		setGridEmboss(true);
 
-		if (getGame() == null)
+/*		if (getGame() == null)
 			getApp().getInteractionScope().setGame(new GoGame((byte) 19));
+			*/
 	}
 
 	public GoGame getGame() {
@@ -473,8 +474,10 @@ public class GoBoardViewHD extends View {
 	public void boardSizeChanged() {
 		setSize(this.getWidth(), this.getHeight());
 	}
-
 	
+	public void regenerateStroneImagesWithNewSize() {
+		setSize(getWidth(),getHeight());
+	}
 
 	public void setRegenerataStonesFlag(boolean new_flag) {
 		regenerate_stones_flag = new_flag;

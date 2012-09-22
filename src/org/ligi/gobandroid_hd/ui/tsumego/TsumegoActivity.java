@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import org.ligi.android.common.dialogs.ActivityFinishOnDialogClickListener;
 import org.ligi.android.common.dialogs.DialogDiscarder;
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoMove;
@@ -40,7 +40,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 			EasyTracker.getTracker().trackException(
 					"tsumego start getGame() returned null in onCreate", false);
 			finish();
-			startActivity(new Intent(this, gobandroid.class));
+			//startActivity(new Intent(this, gobandroid.class));
 			return;
 		}
 
@@ -127,7 +127,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 			EasyTracker.getTracker().trackException(
 					"tsumego start getGame() returned null in onCreate", false);
 			finish();
-			startActivity(new Intent(this, gobandroid.class));
+			//startActivity(new Intent(this, gobandroid.class));
 			return super.onCreateOptionsMenu(menu);
 		}
 

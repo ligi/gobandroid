@@ -1,6 +1,6 @@
 package org.ligi.gobandroid_hd.ui.gnugo;
 
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.logic.GTPHelper;
 import org.ligi.gobandroid_hd.logic.GoBoard;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
@@ -25,6 +25,12 @@ import android.support.v4.app.Fragment;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+/**
+ * the central Application-Context
+ * 
+ * @author ligi
+ * 
+ */
 public class PlayAgainstGnugoActivity extends GoActivity  implements GoGameChangeListener,Runnable {
 
 	private IGnuGoService gnu_service ;
@@ -40,7 +46,7 @@ public class PlayAgainstGnugoActivity extends GoActivity  implements GoGameChang
 	
 	public final static String INTENT_ACTION="org.ligi.gobandroidhd.ai.gnugo.GnuGoService";
 	
-    @Override
+  @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// TODO the next line works but needs investigation - i thought more of getBoard().requestFocus(); - but that was not working ..
@@ -74,7 +80,7 @@ public class PlayAgainstGnugoActivity extends GoActivity  implements GoGameChang
 		});
 		dlg.show();
 		
-    }		
+  }		
     
 	@Override
 	protected void onResume() {

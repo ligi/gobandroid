@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui.recording;
 
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.InteractionScope;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.GoActivity;
@@ -23,6 +24,7 @@ public class GameRecordActivity extends GoActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getApp().getInteractionScope().setMode(InteractionScope.MODE_RECORD);
 		// TODO the next line works but needs investigation - i thought more of
 		// getBoard().requestFocus(); - but that was not working ..
 		getWindow().setSoftInputMode(
@@ -68,6 +70,7 @@ public class GameRecordActivity extends GoActivity implements
 		this.invalidateOptionsMenu();
 	}
 
+	@Override
 	public Fragment getGameExtraFragment() {
 		return new RecordingGameExtrasFragment();
 	}
