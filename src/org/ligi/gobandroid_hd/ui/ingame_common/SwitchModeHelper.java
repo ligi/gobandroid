@@ -46,6 +46,12 @@ public class SwitchModeHelper {
 			return null;
 		}
 	}
+	
+	/**
+	 * 
+	 * @param activity - context 
+	 * @param mode - new mode
+	 */
 	public static void startGame(GobandroidFragmentActivity activity,byte mode) {
 		activity.getApp().getInteractionScope().setMode(mode);
 		activity.startActivity(getIntentByMode(activity, mode));
