@@ -1,16 +1,21 @@
 package org.ligi.gobandroid_hd.ui.review;
 
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GoActivity;
+import org.ligi.gobandroid_hd.ui.GobanDroidTVActivity;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.gobandroid_hd.ui.fragments.NavigationAndCommentFragment;
-import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
-import com.actionbarsherlock.view.MenuItem;
+import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.actionbarsherlock.view.MenuItem;
 
 public class GameReviewActivity extends GoActivity {
 
@@ -45,6 +50,15 @@ public class GameReviewActivity extends GoActivity {
 
 		if (event.getAction() == KeyEvent.ACTION_DOWN)
 			switch (keyCode) {
+
+			case KeyEvent.KEYCODE_BOOKMARK:
+				new BookmarkDialog(this).show();
+				return true;
+			
+			case KeyEvent.KEYCODE_MEDIA_PLAY:
+				SwitchModeHelper.startGame(this, InteractionScope.MODE_TELEVIZE);
+				return true;
+			
 			case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
 			case KeyEvent.KEYCODE_DPAD_LEFT:
 				if (!getGame().canUndo())

@@ -1,12 +1,14 @@
 package org.ligi.gobandroid_hd.ui.review;
 
 import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GobanDroidTVActivity;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.gobandroid_hd.ui.fragments.CommentAndNowPlayingFragment;
+import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.tracedroid.logging.Log;
 
 import com.actionbarsherlock.view.Menu;
@@ -166,6 +168,10 @@ public class GoGamePlayerActivity extends GoActivity {
 
 		if (event.getAction() == KeyEvent.ACTION_DOWN)
 			switch (keyCode) {
+			case KeyEvent.KEYCODE_MEDIA_PAUSE:
+				SwitchModeHelper.startGame(this, InteractionScope.MODE_REVIEW);
+				return true;
+			
 			case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
 			case KeyEvent.KEYCODE_DPAD_LEFT:
 				if (!getGame().canUndo())
