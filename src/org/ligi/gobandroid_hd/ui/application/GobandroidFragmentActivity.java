@@ -4,9 +4,7 @@ import java.lang.reflect.Field;
 
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.ui.gobandroid;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
