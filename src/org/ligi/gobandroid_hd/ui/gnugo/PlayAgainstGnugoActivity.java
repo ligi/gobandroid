@@ -323,4 +323,8 @@ public class PlayAgainstGnugoActivity extends GoActivity  implements GoGameChang
 		}		
 
 	}
+	
+	public boolean doAutosave() {
+		return true;
+	}
 }

@@ -9,10 +9,10 @@ import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 
-import com.actionbarsherlock.view.Menu;
-
 import android.os.Bundle;
 import android.view.WindowManager;
+
+import com.actionbarsherlock.view.Menu;
 
 /**
  * Activity to record a Game - or play on one device
@@ -55,6 +55,10 @@ public class EditGameActivity extends GoActivity implements
 				return ""+(char)('A'+i);
 		}
 		return "a"; // should not happen - only if a hundret markers			
+	}
+
+	public boolean doAutosave() {
+		return true;
 	}
 	
 	@Override

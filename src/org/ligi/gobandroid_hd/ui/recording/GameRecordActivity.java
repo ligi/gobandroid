@@ -62,8 +62,31 @@ public class GameRecordActivity extends GoActivity implements
 	public boolean onCreateOptionsMenu(Menu menu) {
 		this.getSupportMenuInflater().inflate(R.menu.ingame_record, menu);
 		return super.onCreateOptionsMenu(menu);
+
 	}
 
+	public boolean doAutosave() {
+		return true;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public void onGoGameChange() {
 		super.onGoGameChange();

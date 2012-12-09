@@ -9,6 +9,8 @@ import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 
+import com.actionbarsherlock.view.MenuItem;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +25,8 @@ import android.widget.TextView;
 
 public class GameSetupFragment extends GobandroidFragment implements OnSeekBarChangeListener, OnClickListener {
 
-	private byte act_size = 9;
-	private byte act_handicap = 0;
+	public byte act_size = 9;
+	public byte act_handicap = 0;
 
 	private final static int size_offset = 2;
 
@@ -158,5 +160,7 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
 		// TODO Auto-generated method stub
 		
 	}
+	
+
 
 }

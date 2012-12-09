@@ -49,6 +49,7 @@ import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.application.MenuDrawer;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 import org.ligi.tracedroid.logging.Log;
@@ -81,7 +82,9 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		new MenuDrawer(this);
+		setContentView(new LinearLayout(this));
+		
 		GoPrefs.init(this);
 
 		progress = new ProgressBar(this, null,
@@ -198,7 +201,8 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
 			Log.i("got sgf content:" + sgf);
 			game = SGFHelper.sgf2game(sgf, this);
-
+			
+			
 			// if it is a tsumego and we need a transformation to right corner
 			// -> do so
 			if (getApp().getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
@@ -208,7 +212,9 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 					game = SGFHelper.sgf2game(sgf, null,
 							SGFHelper.BREAKON_NOTHING, transform);
 			}
-
+			
+			
+			
 		} catch (Exception e) {
 			Log.w("exception in load", e);
 			game=null;

@@ -266,6 +266,10 @@ public class CopyOfGoSetupActivity extends GoActivity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.menu_clear_board:
+			getApp().getInteractionScope().setGame(
+					new GoGame(act_size, act_handicap));
+			break;
 		case R.id.menu_start:
 			start_game();
 

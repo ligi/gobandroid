@@ -62,9 +62,7 @@ public class GoGame {
 	private GoBoard last_board; // board to detect KO situations
 	private GoBoard pre_last_board; // board to detect KO situations
 	private GoBoard handicap_board;
-
-	private boolean game_finished = false;
-
+	
 	private int[][] groups; // array to build groups
 
 	public int[][] area_groups; // array to build groups
@@ -105,6 +103,7 @@ public class GoGame {
 	private int local_captures = 0;
 
 	public void setGame(GoGame game) {
+		metadata=game.getMetaData();
 		all_handicap_positions=game.all_handicap_positions;
 		handicap=game.handicap;
 		komi=game.komi;
@@ -213,11 +212,12 @@ public class GoGame {
 
 	public void pass() {
 		if (act_move.isPassMove()) { // finish game if both passed
-			game_finished = true;
+			act_move = new GoMove(act_move);
+			act_move.setToPassMove();
+			
 			buildGroups();
 			buildAreaGroups();
 		} else {
-
 			act_move = new GoMove(act_move);
 			act_move.setToPassMove();
 		}
@@ -254,7 +254,7 @@ public class GoGame {
 			return MOVE_VALID;
 		}
 
-		if (game_finished) { // game is finished - players are amarking dead
+		if (isFinished()) { // game is finished - players are amarking dead
 								// stones
 
 
@@ -383,8 +383,7 @@ public class GoGame {
 		if (!keep_move)
 			mLastMove.destroy();
 		getGoMover().undo();
-		game_finished = false;
-
+		
 		getGoMover().paused = false;
 	}
 
@@ -828,7 +827,15 @@ public class GoGame {
 	}
 
 	public boolean isFinished() {
-		return game_finished;
+		if (getActMove().isFirstMove())
+			return false;
+		
+		// need at least 2 moves to finish a game ( 2 passes )
+		if (getActMove().getParent()==null) 
+			return false;
+		
+		// w passes
+		return getActMove().isPassMove() && getActMove().getParent().isPassMove();
 	}
 
 	/**

@@ -22,6 +22,7 @@ package org.ligi.gobandroid_hd.ui;
 import org.ligi.android.common.preferences.SetPreferenceEnabledByCheckBoxPreferenceState;
 import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
+import org.ligi.gobandroid_hd.ui.application.MenuDrawer;
 
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -35,6 +36,7 @@ import android.preference.PreferenceScreen;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gcm.GCMRegistrar;
+import com.slidingmenu.lib.app.SlidingPreferenceActivity;
 
 /**
  * Activity to edit the gobandroid game preferences
@@ -43,7 +45,7 @@ import com.google.android.gcm.GCMRegistrar;
  * 
  *         This software is licenced with GPLv3
  */
-public class GoPrefsActivity extends SherlockPreferenceActivity implements
+public class GoPrefsActivity extends SlidingPreferenceActivity implements
 		OnPreferenceChangeListener {
 
 	private ListPreference viewDistPref;
@@ -56,9 +58,10 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements
 	private CheckBoxPreference doLegendCheckBoxPref;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		new MenuDrawer(this);
+		
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		setPreferenceScreen(createPreferenceHierarchy());
@@ -67,6 +70,7 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements
 	private PreferenceScreen createPreferenceHierarchy() {
 		GobandroidSettings settings = new GobandroidSettings(this);
 
+		//setBehindContentView(R.layout.)
 		// Root
 		PreferenceScreen root = getPreferenceManager().createPreferenceScreen(
 				this);
@@ -323,16 +327,6 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			finish();
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		/*
 		 * if ((preference==sgf_path_pref)||(preference==sgf_fname_pref)
@@ -340,5 +334,16 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements
 		 * (preference==aiLevelPref)) preference.setSummary((String)newValue);
 		 */
 		return true; // return that we are OK with preferences
+	}
+	
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			getSlidingMenu().toggle();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }

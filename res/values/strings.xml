@@ -142,7 +142,7 @@
   <string name="numbered_end">number path</string>
   <string name="icon">icon</string>
   <string name="go_tv">GoTV</string>
-  <string name="i_do_not_want_to_keep_variants_for_this_game">I do not want to keep variations in this game</string>
+  <string name="i_do_not_want_to_keep_variants_for_this_game">never in this game</string>
   <string name="end_review">End review?</string>
   <string name="komi_must_be_a_number">Komi must be a number</string>
   <string name="youtube_tutorial">Tutorial on YouTube</string>
@@ -173,4 +173,5 @@
   <string name="play">Play</string>
   <string name="setup">Setup</string>
   <string name="load">Load</string>
+  <string name="clear_board">clear board</string>
 </resources>

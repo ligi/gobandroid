@@ -20,15 +20,19 @@
 package org.ligi.gobandroid_hd.ui.game_setup;
 
 import org.ligi.gobandroid_hd.InteractionScope;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GoActivity;
+import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 import org.ligi.tracedroid.logging.Log;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.MotionEvent;
 import android.view.WindowManager;
 
 /**
@@ -44,6 +48,9 @@ import android.view.WindowManager;
 
 public class GoSetupActivity extends GoActivity {
 
+	private GameSetupFragment setup_fragment;
+	private MenuItem clear_board_menu_item;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,14 +59,27 @@ public class GoSetupActivity extends GoActivity {
 		// getBoard().requestFocus(); - but that was not working ..
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		Log.i("starting setup");
+
 	}
 	
+
+
+
 	
 	@Override
 	public Fragment getGameExtraFragment() {
-		return new GameSetupFragment();
+		if (setup_fragment==null)
+			setup_fragment=new GameSetupFragment();
+		return setup_fragment;
 	}
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		this.getSupportMenuInflater().inflate(R.menu.game_setup, menu);
+		clear_board_menu_item=menu.findItem(R.id.menu_clear_board);
+		clear_board_menu_item.setVisible(getGame().getActMove().getParent()!=null);
+		return super.onCreateOptionsMenu(menu);
+	}
 
 	@Override
 	public byte doMoveWithUIFeedback(byte x, byte y) {
@@ -69,10 +89,25 @@ public class GoSetupActivity extends GoActivity {
 				getGame().jump(getGame().getActMove().getnextMove(0));
 
 		getGame().notifyGameChange();
-		Log.i(getGame().getVisualBoard().toString());
-		
 		this.startActivity(new Intent(this, GameRecordActivity.class));
 		finish();
 		return res;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_clear_board:
+			getApp().getInteractionScope().setGame(
+					new GoGame(setup_fragment.act_size, setup_fragment.act_handicap));
+			clear_board_menu_item.setVisible(false);
+			getGame().notifyGameChange();
+			break;
+		case R.id.menu_start:
+			this.startActivity(new Intent(this, GameRecordActivity.class));
+			finish();
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }

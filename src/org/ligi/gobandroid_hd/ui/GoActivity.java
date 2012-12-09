@@ -23,10 +23,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.ligi.android.common.activitys.ActivityOrientationLocker;
-import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
@@ -45,6 +47,10 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,11 +61,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.slidingmenu.lib.SlidingMenu;
 
 /**
  * Activity for a Go Game
@@ -81,7 +92,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 	private Fragment actFragment;
 
 	public GoSoundManager sound_man;
-
+	
 	private InteractionScope interaction_scope;
 
 	public Fragment getGameExtraFragment() {
@@ -93,7 +104,12 @@ public class GoActivity extends GobandroidFragmentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		interaction_scope = getApp().getInteractionScope();
+		setContentView(R.layout.game);
+
+		
+
+        
+     	interaction_scope = getApp().getInteractionScope();
 		this.getSupportActionBar().setHomeButtonEnabled(true);
 
 		ActivityOrientationLocker.disableRotation(this);
@@ -120,7 +136,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		fragmentTransAction.add(R.id.game_extra_container,
 				getGameExtraFragment()).commit();
 
-		this.setContentView(R.layout.game);
+		//this.setContentView(R.layout.game);
 		getSupportActionBar().setCustomView(customNav);
 		getSupportActionBar().setDisplayShowCustomEnabled(true);
 		customNav.setFocusable(false);
@@ -162,6 +178,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 
 	@Override
 	public void onGoGameChange() {
+		Log.i("onGoGameChange in GoActivity");
 		if (getGame().getActMove().getMovePos() > last_processed_move_change_num) {
 			if (getGame().isBlackToMove())
 				sound_man.playSound(GoSoundManager.SOUND_PLACE1);
@@ -255,18 +272,8 @@ public class GoActivity extends GobandroidFragmentActivity implements
 			new GameInfoAlert(this, getGame()).show();
 			return true;
 			
-		case R.id.load_game:
-			Intent i = new Intent(this, SGFSDCardListActivity.class);
-			i.setData((Uri.parse("file://" + getApp().getSettings().getSGFBasePath())));
-			startActivity(i);
-			finish();
-			break;
-
-		case R.id.links:
-			startActivity(new Intent(this, LinksActivity.class));
-			finish();
-			break;
-
+		
+		
 		case R.id.menu_game_undo:
 			if (!getGame().canUndo())
 				break;
@@ -277,7 +284,8 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		case R.id.menu_game_pass:
 			getGame().pass();
 			getGame().notifyGameChange();
-
+		
+			
 			if (getGame().isFinished()) {
 				switchToCounting();
 			}
@@ -291,14 +299,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 			new SaveSGFDialog(this).show();
 			return true;
 
-		case R.id.preferences:
-			startActivity(new Intent(this, GoPrefsActivity.class));
-			return true;
-
-		case android.R.id.home:
-			quit(true);
-			return true;
-
+		
 		case R.id.menu_bookmark:
 			new BookmarkDialog(this).show();
 			return true;
@@ -426,6 +427,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 
+		Log.i("touch in GoActivity");
 		if (event.getAction() == MotionEvent.ACTION_UP) {
 			setFragment(getGameExtraFragment());
 			if (getResources().getBoolean(R.bool.small))
@@ -449,8 +451,10 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		else if (getGame().getGoMover().isMoversMove())
 			showInfoToast(R.string.not_your_turn);
 		else
-			doTouch(event);
-
+			//if (!getSlidingMenu().is)
+				doTouch(event);
+		
+		
 		//refreshZoomFragment();
 		return true;
 	}
@@ -459,7 +463,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 	public void onPause() {
 		super.onPause();
 
-		try {
+		if (doAutosave()) try {
 			File f = new File(getSettings().getSGFSavePath() + "/autosave.sgf");
 			f.createNewFile();
 
@@ -476,14 +480,25 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		}
 
 	}
+	
+	public boolean doAutosave() {
+		return false;
+	}
 
 	public void doTouch(MotionEvent event) {
 
 		// calculate position on the field by position on the touchscreen
 
-		interaction_scope.setTouchPosition(getBoard().pixel2boardPos(
+		if (event.getAction() == MotionEvent.ACTION_DOWN ||
+				event.getAction() == MotionEvent.ACTION_MOVE 
+				) {
+				interaction_scope.setTouchPosition(getBoard().pixel2boardPos(
 				event.getX(), event.getY()));
-		if (event.getAction() == MotionEvent.ACTION_UP) {
+		}
+		else if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+			interaction_scope.setTouchPosition(-1);
+		}
+		else if (event.getAction() == MotionEvent.ACTION_UP) {
 
 			if (go_board.move_stone_mode) {
 				// TODO check if this is an illegal move ( e.g. in variants )
@@ -606,6 +621,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 	}
 
 	public void refreshZoomFragment() {
+		Log.i("refreshZoomFragment()" + getZoomFragment().getBoard() + " " + myZoomFragment.getBoard());
 		if (getZoomFragment().getBoard() == null) // nothing we can do
 			return;
 

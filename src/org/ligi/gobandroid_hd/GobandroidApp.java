@@ -57,8 +57,11 @@ public class GobandroidApp extends Application {
 			// Make sure the device has the proper dependencies.
 			GCMRegistrar.checkDevice(this);
 
+			
 			final String regId = GCMRegistrar.getRegistrationId(this);
-			if (regId.equals("")) {
+			Log.i("initGCM with regId="+regId);
+			//if (regId.equals("")) 
+			{
 				// Automatically registers application on startup.
 				GCMRegistrar.register(this, GobandroidConfiguration.GCM_SENDER_ID);
 			}

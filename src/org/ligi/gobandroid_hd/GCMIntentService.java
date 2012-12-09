@@ -20,32 +20,33 @@ import android.os.Bundle;
  *
  */
 public class GCMIntentService extends GCMBaseIntentService  {
-	      
+	
   public GCMIntentService() {
     super(GobandroidConfiguration.GCM_SENDER_ID);
   }
   
-	@Override
+  @Override
 	public void onRegistered(Context context, String registrationId) {
-		Log.i("C2DM registered" + registrationId + " regid:" + registrationId ) ;
+		Log.i("GCM registered with regid:" + registrationId ) ;
 	}
 
 	@Override
 	protected void onMessage(Context context, Intent intent) {
+		Log.i("GCM incoming Message" );
 		EasyTracker.getInstance().setContext(context);
 		if (intent.getExtras()==null)
 			return;
 		Bundle e=intent.getExtras();
 		
 		if (e.getString("max_tsumego")!=null) { // todo use the supplied value here
-			Log.i("C2DM starting DownloadProblemsForNotification " );
+			Log.i("GCM starting DownloadProblemsForNotification");
 			DownloadProblemsForNotification.show(context);
 		}
 	}
 
 	@Override 
 	public void onError(Context context, String errorId) {
-		Log.e("Error in C2DM" + errorId);
+		Log.e("Error in GCM" + errorId);
 	}
 	
 	@Override

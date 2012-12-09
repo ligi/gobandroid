@@ -2,6 +2,8 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 	<style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.Light.ActionBar">
 	</style>
+	
+
 
     <style name="dialog_theme" parent="Theme.Sherlock.Light">
 	
@@ -66,4 +68,36 @@
 	    <item name="android:windowNoTitle">true</item>
 	    <item name="android:backgroundDimEnabled">false</item>
   	</style>
+  	
+	<style name="MenuDrawer" />
+
+    <style name="MenuDrawer.Widget" />
+	
+	 <style name="MenuDrawer.Widget.Category">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">16dp</item>
+        
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+	 
+    <style name="MenuDrawer.Widget.Title">        
+        <item name="android:textAppearance">?android:attr/textAppearance</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">32dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:drawablePadding">16dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+	
 </resources>
