@@ -47,6 +47,7 @@ import org.ligi.android.common.files.FileHelper;
 import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.backend.CloudGobanHelper;
+import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -69,9 +70,7 @@ import com.google.api.services.cloudgoban.Cloudgoban;
 
 public class SGFLoadActivity extends GobandroidFragmentActivity implements
 		Runnable, SGFHelper.ISGFLoadProgressCallback {
-
-	public static final String CLOUD_GOBAN_URL_BASE = "https://cloud-goban.appspot.com/game/";
-	                                                    
+                                            
 	private GoGame game = null;
 	// private Uri intent_uri;
 	private String sgf;
@@ -149,9 +148,9 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 		String uri_str=intent_uri.toString();
 		if (uri_str.startsWith("content://")) {
 			in = getContentResolver().openInputStream(intent_uri);
-		}else if (uri_str.startsWith(CLOUD_GOBAN_URL_BASE)) {
+		}else if (uri_str.startsWith(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE)) {
 			GobandroidNotifications.cancelCloudMoveNotification(this);
-			cloudgoban_parent_key=uri_str.replace(CLOUD_GOBAN_URL_BASE,"");
+			cloudgoban_parent_key=uri_str.replace(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE,"");
 			Cloudgoban cg=getApp().getCloudgoban();
 			return cg.games().get(cloudgoban_parent_key).execute().getSgf().getValue();
 		} else
