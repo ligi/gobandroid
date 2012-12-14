@@ -18,6 +18,6 @@ public class DownloadProblemsForNotification {
 
 		int res = TsumegoDownloadHelper.doDownloadDefault(app);
 		if (res > 0)
-			GobandroidNotifications.addNewTsumegosNotification(ctx, res);
+			new GobandroidNotifications(ctx).addNewTsumegosNotification(res);
 	}
 }

@@ -13,6 +13,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 
 /**
  * Class to care about notifications used in gobandroid
@@ -27,95 +28,84 @@ public class GobandroidNotifications {
 	private final static int NEWTSUMEGOS_NOTIFICATION_ID = 10002;
 	private final static int CLOUDMOVE_NOTIFICATION_ID = 10003;
 
-	public static void addGoLinkNotification(Context context, String golink) {
-		NotificationManager notificationManager = (NotificationManager) context
-				.getSystemService(Activity.NOTIFICATION_SERVICE);
-		Notification notification = new Notification(R.drawable.ic_launcher,
-				context.getString(R.string.the_go_game_you_reviewed), System.currentTimeMillis());
+	private Context context;
+	private NotificationCompat.Builder notificationBuilder;
+	private NotificationManager notificationManager;
+	private Intent notificationIntent;
 
-		Intent notificationIntent = new Intent(context,
-				GoLinkLoadActivity.class);
-		notificationIntent.setData(Uri.parse(golink));
-		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
-				notificationIntent, 0);
-
-		notification.defaults = Notification.FLAG_ONLY_ALERT_ONCE
-				+ Notification.FLAG_AUTO_CANCEL;
-
-		notification.setLatestEventInfo(context, context.getString(R.string.the_go_game_you_reviewed),
-				golink, pendingIntent);
-		notificationManager.notify(GOLINK_NOTIFICATION_ID, notification);
+	private GobandroidApp getApp() {
+		return (GobandroidApp) context.getApplicationContext();
 	}
 
-	public static void cancelGoLinkNotification(Context context) {
-		NotificationManager notificationManager = (NotificationManager) context
-				.getSystemService(Activity.NOTIFICATION_SERVICE);
+	public GobandroidNotifications(Context context) {
+		this.context = context;
+		notificationBuilder = new NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_launcher);
+		notificationManager = (NotificationManager) context.getSystemService(Activity.NOTIFICATION_SERVICE);
+		notificationBuilder.setSound(Uri.parse("android.resource://org.ligi.gobandroid_beta/" + R.raw.go_place1));
+		notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+		
+		//notificationBuilder.setVibrate(new long[] { 1000, 100, 1000, 100 });
+		//needs permission vibrate - not yet sure if wanted yet
+	}
+
+	public void addGoLinkNotification(String golink) {
+		notificationBuilder.setTicker(context.getString(R.string.the_go_game_you_reviewed));
+
+		notificationIntent = new Intent(context, GoLinkLoadActivity.class);
+		notificationIntent.setData(Uri.parse(golink));
+
+		notificationBuilder.setContentTitle(context.getString(R.string.the_go_game_you_reviewed));
+		notificationBuilder.setContentText(golink);
+
+		doNotify(GOLINK_NOTIFICATION_ID);
+	}
+
+	public void cancelGoLinkNotification() {
 		notificationManager.cancel(GOLINK_NOTIFICATION_ID);
 	}
 
 	public static String BOOL_FROM_NOTIFICATION_EXTRA_KEY = "from_notification";
 
-	public static void addNewTsumegosNotification(Context context, int count) {
-		GobandroidApp app = (GobandroidApp) context.getApplicationContext();
+	public void addNewTsumegosNotification(int count) {
+		notificationBuilder.setTicker(context.getString(R.string.new_tsumegos_available));
 
-		NotificationManager notificationManager = (NotificationManager) context
-				.getSystemService(Activity.NOTIFICATION_SERVICE);
-		Notification notification = new Notification(R.drawable.ic_launcher,
-				context.getString(R.string.new_tsumegos_available), System.currentTimeMillis());
+		notificationIntent = new Intent(context, SGFSDCardListActivity.class);
+		notificationIntent.setData((Uri.parse("file://" + getApp().getSettings().getTsumegoPath())));
+		notificationIntent.putExtra(BOOL_FROM_NOTIFICATION_EXTRA_KEY, true);
+		getApp().getInteractionScope().setMode(InteractionScope.MODE_TSUMEGO);
 
-		Intent i = new Intent(context, SGFSDCardListActivity.class);
-		i.setData((Uri.parse("file://" + app.getSettings().getTsumegoPath())));
-		i.putExtra(BOOL_FROM_NOTIFICATION_EXTRA_KEY, true);
-		app.getInteractionScope().setMode(InteractionScope.MODE_TSUMEGO);
+		notificationBuilder.setContentTitle(context.getString(R.string.new_tsumegos_available));
+		notificationBuilder.setContentText("" + count + " new tsumegos");
 
-		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i,
-				0);
-
-		notification.defaults = Notification.FLAG_ONLY_ALERT_ONCE
-				+ Notification.FLAG_AUTO_CANCEL;
-
-		notification.setLatestEventInfo(context, context.getString(R.string.new_tsumegos_available), ""
-				+ count + " new tsumegos", pendingIntent);
-		notificationManager.notify(NEWTSUMEGOS_NOTIFICATION_ID, notification);
+		doNotify(NEWTSUMEGOS_NOTIFICATION_ID);
 	}
-	
 
-	public static void cancelNewTsumegosNotification(Context context) {
-		NotificationManager notificationManager = (NotificationManager) context
-				.getSystemService(Activity.NOTIFICATION_SERVICE);
+	public void cancelNewTsumegosNotification() {
 		notificationManager.cancel(NEWTSUMEGOS_NOTIFICATION_ID);
 	}
-	
-	public static void addNewCloudMoveNotification(Context context, String game_key) {
-		GobandroidApp app = (GobandroidApp) context.getApplicationContext();
 
-		NotificationManager notificationManager = (NotificationManager) context
-				.getSystemService(Activity.NOTIFICATION_SERVICE);
-		
-		Notification notification = new Notification(R.drawable.ic_launcher,
-				context.getString(R.string.a_move_in_one_online_game_you_participate_is_done), System.currentTimeMillis());
+	public void addNewCloudMoveNotification(String game_key) {
 
-		Intent i = new Intent(context, SGFLoadActivity.class);
-		i.setData(Uri.parse(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE +game_key));
-		i.putExtra(BOOL_FROM_NOTIFICATION_EXTRA_KEY, true);
-		app.getInteractionScope().setMode(InteractionScope.MODE_TSUMEGO);
+		notificationBuilder.setTicker(context.getString(R.string.a_move_in_one_online_game_you_participate_is_done));
+		notificationBuilder.setContentTitle(context.getString(R.string.new_move));
+		notificationBuilder.setContentText(context.getString(R.string.in_an_online_game_you_participate));
 
-		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i,
-				0);
+		// create the pending intent as reaction to click
+		notificationIntent = new Intent(context, SGFLoadActivity.class);
+		notificationIntent.setData(Uri.parse(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE + game_key));
+		notificationIntent.putExtra(BOOL_FROM_NOTIFICATION_EXTRA_KEY, true);
 
-		notification.defaults = Notification.FLAG_ONLY_ALERT_ONCE
-				+ Notification.FLAG_AUTO_CANCEL;
-
-		notification.setLatestEventInfo(context, context.getString(R.string.new_move), context.getString(R.string.in_an_online_game_you_participate)
-				, pendingIntent);
-		notificationManager.notify(CLOUDMOVE_NOTIFICATION_ID, notification);
+		doNotify(CLOUDMOVE_NOTIFICATION_ID);
 	}
-	
-	public static void cancelCloudMoveNotification(Context context) {
-		NotificationManager notificationManager = (NotificationManager) context
-				.getSystemService(Activity.NOTIFICATION_SERVICE);
+
+	private void doNotify(int id) {
+		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+		notificationBuilder.setContentIntent(pendingIntent);
+		notificationManager.notify(id, notificationBuilder.getNotification());
+	}
+
+	public void cancelCloudMoveNotification() {
 		notificationManager.cancel(CLOUDMOVE_NOTIFICATION_ID);
 	}
-	
 
 }

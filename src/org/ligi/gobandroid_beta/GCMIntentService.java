@@ -50,7 +50,7 @@ public class GCMIntentService extends GCMBaseIntentService  {
 			Log.i("GCM incoming Message cloud game" + game_key  + "+ game cloud key"+ga.getGame().getCloudKey());
 			if (!ga.hasActiveGoActivity() || ga.getGame().getCloudKey()==null || !ga.getGame().getCloudKey().equals(game_key)) {
 				
-				GobandroidNotifications.addNewCloudMoveNotification(context, game_key);
+				new GobandroidNotifications(this).addNewCloudMoveNotification(game_key);
 			}
 			else try {
 				

@@ -22,7 +22,7 @@ public class GoLinkLoadActivity extends Activity {
 		
 		Uri intent_uri=getIntent().getData(); // extract the uri from the intent
 		
-		GobandroidNotifications.cancelGoLinkNotification(this);
+		new GobandroidNotifications(this).cancelGoLinkNotification();
 		
 		if (intent_uri==null) {
 			Log.e("GoLinkLoadActivity with intent_uri==null");

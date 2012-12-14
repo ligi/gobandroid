@@ -68,7 +68,7 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity implements
 		sgf_path=getSettings().getSGFBasePath();
 
 		if (getIntent().getBooleanExtra(GobandroidNotifications.BOOL_FROM_NOTIFICATION_EXTRA_KEY,false))
-			GobandroidNotifications.cancelNewTsumegosNotification(this);
+			new GobandroidNotifications(this).cancelNewTsumegosNotification();
 		
 		if (getIntent().getData()!=null)
 			sgf_path=getIntent().getData().getPath();

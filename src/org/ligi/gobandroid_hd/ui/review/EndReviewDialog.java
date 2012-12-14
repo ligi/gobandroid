@@ -95,7 +95,7 @@ public class EndReviewDialog extends GobandroidDialog {
 				}
 
 				if (bookmark_notification.isChecked()) {
-					GobandroidNotifications.addGoLinkNotification(context,
+					new GobandroidNotifications(context).addGoLinkNotification(
 							context.getSettings().getBookmarkPath() + "/"
 									+ bookmark_name.getText().toString()
 									+ ".golink");
