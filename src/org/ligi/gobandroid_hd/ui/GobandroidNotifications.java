@@ -93,7 +93,7 @@ public class GobandroidNotifications {
 				.getSystemService(Activity.NOTIFICATION_SERVICE);
 		
 		Notification notification = new Notification(R.drawable.ic_launcher,
-				"A move in one online game you play is done", System.currentTimeMillis());
+				context.getString(R.string.a_move_in_one_online_game_you_participate_is_done), System.currentTimeMillis());
 
 		Intent i = new Intent(context, SGFLoadActivity.class);
 		i.setData(Uri.parse(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE +game_key));
@@ -106,7 +106,7 @@ public class GobandroidNotifications {
 		notification.defaults = Notification.FLAG_ONLY_ALERT_ONCE
 				+ Notification.FLAG_AUTO_CANCEL;
 
-		notification.setLatestEventInfo(context, "A online game you played", "new move"
+		notification.setLatestEventInfo(context, context.getString(R.string.new_move), context.getString(R.string.in_an_online_game_you_participate)
 				, pendingIntent);
 		notificationManager.notify(CLOUDMOVE_NOTIFICATION_ID, notification);
 	}

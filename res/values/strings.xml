@@ -7,7 +7,6 @@
   <string name="load_game">Load Game</string>
   <string name="load_tsumego">Load Tsumego</string>
   <string name="tsumego">Tsumego</string>
-  <string name="igs">IGS</string>
   <string name="info">Info</string>
   <string name="quit">Quit</string>
   <string name="quit_confirm">Do you really want to quit this game?</string>
@@ -94,11 +93,11 @@
   <string name="link_title">Links</string>
   <string name="link_tab_about">About</string>
   <string name="link_tab_credits">Credits</string>
-  <string name="link_tab_help">Help</string>
+  <string name="help">Help</string>
   <string name="link_tab_sgf">SGF\'s</string>
   <string name="game_mode">Mode</string>
   <string name="switch_game_mode">Switch Mode</string>
-  <string name="menu_bookmark">Bookmark</string>
+  <string name="bookmark">Bookmark</string>
   <string name="menu_autoplay">Autoplay</string>
   <string name="tsumego_off_path">Unknown Variation - usually means that your move is sub-optimal :-(</string>
   <string name="tsumego_correct">Correct !-)</string>
@@ -172,11 +171,24 @@
   <string name="edit">Edit</string>
   <string name="play">Play</string>
   <string name="setup">Setup</string>
-  <string name="load">Load</string>
+  <string name="load">LOAD</string>
   <string name="clear_board">clear board</string>
   <string name="invite">Invite</string>
   <string name="accept">accept</string>
   <string name="new_tsumegos_available">New Tsumegos available!</string>
   <string name="the_go_game_you_reviewed">The Go Game you reviewed</string>
   <string name="this_game_has_2_players_but_you_can_only_watch_it">This game has 2 players - but you can only watch it</string>
+  <string name="a_move_in_one_online_game_you_participate_is_done">A move in one online game you participate is done</string>
+  <string name="new_move">new move</string>
+  <string name="in_an_online_game_you_participate">in an online game you participate</string>
+  <string name="choose_invite_method">choose invite method</string>
+  <string name="you_are_invited_to_a_go_game">You are invited to a GO-Game ( size: %1$s , color: %2$s )</string>
+  <string name="go_game_invitation">GO Game Invitation</string>
+  <string name="uploading_game">uploading game</string>
+  <string name="profile">profile</string>
+  <string name="name">name</string>
+  <string name="rank">rank</string>
+  <string name="empty_board">Empty Board</string>
+  <string name="more">MORE</string>
+  
 </resources>

@@ -70,17 +70,17 @@ public class MenuDrawer implements OnItemClickListener {
 	public ListAdapter getAdapter() {
 
 		List<Object> items = new ArrayList<Object>();
-		items.add(new Category("LOAD"));
-		items.add(new Item(R.id.empty, "Empty Board", R.drawable.play));
-		items.add(new Item(R.id.tsumego, "Tsumego",
+		items.add(new Category(R.string.load));
+		items.add(new Item(R.id.empty, R.string.empty_board, R.drawable.play));
+		items.add(new Item(R.id.tsumego, R.string.tsumego,
 				R.drawable.dashboard_tsumego));
-		items.add(new Item(R.id.review, "Review", R.drawable.dashboard_review));
-		items.add(new Item(R.id.bookmark, "Bookmark", R.drawable.bookmark));
-		items.add(new Category("MORE"));
-		items.add(new Item(R.id.links, "Links", R.drawable.dashboard_links));
-		items.add(new Item(R.id.preferences, "Preferences",
+		items.add(new Item(R.id.review, R.string.review, R.drawable.dashboard_review));
+		items.add(new Item(R.id.bookmark, R.string.bookmark, R.drawable.bookmark));
+		items.add(new Category(R.string.more));
+		items.add(new Item(R.id.links, R.string.links, R.drawable.dashboard_links));
+		items.add(new Item(R.id.preferences, R.string.preferences,
 				R.drawable.preferences));
-		items.add(new Item(R.id.help, "Help",R.drawable.help));
+		items.add(new Item(R.id.help, R.string.help,R.drawable.help));
 
 		return new MenuAdapter(items);
 	}
@@ -140,25 +140,25 @@ public class MenuDrawer implements OnItemClickListener {
 		return (GobandroidApp) ctx.getApplicationContext();
 	}
 
-	private static class Item {
+	private class Item {
 
 		String mTitle;
 		int mIconRes;
 		int id;
 
-		Item(int id, String title, int iconRes) {
+		Item(int id, int title, int iconRes) {
 			this.id = id;
-			mTitle = title;
+			mTitle = ctx.getString(title);
 			mIconRes = iconRes;
 		}
 	}
 
-	private static class Category {
+	private class Category {
 
 		String mTitle;
 
-		Category(String title) {
-			mTitle = title;
+		Category(int title) {
+			mTitle = ctx.getString(title);
 		}
 	}
 

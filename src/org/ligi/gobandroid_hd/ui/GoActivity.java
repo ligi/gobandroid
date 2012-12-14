@@ -28,6 +28,7 @@ import org.ligi.android.common.activitys.ActivityOrientationLocker;
 import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.backend.CloudGobanHelper;
+import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
@@ -203,16 +204,16 @@ public class GoActivity extends GobandroidFragmentActivity implements
 			try {
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("text/plain");
-				i.putExtra(Intent.EXTRA_SUBJECT, "GO Game Invitation");
+				i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.go_game_invitation));
 				String color=getString(R.string.white);
 				if (getGame().getActMove().isBlackToMove())
 					color=getString(R.string.black);
 				
-				String sAux = "\nYou are invited to a GO-Game( size: " + getGame().getSize() + " color:" +color + ")\n";
-				sAux = sAux + "https://cloud-goban.appspot.com/game/" + result
+				String sAux = "\n" + String.format(getString(R.string.you_are_invited_to_a_go_game),  getGame().getSize(),color ) + "\n";
+				sAux = sAux + GobandroidConfiguration.CLOUD_GOBAN_URL_BASE + result
 						+ "\n#gobandroid\n";
 				i.putExtra(Intent.EXTRA_TEXT, sAux);
-				startActivity(Intent.createChooser(i, "choose invite method"));
+				startActivity(Intent.createChooser(i,getString( R.string.choose_invite_method)));
 			} catch (Exception e) { // e.toString();
 			}
 		}
@@ -241,7 +242,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		@Override
 		protected void onPreExecute() {
 			pd = new ProgressDialog(GoActivity.this);
-			pd.setMessage("uploading game");
+			pd.setMessage(getString(R.string.uploading_game));
 			pd.show();
 			super.onPreExecute();
 		}
