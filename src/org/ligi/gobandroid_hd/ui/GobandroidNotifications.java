@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui;
 import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.InteractionScope;
+import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
 
 import android.app.Activity;
@@ -95,7 +96,7 @@ public class GobandroidNotifications {
 				"A move in one online game you play is done", System.currentTimeMillis());
 
 		Intent i = new Intent(context, SGFLoadActivity.class);
-		i.setData(Uri.parse(SGFLoadActivity.CLOUD_GOBAN_URL_BASE +game_key));
+		i.setData(Uri.parse(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE +game_key));
 		i.putExtra(BOOL_FROM_NOTIFICATION_EXTRA_KEY, true);
 		app.getInteractionScope().setMode(InteractionScope.MODE_TSUMEGO);
 
