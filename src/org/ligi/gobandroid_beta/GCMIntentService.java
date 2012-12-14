@@ -9,13 +9,12 @@ import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsForNotification;
 import org.ligi.tracedroid.logging.Log;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.android.gcm.GCMBaseIntentService;
-import com.google.api.services.cloudgoban.model.GoGameParticipation;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.android.gcm.GCMBaseIntentService;
 
 /**
  * interface to the C2DM service utilizing the classes from
