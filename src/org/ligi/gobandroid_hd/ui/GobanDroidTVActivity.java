@@ -3,8 +3,8 @@ package org.ligi.gobandroid_hd.ui;
 import java.io.File;
 import java.util.Vector;
 
-import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
 import android.content.Intent;

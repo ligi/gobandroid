@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.android.common.files.FileHelper;
-import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;

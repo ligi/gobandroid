@@ -90,7 +90,13 @@ public class GameScoringActivity extends GoActivity implements
 	@Override
 	public void onGoGameChange() {
 		super.onGoGameChange();
-		this.invalidateOptionsMenu();
+		runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				invalidateOptionsMenu();
+			}
+		});
 	}
 
 	@Override

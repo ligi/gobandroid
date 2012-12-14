@@ -1,7 +1,7 @@
 package org.ligi.gobandroid_hd.ui;
 
-import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.GobandroidApp;
 
 import android.app.Dialog;
 import android.content.Context;

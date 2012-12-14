@@ -1,5 +1,5 @@
 /**
- * gobandroid 
+  * gobandroid 
  * by Marcus -Ligi- Bueschleb 
  * http://ligi.de
  *
@@ -44,8 +44,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.ligi.android.common.files.FileHelper;
-import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.InteractionScope;
+import org.ligi.gobandroid_hd.backend.CloudGobanHelper;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -55,6 +56,7 @@ import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 import org.ligi.tracedroid.logging.Log;
 
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.api.services.cloudgoban.Cloudgoban;
 
 /**
  * Activity to load a SGF with a ProgressDialog showing the Progress
@@ -68,6 +70,8 @@ import com.google.analytics.tracking.android.EasyTracker;
 public class SGFLoadActivity extends GobandroidFragmentActivity implements
 		Runnable, SGFHelper.ISGFLoadProgressCallback {
 
+	public static final String CLOUD_GOBAN_URL_BASE = "https://cloud-goban.appspot.com/game/";
+	                                                    
 	private GoGame game = null;
 	// private Uri intent_uri;
 	private String sgf;
@@ -78,6 +82,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 	private AlertDialog alert_dlg;
 	private TextView message_tv;
 	private String act_message;
+	private String cloudgoban_parent_key=null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -141,10 +146,15 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 			return FileHelper.file2String(new File(intent_uri.toString()));
 
 		InputStream in;
-
-		if (intent_uri.toString().startsWith("content://"))
+		String uri_str=intent_uri.toString();
+		if (uri_str.startsWith("content://")) {
 			in = getContentResolver().openInputStream(intent_uri);
-		else
+		}else if (uri_str.startsWith(CLOUD_GOBAN_URL_BASE)) {
+			GobandroidNotifications.cancelCloudMoveNotification(this);
+			cloudgoban_parent_key=uri_str.replace(CLOUD_GOBAN_URL_BASE,"");
+			Cloudgoban cg=getApp().getCloudgoban();
+			return cg.games().get(cloudgoban_parent_key).execute().getSgf().getValue();
+		} else
 			in = new BufferedInputStream(new URL("" + intent_uri).openStream(),
 					4096);
 
@@ -169,6 +179,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 		if (file_writer != null)
 			file_writer.close();
 
+		Log.i("SGF return" + out.toString());
 		return out.toString();
 	}
 
@@ -285,19 +296,43 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 			for (int i = 0; i < move_num; i++)
 				game.jump(game.getActMove().getnextMove(0));
 
+		else if (cloudgoban_parent_key!=null) {
+			getApp().getInteractionScope().setMode(InteractionScope.MODE_RECORD);
+			
+			//game.getMetaData().setCloudParent();
+			
+			while (game.getActMove().getNextMoveVariationCount()>-1)
+				game.jump(game.getActMove().getnextMove(0));
+			
+		}
 		getApp().getInteractionScope().setGame(game);
 
+		
 		game.getMetaData().setFileName(intent_uri.toString());
 
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				alert_dlg.hide();
-				finish();
-			}
-		});
 
-		SwitchModeHelper.startGameWithCorrectMode(this);
+		if (cloudgoban_parent_key!=null) {
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					alert_dlg.hide();
+				}
+			});
+		
+			CloudGobanHelper.registerGame(this,cloudgoban_parent_key,game.isBlackToMove()?"w":"b",true,handler);
+		}
+		else {
+
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					alert_dlg.hide();
+					finish();
+				}
+			});
+			SwitchModeHelper.startGameWithCorrectMode(this);
+		}
+			
 	}
 
 	@Override

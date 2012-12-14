@@ -3,8 +3,8 @@ package org.ligi.gobandroid_hd.ui.application;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GoPrefsActivity;
 import org.ligi.gobandroid_hd.ui.HelpDialog;

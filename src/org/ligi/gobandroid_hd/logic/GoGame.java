@@ -97,12 +97,15 @@ public class GoGame {
 	public final static byte MOVE_INVALID_CELL_NOT_FREE = 2;
 	public final static byte MOVE_INVALID_CELL_NO_LIBERTIES = 3;
 	public final static byte MOVE_INVALID_IS_KO = 4;
+	public final static byte MOVE_INVALID = 5;
 
 	private boolean[][] all_handicap_positions;
 
 	private int local_captures = 0;
 
 	public void setGame(GoGame game) {
+		cloud_key=game.getCloudKey();
+		cloud_role=game.getCloudRole();
 		metadata=game.getMetaData();
 		all_handicap_positions=game.all_handicap_positions;
 		handicap=game.handicap;
@@ -902,5 +905,20 @@ public class GoGame {
 	
 	public void setDeadBlack(int _dead_black) {
 		dead_black=_dead_black;		
+	}
+	
+	private String cloud_key=null,cloud_role=null;
+	
+	public void setCloudDefs(String cloud_key,String cloud_role) {
+		this.cloud_key=cloud_key;
+		this.cloud_role=cloud_role;
+	}
+	
+	public String getCloudKey() {
+		return cloud_key;
+	}
+	
+	public String getCloudRole() {
+		return cloud_role;
 	}
 }

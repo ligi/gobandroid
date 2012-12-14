@@ -229,4 +229,5 @@ public class GoMove {
 	public void setIsBlackToMove(boolean black_to_move) {
 		this.black_to_move=black_to_move;
 	}
+
 }

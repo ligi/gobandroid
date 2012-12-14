@@ -123,29 +123,7 @@ public class EditGameActivity extends GoActivity implements
 	private EditGameMode getMode() {
 		return editModePool.getActMode();
 	}
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		super.onPrepareOptionsMenu(menu);
-
-		try {
-			menu.findItem(R.id.menu_game_pass).setVisible(
-					!getGame().isFinished());
-			/*menu.findItem(R.id.menu_game_results).setVisible(
-					getGame().isFinished());*/
-			menu.findItem(R.id.menu_game_undo).setVisible(getGame().canUndo());
-		} catch (NullPointerException e) {
-		} // we do not care when they do not exist
-
-		return true;
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		this.getSupportMenuInflater().inflate(R.menu.ingame_record, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-
+	
 	@Override
 	public void onGoGameChange() {
 		super.onGoGameChange();

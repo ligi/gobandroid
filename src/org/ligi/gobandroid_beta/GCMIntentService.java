@@ -1,12 +1,17 @@
-package org.ligi.gobandroid_hd;
+package org.ligi.gobandroid_beta;
 
+import java.io.IOException;
+
+import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
+import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsForNotification;
-import org.ligi.gobandroid_beta.R;
 import org.ligi.tracedroid.logging.Log;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gcm.GCMBaseIntentService;
+import com.google.api.services.cloudgoban.model.GoGameParticipation;
 
 import android.content.Context;
 import android.content.Intent;
@@ -37,7 +42,36 @@ public class GCMIntentService extends GCMBaseIntentService  {
 		if (intent.getExtras()==null)
 			return;
 		Bundle e=intent.getExtras();
-		
+		String game_key=e.getString("game_key");
+		if (game_key!=null) { // cloud game message
+			
+			Log.i("GCM act"+((GobandroidApp)context.getApplicationContext()).getGame().toString());
+			
+			GobandroidApp ga=(GobandroidApp)context.getApplicationContext();
+			Log.i("GCM incoming Message cloud game" + game_key  + "+ game cloud key"+ga.getGame().getCloudKey());
+			if (!ga.hasActiveGoActivity() || ga.getGame().getCloudKey()==null || !ga.getGame().getCloudKey().equals(game_key)) {
+				
+				GobandroidNotifications.addNewCloudMoveNotification(context, game_key);
+			}
+			else try {
+				
+				String sgf=ga.getCloudgoban().games().get(game_key).execute().getSgf().getValue();
+				ga.getGame().setGame(SGFHelper.sgf2game(sgf, null));
+				
+				
+				while ( ga.getGame().getActMove().hasNextMove())
+					ga.getGame().jump(ga.getGame().getActMove().getnextMove(0)); // mainstream
+				
+				ga.getGame().setCloudDefs(game_key, e.getString("role"));
+				
+				ga.getGame().notifyGameChange();
+				
+			} catch (IOException e1) {
+				
+			}
+			
+			
+		}
 		if (e.getString("max_tsumego")!=null) { // todo use the supplied value here
 			Log.i("GCM starting DownloadProblemsForNotification");
 			DownloadProblemsForNotification.show(context);

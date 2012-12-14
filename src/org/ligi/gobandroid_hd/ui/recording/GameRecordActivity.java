@@ -1,13 +1,15 @@
 package org.ligi.gobandroid_hd.ui.recording;
 
-import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.GoActivity;
+import org.ligi.gobandroid_hd.ui.GoPrefs;
+import org.ligi.tracedroid.Log;
 
 import com.actionbarsherlock.view.Menu;
-
+import com.actionbarsherlock.view.MenuItem;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.WindowManager;
@@ -33,6 +35,13 @@ public class GameRecordActivity extends GoActivity implements
 
 	@Override
 	public byte doMoveWithUIFeedback(byte x, byte y) {
+			
+		if (isCloudMove()) {
+			Log.i("showing info toast");
+			showInfoToast(R.string.not_your_turn);
+			return GoGame.MOVE_INVALID;
+		}
+			
 		byte res = super.doMoveWithUIFeedback(x, y);
 		if (res == GoGame.MOVE_VALID)
 			if (getGame().getActMove().hasNextMove())
@@ -43,15 +52,58 @@ public class GameRecordActivity extends GoActivity implements
 	}
 
 	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+		/*
+		 * case R.id.menu_game_switchmode: new SwitchModeDialog(this).show();
+		 * return true;
+		 */
+
+		case R.id.menu_game_accept:
+			new UploadGameToCloudEndpointsBase().execute();
+			acceptCloudMove();
+			onGoGameChange();
+			return true;
+			
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 
 		try {
-			menu.findItem(R.id.menu_game_pass).setVisible(
-					!getGame().isFinished());
+			boolean pass_avail=!getGame().isFinished();
+			
+			if (isCloudGame()&&isCloudMove())
+				pass_avail=false;
+			
+			if (isCloudGame()&&isLastMoveAccepted())
+				pass_avail=false;
+			
+			menu.findItem(R.id.menu_game_pass).setVisible(pass_avail);
+			
 			/*menu.findItem(R.id.menu_game_results).setVisible(
 					getGame().isFinished());*/
-			menu.findItem(R.id.menu_game_undo).setVisible(getGame().canUndo());
+		
+			
+			boolean undo_avail=getGame().canUndo();
+			
+			if (isCloudGame()&&getGame().getCloudRole().equals("s"))
+				undo_avail=false;
+			
+			if (isCloudGame()&&!isCloudMove())
+				undo_avail=false;
+			
+			if (isCloudGame()&&isLastMoveAccepted())
+				undo_avail=false;
+			
+			menu.findItem(R.id.menu_game_undo).setVisible(undo_avail);	
+			// TODO works but weird logic 
+			menu.findItem(R.id.menu_game_accept).setVisible(isCloudGame() && undo_avail);
+			
 		} catch (NullPointerException e) {
 		} // we do not care when they do not exist
 
@@ -70,32 +122,44 @@ public class GameRecordActivity extends GoActivity implements
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@Override
 	public void onGoGameChange() {
 		super.onGoGameChange();
-		this.invalidateOptionsMenu();
+		runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				invalidateOptionsMenu();
+
+				boolean switch_to_count=getGame().isFinished();
+				
+					
+				if (isCloudGame() && ( isCloudMove() &&!isLastMoveAccepted()))
+					switch_to_count=false;
+				
+				
+				if (switch_to_count) 
+					switchToCounting();
+
+			}
+
+		});
+		
 	}
 
+	
+	
 	@Override
 	public Fragment getGameExtraFragment() {
 		return new RecordingGameExtrasFragment();
+	}
+	
+	@Override
+	public void requestUndo() {
+		if (isCloudGame())
+			getGame().undo(GoPrefs.isKeepVariantEnabled());
+		else
+			super.requestUndo();
 	}
 
 }

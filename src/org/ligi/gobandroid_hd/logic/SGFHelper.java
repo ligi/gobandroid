@@ -181,7 +181,10 @@ public class SGFHelper {
 			String act_param = "";
 			String act_cmd = "";
 			String last_cmd = "";
-
+			
+			int predef_count_b=0;
+			int predef_count_w=0;
+			
 			GoGameMetadata metadata = new GoGameMetadata();
 
 			boolean break_pulled = false;
@@ -404,8 +407,9 @@ public class SGFHelper {
 								if ((breakon & BREAKON_FIRSTMOVE) > 0)
 									break_pulled = true;
 
-								if (game.getActMove().isFirstMove())
+								if (game.getActMove().isFirstMove()) {
 									game.apply_handicap();
+								}
 
 								if (act_param.length() == 0)
 									game.pass();
@@ -437,14 +441,20 @@ public class SGFHelper {
 								if (act_param.length() != 0) {
 									if (game.isBlackToMove()
 											&& (act_cmd.equals("AB") || act_cmd
-													.equals("AddBlack")))
+													.equals("AddBlack"))) {
+										predef_count_b++;
 										game.getHandicapBoard().setCellBlack(
 												param_x, param_y);
+									}
+												
 									if (game.isBlackToMove()
 											&& (act_cmd.equals("AW") || act_cmd
-													.equals("AddWhite")))
+													.equals("AddWhite"))) {
+										predef_count_w++;
 										game.getHandicapBoard().setCellWhite(
 												param_x, param_y);
+
+									}
 								} else
 									Log.w("AB / AW command without param");
 
@@ -473,8 +483,12 @@ public class SGFHelper {
 
 			}
 
-			if (game != null)
+			if (game != null) {
+				if (game.getActMove().isFirstMove() && predef_count_w==0 && predef_count_b>0) {
+					game.getActMove().setIsBlackToMove(true); // propably handycap - so make white to move - very imortant for cloud game and handycap
+				}
 				game.setMetadata(metadata);
+			}
 			return game;
 
 		} catch (Exception e) { // some weird sgf - we want to catch to not FC

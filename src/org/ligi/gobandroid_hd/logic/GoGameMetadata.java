@@ -173,4 +173,6 @@ public class GoGameMetadata {
 	public void setFileName(String filename) {
 		this.filename = filename;
 	}
+
+
 }

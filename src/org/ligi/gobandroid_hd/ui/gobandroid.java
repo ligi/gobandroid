@@ -23,8 +23,8 @@ import java.io.File;
 
 import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.android.common.intents.IntentHelper;
-import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.game_setup.GoSetupActivity;
 import org.ligi.gobandroid_hd.ui.gnugo.GnuGoHelper;
@@ -66,7 +66,7 @@ public class gobandroid extends GobandroidFragmentActivity {
 			setTitle("Gobandroid " + getVersionCode());
 
 		// if we have stacktraces - give user option to send them
-		TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
+		
 		/*
 		 * Intent intent = new Intent(Intent.ACTION_PICK,
 		 * ContactsContract.Contacts.CONTENT_URI);

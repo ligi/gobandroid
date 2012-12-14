@@ -1,8 +1,8 @@
 package org.ligi.gobandroid_hd.ui;
 
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.InteractionScope;
-import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.gnugo.GnuGoHelper;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
