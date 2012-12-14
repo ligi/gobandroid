@@ -174,4 +174,9 @@
   <string name="setup">Setup</string>
   <string name="load">Load</string>
   <string name="clear_board">clear board</string>
+  <string name="invite">Invite</string>
+  <string name="accept">accept</string>
+  <string name="new_tsumegos_available">New Tsumegos available!</string>
+  <string name="the_go_game_you_reviewed">The Go Game you reviewed</string>
+  <string name="this_game_has_2_players_but_you_can_only_watch_it">This game has 2 players - but you can only watch it</string>
 </resources>
