@@ -30,7 +30,6 @@ import org.ligi.gobandroid_hd.ui.game_setup.GoSetupActivity;
 import org.ligi.gobandroid_hd.ui.gnugo.GnuGoHelper;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
-import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 
 import android.app.AlertDialog;
 import android.content.Context;

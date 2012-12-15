@@ -9,17 +9,16 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
-import org.ligi.gobandroid_hd.ui.gobandroid;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.tracedroid.logging.Log;
+
+import android.app.AlertDialog;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
-
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
 public class TsumegoActivity extends GoActivity implements GoGameChangeListener {
 

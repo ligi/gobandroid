@@ -1,6 +1,5 @@
 package org.ligi.gobandroid_hd.ui.editing;
 
-import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.markers.CircleMarker;
@@ -11,8 +10,6 @@ import org.ligi.gobandroid_hd.ui.GoActivity;
 
 import android.os.Bundle;
 import android.view.WindowManager;
-
-import com.actionbarsherlock.view.Menu;
 
 /**
  * Activity to record a Game - or play on one device
