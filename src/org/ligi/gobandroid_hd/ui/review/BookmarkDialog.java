@@ -78,7 +78,7 @@ public class BookmarkDialog extends GobandroidDialog {
 	public BookmarkDialog(final GobandroidFragmentActivity context) {
 		super(context);
 
-		setTitle(R.string.menu_bookmark);
+		setTitle(R.string.bookmark);
 		setIconResource(R.drawable.bookmark);
 		setContentView(R.layout.save_bookmark);
 
