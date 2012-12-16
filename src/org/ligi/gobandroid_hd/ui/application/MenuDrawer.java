@@ -1,5 +1,6 @@
 package org.ligi.gobandroid_hd.ui.application;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GoPrefsActivity;
 import org.ligi.gobandroid_hd.ui.HelpDialog;
+import org.ligi.gobandroid_hd.ui.UnzipSGFsDialog;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
@@ -20,6 +22,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -107,11 +110,18 @@ public class MenuDrawer implements OnItemClickListener {
 			ctx.startActivity(new Intent(ctx, GoPrefsActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
 			break;
 		case R.id.tsumego:
-			startSGFListForPath(getApp().getSettings().getTsumegoPath());
+			Intent next = startSGFListForPath(getApp().getSettings().getTsumegoPath());
+			
+			if (!unzipSGFifNeeded(next))
+				ctx.startActivity(next);
 			break;
 
 		case R.id.review:
-			startSGFListForPath(getApp().getSettings().getReviewPath());
+			Intent next2 = startSGFListForPath(getApp().getSettings().getTsumegoPath());
+			
+			if (!unzipSGFifNeeded(next2))
+				ctx.startActivity(next2);
+			//startSGFListForPath(getApp().getSettings().getReviewPath());
 			break;
 
 		case R.id.bookmark:
@@ -121,11 +131,10 @@ public class MenuDrawer implements OnItemClickListener {
 		}
 	}
 
-	private void startSGFListForPath(String path) {
+	private Intent startSGFListForPath(String path) {
 		Intent i = new Intent(ctx, SGFSDCardListActivity.class);
 		i.setData(Uri.parse("file://" + path));
-		ctx.startActivity(i);
-		ctx.finish();
+		return i;
 	}
 
 	private GobandroidApp getApp() {
@@ -241,4 +250,24 @@ public class MenuDrawer implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		handleId((Integer) arg1.getTag());
 	}
+
+	/**
+	 * Downloads SGFs and shows a ProgressDialog when needed
+	 * 
+	 * @return - weather we had to unzip files
+	 */
+	public boolean unzipSGFifNeeded(Intent intent_after) {
+		String storrage_state = Environment.getExternalStorageState();
+
+		// we check for the tsumego path as the base path could already be there
+		// but
+		// no valid tsumego
+		
+		if ((storrage_state.equals(Environment.MEDIA_MOUNTED) && (!(new File(getApp().getSettings().getTsumegoPath())).isDirectory()))) {
+			UnzipSGFsDialog.show(ctx, intent_after);
+			return true;
+		}
+		return false;
+	}
+
 }
