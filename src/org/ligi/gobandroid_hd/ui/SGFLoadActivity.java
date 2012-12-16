@@ -149,8 +149,9 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 			in = getContentResolver().openInputStream(intent_uri);
 		}else if (uri_str.startsWith(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE)) {
 			new GobandroidNotifications(this).cancelCloudMoveNotification();
-			cloudgoban_parent_key=uri_str.replace(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE,"");
+			cloudgoban_parent_key=uri_str.replace(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE,"").split("#")[0];
 			Cloudgoban cg=getApp().getCloudgoban();
+			
 			return cg.games().get(cloudgoban_parent_key).execute().getSgf().getValue();
 		} else
 			in = new BufferedInputStream(new URL("" + intent_uri).openStream(),
