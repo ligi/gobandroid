@@ -211,7 +211,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 				
 				String sAux = "\n" + String.format(getString(R.string.you_are_invited_to_a_go_game),  getGame().getSize(),color ) + "\n";
 				sAux = sAux + GobandroidConfiguration.CLOUD_GOBAN_URL_BASE + result
-						+ "\n#gobandroid\n";
+						+ "\n \n #gobandroid\n";
 				i.putExtra(Intent.EXTRA_TEXT, sAux);
 				startActivity(Intent.createChooser(i,getString( R.string.choose_invite_method)));
 			} catch (Exception e) { // e.toString();
