@@ -7,9 +7,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.ligi.gobandroid_beta.R;
-import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.tracedroid.logging.Log;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -75,17 +77,17 @@ public class UnzipSGFsDialog {
 	 *            - if the alert should close when connection is established
 	 * 
 	 */
-	public static void show(GobandroidFragmentActivity activity, Intent intent_after_finish) {
+	public static void show(Activity activity, Intent intent_after_finish) {
 
 		ProgressDialog dialog = ProgressDialog.show(activity, "", "Unziping SGF's. Please wait...", true);
 
 		class AlertDialogUpdater implements Runnable {
 
 			private ProgressDialog myProgress;
-			private GobandroidFragmentActivity activity;
+			private Activity activity;
 			private Intent intent_after_finish;
 
-			public AlertDialogUpdater(GobandroidFragmentActivity activity, ProgressDialog progress, Intent intent_after_finish) {
+			public AlertDialogUpdater(Activity activity, ProgressDialog progress, Intent intent_after_finish) {
 				this.activity = activity;
 				this.intent_after_finish = intent_after_finish;
 				myProgress = progress;
@@ -95,7 +97,8 @@ public class UnzipSGFsDialog {
 				Resources resources = activity.getResources();
 
 				InputStream is = resources.openRawResource(R.raw.sgf_pack);
-				new Decompress(is, activity.getSettings().getSGFBasePath()).unzip();
+				GobandroidSettings settings=((GobandroidApp)activity.getApplicationContext()).getSettings();
+				new Decompress(is, settings.getSGFBasePath()).unzip();
 
 				myProgress.dismiss();
 				activity.startActivity(intent_after_finish);
