@@ -25,6 +25,7 @@ import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.android.common.intents.IntentHelper;
 import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.InteractionScope;
+import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.game_setup.GoSetupActivity;
 import org.ligi.gobandroid_hd.ui.gnugo.GnuGoHelper;
@@ -65,7 +66,7 @@ public class gobandroid extends GobandroidFragmentActivity {
 			setTitle("Gobandroid " + getVersionCode());
 
 		// if we have stacktraces - give user option to send them
-		
+
 		/*
 		 * Intent intent = new Intent(Intent.ACTION_PICK,
 		 * ContactsContract.Contacts.CONTENT_URI);
@@ -86,8 +87,7 @@ public class gobandroid extends GobandroidFragmentActivity {
 	 **/
 
 	public void recordGame(View target) {
-		EasyTracker.getTracker().trackEvent("ui_action", "dashboard", "record",
-				null);
+		EasyTracker.getTracker().trackEvent("ui_action", "dashboard", "record", null);
 		getApp().getInteractionScope().setMode(InteractionScope.MODE_RECORD);
 		this.startActivity(new Intent(this, GoSetupActivity.class));
 
@@ -98,8 +98,7 @@ public class gobandroid extends GobandroidFragmentActivity {
 		switch (item.getItemId()) {
 		case R.id.help:
 			new HelpDialog(this).show();
-			EasyTracker.getTracker().trackEvent("ui_action", "dashboard",
-					"help", null);
+			EasyTracker.getTracker().trackEvent("ui_action", "dashboard", "help", null);
 
 			return true;
 		}
@@ -113,8 +112,7 @@ public class gobandroid extends GobandroidFragmentActivity {
 	}
 
 	public void solveProblem(View target) {
-		EasyTracker.getTracker().trackEvent("ui_action", "dashboard",
-				"tsumego", null);
+		EasyTracker.getTracker().trackEvent("ui_action", "dashboard", "tsumego", null);
 		Intent next = startLoad(getSettings().getTsumegoPath());
 
 		if (!unzipSGFifNeeded(next))
@@ -122,8 +120,7 @@ public class gobandroid extends GobandroidFragmentActivity {
 	}
 
 	public void reviewGame(View target) {
-		EasyTracker.getTracker().trackEvent("ui_action", "dashboard", "review",
-				null);
+		EasyTracker.getTracker().trackEvent("ui_action", "dashboard", "review", null);
 		Intent next = startLoad(getSettings().getReviewPath());
 		if (!unzipSGFifNeeded(next))
 			startActivity(next);
@@ -140,8 +137,7 @@ public class gobandroid extends GobandroidFragmentActivity {
 		// we check for the tsumego path as the base path could already be there
 		// but
 		// no valid tsumego
-		if ((storrage_state.equals(Environment.MEDIA_MOUNTED) && (!(new File(
-				getSettings().getTsumegoPath())).isDirectory()))) {
+		if ((storrage_state.equals(Environment.MEDIA_MOUNTED) && (!(new File(getSettings().getTsumegoPath())).isDirectory()))) {
 			UnzipSGFsDialog.show(this, intent_after);
 			return true;
 		}
@@ -149,48 +145,32 @@ public class gobandroid extends GobandroidFragmentActivity {
 	}
 
 	public void startLinks(View target) {
-		EasyTracker.getTracker().trackEvent("ui_action", "dashboard", "links",
-				null);
+		EasyTracker.getTracker().trackEvent("ui_action", "dashboard", "links", null);
 		this.startActivity(new Intent(this, LinksActivity.class));
 	}
 
 	public void startGnuGoGame(View target) {
 
 		if (!GnuGoHelper.isGnuGoAvail(this)) {
-			EasyTracker.getTracker().trackEvent("ui_action", "intern",
-					"gnugo_missing", null);
-			new AlertDialog.Builder(this)
-					.setMessage(R.string.gnugo_not_installed)
-					.setTitle(R.string.problem)
-					.setNegativeButton(android.R.string.cancel,
-							new DialogDiscarder())
-					.setPositiveButton(R.string.install_gnugo,
-							new OnClickListener() {
+			EasyTracker.getTracker().trackEvent("ui_action", "intern", "gnugo_missing", null);
+			new AlertDialog.Builder(this).setMessage(R.string.gnugo_not_installed).setTitle(R.string.problem).setNegativeButton(android.R.string.cancel, new DialogDiscarder()).setPositiveButton(R.string.install_gnugo, new OnClickListener() {
 
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									try {
-										IntentHelper
-												.goToMarketPackage(
-														gobandroid.this,
-														"org.ligi.gobandroidhd.ai.gnugo");
-									} catch (Exception e) {
-										Intent fail_intent = new Intent();
-										fail_intent
-												.setAction(Intent.ACTION_VIEW);
-										fail_intent.setData(Uri
-												.parse("http://github.com/downloads/ligi/gobandroid-ai-gnugo/org_ligi_gobandroid_ai_gnugo_0.7.apk"));
-										gobandroid.this
-												.startActivity(fail_intent);
-									}
-								}
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					try {
+						IntentHelper.goToMarketPackage(gobandroid.this, "org.ligi.gobandroidhd.ai.gnugo");
+					} catch (Exception e) {
+						Intent fail_intent = new Intent();
+						fail_intent.setAction(Intent.ACTION_VIEW);
+						fail_intent.setData(Uri.parse(GobandroidConfiguration.GNUGO_MANUAL_INSTALL_URL));
+						gobandroid.this.startActivity(fail_intent);
+					}
+				}
 
-							}).show();
+			}).show();
 			return;
 		}
-		EasyTracker.getTracker().trackEvent("ui_action", "dashboard", "gnugo",
-				null);
+		EasyTracker.getTracker().trackEvent("ui_action", "dashboard", "gnugo", null);
 
 		getApp().getInteractionScope().setMode(InteractionScope.MODE_GNUGO);
 		this.startActivity(new Intent(this, GoSetupActivity.class));
@@ -206,9 +186,7 @@ public class gobandroid extends GobandroidFragmentActivity {
 
 	public static String getVersionCode(Context ctx) {
 		try {
-			return "v"
-					+ ctx.getPackageManager().getPackageInfo(
-							ctx.getPackageName(), 0).versionName;
+			return "v" + ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0).versionName;
 		} catch (NameNotFoundException e) {
 			return "v?";
 		}

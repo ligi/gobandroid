@@ -49,8 +49,7 @@ public class IconicAdapter extends ArrayAdapter<Object> {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater vi = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		View row = vi.inflate(R.layout.icon_and_text, null);
 		TextView label = (TextView) row.findViewById(R.id.TextView01);

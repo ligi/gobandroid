@@ -174,5 +174,4 @@ public class GoGameMetadata {
 		this.filename = filename;
 	}
 
-
 }

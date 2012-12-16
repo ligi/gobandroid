@@ -17,8 +17,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class InGameActionBarStonesAndPointsView extends View implements
-		GoGame.GoGameChangeListener {
+public class InGameActionBarStonesAndPointsView extends View implements GoGame.GoGameChangeListener {
 
 	private Bitmap white_stone_bitmap = null;
 	private Bitmap black_stone_bitmap = null;
@@ -31,14 +30,11 @@ public class InGameActionBarStonesAndPointsView extends View implements
 	private GobandroidApp app;
 
 	private Bitmap getScaledRes(float size, int resID) {
-		Bitmap unscaled_bitmap = BitmapFactory.decodeResource(
-				this.getResources(), resID);
-		return Bitmap.createScaledBitmap(unscaled_bitmap, (int) size,
-				(int) size, true);
+		Bitmap unscaled_bitmap = BitmapFactory.decodeResource(this.getResources(), resID);
+		return Bitmap.createScaledBitmap(unscaled_bitmap, (int) size, (int) size, true);
 	}
 
-	public InGameActionBarStonesAndPointsView(Context context,
-			AttributeSet attrs) {
+	public InGameActionBarStonesAndPointsView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init();
 	}
@@ -60,20 +56,17 @@ public class InGameActionBarStonesAndPointsView extends View implements
 
 		black_stone_bitmap = getScaledRes(h / 2, R.drawable.stone_black);
 		white_stone_bitmap = getScaledRes(h / 2, R.drawable.stone_white);
-		black_bg_rect = new Rect(0, 0, black_stone_bitmap.getWidth() * 3,
-				black_stone_bitmap.getHeight());
+		black_bg_rect = new Rect(0, 0, black_stone_bitmap.getWidth() * 3, black_stone_bitmap.getHeight());
 		white_bg_rect = new Rect(black_bg_rect);
 		white_bg_rect.offsetTo(0, black_stone_bitmap.getHeight());
 		fm = mPaint.getFontMetrics();
-		text_offset = (black_stone_bitmap.getHeight() - mPaint.getTextSize())
-				/ 2 - (fm.top + fm.bottom);
+		text_offset = (black_stone_bitmap.getHeight() - mPaint.getTextSize()) / 2 - (fm.top + fm.bottom);
 	}
 
 	public void init() {
 		mPaint.setColor(Color.BLACK);
 		getGame().addGoGameChangeListener(this);
-		myActiveBGPaint.setColor(getResources()
-				.getColor(R.color.dividing_color));
+		myActiveBGPaint.setColor(getResources().getColor(R.color.dividing_color));
 		myActiveBGPaint.setStyle(Paint.Style.FILL);
 	}
 
@@ -85,8 +78,7 @@ public class InGameActionBarStonesAndPointsView extends View implements
 	protected void onDraw(Canvas canvas) {
 
 		if (this.getWidth() > white_bg_rect.width() * 2) {
-			String move_text = getContext().getString(R.string.move) + " "
-					+ getGame().getActMove().getMovePos();
+			String move_text = getContext().getString(R.string.move) + " " + getGame().getActMove().getMovePos();
 
 			int mode_str = R.string.empty_str;
 			switch (app.getInteractionScope().getMode()) {
@@ -113,12 +105,9 @@ public class InGameActionBarStonesAndPointsView extends View implements
 
 			}
 
-			canvas.drawText(move_text, white_bg_rect.width() + 5, text_offset,
-					mPaint);
+			canvas.drawText(move_text, white_bg_rect.width() + 5, text_offset, mPaint);
 
-			canvas.drawText(getContext().getString(mode_str),
-					white_bg_rect.width() + 5, getHeight() / 2 + text_offset,
-					mPaint);
+			canvas.drawText(getContext().getString(mode_str), white_bg_rect.width() + 5, getHeight() / 2 + text_offset, mPaint);
 		}
 
 		if (getGame().isBlackToMove() || getGame().isFinished())
@@ -127,17 +116,11 @@ public class InGameActionBarStonesAndPointsView extends View implements
 		if ((!getGame().isBlackToMove()) || getGame().isFinished())
 			canvas.drawRect(white_bg_rect, myActiveBGPaint);
 
-		canvas.drawBitmap(black_stone_bitmap,
-				black_stone_bitmap.getWidth() / 2, 0, null);
-		canvas.drawBitmap(white_stone_bitmap,
-				black_stone_bitmap.getWidth() / 2, getHeight() / 2, null);
+		canvas.drawBitmap(black_stone_bitmap, black_stone_bitmap.getWidth() / 2, 0, null);
+		canvas.drawBitmap(white_stone_bitmap, black_stone_bitmap.getWidth() / 2, getHeight() / 2, null);
 
-		canvas.drawText(" " + getGame().getCapturesBlack(),
-				(int) (black_stone_bitmap.getWidth() * 1.5), text_offset,
-				mPaint);
-		canvas.drawText(" " + getGame().getCapturesWhite(),
-				(int) (black_stone_bitmap.getWidth() * 1.5), getHeight() / 2
-						+ text_offset, mPaint);
+		canvas.drawText(" " + getGame().getCapturesBlack(), (int) (black_stone_bitmap.getWidth() * 1.5), text_offset, mPaint);
+		canvas.drawText(" " + getGame().getCapturesWhite(), (int) (black_stone_bitmap.getWidth() * 1.5), getHeight() / 2 + text_offset, mPaint);
 		super.onDraw(canvas);
 	}
 

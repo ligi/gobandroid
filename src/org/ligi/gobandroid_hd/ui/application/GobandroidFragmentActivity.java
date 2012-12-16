@@ -21,7 +21,7 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity {
 		super.onCreate(savedInstanceState);
 
 		new MenuDrawer(this);
-		
+
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		// a little hack because I strongly disagree with the style guide here
 		// ;-)
@@ -30,8 +30,7 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity {
 		// http://stackoverflow.com/questions/9286822/how-to-force-use-of-overflow-menu-on-devices-with-menu-button
 		try {
 			ViewConfiguration config = ViewConfiguration.get(this);
-			Field menuKeyField = ViewConfiguration.class
-					.getDeclaredField("sHasPermanentMenuKey");
+			Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
 			if (menuKeyField != null) {
 				menuKeyField.setAccessible(true);
 				menuKeyField.setBoolean(config, false);
@@ -57,12 +56,9 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity {
 		super.onResume();
 
 		if (doFullScreen())
-			this.getWindow().setFlags(
-					WindowManager.LayoutParams.FLAG_FULLSCREEN,
-					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		else
-			this.getWindow().clearFlags(
-					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	}
 
 	public GobandroidApp getApp() {

@@ -16,48 +16,46 @@ import android.widget.TextView;
 public class NavigationAndCommentFragment extends Fragment implements GoGameChangeListener {
 
 	private TextView myTextView;
-	
+
 	private GoGame game;
+
 	@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-		
-		View res=inflater.inflate(R.layout.game_extra_review, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		myTextView=(TextView)res.findViewById(R.id.comments_textview);
+		View res = inflater.inflate(R.layout.game_extra_review, container, false);
 
-		game=((GobandroidApp)(getActivity().getApplicationContext())).getGame();
+		myTextView = (TextView) res.findViewById(R.id.comments_textview);
+
+		game = ((GobandroidApp) (getActivity().getApplicationContext())).getGame();
 		game.addGoGameChangeListener(this);
 
-		
 		getFragmentManager().beginTransaction().replace(R.id.container_for_nav, new NavigationFragment()).commit();
 		onGoGameChange();
 		return res;
-    }
-	
+	}
+
 	@Override
 	public void onGoGameChange() {
 		gameChangeHandler.post(new Runnable() {
 
 			@Override
 			public void run() {
-				if (myTextView!=null) {
+				if (myTextView != null) {
 					myTextView.setText(game.getActMove().getComment());
 					CommentHelper.linkifyCommentTextView(myTextView);
-						
+
 				}
 			}
-			
+
 		});
 	}
-	
-	private Handler gameChangeHandler=new Handler();
-	
+
+	private Handler gameChangeHandler = new Handler();
+
 	@Override
 	public void onDestroyView() {
 		game.removeGoGameChangeListener(this);
 		super.onDestroyView();
 	}
-		
-	
+
 }

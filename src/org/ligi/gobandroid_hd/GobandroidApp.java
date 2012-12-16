@@ -29,15 +29,16 @@ public class GobandroidApp extends Application {
 
 	// the InteractionScope holds things like mode/act game between activities
 	private InteractionScope interaction_scope;
-	private boolean has_active_go_activity=false;
-	
+	private boolean has_active_go_activity = false;
+
 	public void setGoActivityActivity(boolean active) {
-		has_active_go_activity=active;
+		has_active_go_activity = active;
 	}
+
 	public boolean hasActiveGoActivity() {
 		return has_active_go_activity;
 	}
-	
+
 	public String getAppVersion() {
 		try {
 			return getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
@@ -58,7 +59,7 @@ public class GobandroidApp extends Application {
 
 		interaction_scope = new InteractionScope();
 
-		if (Build.VERSION.SDK_INT > 7) // need at least 8 for GCM 
+		if (Build.VERSION.SDK_INT > 7) // need at least 8 for GCM
 			initGCM();
 
 		GobandroidBackend.registerDevice(this);
@@ -69,16 +70,14 @@ public class GobandroidApp extends Application {
 			// Make sure the device has the proper dependencies.
 			GCMRegistrar.checkDevice(this);
 
-			
 			final String regId = GCMRegistrar.getRegistrationId(this);
-			Log.i("initGCM with regId="+regId);
-			if (regId.equals(""))	{
+			Log.i("initGCM with regId=" + regId);
+			if (regId.equals("")) {
 				// Automatically registers application on startup.
 				GCMRegistrar.register(this, GobandroidConfiguration.GCM_SENDER_ID);
 			}
 		} catch (Exception e) {
-			EasyTracker.getTracker()
-					.trackException("cannot init GCM", e, false);
+			EasyTracker.getTracker().trackException("cannot init GCM", e, false);
 		}
 	}
 
@@ -104,12 +103,12 @@ public class GobandroidApp extends Application {
 	public GobandroidSettings getSettings() {
 		return new GobandroidSettings(this);
 	}
-	
+
 	public Cloudgoban getCloudgoban() {
 		HttpTransport transport = AndroidHttp.newCompatibleTransport();
 		JsonFactory jsonFactory = new GsonFactory();
-		
+
 		return new Cloudgoban(transport, jsonFactory, null);
-		
+
 	}
 }

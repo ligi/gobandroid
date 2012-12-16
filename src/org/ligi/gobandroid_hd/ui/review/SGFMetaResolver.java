@@ -29,8 +29,7 @@ public class SGFMetaResolver {
 	HashMap<String, String> SGG2MetaURL = new HashMap<String, String>() {
 		private static final long serialVersionUID = 8869726816891994882L;
 		{
-			put("http://gogameguru.com/i/2012/03/Jiang-Weijie-vs-Lee-Changho-20120213.sgf",
-					"http://gogameguru.com/go-commentary-jiang-weijie-lee-changho-16th-lg-cup/");
+			put("http://gogameguru.com/i/2012/03/Jiang-Weijie-vs-Lee-Changho-20120213.sgf", "http://gogameguru.com/go-commentary-jiang-weijie-lee-changho-16th-lg-cup/");
 			put("", "");
 		}
 	};

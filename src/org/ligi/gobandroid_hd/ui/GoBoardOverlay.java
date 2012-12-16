@@ -35,16 +35,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.FrameLayout.LayoutParams;
 
 /**
  * overlay for the go-board with comments and nav buttons
- *  
+ * 
  * @author <a href="http://ligi.de">Marcus -LiGi- Bueschleb </a>
  * 
  *         This software is licenced with GPLv3
@@ -59,8 +59,7 @@ public class GoBoardOverlay implements OnClickListener {
 	private Context context;
 	private GoBoardView board_view;
 
-	public GoBoardOverlay(Context context, GoBoardView board_view,
-			boolean horizontal) {
+	public GoBoardOverlay(Context context, GoBoardView board_view, boolean horizontal) {
 		this.context = context;
 		this.board_view = board_view;
 
@@ -104,18 +103,15 @@ public class GoBoardOverlay implements OnClickListener {
 		button_container = new LinearLayout(context);
 
 		for (ImageButton btn : control_buttons) {
-			btn.setLayoutParams(new LinearLayout.LayoutParams(
-					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
+			btn.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
 			button_container.addView(btn);
 		}
 
 		if (horizontal) {
 			button_container.setOrientation(LinearLayout.VERTICAL);
-			button_container.setLayoutParams(new LinearLayout.LayoutParams(
-					LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
+			button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
 
-			FrameLayout.LayoutParams bottom_nav_params = new FrameLayout.LayoutParams(
-					LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+			FrameLayout.LayoutParams bottom_nav_params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
 
 			bottom_nav_params.gravity = Gravity.RIGHT;
 			outer_lin.setOrientation(LinearLayout.HORIZONTAL);
@@ -123,14 +119,11 @@ public class GoBoardOverlay implements OnClickListener {
 		} else { // vertical layout
 
 			button_container.setOrientation(LinearLayout.HORIZONTAL);
-			button_container.setLayoutParams(new LinearLayout.LayoutParams(
-					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+			button_container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
-			FrameLayout.LayoutParams bottom_nav_params = new FrameLayout.LayoutParams(
-					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+			FrameLayout.LayoutParams bottom_nav_params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-			bottom_nav_params.gravity = Gravity.BOTTOM
-					| Gravity.CENTER_HORIZONTAL;
+			bottom_nav_params.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
 
 			outer_lin.setLayoutParams(bottom_nav_params);
 			outer_lin.setOrientation(LinearLayout.VERTICAL);
@@ -158,13 +151,11 @@ public class GoBoardOverlay implements OnClickListener {
 
 	public void updateCommentsSize(int w, int h, boolean horizontal) {
 
-		Log.i("refreshing overlay in update to --" + w + "x" + h + " "
-				+ (horizontal ? "h" : "v") + " " + back.getHeight());
+		Log.i("refreshing overlay in update to --" + w + "x" + h + " " + (horizontal ? "h" : "v") + " " + back.getHeight());
 		if (horizontal)
 			comment_tv.setWidth(w - h - 20 - back.getWidth());
 		else
-			comment_sv.setLayoutParams(new LinearLayout.LayoutParams(w, h - w
-					- back.getHeight()));
+			comment_sv.setLayoutParams(new LinearLayout.LayoutParams(w, h - w - back.getHeight()));
 
 		// updateCommentText();
 		comment_sv.requestLayout();
@@ -213,9 +204,7 @@ public class GoBoardOverlay implements OnClickListener {
 				if (game.getActMove().hasComment())
 					txt.setText(game.getActMove().getComment());
 				else
-					txt.setText(""
-							+ (game.getPossibleVariationCount() + 1)
-							+ " Variations found for this move - which should we take?");
+					txt.setText("" + (game.getPossibleVariationCount() + 1) + " Variations found for this move - which should we take?");
 
 				txt.setPadding(10, 2, 10, 23);
 				lin.addView(txt);
@@ -243,25 +232,20 @@ public class GoBoardOverlay implements OnClickListener {
 				};
 
 				li.setWeightSum(1.0f * (game.getPossibleVariationCount() + 1));
-				li.setLayoutParams(new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.MATCH_PARENT,
-						LinearLayout.LayoutParams.WRAP_CONTENT));
+				li.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
 				for (Integer i = 0; i < game.getPossibleVariationCount() + 1; i++) {
 					Button var_btn = new Button(context);
 					var_btn.setTag(i);
 					var_btn.setOnClickListener(var_select_listener);
 					if (game.getActMove().getnextMove(i).isMarked())
-						var_btn.setText(game.getActMove().getnextMove(i)
-								.getMarkText());
+						var_btn.setText(game.getActMove().getnextMove(i).getMarkText());
 					else
 						var_btn.setText("" + (i + 1));
 
 					li.addView(var_btn);
 
-					var_btn.setLayoutParams(new LinearLayout.LayoutParams(
-							LinearLayout.LayoutParams.WRAP_CONTENT,
-							LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+					var_btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
 				}
 
 				select_dlg.setTitle(R.string.variations);
@@ -276,52 +260,27 @@ public class GoBoardOverlay implements OnClickListener {
 			game.jumpLast();
 		else if (btn == comments) {
 
-			new AlertDialog.Builder(context)
-					.setTitle(R.string.comments)
-					.setMessage(getGameComment())
-					.setPositiveButton(R.string.ok,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int whichButton) {
-								}
-							})
-					.setNeutralButton("Edit",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int whichButton) {
+			new AlertDialog.Builder(context).setTitle(R.string.comments).setMessage(getGameComment()).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+				}
+			}).setNeutralButton("Edit", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
 
-									final EditText comment_edit = new EditText(
-											context);
-									comment_edit.setText(getGameComment());
+					final EditText comment_edit = new EditText(context);
+					comment_edit.setText(getGameComment());
 
-									new AlertDialog.Builder(context)
-											.setTitle(R.string.comments)
-											.setView(comment_edit)
-											.setPositiveButton(
-													R.string.ok,
-													new DialogInterface.OnClickListener() {
-														public void onClick(
-																DialogInterface dialog,
-																int whichButton) {
-															game.getActMove()
-																	.setComment(
-																			comment_edit
-																					.getText()
-																					.toString());
-															updateCommentText();
-														}
-													})
-											.setNegativeButton(
-													R.string.cancel,
-													new DialogInterface.OnClickListener() {
-														public void onClick(
-																DialogInterface dialog,
-																int whichButton) {
-														}
-													}).show();
+					new AlertDialog.Builder(context).setTitle(R.string.comments).setView(comment_edit).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							game.getActMove().setComment(comment_edit.getText().toString());
+							updateCommentText();
+						}
+					}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+						}
+					}).show();
 
-								}
-							}).show();
+				}
+			}).show();
 		}
 
 		updateCommentText();
@@ -343,12 +302,9 @@ public class GoBoardOverlay implements OnClickListener {
 		}
 
 		back.setEnabled(game.canUndo() && (!game.getGoMover().isMoversMove()));
-		first.setEnabled(game.canUndo()
-				&& (!game.getGoMover().isPlayingInThisGame()));
-		next.setEnabled(game.canRedo()
-				&& (!game.getGoMover().isPlayingInThisGame()));
-		last.setEnabled(game.canRedo()
-				&& (!game.getGoMover().isPlayingInThisGame()));
+		first.setEnabled(game.canUndo() && (!game.getGoMover().isPlayingInThisGame()));
+		next.setEnabled(game.canRedo() && (!game.getGoMover().isPlayingInThisGame()));
+		last.setEnabled(game.canRedo() && (!game.getGoMover().isPlayingInThisGame()));
 		// comments.setEnabled(game.getActMove().hasComment());
 	}
 }

@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui.tsumego.fetch;
 import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.ui.Refreshable;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,8 +15,7 @@ import android.os.AsyncTask;
  * @author ligi
  * 
  */
-public class DownloadProblemsDialogTask extends
-		AsyncTask<TsumegoSource[], String, Integer> {
+public class DownloadProblemsDialogTask extends AsyncTask<TsumegoSource[], String, Integer> {
 
 	private ProgressDialog progress_dialog;
 	private Refreshable refreshable;
@@ -28,9 +28,7 @@ public class DownloadProblemsDialogTask extends
 
 	@Override
 	protected void onPreExecute() {
-		progress_dialog = ProgressDialog.show(ctx,
-				ctx.getString(R.string.download_status),
-				ctx.getString(R.string.downloading_tsumegos_please_wait), true);
+		progress_dialog = ProgressDialog.show(ctx, ctx.getString(R.string.download_status), ctx.getString(R.string.downloading_tsumegos_please_wait), true);
 		super.onPreExecute();
 	}
 
@@ -50,14 +48,11 @@ public class DownloadProblemsDialogTask extends
 		String msg = ctx.getString(R.string.no_new_tsumegos_found);
 
 		if (result > 0) {
-			msg = String.format(ctx.getString(R.string.downloaded_n_tsumego,
-					result));
+			msg = String.format(ctx.getString(R.string.downloaded_n_tsumego, result));
 			refreshable.refresh();
 		}
 
-		new AlertDialog.Builder(ctx).setMessage(msg)
-				.setTitle(R.string.download_report)
-				.setPositiveButton(R.string.ok, new DialogDiscarder()).show();
+		new AlertDialog.Builder(ctx).setMessage(msg).setTitle(R.string.download_report).setPositiveButton(R.string.ok, new DialogDiscarder()).show();
 	}
 
 	@Override

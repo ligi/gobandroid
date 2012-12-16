@@ -36,32 +36,32 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
 	private Button size_button19x19;
 
 	private TextView handicap_text;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		
+
 		GoPrefs.init(getActivity()); // TODO remove legacy
-		
-		View view=inflater.inflate(R.layout.game_setup_inner,null);
-		LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+
+		View view = inflater.inflate(R.layout.game_setup_inner, null);
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		view.setLayoutParams(lp);
-		
-		size_seek = findById(view,R.id.size_slider);
+
+		size_seek = findById(view, R.id.size_slider);
 		size_seek.setOnSeekBarChangeListener(this);
 
-		size_text = findById(view,R.id.game_size_label);
+		size_text = findById(view, R.id.game_size_label);
 
-		size_button9x9 = findById(view,R.id.size_button9x9);
+		size_button9x9 = findById(view, R.id.size_button9x9);
 		size_button9x9.setOnClickListener(this);
 
-		size_button13x13 = findById(view,R.id.size_button13x13);
+		size_button13x13 = findById(view, R.id.size_button13x13);
 		size_button13x13.setOnClickListener(this);
 
-		size_button19x19 = findById(view,R.id.size_button19x19);
+		size_button19x19 = findById(view, R.id.size_button19x19);
 		size_button19x19.setOnClickListener(this);
 
-		handicap_text = findById(view,R.id.handicap_label);
-		handicap_seek = findById(view,R.id.handicap_seek);
+		handicap_text = findById(view, R.id.handicap_label);
+		handicap_seek = findById(view, R.id.handicap_seek);
 		handicap_seek.setOnSeekBarChangeListener(this);
 
 		// set defaults
@@ -87,12 +87,10 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
 
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-		
-		if ((seekBar == size_seek)
-				&& (act_size != (byte) (progress + size_offset)))
+
+		if ((seekBar == size_seek) && (act_size != (byte) (progress + size_offset)))
 			act_size = (byte) (progress + size_offset);
-		else if ((seekBar == handicap_seek)
-				&& (act_handicap != (byte) progress))
+		else if ((seekBar == handicap_seek) && (act_handicap != (byte) progress))
 			act_handicap = (byte) progress;
 
 		refresh_ui();
@@ -100,17 +98,13 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
 	
 		*/
 	}
-	
-	
 
 	/**
 	 * refresh the ui elements with values from act_size / act_handicap
 	 */
 	public void refresh_ui() {
-		size_text.setText(getString(R.string.size) + " " + act_size + "x"
-				+ act_size);
-		handicap_text
-				.setText(getString(R.string.handicap) + " " + act_handicap);
+		size_text.setText(getString(R.string.size) + " " + act_size + "x" + act_size);
+		handicap_text.setText(getString(R.string.handicap) + " " + act_handicap);
 
 		// the checks for change here are important - otherwise samsung moment
 		// will die here with stack overflow
@@ -124,40 +118,35 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
 			size_seek.setMax(19 - size_offset);
 
 		// only enable handicap seeker when the size is 9x9 or 13x13 or 19x19
-		handicap_seek.setEnabled((act_size == 9) || (act_size == 13)
-				|| (act_size == 19));
+		handicap_seek.setEnabled((act_size == 9) || (act_size == 13) || (act_size == 19));
 
 		GoPrefs.setLastBoardSize(act_size);
 		GoPrefs.setLastHandicap(act_handicap);
-		
-		InteractionScope is=getApp().getInteractionScope();
-		
-		if (is.getGame().getSize()!=act_size || is.getGame().getHandicap()!=act_handicap) {
+
+		InteractionScope is = getApp().getInteractionScope();
+
+		if (is.getGame().getSize() != act_size || is.getGame().getHandicap() != act_handicap) {
 			getApp().getInteractionScope().setGame(new GoGame(act_size, act_handicap));
 		}
-		
-		GoBoardViewHD board=((GoActivity)getActivity()).getBoard();
-		
+
+		GoBoardViewHD board = ((GoActivity) getActivity()).getBoard();
+
 		if (board != null) {
 			board.regenerateStroneImagesWithNewSize();
 			board.invalidate();
 		}
 	}
 
-	
-
 	@Override
 	public void onStartTrackingTouch(SeekBar seekBar) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
 		// TODO Auto-generated method stub
-		
-	}
-	
 
+	}
 
 }

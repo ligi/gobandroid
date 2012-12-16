@@ -55,8 +55,7 @@ import com.google.analytics.tracking.android.EasyTracker;
  * 
  **/
 
-public class CopyOfGoSetupActivity extends GoActivity implements
-		OnSeekBarChangeListener, OnClickListener {
+public class CopyOfGoSetupActivity extends GoActivity implements OnSeekBarChangeListener, OnClickListener {
 
 	private byte act_size = 9;
 	private byte act_handicap = 0;
@@ -86,7 +85,7 @@ public class CopyOfGoSetupActivity extends GoActivity implements
 		this.setTitle(R.string.board_setup);
 
 	}
-	
+
 	private void setup_board() {
 		board = findById(R.id.go_board);
 
@@ -124,7 +123,7 @@ public class CopyOfGoSetupActivity extends GoActivity implements
 			getSupportActionBar().setSubtitle(R.string.for_recording);
 			break;
 		}
-		
+
 		setup_board();
 
 		size_seek = findById(R.id.size_slider);
@@ -156,10 +155,8 @@ public class CopyOfGoSetupActivity extends GoActivity implements
 	 * refresh the ui elements with values from act_size / act_handicap
 	 */
 	public void refresh_ui() {
-		size_text.setText(getString(R.string.size) + " " + act_size + "x"
-				+ act_size);
-		handicap_text
-				.setText(getString(R.string.handicap) + " " + act_handicap);
+		size_text.setText(getString(R.string.size) + " " + act_size + "x" + act_size);
+		handicap_text.setText(getString(R.string.handicap) + " " + act_handicap);
 
 		// the checks for change here are important - otherwise samsung moment
 		// will die here with stack overflow
@@ -173,27 +170,22 @@ public class CopyOfGoSetupActivity extends GoActivity implements
 			size_seek.setMax(19 - size_offset);
 
 		// only enable handicap seeker when the size is 9x9 or 13x13 or 19x19
-		handicap_seek.setEnabled((act_size == 9) || (act_size == 13)
-				|| (act_size == 19));
+		handicap_seek.setEnabled((act_size == 9) || (act_size == 13) || (act_size == 19));
 
 		GoPrefs.setLastBoardSize(act_size);
 		GoPrefs.setLastHandicap(act_handicap);
 
-		getApp().getInteractionScope().setGame(
-				new GoGame(act_size, act_handicap));
+		getApp().getInteractionScope().setGame(new GoGame(act_size, act_handicap));
 		if (board != null) {
 			board.boardSizeChanged();
 			board.invalidate();
 		}
 	}
 
-	public void onProgressChanged(SeekBar seekBar, int progress,
-			boolean fromUser) {
-		if ((seekBar == size_seek)
-				&& (act_size != (byte) (progress + size_offset)))
+	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+		if ((seekBar == size_seek) && (act_size != (byte) (progress + size_offset)))
 			act_size = (byte) (progress + size_offset);
-		else if ((seekBar == handicap_seek)
-				&& (act_handicap != (byte) progress))
+		else if ((seekBar == handicap_seek) && (act_handicap != (byte) progress))
 			act_handicap = (byte) progress;
 
 		refresh_ui();
@@ -229,16 +221,16 @@ public class CopyOfGoSetupActivity extends GoActivity implements
 		Intent go_intent;
 
 		switch (getApp().getInteractionScope().getMode()) {
-		
+
 		case InteractionScope.MODE_GNUGO:
 			go_intent = new Intent(this, PlayAgainstGnugoActivity.class);
 			break;
-		
+
 		default:
 			go_intent = new Intent(this, GameRecordActivity.class);
 			getApp().getInteractionScope().setMode(InteractionScope.MODE_RECORD);
 		}
-			
+
 		/*
 		 * go_intent.putExtra("size",act_size );
 		 * go_intent.putExtra("handicap",act_handicap );
@@ -248,8 +240,7 @@ public class CopyOfGoSetupActivity extends GoActivity implements
 		 * go_intent.putExtra("black_player",black_player_spinner
 		 * .getSelectedItemPosition());
 		 */
-		EasyTracker.getTracker().trackEvent("ui_event", "setup_board",
-				"" + act_size, null);
+		EasyTracker.getTracker().trackEvent("ui_event", "setup_board", "" + act_size, null);
 		go_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		go_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(go_intent);
@@ -265,8 +256,7 @@ public class CopyOfGoSetupActivity extends GoActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_clear_board:
-			getApp().getInteractionScope().setGame(
-					new GoGame(act_size, act_handicap));
+			getApp().getInteractionScope().setGame(new GoGame(act_size, act_handicap));
 			break;
 		case R.id.menu_start:
 			start_game();

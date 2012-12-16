@@ -12,8 +12,8 @@ public class GobandroidListFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		getListView().setCacheColorHint(0);
-        getListView().setDivider((GradientDrawable)getActivity().getResources().getDrawable(R.drawable.divider_h));
-        getListView().setDividerHeight(2);
-        
+		getListView().setDivider((GradientDrawable) getActivity().getResources().getDrawable(R.drawable.divider_h));
+		getListView().setDividerHeight(2);
+
 	}
 }

@@ -3,9 +3,9 @@ package org.ligi.gobandroid_hd.ui.tsumego.fetch;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import android.content.Context;
+
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class DownloadProblemsForNotification {
 
@@ -13,8 +13,7 @@ public class DownloadProblemsForNotification {
 
 		GobandroidApp app = (GobandroidApp) ctx.getApplicationContext();
 
-		EasyTracker.getTracker().trackEvent("ui_action", "tsumego",
-				"refresh_notification", null);
+		EasyTracker.getTracker().trackEvent("ui_action", "tsumego", "refresh_notification", null);
 
 		int res = TsumegoDownloadHelper.doDownloadDefault(app);
 		if (res > 0)

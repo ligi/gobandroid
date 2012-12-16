@@ -62,8 +62,7 @@ public class SGFHelper {
 				if (act_move.isPassMove())
 					res += "[]";
 				else
-					res += coords2SGFFragment(act_move.getX(), act_move.getY())
-							+ "\n";
+					res += coords2SGFFragment(act_move.getX(), act_move.getY()) + "\n";
 			}
 
 			// add the comment
@@ -71,18 +70,18 @@ public class SGFHelper {
 				res += "C[" + act_move.getComment() + "]\n";
 
 			// add markers
-			for(GoMarker marker : act_move.getMarkers()) {
+			for (GoMarker marker : act_move.getMarkers()) {
 				if (marker instanceof SquareMarker) {
-					res += "SQ" +coords2SGFFragment(marker.getX(),marker.getY());
+					res += "SQ" + coords2SGFFragment(marker.getX(), marker.getY());
 				} else if (marker instanceof TriangleMarker) {
-						res += "TR" +coords2SGFFragment(marker.getX(),marker.getY());
+					res += "TR" + coords2SGFFragment(marker.getX(), marker.getY());
 				} else if (marker instanceof CircleMarker) {
-					res += "CR" +coords2SGFFragment(marker.getX(),marker.getY());
+					res += "CR" + coords2SGFFragment(marker.getX(), marker.getY());
 				} else {
-					res += "LB" +coords2SGFFragment(marker.getX(),marker.getY()).replace("]",":"+marker.getText()+"]");
+					res += "LB" + coords2SGFFragment(marker.getX(), marker.getY()).replace("]", ":" + marker.getText() + "]");
 				}
 			}
-			
+
 			GoMove next_move = null;
 
 			if (act_move.hasNextMove()) {
@@ -106,8 +105,7 @@ public class SGFHelper {
 	}
 
 	private static String getSGFSnippet(String cmd, String param) {
-		if ((param == null) || (param.equals("")) || (cmd == null)
-				|| (cmd.equals("")))
+		if ((param == null) || (param.equals("")) || (cmd == null) || (cmd.equals("")))
 			return "";
 		return cmd + "[" + escapeSGF(param) + "]";
 	}
@@ -151,8 +149,7 @@ public class SGFHelper {
 		return sgf2game(sgf, callback, BREAKON_NOTHING, DEFAULT_SGF_TRANSFORM);
 	}
 
-	public static GoGame sgf2game(String sgf,
-			ISGFLoadProgressCallback callback, int breakon) {
+	public static GoGame sgf2game(String sgf, ISGFLoadProgressCallback callback, int breakon) {
 		return sgf2game(sgf, callback, breakon, DEFAULT_SGF_TRANSFORM);
 	}
 
@@ -164,8 +161,7 @@ public class SGFHelper {
 	 *            - bit 1 => mirror y ; bit 2 => mirror x ; bit 3 => swap x/y
 	 * @return
 	 */
-	public static GoGame sgf2game(String sgf,
-			ISGFLoadProgressCallback callback, int breakon, int transform) {
+	public static GoGame sgf2game(String sgf, ISGFLoadProgressCallback callback, int breakon, int transform) {
 		try {
 			Log.i("sgf to process:" + sgf);
 			byte size = -1;
@@ -181,10 +177,10 @@ public class SGFHelper {
 			String act_param = "";
 			String act_cmd = "";
 			String last_cmd = "";
-			
-			int predef_count_b=0;
-			int predef_count_w=0;
-			
+
+			int predef_count_b = 0;
+			int predef_count_w = 0;
+
 			GoGameMetadata metadata = new GoGameMetadata();
 
 			boolean break_pulled = false;
@@ -209,13 +205,7 @@ public class SGFHelper {
 							act_cmd = last_cmd;
 
 						// for files without SZ - e.g. ggg-intermediate-11.sgf
-						if ((game == null)
-								&& (act_cmd.equals("AB")
-										|| act_cmd.equals("AW")
-										|| act_cmd.equals("TR")
-										|| act_cmd.equals("SQ")
-										|| act_cmd.equals("LB") || act_cmd
-											.equals("MA"))) {
+						if ((game == null) && (act_cmd.equals("AB") || act_cmd.equals("AW") || act_cmd.equals("TR") || act_cmd.equals("SQ") || act_cmd.equals("LB") || act_cmd.equals("MA"))) {
 							size = 19;
 							game = new GoGame((byte) 19);
 						}
@@ -275,8 +265,7 @@ public class SGFHelper {
 								// command
 								// now
 						if ((game != null) && (callback != null))
-							callback.progress(p, sgf.length(), game
-									.getActMove().getMovePos());
+							callback.progress(p, sgf.length(), game.getActMove().getMovePos());
 						if (!escape) {
 							consuming_param = false;
 
@@ -286,10 +275,8 @@ public class SGFHelper {
 							// be
 							// coords - so parse
 							if (act_param.length() >= 2) {
-								param_x = (byte) (act_param
-										.charAt(((transform & 4) == 0) ? 0 : 1) - 'a');
-								param_y = (byte) (act_param
-										.charAt(((transform & 4) == 0) ? 1 : 0) - 'a');
+								param_x = (byte) (act_param.charAt(((transform & 4) == 0) ? 0 : 1) - 'a');
+								param_y = (byte) (act_param.charAt(((transform & 4) == 0) ? 1 : 0) - 'a');
 
 								if ((transform & 1) > 0)
 									param_y = (byte) (size - 1 - param_y);
@@ -310,34 +297,30 @@ public class SGFHelper {
 							if (act_cmd.equals("LB")) {
 								String[] inner = act_param.split(":");
 								String txt = "X";
-								//if (inner.length > 1) TODO check why this was done once
+								// if (inner.length > 1) TODO check why this was
+								// done once
 								txt = inner[1];
 
-								game.getActMove().addMarker(
-										new GoMarker(param_x, param_y, txt));
+								game.getActMove().addMarker(new GoMarker(param_x, param_y, txt));
 							}
 
 							// mark with x
 							if (act_cmd.equals("Mark") | act_cmd.equals("MA"))
-								game.getActMove().addMarker(
-										new GoMarker(param_x, param_y, "X"));
+								game.getActMove().addMarker(new GoMarker(param_x, param_y, "X"));
 
 							// mark with triangle
 							if (act_cmd.equals("TR")) {
-								game.getActMove().addMarker(
-										new TriangleMarker(param_x, param_y));
+								game.getActMove().addMarker(new TriangleMarker(param_x, param_y));
 							}
 
 							// mark with square
 							if (act_cmd.equals("SQ")) {
-								game.getActMove().addMarker(
-										new SquareMarker(param_x, param_y));
+								game.getActMove().addMarker(new SquareMarker(param_x, param_y));
 							}
 
 							// mark with circle
 							if (act_cmd.equals("CR")) {
-								game.getActMove().addMarker(
-										new CircleMarker(param_x, param_y));
+								game.getActMove().addMarker(new CircleMarker(param_x, param_y));
 							}
 
 							if (act_cmd.equals("GN")) // Game Name
@@ -377,24 +360,20 @@ public class SGFHelper {
 																				// so
 																				// fixing
 								size = Byte.parseByte(act_param);
-								if ((game == null)
-										|| (game.getBoardSize() != size)) {
+								if ((game == null) || (game.getBoardSize() != size)) {
 									game = new GoGame(size);
 									var_vect.add(game.getActMove());
 								}
 							}
 
 							// comment command
-							if (act_cmd.equals("Comment")
-									|| act_cmd.equals("C")) {
+							if (act_cmd.equals("Comment") || act_cmd.equals("C")) {
 								if (game != null)
 									game.getActMove().setComment(act_param);
 							}
 
 							// move command
-							if (act_cmd.equals("Black") || act_cmd.equals("B")
-									|| act_cmd.equals("W")
-									|| act_cmd.equals("White")) {
+							if (act_cmd.equals("Black") || act_cmd.equals("B") || act_cmd.equals("W") || act_cmd.equals("White")) {
 
 								// if still no game open -> open one with
 								// default
@@ -416,9 +395,7 @@ public class SGFHelper {
 								else
 									game.do_move(param_x, param_y);
 
-								game.getActMove().setIsBlackToMove(
-										act_cmd.equals("Black")
-												|| act_cmd.equals("B"));
+								game.getActMove().setIsBlackToMove(act_cmd.equals("Black") || act_cmd.equals("B"));
 
 							}
 
@@ -426,10 +403,7 @@ public class SGFHelper {
 							// handle predefined stones ( mostly handicap stones
 							// )
 							// in SGF
-							if (act_cmd.equals("AddBlack")
-									|| act_cmd.equals("AB")
-									|| act_cmd.equals("AW")
-									|| act_cmd.equals("AddWhite")) {
+							if (act_cmd.equals("AddBlack") || act_cmd.equals("AB") || act_cmd.equals("AW") || act_cmd.equals("AddWhite")) {
 
 								if (game == null) { // create a game if it is
 													// not
@@ -439,20 +413,14 @@ public class SGFHelper {
 								}
 
 								if (act_param.length() != 0) {
-									if (game.isBlackToMove()
-											&& (act_cmd.equals("AB") || act_cmd
-													.equals("AddBlack"))) {
+									if (game.isBlackToMove() && (act_cmd.equals("AB") || act_cmd.equals("AddBlack"))) {
 										predef_count_b++;
-										game.getHandicapBoard().setCellBlack(
-												param_x, param_y);
+										game.getHandicapBoard().setCellBlack(param_x, param_y);
 									}
-												
-									if (game.isBlackToMove()
-											&& (act_cmd.equals("AW") || act_cmd
-													.equals("AddWhite"))) {
+
+									if (game.isBlackToMove() && (act_cmd.equals("AW") || act_cmd.equals("AddWhite"))) {
 										predef_count_w++;
-										game.getHandicapBoard().setCellWhite(
-												param_x, param_y);
+										game.getHandicapBoard().setCellWhite(param_x, param_y);
 
 									}
 								} else
@@ -484,8 +452,14 @@ public class SGFHelper {
 			}
 
 			if (game != null) {
-				if (game.getActMove().isFirstMove() && predef_count_w==0 && predef_count_b>0) {
-					game.getActMove().setIsBlackToMove(true); // propably handycap - so make white to move - very imortant for cloud game and handycap
+				if (game.getActMove().isFirstMove() && predef_count_w == 0 && predef_count_b > 0) {
+					game.getActMove().setIsBlackToMove(true); // propably
+																// handycap - so
+																// make white to
+																// move - very
+																// imortant for
+																// cloud game
+																// and handycap
 				}
 				game.setMetadata(metadata);
 			}
@@ -508,8 +482,7 @@ public class SGFHelper {
 		File f = new File(fname);
 
 		if (f.isDirectory())
-			throw new IllegalArgumentException(
-					"cannot write - fname is a directory");
+			throw new IllegalArgumentException("cannot write - fname is a directory");
 
 		if (f.getParentFile() == null) // not really sure when this can be the
 										// case ( perhaps only / ) - but the doc

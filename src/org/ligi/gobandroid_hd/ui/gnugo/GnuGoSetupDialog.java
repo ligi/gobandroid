@@ -2,6 +2,7 @@ package org.ligi.gobandroid_hd.ui.gnugo;
 
 import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -43,12 +44,12 @@ public class GnuGoSetupDialog extends GobandroidDialog {
 			gnugo_plays_white_radio.setChecked(true);
 		else if (shared_prefs.getBoolean(SP_KEY_PLAYS_BLACK, false))
 			gnugo_plays_black_radio.setChecked(true);
-		else // no former selection - default to black 
+		else
+			// no former selection - default to black
 			gnugo_plays_black_radio.setChecked(true);
-		
+
 		strange_seek = ((SeekBar) this.findViewById(R.id.gnugo_strength_seek));
 		strange_seek.setProgress(shared_prefs.getInt(SP_KEY_STRENGTH, 0));
-
 
 	}
 
@@ -71,11 +72,11 @@ public class GnuGoSetupDialog extends GobandroidDialog {
 	public void saveRecentAsDefault() {
 		SharedPreferences.Editor edit = shared_prefs.edit();
 		edit.putInt(SP_KEY_STRENGTH, getStrength());
-		
+
 		edit.putBoolean(SP_KEY_PLAYS_WHITE, isWhiteActive());
 		edit.putBoolean(SP_KEY_PLAYS_BLACK, isBlackActive());
 		edit.putBoolean(SP_KEY_PLAYS_BOTH, isBothActive());
-			
+
 		edit.commit();
 	}
 

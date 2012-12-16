@@ -19,21 +19,6 @@
 
 package org.ligi.gobandroid_hd.ui;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -55,6 +40,20 @@ import org.ligi.gobandroid_hd.ui.application.MenuDrawer;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 import org.ligi.tracedroid.logging.Log;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.api.services.cloudgoban.Cloudgoban;

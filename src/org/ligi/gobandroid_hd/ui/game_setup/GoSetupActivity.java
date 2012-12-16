@@ -49,7 +49,7 @@ public class GoSetupActivity extends GoActivity {
 
 	private GameSetupFragment setup_fragment;
 	private MenuItem clear_board_menu_item;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,23 +60,19 @@ public class GoSetupActivity extends GoActivity {
 		Log.i("starting setup");
 
 	}
-	
 
-
-
-	
 	@Override
 	public Fragment getGameExtraFragment() {
-		if (setup_fragment==null)
-			setup_fragment=new GameSetupFragment();
+		if (setup_fragment == null)
+			setup_fragment = new GameSetupFragment();
 		return setup_fragment;
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		this.getSupportMenuInflater().inflate(R.menu.game_setup, menu);
-		clear_board_menu_item=menu.findItem(R.id.menu_clear_board);
-		clear_board_menu_item.setVisible(getGame().getActMove().getParent()!=null);
+		clear_board_menu_item = menu.findItem(R.id.menu_clear_board);
+		clear_board_menu_item.setVisible(getGame().getActMove().getParent() != null);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -97,8 +93,7 @@ public class GoSetupActivity extends GoActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_clear_board:
-			getApp().getInteractionScope().setGame(
-					new GoGame(setup_fragment.act_size, setup_fragment.act_handicap));
+			getApp().getInteractionScope().setGame(new GoGame(setup_fragment.act_size, setup_fragment.act_handicap));
 			clear_board_menu_item.setVisible(false);
 			getGame().notifyGameChange();
 			break;

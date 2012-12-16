@@ -76,8 +76,7 @@ import com.google.api.services.cloudgoban.model.Text;
  * 
  **/
 
-public class GoActivity extends GobandroidFragmentActivity implements
-		OnTouchListener, OnKeyListener, GoGame.GoGameChangeListener {
+public class GoActivity extends GobandroidFragmentActivity implements OnTouchListener, OnKeyListener, GoGame.GoGameChangeListener {
 
 	private GoBoardViewHD go_board = null;
 
@@ -100,7 +99,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.game);
-		
+
 		TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
 
 		interaction_scope = getApp().getInteractionScope();
@@ -109,8 +108,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		ActivityOrientationLocker.disableRotation(this);
 
 		if (getSettings().isWakeLockEnabled()) {
-			getWindow()
-					.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		}
 
 		if (getGame() == null) { // cannot do anything without a game
@@ -124,11 +122,9 @@ public class GoActivity extends GobandroidFragmentActivity implements
 
 		View customNav = new InGameActionBarView2(this);
 
-		FragmentTransaction fragmentTransAction = this
-				.getSupportFragmentManager().beginTransaction();
+		FragmentTransaction fragmentTransAction = this.getSupportFragmentManager().beginTransaction();
 
-		fragmentTransAction.add(R.id.game_extra_container,
-				getGameExtraFragment()).commit();
+		fragmentTransAction.add(R.id.game_extra_container, getGameExtraFragment()).commit();
 
 		// this.setContentView(R.layout.game);
 		getSupportActionBar().setCustomView(customNav);
@@ -146,8 +142,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 	@SuppressLint("ShowToast")
 	// this is correct - we do not want to show the toast at this stage
 	private void createInfoToast() {
-		info_toast = Toast.makeText(this.getBaseContext(), "",
-				Toast.LENGTH_LONG);
+		info_toast = Toast.makeText(this.getBaseContext(), "", Toast.LENGTH_LONG);
 	}
 
 	/**
@@ -196,8 +191,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		go_board.requestFocus();
 	}
 
-	class UploadGameToCloudEndpointsWithSend extends
-			UploadGameToCloudEndpointsBase {
+	class UploadGameToCloudEndpointsWithSend extends UploadGameToCloudEndpointsBase {
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
@@ -205,19 +199,18 @@ public class GoActivity extends GobandroidFragmentActivity implements
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("text/plain");
 				i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.go_game_invitation));
-				String color=getString(R.string.white);
+				String color = getString(R.string.white);
 				if (getGame().getActMove().isBlackToMove())
-					color=getString(R.string.black);
-				
-				String sAux = "\n" + String.format(getString(R.string.you_are_invited_to_a_go_game),  getGame().getSize(),color ) + "\n";
-				sAux = sAux + GobandroidConfiguration.CLOUD_GOBAN_URL_BASE + result
-						+ "\n \n #gobandroid\n";
+					color = getString(R.string.black);
+
+				String sAux = "\n" + String.format(getString(R.string.you_are_invited_to_a_go_game), getGame().getSize(), color) + "\n";
+				sAux = sAux + GobandroidConfiguration.CLOUD_GOBAN_URL_BASE + result + "\n \n #gobandroid\n";
 				i.putExtra(Intent.EXTRA_TEXT, sAux);
-				startActivity(Intent.createChooser(i,getString( R.string.choose_invite_method)));
+				startActivity(Intent.createChooser(i, getString(R.string.choose_invite_method)));
 			} catch (Exception e) { // e.toString();
 			}
 		}
-		
+
 		@Override
 		public boolean doRegister() {
 			return true;
@@ -225,16 +218,12 @@ public class GoActivity extends GobandroidFragmentActivity implements
 	}
 
 	private ProgressDialog pd;
-	
-	public class UploadGameToCloudEndpointsBase extends
-			AsyncTask<Void, Void, String> {
 
-	
+	public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String> {
 
 		@Override
 		protected void onPostExecute(String result) {
 
-			
 			pd.dismiss();
 
 		}
@@ -246,7 +235,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 			pd.show();
 			super.onPreExecute();
 		}
-		
+
 		protected boolean doRegister() {
 			return false;
 		}
@@ -254,32 +243,30 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		@Override
 		protected String doInBackground(Void... params) {
 
-			String game_key=null;
-	
+			String game_key = null;
+
 			int attempts = 0;
-			boolean has_cloud_history=(getGame().getCloudKey()!=null); 
+			boolean has_cloud_history = (getGame().getCloudKey() != null);
 			while (attempts++ < 6) {
 				try {
 					Cloudgoban gc = getApp().getCloudgoban();
 
-					if (game_key==null) {
+					if (game_key == null) {
 						Game game = new Game();
-						game.setSgf(new Text().setValue(SGFHelper
-								.game2sgf(getGame())));
+						game.setSgf(new Text().setValue(SGFHelper.game2sgf(getGame())));
 						if (has_cloud_history) {
 							game.setEncodedKey(getGame().getCloudKey());
 							game_key = gc.games().edit(game).execute().getEncodedKey();
-							
-						} else {  // create a new Game
+
+						} else { // create a new Game
 							game_key = gc.games().insert(game).execute().getEncodedKey();
 						}
 
 					}
-					
-					
-					if (game_key != null ) { // success 
+
+					if (game_key != null) { // success
 						if (doRegister()) {
-							CloudGobanHelper.registerGame(GoActivity.this,game_key,""+(getGame().isBlackToMove()?'b':'w'),false,null);
+							CloudGobanHelper.registerGame(GoActivity.this, game_key, "" + (getGame().isBlackToMove() ? 'b' : 'w'), false, null);
 						}
 						getGame().notifyGameChange();
 						return game_key;
@@ -292,8 +279,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 				} catch (IOException e) {
 					Log.i("SAVEDSGF err " + e);
 				}
-				
-				
+
 			}
 
 			return null;
@@ -305,9 +291,9 @@ public class GoActivity extends GobandroidFragmentActivity implements
 	@Override
 	protected void onStop() {
 		getApp().setGoActivityActivity(false);
-		if (pd!=null)
+		if (pd != null)
 			pd.dismiss();
-		
+
 		if (getGame() == null)
 			Log.w("we do not have a game (anymore) in onStop of a GoGame activity - thats crazy!");
 		else
@@ -355,8 +341,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 
 	@Override
 	public boolean doFullScreen() {
-		return getSettings().isFullscreenEnabled()
-				| getResources().getBoolean(R.bool.force_fullscreen);
+		return getSettings().isFullscreenEnabled() | getResources().getBoolean(R.bool.force_fullscreen);
 	}
 
 	@Override
@@ -381,15 +366,13 @@ public class GoActivity extends GobandroidFragmentActivity implements
 			if (!getGame().canUndo())
 				break;
 
-		
-			
 			requestUndo();
 			return true;
 
 		case R.id.menu_game_pass:
 			getGame().pass();
 			getGame().notifyGameChange();
-			
+
 			return true;
 
 			/*
@@ -401,7 +384,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 			return true;
 
 		case R.id.menu_game_invite:
-			getGame().setCloudDefs(null,null);
+			getGame().setCloudDefs(null, null);
 			new UploadGameToCloudEndpointsWithSend().execute();
 			return true;
 		case R.id.menu_bookmark:
@@ -449,23 +432,14 @@ public class GoActivity extends GobandroidFragmentActivity implements
 			return;
 		}
 
-		new AlertDialog.Builder(this)
-				.setTitle(R.string.end_game_quesstion_title)
-				.setMessage(R.string.quit_confirm)
-				.setPositiveButton(R.string.yes,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
-								shutdown(toHome);
-							}
-						})
-				.setCancelable(true)
-				.setNegativeButton(R.string.no,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
-							}
-						}).show();
+		new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title).setMessage(R.string.quit_confirm).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				shutdown(toHome);
+			}
+		}).setCancelable(true).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+			}
+		}).show();
 	}
 
 	@Override
@@ -485,14 +459,13 @@ public class GoActivity extends GobandroidFragmentActivity implements
 	 * @param resId
 	 **/
 	protected void showInfoToast(int resId) {
-		//info_toast.cancel();
+		// info_toast.cancel();
 		info_toast.setText(resId);
 		info_toast.show();
 	}
 
 	protected byte doMoveWithUIFeedback(byte x, byte y) {
-	
-	
+
 		byte res = getGame().do_move(x, y);
 		switch (res) {
 		case GoGame.MOVE_INVALID_IS_KO:
@@ -512,8 +485,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 
 	public void setFragment(Fragment newFragment) {
 
-		FragmentTransaction fragmentTransAction = getSupportFragmentManager()
-				.beginTransaction();
+		FragmentTransaction fragmentTransAction = getSupportFragmentManager().beginTransaction();
 
 		if (actFragment == newFragment) {
 			Log.i("GoFrag same same");
@@ -565,42 +537,41 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		// refreshZoomFragment();
 		return true;
 	}
-	
+
 	public boolean isCloudGame() {
-		return getGame().getCloudKey()!=null && getGame().getCloudRole()!=null;
+		return getGame().getCloudKey() != null && getGame().getCloudRole() != null;
 	}
-	
+
 	public boolean isLastMoveAccepted() {
 		if (!isCloudGame())
 			return false;
-		
-		if (last_accept==null)
+
+		if (last_accept == null)
 			return false;
-		
-		return (last_accept.getMovePos()==getGame().getActMove().getMovePos());
+
+		return (last_accept.getMovePos() == getGame().getActMove().getMovePos());
 	}
-	
+
 	public void acceptCloudMove() {
-		last_accept=getGame().getActMove();
+		last_accept = getGame().getActMove();
 	}
-	
+
 	private GoMove last_accept;
-	
+
 	public boolean isCloudMove() {
-		if  (!isCloudGame())
+		if (!isCloudGame())
 			return false;
-		
+
 		/*
-		if (isLastMoveAccepted())
-			return true;
-		*/
+		 * if (isLastMoveAccepted()) return true;
+		 */
 		if (getGame().getCloudRole().equals("s"))
 			return true;
 		if (getGame().getCloudRole().equals("b") && getGame().isBlackToMove())
 			return true;
 		if (getGame().getCloudRole().equals("w") && !getGame().isBlackToMove())
 			return true;
-		
+
 		return false;
 	}
 
@@ -610,8 +581,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 
 		if (doAutosave())
 			try {
-				File f = new File(getSettings().getSGFSavePath()
-						+ "/autosave.sgf");
+				File f = new File(getSettings().getSGFSavePath() + "/autosave.sgf");
 				f.createNewFile();
 
 				FileWriter sgf_writer = new FileWriter(f);
@@ -636,10 +606,8 @@ public class GoActivity extends GobandroidFragmentActivity implements
 
 		// calculate position on the field by position on the touchscreen
 
-		if (event.getAction() == MotionEvent.ACTION_DOWN
-				|| event.getAction() == MotionEvent.ACTION_MOVE) {
-			interaction_scope.setTouchPosition(getBoard().pixel2boardPos(
-					event.getX(), event.getY()));
+		if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
+			interaction_scope.setTouchPosition(getBoard().pixel2boardPos(event.getX(), event.getY()));
 		} else if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
 			interaction_scope.setTouchPosition(-1);
 		} else if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -647,12 +615,8 @@ public class GoActivity extends GobandroidFragmentActivity implements
 			if (go_board.move_stone_mode) {
 				// TODO check if this is an illegal move ( e.g. in variants )
 
-				if (getGame().getVisualBoard().isCellFree(
-						interaction_scope.getTouchX(),
-						interaction_scope.getTouchY())) {
-					getGame().getActMove().setXY(
-							(byte) interaction_scope.getTouchX(),
-							(byte) interaction_scope.getTouchY());
+				if (getGame().getVisualBoard().isCellFree(interaction_scope.getTouchX(), interaction_scope.getTouchY())) {
+					getGame().getActMove().setXY((byte) interaction_scope.getTouchX(), (byte) interaction_scope.getTouchY());
 					getGame().getActMove().setDidCaptures(true); // TODO check
 																	// if we
 																	// harm sth
@@ -661,14 +625,10 @@ public class GoActivity extends GobandroidFragmentActivity implements
 
 				}
 				go_board.move_stone_mode = false;
-			} else if ((getGame().getActMove().getX() == interaction_scope
-					.getTouchX())
-					&& (getGame().getActMove().getY() == interaction_scope
-							.getTouchY()))
+			} else if ((getGame().getActMove().getX() == interaction_scope.getTouchX()) && (getGame().getActMove().getY() == interaction_scope.getTouchY()))
 				initializeStoneMove();
 			else
-				doMoveWithUIFeedback((byte) interaction_scope.getTouchX(),
-						(byte) interaction_scope.getTouchY());
+				doMoveWithUIFeedback((byte) interaction_scope.getTouchX(), (byte) interaction_scope.getTouchY());
 
 			interaction_scope.setTouchPosition(-1);
 
@@ -691,21 +651,18 @@ public class GoActivity extends GobandroidFragmentActivity implements
 		// TODO check if we only want this in certain modes
 		if (GoPrefs.isAnnounceMoveActive()) {
 
-			new AlertDialog.Builder(this).setMessage(R.string.hint_stone_move)
-					.setPositiveButton(R.string.ok,
+			new AlertDialog.Builder(this).setMessage(R.string.hint_stone_move).setPositiveButton(R.string.ok,
 
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-							GoPrefs.setAnnounceMoveActive(false);
-						}
-					}).show();
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					GoPrefs.setAnnounceMoveActive(false);
+				}
+			}).show();
 		}
 	}
 
 	public boolean doAskToKeepVariant() {
-		return GoPrefs.isAskVariantEnabled()
-				&& getApp().getInteractionScope().ask_variant_session;
+		return GoPrefs.isAskVariantEnabled() && getApp().getInteractionScope().ask_variant_session;
 	}
 
 	@Override
@@ -730,8 +687,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 
 			case KeyEvent.KEYCODE_DPAD_DOWN:
 				go_board.prepare_keyinput();
-				if (interaction_scope.getTouchY() < getGame().getVisualBoard()
-						.getSize() - 1)
+				if (interaction_scope.getTouchY() < getGame().getVisualBoard().getSize() - 1)
 					interaction_scope.touch_position += getGame().getSize();
 				else
 					return false;
@@ -739,16 +695,14 @@ public class GoActivity extends GobandroidFragmentActivity implements
 
 			case KeyEvent.KEYCODE_DPAD_RIGHT:
 				go_board.prepare_keyinput();
-				if (interaction_scope.getTouchX() < getGame().getVisualBoard()
-						.getSize() - 1)
+				if (interaction_scope.getTouchX() < getGame().getVisualBoard().getSize() - 1)
 					interaction_scope.touch_position++;
 				else
 					return false;
 				break;
 
 			case KeyEvent.KEYCODE_DPAD_CENTER:
-				doMoveWithUIFeedback((byte) interaction_scope.getTouchX(),
-						(byte) interaction_scope.getTouchY());
+				doMoveWithUIFeedback((byte) interaction_scope.getTouchX(), (byte) interaction_scope.getTouchY());
 				break;
 
 			default:
@@ -765,8 +719,7 @@ public class GoActivity extends GobandroidFragmentActivity implements
 	}
 
 	public void refreshZoomFragment() {
-		Log.i("refreshZoomFragment()" + getZoomFragment().getBoard() + " "
-				+ myZoomFragment.getBoard());
+		Log.i("refreshZoomFragment()" + getZoomFragment().getBoard() + " " + myZoomFragment.getBoard());
 		if (getZoomFragment().getBoard() == null) // nothing we can do
 			return;
 

@@ -36,10 +36,9 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		on_path_moves = new Vector<GoMove>();
 
 		if (getGame() == null) { // there was no game - fallback to main menu
-			EasyTracker.getTracker().trackException(
-					"tsumego start getGame() returned null in onCreate", false);
+			EasyTracker.getTracker().trackException("tsumego start getGame() returned null in onCreate", false);
 			finish();
-			//startActivity(new Intent(this, gobandroid.class));
+			// startActivity(new Intent(this, gobandroid.class));
 			return;
 		}
 
@@ -48,12 +47,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
 		// try to find the correct solution
 		if (!isFinishingMoveKnown())
-			new AlertDialog.Builder(this)
-					.setMessage(R.string.tsumego_sgf_no_solution)
-					.setNegativeButton(R.string.ok, new DialogDiscarder())
-					.setPositiveButton(R.string.go_back,
-							new ActivityFinishOnDialogClickListener(this))
-					.show();
+			new AlertDialog.Builder(this).setMessage(R.string.tsumego_sgf_no_solution).setNegativeButton(R.string.ok, new DialogDiscarder()).setPositiveButton(R.string.go_back, new ActivityFinishOnDialogClickListener(this)).show();
 
 		getGame().addGoGameChangeListener(this);
 
@@ -84,7 +78,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (getGame()!=null) // TODO investigate when game can be null here
+		if (getGame() != null) // TODO investigate when game can be null here
 			getGame().removeGoGameChangeListener(this);
 	}
 
@@ -95,8 +89,8 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 	public byte doMoveWithUIFeedback(byte x, byte y) {
 
 		byte res = super.doMoveWithUIFeedback(x, y);
-		
-		// if the move was valid and we have a counter move -> we will play it 
+
+		// if the move was valid and we have a counter move -> we will play it
 		if (res == GoGame.MOVE_VALID)
 			if (getGame().getActMove().hasNextMove()) {
 				getGame().jump(getGame().getActMove().getnextMove(0));
@@ -123,16 +117,14 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		if (getGame() == null) { // there was no game - fallback to main menu
-			EasyTracker.getTracker().trackException(
-					"tsumego start getGame() returned null in onCreate", false);
+			EasyTracker.getTracker().trackException("tsumego start getGame() returned null in onCreate", false);
 			finish();
-			//startActivity(new Intent(this, gobandroid.class));
+			// startActivity(new Intent(this, gobandroid.class));
 			return super.onCreateOptionsMenu(menu);
 		}
 
 		this.getSupportMenuInflater().inflate(R.menu.ingame_tsumego, menu);
-		menu.findItem(R.id.menu_game_hint).setVisible(
-				isFinishingMoveKnown() && isOnPath());
+		menu.findItem(R.id.menu_game_hint).setVisible(isFinishingMoveKnown() && isOnPath());
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -183,12 +175,10 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		super.onGoGameChange();
 		if (myTsumegoExtrasFragment != null) {
 			myTsumegoExtrasFragment.setOffPathVisibility(!isOnPath());
-			myTsumegoExtrasFragment
-					.setCorrectVisibility(isCorrectMove(getGame().getActMove()));
+			myTsumegoExtrasFragment.setCorrectVisibility(isCorrectMove(getGame().getActMove()));
 		}
 		if (isCorrectMove(getGame().getActMove())) {
-			SGFMetaData meta = new SGFMetaData(getGame().getMetaData()
-					.getFileName());
+			SGFMetaData meta = new SGFMetaData(getGame().getMetaData().getFileName());
 			meta.setIsSolved(true);
 			meta.persist();
 			/*

@@ -124,17 +124,13 @@ public class GOSkin {
 					size_append = 32;
 
 				Log.i("scale to size" + size);
-				Bitmap unscaled_bitmap = BitmapFactory
-						.decodeFile(skin_base_path + stone_skin_name + "/"
-								+ name + size_append + ".png");
-				return Bitmap.createScaledBitmap(unscaled_bitmap, (int) size,
-						(int) size, true);
+				Bitmap unscaled_bitmap = BitmapFactory.decodeFile(skin_base_path + stone_skin_name + "/" + name + size_append + ".png");
+				return Bitmap.createScaledBitmap(unscaled_bitmap, (int) size, (int) size, true);
 			} catch (Exception e) {
 				Log.w("problem scaling the " + name + " stone bitmap to" + size);
 			}
 
-		Bitmap btm = Bitmap.createBitmap((int) size, (int) size,
-				Bitmap.Config.ARGB_4444);
+		Bitmap btm = Bitmap.createBitmap((int) size, (int) size, Bitmap.Config.ARGB_4444);
 
 		Canvas c = new Canvas(btm);
 		Paint mPaint = new Paint();

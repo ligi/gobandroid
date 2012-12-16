@@ -32,10 +32,8 @@ public class SGFMetaData {
 
 		meta_fname = fname;
 		try {
-			Log.i("got json file "
-					+ FileHelper.file2String(new File(meta_fname)));
-			JSONObject jObject = new JSONObject(
-					FileHelper.file2String(new File(meta_fname)));
+			Log.i("got json file " + FileHelper.file2String(new File(meta_fname)));
+			JSONObject jObject = new JSONObject(FileHelper.file2String(new File(meta_fname)));
 
 			try {
 				rating = (Integer) jObject.getInt("rating");

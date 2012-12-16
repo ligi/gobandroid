@@ -7,7 +7,6 @@ import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -43,9 +42,9 @@ public class GobandroidNotifications {
 		notificationManager = (NotificationManager) context.getSystemService(Activity.NOTIFICATION_SERVICE);
 		notificationBuilder.setSound(Uri.parse("android.resource://org.ligi.gobandroid_beta/" + R.raw.go_place1));
 		notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
-		
-		//notificationBuilder.setVibrate(new long[] { 1000, 100, 1000, 100 });
-		//needs permission vibrate - not yet sure if wanted yet
+
+		// notificationBuilder.setVibrate(new long[] { 1000, 100, 1000, 100 });
+		// needs permission vibrate - not yet sure if wanted yet
 	}
 
 	public void addGoLinkNotification(String golink) {
