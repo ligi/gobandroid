@@ -22,7 +22,8 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity {
 
 		new MenuDrawer(this);
 
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		if (getSupportActionBar()!=null) // yes this happens - e.g.
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		// a little hack because I strongly disagree with the style guide here
 		// ;-)
 		// not having the Actionbar overfow menu also with devices with hardware

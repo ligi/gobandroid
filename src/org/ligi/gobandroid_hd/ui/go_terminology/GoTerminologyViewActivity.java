@@ -28,7 +28,11 @@ public class GoTerminologyViewActivity extends GobandroidFragmentActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-
+		super.onCreate(savedInstanceState);
+		
+		setContentView(R.layout.empty);
+		setBehindContentView(R.layout.empty);
+		
 		String term = this.getIntent().getData().getLastPathSegment();
 		GoTerminologyDialog dialog = new GoTerminologyDialog(this, term);
 		dialog.setPositiveButton(android.R.string.ok, new MyOnClickListener());
@@ -42,7 +46,7 @@ public class GoTerminologyViewActivity extends GobandroidFragmentActivity {
 		});
 		dialog.show();
 
-		super.onCreate(savedInstanceState);
+		
 	}
 
 	class MyOnClickListener implements OnClickListener {
