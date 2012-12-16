@@ -137,6 +137,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
 		game2ui();
 		getZoomFragment();
+		acceptCloudMove(); // this move must be accepted
 	}
 
 	@SuppressLint("ShowToast")
