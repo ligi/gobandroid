@@ -117,15 +117,14 @@ public class MenuDrawer implements OnItemClickListener {
 			break;
 
 		case R.id.review:
-			Intent next2 = startSGFListForPath(getApp().getSettings().getTsumegoPath());
+			Intent next2 = startSGFListForPath(getApp().getSettings().getReviewPath());
 			
 			if (!unzipSGFifNeeded(next2))
 				ctx.startActivity(next2);
-			//startSGFListForPath(getApp().getSettings().getReviewPath());
 			break;
 
 		case R.id.bookmark:
-			startSGFListForPath(getApp().getSettings().getBookmarkPath());
+			ctx.startActivity(startSGFListForPath(getApp().getSettings().getBookmarkPath()));
 			break;
 
 		}
