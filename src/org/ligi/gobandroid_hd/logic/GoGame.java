@@ -119,6 +119,8 @@ public class GoGame {
 		groups = game.groups;
 		area_groups = game.area_groups;
 		area_assign = game.area_assign;
+		captures_black = game.captures_black;
+		captures_white = game.captures_white;
 	}
 
 	public GoGame(byte size) {
