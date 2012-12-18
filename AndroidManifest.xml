@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.ligi.gobandroid_beta"
     android:installLocation="auto"
-    android:versionCode="106"
-    android:versionName="1.06" >
+    android:versionCode="111"
+    android:versionName="1.11" >
 
     <uses-sdk
         android:minSdkVersion="5"
-        android:targetSdkVersion="15" />
+        android:targetSdkVersion="17" />
 
     <supports-screens
         android:anyDensity="true"
@@ -23,10 +23,10 @@
 
     <!-- Only this application can receive the messages and registration result -->
     <permission
-        android:name="org.ligi.gobandroid_hd.permission.C2D_MESSAGE"
+        android:name="org.ligi.gobandroid_beta.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="org.ligi.gobandroid_hd.permission.C2D_MESSAGE" />
+    <uses-permission android:name="org.ligi.gobandroid_beta.permission.C2D_MESSAGE" />
 
     <!-- This app has permission to register and receive message -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
@@ -35,15 +35,18 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
+
+    <uses-permission android:name="org.ligi.gobandroid_beta.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
     <application
         android:name="org.ligi.gobandroid_hd.GobandroidApp"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:logo="@drawable/ic_launcher"
         android:theme="@style/base_theme" >
-        
-        <activity android:name="org.ligi.gobandroid_hd.ui.game_setup.GoSetupActivity" 
-            >
+        <activity android:name="org.ligi.gobandroid_hd.ui.game_setup.GoSetupActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,11 +54,6 @@
             </intent-filter>
         </activity>
         
-        <activity
-            android:name="org.ligi.gobandroid_hd.ui.gobandroid"
-            android:label="@string/app_name" >
-            
-        </activity>
         <activity
             android:name="org.ligi.gobandroid_hd.ui.GobanDroidTVActivity"
             android:icon="@drawable/gobandroid_tv"
@@ -91,7 +89,6 @@
         </activity>
         <activity android:name="org.ligi.gobandroid_hd.ui.gnugo.PlayAgainstGnugoActivity" >
         </activity>
-       
         <activity android:name="org.ligi.gobandroid_hd.ui.review.GoGamePlayerActivity" >
         </activity>
         <activity android:name="org.ligi.gobandroid_hd.ui.editing.EditGameActivity" >
@@ -100,11 +97,24 @@
         </activity>
         <activity android:name="org.ligi.gobandroid_hd.ui.links.LinksActivity" >
         </activity>
-        <activity android:name="org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity" 
-            android:exported="true">
+        <activity
+            android:name="org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity"
+            android:exported="true" >
         </activity>
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadActivity" />
+        
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadFromExternalActivity" >
+             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="cloud-goban.appspot.com"
+                    android:pathPattern="/game/.*"
+                    android:scheme="https" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -185,7 +195,7 @@
         <activity android:name="org.ligi.gobandroid_hd.ui.GoActivity" >
         </activity>
 
-        <service android:name="org.ligi.gobandroid_hd.GCMIntentService" />
+        <service android:name="org.ligi.gobandroid_beta.GCMIntentService" />
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
@@ -207,6 +217,21 @@
             android:exported="true" >
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="org.ligi.gobandroid_beta" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="org.ligi.gobandroid_beta" />
             </intent-filter>
         </receiver>
     </application>
