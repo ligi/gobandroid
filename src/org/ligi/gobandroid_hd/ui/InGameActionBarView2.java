@@ -158,7 +158,7 @@ public class InGameActionBarView2 extends LinearLayout implements
 				R.string.tsumego, R.drawable.dashboard_tsumego);
 		if (GnuGoHelper.isGnuGoAvail(ctx))
 			addModeItem(content_view, InteractionScope.MODE_GNUGO,
-					R.string.gnugo, R.drawable.dashboard_gnugo_item);
+					R.string.gnugo, R.drawable.server);
 
 		BetterPopupWindow pop = new BetterPopupWindow(mode_tv);
 		pop.setContentView(content_view);
