@@ -111,4 +111,15 @@ public class GobandroidApp extends Application {
 		return new Cloudgoban(transport, jsonFactory, null);
 
 	}
+	
+
+	public String getVersionCode() {
+		try {
+			return "v"
+					+ getPackageManager().getPackageInfo(
+							getPackageName(), 0).versionName;
+		} catch (NameNotFoundException e) {
+			return "v?";
+		}
+	}
 }

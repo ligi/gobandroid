@@ -258,8 +258,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 													.putExtra(
 															android.content.Intent.EXTRA_SUBJECT,
 															"SGF Problem"
-																	+ gobandroid
-																			.getVersionCode(SGFLoadActivity.this));
+																	+ getApp().getVersionCode());
 											emailIntent
 													.putExtra(
 															android.content.Intent.EXTRA_TEXT,
