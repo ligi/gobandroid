@@ -51,7 +51,7 @@ public class GobandroidSettings {
 	}
 
 	public boolean isSoundEnabled() {
-		return getPreferences().getBoolean(KEY_SOUND, false);
+		return getPreferences().getBoolean(KEY_SOUND, true);
 	}
 
 	public boolean isLegendEnabled() {
@@ -71,6 +71,6 @@ public class GobandroidSettings {
 	}
 
 	public boolean isTsumegoPushEnabled() {
-		return getPreferences().getBoolean(KEY_TSUMEGO_PUSH, false);
+		return getPreferences().getBoolean(KEY_TSUMEGO_PUSH, true);
 	}
 }
