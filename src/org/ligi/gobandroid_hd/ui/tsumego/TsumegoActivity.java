@@ -51,10 +51,10 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
 		getGame().addGoGameChangeListener(this);
 
-		float myZoom = TsumegoHelper.calcZoom(getGame());
+		float myZoom = TsumegoHelper.calcZoom(getGame(),true);
 
 		getBoard().setZoom(myZoom);
-		getBoard().setZoomPOI(TsumegoHelper.calcPOI(getGame()));
+		getBoard().setZoomPOI(TsumegoHelper.calcPOI(getGame(),true));
 	}
 
 	private GoMove getFinishingMove() {

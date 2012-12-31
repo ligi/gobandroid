@@ -105,8 +105,8 @@ public class AutoScreenShotTask extends AsyncTask<String, String, Integer> {
 								getApp().getInteractionScope().setGame(SGFHelper.sgf2game(FileHelper.file2String(file), null));
 
 								if (file.getPath().contains("tsumego")) {
-									gbv.setZoom(TsumegoHelper.calcZoom(getApp().getGame()));
-									gbv.setZoomPOI(TsumegoHelper.calcPOI(getApp().getGame()));
+									gbv.setZoom(TsumegoHelper.calcZoom(getApp().getGame(),false));
+									gbv.setZoomPOI(TsumegoHelper.calcPOI(getApp().getGame(),false));
 								} else {
 									for (int i = 0; i < 42; i++)
 										try {

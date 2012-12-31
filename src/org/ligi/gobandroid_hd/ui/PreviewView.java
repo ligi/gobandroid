@@ -29,7 +29,7 @@ public class PreviewView extends View {
 	public PreviewView(Context context, GoGame game) {
 		super(context);
 
-		span = TsumegoHelper.calcSpan(game) + 1;
+		span = TsumegoHelper.calcSpan(game,false) + 1;
 
 		this.game = game;
 		black_line_paint = new Paint();

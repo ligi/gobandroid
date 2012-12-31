@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui.tsumego;
 
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.GoMove;
 
 public class TsumegoHelper {
 
@@ -10,20 +11,43 @@ public class TsumegoHelper {
 	 * @param game
 	 * @return
 	 */
-	public static int calcSpan(GoGame game) {
-		int min_x = 0;
-		int min_y = 0;
+	public static int calcSpan(GoGame game,boolean with_moves) {
+		int max = 0;
 		for (int x = 0; x < game.getSize(); x++)
 			for (int y = 0; y < game.getSize(); y++) {
-				if ((x > min_x) && !game.getHandicapBoard().isCellFree(x, y))
-					min_x = x;
-				if ((y > min_y) && !game.getHandicapBoard().isCellFree(x, y))
-					min_y = y;
+				if ((x > max) && !game.getHandicapBoard().isCellFree(x, y))
+					max = x;
+				if ((y > max) && !game.getHandicapBoard().isCellFree(x, y))
+					max = y;
 			}
-
-		return Math.max(min_x, min_y);
+		
+		if (with_moves) {
+			max=calcMaxMove(game.getFirstMove(),max);
+		}
+		
+		return max;
 	}
 
+	public static int calcMaxMove(GoMove move,int act_max) {
+		if (move==null) 
+			return act_max;
+		
+		for (GoMove nmove:move.getNextMoveVariations()) {
+			int tmp_max=calcMaxMove(nmove,act_max);
+			if (tmp_max>act_max)
+				act_max=tmp_max;
+		}
+		
+		if (move.getX()>act_max)
+			act_max=move.getX();
+		
+		if (move.getY()>act_max)
+			act_max=move.getY();
+		
+		return act_max;
+	}
+	
+	
 	/*
 	 * 
 	 * public static int calcSpan(GoGame game) { int min_x=game.getSize(); int
@@ -41,9 +65,9 @@ public class TsumegoHelper {
 	 * 
 	 * @return - the calculated Zoom factor
 	 */
-	public static float calcZoom(GoGame game) {
+	public static float calcZoom(GoGame game,boolean with_moves) {
 
-		int max_span_size = calcSpan(game);
+		int max_span_size = calcSpan(game,with_moves);
 
 		if (max_span_size == 0) // no predefined stones -> no zoom
 			return 1.0f;
@@ -55,11 +79,14 @@ public class TsumegoHelper {
 		else
 			return calculated_zoom;
 	}
+	
 
-	public static int calcPOI(GoGame game) {
-		int poi = (int) (game.getSize() / 2f / calcZoom(game));
+	public static int calcPOI(GoGame game,boolean with_moves) {
+		int poi = (int) (game.getSize() / 2f / calcZoom(game,with_moves));
 		return poi + poi * game.getSize();
 	}
+	
+	
 
 	public static int calcTransform(GoGame game) {
 		// we count 4 quadrants to find the hot spot
