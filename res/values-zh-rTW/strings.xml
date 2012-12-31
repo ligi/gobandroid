@@ -93,9 +93,13 @@
   <string name="link_title">相關鏈結</string>
   <string name="link_tab_about">關於</string>
   <string name="link_tab_credits">致謝</string>
+  <string name="help">幫助
+</string>
   <string name="link_tab_sgf">SGF的相關網站</string>
   <string name="game_mode">模式</string>
   <string name="switch_game_mode">切換模式</string>
+  <string name="bookmark">書籤
+</string>
   <string name="menu_autoplay">自動演示</string>
   <string name="tsumego_off_path">可能答錯了！未知的分支變化 - 通常意謂著您的落子並非一般會進行的著手！</string>
   <string name="tsumego_correct">正解圖！您答對了！</string>
@@ -139,6 +143,7 @@
   <string name="numbered_end">直接顯示正解圖</string>
   <string name="icon">圖標</string>
   <string name="go_tv">GoTV</string>
+  <string name="i_do_not_want_to_keep_variants_for_this_game">從未在對局中</string>
   <string name="end_review">結束覆盤？</string>
   <string name="komi_must_be_a_number">請以數字形式來表示\"貼目\"</string>
   <string name="youtube_tutorial">在 YouTube 上的視頻教程</string>
@@ -162,4 +167,33 @@
   <string name="downloading_tsumegos_please_wait">詰碁下載中請稍候....</string>
   <string name="no_new_tsumegos_found">没有新詰碁</string>
   <string name="downloaded_n_tsumego">下載 %d 個新詰碁;-)</string>
+  <string name="overwrite_existing_file">覆寫已存在的檔案</string>
+  <string name="share">分享</string>
+  <string name="score">數地</string>
+  <string name="edit">編輯
+</string>
+  <string name="play">對弈
+</string>
+  <string name="setup">設定</string>
+  <string name="load">載入</string>
+  <string name="clear_board">清除盤面</string>
+  <string name="invite">邀請對局</string>
+  <string name="accept">接受
+</string>
+  <string name="new_tsumegos_available">有新詰碁可用
+</string>
+  <string name="the_go_game_you_reviewed">您所覆盤的對局</string>
+  <string name="this_game_has_2_players_but_you_can_only_watch_it">本對局有2位弈者-但您只能觀賽</string>
+  <string name="a_move_in_one_online_game_you_participate_is_done">您所參加的線上對局</string>
+  <string name="new_move">新手法</string>
+  <string name="in_an_online_game_you_participate">您所參加的線上對局</string>
+  <string name="choose_invite_method">選擇邀請對局的方式</string>
+  <string name="you_are_invited_to_a_go_game">您被邀請的圍棋對局（大小：%1$s，顏色：%2$s）</string>
+  <string name="go_game_invitation">對局邀請</string>
+  <string name="uploading_game">上傳對局結果</string>
+  <string name="profile">履歷（設定檔）</string>
+  <string name="name">姓名</string>
+  <string name="rank">段位（級數）</string>
+  <string name="empty_board">清空棋盤</string>
+  <string name="more">更多</string>
 </resources>
