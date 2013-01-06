@@ -99,10 +99,13 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		GoPrefs.init(this); // TODO remove legacy
+		
 		setContentView(R.layout.game);
 
-		TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
-
+		// if there where stacktraces collected -> give the user the option to send them 
+		TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this); 
+		
 		interaction_scope = getApp().getInteractionScope();
 		this.getSupportActionBar().setHomeButtonEnabled(true);
 
