@@ -21,17 +21,23 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+/**
+ * Adapter to display a list of tsumegos in a path
+ * @author ligi
+ *
+ */
 class TsumegoPathViewAdapter extends BaseAdapter {
 
 	private Activity activity;
 	private String[] menu_items;
 	private String path;
-
+	private String hints_used_fmt;
+	
 	public TsumegoPathViewAdapter(Activity activity, String[] menu_items, String path) {
 		this.activity = activity;
 		this.menu_items = menu_items;
 		this.path = path;
+		hints_used_fmt=activity.getString(R.string.hints_used);
 	}
 
 	@Override
@@ -53,8 +59,6 @@ class TsumegoPathViewAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		// View v =
-		// activity.getLayoutInflater().inflate(R.layout.sgf_tsumego_list_item,null);
 		String base_fname = path + "/" + menu_items[position];
 
 		View v;
@@ -67,15 +71,16 @@ class TsumegoPathViewAdapter extends BaseAdapter {
 
 			container.setVisibility(View.GONE);
 
-		} else
+		} else {
 			v = inflater.inflate(R.layout.sgf_tsumego_list_item, null);
-
+		}
+		
 		TextView title_tv = (TextView) v.findViewById(R.id.filename);
 
 		if (title_tv != null) {
 			title_tv.setText(menu_items[position].replace(".sgf", ""));
 		}
-
+		
 		String sgf_str = "";
 
 		if (GoLink.isGoLink(base_fname)) {
@@ -93,6 +98,17 @@ class TsumegoPathViewAdapter extends BaseAdapter {
 
 		if (game != null) {
 
+			TextView hints_tv = (TextView) v.findViewById(R.id.hints_tv);
+			
+			SGFMetaData meta = new SGFMetaData(base_fname);
+			
+			if (hints_tv != null) {
+				if (meta.getHintsUsed()>0)
+					hints_tv.setText(String.format(hints_used_fmt, meta.getHintsUsed()));
+				else
+					hints_tv.setVisibility(View.GONE);
+			}			
+			
 			int transform = TsumegoHelper.calcTransform(game);
 
 			if (transform != SGFHelper.DEFAULT_SGF_TRANSFORM)

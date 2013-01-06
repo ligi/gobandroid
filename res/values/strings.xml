@@ -190,4 +190,5 @@
   <string name="rank">rank</string>
   <string name="empty_board">Empty Board</string>
   <string name="more">MORE</string>
+  <string name="hints_used">%d hints requested</string>
 </resources>

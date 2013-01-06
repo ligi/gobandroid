@@ -85,8 +85,6 @@ public class TsumegoHelper {
 		int poi = (int) (game.getSize() / 2f / calcZoom(game,with_moves));
 		return poi + poi * game.getSize();
 	}
-	
-	
 
 	public static int calcTransform(GoGame game) {
 		// we count 4 quadrants to find the hot spot

@@ -10,14 +10,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp" >
 
-            <LinearLayout
-        android:id="@+id/thumb_container"
+        <LinearLayout
+            android:id="@+id/thumb_container"
             android:layout_width="@dimen/thumbnail_size"
             android:layout_height="@dimen/thumbnail_size"
-        android:layout_margin="5dp" 
-        android:orientation="horizontal"
-            />
-        
+            android:layout_margin="5dp"
+            android:orientation="horizontal" />
+
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
@@ -29,8 +28,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Large Text"
-                android:textColor="@android:color/black"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/hints_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
 
             <ImageView
                 android:id="@+id/solve_status_image"
@@ -38,9 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:src="@drawable/dashboard_tsumego" />
-
         </LinearLayout>
-
     </LinearLayout>
 
 </LinearLayout>

@@ -20,8 +20,9 @@ public class SGFMetaData {
 
 	public Integer rating = null;
 	public boolean is_solved = false;
-
 	private String meta_fname = null;
+	private Integer hints_used=0;
+	
 	private boolean has_data = false;
 
 	public final static String FNAME_ENDING = ".sgfmeta";
@@ -42,6 +43,11 @@ public class SGFMetaData {
 
 			try {
 				is_solved = (Boolean) jObject.getBoolean("is_solved");
+			} catch (org.json.JSONException jse) {
+			} // don't care if not there
+
+			try {
+				hints_used = (Integer) jObject.getInt("hints_used");
 			} catch (org.json.JSONException jse) {
 			} // don't care if not there
 
@@ -78,6 +84,7 @@ public class SGFMetaData {
 				if (rating != null)
 					object.put("rating", rating);
 				object.put("is_solved", is_solved);
+				object.put("hints_used",hints_used);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -99,5 +106,17 @@ public class SGFMetaData {
 
 	public void setIsSolved(boolean b) {
 		is_solved = b;
+	}
+	
+	public void setHintsUsed(int hints_used) {
+		this.hints_used=hints_used;
+	}
+	
+	public void incHintsUsed() {
+		hints_used++;
+	}
+	
+	public int getHintsUsed() {
+		return hints_used;
 	}
 }

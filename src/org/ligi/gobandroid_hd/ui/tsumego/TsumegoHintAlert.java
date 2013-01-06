@@ -5,16 +5,24 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
 public class TsumegoHintAlert {
 
+	public static void setHintMeta(GoGame game) {
+		SGFMetaData meta = new SGFMetaData(game.getMetaData().getFileName());
+		meta.incHintsUsed();
+		meta.persist();
+	}
+
 	public static void show(final GobandroidFragmentActivity activity, final GoMove finishing_move) {
 
 		new AlertDialog.Builder(activity).setTitle(R.string.hint).setItems(R.array.hint_options, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
+				setHintMeta(activity.getGame());
 				switch (item) {
 				case 0:
 					mark_path(finishing_move, false, activity.getGame());
