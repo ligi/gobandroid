@@ -185,7 +185,7 @@
   <string name="you_are_invited_to_a_go_game">You are invited to a GO-Game ( size: %1$s , color: %2$s )</string>
   <string name="go_game_invitation">GO Game Invitation</string>
   <string name="uploading_game">uploading game</string>
-  <string name="profile">profile</string>
+  <string name="profile">Profile</string>
   <string name="name">name</string>
   <string name="rank">rank</string>
   <string name="empty_board">Empty Board</string>

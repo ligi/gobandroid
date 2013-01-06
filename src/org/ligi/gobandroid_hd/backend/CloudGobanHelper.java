@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.backend;
 import java.io.IOException;
 
 import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.online.UserHandler;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.tracedroid.logging.Log;
@@ -12,7 +13,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Handler;
 
-import com.google.android.gcm.GCMRegistrar;
 import com.google.api.services.cloudgoban.model.GoGameParticipation;
 
 public class CloudGobanHelper {
@@ -21,7 +21,7 @@ public class CloudGobanHelper {
 
 		GoGameParticipation gn = new GoGameParticipation();
 		gn.setGameKey(game_key);
-		gn.setContact(GCMRegistrar.getRegistrationId(activity));
+		gn.setUserKey(UserHandler.getUserKey(activity.getApp()));
 
 		gn.setRole("" + role);
 

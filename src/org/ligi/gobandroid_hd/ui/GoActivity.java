@@ -25,6 +25,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import org.ligi.android.common.activitys.ActivityOrientationLocker;
+import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.backend.CloudGobanHelper;
@@ -196,20 +197,29 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
-			try {
-				Intent i = new Intent(Intent.ACTION_SEND);
-				i.setType("text/plain");
-				i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.go_game_invitation));
-				String color = getString(R.string.white);
-				if (getGame().getActMove().isBlackToMove())
-					color = getString(R.string.black);
 
-				String sAux = "\n" + String.format(getString(R.string.you_are_invited_to_a_go_game), getGame().getSize(), color) + "\n";
-				sAux = sAux + GobandroidConfiguration.CLOUD_GOBAN_URL_BASE + result + "\n \n #gobandroid\n";
-				i.putExtra(Intent.EXTRA_TEXT, sAux);
-				startActivity(Intent.createChooser(i, getString(R.string.choose_invite_method)));
-			} catch (Exception e) { // e.toString();
-			}
+			if (result == null) {
+				AlertDialog.Builder alert_b=new AlertDialog.Builder(GoActivity.this);
+				alert_b.setMessage("Cannot create the game - please try again later");
+				alert_b.setTitle("Server Problem");
+				alert_b.setIcon(android.R.drawable.ic_dialog_alert);
+				alert_b.setPositiveButton(R.string.ok,new DialogDiscarder());
+				alert_b.show();
+			} else
+				try {
+					Intent i = new Intent(Intent.ACTION_SEND);
+					i.setType("text/plain");
+					i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.go_game_invitation));
+					String color = getString(R.string.white);
+					if (getGame().getActMove().isBlackToMove())
+						color = getString(R.string.black);
+
+					String sAux = "\n" + String.format(getString(R.string.you_are_invited_to_a_go_game), getGame().getSize(), color) + "\n";
+					sAux = sAux + GobandroidConfiguration.CLOUD_GOBAN_URL_BASE + result + "\n \n #gobandroid\n";
+					i.putExtra(Intent.EXTRA_TEXT, sAux);
+					startActivity(Intent.createChooser(i, getString(R.string.choose_invite_method)));
+				} catch (Exception e) { // e.toString();
+				}
 		}
 
 		@Override
@@ -252,12 +262,15 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 				try {
 					Cloudgoban gc = getApp().getCloudgoban();
 
+					Log.i("CloudGoban upload "  + game_key + " " + has_cloud_history);
 					if (game_key == null) {
 						Game game = new Game();
 						game.setSgf(new Text().setValue(SGFHelper.game2sgf(getGame())));
 						if (has_cloud_history) {
+							Log.i("CloudGoban EditGame start" + getGame().getCloudKey());
 							game.setEncodedKey(getGame().getCloudKey());
 							game_key = gc.games().edit(game).execute().getEncodedKey();
+							Log.i("CloudGoban EditGame" + game_key);
 
 						} else { // create a new Game
 							game_key = gc.games().insert(game).execute().getEncodedKey();
@@ -278,7 +291,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 					} catch (InterruptedException e) {
 					}
 				} catch (IOException e) {
-					Log.i("SAVEDSGF err " + e);
+					Log.i("CloudGoban err " + e);
 				}
 
 			}

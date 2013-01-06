@@ -15,7 +15,9 @@ public class GobandroidSettings {
 	public static final String KEY_WAKE_LOCK = "wake_lock";
 	public static final String KEY_GRID_EMBOSS = "grid_emboss";
 	public static final String KEY_TSUMEGO_PUSH = "push_tsumego";;
-
+	public static final String KEY_USERNAME = "username";
+	public static final String KEY_RANK = "rank";
+	
 	private Context ctx;
 
 	public GobandroidSettings(Context ctx) {
@@ -72,5 +74,21 @@ public class GobandroidSettings {
 
 	public boolean isTsumegoPushEnabled() {
 		return getPreferences().getBoolean(KEY_TSUMEGO_PUSH, true);
+	}
+	
+	public void setUsername(String username) {
+		getPreferences().edit().putString(KEY_USERNAME, username).commit();
+	}
+	
+	public String getUsername() {
+		return getPreferences().getString(KEY_USERNAME, "");
+	}
+	
+	public void setRank(String rank) {
+		getPreferences().edit().putString(KEY_RANK, rank).commit();
+	}
+	
+	public String getRank() {
+		return getPreferences().getString(KEY_RANK, "");
 	}
 }

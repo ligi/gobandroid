@@ -64,6 +64,23 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
 			public void onClick(DialogInterface dialog, int which) {
 				playing_black = dlg.isBlackActive() | dlg.isBothActive();
 				playing_white = dlg.isWhiteActive() | dlg.isBothActive();
+				
+				if (dlg.isBlackActive()) {
+					getGame().getMetaData().setBlackName(getString(R.string.gnugo));
+					getGame().getMetaData().setBlackRank("");
+				} else {
+					getGame().getMetaData().setBlackName(getApp().getSettings().getUsername());
+					getGame().getMetaData().setBlackRank(getApp().getSettings().getRank());
+				}
+				
+				if (dlg.isWhiteActive()) {
+					getGame().getMetaData().setWhiteName(getString(R.string.gnugo));
+					getGame().getMetaData().setWhiteRank("");
+				} else {
+					getGame().getMetaData().setWhiteName(getApp().getSettings().getUsername());
+					getGame().getMetaData().setWhiteRank(getApp().getSettings().getRank());
+				}
+				
 				level = (byte) dlg.getStrength();
 				dlg.saveRecentAsDefault();
 				dialog.dismiss();

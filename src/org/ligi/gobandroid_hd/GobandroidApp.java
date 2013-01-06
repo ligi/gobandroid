@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd;
 import org.ligi.gobandroid_hd.backend.GobandroidBackend;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.online.UserHandler;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.tracedroid.TraceDroid;
 import org.ligi.tracedroid.logging.Log;
@@ -63,6 +64,7 @@ public class GobandroidApp extends Application {
 			initGCM();
 
 		GobandroidBackend.registerDevice(this);
+		UserHandler.syncUser(this);
 	}
 
 	private void initGCM() {

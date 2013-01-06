@@ -9,6 +9,7 @@ import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GoPrefsActivity;
 import org.ligi.gobandroid_hd.ui.HelpDialog;
+import org.ligi.gobandroid_hd.ui.ProfileActivity;
 import org.ligi.gobandroid_hd.ui.UnzipSGFsDialog;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
@@ -23,6 +24,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.preference.Preference;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -78,6 +80,7 @@ public class MenuDrawer implements OnItemClickListener {
 		items.add(new Item(R.id.review, R.string.review, R.drawable.dashboard_review));
 		items.add(new Item(R.id.bookmark, R.string.bookmark, R.drawable.bookmark));
 		items.add(new Category(R.string.more));
+		items.add(new Item(R.id.profile, R.string.profile, R.drawable.profile));
 		items.add(new Item(R.id.links, R.string.links, R.drawable.dashboard_links));
 		items.add(new Item(R.id.preferences, R.string.preferences, R.drawable.preferences));
 		items.add(new Item(R.id.help, R.string.help, R.drawable.help));
@@ -127,6 +130,10 @@ public class MenuDrawer implements OnItemClickListener {
 			ctx.startActivity(startSGFListForPath(getApp().getSettings().getBookmarkPath()));
 			break;
 
+
+		case R.id.profile:
+			ctx.startActivity(new Intent(ctx,ProfileActivity.class));
+			break;
 		}
 	}
 
