@@ -30,4 +30,11 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>cloudgoban-v1-generated-source</name>
+			<type>2</type>
+			<location>/home/ligi/git/cloud_goban/endpoint-libs/libcloudgoban-v1/cloudgoban/cloudgoban-v1-generated-source</location>
+		</link>
+	</linkedResources>
 </projectDescription>
