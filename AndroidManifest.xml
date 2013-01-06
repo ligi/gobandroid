@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.ligi.gobandroid_beta"
     android:installLocation="auto"
-    android:versionCode="112"
-    android:versionName="1.12" >
+    android:versionCode="113"
+    android:versionName="1.13" >
 
     <uses-sdk
         android:minSdkVersion="5"
@@ -35,7 +35,6 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
-
     <uses-permission android:name="org.ligi.gobandroid_beta.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
@@ -53,7 +52,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name="org.ligi.gobandroid_hd.ui.GobanDroidTVActivity"
             android:icon="@drawable/gobandroid_tv"
@@ -87,24 +85,19 @@
                     android:scheme="goterm" />
             </intent-filter>
         </activity>
-        <activity android:name="org.ligi.gobandroid_hd.ui.gnugo.PlayAgainstGnugoActivity" >
-        </activity>
-        <activity android:name="org.ligi.gobandroid_hd.ui.review.GoGamePlayerActivity" >
-        </activity>
-        <activity android:name="org.ligi.gobandroid_hd.ui.editing.EditGameActivity" >
-        </activity>
-        <activity android:name="org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity" >
-        </activity>
-        <activity android:name="org.ligi.gobandroid_hd.ui.links.LinksActivity" >
-        </activity>
+        <activity android:name="org.ligi.gobandroid_hd.ui.gnugo.PlayAgainstGnugoActivity" />
+        <activity android:name="org.ligi.gobandroid_hd.ui.ProfileActivity" />
+        <activity android:name="org.ligi.gobandroid_hd.ui.review.GoGamePlayerActivity" />
+        <activity android:name="org.ligi.gobandroid_hd.ui.editing.EditGameActivity" />
+        <activity android:name="org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity" />
+        <activity android:name="org.ligi.gobandroid_hd.ui.links.LinksActivity" />
         <activity
             android:name="org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity"
             android:exported="true" >
         </activity>
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadActivity" />
-        
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadFromExternalActivity" >
-             <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -114,6 +107,17 @@
                     android:host="cloud-goban.appspot.com"
                     android:pathPattern="/game/.*"
                     android:scheme="https" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="cloud-goban.appspot.com"
+                    android:pathPattern="/game/.*"
+                    android:scheme="http" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -154,17 +158,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="*"
-                    android:pathPattern=".*\\.sgf"
-                    android:scheme="content" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:mimeType="application/x-go-sgf" />
             </intent-filter>
         </activity>
@@ -183,17 +176,12 @@
         </activity>
         <activity android:name="org.ligi.gobandroid_hd.ui.recording.GameRecordActivity" />
         <activity android:name="org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity" />
-        <activity android:name="org.ligi.gobandroid_hd.ui.review.GameReviewActivity" >
-        </activity>
+        <activity android:name="org.ligi.gobandroid_hd.ui.review.GameReviewActivity" />
         <activity android:name="org.ligi.gobandroid_hd.ui.counting.CountGameActivity" />
-        <activity android:name="org.ligi.gobandroid_hd.ui.GoPrefsActivity" >
-        </activity>
-        <activity android:name="org.ligi.gobandroid_hd.ui.LoadActionsActivity" >
-        </activity>
-        <activity android:name="org.ligi.gobandroid_hd.ui.SGFOnlineListActivity" >
-        </activity>
-        <activity android:name="org.ligi.gobandroid_hd.ui.GoActivity" >
-        </activity>
+        <activity android:name="org.ligi.gobandroid_hd.ui.GoPrefsActivity" />
+        <activity android:name="org.ligi.gobandroid_hd.ui.LoadActionsActivity" />
+        <activity android:name="org.ligi.gobandroid_hd.ui.SGFOnlineListActivity" />
+        <activity android:name="org.ligi.gobandroid_hd.ui.GoActivity" />
 
         <service android:name="org.ligi.gobandroid_beta.GCMIntentService" />
 
@@ -219,7 +207,6 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
