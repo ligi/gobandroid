@@ -141,6 +141,12 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 		return false;
 	}
 
+	@Override 
+	public void initializeStoneMove() {
+		// disable stone move - not wanted in tsumego
+	}
+	
+	
 	@Override
 	public void requestUndo() {
 		getBoard().move_stone_mode = false;

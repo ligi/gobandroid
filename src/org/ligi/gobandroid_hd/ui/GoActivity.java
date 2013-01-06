@@ -638,7 +638,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 					getGame().refreshBoards();
 
 				}
-				go_board.move_stone_mode = false;
+				go_board.move_stone_mode = false; // moving of stone done
 			} else if ((getGame().getActMove().getX() == interaction_scope.getTouchX()) && (getGame().getActMove().getY() == interaction_scope.getTouchY()))
 				initializeStoneMove();
 			else
