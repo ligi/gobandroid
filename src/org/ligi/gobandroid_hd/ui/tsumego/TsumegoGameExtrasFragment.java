@@ -71,15 +71,14 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
         game = getGame();
 
 
-        String next_tsumego = calcNextTsumego(game.getMetaData().getFileName().replaceFirst("file://", ""));
+        String next_tsumego_url_str = calcNextTsumego(game.getMetaData().getFileName().replaceFirst("file://", ""));
 
-        if (next_tsumego != null && new File(next_tsumego).exists()) {
+        if (next_tsumego_url_str != null && new File(next_tsumego_url_str).exists()) {
 
             correct_view.setMovementMethod(LinkMovementMethod.getInstance());
-            String text = "Correct <a href='tsumego://" + next_tsumego + "'>next tsumego</a>";
+
+            String text = getString(R.string.tsumego_correct) + " <a href='tsumego://" + next_tsumego_url_str + "'>" + getString(R.string.next_tsumego) + "</a>";
             correct_view.setText(Html.fromHtml(text));
-        } else {
-            correct_view.setText(Html.fromHtml(game.getMetaData().getFileName()));
         }
 
 
