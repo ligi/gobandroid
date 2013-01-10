@@ -16,7 +16,7 @@
 
 package org.ligi.gobandroid_hd.ui.review;
 
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -72,16 +72,14 @@ public class EndReviewDialog extends GobandroidDialog {
 		if (meta.getRating() != null)
 			rating_bar.setRating(.5f * meta.getRating());
 
-		save_bookmark_cp
-				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		save_bookmark_cp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-					@Override
-					public void onCheckedChanged(CompoundButton buttonView,
-							boolean isChecked) {
-						bookmark_notification.setEnabled(isChecked);
-						bookmark_name.setEnabled(isChecked);
-					}
-				});
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				bookmark_notification.setEnabled(isChecked);
+				bookmark_name.setEnabled(isChecked);
+			}
+		});
 
 		class PositiveOnClickListener implements OnClickListener {
 
@@ -89,16 +87,11 @@ public class EndReviewDialog extends GobandroidDialog {
 			public void onClick(DialogInterface dialog, int which) {
 
 				if (save_bookmark_cp.isChecked()) {
-					GoLink.saveGameToGoLink(getApp().getGame(), context
-							.getSettings().getBookmarkPath(), bookmark_name
-							.getText().toString() + ".golink");
+					GoLink.saveGameToGoLink(getApp().getGame(), context.getSettings().getBookmarkPath(), bookmark_name.getText().toString() + ".golink");
 				}
 
 				if (bookmark_notification.isChecked()) {
-					GobandroidNotifications.addGoLinkNotification(context,
-							context.getSettings().getBookmarkPath() + "/"
-									+ bookmark_name.getText().toString()
-									+ ".golink");
+					new GobandroidNotifications(context).addGoLinkNotification(context.getSettings().getBookmarkPath() + "/" + bookmark_name.getText().toString() + ".golink");
 				}
 
 				saveSGFMeta();

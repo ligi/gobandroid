@@ -9,6 +9,6 @@ import android.content.Intent;
 public class GnuGoHelper {
 
 	public static boolean isGnuGoAvail(Context ctx) {
-		return (IntentHelper.isServiceAvailable(new Intent(GnuGoMover.intent_action_name),ctx.getPackageManager(),0));
+		return (IntentHelper.isServiceAvailable(new Intent(GnuGoMover.intent_action_name), ctx.getPackageManager(), 0));
 	}
 }

@@ -1,6 +1,6 @@
 package org.ligi.gobandroid_hd.ui;
 
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ public class GobandroidListFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		getListView().setCacheColorHint(0);
-        getListView().setDivider((GradientDrawable)getActivity().getResources().getDrawable(R.drawable.divider));
-        getListView().setDividerHeight(2);
-        
+		getListView().setDivider((GradientDrawable) getActivity().getResources().getDrawable(R.drawable.divider_h));
+		getListView().setDividerHeight(2);
+
 	}
 }

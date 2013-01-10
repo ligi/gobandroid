@@ -3,8 +3,8 @@ package org.ligi.gobandroid_hd.ui;
 import java.io.File;
 import java.util.Vector;
 
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.InteractionScope;
-import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
 import android.content.Intent;
@@ -28,8 +28,7 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 	private File path_to_play_from;
 
 	public Intent getIntent2start() {
-		return new Intent(this, GobanDroidTVActivity.class)
-				.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		return new Intent(this, GobanDroidTVActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 	}
 
 	@Override
@@ -38,8 +37,7 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 		getApp().getInteractionScope().setMode(InteractionScope.MODE_TELEVIZE);
 
 		getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
-		path_to_play_from = new File(getSettings().getReviewPath()
-				+ "/commented_games/");
+		path_to_play_from = new File(getSettings().getReviewPath() + "/commented_games/");
 
 		EasyTracker.getInstance().setContext(this);
 
@@ -64,11 +62,9 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 				avail_file_list.add(act.getAbsolutePath());
 		}
 
-		choosen = avail_file_list.get((int) (Math.random() * avail_file_list
-				.size()));
+		choosen = avail_file_list.get((int) (Math.random() * avail_file_list.size()));
 
-		EasyTracker.getTracker().trackEvent("gtv", "start_play_file", choosen,
-				null);
+		EasyTracker.getTracker().trackEvent("gtv", "start_play_file", choosen, null);
 
 		start_review_intent.setData(Uri.parse("file://" + choosen));
 

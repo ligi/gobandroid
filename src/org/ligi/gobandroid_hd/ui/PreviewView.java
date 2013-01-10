@@ -1,6 +1,6 @@
 package org.ligi.gobandroid_hd.ui;
 
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 
@@ -29,7 +29,7 @@ public class PreviewView extends View {
 	public PreviewView(Context context, GoGame game) {
 		super(context);
 
-		span = TsumegoHelper.calcSpan(game) + 1;
+		span = TsumegoHelper.calcSpan(game,false) + 1;
 
 		this.game = game;
 		black_line_paint = new Paint();

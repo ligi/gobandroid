@@ -1,16 +1,15 @@
 package org.ligi.gobandroid_hd.ui.review;
 
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GobanDroidTVActivity;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.gobandroid_hd.ui.fragments.CommentAndNowPlayingFragment;
+import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.tracedroid.logging.Log;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.Window;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +18,9 @@ import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.Window;
 
 public class GoGamePlayerActivity extends GoActivity {
 
@@ -59,8 +61,7 @@ public class GoGamePlayerActivity extends GoActivity {
 
 		@Override
 		public void run() {
-			setSupportProgress((int) (Window.PROGRESS_START + progress_to_display
-					* (Window.PROGRESS_END - Window.PROGRESS_START)));
+			setSupportProgress((int) (Window.PROGRESS_START + progress_to_display * (Window.PROGRESS_END - Window.PROGRESS_START)));
 		}
 
 	};
@@ -78,8 +79,7 @@ public class GoGamePlayerActivity extends GoActivity {
 
 			while (System.currentTimeMillis() < start_time + time) {
 				Thread.sleep(100);
-				progress_to_display = 1f - ((float) (System.currentTimeMillis()
-						- start_time + 1) / time);
+				progress_to_display = 1f - ((float) (System.currentTimeMillis() - start_time + 1) / time);
 				handler.post(mTimerProgressRunnable);
 			}
 
@@ -95,11 +95,9 @@ public class GoGamePlayerActivity extends GoActivity {
 		@Override
 		public void run() {
 			// game=;
-			Log.i("gobandroid", "automove start"
-					+ getGame().getActMove().getNextMoveVariations().size());
+			Log.i("gobandroid", "automove start" + getGame().getActMove().getNextMoveVariations().size());
 			while (autoplay_active && (getGame().getActMove().hasNextMove())) {
-				Log.i("gobandroid", "automove move"
-						+ getGame().getActMove().hasNextMove());
+				Log.i("gobandroid", "automove move" + getGame().getActMove().hasNextMove());
 
 				handler.post(new Runnable() {
 
@@ -109,8 +107,7 @@ public class GoGamePlayerActivity extends GoActivity {
 						getGame().jump(next_mve);
 					}
 				});
-				Log.i("gobandroid", "automove move"
-						+ getGame().getActMove().hasNextMove());
+				Log.i("gobandroid", "automove move" + getGame().getActMove().hasNextMove());
 				sleepWithProgress(calcTime());
 
 			}
@@ -123,8 +120,7 @@ public class GoGamePlayerActivity extends GoActivity {
 			Log.i("gobandroid", "automove asleep");
 
 			if (!getApp().getInteractionScope().is_in_noif_mode()) {
-				Intent next_intent = new Intent(GoGamePlayerActivity.this,
-						GobanDroidTVActivity.class);
+				Intent next_intent = new Intent(GoGamePlayerActivity.this, GobanDroidTVActivity.class);
 
 				if (autoplay_active) {
 					GoGamePlayerActivity.this.startActivity(next_intent);
@@ -166,6 +162,10 @@ public class GoGamePlayerActivity extends GoActivity {
 
 		if (event.getAction() == KeyEvent.ACTION_DOWN)
 			switch (keyCode) {
+			case KeyEvent.KEYCODE_MEDIA_PAUSE:
+				SwitchModeHelper.startGame(this, InteractionScope.MODE_REVIEW);
+				return true;
+
 			case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
 			case KeyEvent.KEYCODE_DPAD_LEFT:
 				if (!getGame().canUndo())
@@ -204,8 +204,7 @@ public class GoGamePlayerActivity extends GoActivity {
 	private int calcTime() {
 		int res = pause_between_moves;
 		if (getGame().getActMove().hasComment())
-			res += pause_betwen_moves_extra_per_word
-					* countWords(getGame().getActMove().getComment());
+			res += pause_betwen_moves_extra_per_word * countWords(getGame().getActMove().getComment());
 		return res;
 	}
 

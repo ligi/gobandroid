@@ -1,6 +1,6 @@
 package org.ligi.gobandroid_hd.ui.scoring;
 
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.GoActivity;
@@ -35,6 +35,7 @@ public class GameScoringActivity extends GoActivity implements
 
 	}
 
+	@Override
 	public void doTouch(MotionEvent event) {
 		//super.doTouch(event); - Do not call! Not needed and breaks marking dead stones
 		
@@ -89,7 +90,13 @@ public class GameScoringActivity extends GoActivity implements
 	@Override
 	public void onGoGameChange() {
 		super.onGoGameChange();
-		this.invalidateOptionsMenu();
+		runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				invalidateOptionsMenu();
+			}
+		});
 	}
 
 	@Override

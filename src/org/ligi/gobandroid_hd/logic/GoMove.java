@@ -49,8 +49,8 @@ public class GoMove {
 
 	private int move_pos = 0;
 
-	private boolean black_to_move=true;
-	
+	private boolean black_to_move = true;
+
 	public GoMove(GoMove parent) {
 		this.parent = parent;
 
@@ -58,7 +58,7 @@ public class GoMove {
 		markers = new Vector<GoMarker>();
 
 		if (parent != null) {
-			black_to_move=!parent.isBlackToMove();
+			black_to_move = !parent.isBlackToMove();
 
 			parent.addNextMove(this);
 
@@ -73,11 +73,10 @@ public class GoMove {
 
 	public GoMove(byte x, byte y, GoMove parent) {
 		this(parent);
-		
+
 		this.x = x;
 		this.y = y;
 	}
-
 
 	public void setDidCaptures(boolean did) {
 		did_captures = did;
@@ -198,8 +197,7 @@ public class GoMove {
 
 	public GoMarker getGoMarker() {
 		for (GoMarker marker : parent.getMarkers())
-			if ((this.getX() == marker.getX())
-					&& (this.getY() == marker.getY()))
+			if ((this.getX() == marker.getX()) && (this.getY() == marker.getY()))
 				return marker;
 		return null;
 	}
@@ -221,12 +219,13 @@ public class GoMove {
 		markers.removeAllElements(); // useful?
 		next_move_variations.removeAllElements(); // useful?
 	}
-	
+
 	public boolean isBlackToMove() {
 		return black_to_move;
 	}
-	
+
 	public void setIsBlackToMove(boolean black_to_move) {
-		this.black_to_move=black_to_move;
+		this.black_to_move = black_to_move;
 	}
+
 }

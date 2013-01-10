@@ -63,10 +63,6 @@ public class GoGame {
 	private GoBoard pre_last_board; // board to detect KO situations
 	private GoBoard handicap_board;
 
-	private boolean last_action_was_pass = false;
-
-	private boolean game_finished = false;
-
 	private int[][] groups; // array to build groups
 
 	public int[][] area_groups; // array to build groups
@@ -101,16 +97,41 @@ public class GoGame {
 	public final static byte MOVE_INVALID_CELL_NOT_FREE = 2;
 	public final static byte MOVE_INVALID_CELL_NO_LIBERTIES = 3;
 	public final static byte MOVE_INVALID_IS_KO = 4;
+	public final static byte MOVE_INVALID = 5;
 
 	private boolean[][] all_handicap_positions;
 
 	private int local_captures = 0;
+
+	public void setGame(GoGame game) {
+		cloud_key = game.getCloudKey();
+		cloud_role = game.getCloudRole();
+		metadata = game.getMetaData();
+		all_handicap_positions = game.all_handicap_positions;
+		handicap = game.handicap;
+		komi = game.komi;
+		visual_board = game.visual_board;
+		calc_board = game.calc_board;
+		last_board = game.last_board;
+		pre_last_board = game.pre_last_board;
+		handicap_board = game.handicap_board;
+		act_move = game.act_move;
+		groups = game.groups;
+		area_groups = game.area_groups;
+		area_assign = game.area_assign;
+		captures_black = game.captures_black;
+		captures_white = game.captures_white;
+	}
 
 	public GoGame(byte size) {
 		this(size, (byte) 0);
 	}
 
 	public GoGame(byte size, byte handicap) {
+		init(size, handicap);
+	}
+
+	public void init(byte size, byte handicap) {
 
 		this.handicap = handicap;
 
@@ -131,16 +152,12 @@ public class GoGame {
 			byte[][] handicapArray = GoDefinitions.getHandicapArray(size);
 			for (int i = 0; i < 9; i++) {
 				if (i < handicap) {
-					handicap_board.setCellBlack(handicapArray[i][0],
-							handicapArray[i][1]);
+					handicap_board.setCellBlack(handicapArray[i][0], handicapArray[i][1]);
 					if (i == 5 || i == 7) {
-						handicap_board.setCellFree(handicapArray[4][0],
-								handicapArray[4][1]);
-						handicap_board.setCellBlack(handicapArray[i + 1][0],
-								handicapArray[i + 1][1]);
+						handicap_board.setCellFree(handicapArray[4][0], handicapArray[4][1]);
+						handicap_board.setCellBlack(handicapArray[i + 1][0], handicapArray[i + 1][1]);
 					} else if (i == 6 || i == 8)
-						handicap_board.setCellBlack(handicapArray[4][0],
-								handicapArray[4][1]);
+						handicap_board.setCellBlack(handicapArray[4][0], handicapArray[4][1]);
 				}
 				all_handicap_positions[handicapArray[i][0]][handicapArray[i][1]] = true;
 			}
@@ -160,7 +177,9 @@ public class GoGame {
 
 		act_move = new GoMove(null);
 		act_move.setIsFirstMove();
-		act_move.setIsBlackToMove(handicap!=0); // if handicap==null set black to move next - else set white to move next
+		act_move.setIsBlackToMove(handicap != 0); // if handicap==null set black
+													// to move next - else set
+													// white to move next
 		reset();
 	}
 
@@ -195,13 +214,13 @@ public class GoGame {
 	}
 
 	public void pass() {
-		if (last_action_was_pass) { // finish game if both passed
-			game_finished = true;
+		if (act_move.isPassMove()) { // finish game if both passed
+			act_move = new GoMove(act_move);
+			act_move.setToPassMove();
+
 			buildGroups();
 			buildAreaGroups();
 		} else {
-			last_action_was_pass = true;
-
 			act_move = new GoMove(act_move);
 			act_move.setToPassMove();
 		}
@@ -220,8 +239,7 @@ public class GoGame {
 		Log.i("do_move x:" + x + " y:" + y);
 
 		// return with INVALID if x and y are inside the board
-		if ((x < 0) || (x >= calc_board.getSize()) || (y < 0)
-				|| (y >= calc_board.getSize()))
+		if ((x < 0) || (x >= calc_board.getSize()) || (y < 0) || (y >= calc_board.getSize()))
 			return MOVE_INVALID_NOT_ON_BOARD;
 
 		// check if the "new" move is in the variations - to not have 2 equal
@@ -238,9 +256,8 @@ public class GoGame {
 			return MOVE_VALID;
 		}
 
-		if (game_finished) { // game is finished - players are amarking dead
-								// stones
-
+		if (isFinished()) { // game is finished - players are amarking dead
+							// stones
 
 			return MOVE_VALID;
 		}
@@ -251,7 +268,6 @@ public class GoGame {
 
 		GoBoard bak_board = calc_board.clone();
 
-		
 		// int tmp_cap=captures_black+captures_white;
 
 		if (isBlackToMove())
@@ -287,10 +303,9 @@ public class GoGame {
 		pre_last_board = last_board.clone();
 		last_board = calc_board.clone();
 		visual_board = calc_board.clone();
-		last_action_was_pass = false;
 
 		act_move = new GoMove(x, y, act_move);
-		
+
 		if (!calc_board.isCellWhite(x, y))
 			captures_black += local_captures;
 		else
@@ -302,7 +317,6 @@ public class GoGame {
 		// if we reached this point this move must be valid
 		return MOVE_VALID;
 	}
-
 
 	public GoMove getActMove() {
 		return act_move;
@@ -368,7 +382,6 @@ public class GoGame {
 		if (!keep_move)
 			mLastMove.destroy();
 		getGoMover().undo();
-		game_finished = false;
 
 		getGoMover().paused = false;
 	}
@@ -426,7 +439,6 @@ public class GoGame {
 			return;
 		}
 
-		last_action_was_pass = false;
 		clear_calc_board();
 
 		Vector<GoMove> replay_moves = new Vector<GoMove>();
@@ -455,29 +467,20 @@ public class GoGame {
 
 	public boolean cell_has_libertie(int x, int y) {
 
-		return (((x != 0) && (calc_board.isCellFree(x - 1, y)))
-				|| ((y != 0) && (calc_board.isCellFree(x, y - 1)))
-				|| ((x != (calc_board.getSize() - 1)) && (calc_board
-						.isCellFree(x + 1, y))) || ((y != (calc_board.getSize() - 1)) && (calc_board
-				.isCellFree(x, y + 1))));
+		return (((x != 0) && (calc_board.isCellFree(x - 1, y))) || ((y != 0) && (calc_board.isCellFree(x, y - 1))) || ((x != (calc_board.getSize() - 1)) && (calc_board.isCellFree(x + 1, y))) || ((y != (calc_board.getSize() - 1)) && (calc_board.isCellFree(
+				x, y + 1))));
 	}
 
 	public boolean cell_has_white_neighbours(int x, int y) {
 
-		return (((x != 0) && (calc_board.isCellWhite(x - 1, y)))
-				|| ((y != 0) && (calc_board.isCellWhite(x, y - 1)))
-				|| ((x != (calc_board.getSize() - 1)) && (calc_board
-						.isCellWhite(x + 1, y))) || ((y != (calc_board
-				.getSize() - 1)) && (calc_board.isCellWhite(x, y + 1))));
+		return (((x != 0) && (calc_board.isCellWhite(x - 1, y))) || ((y != 0) && (calc_board.isCellWhite(x, y - 1))) || ((x != (calc_board.getSize() - 1)) && (calc_board.isCellWhite(x + 1, y))) || ((y != (calc_board.getSize() - 1)) && (calc_board
+				.isCellWhite(x, y + 1))));
 	}
 
 	public boolean cell_has_black_neighbours(int x, int y) {
 
-		return (((x != 0) && (calc_board.isCellBlack(x - 1, y)))
-				|| ((y != 0) && (calc_board.isCellBlack(x, y - 1)))
-				|| ((x != (calc_board.getSize() - 1)) && (calc_board
-						.isCellBlack(x + 1, y))) || ((y != (calc_board
-				.getSize() - 1)) && (calc_board.isCellBlack(x, y + 1))));
+		return (((x != 0) && (calc_board.isCellBlack(x - 1, y))) || ((y != 0) && (calc_board.isCellBlack(x, y - 1))) || ((x != (calc_board.getSize() - 1)) && (calc_board.isCellBlack(x + 1, y))) || ((y != (calc_board.getSize() - 1)) && (calc_board
+				.isCellBlack(x, y + 1))));
 	}
 
 	/**
@@ -494,8 +497,7 @@ public class GoGame {
 		 * return true;
 		 */
 
-		boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board
-				.getSize()];
+		boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board.getSize()];
 		Stack<Integer> ptStackX = new Stack<Integer>();
 		Stack<Integer> ptStackY = new Stack<Integer>();
 
@@ -514,29 +516,25 @@ public class GoGame {
 
 			/* check to the left */
 			if (newx > 0)
-				if (calc_board.areCellsEqual(newx - 1, newy, newx, newy)
-						&& (checked_pos[newx - 1][newy] == false)) {
+				if (calc_board.areCellsEqual(newx - 1, newy, newx, newy) && (checked_pos[newx - 1][newy] == false)) {
 					ptStackX.push(newx - 1);
 					ptStackY.push(newy);
 				}
 			/* check to the right */
 			if (newx < calc_board.getSize() - 1)
-				if (calc_board.areCellsEqual(newx + 1, newy, newx, newy)
-						&& (checked_pos[newx + 1][newy] == false)) {
+				if (calc_board.areCellsEqual(newx + 1, newy, newx, newy) && (checked_pos[newx + 1][newy] == false)) {
 					ptStackX.push(newx + 1);
 					ptStackY.push(newy);
 				}
 			/* check down */
 			if (newy > 0)
-				if (calc_board.areCellsEqual(newx, newy - 1, newx, newy)
-						&& (checked_pos[newx][newy - 1] == false)) {
+				if (calc_board.areCellsEqual(newx, newy - 1, newx, newy) && (checked_pos[newx][newy - 1] == false)) {
 					ptStackX.push(newx);
 					ptStackY.push(newy - 1);
 				}
 			/* check up */
 			if (newy < calc_board.getSize() - 1)
-				if (calc_board.areCellsEqual(newx, newy + 1, newx, newy)
-						&& (checked_pos[newx][newy + 1] == false)) {
+				if (calc_board.areCellsEqual(newx, newy + 1, newx, newy) && (checked_pos[newx][newy + 1] == false)) {
 					ptStackX.push(newx);
 					ptStackY.push(newy + 1);
 				}
@@ -609,29 +607,25 @@ public class GoGame {
 						groups[newx][newy] = group_count;
 						/* check to the left */
 						if (newx > 0)
-							if (calc_board.areCellsEqual(newx - 1, newy, newx,
-									newy) && (groups[newx - 1][newy] == -1)) {
+							if (calc_board.areCellsEqual(newx - 1, newy, newx, newy) && (groups[newx - 1][newy] == -1)) {
 								ptStackX.push(newx - 1);
 								ptStackY.push(newy);
 							}
 						/* check to the right */
 						if (newx < calc_board.getSize() - 1)
-							if (calc_board.areCellsEqual(newx + 1, newy, newx,
-									newy) && (groups[newx + 1][newy] == -1)) {
+							if (calc_board.areCellsEqual(newx + 1, newy, newx, newy) && (groups[newx + 1][newy] == -1)) {
 								ptStackX.push(newx + 1);
 								ptStackY.push(newy);
 							}
 						/* check down */
 						if (newy > 0)
-							if (calc_board.areCellsEqual(newx, newy - 1, newx,
-									newy) && (groups[newx][newy - 1] == -1)) {
+							if (calc_board.areCellsEqual(newx, newy - 1, newx, newy) && (groups[newx][newy - 1] == -1)) {
 								ptStackX.push(newx);
 								ptStackY.push(newy - 1);
 							}
 						/* check up */
 						if (newy < calc_board.getSize() - 1)
-							if (calc_board.areCellsEqual(newx, newy + 1, newx,
-									newy) && (groups[newx][newy + 1] == -1)) {
+							if (calc_board.areCellsEqual(newx, newy + 1, newx, newy) && (groups[newx][newy + 1] == -1)) {
 								ptStackX.push(newx);
 								ptStackY.push(newy + 1);
 							}
@@ -705,29 +699,21 @@ public class GoGame {
 
 		/* check left */
 		if (ignore_x > 0)
-			if ((!hasGroupLiberties(ignore_x - 1, ignore_y))
-					&& (!calc_board.areCellsEqual(ignore_x, ignore_y,
-							ignore_x - 1, ignore_y)))
+			if ((!hasGroupLiberties(ignore_x - 1, ignore_y)) && (!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x - 1, ignore_y)))
 				remove_group(ignore_x - 1, (int) ignore_y);
 		/* check right */
 		if (ignore_x < calc_board.getSize() - 1)
-			if ((!hasGroupLiberties(ignore_x + 1, ignore_y))
-					&& (!calc_board.areCellsEqual(ignore_x, ignore_y,
-							ignore_x + 1, ignore_y)))
+			if ((!hasGroupLiberties(ignore_x + 1, ignore_y)) && (!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x + 1, ignore_y)))
 				remove_group(ignore_x + 1, (int) ignore_y);
 		/* check down */
 		if (ignore_y > 0) {
-			if ((!hasGroupLiberties(ignore_x, ignore_y - 1))
-					&& (!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x,
-							ignore_y - 1)))
+			if ((!hasGroupLiberties(ignore_x, ignore_y - 1)) && (!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x, ignore_y - 1)))
 				remove_group((int) ignore_x, ignore_y - 1);
 
 		}
 		/* check up */
 		if (ignore_y < calc_board.getSize() - 1) {
-			if ((!hasGroupLiberties(ignore_x, ignore_y + 1))
-					&& (!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x,
-							ignore_y + 1)))
+			if ((!hasGroupLiberties(ignore_x, ignore_y + 1)) && (!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x, ignore_y + 1)))
 				remove_group((int) ignore_x, ignore_y + 1);
 
 		}
@@ -739,8 +725,7 @@ public class GoGame {
 											// want
 			return;
 
-		boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board
-				.getSize()];
+		boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board.getSize()];
 		Stack<Integer> ptStackX = new Stack<Integer>();
 		Stack<Integer> ptStackY = new Stack<Integer>();
 
@@ -755,32 +740,28 @@ public class GoGame {
 
 			/* check to the left */
 			if (newx > 0)
-				if (calc_board.areCellsEqual(newx - 1, newy, newx, newy)
-						&& (checked_pos[newx - 1][newy] == false)) {
+				if (calc_board.areCellsEqual(newx - 1, newy, newx, newy) && (checked_pos[newx - 1][newy] == false)) {
 					ptStackX.push(newx - 1);
 					ptStackY.push(newy);
 					checked_pos[newx - 1][newy] = true;
 				}
 			/* check to the right */
 			if (newx < calc_board.getSize() - 1)
-				if (calc_board.areCellsEqual(newx + 1, newy, newx, newy)
-						&& (checked_pos[newx + 1][newy] == false)) {
+				if (calc_board.areCellsEqual(newx + 1, newy, newx, newy) && (checked_pos[newx + 1][newy] == false)) {
 					ptStackX.push(newx + 1);
 					ptStackY.push(newy);
 					checked_pos[newx + 1][newy] = true;
 				}
 			/* check down */
 			if (newy > 0)
-				if (calc_board.areCellsEqual(newx, newy - 1, newx, newy)
-						&& (checked_pos[newx][newy - 1] == false)) {
+				if (calc_board.areCellsEqual(newx, newy - 1, newx, newy) && (checked_pos[newx][newy - 1] == false)) {
 					ptStackX.push(newx);
 					ptStackY.push(newy - 1);
 					checked_pos[newx][newy - 1] = true;
 				}
 			/* check up */
 			if (newy < calc_board.getSize() - 1)
-				if (calc_board.areCellsEqual(newx, newy + 1, newx, newy)
-						&& (checked_pos[newx][newy + 1] == false)) {
+				if (calc_board.areCellsEqual(newx, newy + 1, newx, newy) && (checked_pos[newx][newy + 1] == false)) {
 					ptStackX.push(newx);
 					ptStackY.push(newy + 1);
 					checked_pos[newx][newy + 1] = true;
@@ -813,19 +794,24 @@ public class GoGame {
 		return calc_board;
 	}
 
-	public boolean isLastActionPass() {
-		return last_action_was_pass;
-	}
-
 	public boolean isFinished() {
-		return game_finished;
+		if (getActMove().isFirstMove())
+			return false;
+
+		// need at least 2 moves to finish a game ( 2 passes )
+		if (getActMove().getParent() == null)
+			return false;
+
+		// w passes
+		return getActMove().isPassMove() && getActMove().getParent().isPassMove();
 	}
 
 	/**
 	 * @return who has to do the next move
 	 */
 	public boolean isBlackToMove() {
-		return (!act_move.isBlackToMove()); // the opposite of wo was to move before
+		return (!act_move.isBlackToMove()); // the opposite of wo was to move
+											// before
 	}
 
 	public int getCapturesBlack() {
@@ -844,7 +830,7 @@ public class GoGame {
 		return groups[x][y];
 	}
 
-	private byte getHandicap() {
+	public byte getHandicap() {
 		return handicap;
 	}
 
@@ -880,10 +866,25 @@ public class GoGame {
 	}
 
 	public void setDeadWhite(int _dead_white) {
-		dead_white=_dead_white;		
+		dead_white = _dead_white;
 	}
-	
+
 	public void setDeadBlack(int _dead_black) {
-		dead_black=_dead_black;		
+		dead_black = _dead_black;
+	}
+
+	private String cloud_key = null, cloud_role = null;
+
+	public void setCloudDefs(String cloud_key, String cloud_role) {
+		this.cloud_key = cloud_key;
+		this.cloud_role = cloud_role;
+	}
+
+	public String getCloudKey() {
+		return cloud_key;
+	}
+
+	public String getCloudRole() {
+		return cloud_role;
 	}
 }

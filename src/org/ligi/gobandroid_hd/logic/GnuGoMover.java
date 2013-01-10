@@ -35,9 +35,9 @@ import android.os.RemoteException;
  * Class handle moves by GnuGo
  * 
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
- *         
- * This software is licenced with GPLv3 
-**/
+ * 
+ *         This software is licenced with GPLv3
+ **/
 public class GnuGoMover implements Runnable {
 
 	private IGnuGoService gnu_service;
@@ -65,8 +65,7 @@ public class GnuGoMover implements Runnable {
 		this.playing_white = false;
 	}
 
-	public GnuGoMover(Activity activity, GoGame game, boolean playing_black,
-			boolean playing_white, byte level) {
+	public GnuGoMover(Activity activity, GoGame game, boolean playing_black, boolean playing_white, byte level) {
 		this.application = activity.getApplication();
 		this.level = level;
 		this.playing_black = playing_black;
@@ -78,8 +77,7 @@ public class GnuGoMover implements Runnable {
 			conn = new ServiceConnection() {
 
 				@Override
-				public void onServiceConnected(ComponentName name,
-						IBinder service) {
+				public void onServiceConnected(ComponentName name, IBinder service) {
 					gnu_service = IGnuGoService.Stub.asInterface(service);
 
 					try {
@@ -94,8 +92,7 @@ public class GnuGoMover implements Runnable {
 				}
 			};
 
-			application.bindService(new Intent(intent_action_name), conn,
-					Context.BIND_AUTO_CREATE);
+			application.bindService(new Intent(intent_action_name), conn, Context.BIND_AUTO_CREATE);
 
 			mover_thread = new Thread(this);
 			mover_thread.start();
@@ -127,8 +124,7 @@ public class GnuGoMover implements Runnable {
 		try {
 			gnu_service.processGTP("white " + coordinates2gtpstr(x, y));
 		} catch (Exception e) {
-			Log.w("problem processing white move to "
-					+ coordinates2gtpstr(x, y));
+			Log.w("problem processing white move to " + coordinates2gtpstr(x, y));
 		}
 	}
 
@@ -136,8 +132,7 @@ public class GnuGoMover implements Runnable {
 		try {
 			gnu_service.processGTP("black " + coordinates2gtpstr(x, y));
 		} catch (Exception e) {
-			Log.w("problem processing black move to "
-					+ coordinates2gtpstr(x, y));
+			Log.w("problem processing black move to " + coordinates2gtpstr(x, y));
 		}
 	}
 
@@ -175,10 +170,8 @@ public class GnuGoMover implements Runnable {
 					for (byte x = 0; x < game.getBoardSize(); x++)
 						for (byte y = 0; y < game.getBoardSize(); y++)
 							if (game.getHandicapBoard().isCellBlack(x, y))
-								gnu_service.processGTP("black "
-										+ coordinates2gtpstr(x, y));
-					Log.i("setting level "
-							+ gnu_service.processGTP("level " + level));
+								gnu_service.processGTP("black " + coordinates2gtpstr(x, y));
+					Log.i("setting level " + gnu_service.processGTP("level " + level));
 					gnugo_size_set = true;
 				} catch (RemoteException e) {
 				}
@@ -194,12 +187,10 @@ public class GnuGoMover implements Runnable {
 
 						if (!GTPHelper.doMoveByGTPString(answer, game)) {
 							problem_string = answer;
-							problem_string += "\n"
-									+ gnu_service.processGTP("showboard");
+							problem_string += "\n" + gnu_service.processGTP("showboard");
 							game.pass();
 						}
-						Log.i("gugoservice"
-								+ gnu_service.processGTP("showboard"));
+						Log.i("gugoservice" + gnu_service.processGTP("showboard"));
 					} catch (RemoteException e) {
 					}
 				} else {
@@ -212,13 +203,11 @@ public class GnuGoMover implements Runnable {
 
 						if (!GTPHelper.doMoveByGTPString(answer, game)) {
 							problem_string = answer;
-							problem_string += "\n"
-									+ gnu_service.processGTP("showboard");
+							problem_string += "\n" + gnu_service.processGTP("showboard");
 							game.pass();
 						}
 
-						Log.i("gugoservice"
-								+ gnu_service.processGTP("showboard"));
+						Log.i("gugoservice" + gnu_service.processGTP("showboard"));
 
 					} catch (RemoteException e) {
 					}
@@ -255,8 +244,7 @@ public class GnuGoMover implements Runnable {
 	public boolean isMoversMove() {
 		if (!isPlayingInThisGame())
 			return false;
-		return (game.isBlackToMove() && (playing_black))
-				|| (!game.isBlackToMove() && (playing_white));
+		return (game.isBlackToMove() && (playing_black)) || (!game.isBlackToMove() && (playing_white));
 	}
 
 	public String getProblemString() {

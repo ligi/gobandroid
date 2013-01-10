@@ -91,11 +91,9 @@
   <string name="hint">提示</string>
   <string name="link_title">相关链结</string>
   <string name="link_tab_about">关于</string>
-  <string name="link_tab_help">帮助</string>
   <string name="link_tab_sgf">SGF的相关网站</string>
   <string name="game_mode">模式</string>
   <string name="switch_game_mode">切换模式</string>
-  <string name="menu_bookmark">书签</string>
   <string name="menu_autoplay">自动演示</string>
   <string name="tsumego_off_path">可能答错了！未知的分支变化 - 通常意谓着您的落子并非一般会进行的着手！</string>
   <string name="tsumego_correct">正解图！您答对了！</string>

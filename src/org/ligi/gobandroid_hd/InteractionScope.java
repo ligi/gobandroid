@@ -1,9 +1,10 @@
 package org.ligi.gobandroid_hd;
 
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 
 public class InteractionScope {
+	
 	public final static byte MODE_RECORD = 0;
 	public final static byte MODE_TSUMEGO = 1;
 	public final static byte MODE_REVIEW = 2;
@@ -11,6 +12,7 @@ public class InteractionScope {
 	public final static byte MODE_TELEVIZE = 4;
 	public final static byte MODE_COUNT = 5;
 	public final static byte MODE_EDIT = 6;
+	public final static byte MODE_SETUP = 7;
 	
 
 	public int touch_position = -1; // negative numbers -> no recent touch
@@ -30,13 +32,19 @@ public class InteractionScope {
 	 */
 	public void setGame(GoGame p_game) {
 		ask_variant_session = true;
-		game = p_game;
+		
+		if (game==null)
+			game = p_game;
+		else // keep listeners and stuff
+			game.setGame(p_game);
 	}
 
 	/**
 	 * @return the game instance
 	 */
 	public GoGame getGame() {
+		if (game==null)
+			game=new GoGame((byte)9);
 		return game;
 	}
 
@@ -94,6 +102,8 @@ public class InteractionScope {
 			return R.string.gnugo;
 		case InteractionScope.MODE_EDIT:
 			return R.string.edit;
+		case InteractionScope.MODE_SETUP:
+			return R.string.setup;
 		default:
 			return R.string.empty_str;
 		}

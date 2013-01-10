@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import org.ligi.android.common.files.FileHelper;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.tracedroid.logging.Log;
@@ -22,7 +23,7 @@ public class GoLink {
 	}
 	
 	public GoLink(File file) {
-		
+
 		try {
 			String go_lnk=FileHelper.file2String(file);
 			go_lnk=go_lnk.replace("\n","").replace("\r","");

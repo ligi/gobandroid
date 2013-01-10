@@ -22,8 +22,8 @@ package org.ligi.gobandroid_hd.ui;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.GobandroidApp;
-import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
@@ -61,12 +61,10 @@ public class GoBoardViewHD extends View {
 	public boolean mark_last_stone = true;
 	public boolean legend_sgf_mode = true; // GoPrefs.getLegendSGFMode()
 	public boolean show_area_stones = false;
-	
+
 	// we need a lot of paints, but so we have a efficient onDraw with less
 	// calls and the mem does not matter compared to bitmaps
-	private Paint hoshi_paint, legendPaint, blackTextPaint, whiteTextPaint,
-			gridPaint, gridPaint_h, bitmapPaint, placeStonePaint, opaque_paint,
-			whiteLastStoneCirclePaint, blackLastStoneCirclePaint;
+	private Paint hoshi_paint, legendPaint, blackTextPaint, whiteTextPaint, gridPaint, gridPaint_h, bitmapPaint, placeStonePaint, opaque_paint, whiteLastStoneCirclePaint, blackLastStoneCirclePaint;
 
 	private float stone_size;
 
@@ -162,8 +160,10 @@ public class GoBoardViewHD extends View {
 		setFocusable(true);
 		setGridEmboss(true);
 
-		if (getGame() == null)
-			getApp().getInteractionScope().setGame(new GoGame((byte) 19));
+		/*
+		 * if (getGame() == null) getApp().getInteractionScope().setGame(new
+		 * GoGame((byte) 19));
+		 */
 	}
 
 	public GoGame getGame() {
@@ -199,28 +199,21 @@ public class GoBoardViewHD extends View {
 			Log.w("zoom requested but no POI to center around");
 
 		Point act_zoom_point = getGame().linear_coordinate2Point(act_zoom_poi);
-		PointF res = new PointF(
-				-stone_size
-						* (act_zoom_point.x - getGame().getSize() / 2.0f / zoom),
-				-stone_size
-						* (act_zoom_point.y - getGame().getSize() / 2.0f / zoom));
+		PointF res = new PointF(-stone_size * (act_zoom_point.x - getGame().getSize() / 2.0f / zoom), -stone_size * (act_zoom_point.y - getGame().getSize() / 2.0f / zoom));
 
 		return res;
 	}
 
 	public void screenshot(String sshot_name) {
-		Bitmap bmp = Bitmap.createBitmap(this.getWidth(), this.getHeight(),
-				Config.ARGB_8888);
+		Bitmap bmp = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Config.ARGB_8888);
 		Canvas c = new Canvas(bmp);
 		draw2canvas(c);
 
 		try {
 			if (sshot_name.indexOf("://") > 0)
-				sshot_name = sshot_name
-						.substring(sshot_name.indexOf("://") + 3);
+				sshot_name = sshot_name.substring(sshot_name.indexOf("://") + 3);
 			Log.i("writing screenshot " + sshot_name);
-			new File(sshot_name.substring(0, sshot_name.lastIndexOf("/")))
-					.mkdirs();
+			new File(sshot_name.substring(0, sshot_name.lastIndexOf("/"))).mkdirs();
 			new File(sshot_name).createNewFile();
 			FileOutputStream out = new FileOutputStream(sshot_name);
 			bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
@@ -242,10 +235,8 @@ public class GoBoardViewHD extends View {
 	/**
 	 * used to make nice code around hoshi and last stone circle
 	 */
-	private void drawBoardCircle(Canvas canvas, float x, float y, float size,
-			Paint paint) {
-		canvas.drawCircle(stone_size / 2.0f + x * stone_size, stone_size / 2.0f
-				+ y * stone_size, size, paint);
+	private void drawBoardCircle(Canvas canvas, float x, float y, float size, Paint paint) {
+		canvas.drawCircle(stone_size / 2.0f + x * stone_size, stone_size / 2.0f + y * stone_size, size, paint);
 	}
 
 	protected void draw2canvas(Canvas canvas) {
@@ -263,135 +254,71 @@ public class GoBoardViewHD extends View {
 		boolean actpos_highlight_condition = false;
 
 		if (!(do_actpos_highlight_ony_if_active && (!isFocused()))) {
-			actpos_highlight_condition = do_actpos_highlight
-					&& getApp().getInteractionScope().hasValidTouchCoord();
+			actpos_highlight_condition = do_actpos_highlight && getApp().getInteractionScope().hasValidTouchCoord();
 		}
 
 		// draw semi transparent stone on current touch pos as a shadow
 		if ((!move_stone_mode) && actpos_highlight_condition) {
-			canvas.drawBitmap(((getGame().isBlackToMove()) ? black_stone_bitmap
-					: white_stone_bitmap), getApp().getInteractionScope()
-					.getTouchX() * stone_size, getApp().getInteractionScope()
-					.getTouchY() * stone_size, placeStonePaint);
+			canvas.drawBitmap(((getGame().isBlackToMove()) ? black_stone_bitmap : white_stone_bitmap), getApp().getInteractionScope().getTouchX() * stone_size, getApp().getInteractionScope().getTouchY() * stone_size, placeStonePaint);
 		}
 
 		// draw the vertical lines for the grid
 		for (byte x = 0; x < getGameSize(); x++)
-			canvas.drawLine(
-					stone_size / 2.0f + x * stone_size,
-					stone_size / 2.0f,
-					stone_size / 2.0f + x * stone_size,
-					stone_size
-							* (float) (getGame().getVisualBoard().getSize() - 1)
-							+ stone_size / 2.0f,
-					(actpos_highlight_condition && (getApp()
-							.getInteractionScope().getTouchX() == x)) ? gridPaint_h
-							: gridPaint);
+			canvas.drawLine(stone_size / 2.0f + x * stone_size, stone_size / 2.0f, stone_size / 2.0f + x * stone_size, stone_size * (float) (getGame().getVisualBoard().getSize() - 1) + stone_size / 2.0f, (actpos_highlight_condition && (getApp()
+					.getInteractionScope().getTouchX() == x)) ? gridPaint_h : gridPaint);
 
 		// draw the horizontal lines and the legend
 		for (byte x = 0; x < getGame().getVisualBoard().getSize(); x++) {
-			canvas.drawLine(
-					stone_size / 2.0f,
-					stone_size / 2.0f + x * stone_size,
-					stone_size
-							* (float) (getGame().getVisualBoard().getSize() - 1)
-							+ stone_size / 2.0f,
-					stone_size / 2.0f + x * stone_size,
-					(actpos_highlight_condition && (getApp()
-							.getInteractionScope().getTouchY() == x)) ? gridPaint_h
-							: gridPaint);
+			canvas.drawLine(stone_size / 2.0f, stone_size / 2.0f + x * stone_size, stone_size * (float) (getGame().getVisualBoard().getSize() - 1) + stone_size / 2.0f, stone_size / 2.0f + x * stone_size, (actpos_highlight_condition && (getApp()
+					.getInteractionScope().getTouchY() == x)) ? gridPaint_h : gridPaint);
 			if (do_legend) {
-				canvas.drawText(
-						"" + (getGameSize() - x),
-						6 + stone_size * (float) (getGameSize() - 1)
-								+ stone_size / 2.0f,
-						stone_size / 2.0f + x * stone_size
-								+ gridPaint.getTextSize() / 3, legendPaint);
+				canvas.drawText("" + (getGameSize() - x), 6 + stone_size * (float) (getGameSize() - 1) + stone_size / 2.0f, stone_size / 2.0f + x * stone_size + gridPaint.getTextSize() / 3, legendPaint);
 
 				if ((x > 7) && legend_sgf_mode)
-					canvas.drawText("" + (char) ('A' + (x + 1)), stone_size
-							/ 2.0f + x * stone_size, stone_size
-							* (float) (getGameSize() - 1) + stone_size / 2.0f
-							+ 1 + gridPaint.getTextSize(), legendPaint);
+					canvas.drawText("" + (char) ('A' + (x + 1)), stone_size / 2.0f + x * stone_size, stone_size * (float) (getGameSize() - 1) + stone_size / 2.0f + 1 + gridPaint.getTextSize(), legendPaint);
 				else
-					canvas.drawText("" + (char) ('A' + x), stone_size / 2.0f
-							+ x * stone_size, stone_size
-							* (float) (getGameSize() - 1) + stone_size / 2.0f
-							+ 1 + gridPaint.getTextSize(), legendPaint);
+					canvas.drawText("" + (char) ('A' + x), stone_size / 2.0f + x * stone_size, stone_size * (float) (getGameSize() - 1) + stone_size / 2.0f + 1 + gridPaint.getTextSize(), legendPaint);
 			}
 		}
 
 		for (byte x = 0; x < getGameSize(); x++)
 			for (byte y = 0; y < getGameSize(); y++) {
 				if (getGame().isPosHoschi(x, y))
-					drawBoardCircle(canvas, x, y, 2f + stone_size / 10,
-							hoshi_paint);
+					drawBoardCircle(canvas, x, y, 2f + stone_size / 10, hoshi_paint);
 
 				// paint the territory with alpha opaque stones
 				if (show_area_stones) {
 					if (getGame().area_assign[x][y] == GoDefinitions.PLAYER_BLACK)
-						canvas.drawBitmap(black_stone_bitmap, x * stone_size, y
-								* stone_size, opaque_paint);
+						canvas.drawBitmap(black_stone_bitmap, x * stone_size, y * stone_size, opaque_paint);
 
 					if (getGame().area_assign[x][y] == GoDefinitions.PLAYER_WHITE)
-						canvas.drawBitmap(white_stone_bitmap, x * stone_size, y
-								* stone_size, opaque_paint);
+						canvas.drawBitmap(white_stone_bitmap, x * stone_size, y * stone_size, opaque_paint);
 
 				}
 
 				if (getGame().getCalcBoard().isCellDead(x, y)) {
 					if (getGame().getVisualBoard().isCellWhite(x, y))
-						canvas.drawBitmap(
-								white_stone_bitmap_small,
-								x
-										* stone_size
-										+ (stone_size - white_stone_bitmap_small
-												.getWidth()) / 2,
-								y
-										* stone_size
-										+ (stone_size - white_stone_bitmap_small
-												.getHeight()) / 2, bitmapPaint);
+						canvas.drawBitmap(white_stone_bitmap_small, x * stone_size + (stone_size - white_stone_bitmap_small.getWidth()) / 2, y * stone_size + (stone_size - white_stone_bitmap_small.getHeight()) / 2, bitmapPaint);
 
 					if (getGame().getVisualBoard().isCellBlack(x, y))
-						canvas.drawBitmap(
-								black_stone_bitmap_small,
-								x
-										* stone_size
-										+ (stone_size - black_stone_bitmap_small
-												.getWidth()) / 2,
-								y
-										* stone_size
-										+ (stone_size - black_stone_bitmap_small
-												.getHeight()) / 2, bitmapPaint);
+						canvas.drawBitmap(black_stone_bitmap_small, x * stone_size + (stone_size - black_stone_bitmap_small.getWidth()) / 2, y * stone_size + (stone_size - black_stone_bitmap_small.getHeight()) / 2, bitmapPaint);
 
 				} else {
 
-					boolean should_draw_opaque = (move_stone_mode
-							&& (x == getGame().getActMove().getX()) && (y == getGame()
-							.getActMove().getY()));
+					boolean should_draw_opaque = (move_stone_mode && (x == getGame().getActMove().getX()) && (y == getGame().getActMove().getY()));
 
 					if (getGame().getVisualBoard().isCellWhite(x, y))
-						canvas.drawBitmap(white_stone_bitmap, x * stone_size, y
-								* stone_size, should_draw_opaque ? opaque_paint
-								: bitmapPaint);
+						canvas.drawBitmap(white_stone_bitmap, x * stone_size, y * stone_size, should_draw_opaque ? opaque_paint : bitmapPaint);
 					if (getGame().getVisualBoard().isCellBlack(x, y))
-						canvas.drawBitmap(black_stone_bitmap, x * stone_size, y
-								* stone_size, should_draw_opaque ? opaque_paint
-								: bitmapPaint);
+						canvas.drawBitmap(black_stone_bitmap, x * stone_size, y * stone_size, should_draw_opaque ? opaque_paint : bitmapPaint);
 
 					if (mark_last_stone) { // if the last stone should be marked
 						/** mark the last move */
-						if ((getGame().getActMove().getX() == x)
-								&& (getGame().getActMove().getY() == y)) {
+						if ((getGame().getActMove().getX() == x) && (getGame().getActMove().getY() == y)) {
 							if (getGame().getVisualBoard().isCellWhite(x, y))
-								drawBoardCircle(canvas, x, y,
-										2f + stone_size / 4f,
-										blackLastStoneCirclePaint);
-							else if (getGame().getVisualBoard().isCellBlack(x,
-									y))
-								drawBoardCircle(canvas, x, y,
-										2f + stone_size / 4f,
-										whiteLastStoneCirclePaint);
+								drawBoardCircle(canvas, x, y, 2f + stone_size / 4f, blackLastStoneCirclePaint);
+							else if (getGame().getVisualBoard().isCellBlack(x, y))
+								drawBoardCircle(canvas, x, y, 2f + stone_size / 4f, whiteLastStoneCirclePaint);
 						}
 					}
 				}
@@ -403,15 +330,10 @@ public class GoBoardViewHD extends View {
 		// paint the markers
 		for (GoMarker marker : getGame().getActMove().getMarkers())
 
-			if (getGame().getVisualBoard().isCellBlack(marker.getX(),
-					marker.getY()))
-				canvas.drawText(marker.getText(), marker.getX() * stone_size
-						+ stone_size / 2.0f, marker.getY() * stone_size
-						- (fm.top + fm.bottom), whiteTextPaint);
+			if (getGame().getVisualBoard().isCellBlack(marker.getX(), marker.getY()))
+				canvas.drawText(marker.getText(), marker.getX() * stone_size + stone_size / 2.0f, marker.getY() * stone_size - (fm.top + fm.bottom), whiteTextPaint);
 			else
-				canvas.drawText(marker.getText(), marker.getX() * stone_size
-						+ stone_size / 2.0f, marker.getY() * stone_size
-						- (fm.top + fm.bottom), blackTextPaint);
+				canvas.drawText(marker.getText(), marker.getX() * stone_size + stone_size / 2.0f, marker.getY() * stone_size - (fm.top + fm.bottom), blackTextPaint);
 
 		canvas.restore();
 	} // end of onDraw
@@ -424,10 +346,8 @@ public class GoBoardViewHD extends View {
 	}
 
 	private Bitmap getScaledRes(float size, int resID) {
-		Bitmap unscaled_bitmap = BitmapFactory.decodeResource(
-				this.getResources(), resID);
-		return Bitmap.createScaledBitmap(unscaled_bitmap, (int) size,
-				(int) size, true);
+		Bitmap unscaled_bitmap = BitmapFactory.decodeResource(this.getResources(), resID);
+		return Bitmap.createScaledBitmap(unscaled_bitmap, (int) size, (int) size, true);
 	}
 
 	/**
@@ -439,10 +359,8 @@ public class GoBoardViewHD extends View {
 		float SMALL_STONE_SCALER = 0.6f;
 		white_stone_bitmap = getScaledRes(stone_size, R.drawable.stone_white);
 		black_stone_bitmap = getScaledRes(stone_size, R.drawable.stone_black);
-		white_stone_bitmap_small = getScaledRes(
-				stone_size * SMALL_STONE_SCALER, R.drawable.stone_white);
-		black_stone_bitmap_small = getScaledRes(
-				stone_size * SMALL_STONE_SCALER, R.drawable.stone_black);
+		white_stone_bitmap_small = getScaledRes(stone_size * SMALL_STONE_SCALER, R.drawable.stone_white);
+		black_stone_bitmap_small = getScaledRes(stone_size * SMALL_STONE_SCALER, R.drawable.stone_black);
 
 		regenerate_stones_flag = false;
 
@@ -464,9 +382,7 @@ public class GoBoardViewHD extends View {
 	}
 
 	private void setSize(int w, int h) {
-		stone_size = zoom
-				* (((w < h) ? w : h) / (float) getGame().getVisualBoard()
-						.getSize());
+		stone_size = zoom * (((w < h) ? w : h) / (float) getGame().getVisualBoard().getSize());
 		regenerate_stones_flag = true;
 	}
 
@@ -474,7 +390,9 @@ public class GoBoardViewHD extends View {
 		setSize(this.getWidth(), this.getHeight());
 	}
 
-	
+	public void regenerateStroneImagesWithNewSize() {
+		setSize(getWidth(), getHeight());
+	}
 
 	public void setRegenerataStonesFlag(boolean new_flag) {
 		regenerate_stones_flag = new_flag;
@@ -499,7 +417,6 @@ public class GoBoardViewHD extends View {
 
 	public int pixel2boardPos(float x, float y) {
 		return (int) ((x - getZoomTranslate().x) / (stone_size) // x
-		+ (int) (((y - getZoomTranslate().y)) / (stone_size))
-				* getGame().getSize());
+		+ (int) (((y - getZoomTranslate().y)) / (stone_size)) * getGame().getSize());
 	}
 }

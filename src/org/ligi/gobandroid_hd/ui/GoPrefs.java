@@ -71,8 +71,7 @@ public class GoPrefs {
 
 	public final static String DEFAULT_AI_LEVEL = "5";
 	public final static String DEFAULT_SKIN = "no Skin";
-	public final static String DEFAULT_SGF_PATH = Environment
-			.getExternalStorageDirectory().getPath() + "/gobandroid/sgf";
+	public final static String DEFAULT_SGF_PATH = Environment.getExternalStorageDirectory().getPath() + "/gobandroid/sgf";
 	public final static String DEFAULT_SGF_FNAME = "game";
 
 	public final static int DEFAULT_LAST_BOARD_SIZE = 9;
@@ -98,8 +97,7 @@ public class GoPrefs {
 	}
 
 	public static int getLastBoardSize() {
-		return shared_prefs
-				.getInt(KEY_LAST_BOARD_SIZE, DEFAULT_LAST_BOARD_SIZE);
+		return shared_prefs.getInt(KEY_LAST_BOARD_SIZE, DEFAULT_LAST_BOARD_SIZE);
 	}
 
 	public static void setLastHandicap(int size) {
@@ -111,23 +109,19 @@ public class GoPrefs {
 	}
 
 	public static String getLastPlayerBlack() {
-		return shared_prefs.getString(KEY_LAST_PLAYER_BLACK,
-				DEFAULT_LAST_PLAYER_BLACK);
+		return shared_prefs.getString(KEY_LAST_PLAYER_BLACK, DEFAULT_LAST_PLAYER_BLACK);
 	}
 
 	public static String getLastPlayerWhite() {
-		return shared_prefs.getString(KEY_LAST_PLAYER_WHITE,
-				DEFAULT_LAST_PLAYER_WHITE);
+		return shared_prefs.getString(KEY_LAST_PLAYER_WHITE, DEFAULT_LAST_PLAYER_WHITE);
 	}
 
 	public static void setLastPlayerWhite(String last_player) {
-		shared_prefs.edit().putString(KEY_LAST_PLAYER_WHITE, last_player)
-				.commit();
+		shared_prefs.edit().putString(KEY_LAST_PLAYER_WHITE, last_player).commit();
 	}
 
 	public static void setLastPlayerBlack(String last_player) {
-		shared_prefs.edit().putString(KEY_LAST_PLAYER_BLACK, last_player)
-				.commit();
+		shared_prefs.edit().putString(KEY_LAST_PLAYER_BLACK, last_player).commit();
 	}
 
 	public static boolean getGridEmbossEnabled() {
@@ -155,8 +149,7 @@ public class GoPrefs {
 	}
 
 	public static byte getViewableDistance() {
-		String viewdist_str = shared_prefs.getString(KEY_VIEW_STONE_DISTANCE,
-				DEFAULT_VIEWABLE_DISTANCE);
+		String viewdist_str = shared_prefs.getString(KEY_VIEW_STONE_DISTANCE, DEFAULT_VIEWABLE_DISTANCE);
 		return Byte.parseByte(viewdist_str);
 	}
 
@@ -193,8 +186,7 @@ public class GoPrefs {
 	}
 
 	public static byte getAILevel() {
-		String level_str = shared_prefs.getString(KEY_AI_LEVEL,
-				DEFAULT_AI_LEVEL);
+		String level_str = shared_prefs.getString(KEY_AI_LEVEL, DEFAULT_AI_LEVEL);
 		try {
 			return Byte.parseByte(level_str.substring(0, 2));
 		} catch (Exception e) {
@@ -227,8 +219,7 @@ public class GoPrefs {
 	}
 
 	public static String[] getAllAILevelStrings() {
-		return new String[] { "1 fast/weak", "2", "3", "4", "5 balance", "6",
-				"7", "8", "9", "10 slow/strong" };
+		return new String[] { "1 fast/weak", "2", "3", "4", "5 balance", "6", "7", "8", "9", "10 slow/strong" };
 	}
 
 	public static String getAILevelString() {

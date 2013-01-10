@@ -18,14 +18,8 @@ public class TsumegoDownloadHelper {
 	private final static String BASE_URL = "http://gogameguru.com/i/go-problems/";
 
 	public static TsumegoSource[] getDefaultList(GobandroidApp app) {
-		return new TsumegoSource[] {
-				new TsumegoSource(app.getSettings().getTsumegoPath()
-						+ "1.easy/", BASE_URL, "ggg-easy-%02d.sgf"),
-				new TsumegoSource(app.getSettings().getTsumegoPath()
-						+ "2.intermediate/", BASE_URL,
-						"ggg-intermediate-%02d.sgf"),
-				new TsumegoSource(app.getSettings().getTsumegoPath()
-						+ "3.hard/", BASE_URL, "ggg-hard-%02d.sgf") };
+		return new TsumegoSource[] { new TsumegoSource(app.getSettings().getTsumegoPath() + "1.easy/", BASE_URL, "ggg-easy-%02d.sgf"), new TsumegoSource(app.getSettings().getTsumegoPath() + "2.intermediate/", BASE_URL, "ggg-intermediate-%02d.sgf"),
+				new TsumegoSource(app.getSettings().getTsumegoPath() + "3.hard/", BASE_URL, "ggg-hard-%02d.sgf") };
 	}
 
 	public static int doDownloadDefault(GobandroidApp app) {
@@ -45,8 +39,7 @@ public class TsumegoDownloadHelper {
 
 				while (!finished) {
 
-					while (new File(src.local_path + src.getFnameByPos(pos))
-							.exists()) {
+					while (new File(src.local_path + src.getFnameByPos(pos)).exists()) {
 
 						pos++;
 					}
@@ -56,20 +49,16 @@ public class TsumegoDownloadHelper {
 					} else
 						try {
 							// new File().exists()
-							URL url = new URL(src.remote_path
-									+ src.getFnameByPos(pos));
+							URL url = new URL(src.remote_path + src.getFnameByPos(pos));
 							URLConnection ucon = url.openConnection();
-							BufferedInputStream bis = new BufferedInputStream(
-									ucon.getInputStream());
+							BufferedInputStream bis = new BufferedInputStream(ucon.getInputStream());
 
 							ByteArrayBuffer baf = new ByteArrayBuffer(50);
 							int current = 0;
 							while ((current = bis.read()) != -1)
 								baf.append((byte) current);
 
-							FileOutputStream fos = new FileOutputStream(
-									new File(src.local_path
-											+ src.getFnameByPos(pos)));
+							FileOutputStream fos = new FileOutputStream(new File(src.local_path + src.getFnameByPos(pos)));
 							fos.write(baf.toByteArray());
 							fos.close();
 

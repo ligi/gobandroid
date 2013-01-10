@@ -9,19 +9,19 @@ import android.util.AttributeSet;
 import android.view.View;
 
 public class SpinnerTriangleView extends View {
-	private Paint p ;
+	private Paint p;
 	private Path pth;
-	
+
 	public SpinnerTriangleView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		 p = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
-		 pth = new Path();
+		p = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+		pth = new Path();
 	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-		
+
 		pth.moveTo(w - this.getPaddingRight(), this.getPaddingTop());
 		pth.lineTo(w - this.getPaddingRight(), h - this.getPaddingBottom());
 		pth.lineTo(getPaddingLeft(), h - getPaddingBottom());

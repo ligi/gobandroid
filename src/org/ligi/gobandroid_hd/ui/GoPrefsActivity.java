@@ -20,8 +20,9 @@
 package org.ligi.gobandroid_hd.ui;
 
 import org.ligi.android.common.preferences.SetPreferenceEnabledByCheckBoxPreferenceState;
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
+import org.ligi.gobandroid_hd.ui.application.MenuDrawer;
 
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -32,9 +33,9 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gcm.GCMRegistrar;
+import com.slidingmenu.lib.app.SlidingPreferenceActivity;
 
 /**
  * Activity to edit the gobandroid game preferences
@@ -43,8 +44,7 @@ import com.google.android.gcm.GCMRegistrar;
  * 
  *         This software is licenced with GPLv3
  */
-public class GoPrefsActivity extends SherlockPreferenceActivity implements
-		OnPreferenceChangeListener {
+public class GoPrefsActivity extends SlidingPreferenceActivity implements OnPreferenceChangeListener {
 
 	private ListPreference viewDistPref;
 	private ListPreference boardSkinPref;
@@ -56,8 +56,9 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements
 	private CheckBoxPreference doLegendCheckBoxPref;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		new MenuDrawer(this);
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -67,9 +68,9 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements
 	private PreferenceScreen createPreferenceHierarchy() {
 		GobandroidSettings settings = new GobandroidSettings(this);
 
+		// setBehindContentView(R.layout.)
 		// Root
-		PreferenceScreen root = getPreferenceManager().createPreferenceScreen(
-				this);
+		PreferenceScreen root = getPreferenceManager().createPreferenceScreen(this);
 
 		root.setPersistent(true);
 
@@ -168,12 +169,10 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements
 																	// sense
 																	// when FS
 																	// is forced
-			CheckBoxPreference fullscreenCheckBoxPref = new CheckBoxPreference(
-					this);
+			CheckBoxPreference fullscreenCheckBoxPref = new CheckBoxPreference(this);
 			fullscreenCheckBoxPref.setKey(GobandroidSettings.KEY_FULLSCREEN);
 			fullscreenCheckBoxPref.setTitle(R.string.fullscreen_board);
-			fullscreenCheckBoxPref
-					.setSummary(R.string.fullscreen_board_summary);
+			fullscreenCheckBoxPref.setSummary(R.string.fullscreen_board_summary);
 			uiPrefCat.addPreference(fullscreenCheckBoxPref);
 		}
 
@@ -201,20 +200,16 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements
 		doEmbossCheckBoxPref.setSummary(R.string.grid_emboss_summary);
 		uiPrefCat.addPreference(doEmbossCheckBoxPref);
 
-		CheckBoxPreference keepScreenAwakeCheckBoxPref = new CheckBoxPreference(
-				this);
+		CheckBoxPreference keepScreenAwakeCheckBoxPref = new CheckBoxPreference(this);
 		keepScreenAwakeCheckBoxPref.setKey(GobandroidSettings.KEY_WAKE_LOCK);
 		keepScreenAwakeCheckBoxPref.setTitle(R.string.constant_light);
-		keepScreenAwakeCheckBoxPref
-				.setSummary(R.string.drain_your_battery_while_playing);
-		keepScreenAwakeCheckBoxPref.setDefaultValue(settings
-				.isWakeLockEnabled());
+		keepScreenAwakeCheckBoxPref.setSummary(R.string.drain_your_battery_while_playing);
+		keepScreenAwakeCheckBoxPref.setDefaultValue(settings.isWakeLockEnabled());
 		uiPrefCat.addPreference(keepScreenAwakeCheckBoxPref);
 
 		// the preference that sets SGF mode on Legend only makes sense if there
 		// is a Legend in the first place
-		new SetPreferenceEnabledByCheckBoxPreferenceState(doLegendCheckBoxPref)
-				.addPreference2SetEnable(SGFLegendCheckBoxPref);
+		new SetPreferenceEnabledByCheckBoxPreferenceState(doLegendCheckBoxPref).addPreference2SetEnable(SGFLegendCheckBoxPref);
 
 		PreferenceCategory soundPrefCat = new PreferenceCategory(this);
 		soundPrefCat.setTitle(R.string.sound);
@@ -228,19 +223,15 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements
 		soundPrefCat.addPreference(soundCheckBoxPref);
 
 		if (!GCMRegistrar.getRegistrationId(this).equals("")) {
-			PreferenceCategory notificationsPrefsCat = new PreferenceCategory(
-					this);
+			PreferenceCategory notificationsPrefsCat = new PreferenceCategory(this);
 			notificationsPrefsCat.setTitle(R.string.notifications);
 			root.addPreference(notificationsPrefsCat);
 
-			CheckBoxPreference notifyTsumegoCheckBoxPref = new CheckBoxPreference(
-					this);
-			notifyTsumegoCheckBoxPref
-					.setKey(GobandroidSettings.KEY_TSUMEGO_PUSH);
+			CheckBoxPreference notifyTsumegoCheckBoxPref = new CheckBoxPreference(this);
+			notifyTsumegoCheckBoxPref.setKey(GobandroidSettings.KEY_TSUMEGO_PUSH);
 			notifyTsumegoCheckBoxPref.setTitle(R.string.push_tsumego);
 			notifyTsumegoCheckBoxPref.setSummary(R.string.push_tsumego_extra);
-			notifyTsumegoCheckBoxPref.setDefaultValue(settings
-					.isTsumegoPushEnabled());
+			notifyTsumegoCheckBoxPref.setDefaultValue(settings.isTsumegoPushEnabled());
 			notificationsPrefsCat.addPreference(notifyTsumegoCheckBoxPref);
 		}
 
@@ -323,16 +314,6 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			finish();
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		/*
 		 * if ((preference==sgf_path_pref)||(preference==sgf_fname_pref)
@@ -340,5 +321,15 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements
 		 * (preference==aiLevelPref)) preference.setSummary((String)newValue);
 		 */
 		return true; // return that we are OK with preferences
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			getSlidingMenu().toggle();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }

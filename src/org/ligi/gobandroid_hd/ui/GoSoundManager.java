@@ -2,7 +2,7 @@ package org.ligi.gobandroid_hd.ui;
 
 import java.util.HashMap;
 
-import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
 
@@ -12,7 +12,7 @@ import android.media.SoundPool;
 
 /**
  * Class to care about the Board-Sounds
- *   
+ * 
  * @author <a href="http://ligi.de">Marcus -LiGi- Bueschleb </a>
  * 
  *         This software is licenced with GPLv3
@@ -36,8 +36,7 @@ public class GoSoundManager {
 		mContext = theContext;
 		mSoundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 0);
 		mSoundPoolMap = new HashMap<Integer, Integer>();
-		mAudioManager = (AudioManager) mContext
-				.getSystemService(Context.AUDIO_SERVICE);
+		mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
 
 		addSound(SOUND_START, R.raw.go_start);
 		addSound(SOUND_END, R.raw.go_clearboard);
@@ -55,12 +54,9 @@ public class GoSoundManager {
 		if (!mContext.getSettings().isSoundEnabled())
 			return; // user does not want sound
 
-		float streamVolume = mAudioManager
-				.getStreamVolume(AudioManager.STREAM_MUSIC);
-		streamVolume = streamVolume
-				/ mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-		mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume,
-				1, 0, 1f);
+		float streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		streamVolume = streamVolume / mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+		mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume, 1, 0, 1f);
 	}
 
 }

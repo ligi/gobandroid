@@ -1,7 +1,7 @@
 package org.ligi.gobandroid_hd.ui;
 
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.GobandroidApp;
-import org.ligi.gobandroid_hd.R;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -41,15 +41,13 @@ public class GobandroidDialog extends Dialog {
 		super(context);
 
 		ctx = new ContextThemeWrapper(context, R.style.dialog_theme);
-		inflater = (LayoutInflater) ctx
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.setContentView(inflater.inflate(R.layout.gobandroid_dialog, null));
 
 		// this sounds misleading but behaves right - we just do not want to
 		// start with keyboard open
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		button_container = (LinearLayout) findViewById(R.id.button_container);
 	}
@@ -57,8 +55,7 @@ public class GobandroidDialog extends Dialog {
 	// dirty hack - but works and finding another workaround costed me hours
 	// without success in sight ..
 	public void setIsSmallDialog() {
-		findViewById(R.id.dialog_main_container).setBackgroundResource(
-				R.drawable.shinkaya_half);
+		findViewById(R.id.dialog_main_container).setBackgroundResource(R.drawable.shinkaya_half);
 	}
 
 	public GobandroidApp getApp() {
@@ -71,24 +68,19 @@ public class GobandroidDialog extends Dialog {
 
 	@Override
 	public void setContentView(int content) {
-		LinearLayout container = (LinearLayout) this
-				.findViewById(R.id.dialog_content);
+		LinearLayout container = (LinearLayout) this.findViewById(R.id.dialog_content);
 
 		Log.i("", "container" + container + " inflater" + inflater);
 		container.addView(inflater.inflate(content, null));
 	}
 
 	public void setContentFill() {
-		LinearLayout container = (LinearLayout) this
-				.findViewById(R.id.dialog_content);
-		container.setLayoutParams(new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+		LinearLayout container = (LinearLayout) this.findViewById(R.id.dialog_content);
+		container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 	}
 
-	public void addItem(int image_resId, int str_resid,
-			final OnClickListener listener) {
-		LinearLayout container = (LinearLayout) this
-				.findViewById(R.id.dialog_items);
+	public void addItem(int image_resId, int str_resid, final OnClickListener listener) {
+		LinearLayout container = (LinearLayout) this.findViewById(R.id.dialog_items);
 		Log.i("", "container" + container + " inflater" + inflater);
 		View v = inflater.inflate(R.layout.dialog_item, null);
 		((TextView) v.findViewById(R.id.text)).setText(str_resid);
@@ -151,23 +143,18 @@ public class GobandroidDialog extends Dialog {
 
 	public void setPositiveButton(int text_stringres) {
 		getPositiveButton().setText(text_stringres);
-		getPositiveButton().setOnClickListener(
-				new DialogOnClickWrapper(new DefaultOnClickListener()));
+		getPositiveButton().setOnClickListener(new DialogOnClickWrapper(new DefaultOnClickListener()));
 	}
 
-	public void setPositiveButton(int text_stringres,
-			DialogInterface.OnClickListener listener) {
+	public void setPositiveButton(int text_stringres, DialogInterface.OnClickListener listener) {
 		getPositiveButton().setText(text_stringres);
-		getPositiveButton().setOnClickListener(
-				new DialogOnClickWrapper(listener));
+		getPositiveButton().setOnClickListener(new DialogOnClickWrapper(listener));
 	}
 
 	public Button getPositiveButton() {
 		if (positive_btn == null) {
 			positive_btn = new Button(getContext());
-			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT,
-					LinearLayout.LayoutParams.MATCH_PARENT, 1f);
+			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
 			positive_btn.setLayoutParams(lp);
 			button_container.addView(positive_btn);
 		}
@@ -176,23 +163,18 @@ public class GobandroidDialog extends Dialog {
 
 	public void setNegativeButton(int text_stringres) {
 		getNegativeButton().setText(text_stringres);
-		getNegativeButton().setOnClickListener(
-				new DialogOnClickWrapper(new DefaultOnClickListener()));
+		getNegativeButton().setOnClickListener(new DialogOnClickWrapper(new DefaultOnClickListener()));
 	}
 
-	public void setNegativeButton(int text_stringres,
-			DialogInterface.OnClickListener listener) {
+	public void setNegativeButton(int text_stringres, DialogInterface.OnClickListener listener) {
 		getNegativeButton().setText(text_stringres);
-		getNegativeButton().setOnClickListener(
-				new DialogOnClickWrapper(listener));
+		getNegativeButton().setOnClickListener(new DialogOnClickWrapper(listener));
 	}
 
 	private Button getNegativeButton() {
 		if (negative_btn == null) {
 			negative_btn = new Button(getContext());
-			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT,
-					LinearLayout.LayoutParams.MATCH_PARENT, 1f);
+			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
 			negative_btn.setLayoutParams(lp);
 			button_container.addView(negative_btn);
 		}

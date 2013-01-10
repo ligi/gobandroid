@@ -14,7 +14,8 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 /**
- * This class does most of the work of wrapping the {@link PopupWindow} so it's simpler to use.
+ * This class does most of the work of wrapping the {@link PopupWindow} so it's
+ * simpler to use.
  * 
  * @author qberticus
  * 
@@ -41,7 +42,7 @@ public class BetterPopupWindow {
 		this.window.setTouchInterceptor(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				if(event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+				if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
 					BetterPopupWindow.this.window.dismiss();
 					return true;
 				}
@@ -54,29 +55,32 @@ public class BetterPopupWindow {
 	}
 
 	/**
-	 * Anything you want to have happen when created. Probably should create a view and setup the event listeners on
-	 * child views.
+	 * Anything you want to have happen when created. Probably should create a
+	 * view and setup the event listeners on child views.
 	 */
-	protected void onCreate() {}
+	protected void onCreate() {
+	}
 
 	/**
 	 * In case there is stuff to do right before displaying.
 	 */
-	protected void onShow() {}
+	protected void onShow() {
+	}
 
 	private void preShow() {
-		if(this.root == null) {
+		if (this.root == null) {
 			throw new IllegalStateException("setContentView was not called with a view to display.");
 		}
 		onShow();
 
-		if(this.background == null) {
+		if (this.background == null) {
 			this.window.setBackgroundDrawable(new BitmapDrawable());
 		} else {
 			this.window.setBackgroundDrawable(this.background);
 		}
 
-		// if using PopupWindow#setBackgroundDrawable this is the only values of the width and hight that make it work
+		// if using PopupWindow#setBackgroundDrawable this is the only values of
+		// the width and hight that make it work
 		// otherwise you need to set the background of the root viewgroup
 		// and set the popupwindow background to an empty BitmapDrawable
 		this.window.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
@@ -109,8 +113,7 @@ public class BetterPopupWindow {
 	 * @param layoutResID
 	 */
 	public void setContentView(int layoutResID) {
-		LayoutInflater inflator =
-				(LayoutInflater) this.anchor.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflator = (LayoutInflater) this.anchor.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.setContentView(inflator.inflate(layoutResID, null));
 	}
 
@@ -141,7 +144,7 @@ public class BetterPopupWindow {
 	public void showLikePopDownMenu(int xOffset, int yOffset) {
 		this.preShow();
 
-		//this.window.setAnimationStyle(R.style.Animations_PopDownMenu);
+		// this.window.setAnimationStyle(R.style.Animations_PopDownMenu);
 
 		this.window.showAsDropDown(this.anchor, xOffset, yOffset);
 	}
@@ -164,14 +167,12 @@ public class BetterPopupWindow {
 	public void showLikeQuickAction(int xOffset, int yOffset) {
 		this.preShow();
 
-	//	this.window.setAnimationStyle(R.style.Animations_GrowFromBottom);
+		// this.window.setAnimationStyle(R.style.Animations_GrowFromBottom);
 
 		int[] location = new int[2];
 		this.anchor.getLocationOnScreen(location);
 
-		Rect anchorRect =
-				new Rect(location[0], location[1], location[0] + this.anchor.getWidth(), location[1]
-					+ this.anchor.getHeight());
+		Rect anchorRect = new Rect(location[0], location[1], location[0] + this.anchor.getWidth(), location[1] + this.anchor.getHeight());
 
 		this.root.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
@@ -185,9 +186,9 @@ public class BetterPopupWindow {
 		int yPos = anchorRect.top - rootHeight + yOffset;
 
 		// display on bottom
-		if(rootHeight > anchorRect.top) {
+		if (rootHeight > anchorRect.top) {
 			yPos = anchorRect.bottom + yOffset;
-//			this.window.setAnimationStyle(R.style.Animations_GrowFromTop);
+			// this.window.setAnimationStyle(R.style.Animations_GrowFromTop);
 		}
 
 		this.window.showAtLocation(this.anchor, Gravity.NO_GRAVITY, xPos, yPos);

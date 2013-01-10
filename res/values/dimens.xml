@@ -6,4 +6,5 @@
     <dimen name="text_size_large">28sp</dimen>
     
     <dimen name="thumbnail_size">150dp</dimen>
+    <dimen name="menu_drawer_width">230dp</dimen>
 </resources>

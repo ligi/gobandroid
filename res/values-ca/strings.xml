@@ -7,7 +7,6 @@
   <string name="load_game">Carregar partida</string>
   <string name="load_tsumego">Carregar Tsumego</string>
   <string name="tsumego">Tsumego</string>
-  <string name="igs">IGS</string>
   <string name="info">Informació</string>
   <string name="quit">Sortir</string>
   <string name="quit_confirm">Segur que vols sortir de la partida?</string>
@@ -17,7 +16,7 @@
   <string name="comments">Comentaris</string>
   <string name="ok">D\'acord</string>
   <string name="wait_gnugo">Espera que GnuGo es prepari</string>
-  <string name="not_your_turn">Espera al teu torn!</string>
+  <string name="not_your_turn">Espera el teu torn!</string>
   <string name="undo">Desfés</string>
   <string name="redo">Refés</string>
   <string name="pass">Passar</string>
@@ -94,11 +93,11 @@
   <string name="link_title">Enllaços</string>
   <string name="link_tab_about">Quant a</string>
   <string name="link_tab_credits">Crèdits</string>
-  <string name="link_tab_help">Ajuda</string>
+  <string name="help">Ajuda</string>
   <string name="link_tab_sgf">SGFs</string>
   <string name="game_mode">Mode</string>
   <string name="switch_game_mode">Canviar mode</string>
-  <string name="menu_bookmark">Senyalar</string>
+  <string name="bookmark">Adreça d\'interès</string>
   <string name="menu_autoplay">Reproducció automàtica</string>
   <string name="tsumego_off_path">Variació desconeguda - generalment vol dir que el moviment és sub-òptim :-(</string>
   <string name="tsumego_correct">Correcte!-)</string>
@@ -130,7 +129,6 @@
   <string name="loading_sgf">S\'està carregant SGF</string>
   <string name="review">Revisió</string>
   <string name="record">Registre</string>
-  <string name="empty_str"> </string>
   <string name="autoplay_off">reproducció aut. no</string>
   <string name="autoplay_on">reproducció aut. sí</string>
   <string name="mark_next">marcar següent</string>
@@ -143,7 +141,7 @@
   <string name="numbered_end">numera el camí</string>
   <string name="icon">icona</string>
   <string name="go_tv">GoTV</string>
-  <string name="i_do_not_want_to_keep_variants_for_this_game">No vull mantenir variacions a aquesta partida</string>
+  <string name="i_do_not_want_to_keep_variants_for_this_game">mai en aquest joc</string>
   <string name="end_review">Finalitzar revisió?</string>
   <string name="komi_must_be_a_number">Komi ha de ser un número</string>
   <string name="youtube_tutorial">Tutorial en anglès a YouTube</string>
@@ -167,4 +165,29 @@
   <string name="downloading_tsumegos_please_wait">Descarregant Tsumegos sis-plau espera...</string>
   <string name="no_new_tsumegos_found">No he trobat Tsumegos nous :-(</string>
   <string name="downloaded_n_tsumego">Descarregats %d Tsumegos nous ;-)</string>
+  <string name="overwrite_existing_file">Sobreescriu el fitxer existent</string>
+  <string name="share">Comparteix</string>
+  <string name="score">Puntuació</string>
+  <string name="edit">Editar</string>
+  <string name="play">Jugar</string>
+  <string name="setup">Instal·lació</string>
+  <string name="load">Carrega</string>
+  <string name="clear_board">buida el tauler</string>
+  <string name="invite">Invita</string>
+  <string name="accept">accepta</string>
+  <string name="new_tsumegos_available">Nous tsumegos disponibles!</string>
+  <string name="the_go_game_you_reviewed">La partida que has revisat</string>
+  <string name="this_game_has_2_players_but_you_can_only_watch_it">Aquesta partida ja té 2 jugadors, pots mirar-la si vols</string>
+  <string name="a_move_in_one_online_game_you_participate_is_done">S\'ha fet una jugada a una de els teves partides en línia</string>
+  <string name="new_move">Nova jugada</string>
+  <string name="in_an_online_game_you_participate">en una de les teves partides en línia</string>
+  <string name="choose_invite_method">Tria el mètode d\'invitar</string>
+  <string name="you_are_invited_to_a_go_game">T\'han invitat a una partida (mida: %1$ s, color: %2$ s)</string>
+  <string name="go_game_invitation">Invitació a jugar</string>
+  <string name="uploading_game">Carregant partida</string>
+  <string name="profile">perfil</string>
+  <string name="name">nom</string>
+  <string name="rank">nivell</string>
+  <string name="empty_board">Tauler buit</string>
+  <string name="more">MÉS</string>
 </resources>

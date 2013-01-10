@@ -1,8 +1,8 @@
 package org.ligi.gobandroid_hd.ui;
 
+import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.InteractionScope;
-import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.gnugo.GnuGoHelper;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
@@ -137,6 +137,10 @@ public class InGameActionBarView2 extends LinearLayout implements
 		content_view.setBackgroundDrawable(new BitmapDrawableNoMinimumSize(ctx
 				.getResources(), R.drawable.wood_bg));
 
+
+		addModeItem(content_view, InteractionScope.MODE_SETUP,
+				R.string.setup, R.drawable.preferences);
+		
 		addModeItem(content_view, InteractionScope.MODE_RECORD,
 				R.string.play, R.drawable.play);
 		
@@ -144,7 +148,7 @@ public class InGameActionBarView2 extends LinearLayout implements
 				R.string.edit, R.drawable.dashboard_record);
 		
 		addModeItem(content_view, InteractionScope.MODE_COUNT,
-				R.string.score, R.drawable.dashboard_score);
+				R.string.count, R.drawable.dashboard_score);
 		
 		addModeItem(content_view, InteractionScope.MODE_REVIEW,
 				R.string.review, R.drawable.dashboard_review);
@@ -154,7 +158,7 @@ public class InGameActionBarView2 extends LinearLayout implements
 				R.string.tsumego, R.drawable.dashboard_tsumego);
 		if (GnuGoHelper.isGnuGoAvail(ctx))
 			addModeItem(content_view, InteractionScope.MODE_GNUGO,
-					R.string.gnugo, R.drawable.dashboard_gnugo_item);
+					R.string.gnugo, R.drawable.server);
 
 		BetterPopupWindow pop = new BetterPopupWindow(mode_tv);
 		pop.setContentView(content_view);

@@ -52,8 +52,7 @@ public class GTPHelper {
 		}
 
 		else if (gtp_str.toUpperCase().equals("PASS")) {
-			game.getActMove().setComment(
-					game.getActMove().getComment() + "passes");
+			game.getActMove().setComment(game.getActMove().getComment() + "passes");
 			game.pass();
 			return true;
 		}
