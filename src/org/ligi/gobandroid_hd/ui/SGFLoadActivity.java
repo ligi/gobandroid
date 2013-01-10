@@ -125,8 +125,16 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         return res;
     }
 
-    public String uri2string(Uri intent_uri) throws FileNotFoundException,
-            MalformedURLException, IOException {
+    /**
+     * get the content-string from a uri
+     *
+     * @param intent_uri
+     * @return
+     * @throws FileNotFoundException
+     * @throws MalformedURLException
+     * @throws IOException
+     */
+    public String uri2string(Uri intent_uri) throws IOException {
 
         if (intent_uri.toString().startsWith("/"))
             return FileHelper.file2String(new File(intent_uri.toString()));
@@ -157,7 +165,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
             file_writer = new FileOutputStream(f);
         }
 
-        StringBuffer out = new StringBuffer();
+        StringBuilder out = new StringBuilder();
         byte[] b = new byte[4096];
         for (int n; (n = in.read(b)) != -1; ) {
             out.append(new String(b, 0, n));
