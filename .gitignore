@@ -5,3 +5,13 @@ gobandroid.properties
 gobandroid.xml
 module_gobandroid.xml  
 project.properties
+.classpath
+.idea/
+.project
+.settings/
+lint.xml
+module_gobandroid.xml
+monkey_scripts/
+proguard/
+proguard_logs/
+
