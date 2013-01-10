@@ -1,2 +1,7 @@
 bin/
 gen/
+gobandroid.iml
+gobandroid.properties
+gobandroid.xml
+module_gobandroid.xml  
+project.properties
