@@ -272,9 +272,10 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 						if (has_cloud_history) {
 							Log.i("CloudGoban EditGame start" + getGame().getCloudKey());
 							game.setEncodedKey(getGame().getCloudKey());
-							game_key = gc.games().edit(game).execute().getEncodedKey();
-							Log.i("CloudGoban EditGame" + game_key);
-
+                            Game res_game=gc.games().edit(game).execute();
+							//game_key = gc.games().edit(game).execute().getEncodedKey();
+							Log.i("CloudGoban EditGame" + res_game.getEncodedKey() + " .. " + res_game.getEditKey());
+                            game_key=res_game.getEncodedKey();
 						} else { // create a new Game
 							game_key = gc.games().insert(game).execute().getEncodedKey();
 						}
