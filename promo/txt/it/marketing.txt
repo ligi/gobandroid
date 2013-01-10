@@ -1,0 +1,23 @@
+Gobandroid è un programma OpenSource che riproduce "scacchiera"  del Go (detta goban) realizzato per Android. Gobandroid consente di studiare e di cimentarsi nell’antico gioco del Go (wéiqi in Cinese, igo in Giapponese, baduk in Coreano).
+
+Il go ebbe origine in Cina più di 2.000 anni fa. Il gioco del Go è famoso la ricchezza e raffinatezza strategica nonostante la relativa povertà e semplicità delle sue regole. Il Go è considerato il gioco più complesso al mondo per la vastità e diversità delle singole partite.   [1] [2]
+
+ 
+
+caratteristiche:
+ risoluzione dei Tsumegos ( esercizi di Go)
+ studio di singole partite ( in SGF Format )
+ registrazione delle partite ( o possibilità di usare il cellulare /tablet come tavolo di gioco)
+ TV-Mode (replay automatico di singole partite - attraverso GoogleTV )
+ Giocare contro GnuGo ( richiede istallazione aggiuntiva )
+ disponibile in 6 lingue
+
+Se trovate un bug per favore segnalatelo per email o compilate il form nel “issue tracker” in github. Non posso contattarvi attraverso i commenti su Android-Market per risolvere il problema.
+Il codice sorgente è disponibile su github [3]- Patches / Contributi sono benvenuti! Il progetto è anche disponibile su googleplus: https://plus.google.com/106767057593220295403
+
+[1] http://en.wikipedia.org/wiki/Go_(game)
+[2] http://www.usgo.org/resources/topten.html
+[3] http://github.com/ligi/gobandroid
+
+-------------- short decription - must be < 80 chars
+Gobandroid HD un programma opensource di Go per Android go / igo / baduk / weiqi
