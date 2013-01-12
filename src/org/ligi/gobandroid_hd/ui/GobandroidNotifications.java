@@ -40,7 +40,7 @@ public class GobandroidNotifications {
 		this.context = context;
 		notificationBuilder = new NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_launcher);
 		notificationManager = (NotificationManager) context.getSystemService(Activity.NOTIFICATION_SERVICE);
-		notificationBuilder.setSound(Uri.parse("android.resource://org.ligi.gobandroid_beta/" + R.raw.go_place1));
+		notificationBuilder.setSound(Uri.parse("android.resource://" + getApp().getPackageName() +"/" + R.raw.go_place1));
 		notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
 
 		// notificationBuilder.setVibrate(new long[] { 1000, 100, 1000, 100 });
