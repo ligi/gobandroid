@@ -32,6 +32,13 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
         return string.substring(0, lastIndex) + tail;
     }
 
+    /**
+     * try to find next tsumego based on filename
+     * searching the last number and incrementing it
+     * 
+     * @param fname
+     * @return the filename found
+     */
     private String calcNextTsumego(String fname) {
         Pattern p = Pattern.compile("\\d+");
         Matcher m = p.matcher(fname);
@@ -40,9 +47,12 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
         while (m.find()) {
             old_index = m.group();
         }
-
+        
+        // found no index -> exit 
+        if (old_index.equals(""))
+        	return null;
+        
         int index = Integer.parseInt(old_index);
-
 
         String new_index = "";
         // add the leading zeroes
@@ -51,7 +61,13 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
 
         new_index += "" + (index + 1);
 
-        return replaceLast(fname, old_index, new_index);
+        String guessed_fname_str=replaceLast(fname, old_index, new_index);
+        
+        // check if it exists
+        if (!new File(guessed_fname_str).exists())
+        	return null;
+        
+        return guessed_fname_str;
 
     }
 
@@ -73,7 +89,7 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
 
         String next_tsumego_url_str = calcNextTsumego(game.getMetaData().getFileName().replaceFirst("file://", ""));
 
-        if (next_tsumego_url_str != null && new File(next_tsumego_url_str).exists()) {
+        if (next_tsumego_url_str != null ) {
 
             correct_view.setMovementMethod(LinkMovementMethod.getInstance());
 
