@@ -1,86 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="3dp" >
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="3dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/player_white_stone_img"
-            android:layout_width="18sp"
-            android:layout_height="18sp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/stone_white" />
+                android:id="@+id/player_white_stone_img"
+                android:layout_width="18sp"
+                android:layout_height="18sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/stone_white"/>
 
         <TextView
-            android:id="@+id/player_white"
-            android:layout_width="wrap_content"
-            android:layout_height="18sp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#000000"
-            android:textSize="15sp" />
+                android:id="@+id/player_white"
+                android:layout_width="wrap_content"
+                android:layout_height="18sp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#000000"
+                android:textSize="15sp"/>
 
         <ImageView
-            android:id="@+id/player_black_stone_img"
-            android:layout_width="18sp"
-            android:layout_height="18sp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/stone_black" />
+                android:id="@+id/player_black_stone_img"
+                android:layout_width="18sp"
+                android:layout_height="18sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/stone_black"/>
 
         <TextView
-            android:id="@+id/player_black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#000000"
-            android:textSize="15sp" />
+                android:id="@+id/player_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#000000"
+                android:textSize="15sp"/>
     </LinearLayout>
 
     <TextView
-        android:id="@+id/filename"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:textSize="16sp" />
+            android:id="@+id/filename"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="16sp"/>
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
             <TextView
-                android:id="@+id/game_extra_infos"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#000000"
-                android:textSize="16sp" />
+                    android:id="@+id/game_extra_infos"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/game_link_extra_infos"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#000000"
-                android:textSize="16sp" />
+                    android:id="@+id/game_link_extra_infos"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:textSize="16sp"/>
         </LinearLayout>
 
         <RatingBar
-          
-            style = "?android:attr/ratingBarStyleSmall"
-            android:id="@+id/game_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:isIndicator="true" />
+
+                style="?android:attr/ratingBarStyleSmall"
+                android:id="@+id/game_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"/>
 
     </LinearLayout>
 

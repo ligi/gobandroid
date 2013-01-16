@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-<!-- 
-    <item android:showAsAction="ifRoom|withText" android:id="@+id/menu_gotv" android:title="GoTV" android:icon="@drawable/gobandroid_tv"></item>
- -->    
+<menu>
+    <!--
+        <item android:showAsAction="ifRoom|withText" android:id="@+id/menu_gotv" android:title="GoTV" android:icon="@drawable/gobandroid_tv"></item>
+     -->
 </menu>

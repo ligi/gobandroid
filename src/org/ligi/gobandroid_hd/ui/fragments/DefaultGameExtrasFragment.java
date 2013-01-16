@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 public class DefaultGameExtrasFragment extends Fragment {
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		TextView tv = new TextView(this.getActivity());
-		tv.setText("Implement me!");
-		return tv;
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        TextView tv = new TextView(this.getActivity());
+        tv.setText("Implement me!");
+        return tv;
+    }
 
 }

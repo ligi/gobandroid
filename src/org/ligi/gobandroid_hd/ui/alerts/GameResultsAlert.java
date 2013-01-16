@@ -6,68 +6,65 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as 
  * published by the Free Software Foundation; 
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details. 
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  **/
 package org.ligi.gobandroid_hd.ui.alerts;
 
+import android.content.Context;
+import android.widget.TextView;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 
-import android.content.Context;
-import android.widget.TextView;
-
 /**
  * Class to show an Alert with the Game Result ( who won / points .. )
- * 
+ *
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
- * 
+ *         <p/>
  *         License: This software is licensed with GPLv3
- * 
- **/
+ */
 public class GameResultsAlert extends GobandroidDialog {
 
-	public GameResultsAlert(Context context, GoGame game) {
-		super(context);
-		setTitle(R.string.results);
-		setIconResource(R.drawable.info);
+    public GameResultsAlert(Context context, GoGame game) {
+        super(context);
+        setTitle(R.string.results);
+        setIconResource(R.drawable.info);
 
-		setContentView(R.layout.game_result);
+        setContentView(R.layout.game_result);
 
-		setPositiveButton(android.R.string.ok);
+        setPositiveButton(android.R.string.ok);
 
-		String game_fin_txt = "";
-		if (game.getPointsBlack() == game.getPointsWhite())
-			game_fin_txt = context.getResources().getString(R.string.game_ended_in_draw);
+        String game_fin_txt = "";
+        if (game.getPointsBlack() == game.getPointsWhite())
+            game_fin_txt = context.getResources().getString(R.string.game_ended_in_draw);
 
-		if (game.getPointsBlack() > game.getPointsWhite())
-			game_fin_txt = (context.getString(R.string.black_won_with) + (game.getPointsBlack() - game.getPointsWhite()) + context.getString(R.string._points_));
+        if (game.getPointsBlack() > game.getPointsWhite())
+            game_fin_txt = (context.getString(R.string.black_won_with) + (game.getPointsBlack() - game.getPointsWhite()) + context.getString(R.string._points_));
 
-		if (game.getPointsWhite() > game.getPointsBlack())
-			game_fin_txt = (context.getString(R.string.white_won_with_) + (game.getPointsWhite() - game.getPointsBlack()) + context.getString(R.string._points_));
+        if (game.getPointsWhite() > game.getPointsBlack())
+            game_fin_txt = (context.getString(R.string.white_won_with_) + (game.getPointsWhite() - game.getPointsBlack()) + context.getString(R.string._points_));
 
-		((TextView) findViewById(R.id.result_txt)).setText(game_fin_txt);
+        ((TextView) findViewById(R.id.result_txt)).setText(game_fin_txt);
 
-		((TextView) findViewById(R.id.territory_black)).setText("" + game.territory_black);
-		((TextView) findViewById(R.id.territory_white)).setText("" + game.territory_white);
+        ((TextView) findViewById(R.id.territory_black)).setText("" + game.territory_black);
+        ((TextView) findViewById(R.id.territory_white)).setText("" + game.territory_white);
 
-		((TextView) findViewById(R.id.captures_black)).setText("" + game.getCapturesBlack());
-		((TextView) findViewById(R.id.captures_white)).setText("" + game.getCapturesWhite());
+        ((TextView) findViewById(R.id.captures_black)).setText("" + game.getCapturesBlack());
+        ((TextView) findViewById(R.id.captures_white)).setText("" + game.getCapturesWhite());
 
-		((TextView) findViewById(R.id.komi)).setText("" + game.getKomi());
+        ((TextView) findViewById(R.id.komi)).setText("" + game.getKomi());
 
-		((TextView) findViewById(R.id.final_black)).setText("" + game.getPointsBlack());
-		((TextView) findViewById(R.id.final_white)).setText("" + game.getPointsWhite());
-	}
-	/*
+        ((TextView) findViewById(R.id.final_black)).setText("" + game.getPointsBlack());
+        ((TextView) findViewById(R.id.final_white)).setText("" + game.getPointsWhite());
+    }    /*
 	 * public static void show(Context context,GoGame game) { ScrollView
 	 * scrollview=new ScrollView(context); LinearLayout lin=new
 	 * LinearLayout(context);

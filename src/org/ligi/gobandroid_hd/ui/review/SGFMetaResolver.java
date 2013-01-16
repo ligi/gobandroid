@@ -2,8 +2,7 @@ package org.ligi.gobandroid_hd.ui.review;
 
 import java.util.HashMap;
 
-public class SGFMetaResolver {
-	/*
+public class SGFMetaResolver {    /*
 	 * "http://gogameguru.com/go-commentary-jiang-weijie-lee-changho-16th-lg-cup/"
 	 * http://gogameguru.com/i/2012/03/Jiang-Weijie-vs-Lee-Changho-20120213.sgf
 	 * 
@@ -26,11 +25,12 @@ public class SGFMetaResolver {
 	 * -4-handicap.sgf
 	 */
 
-	HashMap<String, String> SGG2MetaURL = new HashMap<String, String>() {
-		private static final long serialVersionUID = 8869726816891994882L;
-		{
-			put("http://gogameguru.com/i/2012/03/Jiang-Weijie-vs-Lee-Changho-20120213.sgf", "http://gogameguru.com/go-commentary-jiang-weijie-lee-changho-16th-lg-cup/");
-			put("", "");
-		}
-	};
+    HashMap<String, String> SGG2MetaURL = new HashMap<String, String>() {
+        private static final long serialVersionUID = 8869726816891994882L;
+
+        {
+            put("http://gogameguru.com/i/2012/03/Jiang-Weijie-vs-Lee-Changho-20120213.sgf", "http://gogameguru.com/go-commentary-jiang-weijie-lee-changho-16th-lg-cup/");
+            put("", "");
+        }
+    };
 }

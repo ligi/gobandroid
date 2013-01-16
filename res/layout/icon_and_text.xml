@@ -20,11 +20,17 @@
 ********************************************************************/
 -->
 
-<LinearLayout android:id="@+id/LinearLayout01" android:layout_height="wrap_content" android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
-	<TextView android:text="@+id/TextView01" android:id="@+id/TextView01" android:layout_width="wrap_content" android:textStyle="" android:layout_gravity="center_vertical" android:layout_height="wrap_content" android:textSize="27dp" >
-	</TextView>
-	<RelativeLayout android:id="@+id/RelativeLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content">
-		<ImageView android:id="@+id/ImageView01" android:layout_height="wrap_content" android:src="@drawable/ic_launcher" android:contentDescription="@string/icon" android:layout_width="wrap_content">
-		</ImageView>
-	</RelativeLayout>
+<LinearLayout android:id="@+id/LinearLayout01" android:layout_height="wrap_content" android:layout_width="fill_parent"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:text="@+id/TextView01" android:id="@+id/TextView01" android:layout_width="wrap_content"
+              android:textStyle="" android:layout_gravity="center_vertical" android:layout_height="wrap_content"
+              android:textSize="27dp">
+    </TextView>
+    <RelativeLayout android:id="@+id/RelativeLayout01" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+        <ImageView android:id="@+id/ImageView01" android:layout_height="wrap_content"
+                   android:src="@drawable/ic_launcher" android:contentDescription="@string/icon"
+                   android:layout_width="wrap_content">
+        </ImageView>
+    </RelativeLayout>
 </LinearLayout>

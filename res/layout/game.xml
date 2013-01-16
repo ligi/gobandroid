@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-   	style="@style/default_activity_main">
-   	
-	<org.ligi.gobandroid_hd.ui.GoBoardViewHD android:id="@+id/go_board"
- 		android:layout_width="fill_parent" android:layout_height="fill_parent">
- 	</org.ligi.gobandroid_hd.ui.GoBoardViewHD>
- 	 		
- 	<LinearLayout android:id="@+id/game_extra_container"
- 	    android:layout_width="fill_parent" android:layout_height="fill_parent"  />
- 	 		
+              android:orientation="vertical"
+              style="@style/default_activity_main">
+
+    <org.ligi.gobandroid_hd.ui.GoBoardViewHD android:id="@+id/go_board"
+                                             android:layout_width="fill_parent" android:layout_height="fill_parent">
+    </org.ligi.gobandroid_hd.ui.GoBoardViewHD>
+
+    <LinearLayout android:id="@+id/game_extra_container"
+                  android:layout_width="fill_parent" android:layout_height="fill_parent"/>
+
 </LinearLayout>

@@ -1,122 +1,121 @@
 package org.ligi.gobandroid_hd.ui.review;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.ligi.android.common.files.FileHelper;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.tracedroid.logging.Log;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+
 /**
  * stores and gives access to metatata to an SGF file
- * 
+ *
  * @author ligi
- * 
  */
 public class SGFMetaData {
 
-	public Integer rating = null;
-	public boolean is_solved = false;
-	private String meta_fname = null;
-	private Integer hints_used=0;
-	
-	private boolean has_data = false;
+    public Integer rating = null;
+    public boolean is_solved = false;
+    private String meta_fname = null;
+    private Integer hints_used = 0;
 
-	public final static String FNAME_ENDING = ".sgfmeta";
+    private boolean has_data = false;
 
-	public SGFMetaData(String fname) {
-		if (!fname.endsWith(FNAME_ENDING))
-			fname += FNAME_ENDING;
+    public final static String FNAME_ENDING = ".sgfmeta";
 
-		meta_fname = fname;
-		try {
-			Log.i("got json file " + FileHelper.file2String(new File(meta_fname)));
-			JSONObject jObject = new JSONObject(FileHelper.file2String(new File(meta_fname)));
+    public SGFMetaData(String fname) {
+        if (!fname.endsWith(FNAME_ENDING))
+            fname += FNAME_ENDING;
 
-			try {
-				rating = (Integer) jObject.getInt("rating");
-			} catch (org.json.JSONException jse) {
-			} // don't care if not there
+        meta_fname = fname;
+        try {
+            Log.i("got json file " + FileHelper.file2String(new File(meta_fname)));
+            JSONObject jObject = new JSONObject(FileHelper.file2String(new File(meta_fname)));
 
-			try {
-				is_solved = (Boolean) jObject.getBoolean("is_solved");
-			} catch (org.json.JSONException jse) {
-			} // don't care if not there
+            try {
+                rating = (Integer) jObject.getInt("rating");
+            } catch (org.json.JSONException jse) {
+            } // don't care if not there
 
-			try {
-				hints_used = (Integer) jObject.getInt("hints_used");
-			} catch (org.json.JSONException jse) {
-			} // don't care if not there
+            try {
+                is_solved = (Boolean) jObject.getBoolean("is_solved");
+            } catch (org.json.JSONException jse) {
+            } // don't care if not there
 
-			has_data = true;
-		} catch (Exception e) {
-			Log.i("got json file " + e);
-		}
-	}
+            try {
+                hints_used = (Integer) jObject.getInt("hints_used");
+            } catch (org.json.JSONException jse) {
+            } // don't care if not there
 
-	public SGFMetaData(GobandroidApp app) {
-		this(app.getGame().getMetaData().getFileName() + FNAME_ENDING);
-	}
+            has_data = true;
+        } catch (Exception e) {
+            Log.i("got json file " + e);
+        }
+    }
 
-	public void setRating(Integer rating) {
-		this.rating = rating;
-	}
+    public SGFMetaData(GobandroidApp app) {
+        this(app.getGame().getMetaData().getFileName() + FNAME_ENDING);
+    }
 
-	public Integer getRating() {
-		return rating;
-	}
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
 
-	public boolean getIsSolved() {
-		return is_solved;
-	}
+    public Integer getRating() {
+        return rating;
+    }
 
-	public boolean hasData() {
-		return has_data;
-	}
+    public boolean getIsSolved() {
+        return is_solved;
+    }
 
-	public void persist() {
-		try {
-			JSONObject object = new JSONObject();
-			try {
-				if (rating != null)
-					object.put("rating", rating);
-				object.put("is_solved", is_solved);
-				object.put("hints_used",hints_used);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
+    public boolean hasData() {
+        return has_data;
+    }
 
-			String json_str = object.toString();
+    public void persist() {
+        try {
+            JSONObject object = new JSONObject();
+            try {
+                if (rating != null)
+                    object.put("rating", rating);
+                object.put("is_solved", is_solved);
+                object.put("hints_used", hints_used);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-			FileWriter sgf_writer = new FileWriter(new File(meta_fname));
+            String json_str = object.toString();
 
-			BufferedWriter out = new BufferedWriter(sgf_writer);
+            FileWriter sgf_writer = new FileWriter(new File(meta_fname));
 
-			out.write(json_str);
-			out.close();
-			sgf_writer.close();
-		} catch (Exception e) {
-			Log.w("problem writing metadata" + e);
-		}
+            BufferedWriter out = new BufferedWriter(sgf_writer);
 
-	}
+            out.write(json_str);
+            out.close();
+            sgf_writer.close();
+        } catch (Exception e) {
+            Log.w("problem writing metadata" + e);
+        }
 
-	public void setIsSolved(boolean b) {
-		is_solved = b;
-	}
-	
-	public void setHintsUsed(int hints_used) {
-		this.hints_used=hints_used;
-	}
-	
-	public void incHintsUsed() {
-		hints_used++;
-	}
-	
-	public int getHintsUsed() {
-		return hints_used;
-	}
+    }
+
+    public void setIsSolved(boolean b) {
+        is_solved = b;
+    }
+
+    public void setHintsUsed(int hints_used) {
+        this.hints_used = hints_used;
+    }
+
+    public void incHintsUsed() {
+        hints_used++;
+    }
+
+    public int getHintsUsed() {
+        return hints_used;
+    }
 }

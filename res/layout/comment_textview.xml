@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView 	xmlns:android="http://schemas.android.com/apk/res/android" 
-			android:id="@+id/comments_textview"
-			android:layout_width="fill_parent"
-			android:layout_height="match_parent"
-			android:layout_alignParentTop="true"
-			android:layout_margin="3dip"
-			android:layout_weight="10"
-			android:text=""
-			android:textColor="#FF000000"
-			android:textAppearance="?android:attr/textAppearanceLarge"
-			/>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/comments_textview"
+          android:layout_width="fill_parent"
+          android:layout_height="match_parent"
+          android:layout_alignParentTop="true"
+          android:layout_margin="3dip"
+          android:layout_weight="10"
+          android:text=""
+          android:textColor="#FF000000"
+          android:textAppearance="?android:attr/textAppearanceLarge"
+        />

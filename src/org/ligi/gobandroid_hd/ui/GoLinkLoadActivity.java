@@ -1,55 +1,53 @@
 package org.ligi.gobandroid_hd.ui;
 
-import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink;
-import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
-import org.ligi.tracedroid.logging.Log;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink;
+import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
+import org.ligi.tracedroid.logging.Log;
 
 /**
  * Activity to load a go Link
- * 
+ *
  * @author <a href="http://ligi.de">Marcus -LiGi- Bueschleb </a>
- * 
+ *         <p/>
  *         This software is licenced with GPLv3
  */
 public class GoLinkLoadActivity extends Activity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		Uri intent_uri = getIntent().getData(); // extract the uri from the
-												// intent
+        Uri intent_uri = getIntent().getData(); // extract the uri from the
+        // intent
 
-		new GobandroidNotifications(this).cancelGoLinkNotification();
+        new GobandroidNotifications(this).cancelGoLinkNotification();
 
-		if (intent_uri == null) {
-			Log.e("GoLinkLoadActivity with intent_uri==null");
-			finish();
-			return;
-		}
+        if (intent_uri == null) {
+            Log.e("GoLinkLoadActivity with intent_uri==null");
+            finish();
+            return;
+        }
 
-		GoLink link = new GoLink(intent_uri.toString());
+        GoLink link = new GoLink(intent_uri.toString());
 
-		Intent intent = getIntent();
-		intent.setData(Uri.parse(link.getFileName()));
+        Intent intent = getIntent();
+        intent.setData(Uri.parse(link.getFileName()));
 
-		if (link.linksToDirectory()) {
-			intent.setClass(this, SGFSDCardListActivity.class);
-		} else {
-			// we got some sgf - go to sgfload
-			intent.putExtra("move_num", link.getMoveDepth());
-			intent.setClass(this, SGFLoadActivity.class);
-		}
+        if (link.linksToDirectory()) {
+            intent.setClass(this, SGFSDCardListActivity.class);
+        } else {
+            // we got some sgf - go to sgfload
+            intent.putExtra("move_num", link.getMoveDepth());
+            intent.setClass(this, SGFLoadActivity.class);
+        }
 
-		startActivity(intent);
-		finish();
-		// new AlertDialog.Builder(this).setTitle("golink" + intent_uri).show();
-		/*
+        startActivity(intent);
+        finish();
+        // new AlertDialog.Builder(this).setTitle("golink" + intent_uri).show();        /*
 		 * 
 		 * if (intent_uri.getLastPathSegment().endsWith(".golink")) { try {
 		 * fname=contentToStringFileHelper.file2String(new File(fname)); } catch
@@ -65,6 +63,6 @@ public class GoLinkLoadActivity extends Activity {
 		 * 
 		 * if (!fname.contains("://")) fname="file://"+fname;
 		 */
-	}
+    }
 
 }

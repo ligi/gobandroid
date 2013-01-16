@@ -9,37 +9,37 @@ import android.util.AttributeSet;
 import android.view.View;
 
 public class SpinnerTriangleView extends View {
-	private Paint p;
-	private Path pth;
+    private Paint p;
+    private Path pth;
 
-	public SpinnerTriangleView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		p = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
-		pth = new Path();
-	}
+    public SpinnerTriangleView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        p = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+        pth = new Path();
+    }
 
-	@Override
-	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		super.onSizeChanged(w, h, oldw, oldh);
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
 
-		pth.moveTo(w - this.getPaddingRight(), this.getPaddingTop());
-		pth.lineTo(w - this.getPaddingRight(), h - this.getPaddingBottom());
-		pth.lineTo(getPaddingLeft(), h - getPaddingBottom());
-		pth.lineTo(w - this.getPaddingRight(), getPaddingTop());
+        pth.moveTo(w - this.getPaddingRight(), this.getPaddingTop());
+        pth.lineTo(w - this.getPaddingRight(), h - this.getPaddingBottom());
+        pth.lineTo(getPaddingLeft(), h - getPaddingBottom());
+        pth.lineTo(w - this.getPaddingRight(), getPaddingTop());
 
-		p.setColor(Color.BLACK);
-	}
+        p.setColor(Color.BLACK);
+    }
 
-	@Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-		canvas.drawPath(pth, p);
-	}
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.drawPath(pth, p);
+    }
 
-	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
-		this.setMeasuredDimension(parentHeight, parentHeight);
-	}
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
+        this.setMeasuredDimension(parentHeight, parentHeight);
+    }
 }

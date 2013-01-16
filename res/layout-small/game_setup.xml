@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-   	style="@style/default_activity_main"
-    >
-<include layout="@layout/game_setup_inner"/>
+              android:orientation="vertical"
+              style="@style/default_activity_main"
+        >
+    <include layout="@layout/game_setup_inner"/>
 </LinearLayout>

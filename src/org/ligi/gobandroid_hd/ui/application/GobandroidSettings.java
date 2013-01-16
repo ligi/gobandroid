@@ -7,88 +7,89 @@ import android.preference.PreferenceManager;
 
 public class GobandroidSettings {
 
-	/* the keys */
-	public final static String KEY_FULLSCREEN = "fullscreen";
-	public final static String KEY_SOUND = "do_sound";
-	public final static String KEY_DO_LEGEND = "do_legend";
-	public final static String KEY_SGF_LEGEND = "sgf_legend";
-	public static final String KEY_WAKE_LOCK = "wake_lock";
-	public static final String KEY_GRID_EMBOSS = "grid_emboss";
-	public static final String KEY_TSUMEGO_PUSH = "push_tsumego";;
-	public static final String KEY_USERNAME = "username";
-	public static final String KEY_RANK = "rank";
-	
-	private Context ctx;
+    /* the keys */
+    public final static String KEY_FULLSCREEN = "fullscreen";
+    public final static String KEY_SOUND = "do_sound";
+    public final static String KEY_DO_LEGEND = "do_legend";
+    public final static String KEY_SGF_LEGEND = "sgf_legend";
+    public static final String KEY_WAKE_LOCK = "wake_lock";
+    public static final String KEY_GRID_EMBOSS = "grid_emboss";
+    public static final String KEY_TSUMEGO_PUSH = "push_tsumego";
+    ;
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_RANK = "rank";
 
-	public GobandroidSettings(Context ctx) {
-		this.ctx = ctx;
-	}
+    private Context ctx;
 
-	public SharedPreferences getPreferences() {
-		return PreferenceManager.getDefaultSharedPreferences(ctx);
-	}
+    public GobandroidSettings(Context ctx) {
+        this.ctx = ctx;
+    }
 
-	public String getSGFBasePath() {
-		return Environment.getExternalStorageDirectory() + "/gobandroid/sgf/";
-	}
+    public SharedPreferences getPreferences() {
+        return PreferenceManager.getDefaultSharedPreferences(ctx);
+    }
 
-	public String getTsumegoPath() {
-		return getSGFBasePath() + "tsumego/";
-	}
+    public String getSGFBasePath() {
+        return Environment.getExternalStorageDirectory() + "/gobandroid/sgf/";
+    }
 
-	public String getBookmarkPath() {
-		return getReviewPath() + "bookmarks/";
-	}
+    public String getTsumegoPath() {
+        return getSGFBasePath() + "tsumego/";
+    }
 
-	public String getReviewPath() {
-		return getSGFBasePath() + "review/";
-	}
+    public String getBookmarkPath() {
+        return getReviewPath() + "bookmarks/";
+    }
 
-	public String getSGFSavePath() {
-		return getSGFBasePath() + "review/saved/";
-	}
+    public String getReviewPath() {
+        return getSGFBasePath() + "review/";
+    }
 
-	public boolean isFullscreenEnabled() {
-		return getPreferences().getBoolean(KEY_FULLSCREEN, false);
-	}
+    public String getSGFSavePath() {
+        return getSGFBasePath() + "review/saved/";
+    }
 
-	public boolean isSoundEnabled() {
-		return getPreferences().getBoolean(KEY_SOUND, true);
-	}
+    public boolean isFullscreenEnabled() {
+        return getPreferences().getBoolean(KEY_FULLSCREEN, false);
+    }
 
-	public boolean isLegendEnabled() {
-		return getPreferences().getBoolean(KEY_DO_LEGEND, false);
-	}
+    public boolean isSoundEnabled() {
+        return getPreferences().getBoolean(KEY_SOUND, true);
+    }
 
-	public boolean isSGFLegendEnabled() {
-		return getPreferences().getBoolean(KEY_SGF_LEGEND, false);
-	}
+    public boolean isLegendEnabled() {
+        return getPreferences().getBoolean(KEY_DO_LEGEND, false);
+    }
 
-	public boolean isWakeLockEnabled() {
-		return getPreferences().getBoolean(KEY_WAKE_LOCK, true);
-	}
+    public boolean isSGFLegendEnabled() {
+        return getPreferences().getBoolean(KEY_SGF_LEGEND, false);
+    }
 
-	public boolean isGridEmbossEnabled() {
-		return getPreferences().getBoolean(KEY_GRID_EMBOSS, true);
-	}
+    public boolean isWakeLockEnabled() {
+        return getPreferences().getBoolean(KEY_WAKE_LOCK, true);
+    }
 
-	public boolean isTsumegoPushEnabled() {
-		return getPreferences().getBoolean(KEY_TSUMEGO_PUSH, true);
-	}
-	
-	public void setUsername(String username) {
-		getPreferences().edit().putString(KEY_USERNAME, username).commit();
-	}
-	
-	public String getUsername() {
-		return getPreferences().getString(KEY_USERNAME, "");
-	}
-	
-	public void setRank(String rank) {
-		getPreferences().edit().putString(KEY_RANK, rank).commit();
-	}
-	
-	public String getRank() {
-		return getPreferences().getString(KEY_RANK, "");
-	}
+    public boolean isGridEmbossEnabled() {
+        return getPreferences().getBoolean(KEY_GRID_EMBOSS, true);
+    }
+
+    public boolean isTsumegoPushEnabled() {
+        return getPreferences().getBoolean(KEY_TSUMEGO_PUSH, true);
+    }
+
+    public void setUsername(String username) {
+        getPreferences().edit().putString(KEY_USERNAME, username).commit();
+    }
+
+    public String getUsername() {
+        return getPreferences().getString(KEY_USERNAME, "");
+    }
+
+    public void setRank(String rank) {
+        getPreferences().edit().putString(KEY_RANK, rank).commit();
+    }
+
+    public String getRank() {
+        return getPreferences().getString(KEY_RANK, "");
+    }
 }

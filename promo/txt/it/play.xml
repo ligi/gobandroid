@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="short">Gobandroid HD is a opensource goban for Android to play go / igo / baduk / weiqi</string>
+    <string name="short">Gobandroid HD is a opensource goban for Android to play go / igo / baduk / weiqi</string>
 
-<string name="long"></string>
+    <string name="long"></string>
 
 </resources>

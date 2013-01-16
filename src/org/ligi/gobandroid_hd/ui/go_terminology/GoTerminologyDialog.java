@@ -1,51 +1,51 @@
 package org.ligi.gobandroid_hd.ui.go_terminology;
 
-import java.util.HashMap;
-
+import android.app.Activity;
+import android.text.util.Linkify;
+import android.widget.TextView;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.tracedroid.logging.Log;
 
-import android.app.Activity;
-import android.text.util.Linkify;
-import android.widget.TextView;
+import java.util.HashMap;
 
 public class GoTerminologyDialog extends GobandroidDialog {
 
-	public final static HashMap<String, Integer> getTerm2resHashMap() {
-		return new HashMap<String, Integer>() {
-			private static final long serialVersionUID = -8206448225904656388L;
-			{
-				put("joseki", R.string.goterm_joseki);
-				put("miai", R.string.goterm_miai);
-				put("shape", R.string.goterm_shape);
-				put("tesuji", R.string.goterm_tesuji);
-				// missing mojo
-			}
-		};
-	}
+    public final static HashMap<String, Integer> getTerm2resHashMap() {
+        return new HashMap<String, Integer>() {
+            private static final long serialVersionUID = -8206448225904656388L;
 
-	public GoTerminologyDialog(Activity context, String term) {
-		super(context);
+            {
+                put("joseki", R.string.goterm_joseki);
+                put("miai", R.string.goterm_miai);
+                put("shape", R.string.goterm_shape);
+                put("tesuji", R.string.goterm_tesuji);
+                // missing mojo
+            }
+        };
+    }
 
-		setTitle(term);
-		setIconResource(R.drawable.info);
-		setContentView(R.layout.go_terms_view);
+    public GoTerminologyDialog(Activity context, String term) {
+        super(context);
 
-		TextView tv = (TextView) this.findViewById(R.id.go_terms_text);
+        setTitle(term);
+        setIconResource(R.drawable.info);
+        setContentView(R.layout.go_terms_view);
 
-		if (getTerm2resHashMap().containsKey(term))
-			tv.setText(getTerm2resHashMap().get(term));
-		else {
-			tv.setText("no Definition found");
-			Log.w("no definition found for " + term);
-		}
+        TextView tv = (TextView) this.findViewById(R.id.go_terms_text);
 
-		Linkify.addLinks(tv, Linkify.ALL);
+        if (getTerm2resHashMap().containsKey(term))
+            tv.setText(getTerm2resHashMap().get(term));
+        else {
+            tv.setText("no Definition found");
+            Log.w("no definition found for " + term);
+        }
 
-		// ((Button)this.findViewById(R.id.terms_ok_btn)).setOnClickListener(new
-		// ActivityFinishOnViewClickListener(this));
+        Linkify.addLinks(tv, Linkify.ALL);
 
-	}
+        // ((Button)this.findViewById(R.id.terms_ok_btn)).setOnClickListener(new
+        // ActivityFinishOnViewClickListener(this));
+
+    }
 
 }

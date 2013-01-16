@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" 
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="7dp"
-    >
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:padding="7dp"
+        >
 
     <TextView
-        android:id="@+id/game_comment"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+            android:id="@+id/game_comment"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
 
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FF000000" />
-    
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#FF000000"/>
+
     <TextView
-        android:id="@+id/tsumego_off_path_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center_vertical|center_horizontal"
-        
-        android:text="@string/tsumego_off_path"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#FF0000" />
-    
+            android:id="@+id/tsumego_off_path_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical|center_horizontal"
+
+            android:text="@string/tsumego_off_path"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#FF0000"/>
+
     <TextView
-        android:id="@+id/tsumego_correct_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center_vertical|center_horizontal"
-		android:text="@string/tsumego_correct"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#008300" />
+            android:id="@+id/tsumego_correct_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:text="@string/tsumego_correct"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#008300"/>
 
 </LinearLayout>

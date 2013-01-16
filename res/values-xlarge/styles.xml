@@ -9,5 +9,5 @@
         <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:background">@null</item>
-    </style>  
+    </style>
 </resources>

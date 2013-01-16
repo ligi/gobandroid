@@ -1,148 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
     <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stretchColumns="1" >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:stretchColumns="1">
 
         <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/game_name" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/game_name"/>
 
             <EditText
-                android:id="@+id/game_name_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10" >
+                    android:id="@+id/game_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10">
             </EditText>
         </TableRow>
 
         <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/black_name" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/black_name"/>
 
             <EditText
-                android:id="@+id/black_name_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10" >
-            </EditText>
-
-            <Button
-                android:id="@+id/user_is_black_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/it_is_me" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/black_rank" />
-
-            <EditText
-                android:id="@+id/black_rank_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10" >
-            </EditText>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/white_name" />
-
-            <EditText
-                android:id="@+id/white_name_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10" >
+                    android:id="@+id/black_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10">
             </EditText>
 
             <Button
-                android:id="@+id/user_is_white_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/it_is_me" />
+                    android:id="@+id/user_is_black_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/it_is_me"/>
         </TableRow>
 
         <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/white_rank" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/black_rank"/>
 
             <EditText
-                android:id="@+id/white_rank_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10" >
+                    android:id="@+id/black_rank_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10">
             </EditText>
         </TableRow>
 
         <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/komi" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/white_name"/>
 
             <EditText
-                android:id="@+id/komi_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10" >
+                    android:id="@+id/white_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10">
+            </EditText>
+
+            <Button
+                    android:id="@+id/user_is_white_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/it_is_me"/>
+        </TableRow>
+
+        <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/white_rank"/>
+
+            <EditText
+                    android:id="@+id/white_rank_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10">
             </EditText>
         </TableRow>
 
         <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/game_result" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/komi"/>
 
             <EditText
-                android:id="@+id/game_result_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10" >
+                    android:id="@+id/komi_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10">
+            </EditText>
+        </TableRow>
+
+        <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/game_result"/>
+
+            <EditText
+                    android:id="@+id/game_result_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10">
             </EditText>
         </TableRow>
     </TableLayout>

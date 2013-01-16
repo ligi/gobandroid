@@ -41,7 +41,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.google.api.services.cloudgoban.Cloudgoban;
 import com.google.api.services.cloudgoban.model.Game;
 import com.google.api.services.cloudgoban.model.Text;
-import com.google.api.services.cloudgoban.model.User;
 import org.ligi.android.common.activitys.ActivityOrientationLocker;
 import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.InteractionScope;
@@ -255,7 +254,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {        /*
-		 * case R.id.menu_game_switchmode: new SwitchModeDialog(this).show();
+         * case R.id.menu_game_switchmode: new SwitchModeDialog(this).show();
 		 * return true;
 		 */
 
@@ -277,7 +276,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                 return true;
 
 			/*
-			 * case R.id.menu_game_results: new GameResultsAlert(this,
+             * case R.id.menu_game_results: new GameResultsAlert(this,
 			 * getGame()).show(); return true;
 			 */
             case R.id.menu_write_sgf:
@@ -716,10 +715,10 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                             Log.i("CloudGoban EditGame start" + getGame().getCloudKey());
                             game.setEncodedKey(getGame().getCloudKey());
 
-                            Game res_game=gc.games().update("foo",game).execute();
+                            Game res_game = gc.games().update("foo", game).execute();
                             //game_key = gc.games().edit(game).execute().getEncodedKey();
                             Log.i("CloudGoban EditGame" + res_game.getEncodedKey() + " .. " + res_game.getEditKey());
-                            game_key=res_game.getEncodedKey();
+                            game_key = res_game.getEncodedKey();
                         } else { // create a new Game
                             game_key = gc.games().insert(game).execute().getEncodedKey();
                         }

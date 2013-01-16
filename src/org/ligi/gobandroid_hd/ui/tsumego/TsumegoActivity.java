@@ -197,7 +197,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
             SGFMetaData meta = new SGFMetaData(getGame().getMetaData().getFileName());
             meta.setIsSolved(true);
             meta.persist();            /*
-			 * this.getBaseContext().getSharedPreferences("tsumego_stats",
+             * this.getBaseContext().getSharedPreferences("tsumego_stats",
 			 * Activity.MODE_PRIVATE)
 			 * .edit().putInt(game.getMetaData().getFileName(), 100).commit();
 			 */

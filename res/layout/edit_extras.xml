@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <GridView
-        android:id="@+id/gridView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="auto_fit"
-        android:columnWidth="@dimen/actionbar_height"
-        >
+            android:id="@+id/gridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="auto_fit"
+            android:columnWidth="@dimen/actionbar_height"
+            >
     </GridView>
 
     <EditText
-        android:id="@+id/comment_et"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" >
+            android:id="@+id/comment_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10">
 
-        <requestFocus />
+        <requestFocus/>
     </EditText>
 
 </LinearLayout>

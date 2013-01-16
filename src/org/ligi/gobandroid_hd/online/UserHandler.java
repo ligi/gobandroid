@@ -70,8 +70,8 @@ public class UserHandler {
                     }
 
                 // save the user_key
-                if (usr_key!=null) {
-                    SharedPreferences.Editor edit=ctx.getSettings().getPreferences().edit();
+                if (usr_key != null) {
+                    SharedPreferences.Editor edit = ctx.getSettings().getPreferences().edit();
                     edit.putString("user_key", usr_key);
                     edit.commit();
                 }

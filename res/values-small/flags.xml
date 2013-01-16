@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <item name="force_fullscreen" type="bool">true</item>
-   <item name="small" type="bool">true</item>
+    <item name="force_fullscreen" type="bool">true</item>
+    <item name="small" type="bool">true</item>
 </resources>
