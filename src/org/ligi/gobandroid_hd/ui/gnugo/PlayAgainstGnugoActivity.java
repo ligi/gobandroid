@@ -1,5 +1,15 @@
 package org.ligi.gobandroid_hd.ui.gnugo;
 
+import android.content.*;
+import android.content.DialogInterface.OnClickListener;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.support.v4.app.Fragment;
+import android.view.WindowManager;
+import android.widget.Toast;
+import com.actionbarsherlock.view.Menu;
+import com.google.analytics.tracking.android.EasyTracker;
 import org.ligi.gobandroid_beta.R;
 import org.ligi.gobandroid_hd.logic.GTPHelper;
 import org.ligi.gobandroid_hd.logic.GoBoard;
@@ -10,347 +20,331 @@ import org.ligi.gobandroid_hd.ui.recording.RecordingGameExtrasFragment;
 import org.ligi.gobandroidhd.ai.gnugo.IGnuGoService;
 import org.ligi.tracedroid.logging.Log;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.Bundle;
-import android.os.IBinder;
-import android.os.RemoteException;
-import android.support.v4.app.Fragment;
-import android.view.WindowManager;
-import android.widget.Toast;
-
-import com.actionbarsherlock.view.Menu;
-import com.google.analytics.tracking.android.EasyTracker;
-
 /**
  * the central Application-Context
- * 
+ *
  * @author ligi
- * 
  */
 public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChangeListener, Runnable {
 
-	private IGnuGoService gnu_service;
-	private ServiceConnection conn;
+    private IGnuGoService gnu_service;
+    private ServiceConnection conn;
 
-	private boolean playing_black = false;
-	private boolean playing_white = false;
-	private byte level;
+    private boolean playing_black = false;
+    private boolean playing_white = false;
+    private byte level;
 
-	private GnuGoSetupDialog dlg;
+    private GnuGoSetupDialog dlg;
 
-	private boolean gnugo_size_set = false;
+    private boolean gnugo_size_set = false;
 
-	public final static String INTENT_ACTION = "org.ligi.gobandroidhd.ai.gnugo.GnuGoService";
+    public final static String INTENT_ACTION = "org.ligi.gobandroidhd.ai.gnugo.GnuGoService";
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		// TODO the next line works but needs investigation - i thought more of
-		// getBoard().requestFocus(); - but that was not working ..
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO the next line works but needs investigation - i thought more of
+        // getBoard().requestFocus(); - but that was not working ..
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-		EasyTracker.getTracker().trackEvent("ui_action", "gnugo", "play", null);
+        EasyTracker.getTracker().trackEvent("ui_action", "gnugo", "play", null);
 
-		dlg = new GnuGoSetupDialog(this);
+        dlg = new GnuGoSetupDialog(this);
 
-		dlg.setPositiveButton(R.string.ok, new OnClickListener() {
+        dlg.setPositiveButton(R.string.ok, new OnClickListener() {
 
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				playing_black = dlg.isBlackActive() | dlg.isBothActive();
-				playing_white = dlg.isWhiteActive() | dlg.isBothActive();
-				
-				if (dlg.isBlackActive()) {
-					getGame().getMetaData().setBlackName(getString(R.string.gnugo));
-					getGame().getMetaData().setBlackRank("");
-				} else {
-					getGame().getMetaData().setBlackName(getApp().getSettings().getUsername());
-					getGame().getMetaData().setBlackRank(getApp().getSettings().getRank());
-				}
-				
-				if (dlg.isWhiteActive()) {
-					getGame().getMetaData().setWhiteName(getString(R.string.gnugo));
-					getGame().getMetaData().setWhiteRank("");
-				} else {
-					getGame().getMetaData().setWhiteName(getApp().getSettings().getUsername());
-					getGame().getMetaData().setWhiteRank(getApp().getSettings().getRank());
-				}
-				
-				level = (byte) dlg.getStrength();
-				dlg.saveRecentAsDefault();
-				dialog.dismiss();
-			}
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                playing_black = dlg.isBlackActive() | dlg.isBothActive();
+                playing_white = dlg.isWhiteActive() | dlg.isBothActive();
 
-		});
+                if (dlg.isBlackActive()) {
+                    getGame().getMetaData().setBlackName(getString(R.string.gnugo));
+                    getGame().getMetaData().setBlackRank("");
+                } else {
+                    getGame().getMetaData().setBlackName(getApp().getSettings().getUsername());
+                    getGame().getMetaData().setBlackRank(getApp().getSettings().getRank());
+                }
 
-		dlg.setNegativeButton(R.string.cancel, new OnClickListener() {
+                if (dlg.isWhiteActive()) {
+                    getGame().getMetaData().setWhiteName(getString(R.string.gnugo));
+                    getGame().getMetaData().setWhiteRank("");
+                } else {
+                    getGame().getMetaData().setWhiteName(getApp().getSettings().getUsername());
+                    getGame().getMetaData().setWhiteRank(getApp().getSettings().getRank());
+                }
 
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-				finish();
-			}
+                level = (byte) dlg.getStrength();
+                dlg.saveRecentAsDefault();
+                dialog.dismiss();
+            }
 
-		});
-		dlg.show();
+        });
 
-	}
+        dlg.setNegativeButton(R.string.cancel, new OnClickListener() {
 
-	@Override
-	protected void onResume() {
-		Log.i("GnuGoDebug onResume");
-		conn = new ServiceConnection() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+            }
 
-			@Override
-			public void onServiceConnected(ComponentName name, IBinder service) {
-				gnu_service = IGnuGoService.Stub.asInterface(service);
+        });
+        dlg.show();
 
-				try {
-					Log.i("Service bound " + gnu_service.processGTP("test"));
-				} catch (RemoteException e) {
-				}
-			}
+    }
 
-			@Override
-			public void onServiceDisconnected(ComponentName name) {
-				Log.i("Service unbound ");
-			}
-		};
+    @Override
+    protected void onResume() {
+        Log.i("GnuGoDebug onResume");
+        conn = new ServiceConnection() {
 
-		// gnugo_size_set=false;
-		getApplication().bindService(new Intent(INTENT_ACTION), conn, Context.BIND_AUTO_CREATE);
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                gnu_service = IGnuGoService.Stub.asInterface(service);
 
-		new Thread(this).start();
+                try {
+                    Log.i("Service bound " + gnu_service.processGTP("test"));
+                } catch (RemoteException e) {
+                }
+            }
 
-		super.onStart();
-	}
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                Log.i("Service unbound ");
+            }
+        };
 
-	@Override
-	public void onPause() {
-		stop();
-		Log.i("GnuGoDebug onPause");
-		super.onPause();
-	}
+        // gnugo_size_set=false;
+        getApplication().bindService(new Intent(INTENT_ACTION), conn, Context.BIND_AUTO_CREATE);
 
-	public void stop() {
-		if (gnu_service == null)
-			return;
-		gnu_service = null;
-		Log.i("GnuGoDebug stopping");
-		try {
-			getApplication().unbindService(conn);
-			getApplication().stopService(new Intent(INTENT_ACTION));
-		} catch (Exception e) {
-		}
-		conn = null;
+        new Thread(this).start();
 
-	}
+        super.onStart();
+    }
 
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		super.onPrepareOptionsMenu(menu);
-		menu.findItem(R.id.menu_game_pass).setVisible(!getGame().isFinished());
-		// menu.findItem(R.id.menu_game_results).setVisible(getGame().isFinished());
-		return true;
-	}
+    @Override
+    public void onPause() {
+        stop();
+        Log.i("GnuGoDebug onPause");
+        super.onPause();
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		this.getSupportMenuInflater().inflate(R.menu.ingame_record, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
+    public void stop() {
+        if (gnu_service == null)
+            return;
+        gnu_service = null;
+        Log.i("GnuGoDebug stopping");
+        try {
+            getApplication().unbindService(conn);
+            getApplication().stopService(new Intent(INTENT_ACTION));
+        } catch (Exception e) {
+        }
+        conn = null;
 
-	@Override
-	public void onGoGameChange() {
-		super.onGoGameChange();
-	}
+    }
 
-	public Fragment getGameExtraFragment() {
-		return new RecordingGameExtrasFragment();
-	}
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.menu_game_pass).setVisible(!getGame().isFinished());
+        // menu.findItem(R.id.menu_game_results).setVisible(getGame().isFinished());
+        return true;
+    }
 
-	@Override
-	public byte doMoveWithUIFeedback(byte x, byte y) {
-		if ((getGame().isBlackToMove() && (!playing_black)))
-			processMove("black", x, y);
-		else if (((!getGame().isBlackToMove()) && (!playing_white)))
-			processMove("white", x, y);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getSupportMenuInflater().inflate(R.menu.ingame_record, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-		return super.doMoveWithUIFeedback(x, y);
-	}
+    @Override
+    public void onGoGameChange() {
+        super.onGoGameChange();
 
-	public void processMove(String color, byte x, byte y) {
-		try {
-			gnu_service.processGTP(color + " " + coordinates2gtpstr(x, y));
-		} catch (Exception e) {
-			Log.w("problem processing " + color + " move to " + coordinates2gtpstr(x, y));
-		}
-	}
+        if (getGame().isFinished()) {
+            switchToCounting();
+        }
+    }
 
-	@Override
-	public void run() {
-		Log.i("GnuGoDebug startthread " + conn);
-		while (conn != null) {
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+    public Fragment getGameExtraFragment() {
+        return new RecordingGameExtrasFragment();
+    }
 
-			// blocker for the following steps
-			if ((gnu_service == null) || getGame().isFinished() || (conn == null))
-				continue;
+    @Override
+    public byte doMoveWithUIFeedback(byte x, byte y) {
+        if ((getGame().isBlackToMove() && (!playing_black)))
+            processMove("black", x, y);
+        else if (((!getGame().isBlackToMove()) && (!playing_white)))
+            processMove("white", x, y);
 
-			if (gnugo_size_set && !checkGnuGoSync()) { // check if gobandroid
-														// and gnugo see the
-														// same board -
-														// otherwise tell gnugo
-														// about the truth
-														// afterwards ;-)
-				try {
-					Log.i("gnugo sync check problem" + gnu_service.processGTP("showboard") + getGame().getVisualBoard().toString());
-					gnugo_size_set = false;
-				} catch (RemoteException e) {
-				}
-			}
+        return super.doMoveWithUIFeedback(x, y);
+    }
 
-			if (!gnugo_size_set)
-				try {
-					// set the size
-					gnu_service.processGTP("boardsize " + getGame().getBoardSize());
+    public void processMove(String color, byte x, byte y) {
+        try {
+            gnu_service.processGTP(color + " " + coordinates2gtpstr(x, y));
+        } catch (Exception e) {
+            Log.w("problem processing " + color + " move to " + coordinates2gtpstr(x, y));
+        }
+    }
 
-					for (byte x = 0; x < getGame().getBoardSize(); x++)
-						for (byte y = 0; y < getGame().getBoardSize(); y++)
-							if (getGame().getVisualBoard().isCellBlack(x, y))
-								gnu_service.processGTP("black " + coordinates2gtpstr(x, y));
-							else if (getGame().getVisualBoard().isCellWhite(x, y))
-								gnu_service.processGTP("white " + coordinates2gtpstr(x, y));
+    @Override
+    public void run() {
+        Log.i("GnuGoDebug startthread " + conn);
+        while (conn != null) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-					Log.i("setting level " + gnu_service.processGTP("level " + level));
-					gnugo_size_set = true;
-				} catch (Exception e) {
-				}
+            // blocker for the following steps
+            if ((gnu_service == null) || getGame().isFinished() || (conn == null))
+                continue;
 
-			if (getGame().isBlackToMove() && playing_black) {
-				try {
-					String answer = gnu_service.processGTP("genmove black");
+            if (gnugo_size_set && !checkGnuGoSync()) { // check if gobandroid
+                // and gnugo see the
+                // same board -
+                // otherwise tell gnugo
+                // about the truth
+                // afterwards ;-)
+                try {
+                    Log.i("gnugo sync check problem" + gnu_service.processGTP("showboard") + getGame().getVisualBoard().toString());
+                    gnugo_size_set = false;
+                } catch (RemoteException e) {
+                }
+            }
 
-					if (!GTPHelper.doMoveByGTPString(answer, getGame())) {
-						Log.w("GnuGoProblem " + answer + " board " + gnu_service.processGTP("showboard"));
-						Log.w("restarting GnuGo " + answer);
-						gnugo_size_set = false; // reset
-					}
-					Log.i("gugoservice" + gnu_service.processGTP("showboard"));
-				} catch (Exception e) {
-				}
-			}
+            if (!gnugo_size_set)
+                try {
+                    // set the size
+                    gnu_service.processGTP("boardsize " + getGame().getBoardSize());
 
-			if ((!getGame().isBlackToMove()) && playing_white) {
-				try {
-					String answer = gnu_service.processGTP("genmove white");
+                    for (byte x = 0; x < getGame().getBoardSize(); x++)
+                        for (byte y = 0; y < getGame().getBoardSize(); y++)
+                            if (getGame().getVisualBoard().isCellBlack(x, y))
+                                gnu_service.processGTP("black " + coordinates2gtpstr(x, y));
+                            else if (getGame().getVisualBoard().isCellWhite(x, y))
+                                gnu_service.processGTP("white " + coordinates2gtpstr(x, y));
 
-					Log.i("gugoservice" + gnu_service.processGTP("showboard"));
+                    Log.i("setting level " + gnu_service.processGTP("level " + level));
+                    gnugo_size_set = true;
+                } catch (Exception e) {
+                }
 
-					if (!GTPHelper.doMoveByGTPString(answer, getGame())) {
-						Log.w("GnuGoProblem " + answer + " board " + gnu_service.processGTP("showboard"));
-						Log.w("restarting GnuGo " + answer);
-						gnugo_size_set = false; // reset
-					}
-					Log.i("gugoservice" + gnu_service.processGTP("showboard"));
-				} catch (Exception e) {
-				}
-			}
+            if (getGame().isBlackToMove() && playing_black) {
+                try {
+                    String answer = gnu_service.processGTP("genmove black");
 
-			if (getGame().isFinished()) {
-				switchToCounting();
-			}
+                    if (!GTPHelper.doMoveByGTPString(answer, getGame())) {
+                        Log.w("GnuGoProblem " + answer + " board " + gnu_service.processGTP("showboard"));
+                        Log.w("restarting GnuGo " + answer);
+                        gnugo_size_set = false; // reset
+                    }
+                    Log.i("gugoservice" + gnu_service.processGTP("showboard"));
+                } catch (Exception e) {
+                }
+            }
 
-		}
-		stop();
+            if ((!getGame().isBlackToMove()) && playing_white) {
+                try {
+                    String answer = gnu_service.processGTP("genmove white");
 
-		Log.i("a stopthread  " + conn);
-	}
+                    Log.i("gugoservice" + gnu_service.processGTP("showboard"));
 
-	public boolean checkGnuGoSync() {
-		try {
-			String board_str = gnu_service.processGTP("showboard");
-			GoBoard b = new GoBoard((byte) getGame().getBoardSize());
-			String[] split_board = board_str.split("\n");
+                    if (!GTPHelper.doMoveByGTPString(answer, getGame())) {
+                        Log.w("GnuGoProblem " + answer + " board " + gnu_service.processGTP("showboard"));
+                        Log.w("restarting GnuGo " + answer);
+                        gnugo_size_set = false; // reset
+                    }
+                    Log.i("gugoservice" + gnu_service.processGTP("showboard"));
+                } catch (Exception e) {
+                }
+            }
 
-			for (int gnugo_y = 2; gnugo_y <= b.getSize() + 1; gnugo_y++) {
-				String act_line = split_board[gnugo_y].replace(" ", "").replace("" + (getGame().getBoardSize() - (gnugo_y - 2)), "");
-				for (int gnugo_x = 0; gnugo_x < b.getSize(); gnugo_x++) {
-					if (act_line.charAt(gnugo_x) == '.')
-						if (!getGame().getVisualBoard().isCellFree(gnugo_x, gnugo_y - 2))
-							return false;
 
-					if (act_line.charAt(gnugo_x) == 'X')
-						if (!getGame().getVisualBoard().isCellBlack(gnugo_x, gnugo_y - 2))
-							return false;
+        }
+        stop();
 
-					if (act_line.charAt(gnugo_x) == 'O')
-						if (!getGame().getVisualBoard().isCellWhite(gnugo_x, gnugo_y - 2))
-							return false;
-					// Log.i("checking " +act_line.charAt(gnugo_x));
-				}
+        Log.i("a stopthread  " + conn);
+    }
 
-			}
+    public boolean checkGnuGoSync() {
+        try {
+            String board_str = gnu_service.processGTP("showboard");
+            GoBoard b = new GoBoard((byte) getGame().getBoardSize());
+            String[] split_board = board_str.split("\n");
 
-		} catch (Exception e) {
-			Log.w("exception in check of gnugo sync " + e);
-			return false;
-		}
-		return true;
-	}
+            for (int gnugo_y = 2; gnugo_y <= b.getSize() + 1; gnugo_y++) {
+                String act_line = split_board[gnugo_y].replace(" ", "").replace("" + (getGame().getBoardSize() - (gnugo_y - 2)), "");
+                for (int gnugo_x = 0; gnugo_x < b.getSize(); gnugo_x++) {
+                    if (act_line.charAt(gnugo_x) == '.')
+                        if (!getGame().getVisualBoard().isCellFree(gnugo_x, gnugo_y - 2))
+                            return false;
 
-	private String coordinates2gtpstr(byte x, byte y) {
-		if (getGame() == null) {
-			Log.w("coordinates2gtpstr called with game==null");
-			return "";
-		}
-		if (x >= 8)
-			x++; // "I" is missing decrease human OCR-error but increase
-					// computer bugs ...
-		y = (byte) (getGame().getBoardSize() - (y));
-		return "" + (char) ('A' + x) + "" + (y);
-	}
+                    if (act_line.charAt(gnugo_x) == 'X')
+                        if (!getGame().getVisualBoard().isCellBlack(gnugo_x, gnugo_y - 2))
+                            return false;
 
-	/**
-	 * @return if it is a move the mover has to process
-	 */
-	public boolean isMoversMove() {
-		return (getGame().isBlackToMove() && (playing_black)) || (!getGame().isBlackToMove() && (playing_white));
-	}
+                    if (act_line.charAt(gnugo_x) == 'O')
+                        if (!getGame().getVisualBoard().isCellWhite(gnugo_x, gnugo_y - 2))
+                            return false;
+                    // Log.i("checking " +act_line.charAt(gnugo_x));
+                }
 
-	@Override
-	public void requestUndo() {
-		if (isMoversMove()) {
-			Toast.makeText(this, "Please wait for GnuGo", Toast.LENGTH_LONG).show();
-			return;
-		}
+            }
 
-		if (getGame().canUndo()) {
-			getGame().undo(GoPrefs.isKeepVariantEnabled());
-		}
+        } catch (Exception e) {
+            Log.w("exception in check of gnugo sync " + e);
+            return false;
+        }
+        return true;
+    }
 
-		if (getGame().canUndo()) {
-			getGame().undo(GoPrefs.isKeepVariantEnabled());
-		}
+    private String coordinates2gtpstr(byte x, byte y) {
+        if (getGame() == null) {
+            Log.w("coordinates2gtpstr called with game==null");
+            return "";
+        }
+        if (x >= 8)
+            x++; // "I" is missing decrease human OCR-error but increase
+        // computer bugs ...
+        y = (byte) (getGame().getBoardSize() - (y));
+        return "" + (char) ('A' + x) + "" + (y);
+    }
 
-		try {
-			Log.i("gugoservice undo 1" + gnu_service.processGTP("gg-undo 2"));
-		} catch (Exception e) {
-			//
-		}
+    /**
+     * @return if it is a move the mover has to process
+     */
+    public boolean isMoversMove() {
+        return (getGame().isBlackToMove() && (playing_black)) || (!getGame().isBlackToMove() && (playing_white));
+    }
 
-	}
+    @Override
+    public void requestUndo() {
+        if (isMoversMove()) {
+            Toast.makeText(this, "Please wait for GnuGo", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-	public boolean doAutosave() {
-		return true;
-	}
+        if (getGame().canUndo()) {
+            getGame().undo(GoPrefs.isKeepVariantEnabled());
+        }
+
+        if (getGame().canUndo()) {
+            getGame().undo(GoPrefs.isKeepVariantEnabled());
+        }
+
+        try {
+            Log.i("gugoservice undo 1" + gnu_service.processGTP("gg-undo 2"));
+        } catch (Exception e) {
+            //
+        }
+
+    }
+
+    public boolean doAutosave() {
+        return true;
+    }
 }
