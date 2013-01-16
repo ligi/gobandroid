@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="org.ligi.gobandroid_beta"
+          package="org.ligi.gobandroid_hd"
           android:installLocation="auto"
-          android:versionCode="113"
-          android:versionName="1.13">
+          android:versionCode="115"
+          android:versionName="1.15">
 
     <uses-sdk
             android:minSdkVersion="5"
@@ -23,10 +23,10 @@
 
     <!-- Only this application can receive the messages and registration result -->
     <permission
-            android:name="org.ligi.gobandroid_beta.permission.C2D_MESSAGE"
+            android:name="org.ligi.gobandroid_hd.permission.C2D_MESSAGE"
             android:protectionLevel="signature"/>
 
-    <uses-permission android:name="org.ligi.gobandroid_beta.permission.C2D_MESSAGE"/>
+    <uses-permission android:name="org.ligi.gobandroid_hd.permission.C2D_MESSAGE"/>
 
     <!-- This app has permission to register and receive message -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
@@ -35,10 +35,12 @@
             android:name="android.hardware.touchscreen"
             android:required="false"/>
 
-    <uses-permission android:name="org.ligi.gobandroid_beta.permission.C2D_MESSAGE"/>
+    <uses-permission android:name="org.ligi.gobandroid_hd.permission.C2D_MESSAGE"/>
+    <!-- 
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
-
+ 	-->
+ 	
     <application
             android:name="org.ligi.gobandroid_hd.GobandroidApp"
             android:icon="@drawable/ic_launcher"
@@ -99,7 +101,7 @@
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadActivity"/>
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadFromExternalActivity">
 
-
+<!-- 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -122,6 +124,7 @@
                         android:pathPattern="/game/.*"
                         android:scheme="http"/>
             </intent-filter>
+            -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -195,7 +198,7 @@
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFOnlineListActivity"/>
         <activity android:name="org.ligi.gobandroid_hd.ui.GoActivity"/>
 
-        <service android:name="org.ligi.gobandroid_beta.GCMIntentService"/>
+        <service android:name="org.ligi.gobandroid_hd.GCMIntentService"/>
 
         <receiver
                 android:name="com.google.android.gcm.GCMBroadcastReceiver"
@@ -225,12 +228,12 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
 
-                <category android:name="org.ligi.gobandroid_beta"/>
+                <category android:name="org.ligi.gobandroid_hd"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
 
-                <category android:name="org.ligi.gobandroid_beta"/>
+                <category android:name="org.ligi.gobandroid_hd"/>
             </intent-filter>
         </receiver>
     </application>

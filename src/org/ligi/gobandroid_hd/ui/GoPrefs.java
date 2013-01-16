@@ -137,7 +137,8 @@ public class GoPrefs {
 	}
 
 	public static boolean getFatFingerEnabled() {
-		return shared_prefs.getBoolean(KEY_FATFINGER, false);
+		//return shared_prefs.getBoolean(KEY_FATFINGER, false);
+        return true;
 	}
 
 	public static boolean getViewableStoneEnabled() {

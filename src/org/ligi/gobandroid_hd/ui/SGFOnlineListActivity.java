@@ -19,7 +19,7 @@
 
 package org.ligi.gobandroid_hd.ui;
 
-import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.R;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

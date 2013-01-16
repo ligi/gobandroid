@@ -2,7 +2,7 @@ package org.ligi.gobandroid_hd.backend;
 
 import java.io.IOException;
 
-import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.online.UserHandler;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;

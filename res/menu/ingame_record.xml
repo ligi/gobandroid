@@ -7,6 +7,7 @@
 <!--     <item android:title="@string/game_results" android:id="@+id/menu_game_results"  android:showAsAction="withText"></item>
  -->
     <item android:title="@string/share" android:id="@+id/menu_game_share"  android:showAsAction="withText"></item>
+ <!-- 
     <item android:title="@string/invite" android:id="@+id/menu_game_invite"  android:showAsAction="withText"></item>
-    
+  -->   
 </menu>

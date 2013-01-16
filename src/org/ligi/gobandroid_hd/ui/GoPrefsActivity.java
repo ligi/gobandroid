@@ -20,7 +20,7 @@
 package org.ligi.gobandroid_hd.ui;
 
 import org.ligi.android.common.preferences.SetPreferenceEnabledByCheckBoxPreferenceState;
-import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.gobandroid_hd.ui.application.MenuDrawer;
 

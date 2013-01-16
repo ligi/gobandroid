@@ -2,7 +2,7 @@ package org.ligi.gobandroid_hd.ui;
 
 import java.util.HashMap;
 
-import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
 

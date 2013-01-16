@@ -3,7 +3,7 @@ package org.ligi.gobandroid_hd.ui.editing;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.R;
 
 public class EditModeItemPool {
 	private List<EditModeItem> list;

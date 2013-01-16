@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 import com.actionbarsherlock.view.Menu;
 import com.google.analytics.tracking.android.EasyTracker;
-import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GTPHelper;
 import org.ligi.gobandroid_hd.logic.GoBoard;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;

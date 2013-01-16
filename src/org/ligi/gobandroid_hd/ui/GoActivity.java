@@ -24,9 +24,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import com.google.api.services.cloudgoban.model.User;
 import org.ligi.android.common.activitys.ActivityOrientationLocker;
 import org.ligi.android.common.dialogs.DialogDiscarder;
-import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.backend.CloudGobanHelper;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
@@ -272,10 +273,10 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 						if (has_cloud_history) {
 							Log.i("CloudGoban EditGame start" + getGame().getCloudKey());
 							game.setEncodedKey(getGame().getCloudKey());
-                            Game res_game=gc.games().edit(game).execute();
+                            //Game res_game=gc.games().update(new User()).execute();
 							//game_key = gc.games().edit(game).execute().getEncodedKey();
-							Log.i("CloudGoban EditGame" + res_game.getEncodedKey() + " .. " + res_game.getEditKey());
-                            game_key=res_game.getEncodedKey();
+							//Log.i("CloudGoban EditGame" + res_game.getEncodedKey() + " .. " + res_game.getEditKey());
+                            //game_key=res_game.getEncodedKey();
 						} else { // create a new Game
 							game_key = gc.games().insert(game).execute().getEncodedKey();
 						}
@@ -401,10 +402,11 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 			new SaveSGFDialog(this).show();
 			return true;
 
-		case R.id.menu_game_invite:
+/*		case R.id.menu_game_invite:
 			getGame().setCloudDefs(null, null);
 			new UploadGameToCloudEndpointsWithSend().execute();
 			return true;
+			*/
 		case R.id.menu_bookmark:
 			new BookmarkDialog(this).show();
 			return true;

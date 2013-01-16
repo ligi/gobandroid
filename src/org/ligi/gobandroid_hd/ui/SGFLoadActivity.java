@@ -29,9 +29,9 @@ import android.os.Looper;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.*;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.google.api.services.cloudgoban.Cloudgoban;
+
 import org.ligi.android.common.files.FileHelper;
-import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.backend.CloudGobanHelper;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
@@ -42,6 +42,8 @@ import org.ligi.gobandroid_hd.ui.application.MenuDrawer;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 import org.ligi.tracedroid.logging.Log;
+
+import com.google.api.services.cloudgoban.Cloudgoban;
 
 import java.io.*;
 import java.net.MalformedURLException;

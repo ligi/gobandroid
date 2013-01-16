@@ -26,7 +26,7 @@ import java.util.Vector;
 import org.ligi.android.common.activitys.ActivityFinishOnCancelListener;
 import org.ligi.android.common.arrays.ArrayHelper;
 import org.ligi.android.common.dialogs.ActivityFinishOnDialogClickListener;
-import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.Refreshable;

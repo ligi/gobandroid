@@ -16,7 +16,7 @@
 
 package org.ligi.gobandroid_hd.ui.alerts;
 
-import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 
 import android.app.Dialog;

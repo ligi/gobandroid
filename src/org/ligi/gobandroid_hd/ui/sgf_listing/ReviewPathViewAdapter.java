@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.ligi.android.common.files.FileHelper;
-import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.MetaDataFormater;
 import org.ligi.gobandroid_hd.logic.SGFHelper;

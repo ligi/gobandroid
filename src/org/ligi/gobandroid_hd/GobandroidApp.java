@@ -1,5 +1,6 @@
 package org.ligi.gobandroid_hd;
 
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.backend.GobandroidBackend;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;

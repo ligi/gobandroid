@@ -2,7 +2,7 @@ package org.ligi.gobandroid_hd.ui.links;
 
 import org.ligi.android.common.adapter.LinkAndDescriptionAdapter;
 import org.ligi.android.common.adapter.LinkWithDescription;
-import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.R;
 
 import android.content.Intent;
 import android.net.Uri;

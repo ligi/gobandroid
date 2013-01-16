@@ -1,6 +1,6 @@
 package org.ligi.gobandroid_hd.ui;
 
-import org.ligi.gobandroid_beta.R;
+import org.ligi.gobandroid_hd.R;
 
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
