@@ -101,7 +101,6 @@
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadActivity"/>
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadFromExternalActivity">
 
-<!-- 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -124,7 +123,6 @@
                         android:pathPattern="/game/.*"
                         android:scheme="http"/>
             </intent-filter>
-            -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
