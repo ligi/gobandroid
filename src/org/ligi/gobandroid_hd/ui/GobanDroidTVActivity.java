@@ -40,6 +40,7 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
         EasyTracker.getInstance().setContext(this);
 
         if (path_to_play_from.listFiles() == null) {
+            setContentView(R.layout.empty);
             EasyTracker.getTracker().trackEvent("intern", "unzip", "gtv", null);
             UnzipSGFsDialog.show(this, getIntent2start());
         } else {
