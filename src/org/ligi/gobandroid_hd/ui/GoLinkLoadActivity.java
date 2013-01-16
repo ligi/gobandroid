@@ -47,7 +47,8 @@ public class GoLinkLoadActivity extends Activity {
 
         startActivity(intent);
         finish();
-        // new AlertDialog.Builder(this).setTitle("golink" + intent_uri).show();        /*
+        // new AlertDialog.Builder(this).setTitle("golink" + intent_uri).show();
+        /*
 		 * 
 		 * if (intent_uri.getLastPathSegment().endsWith(".golink")) { try {
 		 * fname=contentToStringFileHelper.file2String(new File(fname)); } catch

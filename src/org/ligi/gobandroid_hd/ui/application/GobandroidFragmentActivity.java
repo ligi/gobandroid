@@ -38,7 +38,8 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity {
             // Ignore - but at least we tried ;-)
         }
 
-        // we do not want focus on custom views ( mainly for GTV )        /*
+        // we do not want focus on custom views ( mainly for GTV )
+        /*
 		 * wd if ((this.getSupportActionBar()!=null) &&
 		 * (this.getSupportActionBar().getCustomView()!=null))
 		 * this.getSupportActionBar().getCustomView().setFocusable(false);
