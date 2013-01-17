@@ -15,10 +15,12 @@ public class GobandroidSettings {
     public static final String KEY_WAKE_LOCK = "wake_lock";
     public static final String KEY_GRID_EMBOSS = "grid_emboss";
     public static final String KEY_TSUMEGO_PUSH = "push_tsumego";
-    ;
+
     public static final String KEY_USERNAME = "username";
     public static final String KEY_RANK = "rank";
+    public static final String KEY_ENABLE_BETA = "enable_beta";
 
+    // we need some context
     private Context ctx;
 
     public GobandroidSettings(Context ctx) {
@@ -77,19 +79,23 @@ public class GobandroidSettings {
         return getPreferences().getBoolean(KEY_TSUMEGO_PUSH, true);
     }
 
+    public String getUsername() {
+        return getPreferences().getString(KEY_USERNAME, "");
+    }
+
     public void setUsername(String username) {
         getPreferences().edit().putString(KEY_USERNAME, username).commit();
     }
 
-    public String getUsername() {
-        return getPreferences().getString(KEY_USERNAME, "");
+    public String getRank() {
+        return getPreferences().getString(KEY_RANK, "");
     }
 
     public void setRank(String rank) {
         getPreferences().edit().putString(KEY_RANK, rank).commit();
     }
 
-    public String getRank() {
-        return getPreferences().getString(KEY_RANK, "");
+    public boolean isBetaWanted() {
+        return getPreferences().getBoolean(KEY_ENABLE_BETA, false);
     }
 }

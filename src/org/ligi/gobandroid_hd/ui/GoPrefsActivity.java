@@ -68,7 +68,7 @@ public class GoPrefsActivity extends SlidingPreferenceActivity implements OnPref
         root.setPersistent(true);
 
 		/* Gameplay section */        /*
-		 * PreferenceCategory inlinePrefCat = new PreferenceCategory(this);
+         * PreferenceCategory inlinePrefCat = new PreferenceCategory(this);
 		 * inlinePrefCat.setTitle(R.string.gameplay);
 		 * root.addPreference(inlinePrefCat);
 		 * 
@@ -203,32 +203,48 @@ public class GoPrefsActivity extends SlidingPreferenceActivity implements OnPref
         // is a Legend in the first place
         new SetPreferenceEnabledByCheckBoxPreferenceState(doLegendCheckBoxPref).addPreference2SetEnable(SGFLegendCheckBoxPref);
 
-        PreferenceCategory soundPrefCat = new PreferenceCategory(this);
+        /*PreferenceCategory soundPrefCat = new PreferenceCategory(this);
         soundPrefCat.setTitle(R.string.sound);
         root.addPreference(soundPrefCat);
+          */
+
+
+        PreferenceCategory morePrefsCat = new PreferenceCategory(this);
+        morePrefsCat.setTitle(R.string.more);
+        root.addPreference(morePrefsCat);
 
         CheckBoxPreference soundCheckBoxPref = new CheckBoxPreference(this);
         soundCheckBoxPref.setKey(GobandroidSettings.KEY_SOUND);
         soundCheckBoxPref.setTitle(R.string.enable_sound);
         soundCheckBoxPref.setSummary(R.string.enable_sound_summary);
         soundCheckBoxPref.setDefaultValue(settings.isSoundEnabled());
-        soundPrefCat.addPreference(soundCheckBoxPref);
+        morePrefsCat.addPreference(soundCheckBoxPref);
 
         if (!GCMRegistrar.getRegistrationId(this).equals("")) {
-            PreferenceCategory notificationsPrefsCat = new PreferenceCategory(this);
+            /*PreferenceCategory notificationsPrefsCat = new PreferenceCategory(this);
             notificationsPrefsCat.setTitle(R.string.notifications);
             root.addPreference(notificationsPrefsCat);
+            */
 
             CheckBoxPreference notifyTsumegoCheckBoxPref = new CheckBoxPreference(this);
             notifyTsumegoCheckBoxPref.setKey(GobandroidSettings.KEY_TSUMEGO_PUSH);
             notifyTsumegoCheckBoxPref.setTitle(R.string.push_tsumego);
             notifyTsumegoCheckBoxPref.setSummary(R.string.push_tsumego_extra);
             notifyTsumegoCheckBoxPref.setDefaultValue(settings.isTsumegoPushEnabled());
-            notificationsPrefsCat.addPreference(notifyTsumegoCheckBoxPref);
+            morePrefsCat.addPreference(notifyTsumegoCheckBoxPref);
         }
 
+
+        CheckBoxPreference doBetaCheckBoxPref = new CheckBoxPreference(this);
+        doBetaCheckBoxPref.setKey(GobandroidSettings.KEY_ENABLE_BETA);
+        doBetaCheckBoxPref.setTitle(getString(R.string.beta_functions));
+        doBetaCheckBoxPref.setSummary(getString(R.string.more_features_less_stable));
+        doBetaCheckBoxPref.setDefaultValue(settings.isBetaWanted());
+        morePrefsCat.addPreference(doBetaCheckBoxPref);
+
+
 		/*
-		 * 
+         *
 		 * 
 		 * 
 		 * 
@@ -307,7 +323,7 @@ public class GoPrefsActivity extends SlidingPreferenceActivity implements OnPref
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-		/*
+        /*
 		 * if ((preference==sgf_path_pref)||(preference==sgf_fname_pref)
 		 * ||(preference==boardSkinPref)|| (preference==stoneSkinPref)||
 		 * (preference==aiLevelPref)) preference.setSummary((String)newValue);
