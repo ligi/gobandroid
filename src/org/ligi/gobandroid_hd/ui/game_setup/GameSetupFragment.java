@@ -92,9 +92,7 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
         else if ((seekBar == handicap_seek) && (act_handicap != (byte) progress))
             act_handicap = (byte) progress;
 
-        refresh_ui();        /*
-	
-		*/
+        refresh_ui();
     }
 
     /**
