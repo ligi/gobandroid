@@ -21,17 +21,17 @@ import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 
 public class NavigationFragment extends Fragment implements GoGameChangeListener {
 
-    private View next_btn, prev_btn, first_btn, last_btn;
+    private ImageView next_btn, prev_btn, first_btn, last_btn;
     private GoGame game;
     private Handler gameChangeHandler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View res = inflater.inflate(R.layout.nav_button_container, container, false);
-        first_btn = res.findViewById(R.id.btn_first);
-        last_btn = res.findViewById(R.id.btn_last);
-        next_btn = res.findViewById(R.id.btn_next);
-        prev_btn = res.findViewById(R.id.btn_prev);
+        first_btn = (ImageView) res.findViewById(R.id.btn_first);
+        last_btn = (ImageView) res.findViewById(R.id.btn_last);
+        next_btn = (ImageView) res.findViewById(R.id.btn_next);
+        prev_btn = (ImageView) res.findViewById(R.id.btn_prev);
         game = ((GobandroidApp) (getActivity().getApplicationContext())).getGame();
         game.addGoGameChangeListener(this);
 
@@ -89,21 +89,17 @@ public class NavigationFragment extends Fragment implements GoGameChangeListener
     }
 
     private void updateButtonStates() {
-        /*
-        first_btn.setVisibility(game.canUndo() ? View.VISIBLE : View.INVISIBLE);
-        prev_btn.setVisibility(game.canUndo() ? View.VISIBLE : View.INVISIBLE);
-        next_btn.setVisibility(game.canRedo() ? View.VISIBLE : View.INVISIBLE);
-        last_btn.setVisibility(game.canRedo() ? View.VISIBLE : View.INVISIBLE);
-        */
+        adjustImageBtn(first_btn, R.drawable.nav_first, game.canUndo());
+        adjustImageBtn(prev_btn, R.drawable.nav_prev, game.canUndo());
 
-        adjustImageBtn((ImageView) first_btn, R.drawable.nav_first, game.canUndo());
-        adjustImageBtn((ImageView) prev_btn, R.drawable.nav_prev, game.canUndo());
-
-        adjustImageBtn((ImageView) next_btn, R.drawable.nav_next, game.canRedo());
-        adjustImageBtn((ImageView) last_btn, R.drawable.nav_last, game.canRedo());
+        adjustImageBtn(next_btn, R.drawable.nav_next, game.canRedo());
+        adjustImageBtn(last_btn, R.drawable.nav_last, game.canRedo());
     }
 
     public void adjustImageBtn(ImageView img, int res, boolean enabled) {
+
+        if (img.isEnabled() == enabled) // all good - no work here
+            return;
 
         Bitmap bm = BitmapFactory.decodeResource(getResources(), res);
         if (!enabled) {
