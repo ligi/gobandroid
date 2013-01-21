@@ -1,5 +1,10 @@
 package org.ligi.gobandroid_hd.ui.fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -7,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -16,17 +21,17 @@ import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 
 public class NavigationFragment extends Fragment implements GoGameChangeListener {
 
-    private Button next_btn, prev_btn, first_btn, last_btn;
-
+    private View next_btn, prev_btn, first_btn, last_btn;
     private GoGame game;
+    private Handler gameChangeHandler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View res = inflater.inflate(R.layout.nav_button_container, container, false);
-        first_btn = (Button) res.findViewById(R.id.btn_first);
-        last_btn = (Button) res.findViewById(R.id.btn_last);
-        next_btn = (Button) res.findViewById(R.id.btn_next);
-        prev_btn = (Button) res.findViewById(R.id.btn_prev);
+        first_btn = res.findViewById(R.id.btn_first);
+        last_btn = res.findViewById(R.id.btn_last);
+        next_btn = res.findViewById(R.id.btn_next);
+        prev_btn = res.findViewById(R.id.btn_prev);
         game = ((GobandroidApp) (getActivity().getApplicationContext())).getGame();
         game.addGoGameChangeListener(this);
 
@@ -70,8 +75,6 @@ public class NavigationFragment extends Fragment implements GoGameChangeListener
         return res;
     }
 
-    private Handler gameChangeHandler = new Handler();
-
     @Override
     public void onGoGameChange() {
         gameChangeHandler.post(new Runnable() {
@@ -86,10 +89,52 @@ public class NavigationFragment extends Fragment implements GoGameChangeListener
     }
 
     private void updateButtonStates() {
+        /*
         first_btn.setVisibility(game.canUndo() ? View.VISIBLE : View.INVISIBLE);
         prev_btn.setVisibility(game.canUndo() ? View.VISIBLE : View.INVISIBLE);
         next_btn.setVisibility(game.canRedo() ? View.VISIBLE : View.INVISIBLE);
         last_btn.setVisibility(game.canRedo() ? View.VISIBLE : View.INVISIBLE);
+        */
+
+        adjustImageBtn((ImageView) first_btn, R.drawable.nav_first, game.canUndo());
+        adjustImageBtn((ImageView) prev_btn, R.drawable.nav_prev, game.canUndo());
+
+        adjustImageBtn((ImageView) next_btn, R.drawable.nav_next, game.canRedo());
+        adjustImageBtn((ImageView) last_btn, R.drawable.nav_last, game.canRedo());
+    }
+
+    public void adjustImageBtn(ImageView img, int res, boolean enabled) {
+
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), res);
+        if (!enabled) {
+            img.setEnabled(false);
+            img.setFocusable(false);
+            bm = adjustOpacity(bm, 128);
+        } else {
+            img.setFocusable(true);
+            img.setEnabled(true);
+        }
+        img.setImageDrawable(new BitmapDrawable(bm));
+    }
+
+    //and here's where the magic happens
+    private Bitmap adjustOpacity(Bitmap bitmap, int opacity) {
+        //make sure bitmap is mutable (copy of needed)
+        Bitmap mutableBitmap = bitmap.isMutable()
+                ? bitmap
+                : bitmap.copy(Bitmap.Config.ARGB_8888, true);
+
+        //draw the bitmap into a canvas
+        Canvas canvas = new Canvas(mutableBitmap);
+
+        //create a color with the specified opacity
+        int colour = (opacity & 0xFF) << 24;
+
+        //draw the colour over the bitmap using PorterDuff mode DST_IN
+        canvas.drawColor(colour, PorterDuff.Mode.DST_IN);
+
+        //now return the adjusted bitmap
+        return mutableBitmap;
     }
 
     @Override

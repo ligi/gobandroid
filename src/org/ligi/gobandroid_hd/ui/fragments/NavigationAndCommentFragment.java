@@ -24,9 +24,11 @@ public class NavigationAndCommentFragment extends Fragment implements GoGameChan
         View res = inflater.inflate(R.layout.game_extra_review, container, false);
 
         myTextView = (TextView) res.findViewById(R.id.comments_textview);
-
+        myTextView.setFocusable(false);
         game = ((GobandroidApp) (getActivity().getApplicationContext())).getGame();
         game.addGoGameChangeListener(this);
+
+        res.findViewById(R.id.scrollview).setFocusable(false);
 
         getFragmentManager().beginTransaction().replace(R.id.container_for_nav, new NavigationFragment()).commit();
         onGoGameChange();

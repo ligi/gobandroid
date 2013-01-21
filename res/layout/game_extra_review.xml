@@ -13,6 +13,8 @@
     <ScrollView android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:padding="5dip"
+                android:focusable="false"
+                android:id="@+id/scrollview"
                 android:layout_above="@id/container_for_nav">
 
         <include layout="@layout/comment_textview"/>

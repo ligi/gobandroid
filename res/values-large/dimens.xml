@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="thumbnail_size">420dp</dimen>
-
+    <dimen name="nav_buttons_size">96dp</dimen>
 </resources>

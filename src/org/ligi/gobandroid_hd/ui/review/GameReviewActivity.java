@@ -2,9 +2,9 @@ package org.ligi.gobandroid_hd.ui.review;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.View;
 import com.actionbarsherlock.view.Menu;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -30,34 +30,45 @@ public class GameReviewActivity extends GoActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getBoard().setOnKeyListener(this);
+        //getBoard().setOnKeyListener(this);
         getBoard().do_actpos_highlight = false;
-
     }
 
     @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
+    public void onResume() {
+        super.onResume();
+    }
 
+    public boolean isBoardFocusWanted() {
+        return false;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.i("", "KeyEvent" + event.getKeyCode());
         if (event.getAction() == KeyEvent.ACTION_DOWN)
             switch (keyCode) {
 
+
                 case KeyEvent.KEYCODE_BOOKMARK:
-                    new BookmarkDialog(this).show();
+                    Log.i("", "Focus:" + getWindow().getCurrentFocus());
+                    //new BookmarkDialog(this).show();
                     return true;
 
                 case KeyEvent.KEYCODE_MEDIA_PLAY:
                     SwitchModeHelper.startGame(this, InteractionScope.MODE_TELEVIZE);
                     return true;
 
+
                 case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
-                case KeyEvent.KEYCODE_DPAD_LEFT:
                     if (!getGame().canUndo())
                         return true;
                     getGame().undo();
                     return true;
 
-                case KeyEvent.KEYCODE_DPAD_RIGHT:
+                case KeyEvent.KEYCODE_FORWARD:
                 case KeyEvent.KEYCODE_MEDIA_NEXT:
+                    //case KeyEvent.KEYCODE_MEDIA_:
                     GameForwardAlert.show(this, getGame());
                     return true;
 
@@ -66,9 +77,45 @@ public class GameReviewActivity extends GoActivity {
                     return false;
 
             }
-        return super.onKey(v, keyCode, event);
+        return super.onKeyDown(keyCode, event);
     }
 
+    /*
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+            if (event.getAction() == KeyEvent.ACTION_DOWN)
+                switch (keyCode) {
+
+                    case KeyEvent.KEYCODE_BOOKMARK:
+                        new BookmarkDialog(this).show();
+                        return true;
+
+                    case KeyEvent.KEYCODE_MEDIA_PLAY:
+                        SwitchModeHelper.startGame(this, InteractionScope.MODE_TELEVIZE);
+                        return true;
+
+
+                    case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
+                        if (!getGame().canUndo())
+                            return true;
+                        getGame().undo();
+                        return true;
+
+                    case KeyEvent.KEYCODE_FORWARD:
+                    case KeyEvent.KEYCODE_MEDIA_NEXT:
+                        GameForwardAlert.show(this, getGame());
+                        return true;
+
+                    case KeyEvent.KEYCODE_DPAD_UP:
+                    case KeyEvent.KEYCODE_DPAD_DOWN:
+                        return false;
+
+                }
+            return super.onKey(v, keyCode, event);
+        }
+
+    */
     @Override
     public void doTouch(MotionEvent event) {
         // super.doTouch(event); - Do not call! Not needed and breaks marking
