@@ -125,11 +125,13 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
             getApp().getInteractionScope().setGame(new GoGame(act_size, act_handicap));
         }
 
-        GoBoardViewHD board = ((GoActivity) getActivity()).getBoard();
+        if (getActivity() instanceof GoActivity) {
+            GoBoardViewHD board = ((GoActivity) getActivity()).getBoard();
 
-        if (board != null) {
-            board.regenerateStroneImagesWithNewSize();
-            board.invalidate();
+            if (board != null) {
+                board.regenerateStroneImagesWithNewSize();
+                board.invalidate();
+            }
         }
     }
 
