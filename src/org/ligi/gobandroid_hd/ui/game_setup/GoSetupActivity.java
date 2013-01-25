@@ -25,6 +25,7 @@ import android.support.v4.app.Fragment;
 import android.view.WindowManager;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.androidquery.service.MarketService;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -50,6 +51,10 @@ public class GoSetupActivity extends GoActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        MarketService ms = new MarketService(this);
+        ms.level(MarketService.MINOR).checkVersion();
+
         getApp().getInteractionScope().setMode(InteractionScope.MODE_SETUP);
         // TODO the next line works but needs investigation - i thought more of
         // getBoard().requestFocus(); - but that was not working ..
