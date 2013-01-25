@@ -96,6 +96,7 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
 
     @Override
     protected void onResume() {
+        super.onResume();
         Log.i("GnuGoDebug onResume");
         conn = new ServiceConnection() {
 
