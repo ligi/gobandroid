@@ -50,6 +50,7 @@ import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.online.UserHandler;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
 import org.ligi.gobandroid_hd.ui.alerts.ShareSGFDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -177,34 +178,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         game2ui();
     }
 
-    @Override
-    protected void onStart() {
-        getApp().setGoActivityActivity(true);
-        if (getGame() == null)
-            Log.w("we do not have a game in onStart of a GoGame activity - thats crazy!");
-        else
-            getGame().addGoGameChangeListener(this);
-
-        super.onStart();
-        go_board.setFocusableInTouchMode(true);
-        go_board.requestFocus();
-    }
-
-    @Override
-    protected void onStop() {
-        getApp().setGoActivityActivity(false);
-        if (pd != null)
-            pd.dismiss();
-
-        if (getGame() == null)
-            Log.w("we do not have a game (anymore) in onStop of a GoGame activity - thats crazy!");
-        else
-            getGame().removeGoGameChangeListener(this);
-
-        super.onStop();
-        go_board.move_stone_mode = false;
-    }
-
     /**
      * set some preferences on the go board - intended to be called in onResume
      */
@@ -219,9 +192,23 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         go_board.setGridEmboss(getSettings().isGridEmbossEnabled());
     }
 
+    public boolean isBoardFocusWanted() {
+        return true;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+        getApp().setGoActivityActivity(true);
+
+        if (isBoardFocusWanted()) {
+            go_board.setFocusableInTouchMode(true);
+            go_board.setFocusable(true);
+            go_board.requestFocus();
+        } else {
+            go_board.setFocusableInTouchMode(false);
+            go_board.setFocusable(false);
+        }
         setBoardPreferences();
 
         new Handler().postDelayed(new Runnable() {
@@ -232,6 +219,11 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             }
 
         }, 100);
+
+        if (getGame() == null)
+            Log.w("we do not have a game in onStart of a GoGame activity - thats crazy!");
+        else
+            getGame().addGoGameChangeListener(this);
     }
 
     public ZoomGameExtrasFragment getZoomFragment() {
@@ -461,7 +453,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             return false;
 
 		/*
-		 * if (isLastMoveAccepted()) return true;
+         * if (isLastMoveAccepted()) return true;
 		 */
         if (getGame().getCloudRole().equals("s"))
             return true;
@@ -476,6 +468,15 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     @Override
     public void onPause() {
         super.onPause();
+        go_board.move_stone_mode = false;
+        getApp().setGoActivityActivity(false);
+        if (pd != null)
+            pd.dismiss();
+
+        if (getGame() == null)
+            Log.w("we do not have a game (anymore) in onStop of a GoGame activity - thats crazy!");
+        else
+            getGame().removeGoGameChangeListener(this);
 
         if (doAutosave())
             try {
@@ -710,16 +711,26 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                     Log.i("CloudGoban upload " + game_key + " " + has_cloud_history);
                     if (game_key == null) {
                         Game game = new Game();
+
+                        if (getGame().isBlackToMove()) {
+                            // if black is to move here -> we are white
+                            getGame().getMetaData().setWhiteName(getApp().getSettings().getUsername());
+                            getGame().getMetaData().setWhiteRank(getApp().getSettings().getRank());
+                        } else {
+                            // if white is to move here -> we are black
+                            getGame().getMetaData().setBlackName(getApp().getSettings().getUsername());
+                            getGame().getMetaData().setBlackRank(getApp().getSettings().getRank());
+                        }
+
+
                         game.setSgf(new Text().setValue(SGFHelper.game2sgf(getGame())));
                         if (has_cloud_history) {
-                            Log.i("CloudGoban EditGame start" + getGame().getCloudKey());
                             game.setEncodedKey(getGame().getCloudKey());
-
-                            Game res_game = gc.games().update("foo", game).execute();
-                            //game_key = gc.games().edit(game).execute().getEncodedKey();
-                            Log.i("CloudGoban EditGame" + res_game.getEncodedKey() + " .. " + res_game.getEditKey());
+                            Game res_game = gc.games().update(UserHandler.getUserKey(getApp()), game).execute();
                             game_key = res_game.getEncodedKey();
                         } else { // create a new Game
+
+
                             game_key = gc.games().insert(game).execute().getEncodedKey();
                         }
 
