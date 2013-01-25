@@ -46,7 +46,8 @@ public class UserHandler {
 
                 // if we don't have a secret -> generate one
                 if (!prefs.contains("user_secret"))
-                    prefs.edit().putString("user_secret", UUID.randomUUID().toString());
+                    prefs.edit().putString("user_secret", UUID.randomUUID().toString()).commit();
+
 
                 Cloudgoban gc = ctx.getCloudgoban();
                 User usr = new User();
