@@ -209,5 +209,7 @@
     <string name="online_view_game">View</string>
     <string name="online_join_game">Join</string>
     <string name="online_create_game">Create</string>
+    <string name="enter_username">Please enter some username</string>
+    <string name="who_are_you">Who are you?</string>
 
 </resources>
