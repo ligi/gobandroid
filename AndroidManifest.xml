@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.ligi.gobandroid_hd"
           android:installLocation="auto"
-          android:versionCode="116"
-          android:versionName="1.16">
+          android:versionCode="117"
+          android:versionName="1.17">
 
     <uses-sdk
             android:minSdkVersion="5"
@@ -54,6 +54,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name="org.ligi.gobandroid_hd.ui.online.OnlineSelectActivity"/>
         <activity
                 android:name="org.ligi.gobandroid_hd.ui.GobanDroidTVActivity"
                 android:icon="@drawable/gobandroid_tv"

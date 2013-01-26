@@ -24,6 +24,7 @@ import org.ligi.gobandroid_hd.ui.HelpDialog;
 import org.ligi.gobandroid_hd.ui.ProfileActivity;
 import org.ligi.gobandroid_hd.ui.UnzipSGFsDialog;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
+import org.ligi.gobandroid_hd.ui.online.OnlineSelectActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
 
@@ -72,7 +73,13 @@ public class MenuDrawer implements OnItemClickListener {
         items.add(new Item(R.id.tsumego, R.string.tsumego, R.drawable.dashboard_tsumego));
         items.add(new Item(R.id.review, R.string.review, R.drawable.dashboard_review));
         items.add(new Item(R.id.bookmark, R.string.bookmark, R.drawable.bookmark));
+
+
         items.add(new Category(R.string.more));
+
+        if (getApp().getSettings().isBetaWanted())
+            items.add(new Item(R.id.online_play, R.string.online_play, R.drawable.online_play));
+
         items.add(new Item(R.id.profile, R.string.profile, R.drawable.profile));
         items.add(new Item(R.id.links, R.string.links, R.drawable.dashboard_links));
         items.add(new Item(R.id.preferences, R.string.preferences, R.drawable.preferences));
@@ -105,6 +112,11 @@ public class MenuDrawer implements OnItemClickListener {
 
                 ctx.startActivity(new Intent(ctx, GoPrefsActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 break;
+
+            case R.id.online_play:
+                ctx.startActivity(new Intent(ctx, OnlineSelectActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                break;
+
             case R.id.tsumego:
                 Intent next = startSGFListForPath(getApp().getSettings().getTsumegoPath());
 
