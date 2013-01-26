@@ -1,6 +1,8 @@
 package org.ligi.gobandroid_hd.ui.application;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -114,7 +116,17 @@ public class MenuDrawer implements OnItemClickListener {
                 break;
 
             case R.id.online_play:
-                ctx.startActivity(new Intent(ctx, OnlineSelectActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                if (getApp().getSettings().getUsername().equals(""))
+                    new AlertDialog.Builder(ctx).setMessage(ctx.getString(R.string.enter_username)).setTitle(ctx.getString(R.string.who_are_you))
+                            .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    ctx.startActivity(new Intent(ctx, ProfileActivity.class));
+                                }
+                            }).show();
+                else
+                    ctx.startActivity(new Intent(ctx, OnlineSelectActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 break;
 
             case R.id.tsumego:
