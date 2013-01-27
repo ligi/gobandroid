@@ -22,13 +22,24 @@ public class ShareSGFDialog extends GobandroidDialog {
         if (SGFHelper.saveSGF(getApp().getGame(), fname)) { // if we could save
             // the file
             // add extra
-            Intent it = new Intent(Intent.ACTION_SEND);
-            it.putExtra(Intent.EXTRA_SUBJECT, "SGF created with gobandroid");
-            it.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + fname));
-            it.setType("application/x-go-sgf");
-            context.startActivity(Intent.createChooser(it, "Choose how to send the SGF"));
+
+            init(context, fname);
 
         }
+
+    }
+
+    public ShareSGFDialog(Context context, String fname) {
+        super(context);
+        init(context, fname);
+    }
+
+    public void init(Context context, String fname) {
+        Intent it = new Intent(Intent.ACTION_SEND);
+        it.putExtra(Intent.EXTRA_SUBJECT, "SGF created with gobandroid");
+        it.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + fname));
+        it.setType("application/x-go-sgf");
+        context.startActivity(Intent.createChooser(it, "Choose how to send the SGF"));
 
     }
 

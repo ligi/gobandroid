@@ -1,16 +1,22 @@
 package org.ligi.gobandroid_hd.ui.sgf_listing;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.InteractionScope;
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GoLinkLoadActivity;
 import org.ligi.gobandroid_hd.ui.GobandroidListFragment;
 import org.ligi.gobandroid_hd.ui.SGFLoadActivity;
+import org.ligi.gobandroid_hd.ui.alerts.ShareSGFDialog;
 
 import java.io.File;
 
@@ -47,6 +53,44 @@ public class SGFListFragment extends GobandroidListFragment {
 
         this.setListAdapter(adapter);
 
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);    //To change body of overridden methods use File | Settings | File Templates.
+
+
+        this.getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+
+                new AlertDialog.Builder(getActivity()).setItems(R.array.sgf_longclick_items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                new AlertDialog.Builder(getActivity()).setMessage("Really delete " + dir + "/" + menu_items[position]).setTitle("Delete?")
+                                        .setNegativeButton("NO", new DialogDiscarder())
+                                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                new File(dir + "/" + menu_items[position]).delete();
+                                            }
+                                        })
+
+                                        .show();
+
+                                break;
+                            case 1:
+                                new ShareSGFDialog(getActivity(), dir + "/" + menu_items[position]).show();
+                                break;
+                        }
+                    }
+                }).show();
+                return false;
+            }
+        });
     }
 
     @Override

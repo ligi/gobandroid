@@ -12,4 +12,10 @@
         <item>@string/tsumego</item>
         <item>televize</item>
     </string-array>
+
+    <string-array name="sgf_longclick_items">
+        <item>@string/delete</item>
+        <item>@string/share</item>
+    </string-array>
+
 </resources>

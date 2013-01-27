@@ -211,5 +211,5 @@
     <string name="online_create_game">Create</string>
     <string name="enter_username">Please enter some username</string>
     <string name="who_are_you">Who are you?</string>
-
+    <string name="delete">Delete</string>
 </resources>
