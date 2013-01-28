@@ -45,7 +45,6 @@ public class SGFListFragment extends GobandroidListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        InteractionScope interaction_scope = ((GobandroidApp) (getActivity().getApplicationContext())).getInteractionScope();
 
         if (savedInstanceState != null)
             getEnvFromSavedInstance(savedInstanceState);
@@ -53,12 +52,6 @@ public class SGFListFragment extends GobandroidListFragment {
         if (menu_items == null) // we got nothing from savedInstance
             refresh();
 
-        if (interaction_scope.getMode() == InteractionScope.MODE_TSUMEGO)
-            adapter = new TsumegoPathViewAdapter(this.getActivity(), menu_items, dir);
-        else if (interaction_scope.getMode() == InteractionScope.MODE_REVIEW)
-            adapter = new ReviewPathViewAdapter(this.getActivity(), menu_items, dir);
-
-        this.setListAdapter(adapter);
 
     }
 
@@ -192,6 +185,18 @@ public class SGFListFragment extends GobandroidListFragment {
             Arrays.sort(menu_items);
         }
 
+       /* if (adapter!=null)
+            adapter.notifyDataSetChanged();
+         */
+
+        InteractionScope interaction_scope = ((GobandroidApp) (getActivity().getApplicationContext())).getInteractionScope();
+
+        if (interaction_scope.getMode() == InteractionScope.MODE_TSUMEGO)
+            adapter = new TsumegoPathViewAdapter(this.getActivity(), menu_items, dir);
+        else if (interaction_scope.getMode() == InteractionScope.MODE_REVIEW)
+            adapter = new ReviewPathViewAdapter(this.getActivity(), menu_items, dir);
+
+        this.setListAdapter(adapter);
 
     }
 
