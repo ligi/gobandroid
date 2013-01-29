@@ -115,7 +115,7 @@ public class SGFSDCardListActivity extends GobandroidFragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_refresh:
-                my_task = DownloadProblemsDialog.getAndRunTask(this, (Refreshable) this);
+                my_task = DownloadProblemsDialog.getAndRunTask(this, (Refreshable) list_fragment);
                 return true;
         }
         return super.onOptionsItemSelected(item);

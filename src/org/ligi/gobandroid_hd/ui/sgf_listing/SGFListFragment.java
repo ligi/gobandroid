@@ -18,6 +18,7 @@ import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GoLinkLoadActivity;
 import org.ligi.gobandroid_hd.ui.GobandroidListFragment;
+import org.ligi.gobandroid_hd.ui.Refreshable;
 import org.ligi.gobandroid_hd.ui.SGFLoadActivity;
 import org.ligi.gobandroid_hd.ui.alerts.ShareSGFDialog;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
@@ -27,7 +28,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Vector;
 
-public class SGFListFragment extends GobandroidListFragment {
+public class SGFListFragment extends GobandroidListFragment implements Refreshable {
 
     private String[] menu_items;
     private String dir;
