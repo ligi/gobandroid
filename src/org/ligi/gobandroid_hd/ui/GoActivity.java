@@ -21,10 +21,8 @@ package org.ligi.gobandroid_hd.ui;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -38,19 +36,13 @@ import android.view.WindowManager;
 import android.widget.Toast;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.google.api.services.cloudgoban.Cloudgoban;
-import com.google.api.services.cloudgoban.model.Game;
-import com.google.api.services.cloudgoban.model.Text;
 import org.ligi.android.common.activitys.ActivityOrientationLocker;
-import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.backend.CloudGobanHelper;
-import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
-import org.ligi.gobandroid_hd.online.UserHandler;
+import org.ligi.gobandroid_hd.online.UploadGameToCloudEndpointsWithSend;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
 import org.ligi.gobandroid_hd.ui.alerts.ShareSGFDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -84,7 +76,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     private Fragment actFragment;
     private InteractionScope interaction_scope;
     private int last_processed_move_change_num = 0;
-    private ProgressDialog pd;
+
     private GoMove last_accept;
 
     public Fragment getGameExtraFragment() {
@@ -277,7 +269,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
             case R.id.menu_game_invite:
                 getGame().setCloudDefs(null, null);
-                new UploadGameToCloudEndpointsWithSend().execute();
+                new UploadGameToCloudEndpointsWithSend(this, "private_invite").execute();
                 return true;
             case R.id.menu_bookmark:
                 new BookmarkDialog(this).show();
@@ -470,9 +462,13 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         super.onPause();
         go_board.move_stone_mode = false;
         getApp().setGoActivityActivity(false);
+
+        /*
+        TODO dismiss ProgressDialog from upload when needed
+
         if (pd != null)
             pd.dismiss();
-
+          */
         if (getGame() == null)
             Log.w("we do not have a game (anymore) in onStop of a GoGame activity - thats crazy!");
         else
@@ -639,125 +635,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             new UndoWithVariationDialog(this).show();
         } else
             getGame().undo(GoPrefs.isKeepVariantEnabled());
-    }
-
-    class UploadGameToCloudEndpointsWithSend extends UploadGameToCloudEndpointsBase {
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            if (result == null) {
-                AlertDialog.Builder alert_b = new AlertDialog.Builder(GoActivity.this);
-                alert_b.setMessage("Cannot create the game - please try again later");
-                alert_b.setTitle("Server Problem");
-                alert_b.setIcon(android.R.drawable.ic_dialog_alert);
-                alert_b.setPositiveButton(R.string.ok, new DialogDiscarder());
-                alert_b.show();
-            } else
-                try {
-                    Intent i = new Intent(Intent.ACTION_SEND);
-                    i.setType("text/plain");
-                    i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.go_game_invitation));
-                    String color = getString(R.string.white);
-                    if (getGame().getActMove().isBlackToMove())
-                        color = getString(R.string.black);
-
-                    String sAux = "\n" + String.format(getString(R.string.you_are_invited_to_a_go_game), getGame().getSize(), color) + "\n";
-                    sAux = sAux + GobandroidConfiguration.CLOUD_GOBAN_URL_BASE + result + "\n \n #gobandroid\n";
-                    i.putExtra(Intent.EXTRA_TEXT, sAux);
-                    startActivity(Intent.createChooser(i, getString(R.string.choose_invite_method)));
-                } catch (Exception e) { // e.toString();
-                }
-        }
-
-        @Override
-        public boolean doRegister() {
-            return true;
-        }
-    }
-
-    public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            pd.dismiss();
-
-        }
-
-        @Override
-        protected void onPreExecute() {
-            pd = new ProgressDialog(GoActivity.this);
-            pd.setMessage(getString(R.string.uploading_game));
-            pd.show();
-            super.onPreExecute();
-        }
-
-        protected boolean doRegister() {
-            return false;
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-
-            String game_key = null;
-
-            int attempts = 0;
-            boolean has_cloud_history = (getGame().getCloudKey() != null);
-            while (attempts++ < 6) {
-                try {
-                    Cloudgoban gc = getApp().getCloudgoban();
-
-                    Log.i("CloudGoban upload " + game_key + " " + has_cloud_history);
-                    if (game_key == null) {
-                        Game game = new Game();
-
-                        if (getGame().isBlackToMove()) {
-                            // if black is to move here -> we are white
-                            getGame().getMetaData().setWhiteName(getApp().getSettings().getUsername());
-                            getGame().getMetaData().setWhiteRank(getApp().getSettings().getRank());
-                        } else {
-                            // if white is to move here -> we are black
-                            getGame().getMetaData().setBlackName(getApp().getSettings().getUsername());
-                            getGame().getMetaData().setBlackRank(getApp().getSettings().getRank());
-                        }
-
-
-                        game.setSgf(new Text().setValue(SGFHelper.game2sgf(getGame())));
-                        if (has_cloud_history) {
-                            game.setEncodedKey(getGame().getCloudKey());
-                            Game res_game = gc.games().update(UserHandler.getUserKey(getApp()), game).execute();
-                            game_key = res_game.getEncodedKey();
-                        } else { // create a new Game
-
-
-                            game_key = gc.games().insert(game).execute().getEncodedKey();
-                        }
-
-                    }
-
-                    if (game_key != null) { // success
-                        if (doRegister()) {
-                            CloudGobanHelper.registerGame(GoActivity.this, game_key, "" + (getGame().isBlackToMove() ? 'b' : 'w'), false, null);
-                        }
-                        getGame().notifyGameChange();
-                        return game_key;
-                    }
-
-                    try { // exponential back off
-                        Thread.sleep(attempts * attempts * 1000);
-                    } catch (InterruptedException e) {
-                    }
-                } catch (IOException e) {
-                    Log.i("CloudGoban err " + e);
-                }
-
-            }
-
-            return null;
-
-        }
-
     }
 
 }

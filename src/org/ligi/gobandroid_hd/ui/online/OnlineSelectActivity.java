@@ -23,12 +23,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import com.actionbarsherlock.app.ActionBar;
 import com.google.analytics.tracking.android.EasyTracker;
-import org.ligi.android.common.adapter.LinkWithDescription;
-import org.ligi.android.common.adapter.LinkWithDescriptionAndTitle;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.online.OnlineCreateFragment;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.gobandroid_hd.ui.links.LinkListFragment;
-import org.ligi.tracedroid.logging.Log;
+import org.ligi.gobandroid_hd.ui.game_setup.GameSetupFragment;
 
 /**
  * Activity to load present the user GO-Relevant links ( Rules / SGF's / .. )
@@ -47,10 +45,10 @@ public class OnlineSelectActivity extends GobandroidFragmentActivity implements 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        this.setTitle(R.string.link_title);
+        this.setTitle(R.string.online);
 
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        int[] tabs = new int[]{R.string.online_view_game,R.string.online_create_game,R.string.online_join_game};
+        int[] tabs = new int[]{R.string.online_create_game,R.string.online_your_games,R.string.online_view_game, R.string.online_join_game};
 
         for (int tab_str : tabs) {
             ActionBar.Tab tab = getSupportActionBar().newTab();
@@ -70,6 +68,24 @@ public class OnlineSelectActivity extends GobandroidFragmentActivity implements 
     @Override
     public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
         EasyTracker.getTracker().trackEvent("ui_action", "links", act_tab_str_for_analytics, null);
+
+//
+        switch ((Integer) tab.getTag()) {
+            case R.string.online_join_game:
+                new GamesListLoader(this,"public_invite").execute();
+                break;
+
+            case R.string.online_create_game:
+                changeFragment(new OnlineCreateFragment());
+                break;
+
+            case R.string.online_view_game:
+                new GamesListLoader(this,"private_invite").execute();
+                break;
+
+
+        }
+
     }
 
     @Override

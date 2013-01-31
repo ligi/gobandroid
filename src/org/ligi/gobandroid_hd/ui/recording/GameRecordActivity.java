@@ -10,6 +10,7 @@ import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
+import org.ligi.gobandroid_hd.online.UploadGameToCloudEndpointsBase;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.tracedroid.Log;
@@ -57,7 +58,7 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
 		 */
 
             case R.id.menu_game_accept:
-                new UploadGameToCloudEndpointsBase().execute();
+                new UploadGameToCloudEndpointsBase(this, null).execute();
                 acceptCloudMove();
                 onGoGameChange();
                 return true;

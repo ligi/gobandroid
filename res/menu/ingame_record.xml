@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="@string/undo" android:id="@+id/menu_game_undo" android:icon="@drawable/undo"
           android:showAsAction="ifRoom|withText"></item>
+
     <item android:title="@string/accept" android:id="@+id/menu_game_accept" android:icon="@drawable/next"
           android:showAsAction="ifRoom|withText"></item>
     <item android:title="@string/save_as_sgf" android:id="@+id/menu_write_sgf" android:icon="@drawable/save"

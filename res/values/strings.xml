@@ -206,10 +206,12 @@
     <string name="more_features_less_stable">more features but less stable</string>
     <string name="online">ONLINE</string>
     <string name="online_play">Online-Go</string>
-    <string name="online_view_game">View</string>
+    <string name="online_view_game">Watch</string>
     <string name="online_join_game">Join</string>
     <string name="online_create_game">Create</string>
+    <string name="online_your_games">Your Games</string>
     <string name="enter_username">Please enter some username</string>
     <string name="who_are_you">Who are you?</string>
     <string name="delete">Delete</string>
+    <string name="unknown">unknown</string>
 </resources>

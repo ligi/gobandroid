@@ -31,6 +31,7 @@ public class SGFMetaData {
             fname += FNAME_ENDING;
 
         meta_fname = fname;
+
         try {
             Log.i("got json file " + FileHelper.file2String(new File(meta_fname)));
             JSONObject jObject = new JSONObject(FileHelper.file2String(new File(meta_fname)));

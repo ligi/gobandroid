@@ -39,6 +39,7 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+
         GoPrefs.init(getActivity()); // TODO remove legacy
 
         View view = inflater.inflate(R.layout.game_setup_inner, null);
