@@ -48,7 +48,12 @@ public class SaveSGFDialog extends GobandroidDialog {
         class SaveSGFOnClickListener implements DialogInterface.OnClickListener {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String fname = getCompleteFileName();
-                SGFHelper.saveSGF(getApp().getGame(), fname);
+                boolean res = SGFHelper.saveSGF(getApp().getGame(), fname);
+
+                if (res)
+                    Toast.makeText(context, String.format(context.getString(R.string.file_saved), fname), Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(context, String.format(context.getString(R.string.file_not_saved), fname), Toast.LENGTH_SHORT).show();
 
                 dialog.dismiss();
             }
