@@ -6,6 +6,7 @@ import com.google.android.gcm.GCMRegistrar;
 import com.google.api.services.cloudgoban.Cloudgoban;
 import com.google.api.services.cloudgoban.model.User;
 import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.Log;
 
 import java.io.IOException;
@@ -121,4 +122,15 @@ public class UserHandler {
 
     }
 
+    public static void setGameUsername(GobandroidFragmentActivity goActivity) {
+        if (goActivity.getGame().isBlackToMove()) {
+            // if black is to move here -> we are white
+            goActivity.getGame().getMetaData().setWhiteName(goActivity.getApp().getSettings().getUsername());
+            goActivity.getGame().getMetaData().setWhiteRank(goActivity.getApp().getSettings().getRank());
+        } else {
+            // if white is to move here -> we are black
+            goActivity.getGame().getMetaData().setBlackName(goActivity.getApp().getSettings().getUsername());
+            goActivity.getGame().getMetaData().setBlackRank(goActivity.getApp().getSettings().getRank());
+        }
+    }
 }

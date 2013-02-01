@@ -61,15 +61,7 @@ public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String
                     if (type != null)
                         game.setType(type);
 
-                    if (goActivity.getGame().isBlackToMove()) {
-                        // if black is to move here -> we are white
-                        goActivity.getGame().getMetaData().setWhiteName(goActivity.getApp().getSettings().getUsername());
-                        goActivity.getGame().getMetaData().setWhiteRank(goActivity.getApp().getSettings().getRank());
-                    } else {
-                        // if white is to move here -> we are black
-                        goActivity.getGame().getMetaData().setBlackName(goActivity.getApp().getSettings().getUsername());
-                        goActivity.getGame().getMetaData().setBlackRank(goActivity.getApp().getSettings().getRank());
-                    }
+                   UserHandler.setGameUsername(goActivity);
 
 
                     game.setSgf(new Text().setValue(SGFHelper.game2sgf(goActivity.getGame())));

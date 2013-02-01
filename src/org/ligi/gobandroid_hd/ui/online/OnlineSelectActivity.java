@@ -82,7 +82,7 @@ public class OnlineSelectActivity extends GobandroidFragmentActivity implements 
                 break;
 
             case R.string.online_view_game:
-                new GamesListLoader(this, "private_invite").execute();
+                new GamesListLoader(this, "public_watching").execute();
                 break;
 
 

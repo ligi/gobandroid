@@ -20,14 +20,25 @@ import org.ligi.gobandroid_hd.logic.GoGameMetadata;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.SGFLoadActivity;
 
-class ViewOnlineGameListFragment extends ListFragment {
+public class ViewOnlineGameListFragment extends ListFragment {
 
-    private GameCollection list;
+    static private GameCollection list;
+
     private LayoutInflater mLayoutInflater;
     private ViewListAdapter mAdapter;
 
+    public ViewOnlineGameListFragment() {
+        super();
+    }
+
     public ViewOnlineGameListFragment(GameCollection list) {
+        super();
         this.list = list;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -40,8 +51,8 @@ class ViewOnlineGameListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Intent intent=new Intent(getActivity(), SGFLoadActivity.class);
-        intent.setData(Uri.parse(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE +  ((Game)mAdapter.getItem(position)).getEncodedKey()));
+        Intent intent = new Intent(getActivity(), SGFLoadActivity.class);
+        intent.setData(Uri.parse(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE + ((Game) mAdapter.getItem(position)).getEncodedKey()));
         getActivity().startActivity(intent);
 
         super.onListItemClick(l, v, position, id);    //To change body of overridden methods use File | Settings | File Templates.
@@ -75,8 +86,8 @@ class ViewOnlineGameListFragment extends ListFragment {
             TextView time_tv = (TextView) v.findViewById(R.id.time_tv);
             TextView size_tv = (TextView) v.findViewById(R.id.size_tv);
 
-            View white_block=v.findViewById(R.id.white_block);
-            View black_block=v.findViewById(R.id.black_block);
+            View white_block = v.findViewById(R.id.white_block);
+            View black_block = v.findViewById(R.id.black_block);
 
 
             GoGame game = SGFHelper.sgf2game(online_game.getSgf().getValue(), null);
@@ -86,9 +97,9 @@ class ViewOnlineGameListFragment extends ListFragment {
             if (game_meta.getWhiteName().equals(""))
                 white_block.setVisibility(View.GONE);
             else {
-                String white_label= game_meta.getBlackName();
+                String white_label = game_meta.getBlackName();
                 if (!game_meta.getWhiteRank().equals(""))
-                    white_label+=" ("+game_meta.getWhiteRank()+") ";
+                    white_label += " (" + game_meta.getWhiteRank() + ") ";
 
                 white_tv.setText(white_label);
             }
@@ -96,11 +107,11 @@ class ViewOnlineGameListFragment extends ListFragment {
 
             if (game_meta.getBlackName().equals(""))
                 black_block.setVisibility(View.GONE);
-            else  {
+            else {
 
-                String black_label= game_meta.getBlackName();
+                String black_label = game_meta.getBlackName();
                 if (!game_meta.getBlackRank().equals(""))
-                    black_label+=" ("+game_meta.getBlackRank()+") ";
+                    black_label += " (" + game_meta.getBlackRank() + ") ";
                 black_tv.setText(black_label);
             }
 

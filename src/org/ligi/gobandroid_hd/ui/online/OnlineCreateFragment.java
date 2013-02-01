@@ -10,11 +10,9 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
 /**
- * Created with IntelliJ IDEA.
  * User: ligi
  * Date: 1/31/13
  * Time: 5:46 PM
- * To change this template use File | Settings | File Templates.
  */
 public class OnlineCreateFragment extends Fragment {
 
@@ -25,10 +23,9 @@ public class OnlineCreateFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new UploadGameToCloudEndpointsWithSend((GobandroidFragmentActivity) getActivity(), "public_invite").execute();
+                new UploadGameToCloudEndpointsWithDialog((GobandroidFragmentActivity) getActivity(), "public_invite").execute();
             }
         });
-        //
         return v;
     }
 

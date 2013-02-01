@@ -4,8 +4,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Handler;
+import com.google.api.services.cloudgoban.model.Game;
 import com.google.api.services.cloudgoban.model.GoGameParticipation;
+import com.google.api.services.cloudgoban.model.Text;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.online.UserHandler;
@@ -47,8 +51,23 @@ public class CloudGobanHelper {
                             }
                         });
 
-                    } else if (start_after_reg)
+                    } else if (start_after_reg) {
+                        Game game=activity.getApp().getCloudgoban().games().get(gn.getGameKey()).execute();
+
+                        Log.i("migrating" + game.getType());
+                        if (game.getType().equals("public_invite"))
+                            game.setType("public_watching");
+
+                        Log.i("migrating2" + game.getType());
+
+                        UserHandler.setGameUsername(activity);
+                        game.setSgf(new Text().setValue(SGFHelper.game2sgf(activity.getGame())));
+
+                        activity.getApp().getCloudgoban().games().update(UserHandler.getUserKey(activity.getApp()),game).execute();
+
+                        activity.finish();
                         SwitchModeHelper.startGameWithCorrectMode(activity);
+                    }
                     activity.getGame().setCloudDefs(game_key, participation.getRole());
                     return;
                 }
