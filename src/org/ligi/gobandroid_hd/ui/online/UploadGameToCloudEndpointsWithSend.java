@@ -1,26 +1,25 @@
-package org.ligi.gobandroid_hd.online;
+package org.ligi.gobandroid_hd.ui.online;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
-import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
 /**
-* Created with IntelliJ IDEA.
-* User: ligi
-* Date: 1/31/13
-* Time: 3:06 PM
-* To change this template use File | Settings | File Templates.
-*/
+ * Created with IntelliJ IDEA.
+ * User: ligi
+ * Date: 1/31/13
+ * Time: 3:06 PM
+ * To change this template use File | Settings | File Templates.
+ */
 public class UploadGameToCloudEndpointsWithSend extends UploadGameToCloudEndpointsBase {
 
     private GobandroidFragmentActivity goActivity;
 
     public UploadGameToCloudEndpointsWithSend(GobandroidFragmentActivity goActivity, String type) {
-        super(goActivity,type);
+        super(goActivity, type);
         this.goActivity = goActivity;
     }
 

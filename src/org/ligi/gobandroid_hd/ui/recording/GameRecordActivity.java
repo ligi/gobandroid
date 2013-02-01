@@ -10,9 +10,9 @@ import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
-import org.ligi.gobandroid_hd.online.UploadGameToCloudEndpointsBase;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
+import org.ligi.gobandroid_hd.ui.online.UploadGameToCloudEndpointsBase;
 import org.ligi.tracedroid.Log;
 
 /**
@@ -83,7 +83,7 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
             menu.findItem(R.id.menu_game_pass).setVisible(pass_avail);
 
 			/*
-			 * menu.findItem(R.id.menu_game_results).setVisible(
+             * menu.findItem(R.id.menu_game_results).setVisible(
 			 * getGame().isFinished());
 			 */
 

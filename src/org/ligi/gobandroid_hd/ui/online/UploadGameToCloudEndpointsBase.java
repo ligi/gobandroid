@@ -1,4 +1,4 @@
-package org.ligi.gobandroid_hd.online;
+package org.ligi.gobandroid_hd.ui.online;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -8,27 +8,27 @@ import com.google.api.services.cloudgoban.model.Text;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.backend.CloudGobanHelper;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
-import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
 
 import java.io.IOException;
 
 /**
-* Created with IntelliJ IDEA.
-* User: ligi
-* Date: 1/31/13
-* Time: 3:04 PM
-* To change this template use File | Settings | File Templates.
-*/
+ * Created with IntelliJ IDEA.
+ * User: ligi
+ * Date: 1/31/13
+ * Time: 3:04 PM
+ * To change this template use File | Settings | File Templates.
+ */
 public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String> {
 
     private ProgressDialog pd;
     private String type;
     private GobandroidFragmentActivity goActivity;
+
     public UploadGameToCloudEndpointsBase(GobandroidFragmentActivity goActivity, String type) {
         this.goActivity = goActivity;
-        this.type=type;
+        this.type = type;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String
                 if (game_key == null) {
                     Game game = new Game();
 
-                    if (type!=null)
+                    if (type != null)
                         game.setType(type);
 
                     if (goActivity.getGame().isBlackToMove()) {

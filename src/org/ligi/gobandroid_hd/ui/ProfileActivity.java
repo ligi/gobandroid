@@ -2,11 +2,9 @@ package org.ligi.gobandroid_hd.ui;
 
 import android.os.Bundle;
 import android.widget.EditText;
-import com.tapfortap.AppWall;
-import com.tapfortap.TapForTap;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.online.UserHandler;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.online.UserHandler;
 
 public class ProfileActivity extends GobandroidFragmentActivity {
 

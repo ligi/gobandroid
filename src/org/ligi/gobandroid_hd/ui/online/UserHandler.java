@@ -1,4 +1,4 @@
-package org.ligi.gobandroid_hd.online;
+package org.ligi.gobandroid_hd.ui.online;
 
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -50,6 +50,7 @@ public class UserHandler {
 
 
                 Cloudgoban gc = ctx.getCloudgoban();
+
                 User usr = new User();
                 usr.setName(ctx.getSettings().getUsername());
                 usr.setRank(ctx.getSettings().getRank());

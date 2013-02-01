@@ -6,9 +6,9 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Handler;
 import com.google.api.services.cloudgoban.model.GoGameParticipation;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.online.UserHandler;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
+import org.ligi.gobandroid_hd.ui.online.UserHandler;
 import org.ligi.tracedroid.logging.Log;
 
 import java.io.IOException;

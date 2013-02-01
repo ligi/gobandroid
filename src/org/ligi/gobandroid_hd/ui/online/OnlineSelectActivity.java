@@ -25,9 +25,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.tapfortap.TapForTap;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.online.OnlineCreateFragment;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.gobandroid_hd.ui.game_setup.GameSetupFragment;
 
 /**
  * Activity to load present the user GO-Relevant links ( Rules / SGF's / .. )
@@ -51,7 +49,7 @@ public class OnlineSelectActivity extends GobandroidFragmentActivity implements 
         this.setTitle(R.string.online);
 
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        int[] tabs = new int[]{R.string.online_create_game,R.string.online_your_games,R.string.online_view_game, R.string.online_join_game};
+        int[] tabs = new int[]{R.string.online_create_game, R.string.online_your_games, R.string.online_view_game, R.string.online_join_game};
 
         for (int tab_str : tabs) {
             ActionBar.Tab tab = getSupportActionBar().newTab();
@@ -76,7 +74,7 @@ public class OnlineSelectActivity extends GobandroidFragmentActivity implements 
 //
         switch ((Integer) tab.getTag()) {
             case R.string.online_join_game:
-                new GamesListLoader(this,"public_invite").execute();
+                new GamesListLoader(this, "public_invite").execute();
                 break;
 
             case R.string.online_create_game:
@@ -84,7 +82,7 @@ public class OnlineSelectActivity extends GobandroidFragmentActivity implements 
                 break;
 
             case R.string.online_view_game:
-                new GamesListLoader(this,"private_invite").execute();
+                new GamesListLoader(this, "private_invite").execute();
                 break;
 
 

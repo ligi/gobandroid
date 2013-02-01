@@ -13,8 +13,8 @@ import com.google.api.services.cloudgoban.Cloudgoban;
 import org.ligi.gobandroid_hd.backend.GobandroidBackend;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.online.UserHandler;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
+import org.ligi.gobandroid_hd.ui.online.UserHandler;
 import org.ligi.tracedroid.TraceDroid;
 import org.ligi.tracedroid.logging.Log;
 
