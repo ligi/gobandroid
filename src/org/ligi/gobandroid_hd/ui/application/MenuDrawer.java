@@ -38,9 +38,11 @@ public class MenuDrawer implements OnItemClickListener {
 
     private Activity ctx;
     private SlidingActivityBase sliding_base;
+    private ListView mListView;
 
     public MenuDrawer(Activity ctx) {
         this.ctx = ctx;
+
 
         try {
             this.sliding_base = (SlidingActivityBase) ctx;
@@ -48,8 +50,8 @@ public class MenuDrawer implements OnItemClickListener {
             throw new IllegalArgumentException("context must implement SlidingActivityBase");
         }
 
-        ListView lv = new ListView(ctx);
-        sliding_base.setBehindContentView(lv);
+        mListView = new ListView(ctx);
+        sliding_base.setBehindContentView(mListView);
         // setSlidingActionBarEnabled(false);
 
         SlidingMenu sm = sliding_base.getSlidingMenu();
@@ -62,9 +64,14 @@ public class MenuDrawer implements OnItemClickListener {
         sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         sm.setShadowWidth(5);
 
-        lv.setAdapter(getAdapter());
-        lv.setOnItemClickListener(this);
 
+        mListView.setOnItemClickListener(this);
+
+        refresh();
+    }
+
+    public void refresh() {
+        mListView.setAdapter(getAdapter());
     }
 
     public ListAdapter getAdapter() {
@@ -118,7 +125,7 @@ public class MenuDrawer implements OnItemClickListener {
             case R.id.online_play:
                 if (getApp().getSettings().getUsername().equals(""))
                     new AlertDialog.Builder(ctx).setMessage(ctx.getString(R.string.enter_username)).setTitle(ctx.getString(R.string.who_are_you))
-                            .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 

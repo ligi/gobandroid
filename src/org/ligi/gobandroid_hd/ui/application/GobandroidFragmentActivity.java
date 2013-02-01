@@ -14,11 +14,13 @@ import java.lang.reflect.Field;
 
 public class GobandroidFragmentActivity extends SlidingFragmentActivity {
 
+    private MenuDrawer mMenuDrawer;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        new MenuDrawer(this);
+        mMenuDrawer = new MenuDrawer(this);
 
         if (getSupportActionBar() != null) // yes this happens - e.g.
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -40,7 +42,7 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity {
 
         // we do not want focus on custom views ( mainly for GTV )
         /*
-		 * wd if ((this.getSupportActionBar()!=null) &&
+         * wd if ((this.getSupportActionBar()!=null) &&
 		 * (this.getSupportActionBar().getCustomView()!=null))
 		 * this.getSupportActionBar().getCustomView().setFocusable(false);
 		 */
@@ -53,6 +55,8 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        mMenuDrawer.refresh();
 
         if (doFullScreen())
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
