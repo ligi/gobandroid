@@ -9,39 +9,55 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-        <ImageView
-                android:id="@+id/player_white_stone_img"
-                android:layout_width="36sp"
-                android:layout_height="36sp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/stone_white"/>
 
-        <TextView
-                android:id="@+id/player_white"
+        <LinearLayout
+                android:id="@+id/white_block"
                 android:layout_width="wrap_content"
-                android:layout_height="36sp"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#000000"
-                android:text="white"
-                android:textSize="24sp"/>
+                android:layout_height="wrap_content">
 
-        <ImageView
-                android:id="@+id/player_black_stone_img"
-                android:layout_width="36sp"
-                android:layout_height="36sp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/stone_black"/>
+            <ImageView
+                    android:id="@+id/player_white_stone_img"
+                    android:layout_width="36sp"
+                    android:layout_height="36sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/stone_white"/>
 
-        <TextView
-                android:id="@+id/player_black"
+            <TextView
+                    android:id="@+id/player_white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36sp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#000000"
+                    android:text="white"
+                    android:textSize="24sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/black_block"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#000000"
-                android:textSize="24sp"
-                android:text="black"/>
+                android:layout_height="wrap_content">
+
+            <ImageView
+                    android:id="@+id/player_black_stone_img"
+                    android:layout_width="36sp"
+                    android:layout_height="36sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/stone_black"/>
+
+            <TextView
+                    android:id="@+id/player_black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:text="black"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <TextView

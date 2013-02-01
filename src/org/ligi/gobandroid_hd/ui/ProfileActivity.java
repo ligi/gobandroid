@@ -2,6 +2,8 @@ package org.ligi.gobandroid_hd.ui;
 
 import android.os.Bundle;
 import android.widget.EditText;
+import com.tapfortap.AppWall;
+import com.tapfortap.TapForTap;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.online.UserHandler;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -21,6 +23,7 @@ public class ProfileActivity extends GobandroidFragmentActivity {
 
         rank_et.setText(getApp().getSettings().getRank());
         username_et.setText(getApp().getSettings().getUsername());
+
     }
 
     @Override

@@ -183,9 +183,7 @@
     <string name="accept">accept</string>
     <string name="new_tsumegos_available">New Tsumegos available!</string>
     <string name="the_go_game_you_reviewed">The Go Game you reviewed</string>
-    <string name="this_game_has_2_players_but_you_can_only_watch_it">This game has 2 players - but you can only watch
-        it
-    </string>
+    <string name="this_game_has_2_players_but_you_can_only_watch_it">This game has 2 players - but you can watch it</string>
     <string name="a_move_in_one_online_game_you_participate_is_done">A move in one online game you participate is done
     </string>
     <string name="new_move">new move</string>

@@ -9,12 +9,12 @@ import com.google.api.services.cloudgoban.model.GameCollection;
 import java.io.IOException;
 
 /**
-* Created with IntelliJ IDEA.
-* User: ligi
-* Date: 1/31/13
-* Time: 2:47 PM
-* To change this template use File | Settings | File Templates.
-*/
+ * Created with IntelliJ IDEA.
+ * User: ligi
+ * Date: 1/31/13
+ * Time: 2:47 PM
+ * To change this template use File | Settings | File Templates.
+ */
 class GamesListLoader extends AsyncTask<Void, Void, GameCollection> {
 
     private Dialog dlg;
@@ -22,15 +22,19 @@ class GamesListLoader extends AsyncTask<Void, Void, GameCollection> {
     private String type;
 
 
-
-    public GamesListLoader(OnlineSelectActivity onlineSelectActivity,String type) {
+    public GamesListLoader(OnlineSelectActivity onlineSelectActivity, String type) {
         this.onlineSelectActivity = onlineSelectActivity;
-        this.type=type;
+        this.type = type;
     }
 
     @Override
     protected void onPreExecute() {
-        dlg = new ProgressDialog.Builder(onlineSelectActivity).setMessage("loading").show();
+        ProgressDialog progDailog = new ProgressDialog(onlineSelectActivity);
+        progDailog.setIndeterminate(false);
+        progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progDailog.setCancelable(true);
+        progDailog.show();
+        dlg = progDailog;// new ProgressDialog.Builder(onlineSelectActivity).setMessage("loading").set.show();
         super.onPreExecute();    //To change body of overridden methods use File | Settings | File Templates.
     }
 
@@ -38,7 +42,7 @@ class GamesListLoader extends AsyncTask<Void, Void, GameCollection> {
     protected void onPostExecute(GameCollection aVoid) {
         super.onPostExecute(aVoid);    //To change body of overridden methods use File | Settings | File Templates.
         dlg.dismiss();
-        onlineSelectActivity.changeFragment(new ViewFragment(aVoid));
+        onlineSelectActivity.changeFragment(new ViewOnlineGameListFragment(aVoid));
     }
 
     @Override

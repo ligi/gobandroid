@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import com.actionbarsherlock.app.ActionBar;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.tapfortap.TapForTap;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.online.OnlineCreateFragment;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -41,7 +42,9 @@ public class OnlineSelectActivity extends GobandroidFragmentActivity implements 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.list);
+        TapForTap.initialize(this, "D0343AA784E98E6F6362DBD9C1D541B6");
+
+        this.setContentView(R.layout.content_with_ad);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -59,10 +62,11 @@ public class OnlineSelectActivity extends GobandroidFragmentActivity implements 
         }
 
 
+        new ServerCheckAsyncTask(this).execute(); // this checks if the server is OK
     }
 
     public void changeFragment(Fragment newFragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.list_fragment, newFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content, newFragment).commit();
     }
 
     @Override

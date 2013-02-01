@@ -27,6 +27,10 @@ public class SGFMetaData {
     public final static String FNAME_ENDING = ".sgfmeta";
 
     public SGFMetaData(String fname) {
+
+        if (fname.startsWith("file://"))
+            fname=fname.substring(8);
+
         if (!fname.endsWith(FNAME_ENDING))
             fname += FNAME_ENDING;
 

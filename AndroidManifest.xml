@@ -236,6 +236,8 @@
                 <category android:name="org.ligi.gobandroid_hd"/>
             </intent-filter>
         </receiver>
+
+        <activity android:name="com.tapfortap.TapForTapActivity"/>
     </application>
 
 </manifest>
