@@ -49,7 +49,7 @@ public class OnlineSelectActivity extends GobandroidFragmentActivity implements 
         this.setTitle(R.string.online);
 
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        int[] tabs = new int[]{R.string.online_create_game, R.string.online_your_games, R.string.online_view_game, R.string.online_join_game};
+        int[] tabs = new int[]{R.string.online_create_game, /* R.string.online_your_games, */ R.string.online_view_game, R.string.online_join_game};
 
         for (int tab_str : tabs) {
             ActionBar.Tab tab = getSupportActionBar().newTab();
@@ -66,6 +66,7 @@ public class OnlineSelectActivity extends GobandroidFragmentActivity implements 
     public void changeFragment(Fragment newFragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.content, newFragment).commit();
     }
+
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {

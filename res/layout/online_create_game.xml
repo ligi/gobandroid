@@ -6,22 +6,33 @@
               android:paddingLeft="7dp">
 
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:paddingLeft="7dp">
+
+        <EditText
+                android:id="@+id/game_name_et"
+                android:hint="game title"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                />
+        <Button android:text="create game"
+                android:id="@+id/create_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+    </LinearLayout>
+
+
     <fragment android:name="org.ligi.gobandroid_hd.ui.game_setup.GameSetupFragment"
 
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
             />
 
-    <Button android:text="OK"
-            android:id="@+id/create_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-
-    <View
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dip"
-            />
 
 </LinearLayout>

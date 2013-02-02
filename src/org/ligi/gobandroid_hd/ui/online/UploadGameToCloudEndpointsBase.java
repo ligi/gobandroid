@@ -65,6 +65,7 @@ public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String
 
 
                     game.setSgf(new Text().setValue(SGFHelper.game2sgf(goActivity.getGame())));
+
                     if (has_cloud_history) {
                         game.setEncodedKey(goActivity.getGame().getCloudKey());
                         Game res_game = gc.games().update(UserHandler.getUserKey(goActivity.getApp()), game).execute();

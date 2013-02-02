@@ -4,8 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,13 +22,14 @@ public class UploadGameToCloudEndpointsWithDialog extends UploadGameToCloudEndpo
 
     @Override
     public void onSuccess(String key) {
-        new AlertDialog.Builder(goActivity).setMessage("Game created have fun")
-                .setTitle("Game Created")
+        new AlertDialog.Builder(goActivity).setMessage(R.string.game_created_msg)
+                .setTitle(R.string.game_created)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         goActivity.finish();
+                        goActivity.startActivity(new Intent(goActivity, GameRecordActivity.class));
                     }
                 })
                 .show();

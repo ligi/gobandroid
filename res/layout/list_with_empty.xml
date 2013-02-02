@@ -2,24 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               style="@style/default_activity_main"  >
-    <LinearLayout
-            android:id="@+id/content"
+    <ListView
+            android:id="@android:id/list"
             android:layout_width="fill_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1"
-            >
-    </LinearLayout>
-
-    <include layout="@layout/horizontal_divider"/>
-
+            android:layout_height="fill_parent"
+            />
     <TextView
+
+            android:id="@android:id/empty"
             android:text="Sorry for the Ad, but the servers for the online-functions  cost money ( that's why they are just showed there )"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             />
 
-    <com.tapfortap.AdView android:id="@+id/ad_view" android:layout_height="50dip" android:layout_width="320dip"
-                          android:layout_gravity="center_horizontal"
-            />
+
 </LinearLayout>

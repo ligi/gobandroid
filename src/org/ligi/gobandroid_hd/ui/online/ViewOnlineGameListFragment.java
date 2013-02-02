@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.actionbarsherlock.app.ActionBar;
 import com.google.api.services.cloudgoban.model.Game;
 import com.google.api.services.cloudgoban.model.GameCollection;
 import org.ligi.gobandroid_hd.R;
@@ -44,6 +45,8 @@ public class ViewOnlineGameListFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        setEmptyText("no game yet - try creating one");
         mLayoutInflater = getLayoutInflater(savedInstanceState);
         mAdapter = new ViewListAdapter();
         setListAdapter(mAdapter);
@@ -62,7 +65,10 @@ public class ViewOnlineGameListFragment extends ListFragment {
 
         @Override
         public int getCount() {
-            return list.getItems().size() - 1;
+            if (list.getItems()==null)
+                return 0;
+
+            return list.getItems().size();
 
         }
 
@@ -81,6 +87,7 @@ public class ViewOnlineGameListFragment extends ListFragment {
             View v = mLayoutInflater.inflate(R.layout.online_game_details_list_item, null);
             Game online_game = (Game) getItem(position);
 
+            TextView game_name_tv = (TextView) v.findViewById(R.id.game_name_tv);
             TextView white_tv = (TextView) v.findViewById(R.id.player_white);
             TextView black_tv = (TextView) v.findViewById(R.id.player_black);
             TextView time_tv = (TextView) v.findViewById(R.id.time_tv);
@@ -94,10 +101,17 @@ public class ViewOnlineGameListFragment extends ListFragment {
 
             GoGameMetadata game_meta = game.getMetaData();
 
+            if (game_meta.getName()!=null && !game_meta.getName().equals("")) {
+                game_name_tv.setText(game_meta.getName());
+            } else {
+                game_name_tv.setVisibility(View.GONE);
+            }
+
             if (game_meta.getWhiteName().equals(""))
                 white_block.setVisibility(View.GONE);
             else {
-                String white_label = game_meta.getBlackName();
+                String white_label = game_meta.getWhiteName();
+
                 if (!game_meta.getWhiteRank().equals(""))
                     white_label += " (" + game_meta.getWhiteRank() + ") ";
 
@@ -110,8 +124,11 @@ public class ViewOnlineGameListFragment extends ListFragment {
             else {
 
                 String black_label = game_meta.getBlackName();
+
                 if (!game_meta.getBlackRank().equals(""))
                     black_label += " (" + game_meta.getBlackRank() + ") ";
+
+
                 black_tv.setText(black_label);
             }
 
