@@ -218,6 +218,8 @@
     <string name="file_saved">saved %s</string>
     <string name="file_not_saved">problen saving %s</string>
     <string name="game_created">Game Created</string>
-    <string name="game_created_msg">Game created - enjoy this game!\nTIP: You can also do something else with gobandroid in the background while waiting for the opponent.
+    <string name="game_created_msg">Game created - enjoy this game!\nTIP: You can also do something else with gobandroid
+        in the background while waiting for the opponent.
     </string>
+    <string name="choose_how_to_send_sgf">Choose how to send the SGF</string>
 </resources>

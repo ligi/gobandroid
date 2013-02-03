@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui.alerts;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 
@@ -39,7 +40,7 @@ public class ShareSGFDialog extends GobandroidDialog {
         it.putExtra(Intent.EXTRA_SUBJECT, "SGF created with gobandroid");
         it.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + fname));
         it.setType("application/x-go-sgf");
-        context.startActivity(Intent.createChooser(it, "Choose how to send the SGF"));
+        context.startActivity(Intent.createChooser(it, context.getString(R.string.choose_how_to_send_sgf));
 
     }
 
