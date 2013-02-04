@@ -1,4 +1,4 @@
-package org.ligi.gobandroid_hd.ui.alerts;
+package org.ligi.gobandroid_hd.ui.share;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,11 +21,8 @@ public class ShareSGFDialog extends GobandroidDialog {
 
         String fname = getApp().getSettings().getSGFSavePath() + "/game_to_share_via_action.sgf";
         if (SGFHelper.saveSGF(getApp().getGame(), fname)) { // if we could save
-            // the file
-            // add extra
-
+            // the file add extra
             init(context, fname);
-
         }
 
     }
@@ -40,7 +37,7 @@ public class ShareSGFDialog extends GobandroidDialog {
         it.putExtra(Intent.EXTRA_SUBJECT, "SGF created with gobandroid");
         it.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + fname));
         it.setType("application/x-go-sgf");
-        context.startActivity(Intent.createChooser(it, context.getString(R.string.choose_how_to_send_sgf));
+        context.startActivity(Intent.createChooser(it, context.getString(R.string.choose_how_to_send_sgf)));
 
     }
 
