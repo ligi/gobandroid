@@ -20,7 +20,7 @@ import org.ligi.gobandroid_hd.ui.GoLinkLoadActivity;
 import org.ligi.gobandroid_hd.ui.GobandroidListFragment;
 import org.ligi.gobandroid_hd.ui.Refreshable;
 import org.ligi.gobandroid_hd.ui.SGFLoadActivity;
-import org.ligi.gobandroid_hd.ui.alerts.ShareSGFDialog;
+import org.ligi.gobandroid_hd.ui.share.ShareSGFDialog;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.tracedroid.Log;
 

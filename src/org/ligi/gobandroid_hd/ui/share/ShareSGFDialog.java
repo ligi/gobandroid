@@ -1,8 +1,12 @@
 package org.ligi.gobandroid_hd.ui.share;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
@@ -16,35 +20,36 @@ import org.ligi.gobandroid_hd.ui.GobandroidDialog;
  */
 public class ShareSGFDialog extends GobandroidDialog {
 
+    /**
+     * when no fname used in constructor -> use the current game
+     * @param context
+     */
     public ShareSGFDialog(Context context) {
         super(context);
+        setContentView(R.layout.share_options);
+        setTitle(R.string.share);
+        setIconResource(android.R.drawable.ic_menu_share);
+        setPositiveButton(R.string.ok,new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
-        String fname = getApp().getSettings().getSGFSavePath() + "/game_to_share_via_action.sgf";
-        if (SGFHelper.saveSGF(getApp().getGame(), fname)) { // if we could save
-            // the file add extra
-            init(context, fname);
-        }
 
+                dialog.dismiss();
+            }
+        });
+
+        setNegativeButton(R.string.cancel,new DialogDiscarder());
+
+
+        Spinner type_spinner=(Spinner)findViewById(R.id.type_spinner);
+        type_spinner.setAdapter(new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,new String[] {"Recorded Game","Commented Game","Tsumego","Situation","Other"}));
+
+        setIsSmallDialog();
     }
 
-    public ShareSGFDialog(Context context, String fname) {
-        super(context);
-        init(context, fname);
-    }
 
-    public void init(Context context, String fname) {
-        Intent it = new Intent(Intent.ACTION_SEND);
-        it.putExtra(Intent.EXTRA_SUBJECT, "SGF created with gobandroid");
-        it.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + fname));
-        it.setType("application/x-go-sgf");
-        context.startActivity(Intent.createChooser(it, context.getString(R.string.choose_how_to_send_sgf)));
-
-    }
-
-    @Override
-    public void show() {
-        super.show();
-        dismiss();
+    public ShareSGFDialog(Context context,String fname) {
+        this(context);
     }
 
 }

@@ -3,7 +3,7 @@
           package="org.ligi.gobandroid_hd"
           android:installLocation="auto"
           android:versionCode="120"
-          android:versionName="1.20a">
+          android:versionName="1.20">
 
     <uses-sdk
             android:minSdkVersion="5"

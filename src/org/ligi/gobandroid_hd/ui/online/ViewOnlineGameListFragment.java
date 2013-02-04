@@ -65,7 +65,7 @@ public class ViewOnlineGameListFragment extends ListFragment {
 
         @Override
         public int getCount() {
-            if (list.getItems()==null)
+            if (list==null || list.getItems()==null)
                 return 0;
 
             return list.getItems().size();
