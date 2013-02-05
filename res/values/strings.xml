@@ -222,4 +222,8 @@
         in the background while waiting for the opponent.
     </string>
     <string name="choose_how_to_send_sgf">Choose how to send the SGF</string>
+    <string name="recorded_game">Recorded Game</string>
+    <string name="commented_game">Commented Game</string>
+    <string name="situation">Situation</string>
+    <string name="other">Other</string>
 </resources>
