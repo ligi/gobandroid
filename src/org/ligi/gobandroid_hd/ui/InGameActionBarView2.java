@@ -1,9 +1,11 @@
 package org.ligi.gobandroid_hd.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -119,6 +122,23 @@ public class InGameActionBarView2 extends LinearLayout implements
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        if (mode == InteractionScope.MODE_GNUGO && !(GnuGoHelper.isGnuGoAvail(activity))) {
+                            new AlertDialog.Builder(activity).setTitle(R.string.install_gnugo).setMessage(R.string.gnugo_not_installed)
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent i = new Intent();
+                                            i.setType(Intent.ACTION_VIEW);
+                                            i.setData(Uri.parse("market://details?id=org.ligi.gobandroidhd.ai.gnugo"));
+                                            activity.startActivity(i);
+
+                                        }
+                                    })
+                                    .setNegativeButton("Cancel", new DialogDiscarder())
+                                    .show();
+                            return;
+                        }
                         activity.finish();
                         Log.i("settingmode" + mode);
                         app.getInteractionScope().setMode(mode);
@@ -155,9 +175,9 @@ public class InGameActionBarView2 extends LinearLayout implements
                 R.string.televize, R.drawable.gobandroid_tv);
         addModeItem(content_view, InteractionScope.MODE_TSUMEGO,
                 R.string.tsumego, R.drawable.dashboard_tsumego);
-        if (GnuGoHelper.isGnuGoAvail(ctx))
-            addModeItem(content_view, InteractionScope.MODE_GNUGO,
-                    R.string.gnugo, R.drawable.server);
+
+        addModeItem(content_view, InteractionScope.MODE_GNUGO,
+                R.string.gnugo, R.drawable.server);
 
         BetterPopupWindow pop = new BetterPopupWindow(mode_tv);
         pop.setContentView(content_view);
