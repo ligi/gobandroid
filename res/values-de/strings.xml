@@ -102,7 +102,8 @@
     <string name="switch_game_mode">Modus wechseln</string>
     <string name="bookmark">Lesezeichen</string>
     <string name="menu_autoplay">Autoplay</string>
-    <string name="tsumego_off_path">Unbekannte Variation - bedeutet i. d. R., dass dies nicht der beste Zug ist :-(
+    <string name="tsumego_off_path">Unbekannte Variation - bedeutet i. d. R., dass dies leider nicht der beste Zug ist
+        :-(
     </string>
     <string name="tsumego_correct">Richtig! :-)</string>
     <string name="refresh">synchronisieren</string>
@@ -186,8 +187,8 @@
     <string name="accept">Akzeptieren</string>
     <string name="new_tsumegos_available">Neue Tsumegos verfügbar!</string>
     <string name="the_go_game_you_reviewed">Das GO-Spiel welches Du dir angeschaut hast</string>
-    <string name="this_game_has_2_players_but_you_can_only_watch_it">Dieses Spiel hat 2 Spieler - aber du kannst sie nur
-        beobachten
+    <string name="this_game_has_2_players_but_you_can_only_watch_it">Dieses Spiel hat 2 Spieler - aber du kannst das
+        spiel beobachten
     </string>
     <string name="a_move_in_one_online_game_you_participate_is_done">Ein Zug in einem Online-Spiel dem Du beiwohnst
         wurde getätigt
