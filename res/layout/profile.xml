@@ -7,7 +7,6 @@
         android:paddingLeft="7dp">
 
     <TextView
-            android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/name"/>
@@ -17,13 +16,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:singleLine="true"
             android:inputType="textPersonName">
 
         <requestFocus/>
     </EditText>
 
     <TextView
-            android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rank"/>
@@ -32,6 +31,7 @@
             android:id="@+id/rank_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:ems="10"/>
 
 
