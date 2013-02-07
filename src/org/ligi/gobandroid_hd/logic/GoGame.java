@@ -119,6 +119,8 @@ public class GoGame {
         area_assign = game.area_assign;
         captures_black = game.captures_black;
         captures_white = game.captures_white;
+        dead_black = game.dead_black;
+        dead_white = game.dead_white;
     }
 
     public GoGame(byte size) {
@@ -209,6 +211,9 @@ public class GoGame {
 
         captures_black = 0;
         captures_white = 0;
+
+        dead_black = 0;
+        dead_white = 0;
     }
 
     public void pass() {
