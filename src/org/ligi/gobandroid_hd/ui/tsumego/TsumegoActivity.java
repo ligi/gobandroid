@@ -23,14 +23,13 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
     private GoMove finishing_move;
 
     private TsumegoGameExtrasFragment myTsumegoExtrasFragment;
-    private Vector<GoMove> on_path_moves;
+    private Vector<GoMove> on_path_moves = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         this.setTitle(R.string.tsumego);
-
 
     }
 
@@ -46,6 +45,8 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
     }
 
     private void recursive_add_on_path_moves(GoMove act) {
+        if (on_path_moves == null)
+            on_path_moves = new Vector<GoMove>();
         on_path_moves.add(act);
         if (act.hasNextMove())
             for (GoMove child : act.getNextMoveVariations())
@@ -60,6 +61,12 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
     }
 
     private boolean isOnPath() {
+        if (on_path_moves == null) {
+            Log.i("isOnPath null");
+            // build a on path Vector to do a fast isOnPath() later
+            recursive_add_on_path_moves(getGame().getFirstMove());
+        }
+        Log.i("isOnPath null" + on_path_moves.contains(getGame().getActMove()) + " " + on_path_moves.size());
         return on_path_moves.contains(getGame().getActMove());
     }
 
@@ -157,9 +164,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
     protected void onResume() {
         super.onResume();
 
-
         finishing_move = null;
-        on_path_moves = new Vector<GoMove>();
 
         if (getGame() == null) { // there was no game - fallback to main menu
             EasyTracker.getTracker().trackException("tsumego start getGame() returned null in onCreate", false);
@@ -168,7 +173,6 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
             return;
         }
 
-        // build a on path Vector to do a fast isOnPath() later
         recursive_add_on_path_moves(getGame().getFirstMove());
 
         // try to find the correct solution
