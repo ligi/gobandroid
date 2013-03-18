@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import com.google.analytics.tracking.android.EasyTracker;
+import org.ligi.android.common.dialogs.ActivityFinishOnDialogClickListener;
 import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -67,7 +68,7 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
             setContentView(R.layout.empty);
             new AlertDialog.Builder(this).setMessage(getString(R.string.there_are_no_files_in) + " " + path_to_play_from)
                     .setTitle(R.string.problem)
-                    .setPositiveButton(R.string.ok, new DialogDiscarder())
+                    .setPositiveButton(R.string.ok, new ActivityFinishOnDialogClickListener(this))
                     .show();
             return;
         }
