@@ -105,7 +105,14 @@ public class ProfileActivity extends GobandroidFragmentActivity {
 
                     if (person != null && person.getImage() != null && person.getImage().hasUrl()) {
                         getAQ().find(R.id.profileImage).visible();
-                        getAQ().find(R.id.profileImage).image(person.getImage().getUrl(), true, true);
+
+
+                        String profilePicURL = person.getImage().getUrl();
+                        // hack to get a image with better resolution
+
+                        int profileImageInPixels = (int) getResources().getDimension(R.dimen.profile_size);
+                        profilePicURL = profilePicURL.replaceAll("sz=[0-9]*$", "sz=" + profileImageInPixels);
+                        getAQ().find(R.id.profileImage).image(profilePicURL, true, true);
                     }
 
                     if (username_et.getText().toString().equals("")) {

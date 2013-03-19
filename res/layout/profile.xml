@@ -30,8 +30,8 @@
     </LinearLayout>
 
     <ImageView
-            android:layout_width="212dp"
-            android:layout_height="212dp"
+            android:layout_width="@dimen/profile_size"
+            android:layout_height="@dimen/profile_size"
             android:id="@+id/profileImage"
             />
 
