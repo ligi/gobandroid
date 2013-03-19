@@ -187,7 +187,7 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity implemen
         }
     }
 
-    private AQuery getAQ() {
+    protected AQuery getAQ() {
         if (mAQ == null) {
             mAQ = new AQuery(this);
         }
