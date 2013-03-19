@@ -6,6 +6,35 @@
         android:orientation="vertical"
         android:paddingLeft="7dp">
 
+    <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <Button
+                android:id="@+id/sign_out_button"
+                android:text="Sign Out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <Button
+                android:id="@+id/disconnect_button"
+                android:text="Disconnect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <ImageView
+            android:layout_width="212dp"
+            android:layout_height="212dp"
+            android:id="@+id/profileImage"
+            />
+
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,8 +62,6 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:ems="10"/>
-
-
 </LinearLayout>
 
 
