@@ -7,28 +7,43 @@
     <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/shareTypeRadiGroup"
             >
+
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="via Google-Plus"
+                android:id="@+id/radioButtonGPlus"
+                android:checked="false"
+                android:layout_gravity="left"/>
+
         <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="as Link"
-                android:id="@+id/radioButton" android:checked="false" android:layout_gravity="left"/>
+                android:id="@+id/radioButtonLink"
+                android:checked="false"
+                android:layout_gravity="left"/>
+
         <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="as Attachment"
-                android:id="@+id/radioButton1" android:checked="true" android:layout_gravity="left"/>
+                android:id="@+id/radioButtonAsAttachment"
+                android:checked="true"
+                android:layout_gravity="left"/>
     </RadioGroup>
+
     <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="public"
-
             android:id="@+id/public_cb"
             android:checked="false"/>
+
     <Spinner
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/type_spinner"/>
-
 </LinearLayout>

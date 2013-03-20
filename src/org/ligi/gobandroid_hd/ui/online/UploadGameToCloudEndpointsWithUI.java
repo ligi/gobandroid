@@ -1,10 +1,8 @@
 package org.ligi.gobandroid_hd.ui.online;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
 /**
@@ -14,7 +12,7 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
  * Time: 3:06 PM
  * To change this template use File | Settings | File Templates.
  */
-public abstract class UploadGameToCloudEndpointsWithUI extends UploadGameToCloudEndpointsBase {
+public abstract class UploadGameToCloudEndpointsWithUI extends UploadGameToCloudEndpointsBaseWithProgressDialog {
 
     protected GobandroidFragmentActivity goActivity;
 
@@ -34,8 +32,9 @@ public abstract class UploadGameToCloudEndpointsWithUI extends UploadGameToCloud
             alert_b.setIcon(android.R.drawable.ic_dialog_alert);
             alert_b.setPositiveButton(R.string.ok, new DialogDiscarder());
             alert_b.show();
-        } else
-            onSuccess(result) ;
+        } else {
+            onSuccess(result);
+        }
 
     }
 

@@ -2,7 +2,6 @@ package org.ligi.gobandroid_hd.ui.review;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import com.actionbarsherlock.view.Menu;
@@ -14,6 +13,8 @@ import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.gobandroid_hd.ui.fragments.NavigationAndCommentFragment;
 import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
+import org.ligi.gobandroid_hd.ui.online.UploadGameAndShareMoment;
+import org.ligi.tracedroid.Log;
 
 public class GameReviewActivity extends GoActivity {
 
@@ -46,7 +47,7 @@ public class GameReviewActivity extends GoActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Log.i("", "KeyEvent" + event.getKeyCode());
-        if (event.getAction() == KeyEvent.ACTION_DOWN)
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
             switch (keyCode) {
 
 
@@ -61,8 +62,9 @@ public class GameReviewActivity extends GoActivity {
 
 
                 case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
-                    if (!getGame().canUndo())
+                    if (!getGame().canUndo()) {
                         return true;
+                    }
                     getGame().undo();
                     return true;
 
@@ -77,6 +79,7 @@ public class GameReviewActivity extends GoActivity {
                     return false;
 
             }
+        }
         return super.onKeyDown(keyCode, event);
     }
 
@@ -123,10 +126,11 @@ public class GameReviewActivity extends GoActivity {
 
         getApp().getInteractionScope().setTouchPosition(getBoard().pixel2boardPos(event.getX(), event.getY()));
 
-        if (event.getAction() == MotionEvent.ACTION_UP)
+        if (event.getAction() == MotionEvent.ACTION_UP) {
             setFragment(getGameExtraFragment());
-        else if (event.getAction() == MotionEvent.ACTION_DOWN)
+        } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
             setFragment(getZoomFragment());
+        }
 
         refreshZoomFragment();
 
@@ -141,8 +145,9 @@ public class GameReviewActivity extends GoActivity {
 
     @Override
     public ZoomGameExtrasFragment getZoomFragment() {
-        if (myZoomFragment == null)
+        if (myZoomFragment == null) {
             myZoomFragment = new ZoomGameExtrasFragment(false);
+        }
         return myZoomFragment;
     }
 
@@ -160,6 +165,23 @@ public class GameReviewActivity extends GoActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getSupportMenuInflater().inflate(R.menu.ingame_review, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private String lastMomentFname;
+
+    @Override
+    public void onGoGameChange() {
+        super.onGoGameChange();
+
+        if (!getGame().getActMove().hasNextMove()) {
+
+            if (lastMomentFname == null || !lastMomentFname.equals(getGame().getMetaData().getFileName())) {
+                // TODO make sure it is not just the end of a variation
+                new UploadGameAndShareMoment(this, "reviewed_game").execute();
+                lastMomentFname = getGame().getMetaData().getFileName();
+            }
+
+        }
     }
 
 }

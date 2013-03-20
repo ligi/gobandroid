@@ -59,8 +59,6 @@ public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String
                         Game res_game = gc.games().update(UserHandler.getUserKey(goActivity.getApp()), game).execute();
                         game_key = res_game.getEncodedKey();
                     } else { // create a new Game
-
-
                         game_key = gc.games().insert(game).execute().getEncodedKey();
                     }
 
@@ -68,7 +66,8 @@ public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String
 
                 if (game_key != null) { // success
                     if (doRegister()) {
-                        CloudGobanHelper.registerGame(goActivity, game_key, "" + (goActivity.getGame().isBlackToMove() ? 'b' : 'w'), false, null);
+                        boolean setCloudKey = game_key.endsWith("invite"); // TODO remove this hack
+                        CloudGobanHelper.registerGame(goActivity, game_key, "" + (goActivity.getGame().isBlackToMove() ? 'b' : 'w'), false, null, setCloudKey);
                     }
                     goActivity.getGame().notifyGameChange();
                     return game_key;

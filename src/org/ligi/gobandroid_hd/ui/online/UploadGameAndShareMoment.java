@@ -28,4 +28,6 @@ public class UploadGameAndShareMoment extends UploadGameToCloudEndpointsWithUI {
 
         goActivity.getPlusClient().writeMoment(moment);
     }
+
+
 }

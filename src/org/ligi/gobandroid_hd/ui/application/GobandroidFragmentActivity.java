@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui.application;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
@@ -13,7 +14,9 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.Scopes;
+import com.google.android.gms.plus.GooglePlusUtil;
 import com.google.android.gms.plus.PlusClient;
+import com.google.android.gms.plus.PlusShare;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -64,10 +67,14 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity implemen
 		 *
 		 */
 
-        mPlusClient = new PlusClient.Builder(this, this, this)
-                .setVisibleActivities("http://schemas.google.com/AddActivity")
+        mPlusClient = new PlusClient.Builder(getApplicationContext(), this, this)
+                .setVisibleActivities("http://schemas.google.com/CreateActivity",
+                        "http://schemas.google.com/ReviewActivity",
+                        "http://schemas.google.com/CommentActivity",
+                        "http://schemas.google.com/AddActivity")
                 .setScopes(Scopes.PLUS_LOGIN)
                 .build();
+
         // Progress bar to be displayed if the connection failure is not resolved.
         mConnectionProgressDialog = new ProgressDialog(this);
         mConnectionProgressDialog.setMessage("Signing in...");
@@ -172,6 +179,103 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity implemen
     public void onConnected() {
         // We've resolved any connection errors.
         mConnectionProgressDialog.dismiss();
+
+
+        /*
+        ItemScope target = new ItemScope.Builder()
+                //.setUrl("https://cloud-goban.appspot.com/game/"+key)
+                .setUrl("https://developers.google.com/+/web/snippet/examples/thing")
+                //.setUrl("http://cloud-goban.appspot.com/game/ag1zfmNsb3VkLWdvYmFucgwLEgRHYW1lGKGnJww")
+                //.setType("http://schema.org/CreativeWork")
+                .build();
+
+        Moment moment = new Moment.Builder()
+                .setType("http://schemas.google.com/AddActivity")
+                .setTarget(target)
+                .build();
+
+        getPlusClient().writeMoment(moment);
+         */
+
+        final int errorCode = GooglePlusUtil.checkGooglePlusApp(this);
+        if (errorCode == GooglePlusUtil.SUCCESS) {
+            /*PlusShare.Builder builder = new PlusShare.Builder(this, mPlusClient);
+
+            // Set call-to-action metadata.
+            builder.addCallToAction(
+                    "CREATE_ITEM",
+                    Uri.parse("http://plus.google.com/pages/create"),
+                    "/pages/create");
+            // Set the content url (for desktop use).
+            builder.setContentUrl(Uri.parse("https://plus.google.com/pages/"));
+
+            // Set the target deep-link ID (for mobile use).
+            builder.setContentDeepLinkId("/pages/", null, null, null);
+
+            // Set the share text.
+            builder.setText("Create your Google+ Page too!");
+            startActivityForResult(builder.getIntent(), 0);
+            */
+
+            /*
+               Intent shareIntent = new PlusShare.Builder(this)
+          .setType("text/plain")
+          .setText("Welcome to the Google+ platform.")
+          .setContentUrl(Uri.parse("https://developers.google.com/+/"))
+          .getIntent();
+
+             startActivityForResult(shareIntent, 0);
+               */
+
+            /*
+            Intent shareIntent = new PlusShare.Builder(this)
+                    .setText("Lemon Cheesecake recipe")
+                    .setType("text/plain")
+                    .setContentDeepLinkId("/cheesecake/lemon",
+                            "Lemon Cheesecake recipe",
+                            "A tasty recipe for making lemon cheesecake.",
+                            Uri.parse("http://example.com/static/lemon_cheesecake.png"))
+                    .getIntent();
+
+            startActivityForResult(shareIntent, 0);
+              */
+            //workingPostToGPlus();
+
+
+        } else {
+            // Prompt the user to install the Google+ app.
+            GooglePlusUtil.getErrorDialog(errorCode, this, 0).show();
+        }
+
+
+    }
+
+    private void workingPostToGPlus() {
+        // Create an interactive post with the "VIEW_ITEM" label. This will
+        // create an enhanced share dialog when the post is shared on Google+.
+        // When the user clicks on the deep link, ParseDeepLinkActivity will
+        // immediately parse the deep link, and route to the appropriate resource.
+        Uri callToActionUrl = Uri.parse("https://cloud-goban.appspot.com/game/ag1zfmNsb3VkLWdvYmFucgwLEgRHYW1lGPK_JAw");
+        String callToActionDeepLinkId = "/foo/bar";
+
+
+        // Create an interactive post builder.
+        PlusShare.Builder builder = new PlusShare.Builder(this, mPlusClient);
+
+        // Set call-to-action metadata.
+        builder.addCallToAction("CREATE_ITEM", callToActionUrl, callToActionDeepLinkId);
+
+        // Set the target url (for desktop use).
+        builder.setContentUrl(Uri.parse("https://cloud-goban.appspot.com/game/ag1zfmNsb3VkLWdvYmFucgwLEgRHYW1lGPK_JAw"));
+
+        // Set the target deep-link ID (for mobile use).
+        builder.setContentDeepLinkId("/pages/",
+                null, null, null);
+
+        // Set the pre-filled message.
+        builder.setText("foo bar");
+
+        startActivityForResult(builder.getIntent(), 0);
     }
 
     @Override
@@ -194,5 +298,8 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity implemen
         return mAQ;
     }
 
+    public PlusClient getPlusClient() {
+        return mPlusClient;
+    }
 
 }

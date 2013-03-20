@@ -50,7 +50,7 @@ import org.ligi.gobandroid_hd.ui.online.UploadGameToCloudEndpointsWithSend;
 import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.gobandroid_hd.ui.review.BookmarkDialog;
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
-import org.ligi.gobandroid_hd.ui.share.ShareAsAttachmentDialog;
+import org.ligi.gobandroid_hd.ui.share.ShareSGFDialog;
 import org.ligi.tracedroid.logging.Log;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 
@@ -110,8 +110,9 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             return;
         }
 
-        if (sound_man == null)
+        if (sound_man == null) {
             sound_man = new GoSoundManager(this);
+        }
 
         View customNav = new InGameActionBarView2(this);
 
@@ -161,10 +162,11 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     public void onGoGameChange() {
         Log.i("onGoGameChange in GoActivity");
         if (getGame().getActMove().getMovePos() > last_processed_move_change_num) {
-            if (getGame().isBlackToMove())
+            if (getGame().isBlackToMove()) {
                 sound_man.playSound(GoSoundManager.SOUND_PLACE1);
-            else
+            } else {
                 sound_man.playSound(GoSoundManager.SOUND_PLACE2);
+            }
         }
         last_processed_move_change_num = getGame().getActMove().getMovePos();
         game2ui();
@@ -212,15 +214,17 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         }, 100);
 
-        if (getGame() == null)
+        if (getGame() == null) {
             Log.w("we do not have a game in onStart of a GoGame activity - thats crazy!");
-        else
+        } else {
             getGame().addGoGameChangeListener(this);
+        }
     }
 
     public ZoomGameExtrasFragment getZoomFragment() {
-        if (myZoomFragment == null)
+        if (myZoomFragment == null) {
             myZoomFragment = new ZoomGameExtrasFragment(true);
+        }
         return myZoomFragment;
     }
 
@@ -247,8 +251,9 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                 return true;
 
             case R.id.menu_game_undo:
-                if (!getGame().canUndo())
+                if (!getGame().canUndo()) {
                     break;
+                }
 
                 requestUndo();
                 return true;
@@ -276,8 +281,8 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                 return true;
 
             case R.id.menu_game_share:
-                new ShareAsAttachmentDialog(this).show();
-                //new ShareSGFDialog(this).show();
+                //new ShareAsAttachmentDialog(this).show();
+                new ShareSGFDialog(this).show();
                 return true;
         }
 
@@ -377,8 +382,9 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             return;
         }
 
-        if (actFragment != null)
+        if (actFragment != null) {
             fragmentTransAction.remove(actFragment);
+        }
 
         fragmentTransAction.replace(R.id.game_extra_container, newFragment);
 
@@ -393,31 +399,35 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         Log.i("touch in GoActivity");
         if (event.getAction() == MotionEvent.ACTION_UP) {
             setFragment(getGameExtraFragment());
-            if (getResources().getBoolean(R.bool.small))
+            if (getResources().getBoolean(R.bool.small)) {
                 this.getSupportActionBar().show();
+            }
 
         } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
             setFragment(getZoomFragment());
 
             // for very small devices we want to hide the ActionBar to actually
             // see something in the Zoom-Fragment
-            if (getResources().getBoolean(R.bool.small))
+            if (getResources().getBoolean(R.bool.small)) {
                 this.getSupportActionBar().hide();
+            }
 
-            if (getGame().isBlackToMove())
+            if (getGame().isBlackToMove()) {
                 sound_man.playSound(GoSoundManager.SOUND_PICKUP1);
-            else
+            } else {
                 sound_man.playSound(GoSoundManager.SOUND_PICKUP2);
+            }
         }
 
-        if (!getGame().getGoMover().isReady())
+        if (!getGame().getGoMover().isReady()) {
             showInfoToast(R.string.wait_gnugo);
-        else if (getGame().getGoMover().isMoversMove())
+        } else if (getGame().getGoMover().isMoversMove()) {
             showInfoToast(R.string.not_your_turn);
-
-        else
-            // if (!getSlidingMenu().is)
+        } else
+        // if (!getSlidingMenu().is)
+        {
             doTouch(event);
+        }
 
         // refreshZoomFragment();
         return true;
@@ -428,11 +438,13 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     }
 
     public boolean isLastMoveAccepted() {
-        if (!isCloudGame())
+        if (!isCloudGame()) {
             return false;
+        }
 
-        if (last_accept == null)
+        if (last_accept == null) {
             return false;
+        }
 
         return (last_accept.getMovePos() == getGame().getActMove().getMovePos());
     }
@@ -442,18 +454,22 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     }
 
     public boolean isCloudMove() {
-        if (!isCloudGame())
+        if (!isCloudGame()) {
             return false;
+        }
 
 		/*
          * if (isLastMoveAccepted()) return true;
 		 */
-        if (getGame().getCloudRole().equals("s"))
+        if (getGame().getCloudRole().equals("s")) {
             return true;
-        if (getGame().getCloudRole().equals("b") && getGame().isBlackToMove())
+        }
+        if (getGame().getCloudRole().equals("b") && getGame().isBlackToMove()) {
             return true;
-        if (getGame().getCloudRole().equals("w") && !getGame().isBlackToMove())
+        }
+        if (getGame().getCloudRole().equals("w") && !getGame().isBlackToMove()) {
             return true;
+        }
 
         return false;
     }
@@ -470,12 +486,13 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         if (pd != null)
             pd.dismiss();
           */
-        if (getGame() == null)
+        if (getGame() == null) {
             Log.w("we do not have a game (anymore) in onStop of a GoGame activity - thats crazy!");
-        else
+        } else {
             getGame().removeGoGameChangeListener(this);
+        }
 
-        if (doAutosave())
+        if (doAutosave()) {
             try {
                 File f = new File(getSettings().getSGFSavePath() + "/autosave.sgf");
                 f.createNewFile();
@@ -488,9 +505,11 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                 out.close();
                 sgf_writer.close();
 
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 Log.i("" + e);
             }
+        }
 
     }
 
@@ -521,10 +540,11 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
                 }
                 go_board.move_stone_mode = false; // moving of stone done
-            } else if ((getGame().getActMove().getX() == interaction_scope.getTouchX()) && (getGame().getActMove().getY() == interaction_scope.getTouchY()))
+            } else if ((getGame().getActMove().getX() == interaction_scope.getTouchX()) && (getGame().getActMove().getY() == interaction_scope.getTouchY())) {
                 initializeStoneMove();
-            else
+            } else {
                 doMoveWithUIFeedback((byte) interaction_scope.getTouchX(), (byte) interaction_scope.getTouchY());
+            }
 
             interaction_scope.setTouchPosition(-1);
 
@@ -536,11 +556,15 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     public void initializeStoneMove() {
 
         if (getGame().getGoMover().isPlayingInThisGame()) // dont allow with a
-            // mover
+        // mover
+        {
             return;
+        }
 
         if (go_board.move_stone_mode) // already in the mode
+        {
             return; // -> do nothing
+        }
 
         go_board.move_stone_mode = true;
 
@@ -567,34 +591,38 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             switch (keyCode) {
                 case KeyEvent.KEYCODE_DPAD_UP:
                     go_board.prepare_keyinput();
-                    if (interaction_scope.getTouchY() > 0)
+                    if (interaction_scope.getTouchY() > 0) {
                         interaction_scope.touch_position -= getGame().getSize();
-                    else
+                    } else {
                         return false;
+                    }
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_LEFT:
                     go_board.prepare_keyinput();
-                    if (interaction_scope.getTouchX() > 0)
+                    if (interaction_scope.getTouchX() > 0) {
                         interaction_scope.touch_position--;
-                    else
+                    } else {
                         return false;
+                    }
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_DOWN:
                     go_board.prepare_keyinput();
-                    if (interaction_scope.getTouchY() < getGame().getVisualBoard().getSize() - 1)
+                    if (interaction_scope.getTouchY() < getGame().getVisualBoard().getSize() - 1) {
                         interaction_scope.touch_position += getGame().getSize();
-                    else
+                    } else {
                         return false;
+                    }
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
                     go_board.prepare_keyinput();
-                    if (interaction_scope.getTouchX() < getGame().getVisualBoard().getSize() - 1)
+                    if (interaction_scope.getTouchX() < getGame().getVisualBoard().getSize() - 1) {
                         interaction_scope.touch_position++;
-                    else
+                    } else {
                         return false;
+                    }
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_CENTER:
@@ -617,15 +645,19 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     public void refreshZoomFragment() {
         Log.i("refreshZoomFragment()" + getZoomFragment().getBoard() + " " + myZoomFragment.getBoard());
         if (getZoomFragment().getBoard() == null) // nothing we can do
+        {
             return;
+        }
 
-        if (myZoomFragment.getBoard() != null)
+        if (myZoomFragment.getBoard() != null) {
             myZoomFragment.getBoard().postInvalidate();
+        }
     }
 
     public GoBoardViewHD getBoard() {
-        if (go_board == null)
+        if (go_board == null) {
             setupBoard();
+        }
         return go_board;
     }
 
@@ -634,8 +666,9 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         go_board.move_stone_mode = false;
         if (doAskToKeepVariant()) {
             new UndoWithVariationDialog(this).show();
-        } else
+        } else {
             getGame().undo(GoPrefs.isKeepVariantEnabled());
+        }
     }
 
 }

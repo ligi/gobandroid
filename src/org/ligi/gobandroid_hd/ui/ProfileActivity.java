@@ -11,6 +11,7 @@ import com.google.android.gms.plus.model.people.Person;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.online.UserHandler;
+import org.ligi.tracedroid.Log;
 
 public class ProfileActivity extends GobandroidFragmentActivity {
 
@@ -38,14 +39,20 @@ public class ProfileActivity extends GobandroidFragmentActivity {
         mDisconnectButton = findViewById(R.id.disconnect_button);
         setButtonVisibilityByConnectedState();
 
-        getAQ().find(R.id.profileImage).gone();
+        AQuery profileImageView = getAQ().find(R.id.profileImage);
+
+        if (profileImageView == null) {
+            Log.w("profileImageView is null");
+        } else {
+            profileImageView.gone();
+        }
 
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!mPlusClient.isConnected()) {
                     if (mConnectionResult == null) {
-                        mPlusClient.connect();
+                        //mPlusClient.connect();
                         mConnectionProgressDialog.show();
                     } else {
                         try {
@@ -86,6 +93,7 @@ public class ProfileActivity extends GobandroidFragmentActivity {
                             // Trigger app logic to comply with the developer policies
                             setButtonVisibilityByConnectedState();
                             getAQ().find(R.id.profileImage).gone();
+                            mPlusClient.connect();
                         }
                     });
                 }
@@ -112,7 +120,9 @@ public class ProfileActivity extends GobandroidFragmentActivity {
 
                         int profileImageInPixels = (int) getResources().getDimension(R.dimen.profile_size);
                         profilePicURL = profilePicURL.replaceAll("sz=[0-9]*$", "sz=" + profileImageInPixels);
-                        getAQ().find(R.id.profileImage).image(profilePicURL, true, true);
+                        if (getAQ().find(R.id.profileImage) != null) {
+                            getAQ().find(R.id.profileImage).image(profilePicURL, true, true);
+                        }
                     }
 
                     if (username_et.getText().toString().equals("")) {
