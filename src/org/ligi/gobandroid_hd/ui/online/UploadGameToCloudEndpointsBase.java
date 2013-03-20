@@ -1,11 +1,9 @@
 package org.ligi.gobandroid_hd.ui.online;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import com.google.api.services.cloudgoban.Cloudgoban;
 import com.google.api.services.cloudgoban.model.Game;
 import com.google.api.services.cloudgoban.model.Text;
-import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.backend.CloudGobanHelper;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -13,18 +11,10 @@ import org.ligi.tracedroid.logging.Log;
 
 import java.io.IOException;
 
-/**
- * Created with IntelliJ IDEA.
- * User: ligi
- * Date: 1/31/13
- * Time: 3:04 PM
- * To change this template use File | Settings | File Templates.
- */
 public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String> {
 
-    private ProgressDialog pd;
-    private String type;
-    private GobandroidFragmentActivity goActivity;
+    protected String type;
+    protected GobandroidFragmentActivity goActivity;
 
     public UploadGameToCloudEndpointsBase(GobandroidFragmentActivity goActivity, String type) {
         this.goActivity = goActivity;
@@ -33,9 +23,6 @@ public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String
 
     @Override
     protected void onPreExecute() {
-        pd = new ProgressDialog(goActivity);
-        pd.setMessage(goActivity.getString(R.string.uploading_game));
-        pd.show();
         super.onPreExecute();
     }
 
@@ -58,10 +45,11 @@ public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String
                 if (game_key == null) {
                     Game game = new Game();
 
-                    if (type != null)
+                    if (type != null) {
                         game.setType(type);
+                    }
 
-                   UserHandler.setGameUsername(goActivity);
+                    UserHandler.setGameUsername(goActivity);
 
 
                     game.setSgf(new Text().setValue(SGFHelper.game2sgf(goActivity.getGame())));
@@ -88,9 +76,11 @@ public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String
 
                 try { // exponential back off
                     Thread.sleep(attempts * attempts * 1000);
-                } catch (InterruptedException e) {
                 }
-            } catch (IOException e) {
+                catch (InterruptedException e) {
+                }
+            }
+            catch (IOException e) {
                 Log.i("CloudGoban err " + e);
             }
 
@@ -98,11 +88,6 @@ public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String
 
         return null;
 
-    }
-
-    @Override
-    protected void onPostExecute(String result) {
-        pd.dismiss();
     }
 
 }
