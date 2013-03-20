@@ -119,8 +119,9 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
     public String contentToString(String url) throws IOException {
         String res = "";
 
-        if (url.startsWith("/"))
+        if (url.startsWith("/")) {
             return FileHelper.file2String(new File(url));
+        }
 
         return res;
     }
@@ -136,8 +137,9 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
      */
     public String uri2string(Uri intent_uri) throws IOException {
 
-        if (intent_uri.toString().startsWith("/"))
+        if (intent_uri.toString().startsWith("/")) {
             return FileHelper.file2String(new File(intent_uri.toString()));
+        }
 
         InputStream in;
         String uri_str = intent_uri.toString();
@@ -150,9 +152,10 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
             //cg.games().get(cloudgoban_parent_key).execute().
             Log.i("downloading CloudGoban game");
             return cg.games().get(cloudgoban_parent_key).execute().getSgf().getValue();
-        } else
+        } else {
             in = new BufferedInputStream(new URL("" + intent_uri).openStream(),
                     4096);
+        }
 
         FileOutputStream file_writer = null;
 
@@ -169,11 +172,13 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         byte[] b = new byte[4096];
         for (int n; (n = in.read(b)) != -1; ) {
             out.append(new String(b, 0, n));
-            if (file_writer != null)
+            if (file_writer != null) {
                 file_writer.write(b, 0, n);
+            }
         }
-        if (file_writer != null)
+        if (file_writer != null) {
             file_writer.close();
+        }
 
         Log.i("SGF return" + out.toString());
         return out.toString();
@@ -220,13 +225,15 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
             if (getApp().getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
                 int transform = TsumegoHelper.calcTransform(game);
 
-                if (transform != SGFHelper.DEFAULT_SGF_TRANSFORM)
+                if (transform != SGFHelper.DEFAULT_SGF_TRANSFORM) {
                     game = SGFHelper.sgf2game(sgf, null,
                             SGFHelper.BREAKON_NOTHING, transform);
+                }
             }
 
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Log.w("exception in load", e);
             game = null;
         }
@@ -291,11 +298,10 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
         int move_num = getIntent().getIntExtra("move_num", -1);
 
-        if (move_num != -1)
+        if (move_num != -1) {
             for (int i = 0; i < move_num; i++)
                 game.jump(game.getActMove().getnextMove(0));
-
-        else if (cloudgoban_parent_key != null) {
+        } else if (cloudgoban_parent_key != null) {
             getApp().getInteractionScope().setMode(InteractionScope.MODE_RECORD);
 
             //game.getMetaData().setCloudParent();
@@ -318,7 +324,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
                 }
             });
 
-            CloudGobanHelper.registerGame(this, cloudgoban_parent_key, game.isBlackToMove() ? "w" : "b", true, handler);
+            CloudGobanHelper.registerGame(this, cloudgoban_parent_key, game.isBlackToMove() ? "w" : "b", true, handler, true);
         } else {
 
             handler.post(new Runnable() {

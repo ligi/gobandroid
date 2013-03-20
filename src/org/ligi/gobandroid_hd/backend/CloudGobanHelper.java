@@ -8,7 +8,6 @@ import com.google.api.services.cloudgoban.model.Game;
 import com.google.api.services.cloudgoban.model.GoGameParticipation;
 import com.google.api.services.cloudgoban.model.Text;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
@@ -19,7 +18,7 @@ import java.io.IOException;
 
 public class CloudGobanHelper {
 
-    public static void registerGame(final GobandroidFragmentActivity activity, String game_key, String role, final boolean start_after_reg, Handler handler) {
+    public static void registerGame(final GobandroidFragmentActivity activity, String game_key, String role, final boolean start_after_reg, Handler handler, boolean setCloudKey) {
 
         GoGameParticipation gn = new GoGameParticipation();
         gn.setGameKey(game_key);
@@ -52,30 +51,37 @@ public class CloudGobanHelper {
                         });
 
                     } else if (start_after_reg) {
-                        Game game=activity.getApp().getCloudgoban().games().get(gn.getGameKey()).execute();
+                        Game game = activity.getApp().getCloudgoban().games().get(gn.getGameKey()).execute();
 
                         Log.i("migrating" + game.getType());
-                        if (game.getType().equals("public_invite"))
+                        if (game.getType().equals("public_invite")) {
                             game.setType("public_watching");
+                        }
 
                         Log.i("migrating2" + game.getType());
 
                         UserHandler.setGameUsername(activity);
                         game.setSgf(new Text().setValue(SGFHelper.game2sgf(activity.getGame())));
 
-                        activity.getApp().getCloudgoban().games().update(UserHandler.getUserKey(activity.getApp()),game).execute();
+                        activity.getApp().getCloudgoban().games().update(UserHandler.getUserKey(activity.getApp()), game).execute();
 
                         activity.finish();
                         SwitchModeHelper.startGameWithCorrectMode(activity);
                     }
-                    activity.getGame().setCloudDefs(game_key, participation.getRole());
+
+                    if (setCloudKey) {
+                        activity.getGame().setCloudDefs(game_key, participation.getRole());
+                    }
+
                     return;
                 }
 
                 Thread.sleep(attempt * attempt * 1000); // exponential back off
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 // retries take care of that sort of
-            } catch (InterruptedException e) {
+            }
+            catch (InterruptedException e) {
                 Log.i("cannot sleep");
                 e.printStackTrace();
             }
