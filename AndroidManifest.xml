@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.ligi.gobandroid_hd"
           android:installLocation="auto"
-          android:versionCode="124"
-          android:versionName="1.24">
+          android:versionCode="125"
+          android:versionName="1.25">
 
     <uses-sdk
             android:minSdkVersion="5"
