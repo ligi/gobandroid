@@ -2,11 +2,9 @@ package org.ligi.gobandroid_hd.ui.share;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
+import android.widget.*;
 import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
@@ -28,6 +26,15 @@ public class ShareSGFDialog extends GobandroidDialog {
     private RadioGroup shareTypeRG;
     private Context mContext;
 
+    private SharedPreferences mSharedPrefs; // for saving the last choice
+
+    private final static String LAST_TYPE_SP_KEY = "LAST_TYPE";
+    private final static String LAST_SHARE_TYPE_SP_KEY = "LAST_SHARE_TYPE";
+
+    private final static int SHARE_TYPE_GPLUS = 0;
+    private final static int SHARE_TYPE_LINK = 1;
+    private final static int SHARE_TYPE_ATTACHMENT = 2;
+
     /**
      * when no fname used in constructor -> use the current game
      *
@@ -36,11 +43,15 @@ public class ShareSGFDialog extends GobandroidDialog {
     public ShareSGFDialog(Context context) {
         super(context);
         mContext = context;
+
+        mSharedPrefs = context.getSharedPreferences("share_prefs", Context.MODE_PRIVATE);
+
         setContentView(R.layout.share_options);
         setTitle(R.string.share);
         setIconResource(android.R.drawable.ic_menu_share);
 
         shareTypeRG = (RadioGroup) findViewById(R.id.shareTypeRadiGroup);
+
 
         publicCheckBox = (CheckBox) findViewById(R.id.public_cb);
 
@@ -101,27 +112,56 @@ public class ShareSGFDialog extends GobandroidDialog {
             @Override
             public void onClick(View v) {
 
-                String type = game_type_keys[typeSpinner.getSelectedItemPosition()];
-                String introText = game_anounce_strings[typeSpinner.getSelectedItemPosition()];
+                int selectedTypePosition = typeSpinner.getSelectedItemPosition();
+
+                SharedPreferences.Editor sharedPrefsEditor = mSharedPrefs.edit();
+                sharedPrefsEditor.putInt(LAST_TYPE_SP_KEY, selectedTypePosition);
+                String type = game_type_keys[selectedTypePosition];
+                String introText = game_anounce_strings[selectedTypePosition];
 
                 switch (shareTypeRG.getCheckedRadioButtonId()) {
 
                     case R.id.radioButtonGPlus:
+                        sharedPrefsEditor.putInt(LAST_SHARE_TYPE_SP_KEY, SHARE_TYPE_GPLUS);
                         new UploadGameAndShareToGPplus((GobandroidFragmentActivity) mContext, type, introText).execute();
                         break;
 
                     case R.id.radioButtonLink:
+                        sharedPrefsEditor.putInt(LAST_SHARE_TYPE_SP_KEY, SHARE_TYPE_LINK);
                         new UploadGameAndShareIntent((GobandroidFragmentActivity) mContext, type, introText).execute();
                         break;
 
                     case R.id.radioButtonAsAttachment:
+                        sharedPrefsEditor.putInt(LAST_SHARE_TYPE_SP_KEY, SHARE_TYPE_ATTACHMENT);
                         new ShareAsAttachmentDialog(getContext());
                         break;
 
                 }
+                sharedPrefsEditor.commit();
                 dismiss();
             }
         });
+
+        int lastSelectedPos = mSharedPrefs.getInt(LAST_TYPE_SP_KEY, 0);
+        typeSpinner.setSelection(lastSelectedPos);
+
+        int lastShareType = mSharedPrefs.getInt(LAST_SHARE_TYPE_SP_KEY, SHARE_TYPE_ATTACHMENT);
+        switch (lastShareType) {
+            case SHARE_TYPE_ATTACHMENT:
+                enableRadioBtn(R.id.radioButtonAsAttachment);
+                break;
+            case SHARE_TYPE_GPLUS:
+                enableRadioBtn(R.id.radioButtonGPlus);
+                break;
+            case SHARE_TYPE_LINK:
+                enableRadioBtn(R.id.radioButtonLink);
+                break;
+        }
+
+    }
+
+    private void enableRadioBtn(int id) {
+        ((RadioButton) findViewById(id)).setChecked(true);
     }
 
     public ShareSGFDialog(Context context, String fname) {
