@@ -224,5 +224,14 @@
         </receiver>
 
         <activity android:name="com.tapfortap.TapForTapActivity"/>
+        <activity android:name="org.ligi.gobandroid_hd.backend.ParseDeepLinkActivity">
+            <intent-filter>
+                <action android:name="com.google.android.apps.plus.VIEW_DEEP_LINK"/>
+                <data android:scheme="vnd.google.deeplink"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+        </activity>
     </application>
 </manifest>
