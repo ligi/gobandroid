@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.view.WindowManager;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.google.android.gcm.GCMRegistrar;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -41,9 +40,11 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
         }
 
         byte res = super.doMoveWithUIFeedback(x, y);
-        if (res == GoGame.MOVE_VALID)
-            if (getGame().getActMove().hasNextMove())
+        if (res == GoGame.MOVE_VALID) {
+            if (getGame().getActMove().hasNextMove()) {
                 getGame().jump(getGame().getActMove().getnextMove(0));
+            }
+        }
 
         getGame().notifyGameChange();
         return res;
@@ -74,11 +75,13 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
         try {
             boolean pass_avail = !getGame().isFinished();
 
-            if (isCloudGame() && isCloudMove())
+            if (isCloudGame() && isCloudMove()) {
                 pass_avail = false;
+            }
 
-            if (isCloudGame() && isLastMoveAccepted())
+            if (isCloudGame() && isLastMoveAccepted()) {
                 pass_avail = false;
+            }
 
             menu.findItem(R.id.menu_game_pass).setVisible(pass_avail);
 
@@ -89,22 +92,27 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
 
             boolean undo_avail = getGame().canUndo();
 
-            if (isCloudGame() && getGame().getCloudRole().equals("s"))
+            if (isCloudGame() && getGame().getCloudRole().equals("s")) {
                 undo_avail = false;
+            }
 
-            if (isCloudGame() && !isCloudMove())
+            if (isCloudGame() && !isCloudMove()) {
                 undo_avail = false;
+            }
 
-            if (isCloudGame() && isLastMoveAccepted())
+            if (isCloudGame() && isLastMoveAccepted()) {
                 undo_avail = false;
+            }
 
             menu.findItem(R.id.menu_game_undo).setVisible(undo_avail);
             // TODO works but weird logic
             menu.findItem(R.id.menu_game_accept).setVisible(isCloudGame() && undo_avail);
 
+            /*
             menu.findItem(R.id.menu_game_invite).setVisible(getSettings().isBetaWanted() && !GCMRegistrar.getRegistrationId(this).equals(""));
-
-        } catch (NullPointerException e) {
+            */
+        }
+        catch (NullPointerException e) {
         } // we do not care when they do not exist
 
         return true;
@@ -132,11 +140,13 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
 
                 boolean switch_to_count = getGame().isFinished();
 
-                if (isCloudGame() && (isCloudMove() && !isLastMoveAccepted()))
+                if (isCloudGame() && (isCloudMove() && !isLastMoveAccepted())) {
                     switch_to_count = false;
+                }
 
-                if (switch_to_count)
+                if (switch_to_count) {
                     switchToCounting();
+                }
 
             }
 
@@ -151,10 +161,11 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
 
     @Override
     public void requestUndo() {
-        if (isCloudGame())
+        if (isCloudGame()) {
             getGame().undo(GoPrefs.isKeepVariantEnabled());
-        else
+        } else {
             super.requestUndo();
+        }
     }
 
 }
