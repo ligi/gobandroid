@@ -158,6 +158,16 @@ public class ShareSGFDialog extends GobandroidDialog {
                 break;
         }
 
+        // if we came from the wrong context or plus client is not connected
+        if (!(mContext instanceof GobandroidFragmentActivity) || !((GobandroidFragmentActivity) context).getPlusClient().isConnected()) {
+
+            RadioButton plusRadio = (RadioButton) findViewById(R.id.radioButtonGPlus);
+            if (plusRadio.isChecked()) {
+                enableRadioBtn(R.id.radioButtonLink);
+            }
+            // disable the  plus option - TODO give the user a feedback why we did this
+            plusRadio.setEnabled(false);
+        }
     }
 
     private void enableRadioBtn(int id) {
