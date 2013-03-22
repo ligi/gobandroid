@@ -72,9 +72,12 @@ public class ProfileActivity extends GobandroidFragmentActivity {
             @Override
             public void onClick(View v) {
                 if (mPlusClient.isConnected()) {
+                    mConnectionResult = null;
+
                     mPlusClient.clearDefaultAccount();
                     mPlusClient.disconnect();
                     mPlusClient.connect();
+                    setToNoUser();
                 }
             }
         });
@@ -91,14 +94,18 @@ public class ProfileActivity extends GobandroidFragmentActivity {
                         public void onAccessRevoked(ConnectionResult status) {
                             // mPlusClient is now disconnected and access has been revoked.
                             // Trigger app logic to comply with the developer policies
-                            setButtonVisibilityByConnectedState();
-                            getAQ().find(R.id.profileImage).gone();
+                            setToNoUser();
                             mPlusClient.connect();
                         }
                     });
                 }
             }
         });
+    }
+
+    private void setToNoUser() {
+        setButtonVisibilityByConnectedState();
+        getAQ().find(R.id.profileImage).gone();
     }
 
     private void setButtonVisibilityByConnectedState() {
