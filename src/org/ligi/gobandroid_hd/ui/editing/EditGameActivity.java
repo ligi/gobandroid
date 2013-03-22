@@ -2,6 +2,8 @@ package org.ligi.gobandroid_hd.ui.editing;
 
 import android.os.Bundle;
 import android.view.WindowManager;
+import com.actionbarsherlock.view.Menu;
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.markers.CircleMarker;
@@ -32,8 +34,9 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
             boolean found = false;
             for (GoMarker marker : getGame().getActMove().getMarkers())
                 found |= marker.getText().equals("" + i);
-            if (!found)
+            if (!found) {
                 return i;
+            }
         }
         return 0; // should not happen - only if a hundret markers
     }
@@ -43,8 +46,9 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
             boolean found = false;
             for (GoMarker marker : getGame().getActMove().getMarkers())
                 found |= marker.getText().equals("" + (char) ('A' + i));
-            if (!found)
+            if (!found) {
                 return "" + (char) ('A' + i);
+            }
         }
         return "a"; // should not happen - only if a hundred markers
     }
@@ -67,8 +71,9 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
                 // remove markers with same coordinates
                 GoMarker marker2remove = null;
                 for (GoMarker marker : getGame().getActMove().getMarkers()) {
-                    if (marker.getX() == x && marker.getY() == y)
+                    if (marker.getX() == x && marker.getY() == y) {
                         marker2remove = marker;
+                    }
                 }
 
                 if (marker2remove != null) {
@@ -79,18 +84,20 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
 
         switch (getMode()) {
             case BLACK:
-                if (getGame().getHandicapBoard().isCellBlack(x, y))
+                if (getGame().getHandicapBoard().isCellBlack(x, y)) {
                     getGame().getHandicapBoard().setCellFree(x, y);
-                else
+                } else {
                     getGame().getHandicapBoard().setCellBlack(x, y);
+                }
                 getGame().jump(getGame().getActMove()); // we need to totally
                 // refresh the board
                 break;
             case WHITE:
-                if (getGame().getHandicapBoard().isCellWhite(x, y))
+                if (getGame().getHandicapBoard().isCellWhite(x, y)) {
                     getGame().getHandicapBoard().setCellFree(x, y);
-                else
+                } else {
                     getGame().getHandicapBoard().setCellWhite(x, y);
+                }
                 getGame().jump(getGame().getActMove()); // we need to totally
                 // refresh the board
                 break;
@@ -121,15 +128,24 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
         return editModePool.getActMode();
     }
 
-    @Override
-    public void onGoGameChange() {
-        super.onGoGameChange();
-        this.invalidateOptionsMenu();
-    }
+    /**
+     * crashes with share and imho not needed any more - but investigate
+     *
+     * @Override public void onGoGameChange() {
+     * super.onGoGameChange();
+     * this.invalidateOptionsMenu();
+     * }
+     */
 
     @Override
     public EditGameExtrasFragment getGameExtraFragment() {
         return new EditGameExtrasFragment(editModePool);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getSupportMenuInflater().inflate(R.menu.ingame_edit, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
 }
