@@ -18,10 +18,10 @@ public class UploadGameAndShareToGPplus extends UploadGameToCloudEndpointsWithUI
     @Override
     public void onSuccess(String key) {
         Log.i("sharing to G+ for type: " + type + " game key " + key);
-        workingPostToGPlus(key);
+        postToGPlus(key);
     }
 
-    private void workingPostToGPlus(String key) {
+    private void postToGPlus(String key) {
         // Create an interactive post with the "VIEW_ITEM" label. This will
         // create an enhanced share dialog when the post is shared on Google+.
         // When the user clicks on the deep link, ParseDeepLinkActivity will
