@@ -19,8 +19,6 @@ public class UploadGameAndShareToGPplus extends UploadGameToCloudEndpointsWithUI
     public void onSuccess(String key) {
         Log.i("sharing to G+ for type: " + type + " game key " + key);
         workingPostToGPlus(key);
-
-
     }
 
     private void workingPostToGPlus(String key) {
@@ -29,20 +27,23 @@ public class UploadGameAndShareToGPplus extends UploadGameToCloudEndpointsWithUI
         // When the user clicks on the deep link, ParseDeepLinkActivity will
         // immediately parse the deep link, and route to the appropriate resource.
         Uri callToActionUrl = Uri.parse("https://cloud-goban.appspot.com/game/" + key);
-        String callToActionDeepLinkId = "/game";
+        String callToActionDeepLinkId = "/game/" + key;
 
         // Create an interactive post builder.
         PlusShare.Builder builder = new PlusShare.Builder(goActivity, goActivity.getPlusClient());
 
         // Set call-to-action metadata.
-        builder.addCallToAction("CREATE_ITEM", callToActionUrl, callToActionDeepLinkId);
+        //builder.addCallToAction("CREATE_ITEM", callToActionUrl, callToActionDeepLinkId);
+        builder.addCallToAction("GO", callToActionUrl, callToActionDeepLinkId);
 
         // Set the target url (for desktop use).
         builder.setContentUrl(Uri.parse("https://cloud-goban.appspot.com/game/" + key));
 
         // Set the target deep-link ID (for mobile use).
-        builder.setContentDeepLinkId("/pages/",
-                null, null, null);
+
+        builder.setContentDeepLinkId(callToActionDeepLinkId);
+
+        //builder.setRecipients()
 
         // Set the pre-filled message.
         builder.setText(mIntroText);
