@@ -134,7 +134,7 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity implemen
         return super.onKeyDown(keyCode, event);
     }
 
-    // very nice hint by Jake Wharton by twitter
+    // very nice hint by Jake Wharton via twitter
     @SuppressWarnings("unchecked")
     public <T> T findById(int id) {
         return (T) findViewById(id);

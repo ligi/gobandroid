@@ -13,7 +13,7 @@ public class GobandroidFragment extends Fragment {
         return ((GobandroidApp) getActivity().getApplicationContext()).getGame();
     }
 
-    // very nice hint by Jake Wharton by twitter
+    // very nice hint by Jake Wharton via twitter
     @SuppressWarnings("unchecked")
     public <T> T findById(View view, int id) {
         return (T) view.findViewById(id);
