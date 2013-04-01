@@ -32,6 +32,9 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
  	-->
+    <uses-library
+            android:required="false"
+            android:name="com.sec.android.app.multiwindow"></uses-library>
     <application
             android:name="org.ligi.gobandroid_hd.GobandroidApp"
             android:icon="@drawable/ic_launcher"
@@ -41,7 +44,9 @@
         <activity android:name="org.ligi.gobandroid_hd.ui.game_setup.GoSetupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
