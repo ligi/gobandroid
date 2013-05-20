@@ -1,8 +1,6 @@
 package org.ligi.gobandroid_hd.ui.online;
 
-import android.app.AlertDialog;
 import android.content.Intent;
-import org.ligi.android.common.dialogs.DialogDiscarder;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;

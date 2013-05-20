@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import org.ligi.android.common.files.FileHelper;
+import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.MetaDataFormater;
@@ -78,7 +78,7 @@ class ReviewPathViewAdapter extends BaseAdapter {
 
                 }
 
-                sgf_str = FileHelper.file2String(new File(base_fname));
+                sgf_str = AndroidHelper.at(new File(base_fname)).loadToString();
                 game = SGFHelper.sgf2game(sgf_str, null, SGFHelper.BREAKON_FIRSTMOVE);
                 SGFMetaData sgf_meta = new SGFMetaData(base_fname + SGFMetaData.FNAME_ENDING);
 

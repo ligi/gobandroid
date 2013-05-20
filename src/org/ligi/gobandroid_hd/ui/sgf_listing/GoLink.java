@@ -1,6 +1,6 @@
 package org.ligi.gobandroid_hd.ui.sgf_listing;
 
-import org.ligi.android.common.files.FileHelper;
+import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.tracedroid.logging.Log;
 
@@ -25,7 +25,7 @@ public class GoLink {
     public GoLink(File file) {
 
         try {
-            String go_lnk = FileHelper.file2String(file);
+            String go_lnk = AndroidHelper.at(file).loadToString();
             go_lnk = go_lnk.replace("\n", "").replace("\r", "");
             fname = go_lnk; // backup
             String[] arr_content = go_lnk.split(":#");
@@ -58,7 +58,7 @@ public class GoLink {
      */
     public String getSGFString() {
         try {
-            return FileHelper.file2String(new File(fname));
+            return AndroidHelper.at(new File(fname)).loadToString();
         } catch (IOException e) {
             return "";
         }

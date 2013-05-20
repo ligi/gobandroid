@@ -331,6 +331,7 @@ public class GoBoardViewHD extends View {
         canvas.restore();
     } // end of onDraw
 
+
     /**
      * @return the width/height of the Board in Pixels
      */

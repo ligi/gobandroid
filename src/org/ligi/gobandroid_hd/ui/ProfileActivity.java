@@ -152,8 +152,8 @@ public class ProfileActivity extends GobandroidFragmentActivity {
     }
 
     @Override
-    public void onConnected() {
-        super.onConnected();
+    public void onConnected(Bundle bundle) {
+        super.onConnected(bundle);
         setButtonVisibilityByConnectedState();
     }
 

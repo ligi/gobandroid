@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
-import org.ligi.android.common.dialogs.ActivityFinishOnDialogClickListener;
-import org.ligi.android.common.dialogs.DialogDiscarder;
+import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnClickListener;
+import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
@@ -186,7 +186,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
         // try to find the correct solution
         if (!isFinishingMoveKnown()) {
-            new AlertDialog.Builder(this).setMessage(R.string.tsumego_sgf_no_solution).setNegativeButton(R.string.ok, new DialogDiscarder()).setPositiveButton(R.string.go_back, new ActivityFinishOnDialogClickListener(this)).show();
+            new AlertDialog.Builder(this).setMessage(R.string.tsumego_sgf_no_solution).setNegativeButton(R.string.ok, new DialogDiscardingOnClickListener()).setPositiveButton(R.string.go_back, new ActivityFinishingOnClickListener(this)).show();
         }
 
         getGame().addGoGameChangeListener(this);

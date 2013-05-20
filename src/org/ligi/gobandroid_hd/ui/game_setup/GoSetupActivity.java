@@ -51,7 +51,7 @@ public class GoSetupActivity extends GoActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+/*
         MarketService ms = new MarketService(this);
         ms.level(MarketService.MINOR).checkVersion();
 
@@ -60,7 +60,7 @@ public class GoSetupActivity extends GoActivity {
         // getBoard().requestFocus(); - but that was not working ..
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         Log.i("starting setup");
-
+*/
     }
 
     @Override

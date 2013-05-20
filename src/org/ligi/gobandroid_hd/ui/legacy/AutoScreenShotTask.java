@@ -4,8 +4,8 @@ import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.TextView;
-import org.ligi.android.common.dialogs.DialogDiscarder;
-import org.ligi.android.common.files.FileHelper;
+import org.ligi.androidhelper.AndroidHelper;
+import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
@@ -49,7 +49,7 @@ public class AutoScreenShotTask extends AsyncTask<String, String, Integer> {
 
         new AlertDialog.Builder(activity).setMessage(msg).setTitle(R.string.download_report)
                 // .setView(gbv)
-                .setPositiveButton(android.R.string.ok, new DialogDiscarder()).show();
+                .setPositiveButton(android.R.string.ok, new DialogDiscardingOnClickListener()).show();
     }
 
     protected void onProgressUpdate(String... progress) {
@@ -98,9 +98,9 @@ public class AutoScreenShotTask extends AsyncTask<String, String, Integer> {
                         processPath(file.getPath());
                     } else if (file.getName().endsWith(".sgf")) {
                         try {
-                            String sgf_content = FileHelper.file2String(file);
+                            String sgf_content = AndroidHelper.at(file).loadToString();
                             if ((sgf_content != null) && (!sgf_content.equals(""))) {
-                                getApp().getInteractionScope().setGame(SGFHelper.sgf2game(FileHelper.file2String(file), null));
+                                getApp().getInteractionScope().setGame(SGFHelper.sgf2game(AndroidHelper.at(file).loadToString(), null));
 
                                 if (file.getPath().contains("tsumego")) {
                                     gbv.setZoom(TsumegoHelper.calcZoom(getApp().getGame(), false));

@@ -9,10 +9,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import org.ligi.android.common.activitys.ActivityFinishOnCancelListener;
-import org.ligi.android.common.arrays.ArrayHelper;
-import org.ligi.android.common.dialogs.ActivityFinishOnDialogClickListener;
-import org.ligi.android.common.dialogs.DialogDiscarder;
+import org.ligi.androidhelper.AndroidHelper;
+import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnCancelListener;
+import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnClickListener;
+import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -80,7 +80,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
                         switch (which) {
                             case 0:
                                 new AlertDialog.Builder(getActivity()).setMessage("Really delete " + dir + "/" + menu_items[position]).setTitle("Delete?")
-                                        .setNegativeButton("NO", new DialogDiscarder())
+                                        .setNegativeButton("NO", new DialogDiscardingOnClickListener())
                                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
@@ -139,8 +139,8 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
         Log.i("refresh list");
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity()).setTitle(R.string.problem_listing_sgf);
 
-        alert.setPositiveButton(R.string.ok, new ActivityFinishOnDialogClickListener(getActivity()));
-        alert.setOnCancelListener(new ActivityFinishOnCancelListener(getActivity()));
+        alert.setPositiveButton(R.string.ok, new ActivityFinishingOnClickListener(getActivity()));
+        alert.setOnCancelListener(new ActivityFinishingOnCancelListener(getActivity()));
 
         if (dir == null) {
             alert.setMessage(getResources().getString(R.string.sgf_path_invalid) + " " + dir).show();
@@ -180,7 +180,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             String[] undone_arr = (String[]) undone.toArray(new String[undone.size()]), done_arr = (String[]) done.toArray(new String[done.size()]);
             Arrays.sort(undone_arr);
             Arrays.sort(done_arr);
-            menu_items = ArrayHelper.concat(undone_arr, done_arr);
+            menu_items = AndroidHelper.at(undone_arr).combineWith( done_arr);
         } else {
             menu_items = (String[]) fnames.toArray(new String[fnames.size()]);
             Arrays.sort(menu_items);

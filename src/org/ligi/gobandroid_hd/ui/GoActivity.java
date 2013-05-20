@@ -36,7 +36,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import org.ligi.android.common.activitys.ActivityOrientationLocker;
+import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -46,7 +46,6 @@ import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.fragments.DefaultGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
-import org.ligi.gobandroid_hd.ui.online.UploadGameToCloudEndpointsWithSend;
 import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.gobandroid_hd.ui.review.BookmarkDialog;
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
@@ -90,7 +89,9 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         GoPrefs.init(this); // TODO remove legacy
 
+
         setContentView(R.layout.game);
+
 
         // if there where stacktraces collected -> give the user the option to send them
         TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
@@ -98,7 +99,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         interaction_scope = getApp().getInteractionScope();
         this.getSupportActionBar().setHomeButtonEnabled(true);
 
-        ActivityOrientationLocker.disableRotation(this);
+       AndroidHelper.at(this).disableRotation();
 
         if (getSettings().isWakeLockEnabled()) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -272,10 +273,13 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                 new SaveSGFDialog(this).show();
                 return true;
 
+            /*
             case R.id.menu_game_invite:
                 getGame().setCloudDefs(null, null);
                 new UploadGameToCloudEndpointsWithSend(this, "private_invite").execute();
                 return true;
+            */
+
             case R.id.menu_bookmark:
                 new BookmarkDialog(this).show();
                 return true;
@@ -552,6 +556,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         getGame().notifyGameChange();
     }
+
 
     public void initializeStoneMove() {
 

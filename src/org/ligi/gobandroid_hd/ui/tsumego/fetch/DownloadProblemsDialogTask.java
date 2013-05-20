@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import org.ligi.android.common.dialogs.DialogDiscarder;
+import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.Refreshable;
 
@@ -50,7 +50,7 @@ public class DownloadProblemsDialogTask extends AsyncTask<TsumegoSource[], Strin
             refreshable.refresh();
         }
 
-        new AlertDialog.Builder(ctx).setMessage(msg).setTitle(R.string.download_report).setPositiveButton(R.string.ok, new DialogDiscarder()).show();
+        new AlertDialog.Builder(ctx).setMessage(msg).setTitle(R.string.download_report).setPositiveButton(R.string.ok, new DialogDiscardingOnClickListener()).show();
     }
 
     @Override

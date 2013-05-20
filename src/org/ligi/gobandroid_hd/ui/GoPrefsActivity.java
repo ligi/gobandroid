@@ -25,7 +25,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gcm.GCMRegistrar;
 import com.slidingmenu.lib.app.SlidingPreferenceActivity;
-import org.ligi.android.common.preferences.SetPreferenceEnabledByCheckBoxPreferenceState;
+import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.gobandroid_hd.ui.application.MenuDrawer;
@@ -201,8 +201,11 @@ public class GoPrefsActivity extends SlidingPreferenceActivity implements OnPref
 
         // the preference that sets SGF mode on Legend only makes sense if there
         // is a Legend in the first place
+        /** TODO ANDROIDTUDIO
+         *
+        AndroidHelper.at(doLegendCheckBoxPref)
         new SetPreferenceEnabledByCheckBoxPreferenceState(doLegendCheckBoxPref).addPreference2SetEnable(SGFLegendCheckBoxPref);
-
+*/
         /*PreferenceCategory soundPrefCat = new PreferenceCategory(this);
         soundPrefCat.setTitle(R.string.sound);
         root.addPreference(soundPrefCat);

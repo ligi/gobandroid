@@ -5,7 +5,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.*;
-import org.ligi.android.common.dialogs.DialogDiscarder;
+import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -62,7 +62,7 @@ public class ShareSGFDialog extends GobandroidDialog {
             }
         });
 
-        setNegativeButton(R.string.cancel, new DialogDiscarder());
+        setNegativeButton(R.string.cancel, new DialogDiscardingOnClickListener());
 
         typeSpinner = (Spinner) findViewById(R.id.type_spinner);
         final String[] strings = {

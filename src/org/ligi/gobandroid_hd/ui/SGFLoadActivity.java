@@ -30,7 +30,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.*;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.api.services.cloudgoban.Cloudgoban;
-import org.ligi.android.common.files.FileHelper;
+import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.backend.CloudGobanHelper;
@@ -120,7 +120,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         String res = "";
 
         if (url.startsWith("/")) {
-            return FileHelper.file2String(new File(url));
+            return AndroidHelper.at(new File(url)).loadToString();
         }
 
         return res;
@@ -138,7 +138,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
     public String uri2string(Uri intent_uri) throws IOException {
 
         if (intent_uri.toString().startsWith("/")) {
-            return FileHelper.file2String(new File(intent_uri.toString()));
+            return AndroidHelper.at(new File(intent_uri.toString())).toString();
         }
 
         InputStream in;

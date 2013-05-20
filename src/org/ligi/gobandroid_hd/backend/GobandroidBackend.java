@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.Settings.Secure;
 import com.google.android.gcm.GCMRegistrar;
-import org.ligi.android.common.net.NetHelper;
+import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.tracedroid.Log;
@@ -24,7 +24,8 @@ public class GobandroidBackend {
     public final static int getMaxTsumegos(Context ctx) {
         try {
             URL url = new URL("http://" + GobandroidConfiguration.backend_domain + "/tsumegos/max?device_id=" + Secure.getString(ctx.getContentResolver(), Secure.ANDROID_ID));
-            String count_str = NetHelper.downloadURL2String(url);
+            String count_str = AndroidHelper.at(url).downloadToString();
+
             count_str = count_str.replace("\n", "").replace("\r", "").trim(); // clean
             // the
             // string
@@ -73,7 +74,7 @@ public class GobandroidBackend {
                 url_str += "&" + getURLParamSnippet("device_str", Build.VERSION.RELEASE + " | " + Build.MANUFACTURER + " | " + Build.DEVICE + " | " + Build.MODEL + " | " + Build.DISPLAY + " | " + Build.CPU_ABI + " | " + Build.TYPE + " | " + Build.TAGS);
 
                 URL url = new URL(url_str);
-                NetHelper.downloadURL2String(url).replace("\n", "").replace("\r", "");// .equals("saved");
+                AndroidHelper.at(url).downloadToString().replace("\n", "").replace("\r", "");// .equals("saved");
             } catch (Exception e) {
                 Log.w("cannot register push" + e);
             }

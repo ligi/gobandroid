@@ -1,7 +1,7 @@
 package org.ligi.gobandroid_hd.ui.online;
 
 import android.app.AlertDialog;
-import org.ligi.android.common.dialogs.DialogDiscarder;
+import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
@@ -30,7 +30,7 @@ public abstract class UploadGameToCloudEndpointsWithUI extends UploadGameToCloud
             alert_b.setMessage(goActivity.getString(R.string.cannot_create_game_server_problem));
             alert_b.setTitle(goActivity.getString(R.string.server_problem));
             alert_b.setIcon(android.R.drawable.ic_dialog_alert);
-            alert_b.setPositiveButton(R.string.ok, new DialogDiscarder());
+            alert_b.setPositiveButton(R.string.ok, new DialogDiscardingOnClickListener());
             alert_b.show();
         } else {
             onSuccess(result);

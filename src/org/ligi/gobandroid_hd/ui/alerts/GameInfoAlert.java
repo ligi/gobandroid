@@ -25,7 +25,7 @@ import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import org.ligi.android.common.dialogs.DialogDiscarder;
+import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -115,7 +115,7 @@ public class GameInfoAlert extends GobandroidDialog {
                 try {
                     game.setKomi(Float.valueOf(game_komi_et.getText().toString()));
                 } catch (NumberFormatException ne) {
-                    new AlertDialog.Builder(context).setMessage(R.string.komi_must_be_a_number).setPositiveButton(android.R.string.ok, new DialogDiscarder()).setTitle(R.string.problem).show();
+                    new AlertDialog.Builder(context).setMessage(R.string.komi_must_be_a_number).setPositiveButton(android.R.string.ok, new DialogDiscardingOnClickListener()).setTitle(R.string.problem).show();
                     return;
                 }
 

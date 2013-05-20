@@ -42,6 +42,10 @@
             android:logo="@drawable/ic_launcher"
             android:theme="@style/base_theme">
         <activity android:name="org.ligi.gobandroid_hd.ui.game_setup.GoSetupActivity">
+
+
+
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -60,10 +64,10 @@
                 android:name="org.ligi.gobandroid_hd.ui.GobanDroidTVActivity"
                 android:icon="@drawable/gobandroid_tv"
                 android:label="Gobandroid TV">
-            <intent-filter>
+          <!--  <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            </intent-filter> -->
         </activity>
         <activity android:name="org.ligi.gobandroid_hd.ui.GobanDroidTVActivityNOIF">
             <intent-filter>
@@ -92,7 +96,7 @@
         <activity android:name="org.ligi.gobandroid_hd.ui.review.GoGamePlayerActivity"/>
         <activity android:name="org.ligi.gobandroid_hd.ui.editing.EditGameActivity"/>
         <activity android:name="org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity"/>
-        <activity android:name="org.ligi.gobandroid_hd.ui.links.LinksActivity"/>
+        <activity android:name="org.ligi.gobandroid_hd.ui.links.LinksActivity" />
         <activity
                 android:name="org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity"
                 android:launchMode="singleInstance"

@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import org.ligi.android.common.dialogs.DialogDiscarder;
+import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -135,7 +135,7 @@ public class InGameActionBarView2 extends LinearLayout implements
 
                                         }
                                     })
-                                    .setNegativeButton("Cancel", new DialogDiscarder())
+                                    .setNegativeButton("Cancel", new DialogDiscardingOnClickListener())
                                     .show();
                             return;
                         }
@@ -218,12 +218,13 @@ public class InGameActionBarView2 extends LinearLayout implements
                         .setText("" + app.getGame().getCapturesBlack());
                 int highlight_color = app.getResources().getColor(
                         R.color.dividing_color);
+                int transparent = getResources().getColor(android.R.color.transparent);
                 white_info_container.setBackgroundColor(app.getGame()
-                        .isBlackToMove() && (!app.getGame().isFinished()) ? android.R.color.transparent
+                        .isBlackToMove() && (!app.getGame().isFinished()) ? transparent
                         : highlight_color);
                 black_info_container.setBackgroundColor(app.getGame()
                         .isBlackToMove() || app.getGame().isFinished() ? highlight_color
-                        : android.R.color.transparent);
+                        : transparent);
                 move_tv.setText(app.getResources().getString(R.string.move)
                         + " " + app.getGame().getActMove().getMovePos());
 

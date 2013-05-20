@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import org.ligi.android.common.files.FileHelper;
+import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
@@ -88,7 +88,8 @@ class TsumegoPathViewAdapter extends BaseAdapter {
             sgf_str = gl.getSGFString();
         } else {
             try {
-                sgf_str = FileHelper.file2String(new File(base_fname));
+
+                sgf_str = AndroidHelper.at(new File(base_fname)).loadToString();
             } catch (IOException e) {
             }
         }

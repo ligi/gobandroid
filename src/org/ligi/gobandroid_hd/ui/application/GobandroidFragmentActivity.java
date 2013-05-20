@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import com.actionbarsherlock.view.MenuItem;
 import com.androidquery.AQuery;
 import com.google.analytics.tracking.android.EasyTracker;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.Scopes;
@@ -67,7 +68,8 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity implemen
 		 *
 		 */
 
-        mPlusClient = new PlusClient.Builder(getApplicationContext(), this, this)
+        mPlusClient = new PlusClient.Builder(getApplicationContext(), this, this )
+
                 .setVisibleActivities("http://schemas.google.com/CreateActivity",
                         "http://schemas.google.com/ReviewActivity",
                         "http://schemas.google.com/CommentActivity",
@@ -175,8 +177,36 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity implemen
         mConnectionResult = result;
     }
 
+    private void workingPostToGPlus() {
+        // Create an interactive post with the "VIEW_ITEM" label. This will
+        // create an enhanced share dialog when the post is shared on Google+.
+        // When the user clicks on the deep link, ParseDeepLinkActivity will
+        // immediately parse the deep link, and route to the appropriate resource.
+        Uri callToActionUrl = Uri.parse("https://cloud-goban.appspot.com/game/ag1zfmNsb3VkLWdvYmFucgwLEgRHYW1lGPK_JAw");
+        String callToActionDeepLinkId = "/foo/bar";
+
+
+        // Create an interactive post builder.
+        PlusShare.Builder builder = new PlusShare.Builder(this, mPlusClient);
+
+        // Set call-to-action metadata.
+        builder.addCallToAction("CREATE_ITEM", callToActionUrl, callToActionDeepLinkId);
+
+        // Set the target url (for desktop use).
+        builder.setContentUrl(Uri.parse("https://cloud-goban.appspot.com/game/ag1zfmNsb3VkLWdvYmFucgwLEgRHYW1lGPK_JAw"));
+
+        // Set the target deep-link ID (for mobile use).
+        builder.setContentDeepLinkId("/pages/",
+                null, null, null);
+
+        // Set the pre-filled message.
+        builder.setText("foo bar");
+
+        startActivityForResult(builder.getIntent(), 0);
+    }
+
     @Override
-    public void onConnected() {
+    public void onConnected(Bundle bundle) {
         // We've resolved any connection errors.
         mConnectionProgressDialog.dismiss();
 
@@ -248,34 +278,6 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity implemen
         }
 
 
-    }
-
-    private void workingPostToGPlus() {
-        // Create an interactive post with the "VIEW_ITEM" label. This will
-        // create an enhanced share dialog when the post is shared on Google+.
-        // When the user clicks on the deep link, ParseDeepLinkActivity will
-        // immediately parse the deep link, and route to the appropriate resource.
-        Uri callToActionUrl = Uri.parse("https://cloud-goban.appspot.com/game/ag1zfmNsb3VkLWdvYmFucgwLEgRHYW1lGPK_JAw");
-        String callToActionDeepLinkId = "/foo/bar";
-
-
-        // Create an interactive post builder.
-        PlusShare.Builder builder = new PlusShare.Builder(this, mPlusClient);
-
-        // Set call-to-action metadata.
-        builder.addCallToAction("CREATE_ITEM", callToActionUrl, callToActionDeepLinkId);
-
-        // Set the target url (for desktop use).
-        builder.setContentUrl(Uri.parse("https://cloud-goban.appspot.com/game/ag1zfmNsb3VkLWdvYmFucgwLEgRHYW1lGPK_JAw"));
-
-        // Set the target deep-link ID (for mobile use).
-        builder.setContentDeepLinkId("/pages/",
-                null, null, null);
-
-        // Set the pre-filled message.
-        builder.setText("foo bar");
-
-        startActivityForResult(builder.getIntent(), 0);
     }
 
     @Override
