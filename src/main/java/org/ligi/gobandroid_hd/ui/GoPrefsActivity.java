@@ -28,7 +28,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gcm.GCMRegistrar;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
-import org.ligi.gobandroid_hd.ui.application.MenuDrawer;
 
 /**
  * Activity to edit the gobandroid game preferences
@@ -51,7 +50,9 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new MenuDrawer(this);
+
+
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

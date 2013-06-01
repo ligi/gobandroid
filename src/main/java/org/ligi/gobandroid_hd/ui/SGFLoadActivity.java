@@ -38,7 +38,6 @@ import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.gobandroid_hd.ui.application.MenuDrawer;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 import org.ligi.tracedroid.logging.Log;
@@ -73,7 +72,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new MenuDrawer(this);
+
         setContentView(new LinearLayout(this));
 
         GoPrefs.init(this);
@@ -138,7 +137,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
     public String uri2string(Uri intent_uri) throws IOException {
 
         if (intent_uri.toString().startsWith("/")) {
-            return AndroidHelper.at(new File(intent_uri.toString())).toString();
+            return AndroidHelper.at(new File(intent_uri.toString())).loadToString();
         }
 
         InputStream in;
