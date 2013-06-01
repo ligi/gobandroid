@@ -17,7 +17,6 @@ import android.view.WindowManager;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.androidquery.AQuery;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.Scopes;
@@ -208,14 +207,14 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity impleme
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance().activityStop(this); // Add this method.
+        GobandroidApp.getTracker().activityStop(this); // Add this method.
         mPlusClient.disconnect();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        EasyTracker.getInstance().activityStart(this); // Add this method
+        GobandroidApp.getTracker().activityStart(this); // Add this method
         mPlusClient.connect();
     }
 

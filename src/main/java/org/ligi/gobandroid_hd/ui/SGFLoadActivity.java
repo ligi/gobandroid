@@ -28,9 +28,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.*;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.google.api.services.cloudgoban.Cloudgoban;
 import org.ligi.androidhelper.AndroidHelper;
+import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.backend.CloudGobanHelper;
@@ -105,7 +105,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         alert_dlg = new AlertDialog.Builder(this).setCancelable(false)
                 .setTitle(R.string.loading_sgf).setView(lin).show();
 
-        EasyTracker.getTracker().trackEvent("ui_action", "load_sgf",
+        GobandroidApp.getTracker().trackEvent("ui_action", "load_sgf",
                 getIntent().getData().toString(), null);
         new Thread(this).start();
     }

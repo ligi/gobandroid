@@ -4,8 +4,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import com.google.analytics.tracking.android.EasyTracker;
 import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnClickListener;
+import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -39,11 +39,11 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
         getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
         path_to_play_from = new File(getSettings().getReviewPath() + "/commented_games/");
 
-        EasyTracker.getInstance().setContext(this);
+        GobandroidApp.getTracker().init(this);
 
         if (path_to_play_from.listFiles() == null) {
             setContentView(R.layout.empty);
-            EasyTracker.getTracker().trackEvent("intern", "unzip", "gtv", null);
+            GobandroidApp.getTracker().trackEvent("intern", "unzip", "gtv", null);
             UnzipSGFsDialog.show(this, getIntent2start());
         } else {
             startTV();
@@ -74,7 +74,7 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 
         choosen = avail_file_list.get((int) (Math.random() * avail_file_list.size()));
 
-        EasyTracker.getTracker().trackEvent("gtv", "start_play_file", choosen, null);
+        GobandroidApp.getTracker().trackEvent("gtv", "start_play_file", choosen, null);
 
         start_review_intent.setData(Uri.parse("file://" + choosen));
 

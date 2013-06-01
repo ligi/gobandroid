@@ -3,7 +3,6 @@ package org.ligi.gobandroid_hd;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gcm.GCMBaseIntentService;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
@@ -33,7 +32,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onMessage(Context context, Intent intent) {
         Log.i("GCM incoming Message");
-        EasyTracker.getInstance().setContext(context);
+        GobandroidApp.getTracker().init(context);
         if (intent.getExtras() == null)
             return;
         Bundle e = intent.getExtras();

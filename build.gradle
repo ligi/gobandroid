@@ -1,6 +1,6 @@
 buildscript {
-    repositories { 
-      maven { url 'http://repo1.maven.org/maven2' }
+    repositories {
+        maven { url 'http://repo1.maven.org/maven2' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.4.2'
@@ -13,12 +13,14 @@ apply plugin: 'android'
 repositories {
     mavenCentral()
     maven { url 'libs/aar' }
-    maven { url '../cloud_goban/endpoint-libs/libcloudgoban-v4/cloudgoban/cloudgoban-v4-generated-source/' }
+    maven {
+        url '../cloud_goban/endpoint-libs/libcloudgoban-v4/cloudgoban/cloudgoban-v4-generated-source/'
+    }
 }
 
 
 dependencies {
-    compile fileTree(dir : 'libs', include : '*.jar')
+    compile fileTree(dir: 'libs', include: '*.jar')
     compile 'com.google.android.gms:google-play-services:7'
     compile 'com.actionbarsherlock:actionbarsherlock:4.3.2-SNAPSHOT'
 }
@@ -27,4 +29,17 @@ android {
     compileSdkVersion 17
     buildToolsVersion "17.0.0"
 
+
+    flavorGroups "analytics", "cloud"
+    productFlavors {
+        // no google-play services & google-analytics 
+        withAnalytics {
+            flavorGroup "analytics"
+        }
+
+        noAnalytics {
+            flavorGroup "analytics"
+        }
+
+    }
 }

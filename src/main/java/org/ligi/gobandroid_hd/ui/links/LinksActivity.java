@@ -22,9 +22,9 @@ package org.ligi.gobandroid_hd.ui.links;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import com.actionbarsherlock.app.ActionBar;
-import com.google.analytics.tracking.android.EasyTracker;
 import org.ligi.androidhelper.adapters.LinkWithDescription;
 import org.ligi.androidhelper.adapters.LinkWithDescriptionAndTitle;
+import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
@@ -122,7 +122,7 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 
     @Override
     public void onTabSelected(com.actionbarsherlock.app.ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-        EasyTracker.getTracker().trackEvent("ui_action", "links", act_tab_str_for_analytics, null);
+        GobandroidApp.getTracker().trackEvent("ui_action", "links", act_tab_str_for_analytics, null);
 
         setList((Integer) tab.getTag());
     }

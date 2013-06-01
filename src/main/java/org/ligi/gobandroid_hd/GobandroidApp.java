@@ -3,7 +3,6 @@ package org.ligi.gobandroid_hd;
 import android.app.Application;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gcm.GCMRegistrar;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.http.HttpTransport;
@@ -13,6 +12,8 @@ import com.google.api.services.cloudgoban.Cloudgoban;
 import org.ligi.gobandroid_hd.backend.GobandroidBackend;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.ui.GobandroidTracker;
+import org.ligi.gobandroid_hd.ui.GobandroidTrackerResolver;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.gobandroid_hd.ui.online.UserHandler;
 import org.ligi.tracedroid.TraceDroid;
@@ -50,7 +51,8 @@ public class GobandroidApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        EasyTracker.getInstance().setContext(this);
+
+        getTracker().init(this);
 
         TraceDroid.init(this);
         Log.setTAG("gobandroid");
@@ -76,7 +78,7 @@ public class GobandroidApp extends Application {
                 GCMRegistrar.register(this, GobandroidConfiguration.GCM_SENDER_ID);
             }
         } catch (Exception e) {
-            EasyTracker.getTracker().trackException("cannot init GCM", e, false);
+            getTracker().trackException("cannot init GCM", e, false);
         }
     }
 
@@ -120,5 +122,9 @@ public class GobandroidApp extends Application {
         } catch (NameNotFoundException e) {
             return "v?";
         }
+    }
+
+    public static GobandroidTracker getTracker() {
+        return GobandroidTrackerResolver.getTracker();
     }
 }

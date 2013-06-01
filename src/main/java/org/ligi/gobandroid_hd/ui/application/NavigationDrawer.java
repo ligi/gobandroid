@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -78,7 +76,7 @@ public class NavigationDrawer implements OnItemClickListener {
             case R.id.help:
 
                 new HelpDialog(ctx).show();
-                EasyTracker.getTracker().trackEvent("ui_action", "dashboard", "help", null);
+                GobandroidApp.getTracker().trackEvent("ui_action", "dashboard", "help", null);
 
                 return true;
             case R.id.empty:
