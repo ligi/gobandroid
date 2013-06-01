@@ -21,7 +21,6 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.androidquery.AQuery;
 import com.google.analytics.tracking.android.EasyTracker;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.Scopes;
@@ -64,8 +63,27 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity impleme
                 R.drawable.ic_launcher,  /* nav drawer icon to replace 'Up' caret */
                 R.string.drawer_open,  /* "open drawer" description */
                 R.string.drawer_close  /* "close drawer" description */
-        );
+        ) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getApp().getInteractionScope().setTouchPosition(-1);
+                getApp().getGame().notifyGameChange();
+            }
 
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                getApp().getInteractionScope().setTouchPosition(-1);
+                getApp().getGame().notifyGameChange();
+                super.onDrawerClosed(drawerView);
+            }
+
+            {
+
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
         // Set the drawer toggle as the DrawerListener
 
         drawerLayout.setDrawerListener(mDrawerToggle);

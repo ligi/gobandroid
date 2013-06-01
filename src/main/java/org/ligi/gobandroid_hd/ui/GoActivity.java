@@ -34,8 +34,10 @@ import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.Toast;
+
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+
 import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -99,7 +101,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         interaction_scope = getApp().getInteractionScope();
         this.getSupportActionBar().setHomeButtonEnabled(true);
 
-       AndroidHelper.at(this).disableRotation();
+        AndroidHelper.at(this).disableRotation();
 
         if (getSettings().isWakeLockEnabled()) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -170,6 +172,11 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             }
         }
         last_processed_move_change_num = getGame().getActMove().getMovePos();
+
+        if (getApp().getInteractionScope().getTouchPosition() < 0) {
+            setFragment(getGameExtraFragment());
+        }
+
         game2ui();
     }
 
@@ -379,12 +386,13 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     public void setFragment(Fragment newFragment) {
 
-        FragmentTransaction fragmentTransAction = getSupportFragmentManager().beginTransaction();
-
         if (actFragment == newFragment) {
-            Log.i("GoFrag same same");
+            // GoFrag same same no need to do a thing here
             return;
         }
+
+        FragmentTransaction fragmentTransAction = getSupportFragmentManager().beginTransaction();
+
 
         if (actFragment != null) {
             fragmentTransAction.remove(actFragment);
@@ -509,8 +517,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                 out.close();
                 sgf_writer.close();
 
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 Log.i("" + e);
             }
         }
