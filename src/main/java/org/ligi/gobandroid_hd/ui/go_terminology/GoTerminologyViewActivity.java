@@ -30,7 +30,7 @@ public class GoTerminologyViewActivity extends GobandroidFragmentActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.empty);
-        setBehindContentView(R.layout.empty);
+        // NaDra setBehindContentView(R.layout.empty);
 
         String term = this.getIntent().getData().getLastPathSegment();
         GoTerminologyDialog dialog = new GoTerminologyDialog(this, term);

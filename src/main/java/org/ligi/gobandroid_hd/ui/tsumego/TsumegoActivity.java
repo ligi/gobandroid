@@ -197,7 +197,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
         getBoard().setZoomPOI(TsumegoHelper.calcPOI(getGame(), true));
         onGoGameChange();
 
-        getSlidingMenu().showContent();
+        //NaDraChg getSlidingMenu().showContent();
     }
 
     private GoMove last_move;

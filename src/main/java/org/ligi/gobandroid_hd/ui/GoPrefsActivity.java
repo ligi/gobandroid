@@ -22,10 +22,10 @@ package org.ligi.gobandroid_hd.ui;
 import android.os.Bundle;
 import android.preference.*;
 import android.preference.Preference.OnPreferenceChangeListener;
+
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gcm.GCMRegistrar;
-import com.slidingmenu.lib.app.SlidingPreferenceActivity;
-import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.gobandroid_hd.ui.application.MenuDrawer;
@@ -37,7 +37,7 @@ import org.ligi.gobandroid_hd.ui.application.MenuDrawer;
  *         <p/>
  *         This software is licenced with GPLv3
  */
-public class GoPrefsActivity extends SlidingPreferenceActivity implements OnPreferenceChangeListener {
+public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPreferenceChangeListener {
 
     private ListPreference viewDistPref;
     private ListPreference boardSkinPref;
@@ -338,7 +338,7 @@ public class GoPrefsActivity extends SlidingPreferenceActivity implements OnPref
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                getSlidingMenu().toggle();
+                //NaDra getSlidingMenu().toggle();
                 return true;
         }
         return super.onOptionsItemSelected(item);

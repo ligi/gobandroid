@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.androidquery.AQuery;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -18,19 +19,18 @@ import com.google.android.gms.common.Scopes;
 import com.google.android.gms.plus.GooglePlusUtil;
 import com.google.android.gms.plus.PlusClient;
 import com.google.android.gms.plus.PlusShare;
-import com.slidingmenu.lib.app.SlidingFragmentActivity;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.logic.GoGame;
 
 import java.lang.reflect.Field;
 
-public class GobandroidFragmentActivity extends SlidingFragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
+public class GobandroidFragmentActivity extends SherlockFragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
 
     protected static final int REQUEST_CODE_RESOLVE_ERR = 9000;
     protected ProgressDialog mConnectionProgressDialog;
     protected PlusClient mPlusClient;
     protected ConnectionResult mConnectionResult;
-    private MenuDrawer mMenuDrawer;
+    private org.ligi.gobandroid_hd.ui.application.MenuDrawer mMenuDrawer;
     private AQuery mAQ;
 
     @Override
@@ -91,7 +91,7 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity implemen
     protected void onResume() {
         super.onResume();
 
-        mMenuDrawer.refresh();
+        //NaDra mMenuDrawer.refresh();
 
         if (doFullScreen()) {
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -122,7 +122,7 @@ public class GobandroidFragmentActivity extends SlidingFragmentActivity implemen
 			 * intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			 * startActivity(intent);
 			 */
-                getSlidingMenu().toggle();
+                //NavigationMenuChange getSlidingMenu().toggle();
                 return true;
         }
         return super.onOptionsItemSelected(item);

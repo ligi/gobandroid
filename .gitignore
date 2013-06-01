@@ -1,3 +1,6 @@
+build
+.gradle
+out/
 bin/
 gen/
 gobandroid.iml
