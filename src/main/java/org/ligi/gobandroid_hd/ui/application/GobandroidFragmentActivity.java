@@ -3,15 +3,12 @@ package org.ligi.gobandroid_hd.ui.application;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.graphics.drawable.Drawable;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.ActionProvider;
-import android.view.ContextMenu;
 import android.view.KeyEvent;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
@@ -40,7 +37,6 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity impleme
     protected ProgressDialog mConnectionProgressDialog;
     protected PlusClient mPlusClient;
     protected ConnectionResult mConnectionResult;
-    private NavigationDrawer mMenuDrawer;
     private AQuery mAQ;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout drawerLayout;
@@ -55,12 +51,12 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity impleme
         View v = getLayoutInflater().inflate(layoutResId, null);
         ViewGroup vg = (ViewGroup) findViewById(R.id.content_frame);
         vg.addView(v);
-        mMenuDrawer = new NavigationDrawer(this);
+        NavigationDrawer mMenuDrawer = new NavigationDrawer(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 drawerLayout,         /* DrawerLayout object */
-                R.drawable.ic_launcher,  /* nav drawer icon to replace 'Up' caret */
+                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
                 R.string.drawer_open,  /* "open drawer" description */
                 R.string.drawer_close  /* "close drawer" description */
         ) {
@@ -83,11 +79,26 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity impleme
             }
         };
 
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        // Set the drawer toggle as the DrawerListener
-
         drawerLayout.setDrawerListener(mDrawerToggle);
+    }
 
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        if (mDrawerToggle != null) {
+            mDrawerToggle.syncState();
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        if (mDrawerToggle != null) {
+            mDrawerToggle.onConfigurationChanged(newConfig);
+        }
     }
 
     @Override
@@ -170,216 +181,13 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity impleme
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        if (item.getItemId() == android.R.id.home) {
+            android.view.MenuItem homeMenuItem = new HomeMenuItemForNavigationDrawer();
+            mDrawerToggle.onOptionsItemSelected(homeMenuItem);
+            return true;
+        }
 
-        android.view.MenuItem foo = new android.view.MenuItem() {
-
-            @Override
-            public int getItemId() {
-                return android.R.id.home;
-            }
-
-            @Override
-            public int getGroupId() {
-                return 0;
-            }
-
-            @Override
-            public int getOrder() {
-                return 0;
-            }
-
-            @Override
-            public android.view.MenuItem setTitle(CharSequence charSequence) {
-                return null;
-            }
-
-            @Override
-            public android.view.MenuItem setTitle(int i) {
-                return null;
-            }
-
-            @Override
-            public CharSequence getTitle() {
-                return null;
-            }
-
-            @Override
-            public android.view.MenuItem setTitleCondensed(CharSequence charSequence) {
-                return null;
-            }
-
-            @Override
-            public CharSequence getTitleCondensed() {
-                return null;
-            }
-
-            @Override
-            public android.view.MenuItem setIcon(Drawable drawable) {
-                return null;
-            }
-
-            @Override
-            public android.view.MenuItem setIcon(int i) {
-                return null;
-            }
-
-            @Override
-            public Drawable getIcon() {
-                return null;
-            }
-
-            @Override
-            public android.view.MenuItem setIntent(Intent intent) {
-                return null;
-            }
-
-            @Override
-            public Intent getIntent() {
-                return null;
-            }
-
-            @Override
-            public android.view.MenuItem setShortcut(char c, char c2) {
-                return null;
-            }
-
-            @Override
-            public android.view.MenuItem setNumericShortcut(char c) {
-                return null;
-            }
-
-            @Override
-            public char getNumericShortcut() {
-                return 0;
-            }
-
-            @Override
-            public android.view.MenuItem setAlphabeticShortcut(char c) {
-                return null;
-            }
-
-            @Override
-            public char getAlphabeticShortcut() {
-                return 0;
-            }
-
-            @Override
-            public android.view.MenuItem setCheckable(boolean b) {
-                return null;
-            }
-
-            @Override
-            public boolean isCheckable() {
-                return false;
-            }
-
-            @Override
-            public android.view.MenuItem setChecked(boolean b) {
-                return null;
-            }
-
-            @Override
-            public boolean isChecked() {
-                return false;
-            }
-
-            @Override
-            public android.view.MenuItem setVisible(boolean b) {
-                return null;
-            }
-
-            @Override
-            public boolean isVisible() {
-                return false;
-            }
-
-            @Override
-            public android.view.MenuItem setEnabled(boolean b) {
-                return null;
-            }
-
-            @Override
-            public boolean isEnabled() {
-                return false;
-            }
-
-            @Override
-            public boolean hasSubMenu() {
-                return false;
-            }
-
-            @Override
-            public SubMenu getSubMenu() {
-                return null;
-            }
-
-            @Override
-            public android.view.MenuItem setOnMenuItemClickListener(OnMenuItemClickListener onMenuItemClickListener) {
-                return null;
-            }
-
-            @Override
-            public ContextMenu.ContextMenuInfo getMenuInfo() {
-                return null;
-            }
-
-            @Override
-            public void setShowAsAction(int i) {
-
-            }
-
-            @Override
-            public android.view.MenuItem setShowAsActionFlags(int i) {
-                return null;
-            }
-
-            @Override
-            public android.view.MenuItem setActionView(View view) {
-                return null;
-            }
-
-            @Override
-            public android.view.MenuItem setActionView(int i) {
-                return null;
-            }
-
-            @Override
-            public View getActionView() {
-                return null;
-            }
-
-            @Override
-            public android.view.MenuItem setActionProvider(ActionProvider actionProvider) {
-                return null;
-            }
-
-            @Override
-            public ActionProvider getActionProvider() {
-                return null;
-            }
-
-            @Override
-            public boolean expandActionView() {
-                return false;
-            }
-
-            @Override
-            public boolean collapseActionView() {
-                return false;
-            }
-
-            @Override
-            public boolean isActionViewExpanded() {
-                return false;
-            }
-
-            @Override
-            public android.view.MenuItem setOnActionExpandListener(OnActionExpandListener onActionExpandListener) {
-                return null;
-            }
-        };
-        mDrawerToggle.onOptionsItemSelected(foo);
-        return true;
+        return false;
 
     }
 

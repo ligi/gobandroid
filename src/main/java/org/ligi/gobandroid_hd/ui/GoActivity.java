@@ -79,6 +79,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     private int last_processed_move_change_num = 0;
 
     private GoMove last_accept;
+    private Handler handler;
 
     public Fragment getGameExtraFragment() {
 
@@ -91,6 +92,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         GoPrefs.init(this); // TODO remove legacy
 
+        handler = new Handler();
 
         setContentView(R.layout.game);
 
@@ -173,9 +175,15 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         }
         last_processed_move_change_num = getGame().getActMove().getMovePos();
 
-        if (getApp().getInteractionScope().getTouchPosition() < 0) {
-            setFragment(getGameExtraFragment());
-        }
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+
+                if (getApp().getInteractionScope().getTouchPosition() < 0) {
+                    setFragment(getGameExtraFragment());
+                }
+            }
+        });
 
         game2ui();
     }

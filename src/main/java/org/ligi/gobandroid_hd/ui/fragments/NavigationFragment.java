@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -98,8 +99,13 @@ public class NavigationFragment extends Fragment implements GoGameChangeListener
 
     public void adjustImageBtn(ImageView img, int res, boolean enabled) {
 
-        if (img.isEnabled() == enabled) // all good - no work here
+        if (getActivity() == null) {
             return;
+        }
+
+        if (img.isEnabled() == enabled) { // all good - no work here
+            return;
+        }
 
         Bitmap bm = BitmapFactory.decodeResource(getResources(), res);
         if (!enabled) {
