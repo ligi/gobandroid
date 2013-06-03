@@ -13,9 +13,6 @@ apply plugin: 'android'
 repositories {
     mavenCentral()
     maven { url 'libs/aar' }
-    maven {
-        url '../cloud_goban/endpoint-libs/libcloudgoban-v4/cloudgoban/cloudgoban-v4-generated-source/'
-    }
 }
 
 
@@ -30,9 +27,8 @@ android {
     buildToolsVersion "17.0.0"
 
 
-    flavorGroups "analytics", "cloud"
+    flavorGroups "analytics"
     productFlavors {
-        // no google-play services & google-analytics 
         withAnalytics {
             flavorGroup "analytics"
         }
