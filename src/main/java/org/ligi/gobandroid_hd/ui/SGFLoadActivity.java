@@ -28,13 +28,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.*;
-import com.google.api.services.cloudgoban.Cloudgoban;
 import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.backend.CloudGobanHelper;
-import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -144,14 +141,14 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         String uri_str = intent_uri.toString();
         if (uri_str.startsWith("content://")) {
             in = getContentResolver().openInputStream(intent_uri);
-        } else if (uri_str.startsWith(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE)) {
+        } /* CloudGobanRemove else if (uri_str.startsWith(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE)) {
             new GobandroidNotifications(this).cancelCloudMoveNotification();
             cloudgoban_parent_key = uri_str.replace(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE, "").split("#")[0];
             Cloudgoban cg = getApp().getCloudgoban();
             //cg.games().get(cloudgoban_parent_key).execute().
             Log.i("downloading CloudGoban game");
             return cg.games().get(cloudgoban_parent_key).execute().getSgf().getValue();
-        } else {
+        } */ else {
             in = new BufferedInputStream(new URL("" + intent_uri).openStream(),
                     4096);
         }
@@ -315,7 +312,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         game.getMetaData().setFileName(intent_uri.toString());
 
 
-        if (cloudgoban_parent_key != null) {
+        /* CloudGobanRemove if (cloudgoban_parent_key != null) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -324,7 +321,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
             });
 
             CloudGobanHelper.registerGame(this, cloudgoban_parent_key, game.isBlackToMove() ? "w" : "b", true, handler, true);
-        } else {
+        } else */ {
 
             handler.post(new Runnable() {
                 @Override

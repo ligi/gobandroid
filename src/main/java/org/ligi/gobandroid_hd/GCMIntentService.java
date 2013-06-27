@@ -32,39 +32,16 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onMessage(Context context, Intent intent) {
         Log.i("GCM incoming Message");
-        GobandroidApp.getTracker().init(context);
+
         if (intent.getExtras() == null)
             return;
-        Bundle e = intent.getExtras();
-        String game_key = e.getString("game_key");
-        if (game_key != null) { // cloud game message
 
-            Log.i("GCM act" + ((GobandroidApp) context.getApplicationContext()).getGame().toString());
+        GobandroidApp.getTracker().init(context);
+        CloudHooks.onGCMMessage(context,intent);
 
-            GobandroidApp ga = (GobandroidApp) context.getApplicationContext();
-            Log.i("GCM incoming Message cloud game" + game_key + "+ game cloud key" + ga.getGame().getCloudKey());
-            if (!ga.hasActiveGoActivity() || ga.getGame().getCloudKey() == null || !ga.getGame().getCloudKey().equals(game_key)) {
+        Bundle extras = intent.getExtras();
 
-                new GobandroidNotifications(this).addNewCloudMoveNotification(game_key);
-            } else
-                try {
-
-                    String sgf = ga.getCloudgoban().games().get(game_key).execute().getSgf().getValue();
-                    ga.getGame().setGame(SGFHelper.sgf2game(sgf, null));
-
-                    while (ga.getGame().getActMove().hasNextMove())
-                        ga.getGame().jump(ga.getGame().getActMove().getnextMove(0)); // mainstream
-
-                    ga.getGame().setCloudDefs(game_key, e.getString("role"));
-
-                    ga.getGame().notifyGameChange();
-
-                } catch (IOException e1) {
-
-                }
-
-        }
-        if (e.getString("max_tsumego") != null) { // todo use the supplied value
+        if (extras.getString("max_tsumego") != null) { // todo use the supplied value
             // here
             Log.i("GCM starting DownloadProblemsForNotification");
             DownloadProblemsForNotification.show(context);

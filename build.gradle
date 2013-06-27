@@ -27,7 +27,8 @@ android {
     buildToolsVersion "17.0.0"
 
 
-    flavorGroups "analytics"
+    flavorGroups "analytics","cloud"
+
     productFlavors {
         withAnalytics {
             flavorGroup "analytics"
@@ -35,6 +36,14 @@ android {
 
         noAnalytics {
             flavorGroup "analytics"
+        }
+
+        withCloud {
+            flavorGroup "cloud"
+        }
+
+        noCloud {
+            flavorGroup "cloud"
         }
 
     }

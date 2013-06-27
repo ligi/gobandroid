@@ -9,13 +9,13 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.cloudgoban.Cloudgoban;
+
 import org.ligi.gobandroid_hd.backend.GobandroidBackend;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GobandroidTracker;
 import org.ligi.gobandroid_hd.ui.GobandroidTrackerResolver;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
-import org.ligi.gobandroid_hd.ui.online.UserHandler;
 import org.ligi.tracedroid.TraceDroid;
 import org.ligi.tracedroid.logging.Log;
 
@@ -59,11 +59,12 @@ public class GobandroidApp extends Application {
 
         interaction_scope = new InteractionScope();
 
-        if (Build.VERSION.SDK_INT > 7) // need at least 8 for GCM
+        if (Build.VERSION.SDK_INT > 7) { // need at least 8 for GCM
             initGCM();
+        }
 
-        GobandroidBackend.registerDevice(this);
-        UserHandler.syncUser(this);
+        CloudHooks.onApplicationCreation(this);
+
     }
 
     private void initGCM() {
@@ -76,6 +77,8 @@ public class GobandroidApp extends Application {
             if (regId.equals("")) {
                 // Automatically registers application on startup.
                 GCMRegistrar.register(this, GobandroidConfiguration.GCM_SENDER_ID);
+            } else {
+                GobandroidBackend.registerDevice(this);
             }
         } catch (Exception e) {
             getTracker().trackException("cannot init GCM", e, false);
@@ -104,6 +107,7 @@ public class GobandroidApp extends Application {
     public GobandroidSettings getSettings() {
         return new GobandroidSettings(this);
     }
+
 
     public Cloudgoban getCloudgoban() {
         HttpTransport transport = AndroidHttp.newCompatibleTransport();

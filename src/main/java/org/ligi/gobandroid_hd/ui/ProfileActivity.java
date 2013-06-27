@@ -8,9 +8,10 @@ import com.androidquery.AQuery;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.plus.PlusClient;
 import com.google.android.gms.plus.model.people.Person;
+
+import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.gobandroid_hd.ui.online.UserHandler;
 import org.ligi.tracedroid.Log;
 
 public class ProfileActivity extends GobandroidFragmentActivity {
@@ -26,8 +27,6 @@ public class ProfileActivity extends GobandroidFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
-
-        AQuery mAq = new AQuery(ProfileActivity.this);
 
         username_et = (EditText) findViewById(R.id.username_edit);
         rank_et = (EditText) findViewById(R.id.rank_edit);
@@ -147,7 +146,7 @@ public class ProfileActivity extends GobandroidFragmentActivity {
 
         getApp().getSettings().setRank(rank_et.getText().toString());
         getApp().getSettings().setUsername(username_et.getText().toString());
-        UserHandler.syncUser(getApp());
+        CloudHooks.syncUser(getApp());
         super.onPause();
     }
 

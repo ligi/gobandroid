@@ -45,6 +45,7 @@ public class GobandroidBackend {
         }
     }
 
+    // TODO doesnt need to be a async task any more - no more UI interaction
     static class RegisterDeviceAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private GobandroidApp app;

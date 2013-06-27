@@ -7,13 +7,13 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnClickListener;
 import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
+import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
-import org.ligi.gobandroid_hd.ui.online.UploadGameAndShareMoment;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.tracedroid.logging.Log;
 
@@ -223,7 +223,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
             meta.setIsSolved(true);
             meta.persist();
 
-            new UploadGameAndShareMoment(this, "solved_tsumego").execute();
+            CloudHooks.onSolvedTsumego(this,getGame());
         }
         this.runOnUiThread(new Runnable() {
             @Override

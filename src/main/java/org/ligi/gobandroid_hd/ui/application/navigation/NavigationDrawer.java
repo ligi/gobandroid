@@ -1,4 +1,4 @@
-package org.ligi.gobandroid_hd.ui.application;
+package org.ligi.gobandroid_hd.ui.application.navigation;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +21,7 @@ import org.ligi.gobandroid_hd.ui.GoPrefsActivity;
 import org.ligi.gobandroid_hd.ui.HelpDialog;
 import org.ligi.gobandroid_hd.ui.ProfileActivity;
 import org.ligi.gobandroid_hd.ui.UnzipSGFsDialog;
+import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.gobandroid_hd.ui.online.OnlineSelectActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
@@ -56,7 +57,6 @@ public class NavigationDrawer implements OnItemClickListener {
         items.add(new Item(R.id.tsumego, R.string.tsumego, R.drawable.dashboard_tsumego));
         items.add(new Item(R.id.review, R.string.review, R.drawable.dashboard_review));
         items.add(new Item(R.id.bookmark, R.string.bookmark, R.drawable.bookmark));
-
 
         items.add(new Category(R.string.more));
 

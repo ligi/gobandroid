@@ -27,6 +27,7 @@ import com.google.android.gms.plus.PlusShare;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.ui.application.navigation.NavigationDrawer;
 
 import java.lang.reflect.Field;
 
