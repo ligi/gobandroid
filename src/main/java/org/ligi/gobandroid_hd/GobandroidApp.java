@@ -4,12 +4,6 @@ import android.app.Application;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import com.google.android.gcm.GCMRegistrar;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.services.cloudgoban.Cloudgoban;
-
 import org.ligi.gobandroid_hd.backend.GobandroidBackend;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -109,6 +103,7 @@ public class GobandroidApp extends Application {
     }
 
 
+    /*
     public Cloudgoban getCloudgoban() {
         HttpTransport transport = AndroidHttp.newCompatibleTransport();
         JsonFactory jsonFactory = new GsonFactory();
@@ -116,6 +111,7 @@ public class GobandroidApp extends Application {
         return new Cloudgoban(transport, jsonFactory, null);
 
     }
+    */
 
 
     public String getVersionCode() {

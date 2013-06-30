@@ -68,4 +68,29 @@ public class CloudHooks {
     public static void onSolvedTsumego(GobandroidFragmentActivity ctx,GoGame game) {
         new UploadGameAndShareMoment(ctx, "solved_tsumego").execute();
     }
+
+
+    public static void uploadGameAndShareMoment(GobandroidFragmentActivity ctx,GoGame game,String type) {
+        new UploadGameAndShareMoment(this, type).execute();
+    }
+
+    public static void uploadGame(GobandroidFragmentActivity ctx,GoGame game,String type) {
+        new UploadGameToCloudEndpointsBase(this, type).execute();
+    }
+
+    public static void profileOrOnlinePlay(GobandroidFragmentActivity ctx) {
+
+        if (ctx.getApp().getSettings().getUsername().equals(""))
+            new AlertDialog.Builder(ctx).setMessage(ctx.getString(R.string.enter_username)).setTitle(ctx.getString(R.string.who_are_you))
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            ctx.startActivity(new Intent(ctx, ProfileActivity.class));
+                        }
+                    }).show();
+        else
+            ctx.startActivity(new Intent(ctx, OnlineSelectActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+
+    }
 }

@@ -5,13 +5,14 @@ import android.support.v4.app.Fragment;
 import android.view.WindowManager;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+
+import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
-import org.ligi.gobandroid_hd.ui.online.UploadGameToCloudEndpointsBase;
 import org.ligi.tracedroid.Log;
 
 /**
@@ -59,7 +60,7 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
 		 */
 
             case R.id.menu_game_accept:
-                new UploadGameToCloudEndpointsBase(this, null).execute();
+                CloudHooks.uploadGame(this, getGame(),null);
                 acceptCloudMove();
                 onGoGameChange();
                 return true;

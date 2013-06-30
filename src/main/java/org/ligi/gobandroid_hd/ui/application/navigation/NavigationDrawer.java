@@ -1,6 +1,4 @@
 package org.ligi.gobandroid_hd.ui.application.navigation;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -14,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 
+import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -23,7 +22,6 @@ import org.ligi.gobandroid_hd.ui.ProfileActivity;
 import org.ligi.gobandroid_hd.ui.UnzipSGFsDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
-import org.ligi.gobandroid_hd.ui.online.OnlineSelectActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
 
@@ -100,18 +98,7 @@ public class NavigationDrawer implements OnItemClickListener {
 
 
             case R.id.online_play:
-                if (getApp().getSettings().getUsername().equals(""))
-                    new AlertDialog.Builder(ctx).setMessage(ctx.getString(R.string.enter_username)).setTitle(ctx.getString(R.string.who_are_you))
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    ctx.startActivity(new Intent(ctx, ProfileActivity.class));
-                                }
-                            }).show();
-                else
-                    ctx.startActivity(new Intent(ctx, OnlineSelectActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
-
+                CloudHooks.profileOrOnlinePlay(ctx);
                 return true;
 
             case R.id.tsumego:

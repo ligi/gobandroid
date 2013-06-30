@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import com.actionbarsherlock.view.Menu;
+
+import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -13,7 +15,6 @@ import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.gobandroid_hd.ui.fragments.NavigationAndCommentFragment;
 import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
-import org.ligi.gobandroid_hd.ui.online.UploadGameAndShareMoment;
 import org.ligi.tracedroid.Log;
 
 public class GameReviewActivity extends GoActivity {
@@ -177,7 +178,7 @@ public class GameReviewActivity extends GoActivity {
 
             if (lastMomentFname == null || !lastMomentFname.equals(getGame().getMetaData().getFileName())) {
                 // TODO make sure it is not just the end of a variation
-                new UploadGameAndShareMoment(this, "reviewed_game").execute();
+                CloudHooks.uploadGameAndShareMoment(this,getGame(),"reviewed_game");
                 lastMomentFname = getGame().getMetaData().getFileName();
             }
 
