@@ -58,8 +58,9 @@ public class NavigationDrawer implements OnItemClickListener {
 
         items.add(new Category(R.string.more));
 
-        if (getApp().getSettings().isBetaWanted())
+        /*
             items.add(new Item(R.id.online_play, R.string.online_play, R.drawable.online_play));
+        */
 
         items.add(new Item(R.id.profile, R.string.profile, R.drawable.profile));
         items.add(new Item(R.id.links, R.string.links, R.drawable.dashboard_links));

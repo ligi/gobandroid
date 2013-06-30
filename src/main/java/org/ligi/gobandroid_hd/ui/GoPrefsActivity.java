@@ -72,7 +72,7 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
          * PreferenceCategory inlinePrefCat = new PreferenceCategory(this);
 		 * inlinePrefCat.setTitle(R.string.gameplay);
 		 * root.addPreference(inlinePrefCat);
-		 * 
+		 *
 		 * 
 		 * CheckBoxPreference nextScreenCheckBoxPref = new
 		 * CheckBoxPreference(this);
@@ -237,14 +237,6 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
             notifyTsumegoCheckBoxPref.setDefaultValue(settings.isTsumegoPushEnabled());
             morePrefsCat.addPreference(notifyTsumegoCheckBoxPref);
         }
-
-
-        CheckBoxPreference doBetaCheckBoxPref = new CheckBoxPreference(this);
-        doBetaCheckBoxPref.setKey(GobandroidSettings.KEY_ENABLE_BETA);
-        doBetaCheckBoxPref.setTitle(getString(R.string.beta_functions));
-        doBetaCheckBoxPref.setSummary(getString(R.string.more_features_less_stable));
-        doBetaCheckBoxPref.setDefaultValue(settings.isBetaWanted());
-        morePrefsCat.addPreference(doBetaCheckBoxPref);
 
 
 		/*

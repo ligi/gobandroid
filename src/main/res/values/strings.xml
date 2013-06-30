@@ -201,8 +201,6 @@
     <string name="hints_used">%d hints requested</string>
     <string name="it_is_me">It\'s me</string>
     <string name="next_tsumego">next tsumego</string>
-    <string name="beta_functions">Beta functionality</string>
-    <string name="more_features_less_stable">more features but less stable</string>
     <string name="online">ONLINE</string>
     <string name="online_play">Online-Go</string>
     <string name="online_view_game">Watch</string>

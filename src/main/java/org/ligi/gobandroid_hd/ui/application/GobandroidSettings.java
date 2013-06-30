@@ -18,7 +18,6 @@ public class GobandroidSettings {
 
     public static final String KEY_USERNAME = "username";
     public static final String KEY_RANK = "rank";
-    public static final String KEY_ENABLE_BETA = "enable_beta";
 
     // we need some context
     private Context ctx;
@@ -95,7 +94,4 @@ public class GobandroidSettings {
         getPreferences().edit().putString(KEY_RANK, rank).commit();
     }
 
-    public boolean isBetaWanted() {
-        return getPreferences().getBoolean(KEY_ENABLE_BETA, false);
-    }
 }
