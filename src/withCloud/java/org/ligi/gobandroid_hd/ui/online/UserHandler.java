@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui.online;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import com.google.android.gcm.GCMRegistrar;
+import com.google.api.services.cloudgoban.CloudFactory;
 import com.google.api.services.cloudgoban.Cloudgoban;
 import com.google.api.services.cloudgoban.model.User;
 import org.ligi.gobandroid_hd.GobandroidApp;
@@ -50,7 +51,7 @@ public class UserHandler {
                     prefs.edit().putString("user_secret", UUID.randomUUID().toString()).commit();
 
 
-                Cloudgoban gc = ctx.getCloudgoban();
+                Cloudgoban gc = CloudFactory.getCloudgoban();
 
                 User usr = new User();
                 usr.setName(ctx.getSettings().getUsername());

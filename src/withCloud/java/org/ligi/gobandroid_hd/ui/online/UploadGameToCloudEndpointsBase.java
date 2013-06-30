@@ -1,6 +1,8 @@
 package org.ligi.gobandroid_hd.ui.online;
 
 import android.os.AsyncTask;
+
+import com.google.api.services.cloudgoban.CloudFactory;
 import com.google.api.services.cloudgoban.Cloudgoban;
 import com.google.api.services.cloudgoban.model.Game;
 import com.google.api.services.cloudgoban.model.Text;
@@ -39,7 +41,7 @@ public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String
         boolean has_cloud_history = (goActivity.getGame().getCloudKey() != null);
         while (attempts++ < 6) {
             try {
-                Cloudgoban gc = goActivity.getApp().getCloudgoban();
+                Cloudgoban gc = CloudFactory.getCloudgoban();
 
                 Log.i("CloudGoban upload " + game_key + " " + has_cloud_history);
                 if (game_key == null) {

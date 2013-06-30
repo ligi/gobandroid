@@ -3,6 +3,8 @@ package org.ligi.gobandroid_hd.ui.online;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
+
+import com.google.api.services.cloudgoban.CloudFactory;
 import com.google.api.services.cloudgoban.Cloudgoban;
 import com.tapfortap.AppWall;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -69,7 +71,7 @@ public class ServerCheckAsyncTask extends AsyncTask<Void, Void, Boolean> {
     protected Boolean doInBackground(Void... params) {
         for (int retry = 0; retry < 3; retry++)
             try {
-                Cloudgoban gc = activity.getApp().getCloudgoban();
+                Cloudgoban gc = CloudFactory.getCloudgoban();
                 String status = gc.serverstatus().get().execute().getStatus();
                 if (status != null)
                     return status.equals("OK");

@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Handler;
+
+import com.google.api.services.cloudgoban.CloudFactory;
 import com.google.api.services.cloudgoban.model.Game;
 import com.google.api.services.cloudgoban.model.GoGameParticipation;
 import com.google.api.services.cloudgoban.model.Text;
@@ -28,7 +30,7 @@ public class CloudGobanHelper {
 
         for (int attempt = 0; attempt < 6; attempt++)
             try {
-                GoGameParticipation participation = activity.getApp().getCloudgoban().participation().insert(gn).execute();
+                GoGameParticipation participation = CloudFactory.getCloudgoban().participation().insert(gn).execute();
                 if (null != participation.getEncodedKey()) {
                     if (participation.getRole().equals("s")) {
                         handler.post(new Runnable() {
@@ -51,7 +53,7 @@ public class CloudGobanHelper {
                         });
 
                     } else if (start_after_reg) {
-                        Game game = activity.getApp().getCloudgoban().games().get(gn.getGameKey()).execute();
+                        Game game = CloudFactory.getCloudgoban().games().get(gn.getGameKey()).execute();
 
                         Log.i("migrating" + game.getType());
                         if (game.getType().equals("public_invite")) {
@@ -63,7 +65,7 @@ public class CloudGobanHelper {
                         UserHandler.setGameUsername(activity);
                         game.setSgf(new Text().setValue(SGFHelper.game2sgf(activity.getGame())));
 
-                        activity.getApp().getCloudgoban().games().update(UserHandler.getUserKey(activity.getApp()), game).execute();
+                        CloudFactory.getCloudgoban().games().update(UserHandler.getUserKey(activity.getApp()), game).execute();
 
                         activity.finish();
                         SwitchModeHelper.startGameWithCorrectMode(activity);

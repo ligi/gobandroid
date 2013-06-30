@@ -1,6 +1,8 @@
 package org.ligi.gobandroid_hd;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -8,8 +10,11 @@ import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
+import org.ligi.gobandroid_hd.ui.ProfileActivity;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.online.OnlineSelectActivity;
 import org.ligi.gobandroid_hd.ui.online.UploadGameAndShareMoment;
+import org.ligi.gobandroid_hd.ui.online.UploadGameToCloudEndpointsBase;
 import org.ligi.gobandroid_hd.ui.online.UserHandler;
 import org.ligi.tracedroid.logging.Log;
 
@@ -71,14 +76,14 @@ public class CloudHooks {
 
 
     public static void uploadGameAndShareMoment(GobandroidFragmentActivity ctx,GoGame game,String type) {
-        new UploadGameAndShareMoment(this, type).execute();
+        new UploadGameAndShareMoment(ctx, type).execute();
     }
 
     public static void uploadGame(GobandroidFragmentActivity ctx,GoGame game,String type) {
-        new UploadGameToCloudEndpointsBase(this, type).execute();
+        new UploadGameToCloudEndpointsBase(ctx, type).execute();
     }
 
-    public static void profileOrOnlinePlay(GobandroidFragmentActivity ctx) {
+    public static void profileOrOnlinePlay(final GobandroidFragmentActivity ctx) {
 
         if (ctx.getApp().getSettings().getUsername().equals(""))
             new AlertDialog.Builder(ctx).setMessage(ctx.getString(R.string.enter_username)).setTitle(ctx.getString(R.string.who_are_you))

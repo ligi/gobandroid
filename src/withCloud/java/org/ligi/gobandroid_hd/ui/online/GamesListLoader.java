@@ -3,6 +3,8 @@ package org.ligi.gobandroid_hd.ui.online;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+
+import com.google.api.services.cloudgoban.CloudFactory;
 import com.google.api.services.cloudgoban.Cloudgoban;
 import com.google.api.services.cloudgoban.model.GameCollection;
 
@@ -48,7 +50,7 @@ class GamesListLoader extends AsyncTask<Void, Void, GameCollection> {
     @Override
     protected GameCollection doInBackground(Void... params) {
 
-        Cloudgoban gc = onlineSelectActivity.getApp().getCloudgoban();
+        Cloudgoban gc = CloudFactory.getCloudgoban();
         try {
             return gc.games().list().setLimit(10).setType(type).execute();
         } catch (IOException e) {
