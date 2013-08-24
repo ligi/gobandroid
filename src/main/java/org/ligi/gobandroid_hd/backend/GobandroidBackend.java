@@ -8,7 +8,7 @@ import com.google.android.gcm.GCMRegistrar;
 import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
-import org.ligi.tracedroid.Log;
+import org.ligi.tracedroid.logging.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URL;

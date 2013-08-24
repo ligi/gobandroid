@@ -8,7 +8,7 @@ import com.google.api.services.cloudgoban.Cloudgoban;
 import com.google.api.services.cloudgoban.model.User;
 import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.tracedroid.Log;
+import org.ligi.tracedroid.logging.Log;
 
 import java.io.IOException;
 import java.util.UUID;

@@ -2,9 +2,7 @@ package org.ligi.gobandroid_hd.ui.application;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -18,28 +16,23 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.androidquery.AQuery;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.common.Scopes;
 import com.google.android.gms.plus.GooglePlusUtil;
-import com.google.android.gms.plus.PlusClient;
-import com.google.android.gms.plus.PlusShare;
 
 import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.PlayServicesIntegration;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.application.navigation.NavigationDrawer;
 
 import java.lang.reflect.Field;
 
-public class GobandroidFragmentActivity extends SherlockFragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
+public class GobandroidFragmentActivity extends SherlockFragmentActivity {
 
-    protected static final int REQUEST_CODE_RESOLVE_ERR = 9000;
-    protected ProgressDialog mConnectionProgressDialog;
-    protected PlusClient mPlusClient;
-    protected ConnectionResult mConnectionResult;
     private AQuery mAQ;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout drawerLayout;
+
+    private PlayServicesIntegration playServicesIntegration;
 
     public void closeDrawers() {
         drawerLayout.closeDrawers();
@@ -74,9 +67,6 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity impleme
                 super.onDrawerClosed(drawerView);
             }
 
-            {
-
-            }
         };
 
         drawerLayout.setDrawerListener(mDrawerToggle);
@@ -134,19 +124,8 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity impleme
 		 *
 		 */
 
-        mPlusClient = new PlusClient.Builder(getApplicationContext(), this, this)
+        playServicesIntegration=new PlayServicesIntegration(this);
 
-                .setVisibleActivities("http://schemas.google.com/CreateActivity",
-                        "http://schemas.google.com/ReviewActivity",
-                        "http://schemas.google.com/CommentActivity",
-                        "http://schemas.google.com/AddActivity")
-                .setScopes(Scopes.PLUS_LOGIN)
-                .build();
-
-        // Progress bar to be displayed if the connection failure is not resolved.
-        mConnectionProgressDialog = new ProgressDialog(this);
-        mConnectionProgressDialog.setMessage("Signing in...");
-        mPlusClient.connect();
     }
 
     public boolean doFullScreen() {
@@ -209,36 +188,22 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity impleme
     protected void onStop() {
         super.onStop();
         GobandroidApp.getTracker().activityStop(this); // Add this method.
-        mPlusClient.disconnect();
+        //mPlusClient.disconnect();
+        playServicesIntegration.onStop(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         GobandroidApp.getTracker().activityStart(this); // Add this method
-        mPlusClient.connect();
+        //mPlusClient.connect();
+
+        playServicesIntegration.onStart(this);
+
     }
 
-    @Override
-    public void onConnectionFailed(ConnectionResult result) {
-        if (mConnectionProgressDialog.isShowing()) {
-            // The user clicked the sign-in button already. Start to resolve
-            // connection errors. Wait until onConnected() to dismiss the
-            // connection dialog.
-            if (result.hasResolution()) {
-                try {
-                    result.startResolutionForResult(this, REQUEST_CODE_RESOLVE_ERR);
-                } catch (IntentSender.SendIntentException e) {
-                    mPlusClient.connect();
-                }
-            }
-        }
 
-        // Save the intent so that we can start an activity when the user clicks
-        // the sign-in button.
-        mConnectionResult = result;
-    }
-
+/*
     private void workingPostToGPlus() {
         // Create an interactive post with the "VIEW_ITEM" label. This will
         // create an enhanced share dialog when the post is shared on Google+.
@@ -266,12 +231,9 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity impleme
 
         startActivityForResult(builder.getIntent(), 0);
     }
-
-    @Override
+*/
+    //@Override
     public void onConnected(Bundle bundle) {
-        // We've resolved any connection errors.
-        mConnectionProgressDialog.dismiss();
-
 
         /*
         ItemScope target = new ItemScope.Builder()
@@ -342,17 +304,10 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity impleme
 
     }
 
-    @Override
-    public void onDisconnected() {
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int responseCode, Intent intent) {
-        if (requestCode == REQUEST_CODE_RESOLVE_ERR && responseCode == RESULT_OK) {
-            mConnectionResult = null;
-            mPlusClient.connect();
-        }
+        playServicesIntegration.onActivityResult(requestCode,responseCode,intent);
     }
 
     protected AQuery getAQ() {
@@ -360,10 +315,6 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity impleme
             mAQ = new AQuery(this);
         }
         return mAQ;
-    }
-
-    public PlusClient getPlusClient() {
-        return mPlusClient;
     }
 
 }

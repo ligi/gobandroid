@@ -22,7 +22,7 @@ import org.ligi.gobandroid_hd.ui.Refreshable;
 import org.ligi.gobandroid_hd.ui.SGFLoadActivity;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.gobandroid_hd.ui.share.ShareAsAttachmentDialog;
-import org.ligi.tracedroid.Log;
+import org.ligi.tracedroid.logging.Log;
 
 import java.io.File;
 import java.util.Arrays;

@@ -6,11 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
-import org.ligi.gobandroid_hd.ui.ProfileActivity;
+import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.online.OnlineSelectActivity;
 import org.ligi.gobandroid_hd.ui.online.UploadGameAndShareMoment;
@@ -20,9 +19,6 @@ import org.ligi.tracedroid.logging.Log;
 
 import java.io.IOException;
 
-/**
- * Created by ligi on 6/7/13.
- */
 public class CloudHooks {
 
     public static void onApplicationCreation(GobandroidApp gobandroidApp) {
@@ -91,7 +87,7 @@ public class CloudHooks {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-                            ctx.startActivity(new Intent(ctx, ProfileActivity.class));
+                            ctx.startActivity(new Intent(ctx, BaseProfileActivity.class));
                         }
                     }).show();
         else

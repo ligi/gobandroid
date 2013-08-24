@@ -18,7 +18,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GoPrefsActivity;
 import org.ligi.gobandroid_hd.ui.HelpDialog;
-import org.ligi.gobandroid_hd.ui.ProfileActivity;
+import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
 import org.ligi.gobandroid_hd.ui.UnzipSGFsDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
@@ -125,7 +125,7 @@ public class NavigationDrawer implements OnItemClickListener {
 
 
             case R.id.profile:
-                ctx.startActivity(new Intent(ctx, ProfileActivity.class));
+                ctx.startActivity(new Intent(ctx, BaseProfileActivity.class));
 
                 return true;
         }

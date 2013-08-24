@@ -15,7 +15,7 @@ import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.gobandroid_hd.ui.fragments.NavigationAndCommentFragment;
 import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
-import org.ligi.tracedroid.Log;
+import org.ligi.tracedroid.logging.Log;
 
 public class GameReviewActivity extends GoActivity {
 

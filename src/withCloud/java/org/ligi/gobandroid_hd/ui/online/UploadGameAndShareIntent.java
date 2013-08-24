@@ -3,7 +3,7 @@ package org.ligi.gobandroid_hd.ui.online;
 
 import android.content.Intent;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.tracedroid.Log;
+import org.ligi.tracedroid.logging.Log;
 
 public class UploadGameAndShareIntent extends UploadGameToCloudEndpointsWithUI {
 

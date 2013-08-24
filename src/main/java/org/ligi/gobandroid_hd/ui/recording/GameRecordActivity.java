@@ -13,7 +13,8 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
-import org.ligi.tracedroid.Log;
+import org.ligi.tracedroid.logging.Log;
+
 
 /**
  * Activity to record a Game - or play on one device

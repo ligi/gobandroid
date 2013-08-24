@@ -5,7 +5,6 @@ import android.content.Context;
 
 /**
  * this is a dummy
- * Created by ligi on 6/1/13.
  */
 public class GobandroidNotTracker implements GobandroidTracker {
     @Override

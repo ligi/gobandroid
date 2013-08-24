@@ -1,20 +1,21 @@
 package org.ligi.gobandroid_hd.ui;
 
-import android.content.IntentSender;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
 import com.androidquery.AQuery;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.plus.PlusClient;
 import com.google.android.gms.plus.model.people.Person;
 
 import org.ligi.gobandroid_hd.CloudHooks;
+import org.ligi.gobandroid_hd.PlayServicesIntegration;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.tracedroid.Log;
+import org.ligi.tracedroid.logging.Log;
 
-public class ProfileActivity extends GobandroidFragmentActivity {
+public class PlusAwareProfileAcitivity extends GobandroidFragmentActivity {
 
     private EditText username_et;
     private EditText rank_et;
@@ -49,33 +50,36 @@ public class ProfileActivity extends GobandroidFragmentActivity {
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mPlusClient.isConnected()) {
+                //getPlayServicesHelper().beginUserInitiatedSignIn();;
+                /*
+                if (!getPlusClient().isConnected()) {
                     if (mConnectionResult == null) {
                         //mPlusClient.connect();
                         mConnectionProgressDialog.show();
                     } else {
                         try {
-                            mConnectionResult.startResolutionForResult(ProfileActivity.this, REQUEST_CODE_RESOLVE_ERR);
+                            mConnectionResult.startResolutionForResult(BaseProfileActivity.this, REQUEST_CODE_RESOLVE_ERR);
                         }
                         catch (IntentSender.SendIntentException e) {
                             // Try connecting again.
                             mConnectionResult = null;
-                            mPlusClient.connect();
+                            getPlusClient().connect();
                         }
                     }
                 }
+                */
             }
         });
 
         mSignOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPlusClient.isConnected()) {
+                if (getPlusClient().isConnected()) {
                     mConnectionResult = null;
 
-                    mPlusClient.clearDefaultAccount();
-                    mPlusClient.disconnect();
-                    mPlusClient.connect();
+                    getPlusClient().clearDefaultAccount();
+                    getPlusClient().disconnect();
+                    getPlusClient().connect();
                     setToNoUser();
                 }
             }
@@ -84,17 +88,17 @@ public class ProfileActivity extends GobandroidFragmentActivity {
         mDisconnectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPlusClient.isConnected()) {
+                if (getPlusClient().isConnected()) {
                     // Prior to disconnecting, run clearDefaultAccount().
-                    mPlusClient.clearDefaultAccount();
+                    getPlusClient().clearDefaultAccount();
 
-                    mPlusClient.revokeAccessAndDisconnect(new PlusClient.OnAccessRevokedListener() {
+                    getPlusClient().revokeAccessAndDisconnect(new PlusClient.OnAccessRevokedListener() {
                         @Override
                         public void onAccessRevoked(ConnectionResult status) {
                             // mPlusClient is now disconnected and access has been revoked.
                             // Trigger app logic to comply with the developer policies
                             setToNoUser();
-                            mPlusClient.connect();
+                            getPlusClient().connect();
                         }
                     });
                 }
@@ -108,12 +112,12 @@ public class ProfileActivity extends GobandroidFragmentActivity {
     }
 
     private void setButtonVisibilityByConnectedState() {
-        mSignInButton.setVisibility(!mPlusClient.isConnected() ? View.VISIBLE : View.GONE);
-        mSignOutButton.setVisibility(mPlusClient.isConnected() ? View.VISIBLE : View.GONE);
-        mDisconnectButton.setVisibility(mPlusClient.isConnected() ? View.VISIBLE : View.GONE);
+        mSignInButton.setVisibility(!getPlusClient().isConnected() ? View.VISIBLE : View.GONE);
+        mSignOutButton.setVisibility(getPlusClient().isConnected() ? View.VISIBLE : View.GONE);
+        mDisconnectButton.setVisibility(getPlusClient().isConnected() ? View.VISIBLE : View.GONE);
 
-        if (mPlusClient.isConnected()) {
-            mPlusClient.loadPerson(new PlusClient.OnPersonLoadedListener() {
+        if (getPlusClient().isConnected()) {
+            getPlusClient().loadPerson(new PlusClient.OnPersonLoadedListener() {
                 @Override
                 public void onPersonLoaded(ConnectionResult connectionResult, Person person) {
 
@@ -156,9 +160,18 @@ public class ProfileActivity extends GobandroidFragmentActivity {
         setButtonVisibilityByConnectedState();
     }
 
+    /*
     @Override
     public void onDisconnected() {
         super.onDisconnected();
         setButtonVisibilityByConnectedState();
     }
+    @Override
+    public void onSignInSucceeded() {
+        super.onSignInSucceeded();
+        setButtonVisibilityByConnectedState();
+    }
+
+*/
+
 }
