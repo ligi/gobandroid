@@ -56,8 +56,9 @@ public class RecordingGameExtrasFragment extends GobandroidFragment implements G
         hndl.post(new Runnable() {
             @Override
             public void run() {
-                if ((et != null) && getActivity() != null)
+                if ((et != null) && getActivity() != null) {
                     et.setText(getGame().getActMove().getComment());
+                }
             }
 
         });

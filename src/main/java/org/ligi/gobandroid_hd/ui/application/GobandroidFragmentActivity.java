@@ -1,6 +1,5 @@
 package org.ligi.gobandroid_hd.ui.application;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -15,10 +14,9 @@ import android.view.WindowManager;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.androidquery.AQuery;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.plus.GooglePlusUtil;
 
-import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.PlayServicesIntegration;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -145,8 +143,8 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
         }
     }
 
-    public GobandroidApp getApp() {
-        return (GobandroidApp) getApplicationContext();
+    public App getApp() {
+        return (App) getApplicationContext();
     }
 
     public GoGame getGame() {
@@ -187,7 +185,7 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        GobandroidApp.getTracker().activityStop(this); // Add this method.
+        App.getTracker().activityStop(this); // Add this method.
         //mPlusClient.disconnect();
         playServicesIntegration.onStop(this);
     }
@@ -195,7 +193,7 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        GobandroidApp.getTracker().activityStart(this); // Add this method
+        App.getTracker().activityStart(this); // Add this method
         //mPlusClient.connect();
 
         playServicesIntegration.onStart(this);

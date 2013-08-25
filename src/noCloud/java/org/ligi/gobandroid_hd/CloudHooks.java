@@ -5,7 +5,6 @@ import android.content.Intent;
 
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.gobandroid_hd.ui.application.navigation.NavigationDrawer;
 
 
 /**
@@ -13,11 +12,11 @@ import org.ligi.gobandroid_hd.ui.application.navigation.NavigationDrawer;
  */
 public class CloudHooks {
 
-    public static void onApplicationCreation(GobandroidApp gobandroidApp) {
+    public static void onApplicationCreation(App app) {
 
     }
 
-    public static void syncUser(GobandroidApp gobandroidApp) {
+    public static void syncUser(App app) {
 
     }
 

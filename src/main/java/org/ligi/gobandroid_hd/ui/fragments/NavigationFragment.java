@@ -14,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
@@ -33,7 +33,7 @@ public class NavigationFragment extends Fragment implements GoGameChangeListener
         last_btn = (ImageView) res.findViewById(R.id.btn_last);
         next_btn = (ImageView) res.findViewById(R.id.btn_next);
         prev_btn = (ImageView) res.findViewById(R.id.btn_prev);
-        game = ((GobandroidApp) (getActivity().getApplicationContext())).getGame();
+        game = ((App) (getActivity().getApplicationContext())).getGame();
         game.addGoGameChangeListener(this);
 
         first_btn.setOnClickListener(new OnClickListener() {

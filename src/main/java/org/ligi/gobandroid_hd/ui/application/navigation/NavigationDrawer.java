@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.CloudHooks;
-import org.ligi.gobandroid_hd.GobandroidApp;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GoPrefsActivity;
@@ -75,7 +75,7 @@ public class NavigationDrawer implements OnItemClickListener {
             case R.id.help:
 
                 new HelpDialog(ctx).show();
-                GobandroidApp.getTracker().trackEvent("ui_action", "dashboard", "help", null);
+                App.getTracker().trackEvent("ui_action", "dashboard", "help", null);
 
                 return true;
             case R.id.empty:
@@ -138,8 +138,8 @@ public class NavigationDrawer implements OnItemClickListener {
         return i;
     }
 
-    private GobandroidApp getApp() {
-        return (GobandroidApp) ctx.getApplicationContext();
+    private App getApp() {
+        return (App) ctx.getApplicationContext();
     }
 
     private class Item {

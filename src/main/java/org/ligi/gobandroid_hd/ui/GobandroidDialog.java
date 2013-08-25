@@ -12,7 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import com.androidquery.AQuery;
-import org.ligi.gobandroid_hd.GobandroidApp;
+
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 
 /**
@@ -54,8 +55,8 @@ public class GobandroidDialog extends Dialog {
         findViewById(R.id.dialog_main_container).setBackgroundResource(R.drawable.shinkaya_half);
     }
 
-    public GobandroidApp getApp() {
-        return (GobandroidApp) ctx.getApplicationContext();
+    public App getApp() {
+        return (App) ctx.getApplicationContext();
     }
 
     public void setIconResource(int ico_res) {

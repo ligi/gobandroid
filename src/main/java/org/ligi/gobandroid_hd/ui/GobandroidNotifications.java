@@ -7,7 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-import org.ligi.gobandroid_hd.GobandroidApp;
+
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
@@ -31,8 +32,8 @@ public class GobandroidNotifications {
     private NotificationManager notificationManager;
     private Intent notificationIntent;
 
-    private GobandroidApp getApp() {
-        return (GobandroidApp) context.getApplicationContext();
+    private App getApp() {
+        return (App) context.getApplicationContext();
     }
 
     public GobandroidNotifications(Context context) {

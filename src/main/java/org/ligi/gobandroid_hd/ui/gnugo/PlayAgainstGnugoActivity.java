@@ -9,7 +9,8 @@ import android.support.v4.app.Fragment;
 import android.view.WindowManager;
 import android.widget.Toast;
 import com.actionbarsherlock.view.Menu;
-import org.ligi.gobandroid_hd.GobandroidApp;
+
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GTPHelper;
 import org.ligi.gobandroid_hd.logic.GoBoard;
@@ -47,7 +48,7 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
         // getBoard().requestFocus(); - but that was not working ..
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        GobandroidApp.getTracker().trackEvent("ui_action", "gnugo", "play", null);
+        App.getTracker().trackEvent("ui_action", "gnugo", "play", null);
 
         dlg = new GnuGoSetupDialog(this);
 

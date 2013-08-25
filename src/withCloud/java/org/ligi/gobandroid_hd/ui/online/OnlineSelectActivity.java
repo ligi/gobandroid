@@ -24,7 +24,7 @@ import android.support.v4.app.Fragment;
 import com.actionbarsherlock.app.ActionBar;
 import com.tapfortap.TapForTap;
 
-import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
@@ -71,7 +71,7 @@ public class OnlineSelectActivity extends GobandroidFragmentActivity implements 
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-        GobandroidApp.getTracker().trackEvent("ui_action", "links", act_tab_str_for_analytics, null);
+        App.getTracker().trackEvent("ui_action", "links", act_tab_str_for_analytics, null);
 
 //
         switch ((Integer) tab.getTag()) {

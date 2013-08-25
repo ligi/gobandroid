@@ -31,7 +31,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -237,7 +237,7 @@ public class CopyOfGoSetupActivity extends GoActivity implements OnSeekBarChange
 		 * go_intent.putExtra("black_player",black_player_spinner
 		 * .getSelectedItemPosition());
 		 */
-        GobandroidApp.getTracker().trackEvent("ui_event", "setup_board", "" + act_size, null);
+        App.getTracker().trackEvent("ui_event", "setup_board", "" + act_size, null);
         go_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         go_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(go_intent);

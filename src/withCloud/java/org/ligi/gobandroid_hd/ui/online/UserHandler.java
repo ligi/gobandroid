@@ -6,7 +6,7 @@ import com.google.android.gcm.GCMRegistrar;
 import com.google.api.services.cloudgoban.CloudFactory;
 import com.google.api.services.cloudgoban.Cloudgoban;
 import com.google.api.services.cloudgoban.model.User;
-import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
 
@@ -21,7 +21,7 @@ public class UserHandler {
      * @param ctx
      * @return the user key
      */
-    public static String getUserKey(GobandroidApp ctx) {
+    public static String getUserKey(App ctx) {
         return ctx.getSettings().getPreferences().getString("user_key", null);
     }
 
@@ -30,14 +30,14 @@ public class UserHandler {
      *
      * @param ctx - we need to haz context
      */
-    public static void syncUser(GobandroidApp ctx) {
+    public static void syncUser(App ctx) {
 
 
         class SyncAsyncTask extends AsyncTask<Void, Void, Void> {
 
-            private GobandroidApp ctx;
+            private App ctx;
 
-            public SyncAsyncTask(GobandroidApp ctx) {
+            public SyncAsyncTask(App ctx) {
                 this.ctx = ctx;
             }
 

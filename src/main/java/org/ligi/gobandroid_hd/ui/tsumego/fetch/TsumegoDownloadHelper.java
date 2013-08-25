@@ -2,7 +2,7 @@ package org.ligi.gobandroid_hd.ui.tsumego.fetch;
 
 import android.content.Context;
 import org.apache.http.util.ByteArrayBuffer;
-import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.backend.GobandroidBackend;
 import org.ligi.tracedroid.logging.Log;
 
@@ -16,12 +16,12 @@ public class TsumegoDownloadHelper {
 
     private final static String BASE_URL = "http://gogameguru.com/i/go-problems/";
 
-    public static TsumegoSource[] getDefaultList(GobandroidApp app) {
+    public static TsumegoSource[] getDefaultList(App app) {
         return new TsumegoSource[]{new TsumegoSource(app.getSettings().getTsumegoPath() + "1.easy/", BASE_URL, "ggg-easy-%02d.sgf"), new TsumegoSource(app.getSettings().getTsumegoPath() + "2.intermediate/", BASE_URL, "ggg-intermediate-%02d.sgf"),
                 new TsumegoSource(app.getSettings().getTsumegoPath() + "3.hard/", BASE_URL, "ggg-hard-%02d.sgf")};
     }
 
-    public static int doDownloadDefault(GobandroidApp app) {
+    public static int doDownloadDefault(App app) {
         return doDownload(app, getDefaultList(app));
     }
 

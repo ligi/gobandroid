@@ -5,12 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.gcm.GCMBaseIntentService;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
-import org.ligi.gobandroid_hd.logic.SGFHelper;
-import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsForNotification;
 import org.ligi.tracedroid.logging.Log;
-
-import java.io.IOException;
 
 /**
  * interface to the C2DM service utilising the classes from google's
@@ -36,7 +32,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         if (intent.getExtras() == null)
             return;
 
-        GobandroidApp.getTracker().init(context);
+        App.getTracker().init(context);
         CloudHooks.onGCMMessage(context,intent);
 
         Bundle extras = intent.getExtras();

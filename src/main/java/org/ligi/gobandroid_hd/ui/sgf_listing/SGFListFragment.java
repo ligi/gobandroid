@@ -13,7 +13,7 @@ import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnCancelListener;
 import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnClickListener;
 import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
-import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GoLinkLoadActivity;
@@ -190,7 +190,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             adapter.notifyDataSetChanged();
          */
 
-        InteractionScope interaction_scope = ((GobandroidApp) (getActivity().getApplicationContext())).getInteractionScope();
+        InteractionScope interaction_scope = ((App) (getActivity().getApplicationContext())).getInteractionScope();
 
         if (interaction_scope.getMode() == InteractionScope.MODE_TSUMEGO)
             adapter = new TsumegoPathViewAdapter(this.getActivity(), menu_items, dir);
@@ -201,8 +201,8 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
 
     }
 
-    private GobandroidApp getApp() {
-        return (GobandroidApp) getActivity().getApplicationContext();
+    private App getApp() {
+        return (App) getActivity().getApplicationContext();
     }
 
 }

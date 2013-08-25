@@ -26,7 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
-import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
@@ -46,7 +46,7 @@ public class GameInfoAlert extends GobandroidDialog {
         setIconResource(R.drawable.info);
         setContentView(R.layout.game_info);
 
-        final GobandroidApp app = (GobandroidApp) context.getApplicationContext();
+        final App app = (App) context.getApplicationContext();
 
 
         final EditText game_name_et = (EditText) findViewById(R.id.game_name_et);

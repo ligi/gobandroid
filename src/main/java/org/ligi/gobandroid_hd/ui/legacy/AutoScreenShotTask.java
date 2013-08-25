@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
-import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
@@ -34,8 +34,8 @@ public class AutoScreenShotTask extends AsyncTask<String, String, Integer> {
         this.activity = activity;
     }
 
-    public GobandroidApp getApp() {
-        return (GobandroidApp) activity.getApplicationContext();
+    public App getApp() {
+        return (App) activity.getApplicationContext();
     }
 
     protected void onPostExecute(Integer result) {

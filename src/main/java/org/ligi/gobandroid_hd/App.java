@@ -3,6 +3,8 @@ package org.ligi.gobandroid_hd;
 import android.app.Application;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
+import android.text.TextUtils;
+
 import com.google.android.gcm.GCMRegistrar;
 import org.ligi.gobandroid_hd.backend.GobandroidBackend;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
@@ -15,10 +17,8 @@ import org.ligi.tracedroid.logging.Log;
 
 /**
  * the central Application-Context
- *
- * @author ligi
  */
-public class GobandroidApp extends Application {
+public class App extends Application {
 
     // the InteractionScope holds things like mode/act game between activities
     private InteractionScope interaction_scope;
@@ -68,7 +68,7 @@ public class GobandroidApp extends Application {
 
             final String regId = GCMRegistrar.getRegistrationId(this);
             Log.i("initGCM with regId=" + regId);
-            if (regId.equals("")) {
+            if (TextUtils.isEmpty(regId)) {
                 // Automatically registers application on startup.
                 GCMRegistrar.register(this, GobandroidConfiguration.GCM_SENDER_ID);
             } else {
@@ -77,17 +77,6 @@ public class GobandroidApp extends Application {
         } catch (Exception e) {
             getTracker().trackException("cannot init GCM", e, false);
         }
-    }
-
-    @Override
-    public void onTerminate() {
-
-        super.onTerminate();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
     }
 
     public InteractionScope getInteractionScope() {

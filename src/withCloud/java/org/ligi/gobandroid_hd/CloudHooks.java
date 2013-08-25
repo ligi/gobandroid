@@ -21,12 +21,12 @@ import java.io.IOException;
 
 public class CloudHooks {
 
-    public static void onApplicationCreation(GobandroidApp gobandroidApp) {
-        UserHandler.syncUser(gobandroidApp);
+    public static void onApplicationCreation(App app) {
+        UserHandler.syncUser(app);
     }
 
-    public static void syncUser(GobandroidApp gobandroidApp) {
-        UserHandler.syncUser(gobandroidApp);
+    public static void syncUser(App app) {
+        UserHandler.syncUser(app);
     }
 
     public static void onGCMMessage(Context context, Intent intent) {
@@ -34,9 +34,9 @@ public class CloudHooks {
         String game_key = extras.getString("game_key");
         if (game_key != null) { // cloud game message
 
-            Log.i("GCM act" + ((GobandroidApp) context.getApplicationContext()).getGame().toString());
+            Log.i("GCM act" + ((App) context.getApplicationContext()).getGame().toString());
 
-            GobandroidApp ga = (GobandroidApp) context.getApplicationContext();
+            App ga = (App) context.getApplicationContext();
             Log.i("GCM incoming Message cloud game" + game_key + "+ game cloud key" + ga.getGame().getCloudKey());
             if (!ga.hasActiveGoActivity() || ga.getGame().getCloudKey() == null || !ga.getGame().getCloudKey().equals(game_key)) {
 
@@ -63,7 +63,7 @@ public class CloudHooks {
 
     public static void onGoGameChange(GoGame game) {
 
-        //GobandroidApp.get
+        //App.get
     }
 
     public static void onSolvedTsumego(GobandroidFragmentActivity ctx,GoGame game) {

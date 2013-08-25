@@ -7,7 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import org.ligi.gobandroid_hd.GobandroidApp;
+
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
@@ -25,7 +26,7 @@ public class NavigationAndCommentFragment extends Fragment implements GoGameChan
 
         myTextView = (TextView) res.findViewById(R.id.comments_textview);
         myTextView.setFocusable(false);
-        game = ((GobandroidApp) (getActivity().getApplicationContext())).getGame();
+        game = ((App) (getActivity().getApplicationContext())).getGame();
         game.addGoGameChangeListener(this);
 
         res.findViewById(R.id.scrollview).setFocusable(false);

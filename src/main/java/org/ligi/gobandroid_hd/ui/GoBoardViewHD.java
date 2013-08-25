@@ -25,7 +25,8 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Paint.FontMetrics;
 import android.util.AttributeSet;
 import android.view.View;
-import org.ligi.gobandroid_hd.GobandroidApp;
+
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -91,8 +92,8 @@ public class GoBoardViewHD extends View {
         init();
     }
 
-    public GobandroidApp getApp() {
-        return (GobandroidApp) getContext().getApplicationContext();
+    public App getApp() {
+        return (App) getContext().getApplicationContext();
     }
 
     public void init() {

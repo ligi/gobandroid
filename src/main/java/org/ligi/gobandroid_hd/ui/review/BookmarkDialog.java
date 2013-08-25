@@ -20,7 +20,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.EditText;
 import android.widget.TextView;
-import org.ligi.gobandroid_hd.GobandroidApp;
+
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
@@ -47,7 +48,7 @@ public class BookmarkDialog extends GobandroidDialog {
      * @return
      */
     public static String getEnsuredFilename(Context ctx) {
-        GobandroidApp app = (GobandroidApp) ctx.getApplicationContext();
+        App app = (App) ctx.getApplicationContext();
 
         String fname = app.getGame().getMetaData().getFileName();
         if ((fname == null) || (fname.equals(""))) {

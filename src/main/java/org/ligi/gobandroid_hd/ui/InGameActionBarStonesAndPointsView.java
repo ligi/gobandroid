@@ -5,7 +5,8 @@ import android.graphics.*;
 import android.graphics.Paint.FontMetrics;
 import android.util.AttributeSet;
 import android.view.View;
-import org.ligi.gobandroid_hd.GobandroidApp;
+
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -21,7 +22,7 @@ public class InGameActionBarStonesAndPointsView extends View implements GoGame.G
     private Paint myActiveBGPaint = new Paint();
     private FontMetrics fm;
     private float text_offset;
-    private GobandroidApp app;
+    private App app;
 
     private Bitmap getScaledRes(float size, int resID) {
         Bitmap unscaled_bitmap = BitmapFactory.decodeResource(this.getResources(), resID);
@@ -37,7 +38,7 @@ public class InGameActionBarStonesAndPointsView extends View implements GoGame.G
 
         super(context);
 
-        app = (GobandroidApp) context.getApplicationContext();
+        app = (App) context.getApplicationContext();
 
         init();
     }

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
-import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.tracedroid.logging.Log;
@@ -93,7 +93,7 @@ public class UnzipSGFsDialog {
                 Resources resources = activity.getResources();
 
                 InputStream is = resources.openRawResource(R.raw.sgf_pack);
-                GobandroidSettings settings = ((GobandroidApp) activity.getApplicationContext()).getSettings();
+                GobandroidSettings settings = ((App) activity.getApplicationContext()).getSettings();
                 new Decompress(is, settings.getSGFBasePath()).unzip();
 
                 myProgress.dismiss();

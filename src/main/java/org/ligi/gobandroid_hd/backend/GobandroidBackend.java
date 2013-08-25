@@ -6,7 +6,7 @@ import android.os.Build;
 import android.provider.Settings.Secure;
 import com.google.android.gcm.GCMRegistrar;
 import org.ligi.androidhelper.AndroidHelper;
-import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.tracedroid.logging.Log;
 
@@ -48,9 +48,9 @@ public class GobandroidBackend {
     // TODO doesnt need to be a async task any more - no more UI interaction
     static class RegisterDeviceAsyncTask extends AsyncTask<Void, Void, Void> {
 
-        private GobandroidApp app;
+        private App app;
 
-        public RegisterDeviceAsyncTask(GobandroidApp app) {
+        public RegisterDeviceAsyncTask(App app) {
             this.app = app;
         }
 
@@ -84,7 +84,7 @@ public class GobandroidBackend {
 
     }
 
-    public final static void registerDevice(GobandroidApp app) {
+    public final static void registerDevice(App app) {
         new RegisterDeviceAsyncTask(app).execute();
     }
 }

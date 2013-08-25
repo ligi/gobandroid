@@ -28,7 +28,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
 import android.widget.FrameLayout.LayoutParams;
-import org.ligi.gobandroid_hd.GobandroidApp;
+
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.tracedroid.logging.Log;
@@ -131,8 +132,8 @@ public class GoBoardOverlay implements OnClickListener {
         updateCommentText();
     }
 
-    public GobandroidApp getApp() {
-        return (GobandroidApp) context.getApplicationContext();
+    public App getApp() {
+        return (App) context.getApplicationContext();
     }
 
     private String getGameComment() {

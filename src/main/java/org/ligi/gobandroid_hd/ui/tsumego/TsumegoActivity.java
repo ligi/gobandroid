@@ -8,7 +8,7 @@ import com.actionbarsherlock.view.MenuItem;
 import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnClickListener;
 import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.CloudHooks;
-import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
@@ -109,7 +109,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
     public boolean onCreateOptionsMenu(Menu menu) {
 
         if (getGame() == null) { // there was no game - fallback to main menu
-            GobandroidApp.getTracker().trackException("tsumego start getGame() returned null in onCreate", false);
+            App.getTracker().trackException("tsumego start getGame() returned null in onCreate", false);
             finish();
             // startActivity(new Intent(this, gobandroid.class));
             return super.onCreateOptionsMenu(menu);
@@ -176,7 +176,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
         finishing_move = null;
 
         if (getGame() == null) { // there was no game - fallback to main menu
-            GobandroidApp.getTracker().trackException("tsumego start getGame() returned null in onCreate", false);
+            App.getTracker().trackException("tsumego start getGame() returned null in onCreate", false);
             finish();
             // startActivity(new Intent(this, gobandroid.class));
             return;

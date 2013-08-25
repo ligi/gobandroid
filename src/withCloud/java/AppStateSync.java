@@ -5,7 +5,7 @@ import com.google.android.gms.appstate.OnStateLoadedListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.App;
 
 public class AppStateSync {
 
@@ -33,7 +33,7 @@ public class AppStateSync {
 
             @Override
             public void onStateConflict (int stateKey, String resolvedVersion, byte[] localData, byte[] serverData) {
-                GobandroidApp app = (GobandroidApp)activity.getApplicationContext();
+                App app = (App)activity.getApplicationContext();
                 JSONObject settings_obj=new JSONObject();
                 try {
                     settings_obj.put("rank",app.getSettings().getRank());

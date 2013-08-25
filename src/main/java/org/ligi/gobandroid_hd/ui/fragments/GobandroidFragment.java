@@ -3,12 +3,12 @@ package org.ligi.gobandroid_hd.ui.fragments;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.logic.GoGame;
 
 public class GobandroidFragment extends Fragment {
     public GoGame getGame() {
-        return ((GobandroidApp) getActivity().getApplicationContext()).getGame();
+        return ((App) getActivity().getApplicationContext()).getGame();
     }
 
     // very nice hint by Jake Wharton via twitter
@@ -17,7 +17,7 @@ public class GobandroidFragment extends Fragment {
         return (T) view.findViewById(id);
     }
 
-    public GobandroidApp getApp() {
-        return (GobandroidApp) getActivity().getApplicationContext();
+    public App getApp() {
+        return (App) getActivity().getApplicationContext();
     }
 }

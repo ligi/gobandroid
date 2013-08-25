@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
-import org.ligi.gobandroid_hd.GobandroidApp;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -32,7 +32,7 @@ public class InGameActionBarView2 extends LinearLayout implements
     private ViewGroup black_info_container;
     private ViewGroup white_info_container;
     private LayoutInflater inflater;
-    private GobandroidApp app;
+    private App app;
     private Activity activity;
 
     public InGameActionBarView2(Context ctx, AttributeSet attrs) {
@@ -55,7 +55,7 @@ public class InGameActionBarView2 extends LinearLayout implements
         super(_activity);
 
         activity = _activity;
-        app = (GobandroidApp) _activity.getApplicationContext();
+        app = (App) _activity.getApplicationContext();
 
         inflater = (LayoutInflater) _activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
