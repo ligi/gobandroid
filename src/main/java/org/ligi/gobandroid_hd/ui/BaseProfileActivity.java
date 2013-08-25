@@ -2,6 +2,7 @@ package org.ligi.gobandroid_hd.ui;
 
 import android.os.Bundle;
 import android.widget.EditText;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 

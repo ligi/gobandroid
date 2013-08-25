@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.CheckBox;
+
 import org.ligi.gobandroid_hd.R;
 
 public class UndoWithVariationDialog extends GobandroidDialog {

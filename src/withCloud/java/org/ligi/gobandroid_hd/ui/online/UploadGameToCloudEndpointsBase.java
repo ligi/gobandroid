@@ -6,6 +6,7 @@ import com.google.api.services.cloudgoban.CloudFactory;
 import com.google.api.services.cloudgoban.Cloudgoban;
 import com.google.api.services.cloudgoban.model.Game;
 import com.google.api.services.cloudgoban.model.Text;
+
 import org.ligi.gobandroid_hd.backend.CloudGobanHelper;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -77,11 +78,9 @@ public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String
 
                 try { // exponential back off
                     Thread.sleep(attempts * attempts * 1000);
+                } catch (InterruptedException e) {
                 }
-                catch (InterruptedException e) {
-                }
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 Log.i("CloudGoban err " + e);
             }
 

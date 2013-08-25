@@ -6,6 +6,7 @@ import android.os.Build;
 import android.text.TextUtils;
 
 import com.google.android.gcm.GCMRegistrar;
+
 import org.ligi.gobandroid_hd.backend.GobandroidBackend;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.TextView;
+
 import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;

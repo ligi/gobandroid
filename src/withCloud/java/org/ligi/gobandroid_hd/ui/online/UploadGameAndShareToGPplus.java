@@ -2,7 +2,9 @@ package org.ligi.gobandroid_hd.ui.online;
 
 
 import android.net.Uri;
+
 import com.google.android.gms.plus.PlusShare;
+
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
 

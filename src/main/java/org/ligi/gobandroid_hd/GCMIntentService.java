@@ -3,7 +3,9 @@ package org.ligi.gobandroid_hd;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.google.android.gcm.GCMBaseIntentService;
+
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsForNotification;
 import org.ligi.tracedroid.logging.Log;
@@ -33,7 +35,7 @@ public class GCMIntentService extends GCMBaseIntentService {
             return;
 
         App.getTracker().init(context);
-        CloudHooks.onGCMMessage(context,intent);
+        CloudHooks.onGCMMessage(context, intent);
 
         Bundle extras = intent.getExtras();
 

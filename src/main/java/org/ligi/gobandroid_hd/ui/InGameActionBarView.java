@@ -1,10 +1,16 @@
 package org.ligi.gobandroid_hd.ui;
 
 import android.content.Context;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
+
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;

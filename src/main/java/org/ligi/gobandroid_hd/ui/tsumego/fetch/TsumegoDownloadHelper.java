@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui.tsumego.fetch;
 
 import android.content.Context;
+
 import org.apache.http.util.ByteArrayBuffer;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.backend.GobandroidBackend;

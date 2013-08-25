@@ -4,8 +4,14 @@ import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGameMetadata;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
@@ -183,7 +189,7 @@ public class SaveSGFDialog extends GobandroidDialog {
 
     /**
      * @return the filename with path and file extension - returns null when
-     *         there is no filename given
+     * there is no filename given
      */
     private String getCompleteFileName() {
         String fname = fname_et.getText().toString();

@@ -2,10 +2,12 @@ package org.ligi.gobandroid_hd.ui.online;
 
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+
 import com.google.android.gcm.GCMRegistrar;
 import com.google.api.services.cloudgoban.CloudFactory;
 import com.google.api.services.cloudgoban.Cloudgoban;
 import com.google.api.services.cloudgoban.model.User;
+
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;

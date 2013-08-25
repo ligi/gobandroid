@@ -9,6 +9,7 @@ import com.google.api.services.cloudgoban.CloudFactory;
 import com.google.api.services.cloudgoban.model.Game;
 import com.google.api.services.cloudgoban.model.GoGameParticipation;
 import com.google.api.services.cloudgoban.model.Text;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -79,11 +80,9 @@ public class CloudGobanHelper {
                 }
 
                 Thread.sleep(attempt * attempt * 1000); // exponential back off
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 // retries take care of that sort of
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 Log.i("cannot sleep");
                 e.printStackTrace();
             }

@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui.online;
 
 import android.app.ProgressDialog;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 

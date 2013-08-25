@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
 import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
 import org.ligi.tracedroid.logging.Log;
@@ -49,7 +50,7 @@ public class GoLinkLoadActivity extends Activity {
         finish();
         // new AlertDialog.Builder(this).setTitle("golink" + intent_uri).show();
         /*
-		 * 
+         *
 		 * if (intent_uri.getLastPathSegment().endsWith(".golink")) { try {
 		 * fname=contentToStringFileHelper.file2String(new File(fname)); } catch
 		 * (IOException e) { Log.w("problem loading file" + fname.toString()); }
