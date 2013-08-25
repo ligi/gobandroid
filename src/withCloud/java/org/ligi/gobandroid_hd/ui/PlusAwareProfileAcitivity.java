@@ -10,7 +10,6 @@ import com.google.android.gms.plus.PlusClient;
 import com.google.android.gms.plus.model.people.Person;
 
 import org.ligi.gobandroid_hd.CloudHooks;
-import org.ligi.gobandroid_hd.PlayServicesIntegration;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;

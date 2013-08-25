@@ -19,7 +19,12 @@
 
 package org.ligi.gobandroid_hd.ui;
 
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+
 import org.ligi.tracedroid.logging.Log;
 
 import java.io.File;

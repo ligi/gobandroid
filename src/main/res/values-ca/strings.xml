@@ -29,7 +29,9 @@
     <string name="problem_listing_sgf">Problema al llistar els SGFs</string>
     <string name="there_are_no_files_in">No hi ha fitxers a</string>
     <string name="sgf_path_invalid">El camí de SGF no és vàlid</string>
-    <string name="android_market_problem">No es pot accedir a Google Play - heu d\'instal·lar-ho manualment.</string>
+    <string name="android_market_problem">No es pot accedir a Google Play - heu d\'instal·lar-ho
+        manualment.
+    </string>
     <string name="problem">Problema</string>
     <string name="gameplay">Partida</string>
     <string name="game_results">Resultat de la partida</string>
@@ -45,7 +47,8 @@
     <string name="save_sgf">desar SGF</string>
     <string name="invalid_move_ko">KO!</string>
     <string name="invalid_move_no_liberties">no queden llibertats!</string>
-    <string name="hint_stone_move">Has tocat la pedra actual. Això inicia el moure una pedra que s\'indica amb una pedra
+    <string name="hint_stone_move">Has tocat la pedra actual. Això inicia el moure una pedra que
+        s\'indica amb una pedra
         semitransparent.
     </string>
     <string name="mark_last_stone">Senyalar la darrera pedra</string>
@@ -62,7 +65,8 @@
     <string name="variant_mode_summary">Com gestionar les variacions al desfer</string>
     <string name="path">Camí</string>
     <string name="sgf_path">Camí SGF</string>
-    <string name="enter_sgf_path_request">Sis-plau, introdueix el camí per desar els arxius SGF.</string>
+    <string name="enter_sgf_path_request">Sis-plau, introdueix el camí per desar els arxius SGF.
+    </string>
     <string name="set_ai_strength">Assignar nivell d\'intel·ligència artificial</string>
     <string name="ai_strength">nivell d\'intel·ligència artificial</string>
     <string name="ai_preferences">Preferències de la intel·ligència artificial</string>
@@ -81,13 +85,16 @@
     <string name="sgf_filename">Nom de fitxer SGF</string>
     <string name="game_info">Informació de la partida</string>
     <string name="add_to_sgf">Afegir al nom del fitxer:</string>
-    <string name="save_sgf_question">Diga\'m, sis-plau, com s\'hauria d\'anomenar l\'arxiu que escriuré a %s:</string>
+    <string name="save_sgf_question">Diga\'m, sis-plau, com s\'hauria d\'anomenar l\'arxiu que
+        escriuré a %s:
+    </string>
     <string name="share_question">comparteix després de desar?</string>
     <string name="gamename">Nom de la partida</string>
     <string name="date">Data</string>
     <string name="players">Jugadors</string>
     <string name="time">Temps</string>
-    <string name="enter_default_filename_for_sgf_request">Introduïu el nom del fitxer d\'omissió per als arxius de
+    <string name="enter_default_filename_for_sgf_request">Introduïu el nom del fitxer d\'omissió per
+        als arxius de
         SGF.
     </string>
     <string name="review_game">Revisió</string>
@@ -103,17 +110,22 @@
     <string name="switch_game_mode">Canviar mode</string>
     <string name="bookmark">Adreça d\'interès</string>
     <string name="menu_autoplay">Reproducció automàtica</string>
-    <string name="tsumego_off_path">Variació desconeguda - generalment vol dir que el moviment és sub-òptim :-(</string>
+    <string name="tsumego_off_path">Variació desconeguda - generalment vol dir que el moviment és
+        sub-òptim :-(
+    </string>
     <string name="tsumego_correct">Correcte!-)</string>
     <string name="refresh">Sync</string>
-    <string name="tsumego_sgf_no_solution">Estàs mirant obrir aquest SGF com un Tsumego - però no puc trobar una solució
+    <string name="tsumego_sgf_no_solution">Estàs mirant obrir aquest SGF com un Tsumego - però no
+        puc trobar una solució
         marcada - pots continuar de totes maneres però no et podré aplaudir quan l\'encertis :-(
     </string>
     <string name="working">Treballant</string>
     <string name="please_stay_patient">Espera sis-plau</string>
     <string name="creating_thumbnails">Creant miniatures - Espera sis-plau</string>
     <string name="gnugo">GnuGo</string>
-    <string name="gnugo_not_installed">GnuGo no està instal·lat - per continuar sis-plau instal·la\'l!</string>
+    <string name="gnugo_not_installed">GnuGo no està instal·lat - per continuar sis-plau
+        instal·la\'l!
+    </string>
     <string name="preferences">Preferències</string>
     <string name="board_setup">Configuració del tauler</string>
     <string name="for_recording">per a l\'enregistrament</string>
@@ -143,7 +155,8 @@
     <string name="size">Mida</string>
     <string name="enter_your_comments_here">Introdueix els teus comentaris aquí</string>
     <string name="keep_variant_">Mantenir la variació?</string>
-    <string name="keep_this_move_as_variation">Vols mantenir aquest moviment com a variació?</string>
+    <string name="keep_this_move_as_variation">Vols mantenir aquest moviment com a variació?
+    </string>
     <string name="numbered_end">numera el camí</string>
     <string name="icon">icona</string>
     <string name="go_tv">GoTV</string>
@@ -165,12 +178,14 @@
     <string name="white">Blanques</string>
     <string name="black_and_white">Negres &amp; Blanques</string>
     <string name="for_gnugo">per GnuGo</string>
-    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">Problema al carregar SGF
+    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">
+        Problema al carregar SGF
         vol enviar aquesta SGF a ligi per mirar d\'arreglar el problema?
     </string>
     <string name="go_back">tornar enrere</string>
     <string name="download_status">Estat de la descàrrega</string>
-    <string name="downloading_tsumegos_please_wait">Descarregant Tsumegos sis-plau espera...</string>
+    <string name="downloading_tsumegos_please_wait">Descarregant Tsumegos sis-plau espera...
+    </string>
     <string name="no_new_tsumegos_found">No he trobat Tsumegos nous :-(</string>
     <string name="downloaded_n_tsumego">Descarregats %d Tsumegos nous ;-)</string>
     <string name="overwrite_existing_file">Sobreescriu el fitxer existent</string>
@@ -185,16 +200,20 @@
     <string name="accept">accepta</string>
     <string name="new_tsumegos_available">Nous tsumegos disponibles!</string>
     <string name="the_go_game_you_reviewed">La partida que has revisat</string>
-    <string name="this_game_has_2_players_but_you_can_only_watch_it">Aquesta partida ja té 2 jugadors, pots mirar-la si
+    <string name="this_game_has_2_players_but_you_can_only_watch_it">Aquesta partida ja té 2
+        jugadors, pots mirar-la si
         vols
     </string>
-    <string name="a_move_in_one_online_game_you_participate_is_done">S\'ha fet una jugada a una de els teves partides en
+    <string name="a_move_in_one_online_game_you_participate_is_done">S\'ha fet una jugada a una de
+        els teves partides en
         línia
     </string>
     <string name="new_move">Nova jugada</string>
     <string name="in_an_online_game_you_participate">en una de les teves partides en línia</string>
     <string name="choose_invite_method">Tria el mètode d\'invitar</string>
-    <string name="you_are_invited_to_a_go_game">T\'han invitat a una partida (mida: %1$ s, color: %2$ s)</string>
+    <string name="you_are_invited_to_a_go_game">T\'han invitat a una partida (mida: %1$ s, color:
+        %2$ s)
+    </string>
     <string name="go_game_invitation">Invitació a jugar</string>
     <string name="uploading_game">Carregant partida</string>
     <string name="profile">perfil</string>

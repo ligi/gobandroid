@@ -24,6 +24,6 @@ package com.google.api.services.cloudgoban;
  */
 public class CloudgobanScopes {
 
-  private CloudgobanScopes() {
-  }
+    private CloudgobanScopes() {
+    }
 }

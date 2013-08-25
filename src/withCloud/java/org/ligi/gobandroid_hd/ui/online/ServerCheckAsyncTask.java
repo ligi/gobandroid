@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import com.google.api.services.cloudgoban.CloudFactory;
 import com.google.api.services.cloudgoban.Cloudgoban;
 import com.tapfortap.AppWall;
+
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
 import java.io.IOException;

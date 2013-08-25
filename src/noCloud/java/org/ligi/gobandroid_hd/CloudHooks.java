@@ -24,13 +24,13 @@ public class CloudHooks {
 
     }
 
-    public static void onSolvedTsumego(GobandroidFragmentActivity ctx,GoGame game) {
+    public static void onSolvedTsumego(GobandroidFragmentActivity ctx, GoGame game) {
     }
 
-    public static void uploadGameAndShareMoment(GobandroidFragmentActivity ctx,GoGame game,String type) {
+    public static void uploadGameAndShareMoment(GobandroidFragmentActivity ctx, GoGame game, String type) {
     }
 
-    public static void uploadGame(GobandroidFragmentActivity ctx,GoGame game,String type) {
+    public static void uploadGame(GobandroidFragmentActivity ctx, GoGame game, String type) {
     }
 
     public static void profileOrOnlinePlay(GobandroidFragmentActivity ctx) {

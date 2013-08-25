@@ -1,4 +1,5 @@
 package org.ligi.gobandroid_hd.ui.application.navigation;
+
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -9,16 +10,20 @@ import android.net.Uri;
 import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
 import org.ligi.gobandroid_hd.ui.GoPrefsActivity;
 import org.ligi.gobandroid_hd.ui.HelpDialog;
-import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
 import org.ligi.gobandroid_hd.ui.UnzipSGFsDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
@@ -251,7 +256,8 @@ public class NavigationDrawer implements OnItemClickListener {
     public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
         if (handleId((Integer) arg1.getTag())) {
             ctx.closeDrawers();
-        };
+        }
+        ;
     }
 
     /**

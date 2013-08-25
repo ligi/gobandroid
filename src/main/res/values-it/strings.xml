@@ -29,7 +29,8 @@
     <string name="problem_listing_sgf">Problema nella lettura file SGF</string>
     <string name="there_are_no_files_in">Non c\'e\' alcun file in</string>
     <string name="sgf_path_invalid">Percorso SGF invalido</string>
-    <string name="android_market_problem">Non e\' possibile accedere ad Android Market - procedere all\'installazione
+    <string name="android_market_problem">Non e\' possibile accedere ad Android Market - procedere
+        all\'installazione
         manuale.
     </string>
     <string name="problem">Problema</string>
@@ -47,7 +48,8 @@
     <string name="save_sgf">salva SGF</string>
     <string name="invalid_move_ko">KO!</string>
     <string name="invalid_move_no_liberties">nessuna libertà!</string>
-    <string name="hint_stone_move">Hai segnato questa pietra. Ricomincia la partita dalla pietra semitrasparente.
+    <string name="hint_stone_move">Hai segnato questa pietra. Ricomincia la partita dalla pietra
+        semitrasparente.
     </string>
     <string name="mark_last_stone">segna l\'ultima pietra</string>
     <string name="mark_last_stone_summary">il cerchio mostra l\'ultima pietra</string>
@@ -58,12 +60,14 @@
     <string name="grid_emboss_summary">evidenzia la griglia o tutto nero</string>
     <string name="grid_emboss">Evidenzia la griglia</string>
     <string name="show_legend">Mostra legenda</string>
-    <string name="show_legend_summary">mostra la legenda per vedere velocemente la posizione</string>
+    <string name="show_legend_summary">mostra la legenda per vedere velocemente la posizione
+    </string>
     <string name="variant_mode">Gestione delle variazioni</string>
     <string name="variant_mode_summary">come gestire le variazioni quando si annulla</string>
     <string name="path">Percorso</string>
     <string name="sgf_path">Percorso SGF</string>
-    <string name="enter_sgf_path_request">Inserire il percorso per il salvataggio dei file SGF.</string>
+    <string name="enter_sgf_path_request">Inserire il percorso per il salvataggio dei file SGF.
+    </string>
     <string name="set_ai_strength">Seleziona livello A.I.</string>
     <string name="ai_strength">Livello A.I.</string>
     <string name="ai_preferences">Opzioni A.I.</string>
@@ -82,13 +86,15 @@
     <string name="sgf_filename">Nome file SGF</string>
     <string name="game_info">Informazioni sul programma</string>
     <string name="add_to_sgf">Aggiungi al file:</string>
-    <string name="save_sgf_question">Per favore indicare il nome del file che inviero\' a %s :</string>
+    <string name="save_sgf_question">Per favore indicare il nome del file che inviero\' a %s :
+    </string>
     <string name="share_question">condividi dopo aver salvato?</string>
     <string name="gamename">Nome della partita</string>
     <string name="date">Data</string>
     <string name="players">Giocatori</string>
     <string name="time">Tempo</string>
-    <string name="enter_default_filename_for_sgf_request">Indicare il nome per il il file SGF.</string>
+    <string name="enter_default_filename_for_sgf_request">Indicare il nome per il il file SGF.
+    </string>
     <string name="review_game">Studia</string>
     <string name="record_game">Registra</string>
     <string name="dashboard_problems">Tsumego</string>
@@ -102,13 +108,16 @@
     <string name="switch_game_mode">Cambia modalita\'</string>
     <string name="bookmark">Segnalibro</string>
     <string name="menu_autoplay">Gioco automatico</string>
-    <string name="tsumego_off_path">Variante sconosciuta - solitamente questo significa che la mossa non e\' ottimale
+    <string name="tsumego_off_path">Variante sconosciuta - solitamente questo significa che la mossa
+        non e\' ottimale
         :-(
     </string>
     <string name="tsumego_correct">Giusto !-)</string>
     <string name="refresh">sincronizza</string>
-    <string name="tsumego_sgf_no_solution">Stai tentando di aprire un file SGF come Tsumego - ma non e\' possibile
-        trovare una soluzione - puoi provare ma il programma non potra\' segnalare le mosse corrette :-(
+    <string name="tsumego_sgf_no_solution">Stai tentando di aprire un file SGF come Tsumego - ma non
+        e\' possibile
+        trovare una soluzione - puoi provare ma il programma non potra\' segnalare le mosse corrette
+        :-(
     </string>
     <string name="working">Sto pensando</string>
     <string name="please_stay_patient">Per favore attendi con pazienza</string>
@@ -166,7 +175,8 @@
     <string name="white">bianco</string>
     <string name="black_and_white">Bianco &amp; Nero</string>
     <string name="for_gnugo">per GnuGo</string>
-    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">Problemi nel caricamento
+    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">
+        Problemi nel caricamento
         di sgf vuoi inviare a Ligi questo sgf per risolvere il problema?
     </string>
     <string name="go_back">torna indietro</string>
@@ -186,14 +196,18 @@
     <string name="accept">accetta</string>
     <string name="new_tsumegos_available">Nuovi Tsumego disponibili!</string>
     <string name="the_go_game_you_reviewed">Partite analizzate</string>
-    <string name="this_game_has_2_players_but_you_can_only_watch_it">Questa partita ha 2 giocatori - ma puoi solo
+    <string name="this_game_has_2_players_but_you_can_only_watch_it">Questa partita ha 2 giocatori -
+        ma puoi solo
         assistere
     </string>
-    <string name="a_move_in_one_online_game_you_participate_is_done">Mossa in una partita online effettuata</string>
+    <string name="a_move_in_one_online_game_you_participate_is_done">Mossa in una partita online
+        effettuata
+    </string>
     <string name="new_move">nuova mossa</string>
     <string name="in_an_online_game_you_participate">in una partita online a cui partecipi</string>
     <string name="choose_invite_method">scegli metodo di invito</string>
-    <string name="you_are_invited_to_a_go_game">Sei stato invitato ad una partita ( dimesione: %1$s , colore: %2$s )
+    <string name="you_are_invited_to_a_go_game">Sei stato invitato ad una partita ( dimesione: %1$s
+        , colore: %2$s )
     </string>
     <string name="go_game_invitation">Invito ad una partita</string>
     <string name="uploading_game">caricamento partita</string>

@@ -22,9 +22,14 @@ package org.ligi.gobandroid_hd.ui;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
+import android.graphics.RectF;
 import android.view.View;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;

@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
 

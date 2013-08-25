@@ -29,7 +29,8 @@
     <string name="problem_listing_sgf">Ошибка обработки SGF файла</string>
     <string name="there_are_no_files_in">Нет файлов в</string>
     <string name="sgf_path_invalid">Неверный путь к SGF</string>
-    <string name="android_market_problem">Не могу подключиться к маркету - установите вручную.</string>
+    <string name="android_market_problem">Не могу подключиться к маркету - установите вручную.
+    </string>
     <string name="problem">Задача</string>
     <string name="gameplay">Игровой процесс</string>
     <string name="game_results">Итог игры</string>
@@ -45,7 +46,8 @@
     <string name="save_sgf">сохранить SGF</string>
     <string name="invalid_move_ko">КО!</string>
     <string name="invalid_move_no_liberties">нет пунктов дыхания!</string>
-    <string name="hint_stone_move">Вы прикоснулись к текущему камню. Теперь вы будете перемещать полупрозрачный
+    <string name="hint_stone_move">Вы прикоснулись к текущему камню. Теперь вы будете перемещать
+        полупрозрачный
         камень.
     </string>
     <string name="mark_last_stone">отметить последний камень</string>
@@ -57,7 +59,8 @@
     <string name="grid_emboss_summary">рельефная или черная сетка</string>
     <string name="grid_emboss">Рельеф сетки</string>
     <string name="show_legend">Показывать запись партии</string>
-    <string name="show_legend_summary">показывать запись игры для быстрого просмотра позиции</string>
+    <string name="show_legend_summary">показывать запись игры для быстрого просмотра позиции
+    </string>
     <string name="variant_mode">Обработка вариантов</string>
     <string name="variant_mode_summary">как обрабатывать варианты при отмене</string>
     <string name="path">Путь</string>
@@ -81,13 +84,16 @@
     <string name="sgf_filename">Имя файла SGF</string>
     <string name="game_info">Информация об игре</string>
     <string name="add_to_sgf">Добавить в Файл:</string>
-    <string name="save_sgf_question">Пожалуйста сообщите как мне назвать записываемый в %s файл:</string>
+    <string name="save_sgf_question">Пожалуйста сообщите как мне назвать записываемый в %s файл:
+    </string>
     <string name="share_question">сделать доступной после сохранения?</string>
     <string name="gamename">Название игры</string>
     <string name="date">Дата</string>
     <string name="players">Игроки</string>
     <string name="time">Время</string>
-    <string name="enter_default_filename_for_sgf_request">Пожалуйста введите для SGF имя файла по умолчанию.</string>
+    <string name="enter_default_filename_for_sgf_request">Пожалуйста введите для SGF имя файла по
+        умолчанию.
+    </string>
     <string name="review_game">Просмотр</string>
     <string name="record_game">Запись</string>
     <string name="dashboard_problems">Тсумего</string>
@@ -101,17 +107,22 @@
     <string name="switch_game_mode">Переключить режим</string>
     <string name="bookmark">Закладка</string>
     <string name="menu_autoplay">Автовоспроизведение</string>
-    <string name="tsumego_off_path">Неизвестный вариант - обычно это обозначает, что ваш ход не оптимален :-(</string>
+    <string name="tsumego_off_path">Неизвестный вариант - обычно это обозначает, что ваш ход не
+        оптимален :-(
+    </string>
     <string name="tsumego_correct">Верно !-)</string>
     <string name="refresh">синхронизация</string>
-    <string name="tsumego_sgf_no_solution">Вы пытаетесь открыть SGF как тсумего, но я не могу найти отмеченного решения,
+    <string name="tsumego_sgf_no_solution">Вы пытаетесь открыть SGF как тсумего, но я не могу найти
+        отмеченного решения,
         вы все равно можете попытаться, но я не смогу похвалить вас в случае правильного решения :-(
     </string>
     <string name="working">В процессе</string>
     <string name="please_stay_patient">Пожалуйста подождите</string>
     <string name="creating_thumbnails">Создаю эскизы - Пожалуйста подождите</string>
     <string name="gnugo">GnuGo</string>
-    <string name="gnugo_not_installed">GnuGo не установлен - пожалуйста, установите для продолжения!</string>
+    <string name="gnugo_not_installed">GnuGo не установлен - пожалуйста, установите для
+        продолжения!
+    </string>
     <string name="preferences">Настройки</string>
     <string name="board_setup">Настройки доски</string>
     <string name="for_recording">для записи</string>
@@ -163,12 +174,14 @@
     <string name="white">белыми</string>
     <string name="black_and_white">черными и белыми</string>
     <string name="for_gnugo">для GnuGo</string>
-    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">Ошибка при загрузке SGF.
+    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">
+        Ошибка при загрузке SGF.
         Хотите отправить этот sgf файл ligi для исправления ошибки?
     </string>
     <string name="go_back">назад</string>
     <string name="download_status">Состояние загрузки</string>
-    <string name="downloading_tsumegos_please_wait">Загружаю тсумего. Пожалуйста подождите...</string>
+    <string name="downloading_tsumegos_please_wait">Загружаю тсумего. Пожалуйста подождите...
+    </string>
     <string name="no_new_tsumegos_found">Новых тсумего не найдено :-(</string>
     <string name="downloaded_n_tsumego">Загружено %d новых тсумего ;-)</string>
     <string name="overwrite_existing_file">Перезаписать существующий файл</string>
@@ -183,16 +196,20 @@
     <string name="accept">принять</string>
     <string name="new_tsumegos_available">Доступны новые Тсумего!</string>
     <string name="the_go_game_you_reviewed">Игра которую вы просмотрели</string>
-    <string name="this_game_has_2_players_but_you_can_only_watch_it">В игре уже участвуют два игрока, вы можете только
+    <string name="this_game_has_2_players_but_you_can_only_watch_it">В игре уже участвуют два
+        игрока, вы можете только
         наблюдать
     </string>
-    <string name="a_move_in_one_online_game_you_participate_is_done">Ход в онлайн игре, в которой вы участвуете,
+    <string name="a_move_in_one_online_game_you_participate_is_done">Ход в онлайн игре, в которой вы
+        участвуете,
         завершен
     </string>
     <string name="new_move">новый ход</string>
     <string name="in_an_online_game_you_participate">в онлайн игре в которой вы участвуете</string>
     <string name="choose_invite_method">выберите способ отправления приглашения</string>
-    <string name="you_are_invited_to_a_go_game">Вы приглашены в игру ГО ( размер доски: %1$s , цвет: %2$s )</string>
+    <string name="you_are_invited_to_a_go_game">Вы приглашены в игру ГО ( размер доски: %1$s , цвет:
+        %2$s )
+    </string>
     <string name="go_game_invitation">Приглашение в игру ГО</string>
     <string name="uploading_game">выгружаю игру</string>
     <string name="profile">профиль</string>

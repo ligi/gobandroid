@@ -14,7 +14,7 @@ public class CloudGobanFactory {
 
     public static Cloudgoban getInstance() {
 
-        if (sCloudgoban==null) {
+        if (sCloudgoban == null) {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = new GsonFactory();
 

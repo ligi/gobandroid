@@ -122,7 +122,7 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
 		 *
 		 */
 
-        playServicesIntegration=new PlayServicesIntegration(this);
+        playServicesIntegration = new PlayServicesIntegration(this);
 
     }
 
@@ -201,35 +201,35 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
     }
 
 
-/*
-    private void workingPostToGPlus() {
-        // Create an interactive post with the "VIEW_ITEM" label. This will
-        // create an enhanced share dialog when the post is shared on Google+.
-        // When the user clicks on the deep link, ParseDeepLinkActivity will
-        // immediately parse the deep link, and route to the appropriate resource.
-        Uri callToActionUrl = Uri.parse("https://cloud-goban.appspot.com/game/ag1zfmNsb3VkLWdvYmFucgwLEgRHYW1lGPK_JAw");
-        String callToActionDeepLinkId = "/foo/bar";
+    /*
+        private void workingPostToGPlus() {
+            // Create an interactive post with the "VIEW_ITEM" label. This will
+            // create an enhanced share dialog when the post is shared on Google+.
+            // When the user clicks on the deep link, ParseDeepLinkActivity will
+            // immediately parse the deep link, and route to the appropriate resource.
+            Uri callToActionUrl = Uri.parse("https://cloud-goban.appspot.com/game/ag1zfmNsb3VkLWdvYmFucgwLEgRHYW1lGPK_JAw");
+            String callToActionDeepLinkId = "/foo/bar";
 
 
-        // Create an interactive post builder.
-        PlusShare.Builder builder = new PlusShare.Builder(this, mPlusClient);
+            // Create an interactive post builder.
+            PlusShare.Builder builder = new PlusShare.Builder(this, mPlusClient);
 
-        // Set call-to-action metadata.
-        builder.addCallToAction("CREATE_ITEM", callToActionUrl, callToActionDeepLinkId);
+            // Set call-to-action metadata.
+            builder.addCallToAction("CREATE_ITEM", callToActionUrl, callToActionDeepLinkId);
 
-        // Set the target url (for desktop use).
-        builder.setContentUrl(Uri.parse("https://cloud-goban.appspot.com/game/ag1zfmNsb3VkLWdvYmFucgwLEgRHYW1lGPK_JAw"));
+            // Set the target url (for desktop use).
+            builder.setContentUrl(Uri.parse("https://cloud-goban.appspot.com/game/ag1zfmNsb3VkLWdvYmFucgwLEgRHYW1lGPK_JAw"));
 
-        // Set the target deep-link ID (for mobile use).
-        builder.setContentDeepLinkId("/pages/",
-                null, null, null);
+            // Set the target deep-link ID (for mobile use).
+            builder.setContentDeepLinkId("/pages/",
+                    null, null, null);
 
-        // Set the pre-filled message.
-        builder.setText("foo bar");
+            // Set the pre-filled message.
+            builder.setText("foo bar");
 
-        startActivityForResult(builder.getIntent(), 0);
-    }
-*/
+            startActivityForResult(builder.getIntent(), 0);
+        }
+    */
     //@Override
     public void onConnected(Bundle bundle) {
 
@@ -305,7 +305,7 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int responseCode, Intent intent) {
-        playServicesIntegration.onActivityResult(requestCode,responseCode,intent);
+        playServicesIntegration.onActivityResult(requestCode, responseCode, intent);
     }
 
     protected AQuery getAQ() {

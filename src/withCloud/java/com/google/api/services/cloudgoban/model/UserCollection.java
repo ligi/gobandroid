@@ -19,12 +19,12 @@ import com.google.api.client.json.GenericJson;
 
 /**
  * Model definition for UserCollection.
- *
+ * <p/>
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the . For a detailed explanation see:
  * <a href="http://code.google.com/p/google-api-java-client/wiki/Json">http://code.google.com/p/google-api-java-client/wiki/Json</a>
  * </p>
- *
+ * <p/>
  * <p>
  * Upgrade warning: starting with version 1.12 {@code getResponseHeaders()} is removed, instead use
  * {@link com.google.api.client.http.json.JsonHttpRequest#getLastResponseHeaders()}
@@ -35,33 +35,31 @@ import com.google.api.client.json.GenericJson;
 @SuppressWarnings("javadoc")
 public final class UserCollection extends GenericJson {
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.util.List<User> items;
+    /**
+     * The value may be {@code null}.
+     */
+    @com.google.api.client.util.Key
+    private java.util.List<User> items;
 
-  static {
-    // hack to force ProGuard to consider User used, since otherwise it would be stripped out
-    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
-    com.google.api.client.util.Data.nullOf(User.class);
-  }
+    static {
+        // hack to force ProGuard to consider User used, since otherwise it would be stripped out
+        // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
+        com.google.api.client.util.Data.nullOf(User.class);
+    }
 
-  /**
+    /**
+     * The value returned may be {@code null}.
+     */
+    public java.util.List<User> getItems() {
+        return items;
+    }
 
-   * The value returned may be {@code null}.
-   */
-  public java.util.List<User> getItems() {
-    return items;
-  }
-
-  /**
-
-   * The value set may be {@code null}.
-   */
-  public UserCollection setItems(java.util.List<User> items) {
-    this.items = items;
-    return this;
-  }
+    /**
+     * The value set may be {@code null}.
+     */
+    public UserCollection setItems(java.util.List<User> items) {
+        this.items = items;
+        return this;
+    }
 
 }

@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.Window;
+
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;

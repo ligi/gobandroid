@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+
 import com.actionbarsherlock.view.Menu;
 
 import org.ligi.gobandroid_hd.CloudHooks;
@@ -178,7 +179,7 @@ public class GameReviewActivity extends GoActivity {
 
             if (lastMomentFname == null || !lastMomentFname.equals(getGame().getMetaData().getFileName())) {
                 // TODO make sure it is not just the end of a variation
-                CloudHooks.uploadGameAndShareMoment(this,getGame(),"reviewed_game");
+                CloudHooks.uploadGameAndShareMoment(this, getGame(), "reviewed_game");
                 lastMomentFname = getGame().getMetaData().getFileName();
             }
 

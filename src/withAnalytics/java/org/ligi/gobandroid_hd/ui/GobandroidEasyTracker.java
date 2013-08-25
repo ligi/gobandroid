@@ -16,12 +16,12 @@ public class GobandroidEasyTracker implements GobandroidTracker {
 
     @Override
     public void trackException(String s, Exception e, boolean b) {
-        EasyTracker.getTracker().trackException(s,e,b);
+        EasyTracker.getTracker().trackException(s, e, b);
     }
 
     @Override
     public void trackException(String s, boolean b) {
-        EasyTracker.getTracker().trackException(s,b);
+        EasyTracker.getTracker().trackException(s, b);
     }
 
     @Override

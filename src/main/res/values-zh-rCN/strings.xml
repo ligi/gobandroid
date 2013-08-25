@@ -98,7 +98,9 @@
     <string name="tsumego_off_path">可能答错了！未知的分支变化 - 通常意谓着您的落子并非一般会进行的着手！</string>
     <string name="tsumego_correct">正解图！您答对了！</string>
     <string name="refresh">刷新</string>
-    <string name="tsumego_sgf_no_solution">您正试着以诘碁模式打开SGF档案，档案中未发现正解答案的标示，您仍然可以试着答题，只是在您解答正确时，无法为您喝采！</string>
+    <string name="tsumego_sgf_no_solution">
+        您正试着以诘碁模式打开SGF档案，档案中未发现正解答案的标示，您仍然可以试着答题，只是在您解答正确时，无法为您喝采！
+    </string>
     <string name="working">正在处理中</string>
     <string name="please_stay_patient">请您耐心等待...</string>
     <string name="creating_thumbnails">预覧图创建中... - 请您耐心等待！</string>

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+
 import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnCancelListener;
 import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnClickListener;
@@ -180,7 +181,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             String[] undone_arr = (String[]) undone.toArray(new String[undone.size()]), done_arr = (String[]) done.toArray(new String[done.size()]);
             Arrays.sort(undone_arr);
             Arrays.sort(done_arr);
-            menu_items = AndroidHelper.at(undone_arr).combineWith( done_arr);
+            menu_items = AndroidHelper.at(undone_arr).combineWith(done_arr);
         } else {
             menu_items = (String[]) fnames.toArray(new String[fnames.size()]);
             Arrays.sort(menu_items);

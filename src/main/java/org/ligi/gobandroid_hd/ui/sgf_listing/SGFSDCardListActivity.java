@@ -21,8 +21,10 @@ package org.ligi.gobandroid_hd.ui.sgf_listing;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;

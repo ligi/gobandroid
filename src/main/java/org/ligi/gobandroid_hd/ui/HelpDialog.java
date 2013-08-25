@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
+
 import org.ligi.gobandroid_hd.R;
 
 /**

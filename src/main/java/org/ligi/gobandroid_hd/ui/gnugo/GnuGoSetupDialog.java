@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 

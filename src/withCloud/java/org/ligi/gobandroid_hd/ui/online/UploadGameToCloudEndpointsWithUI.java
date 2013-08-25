@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui.online;
 
 import android.app.AlertDialog;
+
 import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;

@@ -29,7 +29,9 @@
     <string name="problem_listing_sgf">Erreur : ne peut lister les SGF</string>
     <string name="there_are_no_files_in">Aucun fichier trouvé dans</string>
     <string name="sgf_path_invalid">Le chemin d’accès au SGF est invalide</string>
-    <string name="android_market_problem">Impossible d\'accéder à l\'Android Market. Essayez manuellement.</string>
+    <string name="android_market_problem">Impossible d\'accéder à l\'Android Market. Essayez
+        manuellement.
+    </string>
     <string name="problem">Problème</string>
     <string name="gameplay">Mode</string>
     <string name="game_results">Score</string>
@@ -45,7 +47,8 @@
     <string name="save_sgf">Sauvegarde du SGF</string>
     <string name="invalid_move_ko">KO !</string>
     <string name="invalid_move_no_liberties">Coup suicide</string>
-    <string name="hint_stone_move">En sélectionnant cette pierre vous avez la possibilité de la déplacer, comme indiqué
+    <string name="hint_stone_move">En sélectionnant cette pierre vous avez la possibilité de la
+        déplacer, comme indiqué
         par la pierre translucide.
     </string>
     <string name="mark_last_stone">Marquer le dernier coup</string>
@@ -59,7 +62,8 @@
     <string name="show_legend">Coordonnées</string>
     <string name="show_legend_summary">Afficher les coordonnées du goban</string>
     <string name="variant_mode">Gestion des variations</string>
-    <string name="variant_mode_summary">Comment gérer les variations à l’annulation d’un coup</string>
+    <string name="variant_mode_summary">Comment gérer les variations à l’annulation d’un coup
+    </string>
     <string name="path">Chemin</string>
     <string name="sgf_path">Chemin vers les SGF</string>
     <string name="enter_sgf_path_request">Indiquer le chemin pour sauvegarder les SGF.</string>
@@ -87,7 +91,9 @@
     <string name="date">Date</string>
     <string name="players">Joueurs</string>
     <string name="time">Temps</string>
-    <string name="enter_default_filename_for_sgf_request">Indiquez le nom de fichier SGF par défaut.</string>
+    <string name="enter_default_filename_for_sgf_request">Indiquez le nom de fichier SGF par
+        défaut.
+    </string>
     <string name="review_game">Analyse de partie</string>
     <string name="record_game">Partie notée</string>
     <string name="dashboard_problems">Exercices de vie et mort</string>
@@ -104,7 +110,8 @@
     <string name="tsumego_off_path">Coup inconnu. Essaie une nouvelle piste.</string>
     <string name="tsumego_correct">Résolu !</string>
     <string name="refresh">Actualiser</string>
-    <string name="tsumego_sgf_no_solution">Le fichier SGF sélectionné ne contient pas de solution. L’ouvrir tout de
+    <string name="tsumego_sgf_no_solution">Le fichier SGF sélectionné ne contient pas de solution.
+        L’ouvrir tout de
         même ?
     </string>
     <string name="working">Traitement en cours</string>
@@ -163,12 +170,14 @@
     <string name="white">blanc</string>
     <string name="black_and_white">Noir &amp; Blanc</string>
     <string name="for_gnugo">pour GnuGo</string>
-    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">Erreur de lecture du SGF.
+    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">
+        Erreur de lecture du SGF.
         Demander une correction du fichier ?
     </string>
     <string name="go_back">revenir en arrière</string>
     <string name="download_status">Téléchargement...</string>
-    <string name="downloading_tsumegos_please_wait">Téléchargement de nouveaux problèmes de vie et mort en cours...
+    <string name="downloading_tsumegos_please_wait">Téléchargement de nouveaux problèmes de vie et
+        mort en cours...
     </string>
     <string name="no_new_tsumegos_found">Pas de nouveau tsumego disponible</string>
     <string name="downloaded_n_tsumego">%d tsumego téléchargés !</string>
@@ -184,12 +193,16 @@
     <string name="accept">Accepter</string>
     <string name="new_tsumegos_available">Nouveaux tsumego disponibles !</string>
     <string name="the_go_game_you_reviewed">La partie précédemment analysée</string>
-    <string name="this_game_has_2_players_but_you_can_only_watch_it">Mode spectateur disponible</string>
-    <string name="a_move_in_one_online_game_you_participate_is_done">Un coup a été joué dans une de vos parties</string>
+    <string name="this_game_has_2_players_but_you_can_only_watch_it">Mode spectateur disponible
+    </string>
+    <string name="a_move_in_one_online_game_you_participate_is_done">Un coup a été joué dans une de
+        vos parties
+    </string>
     <string name="new_move">nouveau coup</string>
     <string name="in_an_online_game_you_participate">dans une de vos parties</string>
     <string name="choose_invite_method">Mode d\'invitation</string>
-    <string name="you_are_invited_to_a_go_game">On vous défie ! (taille : %1$s, couleur : %2$s)</string>
+    <string name="you_are_invited_to_a_go_game">On vous défie ! (taille : %1$s, couleur : %2$s)
+    </string>
     <string name="go_game_invitation">Invitation à une partie</string>
     <string name="uploading_game">envoi en cours</string>
     <string name="profile">profil</string>

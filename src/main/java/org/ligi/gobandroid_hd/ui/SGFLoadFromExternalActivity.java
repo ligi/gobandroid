@@ -21,6 +21,7 @@ package org.ligi.gobandroid_hd.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 

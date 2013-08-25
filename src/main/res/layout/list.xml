@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              style="@style/default_activity_main"  >
+              style="@style/default_activity_main">
+
     <LinearLayout
             android:id="@+id/list_fragment"
             android:layout_width="fill_parent"

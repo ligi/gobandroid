@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+
 import com.actionbarsherlock.view.Menu;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;

@@ -26,7 +26,9 @@
     <string name="move">Ruch</string>
     <string name="there_are_no_files_in">Nie ma plików w</string>
     <string name="sgf_path_invalid">Ścieżka SGF jest nieprawidłowa</string>
-    <string name="android_market_problem">Nie ma dostępu do Google Play - trzeba instalować ręcznie.</string>
+    <string name="android_market_problem">Nie ma dostępu do Google Play - trzeba instalować
+        ręcznie.
+    </string>
     <string name="problem">Problem</string>
     <string name="game_pass">Pas</string>
 </resources>

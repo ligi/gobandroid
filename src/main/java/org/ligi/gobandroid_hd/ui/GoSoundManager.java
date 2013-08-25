@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;

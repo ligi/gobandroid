@@ -2,6 +2,7 @@ package org.ligi.gobandroid_hd.ui.tsumego;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;

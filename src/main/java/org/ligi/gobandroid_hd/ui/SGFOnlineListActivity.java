@@ -21,6 +21,7 @@ package org.ligi.gobandroid_hd.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+
 import org.ligi.gobandroid_hd.R;
 
 /**
@@ -35,7 +36,7 @@ public class SGFOnlineListActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.list);        /*
-		 * // Create the list fragment and add it as our sole content. if
+         * // Create the list fragment and add it as our sole content. if
 		 * (getSupportFragmentManager().findFragmentById(android.R.id.list) ==
 		 * null) { SGFOnlineListFragment list = new SGFOnlineListFragment();
 		 * getSupportFragmentManager().beginTransaction().add(android.R.id.list,

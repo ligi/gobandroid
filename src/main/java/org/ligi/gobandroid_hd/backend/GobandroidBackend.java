@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.Settings.Secure;
+
 import com.google.android.gcm.GCMRegistrar;
+
 import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;

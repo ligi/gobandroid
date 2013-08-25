@@ -3,7 +3,7 @@ package org.ligi.gobandroid_hd.ui.review;
 import java.util.HashMap;
 
 public class SGFMetaResolver {    /*
-	 * "http://gogameguru.com/go-commentary-jiang-weijie-lee-changho-16th-lg-cup/"
+     * "http://gogameguru.com/go-commentary-jiang-weijie-lee-changho-16th-lg-cup/"
 	 * http://gogameguru.com/i/2012/03/Jiang-Weijie-vs-Lee-Changho-20120213.sgf
 	 * 
 	 * http://gogameguru.com/go-commentary-kim-jiseok-xie-he-13th-nongshim-cup/

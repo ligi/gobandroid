@@ -20,6 +20,7 @@
 package org.ligi.gobandroid_hd.logic;
 
 import android.graphics.Point;
+
 import org.ligi.tracedroid.logging.Log;
 
 import java.util.Stack;
@@ -236,7 +237,7 @@ public class GoGame {
      * @param x
      * @param y
      * @return MOVE_VALID MOVE_INVALID_NOT_ON_BOARD MOVE_INVALID_CELL_NOT_FREE
-     *         MOVE_INVALID_CELL_NO_LIBERTIES MOVE_INVALID_IS_KO
+     * MOVE_INVALID_CELL_NO_LIBERTIES MOVE_INVALID_IS_KO
      */
     public byte do_move(byte x, byte y) {
         Log.i("do_move x:" + x + " y:" + y);
@@ -493,7 +494,7 @@ public class GoGame {
      * @return boolean weather the group has liberty
      */
     public boolean hasGroupLiberties(int x, int y) {        /*
-		 * do a depth search first from point if (calc_board.isCellFree(x,y))
+         * do a depth search first from point if (calc_board.isCellFree(x,y))
 		 * return true;
 		 */
 

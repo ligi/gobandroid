@@ -11,9 +11,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.actionbarsherlock.app.ActionBar;
+
 import com.google.api.services.cloudgoban.model.Game;
 import com.google.api.services.cloudgoban.model.GameCollection;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -65,7 +66,7 @@ public class ViewOnlineGameListFragment extends ListFragment {
 
         @Override
         public int getCount() {
-            if (list==null || list.getItems()==null)
+            if (list == null || list.getItems() == null)
                 return 0;
 
             return list.getItems().size();
@@ -101,7 +102,7 @@ public class ViewOnlineGameListFragment extends ListFragment {
 
             GoGameMetadata game_meta = game.getMetaData();
 
-            if (game_meta.getName()!=null && !game_meta.getName().equals("")) {
+            if (game_meta.getName() != null && !game_meta.getName().equals("")) {
                 game_name_tv.setText(game_meta.getName());
             } else {
                 game_name_tv.setVisibility(View.GONE);

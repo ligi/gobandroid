@@ -3,5 +3,6 @@
               android:orientation="vertical"
               style="@style/default_activity_main"
         >
+
     <include layout="@layout/game_setup_inner"/>
 </LinearLayout>

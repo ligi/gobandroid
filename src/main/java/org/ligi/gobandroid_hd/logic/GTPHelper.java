@@ -34,7 +34,7 @@ public class GTPHelper {
      * @param gtp_str - the GTP string to process
      * @param game    - the game on which we execute the commands
      * @return - true if we understood the command / false if there was a
-     *         problem
+     * problem
      */
     public static boolean doMoveByGTPString(String gtp_str, GoGame game) {
 

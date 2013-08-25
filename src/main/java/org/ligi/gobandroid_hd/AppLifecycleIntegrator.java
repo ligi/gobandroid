@@ -7,5 +7,6 @@ import android.app.Activity;
  */
 public interface AppLifecycleIntegrator {
     public void onStart(Activity activity);
+
     public void onStop(Activity activity);
 }

@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+
 import org.ligi.gobandroid_hd.R;
 
 public class GobandroidListFragment extends ListFragment {

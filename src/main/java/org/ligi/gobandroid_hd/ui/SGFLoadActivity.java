@@ -27,7 +27,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.*;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
@@ -39,7 +44,12 @@ import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 import org.ligi.tracedroid.logging.Log;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -228,8 +238,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
             }
 
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Log.w("exception in load", e);
             game = null;
         }
@@ -321,7 +330,8 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
             });
 
             CloudGobanHelper.registerGame(this, cloudgoban_parent_key, game.isBlackToMove() ? "w" : "b", true, handler, true);
-        } else */ {
+        } else */
+        {
 
             handler.post(new Runnable() {
                 @Override

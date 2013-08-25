@@ -2,6 +2,7 @@ package org.ligi.gobandroid_hd.ui.ingame_common;
 
 import android.content.Context;
 import android.content.Intent;
+
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.editing.EditGameActivity;

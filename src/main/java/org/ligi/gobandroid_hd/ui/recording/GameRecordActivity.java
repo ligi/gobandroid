@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui.recording;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.WindowManager;
+
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
@@ -61,7 +62,7 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
 		 */
 
             case R.id.menu_game_accept:
-                CloudHooks.uploadGame(this, getGame(),null);
+                CloudHooks.uploadGame(this, getGame(), null);
                 acceptCloudMove();
                 onGoGameChange();
                 return true;
@@ -113,8 +114,7 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
             /*
             menu.findItem(R.id.menu_game_invite).setVisible(getSettings().isBetaWanted() && !GCMRegistrar.getRegistrationId(this).equals(""));
             */
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
         } // we do not care when they do not exist
 
         return true;

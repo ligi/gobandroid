@@ -20,6 +20,7 @@ package org.ligi.gobandroid_hd.ui.alerts;
 
 import android.content.Context;
 import android.widget.TextView;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
@@ -65,7 +66,7 @@ public class GameResultsAlert extends GobandroidDialog {
         ((TextView) findViewById(R.id.final_black)).setText("" + game.getPointsBlack());
         ((TextView) findViewById(R.id.final_white)).setText("" + game.getPointsWhite());
     }    /*
-	 * public static void show(Context context,GoGame game) { ScrollView
+     * public static void show(Context context,GoGame game) { ScrollView
 	 * scrollview=new ScrollView(context); LinearLayout lin=new
 	 * LinearLayout(context);
 	 * 

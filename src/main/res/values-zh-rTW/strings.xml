@@ -104,7 +104,9 @@
     <string name="tsumego_off_path">可能答錯了！未知的分支變化 - 通常意謂著您的落子並非一般會進行的著手！</string>
     <string name="tsumego_correct">正解圖！您答對了！</string>
     <string name="refresh">刷新</string>
-    <string name="tsumego_sgf_no_solution">您正試著以詰碁模式打開SGF檔案，檔案中未發現正解答案的標示，您仍然可以試著答題，只是在您解答正確時，無法為您喝采！</string>
+    <string name="tsumego_sgf_no_solution">
+        您正試著以詰碁模式打開SGF檔案，檔案中未發現正解答案的標示，您仍然可以試著答題，只是在您解答正確時，無法為您喝采！
+    </string>
     <string name="working">正在處理中</string>
     <string name="please_stay_patient">請您耐心等待...</string>
     <string name="creating_thumbnails">預覧圖創建中... - 請您耐心等待！</string>
@@ -161,7 +163,8 @@
     <string name="white">白</string>
     <string name="black_and_white">黑方與白方</string>
     <string name="for_gnugo">GnuGo 對弈引擎持</string>
-    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">您想將載入題庫的 SGF 檔案也送一份給
+    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">
+        您想將載入題庫的 SGF 檔案也送一份給
         Gobandroid 的作者
     </string>
     <string name="go_back">回退</string>

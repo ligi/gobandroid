@@ -19,12 +19,12 @@ import com.google.api.client.json.GenericJson;
 
 /**
  * Model definition for CloudgobanVoid.
- *
+ * <p/>
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the . For a detailed explanation see:
  * <a href="http://code.google.com/p/google-api-java-client/wiki/Json">http://code.google.com/p/google-api-java-client/wiki/Json</a>
  * </p>
- *
+ * <p/>
  * <p>
  * Upgrade warning: starting with version 1.12 {@code getResponseHeaders()} is removed, instead use
  * {@link com.google.api.client.http.json.JsonHttpRequest#getLastResponseHeaders()}

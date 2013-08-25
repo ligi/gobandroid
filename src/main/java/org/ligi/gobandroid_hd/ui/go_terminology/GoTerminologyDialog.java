@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui.go_terminology;
 import android.app.Activity;
 import android.text.util.Linkify;
 import android.widget.TextView;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.tracedroid.logging.Log;

@@ -29,7 +29,8 @@
     <string name="problem_listing_sgf">Problem att lista SGFer</string>
     <string name="there_are_no_files_in">Filer saknas i</string>
     <string name="sgf_path_invalid">Sökväg till SGF är ogiltig</string>
-    <string name="android_market_problem">Kan inte nå Android Market - du får installera manuellt.</string>
+    <string name="android_market_problem">Kan inte nå Android Market - du får installera manuellt.
+    </string>
     <string name="problem">Problem</string>
     <string name="gameplay">Spela</string>
     <string name="game_results">Resultat</string>
@@ -45,7 +46,8 @@
     <string name="save_sgf">spara SGF</string>
     <string name="invalid_move_ko">KO!</string>
     <string name="invalid_move_no_liberties">inga friheter!</string>
-    <string name="hint_stone_move">Du pekade på den senaste stenen. Detta gör det möjligt att flytta stenen vilket
+    <string name="hint_stone_move">Du pekade på den senaste stenen. Detta gör det möjligt att flytta
+        stenen vilket
         indikeras med en något genomskinlig sten.
     </string>
     <string name="mark_last_stone">markera senaste stenen</string>
@@ -59,7 +61,8 @@
     <string name="show_legend">Visa korrdinater</string>
     <string name="show_legend_summary">Visa koordinater för att snabbare hitta positioner</string>
     <string name="variant_mode">Hantera variationer</string>
-    <string name="variant_mode_summary">Hur variationer ska hanteras när man ångrar ett drag</string>
+    <string name="variant_mode_summary">Hur variationer ska hanteras när man ångrar ett drag
+    </string>
     <string name="path">Sökväg</string>
     <string name="sgf_path">Sökväg för SGF</string>
     <string name="enter_sgf_path_request">Ange den sökväg där SGF filerna ska sparas.</string>
@@ -81,7 +84,9 @@
     <string name="sgf_filename">SGF-filnamn</string>
     <string name="game_info">Parti info</string>
     <string name="add_to_sgf">Lägg till filnamnet:</string>
-    <string name="save_sgf_question">Vänligen ange vad filen jag kommer att skriva till %s ska heta:</string>
+    <string name="save_sgf_question">Vänligen ange vad filen jag kommer att skriva till %s ska
+        heta:
+    </string>
     <string name="share_question">dela efter spara?</string>
     <string name="gamename">Partinamn</string>
     <string name="date">Datum</string>
@@ -101,17 +106,22 @@
     <string name="switch_game_mode">Byt läge</string>
     <string name="bookmark">Bokmärke</string>
     <string name="menu_autoplay">Självpselande</string>
-    <string name="tsumego_off_path">Okänd variation - betyder ofta att ditt drag är suboptimalt :-(</string>
+    <string name="tsumego_off_path">Okänd variation - betyder ofta att ditt drag är suboptimalt
+        :-(
+    </string>
     <string name="tsumego_correct">Rätt!-)</string>
     <string name="refresh">Uppdaterar</string>
-    <string name="tsumego_sgf_no_solution">Du försöker öppna denna SGF som Tsumego, men ingen markerad lösning hittas.
+    <string name="tsumego_sgf_no_solution">Du försöker öppna denna SGF som Tsumego, men ingen
+        markerad lösning hittas.
         Du kan försöka att lösa den ändå men jag kan inte applådera när du har rätt :-(
     </string>
     <string name="working">Jobbar</string>
     <string name="please_stay_patient">Var god vänta.</string>
     <string name="creating_thumbnails">Skapar tumnaglar - Var god vänta</string>
     <string name="gnugo">GnuGo</string>
-    <string name="gnugo_not_installed">GnuGo ej installerad - för att fortsätta måste du installera GnuGo!</string>
+    <string name="gnugo_not_installed">GnuGo ej installerad - för att fortsätta måste du installera
+        GnuGo!
+    </string>
     <string name="preferences">Inställningar</string>
     <string name="board_setup">Brädstorlek mm.</string>
     <string name="for_recording">för Kifu</string>
@@ -163,7 +173,8 @@
     <string name="white">vit</string>
     <string name="black_and_white">Svart &amp;Vit</string>
     <string name="for_gnugo">för GnuGo</string>
-    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">Kunde inte läsa sgf. Vill
+    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">Kunde
+        inte läsa sgf. Vill
         du skicka den till ligi för felsökning?
     </string>
     <string name="go_back">tillbaka</string>
@@ -183,14 +194,18 @@
     <string name="accept">Acceptera</string>
     <string name="new_tsumegos_available">Nya Tsumegos finns!</string>
     <string name="the_go_game_you_reviewed">Partiet du gick igenom</string>
-    <string name="this_game_has_2_players_but_you_can_only_watch_it">Partiet har två spelare - du kan endast titta på
+    <string name="this_game_has_2_players_but_you_can_only_watch_it">Partiet har två spelare - du
+        kan endast titta på
     </string>
-    <string name="a_move_in_one_online_game_you_participate_is_done">Ett drag har gjorts i ett av dina online-partier
+    <string name="a_move_in_one_online_game_you_participate_is_done">Ett drag har gjorts i ett av
+        dina online-partier
     </string>
     <string name="new_move">nytt drag</string>
     <string name="in_an_online_game_you_participate">i ett av dina online-partier</string>
     <string name="choose_invite_method">välj sätt att bjuda in</string>
-    <string name="you_are_invited_to_a_go_game">Du är inbjuden till ett parti Go (storlek: %1$s, color: %2$s)</string>
+    <string name="you_are_invited_to_a_go_game">Du är inbjuden till ett parti Go (storlek: %1$s,
+        color: %2$s)
+    </string>
     <string name="go_game_invitation">Inbjudan till parti</string>
     <string name="uploading_game">laddar upp parti</string>
     <string name="profile">profil</string>

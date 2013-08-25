@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
 
 public class ZoomGameExtrasFragment extends Fragment {

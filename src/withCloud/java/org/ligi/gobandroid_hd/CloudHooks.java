@@ -8,8 +8,8 @@ import android.os.Bundle;
 
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
-import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
+import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.online.OnlineSelectActivity;
 import org.ligi.gobandroid_hd.ui.online.UploadGameAndShareMoment;
@@ -30,7 +30,7 @@ public class CloudHooks {
     }
 
     public static void onGCMMessage(Context context, Intent intent) {
-        Bundle extras=intent.getExtras();
+        Bundle extras = intent.getExtras();
         String game_key = extras.getString("game_key");
         if (game_key != null) { // cloud game message
 
@@ -66,16 +66,16 @@ public class CloudHooks {
         //App.get
     }
 
-    public static void onSolvedTsumego(GobandroidFragmentActivity ctx,GoGame game) {
+    public static void onSolvedTsumego(GobandroidFragmentActivity ctx, GoGame game) {
         new UploadGameAndShareMoment(ctx, "solved_tsumego").execute();
     }
 
 
-    public static void uploadGameAndShareMoment(GobandroidFragmentActivity ctx,GoGame game,String type) {
+    public static void uploadGameAndShareMoment(GobandroidFragmentActivity ctx, GoGame game, String type) {
         new UploadGameAndShareMoment(ctx, type).execute();
     }
 
-    public static void uploadGame(GobandroidFragmentActivity ctx,GoGame game,String type) {
+    public static void uploadGame(GobandroidFragmentActivity ctx, GoGame game, String type) {
         new UploadGameToCloudEndpointsBase(ctx, type).execute();
     }
 

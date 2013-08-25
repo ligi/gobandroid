@@ -29,7 +29,8 @@
     <string name="problem_listing_sgf">Problem beim Auflisten der SGFs</string>
     <string name="there_are_no_files_in">Keine Dateien in</string>
     <string name="sgf_path_invalid">Der SGF-Pfad ist ungültig.</string>
-    <string name="android_market_problem">Kein Zugang zum Android Market - führen Sie die Installation manuell durch.
+    <string name="android_market_problem">Kein Zugang zum Android Market - führen Sie die
+        Installation manuell durch.
     </string>
     <string name="problem">Problem</string>
     <string name="gameplay">Spielen</string>
@@ -46,21 +47,26 @@
     <string name="save_sgf">SGF speichern</string>
     <string name="invalid_move_ko">KO!</string>
     <string name="invalid_move_no_liberties">Keine Freiheiten!</string>
-    <string name="hint_stone_move">Sie haben auf den letzten Stein getippt. Dies erlaubt das Verschieben, was durch
+    <string name="hint_stone_move">Sie haben auf den letzten Stein getippt. Dies erlaubt das
+        Verschieben, was durch
         einen halbtransparenten Stein gekennzeichnet ist.
     </string>
     <string name="mark_last_stone">Letzten Stein markieren</string>
-    <string name="mark_last_stone_summary">Ein kleiner Kreis kennzeichnet den letzten Stein.</string>
+    <string name="mark_last_stone_summary">Ein kleiner Kreis kennzeichnet den letzten Stein.
+    </string>
     <string name="first_tap_zooms">Erstes Tippen für Zoom</string>
     <string name="first_tap_zooms_summary">aka Dicke-Finger-Modus</string>
     <string name="viewable_stone">Stein sichtbar setzen</string>
     <string name="viewable_stone_sum">Der Stein wird über dem Finger angezeigt.</string>
-    <string name="grid_emboss_summary">Das Raster wird erhaben oder nur schwarz dargestellt.</string>
+    <string name="grid_emboss_summary">Das Raster wird erhaben oder nur schwarz dargestellt.
+    </string>
     <string name="grid_emboss">Erhabenes Raster</string>
     <string name="show_legend">Legende anzeigen</string>
-    <string name="show_legend_summary">Die Legende erlaubt das schnellere Auffinden der Position.</string>
+    <string name="show_legend_summary">Die Legende erlaubt das schnellere Auffinden der Position.
+    </string>
     <string name="variant_mode">Umgang mit Varianten</string>
-    <string name="variant_mode_summary">Wie werden Varianten beim Rückgängigmachen behandelt?</string>
+    <string name="variant_mode_summary">Wie werden Varianten beim Rückgängigmachen behandelt?
+    </string>
     <string name="path">Pfad</string>
     <string name="sgf_path">SGF-Pfad</string>
     <string name="enter_sgf_path_request">Geben Sie den Speicherpfad für SGF-Dateien an.</string>
@@ -82,13 +88,16 @@
     <string name="sgf_filename">SGF-Dateiname</string>
     <string name="game_info">Spielinfos</string>
     <string name="add_to_sgf">An Dateinamen anfügen:</string>
-    <string name="save_sgf_question">Geben Sie den Namen für die unter %s zu speichernde Datei an:</string>
+    <string name="save_sgf_question">Geben Sie den Namen für die unter %s zu speichernde Datei an:
+    </string>
     <string name="share_question">Nach dem Speichern teilen?</string>
     <string name="gamename">Spielname</string>
     <string name="date">Datum</string>
     <string name="players">Spieler</string>
     <string name="time">Zeit</string>
-    <string name="enter_default_filename_for_sgf_request">Geben Sie den Standarddateinamen für SGF-Dateien an.</string>
+    <string name="enter_default_filename_for_sgf_request">Geben Sie den Standarddateinamen für
+        SGF-Dateien an.
+    </string>
     <string name="review_game">Besprechen</string>
     <string name="record_game">Aufzeichnen</string>
     <string name="dashboard_problems">Tsumego</string>
@@ -102,19 +111,24 @@
     <string name="switch_game_mode">Modus wechseln</string>
     <string name="bookmark">Lesezeichen</string>
     <string name="menu_autoplay">Autoplay</string>
-    <string name="tsumego_off_path">Unbekannte Variation - bedeutet i. d. R., dass dies leider nicht der beste Zug ist
+    <string name="tsumego_off_path">Unbekannte Variation - bedeutet i. d. R., dass dies leider nicht
+        der beste Zug ist
         :-(
     </string>
     <string name="tsumego_correct">Richtig! :-)</string>
     <string name="refresh">synchronisieren</string>
-    <string name="tsumego_sgf_no_solution">Sie versuchen, eine SGF-Datei als Tsumego zu laden - es ist jedoch keine
-        Lösung angegeben - Sie können fortfahren, aber es gibt keinen Applaus, wenn Sie richtig liegen :-(
+    <string name="tsumego_sgf_no_solution">Sie versuchen, eine SGF-Datei als Tsumego zu laden - es
+        ist jedoch keine
+        Lösung angegeben - Sie können fortfahren, aber es gibt keinen Applaus, wenn Sie richtig
+        liegen :-(
     </string>
     <string name="working">Wird bearbeitet</string>
     <string name="please_stay_patient">Bitte warten Sie.</string>
-    <string name="creating_thumbnails">Miniaturansichten werden erstellt - bitte warten Sie.</string>
+    <string name="creating_thumbnails">Miniaturansichten werden erstellt - bitte warten Sie.
+    </string>
     <string name="gnugo">GnuGo</string>
-    <string name="gnugo_not_installed">GnuGo ist nicht installiert - zum Fortfahren müssen Sie GnuGo installieren!
+    <string name="gnugo_not_installed">GnuGo ist nicht installiert - zum Fortfahren müssen Sie GnuGo
+        installieren!
     </string>
     <string name="preferences">Einstellungen</string>
     <string name="board_setup">Brett einrichten</string>
@@ -145,7 +159,8 @@
     <string name="size">Größe</string>
     <string name="enter_your_comments_here">Geben Sie hier Ihre Kommentare ein.</string>
     <string name="keep_variant_">Variante behalten?</string>
-    <string name="keep_this_move_as_variation">Möchten Sie diesen Zug als Variante behalten?</string>
+    <string name="keep_this_move_as_variation">Möchten Sie diesen Zug als Variante behalten?
+    </string>
     <string name="numbered_end">Nummerierter Pfad</string>
     <string name="icon">Symbol</string>
     <string name="go_tv">GoTV</string>
@@ -167,12 +182,15 @@
     <string name="white">Weiß</string>
     <string name="black_and_white">Schwarz &amp; Weiß</string>
     <string name="for_gnugo">für GnuGo</string>
-    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">Problem beim Laden der
+    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">
+        Problem beim Laden der
         SGF. Möchten Sie diese SGF-Datei an ligi senden, um das Problem zu beheben?
     </string>
     <string name="go_back">Zurück</string>
     <string name="download_status">Downloadstatus</string>
-    <string name="downloading_tsumegos_please_wait">Tsumegos werden heruntergeladen. Bitte um etwas Geduld...</string>
+    <string name="downloading_tsumegos_please_wait">Tsumegos werden heruntergeladen. Bitte um etwas
+        Geduld...
+    </string>
     <string name="no_new_tsumegos_found">Keine neuen Tsumegos gefunden :-(</string>
     <string name="downloaded_n_tsumego">Es wurden %d neue Tsumegos heruntergeladen :-)</string>
     <string name="overwrite_existing_file">Bestehende Datei überschreiben</string>
@@ -187,16 +205,19 @@
     <string name="accept">Akzeptieren</string>
     <string name="new_tsumegos_available">Neue Tsumegos verfügbar!</string>
     <string name="the_go_game_you_reviewed">Das GO-Spiel welches Du dir angeschaut hast</string>
-    <string name="this_game_has_2_players_but_you_can_only_watch_it">Dieses Spiel hat 2 Spieler - aber du kannst das
+    <string name="this_game_has_2_players_but_you_can_only_watch_it">Dieses Spiel hat 2 Spieler -
+        aber du kannst das
         spiel beobachten
     </string>
-    <string name="a_move_in_one_online_game_you_participate_is_done">Ein Zug in einem Online-Spiel dem Du beiwohnst
+    <string name="a_move_in_one_online_game_you_participate_is_done">Ein Zug in einem Online-Spiel
+        dem Du beiwohnst
         wurde getätigt
     </string>
     <string name="new_move">Neuer Zug</string>
     <string name="in_an_online_game_you_participate">Ein Online Spiel an dem Du Teilnimmst</string>
     <string name="choose_invite_method">Wähle Methode für die Einladung</string>
-    <string name="you_are_invited_to_a_go_game">Sie sind herzlich eingeladen zu einem GO-Spiel (Größe: %1$ s, Farbe: %2$
+    <string name="you_are_invited_to_a_go_game">Sie sind herzlich eingeladen zu einem GO-Spiel
+        (Größe: %1$ s, Farbe: %2$
         s)
     </string>
     <string name="go_game_invitation">Einladung zu einem GO-Spiel</string>

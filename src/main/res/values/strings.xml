@@ -29,7 +29,9 @@
     <string name="problem_listing_sgf">Problem listing SGF\'s</string>
     <string name="there_are_no_files_in">There are no files in</string>
     <string name="sgf_path_invalid">The SGF Path is invalid</string>
-    <string name="android_market_problem">Can\'t Access the Android Market - you will have to install manually.</string>
+    <string name="android_market_problem">Can\'t Access the Android Market - you will have to
+        install manually.
+    </string>
     <string name="problem">Problem</string>
     <string name="gameplay">Gameplay</string>
     <string name="game_results">Game Result</string>
@@ -45,7 +47,8 @@
     <string name="save_sgf">save SGF</string>
     <string name="invalid_move_ko">KO!</string>
     <string name="invalid_move_no_liberties">no liberties!</string>
-    <string name="hint_stone_move">You tapped on the current stone. This initiates moving a stone which is indicated by
+    <string name="hint_stone_move">You tapped on the current stone. This initiates moving a stone
+        which is indicated by
         a half transparent Stone.
     </string>
     <string name="mark_last_stone">mark last stone</string>
@@ -62,7 +65,9 @@
     <string name="variant_mode_summary">how to handle variants when undoing</string>
     <string name="path">Path</string>
     <string name="sgf_path">SGF Path</string>
-    <string name="enter_sgf_path_request">Please enter the Path where the SGF Files should be saved.</string>
+    <string name="enter_sgf_path_request">Please enter the Path where the SGF Files should be
+        saved.
+    </string>
     <string name="set_ai_strength">Set A.I. Strength</string>
     <string name="ai_strength">A.I. strength</string>
     <string name="ai_preferences">A.I. Preferences</string>
@@ -81,13 +86,17 @@
     <string name="sgf_filename">SGF Filename</string>
     <string name="game_info">Game Info</string>
     <string name="add_to_sgf">Add to FileName:</string>
-    <string name="save_sgf_question">Please instruct me on how the file I will write to %s should be named:</string>
+    <string name="save_sgf_question">Please instruct me on how the file I will write to %s should be
+        named:
+    </string>
     <string name="share_question">share after saving?</string>
     <string name="gamename">GameName</string>
     <string name="date">Date</string>
     <string name="players">Players</string>
     <string name="time">Time</string>
-    <string name="enter_default_filename_for_sgf_request">Please enter the default Filename for SGF Files.</string>
+    <string name="enter_default_filename_for_sgf_request">Please enter the default Filename for SGF
+        Files.
+    </string>
     <string name="review_game">Review</string>
     <string name="record_game">Record</string>
     <string name="dashboard_problems">Tsumego</string>
@@ -101,10 +110,13 @@
     <string name="switch_game_mode">Switch Mode</string>
     <string name="bookmark">Bookmark</string>
     <string name="menu_autoplay">Autoplay</string>
-    <string name="tsumego_off_path">Unknown Variation - usually means that your move is sub-optimal :-(</string>
+    <string name="tsumego_off_path">Unknown Variation - usually means that your move is sub-optimal
+        :-(
+    </string>
     <string name="tsumego_correct">Correct !-)</string>
     <string name="refresh">sync</string>
-    <string name="tsumego_sgf_no_solution">You are trying to open this SGF as a Tsumego - but I cannot find a marked
+    <string name="tsumego_sgf_no_solution">You are trying to open this SGF as a Tsumego - but I
+        cannot find a marked
         Solution - you can try anyway but I cannot applaud you when you are correct :-(
     </string>
     <string name="working">Working</string>
@@ -163,7 +175,8 @@
     <string name="white">white</string>
     <string name="black_and_white">Black &amp; White</string>
     <string name="for_gnugo">for GnuGo</string>
-    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">Problem Loading sgf would
+    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">
+        Problem Loading sgf would
         you like to send ligi this sgf to fix the problem?
     </string>
     <string name="go_back">go back</string>
@@ -183,14 +196,18 @@
     <string name="accept">accept</string>
     <string name="new_tsumegos_available">New Tsumegos available!</string>
     <string name="the_go_game_you_reviewed">The Go Game you reviewed</string>
-    <string name="this_game_has_2_players_but_you_can_only_watch_it">This game has 2 players - but you can watch it
+    <string name="this_game_has_2_players_but_you_can_only_watch_it">This game has 2 players - but
+        you can watch it
     </string>
-    <string name="a_move_in_one_online_game_you_participate_is_done">A move in one online game you participate is done
+    <string name="a_move_in_one_online_game_you_participate_is_done">A move in one online game you
+        participate is done
     </string>
     <string name="new_move">new move</string>
     <string name="in_an_online_game_you_participate">in an online game you participate</string>
     <string name="choose_invite_method">choose invite method</string>
-    <string name="you_are_invited_to_a_go_game">You are invited to a GO-Game ( size: %1$s , color: %2$s )</string>
+    <string name="you_are_invited_to_a_go_game">You are invited to a GO-Game ( size: %1$s , color:
+        %2$s )
+    </string>
     <string name="go_game_invitation">GO Game Invitation</string>
     <string name="uploading_game">uploading game</string>
     <string name="profile">Profile</string>
@@ -211,12 +228,15 @@
     <string name="who_are_you">Who are you?</string>
     <string name="delete">Delete</string>
     <string name="unknown">unknown</string>
-    <string name="cannot_create_game_server_problem">Cannot create the game - please try again later</string>
+    <string name="cannot_create_game_server_problem">Cannot create the game - please try again
+        later
+    </string>
     <string name="server_problem">Server Problem</string>
     <string name="file_saved">saved %s</string>
     <string name="file_not_saved">problen saving %s</string>
     <string name="game_created">Game Created</string>
-    <string name="game_created_msg">Game created - enjoy this game!\nTIP: You can also do something else with gobandroid
+    <string name="game_created_msg">Game created - enjoy this game!\nTIP: You can also do something
+        else with gobandroid
         in the background while waiting for the opponent.
     </string>
     <string name="choose_how_to_send_sgf">Choose how to send the SGF</string>

@@ -43,11 +43,14 @@ import java.util.List;
 public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCallbacks,
         GooglePlayServicesClient.OnConnectionFailedListener, OnSignOutCompleteListener {
 
-    /** Listener for sign-in success or failure events. */
+    /**
+     * Listener for sign-in success or failure events.
+     */
     public interface GameHelperListener {
         /**
          * Called when sign-in fails. As a result, a "Sign-In" button can be
          * shown to the user; when that button is clicked, call
+         *
          * @link{GamesHelper#beginUserInitiatedSignIn}. Note that not all calls to this
          * method mean an error; it may be a result of the fact that automatic
          * sign-in could not proceed because user interaction was required
@@ -57,7 +60,9 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
          */
         void onSignInFailed();
 
-        /** Called when sign-in succeeds. */
+        /**
+         * Called when sign-in succeeds.
+         */
         void onSignInSucceeded();
     }
 
@@ -155,12 +160,16 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
         mActivity = activity;
     }
 
-    /** Sets the message that appears onscreen while signing in. */
+    /**
+     * Sets the message that appears onscreen while signing in.
+     */
     public void setSigningInMessage(String message) {
         mSigningInMessage = message;
     }
 
-    /** Sets the message that appears onscreen while signing out. */
+    /**
+     * Sets the message that appears onscreen while signing out.
+     */
     public void setSigningOutMessage(String message) {
         mSigningOutMessage = message;
     }
@@ -187,10 +196,10 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
      * initialization tasks. Next, call @link{#onStart} from the onStart()
      * method of your Activity.
      *
-     * @param listener The listener to be notified of sign-in events.
+     * @param listener     The listener to be notified of sign-in events.
      * @param clientsToUse The clients to use. Use a combination of
-     *            CLIENT_GAMES, CLIENT_PLUS and CLIENT_APPSTATE, or CLIENT_ALL
-     *            to request all clients.
+     *                     CLIENT_GAMES, CLIENT_PLUS and CLIENT_APPSTATE, or CLIENT_ALL
+     *                     to request all clients.
      */
     public void setup(GameHelperListener listener, int clientsToUse) {
         mListener = listener;
@@ -265,7 +274,9 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
         return mPlusClient;
     }
 
-    /** Returns whether or not the user is signed in. */
+    /**
+     * Returns whether or not the user is signed in.
+     */
     public boolean isSignedIn() {
         return mSignedIn;
     }
@@ -286,7 +297,9 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
         return mSignInError ? mConnectionResult : null;
     }
 
-    /** Call this method from your Activity's onStart(). */
+    /**
+     * Call this method from your Activity's onStart().
+     */
     public void onStart(Activity act) {
         mActivity = act;
 
@@ -309,7 +322,9 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
         }
     }
 
-    /** Call this method from your Activity's onStop(). */
+    /**
+     * Call this method from your Activity's onStop().
+     */
     public void onStop() {
         debugLog("onStop: disconnecting clients.");
 
@@ -329,13 +344,17 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
         mActivity = null;
     }
 
-    /** Convenience method to show an alert dialog. */
+    /**
+     * Convenience method to show an alert dialog.
+     */
     public void showAlert(String title, String message) {
         (new AlertDialog.Builder(getContext())).setTitle(title).setMessage(message)
                 .setNeutralButton(android.R.string.ok, null).create().show();
     }
 
-    /** Convenience method to show an alert dialog. */
+    /**
+     * Convenience method to show an alert dialog.
+     */
     public void showAlert(String message) {
         (new AlertDialog.Builder(getContext())).setMessage(message)
                 .setNeutralButton(android.R.string.ok, null).create().show();
@@ -345,15 +364,17 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
      * Returns the invitation ID received through an invitation notification.
      * This should be called from your GameHelperListener's
      *
+     * @return The id of the invitation, or null if none was received.
      * @link{GameHelperListener#onSignInSucceeded} method, to check if there's an
      * invitation available. In that case, accept the invitation.
-     * @return The id of the invitation, or null if none was received.
      */
     public String getInvitationId() {
         return mInvitationId;
     }
 
-    /** Enables debug logging, with the given logcat tag. */
+    /**
+     * Enables debug logging, with the given logcat tag.
+     */
     public void enableDebugLog(boolean enabled, String tag) {
         mDebugLog = enabled;
         mDebugTag = tag;
@@ -381,7 +402,9 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
         return scopeStringBuilder.toString();
     }
 
-    /** Sign out and disconnect from the APIs. */
+    /**
+     * Sign out and disconnect from the APIs.
+     */
     public void signOut() {
         mConnectionResult = null;
         mAutoSignIn = false;
@@ -589,7 +612,9 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
         }
     }
 
-    /** Called when we successfully obtain a connection to a client. */
+    /**
+     * Called when we successfully obtain a connection to a client.
+     */
     @Override
     public void onConnected(Bundle connectionHint) {
         debugLog("onConnected: connected! client=" + mClientCurrentlyConnecting);
@@ -626,7 +651,9 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
         }
     }
 
-    /** Handles a connection failure reported by a client. */
+    /**
+     * Handles a connection failure reported by a client.
+     */
     @Override
     public void onConnectionFailed(ConnectionResult result) {
         // save connection result for later reference
@@ -715,7 +742,9 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
         }
     }
 
-    /** Called when we are disconnected from a client. */
+    /**
+     * Called when we are disconnected from a client.
+     */
     @Override
     public void onDisconnected() {
         debugLog("onDisconnected.");
@@ -730,7 +759,9 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
         }
     }
 
-    /** Returns an error dialog that's appropriate for the given error code. */
+    /**
+     * Returns an error dialog that's appropriate for the given error code.
+     */
     Dialog getErrorDialog(int errorCode) {
         debugLog("Making error dialog for error: " + errorCode);
         Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(errorCode, mActivity,

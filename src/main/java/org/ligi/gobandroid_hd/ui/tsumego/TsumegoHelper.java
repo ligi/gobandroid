@@ -49,7 +49,7 @@ public class TsumegoHelper {
 
 	
 	/*
-	 * 
+     *
 	 * public static int calcSpan(GoGame game) { int min_x=game.getSize(); int
 	 * min_y=game.getSize(); for (int x=0;x<game.getSize();x++) for (int
 	 * y=0;y<game.getSize();y++) { if

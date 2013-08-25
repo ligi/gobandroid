@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui.share;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.SGFHelper;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;

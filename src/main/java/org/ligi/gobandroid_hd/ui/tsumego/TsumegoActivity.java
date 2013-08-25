@@ -3,12 +3,14 @@ package org.ligi.gobandroid_hd.ui.tsumego;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+
 import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnClickListener;
 import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
-import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.App;
+import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
@@ -223,7 +225,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
             meta.setIsSolved(true);
             meta.persist();
 
-            CloudHooks.onSolvedTsumego(this,getGame());
+            CloudHooks.onSolvedTsumego(this, getGame());
         }
         this.runOnUiThread(new Runnable() {
             @Override

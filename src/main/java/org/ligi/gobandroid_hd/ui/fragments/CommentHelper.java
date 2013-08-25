@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui.fragments;
 import android.text.util.Linkify;
 import android.text.util.Linkify.TransformFilter;
 import android.widget.TextView;
+
 import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity;
 
 import java.util.regex.Matcher;

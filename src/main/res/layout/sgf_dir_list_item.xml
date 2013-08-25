@@ -26,6 +26,7 @@
                 android:textSize="@dimen/text_size_large"/>
 
     </LinearLayout>
+
     <LinearLayout
             android:id="@+id/thumb_container"
             android:layout_width="match_parent"

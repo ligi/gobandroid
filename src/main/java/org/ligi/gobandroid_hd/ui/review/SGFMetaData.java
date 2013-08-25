@@ -29,7 +29,7 @@ public class SGFMetaData {
     public SGFMetaData(String fname) {
 
         if (fname.startsWith("file://"))
-            fname=fname.substring(8);
+            fname = fname.substring(8);
 
         if (!fname.endsWith(FNAME_ENDING))
             fname += FNAME_ENDING;

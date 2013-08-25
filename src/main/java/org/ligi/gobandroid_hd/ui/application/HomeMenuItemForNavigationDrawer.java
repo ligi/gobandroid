@@ -8,9 +8,9 @@ import android.view.SubMenu;
 import android.view.View;
 
 /**
- *  we need that to craft a non ABS home MenuItem from home ABS MenuItem
-* Created by ligi on 6/1/13.
-*/
+ * we need that to craft a non ABS home MenuItem from home ABS MenuItem
+ * Created by ligi on 6/1/13.
+ */
 class HomeMenuItemForNavigationDrawer implements android.view.MenuItem {
 
     @Override

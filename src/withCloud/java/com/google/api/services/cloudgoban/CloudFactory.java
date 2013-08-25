@@ -13,11 +13,11 @@ public class CloudFactory {
     private static Cloudgoban cloudGoban;
 
     public static Cloudgoban getCloudgoban() {
-        if (cloudGoban==null) {
+        if (cloudGoban == null) {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = new GsonFactory();
 
-            cloudGoban= new Cloudgoban(transport, jsonFactory, null);
+            cloudGoban = new Cloudgoban(transport, jsonFactory, null);
         }
         return cloudGoban;
     }

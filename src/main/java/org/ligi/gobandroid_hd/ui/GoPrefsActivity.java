@@ -20,12 +20,18 @@
 package org.ligi.gobandroid_hd.ui;
 
 import android.os.Bundle;
-import android.preference.*;
+import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
+import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceCategory;
+import android.preference.PreferenceScreen;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gcm.GCMRegistrar;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 
@@ -50,8 +56,6 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -204,9 +208,9 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
         // is a Legend in the first place
         /** TODO ANDROIDTUDIO
          *
-        AndroidHelper.at(doLegendCheckBoxPref)
-        new SetPreferenceEnabledByCheckBoxPreferenceState(doLegendCheckBoxPref).addPreference2SetEnable(SGFLegendCheckBoxPref);
-*/
+         AndroidHelper.at(doLegendCheckBoxPref)
+         new SetPreferenceEnabledByCheckBoxPreferenceState(doLegendCheckBoxPref).addPreference2SetEnable(SGFLegendCheckBoxPref);
+         */
         /*PreferenceCategory soundPrefCat = new PreferenceCategory(this);
         soundPrefCat.setTitle(R.string.sound);
         root.addPreference(soundPrefCat);
@@ -320,7 +324,7 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         /*
-		 * if ((preference==sgf_path_pref)||(preference==sgf_fname_pref)
+         * if ((preference==sgf_path_pref)||(preference==sgf_fname_pref)
 		 * ||(preference==boardSkinPref)|| (preference==stoneSkinPref)||
 		 * (preference==aiLevelPref)) preference.setSummary((String)newValue);
 		 */

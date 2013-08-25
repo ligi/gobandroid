@@ -102,7 +102,8 @@
     <string name="tsumego_off_path">不明な手順です。最適な正解手順ではありません。 :-(</string>
     <string name="tsumego_correct">正解 !-)</string>
     <string name="refresh">同期</string>
-    <string name="tsumego_sgf_no_solution">詰碁のSGFを開こうとしていますが、解答が含まれていませんでした。詰碁を解くことはできますが、正解した時に確認することができません。 :-(
+    <string name="tsumego_sgf_no_solution">
+        詰碁のSGFを開こうとしていますが、解答が含まれていませんでした。詰碁を解くことはできますが、正解した時に確認することができません。 :-(
     </string>
     <string name="working">考慮中</string>
     <string name="please_stay_patient">しばらくお待ちください</string>
