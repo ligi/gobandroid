@@ -3,7 +3,6 @@ package org.ligi.gobandroid_hd.ui.recording;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +10,8 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+
+import org.ligi.androidhelper.simplifications.SimpleTextWatcher;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
@@ -33,19 +34,10 @@ public class RecordingGameExtrasFragment extends GobandroidFragment implements G
         et.setGravity(Gravity.TOP);
         et.setTextColor(this.getResources().getColor(R.color.text_color_on_board_bg));
 
-        et.addTextChangedListener(new TextWatcher() {
-
+        et.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 getGame().getActMove().setComment(s.toString());
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
 
