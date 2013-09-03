@@ -32,7 +32,8 @@ public class UploadGameAndShareToGPplus extends UploadGameToCloudEndpointsWithUI
         String callToActionDeepLinkId = "/game/" + key;
 
         // Create an interactive post builder.
-        PlusShare.Builder builder = new PlusShare.Builder(goActivity, goActivity.getPlusClient());
+        //PlusShare.Builder builder = new PlusShare.Builder(goActivity, goActivity.getPlusClient());
+        PlusShare.Builder builder=null;
 
         // Set call-to-action metadata.
         //builder.addCallToAction("CREATE_ITEM", callToActionUrl, callToActionDeepLinkId);
