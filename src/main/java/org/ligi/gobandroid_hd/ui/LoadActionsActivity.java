@@ -27,7 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
+import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity;
 
 /**
  * Activity to select a source from where to load SGF's
@@ -63,7 +63,7 @@ public class LoadActionsActivity extends ListActivity {
         Intent go_intent = null;
         switch (position) {
             case MENU_SDCARD:
-                go_intent = new Intent(this, SGFSDCardListActivity.class);
+                go_intent = new Intent(this, SGFFileSystemListActivity.class);
                 break;
 
             case MENU_ONLINE:

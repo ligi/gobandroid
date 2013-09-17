@@ -41,7 +41,7 @@ import java.io.File;
  * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  */
 
-public class SGFSDCardListActivity extends GobandroidFragmentActivity {
+public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
 
     private String[] menu_items;
 

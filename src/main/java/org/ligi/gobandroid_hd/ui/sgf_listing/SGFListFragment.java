@@ -115,7 +115,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
         if (GoLink.isGoLink(fname)) {
             intent2start.setClass(getActivity(), GoLinkLoadActivity.class);
         } else if (!fname.endsWith(".sgf")) {
-            intent2start.setClass(getActivity(), SGFSDCardListActivity.class);
+            intent2start.setClass(getActivity(), SGFFileSystemListActivity.class);
         }
 
         intent2start.setData(Uri.parse(fname));

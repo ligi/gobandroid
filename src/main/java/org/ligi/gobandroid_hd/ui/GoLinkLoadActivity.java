@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink;
-import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
+import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity;
 import org.ligi.tracedroid.logging.Log;
 
 /**
@@ -39,7 +39,7 @@ public class GoLinkLoadActivity extends Activity {
         intent.setData(Uri.parse(link.getFileName()));
 
         if (link.linksToDirectory()) {
-            intent.setClass(this, SGFSDCardListActivity.class);
+            intent.setClass(this, SGFFileSystemListActivity.class);
         } else {
             // we got some sgf - go to sgfload
             intent.putExtra("move_num", link.getMoveDepth());
@@ -61,7 +61,7 @@ public class GoLinkLoadActivity extends Activity {
 		 * intent2start.putExtra("move_num",move_id); }
 		 * 
 		 * if (!fname.endsWith(".sgf")) { intent2start=new
-		 * Intent(this.getActivity(),SGFSDCardListActivity.class); }
+		 * Intent(this.getActivity(),SGFFileSystemListActivity.class); }
 		 * 
 		 * if (!fname.contains("://")) fname="file://"+fname;
 		 */

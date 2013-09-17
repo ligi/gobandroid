@@ -28,7 +28,7 @@ import org.ligi.gobandroid_hd.ui.UnzipSGFsDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
-import org.ligi.gobandroid_hd.ui.sgf_listing.SGFSDCardListActivity;
+import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -138,7 +138,7 @@ public class NavigationDrawer implements OnItemClickListener {
     }
 
     private Intent startSGFListForPath(String path) {
-        Intent i = new Intent(ctx, SGFSDCardListActivity.class);
+        Intent i = new Intent(ctx, SGFFileSystemListActivity.class);
         i.setData(Uri.parse("file://" + path));
         return i;
     }
