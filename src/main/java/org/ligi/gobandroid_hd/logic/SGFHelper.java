@@ -45,7 +45,6 @@ public class SGFHelper {
      * recursive
      *
      * @param move          - the start move
-     * @param black_to_move
      * @return
      */
     private static String moves2string(GoMove move) {
@@ -466,6 +465,7 @@ public class SGFHelper {
         } catch (Exception e) { // some weird sgf - we want to catch to not FC
             // and have the chance to send the sgf to
             // analysis
+            Log.w("Problem parsing SGF " + e );
         }
 
         return null;
