@@ -8,7 +8,7 @@ import com.google.api.services.cloudgoban.model.Game;
 import com.google.api.services.cloudgoban.model.Text;
 
 import org.ligi.gobandroid_hd.backend.CloudGobanHelper;
-import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.tracedroid.logging.Log;
 
@@ -55,7 +55,7 @@ public class UploadGameToCloudEndpointsBase extends AsyncTask<Void, Void, String
                     UserHandler.setGameUsername(goActivity);
 
 
-                    game.setSgf(new Text().setValue(SGFHelper.game2sgf(goActivity.getGame())));
+                    game.setSgf(new Text().setValue(SGFWriter.game2sgf(goActivity.getGame())));
 
                     if (has_cloud_history) {
                         game.setEncodedKey(goActivity.getGame().getCloudKey());

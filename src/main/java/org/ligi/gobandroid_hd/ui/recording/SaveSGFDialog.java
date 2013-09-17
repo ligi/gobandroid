@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGameMetadata;
-import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
@@ -54,7 +54,7 @@ public class SaveSGFDialog extends GobandroidDialog {
         class SaveSGFOnClickListener implements DialogInterface.OnClickListener {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String fname = getCompleteFileName();
-                boolean res = SGFHelper.saveSGF(getApp().getGame(), fname);
+                boolean res = SGFWriter.saveSGF(getApp().getGame(), fname);
 
                 if (res)
                     Toast.makeText(context, String.format(context.getString(R.string.file_saved), fname), Toast.LENGTH_SHORT).show();

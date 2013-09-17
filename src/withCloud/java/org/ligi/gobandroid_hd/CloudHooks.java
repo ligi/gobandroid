@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -45,7 +45,7 @@ public class CloudHooks {
                 try {
 
                     String sgf = CloudGobanFactory.getInstance().games().get(game_key).execute().getSgf().getValue();
-                    ga.getGame().setGame(SGFHelper.sgf2game(sgf, null));
+                    ga.getGame().setGame(SGFReader.sgf2game(sgf, null));
 
                     while (ga.getGame().getActMove().hasNextMove())
                         ga.getGame().jump(ga.getGame().getActMove().getnextMove(0)); // mainstream

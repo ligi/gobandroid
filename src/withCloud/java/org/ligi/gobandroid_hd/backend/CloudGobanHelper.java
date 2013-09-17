@@ -11,7 +11,7 @@ import com.google.api.services.cloudgoban.model.GoGameParticipation;
 import com.google.api.services.cloudgoban.model.Text;
 
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.online.UserHandler;
@@ -64,7 +64,7 @@ public class CloudGobanHelper {
                         Log.i("migrating2" + game.getType());
 
                         UserHandler.setGameUsername(activity);
-                        game.setSgf(new Text().setValue(SGFHelper.game2sgf(activity.getGame())));
+                        game.setSgf(new Text().setValue(SGFWriter.game2sgf(activity.getGame())));
 
                         CloudFactory.getCloudgoban().games().update(UserHandler.getUserKey(activity.getApp()), game).execute();
 

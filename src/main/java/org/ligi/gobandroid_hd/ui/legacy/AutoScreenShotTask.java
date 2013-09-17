@@ -9,7 +9,7 @@ import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
@@ -101,7 +101,7 @@ public class AutoScreenShotTask extends AsyncTask<String, String, Integer> {
                         try {
                             String sgf_content = AndroidHelper.at(file).loadToString();
                             if ((sgf_content != null) && (!sgf_content.equals(""))) {
-                                getApp().getInteractionScope().setGame(SGFHelper.sgf2game(AndroidHelper.at(file).loadToString(), null));
+                                getApp().getInteractionScope().setGame(SGFReader.sgf2game(AndroidHelper.at(file).loadToString(), null));
 
                                 if (file.getPath().contains("tsumego")) {
                                     gbv.setZoom(TsumegoHelper.calcZoom(getApp().getGame(), false));

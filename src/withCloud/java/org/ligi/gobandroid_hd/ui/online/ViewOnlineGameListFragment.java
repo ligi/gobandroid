@@ -19,7 +19,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameMetadata;
-import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import org.ligi.gobandroid_hd.ui.SGFLoadActivity;
 
 public class ViewOnlineGameListFragment extends ListFragment {
@@ -98,7 +98,7 @@ public class ViewOnlineGameListFragment extends ListFragment {
             View black_block = v.findViewById(R.id.black_block);
 
 
-            GoGame game = SGFHelper.sgf2game(online_game.getSgf().getValue(), null);
+            GoGame game = SGFReader.sgf2game(online_game.getSgf().getValue(), null);
 
             GoGameMetadata game_meta = game.getMetaData();
 

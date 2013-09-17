@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 
 /**
@@ -21,7 +21,7 @@ public class ShareAsAttachmentDialog extends GobandroidDialog {
         super(context);
 
         String fname = getApp().getSettings().getSGFSavePath() + "/game_to_share_via_action.sgf";
-        if (SGFHelper.saveSGF(getApp().getGame(), fname)) { // if we could save
+        if (SGFWriter.saveSGF(getApp().getGame(), fname)) { // if we could save
             // the file add extra
             init(context, fname);
         }

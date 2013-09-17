@@ -38,7 +38,7 @@ import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
@@ -62,7 +62,7 @@ import java.net.URL;
  */
 
 public class SGFLoadActivity extends GobandroidFragmentActivity implements
-        Runnable, SGFHelper.ISGFLoadProgressCallback {
+        Runnable, SGFReader.ISGFLoadProgressCallback {
 
     public Uri intent_uri;
     private GoGame game = null;
@@ -223,7 +223,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
             sgf = uri2string(intent_uri);
 
             Log.i("got sgf content:" + sgf);
-            game = SGFHelper.sgf2game(sgf, this);
+            game = SGFReader.sgf2game(sgf, this);
 
 
             // if it is a tsumego and we need a transformation to right corner
@@ -231,9 +231,9 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
             if (getApp().getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
                 int transform = TsumegoHelper.calcTransform(game);
 
-                if (transform != SGFHelper.DEFAULT_SGF_TRANSFORM) {
-                    game = SGFHelper.sgf2game(sgf, null,
-                            SGFHelper.BREAKON_NOTHING, transform);
+                if (transform != SGFReader.DEFAULT_SGF_TRANSFORM) {
+                    game = SGFReader.sgf2game(sgf, null,
+                            SGFReader.BREAKON_NOTHING, transform);
                 }
             }
 

@@ -43,7 +43,7 @@ import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
-import org.ligi.gobandroid_hd.logic.SGFHelper;
+import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.fragments.DefaultGameExtrasFragment;
@@ -521,7 +521,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
                 BufferedWriter out = new BufferedWriter(sgf_writer);
 
-                out.write(SGFHelper.game2sgf(getGame()));
+                out.write(SGFWriter.game2sgf(getGame()));
                 out.close();
                 sgf_writer.close();
 
