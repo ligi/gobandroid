@@ -4,12 +4,11 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.5.+'
-        classpath 'com.squareup.gradle:gradle-android-test-plugin:0.9.+'
     }
 }
 
 apply plugin: 'android'
-apply plugin: 'android-test'
+
 
 repositories {
     mavenCentral()
@@ -33,21 +32,19 @@ dependencies {
     compile "com.android.support:support-v4:18.0.0"
     compile 'org.ligi:AndroidHelper:0.20'
     compile 'org.ligi:tracedroid:1.1'
-
-    testCompile 'junit:junit:4.10'
-    testCompile 'org.robolectric:robolectric:2.1.+'
-    testCompile 'com.squareup:fest-android:1.0.+'
 }
 
 android {
     compileSdkVersion 18
     buildToolsVersion "18.0.1"
 
-    flavorGroups "analytics", "cloud"
+
+
+    flavorGroups "analytics","cloud"
     productFlavors {
         withAnalytics {
             flavorGroup "analytics"
-        }
+ 	}
 
         noAnalytics {
             flavorGroup "analytics"
