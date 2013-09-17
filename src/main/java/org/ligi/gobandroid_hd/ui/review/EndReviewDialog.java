@@ -107,8 +107,8 @@ public class EndReviewDialog extends GobandroidDialog {
             }
         }
 
-        setPositiveButton(R.string.yes, new PositiveOnClickListener());
-        setNegativeButton(R.string.no, new NegativeOnClickListener());
+        setPositiveButton(R.string.end_review_ok_button, new PositiveOnClickListener());
+        setNegativeButton(R.string.end_review_stay_button, new NegativeOnClickListener());
     }
 
 }
