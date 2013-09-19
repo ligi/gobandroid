@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              style="@style/default_activity_main"
-        >
+    android:orientation="vertical"
+    style="@style/default_activity_main">
 
-    <WebView>
-    </WebView>
+    <WebView></WebView>
 
     <ListView
-            android:id="@+id/android:list"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-    </ListView>
+        android:id="@+id/android:list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"></ListView>
     -
 </LinearLayout>

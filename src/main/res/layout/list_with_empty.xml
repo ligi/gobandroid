@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              style="@style/default_activity_main">
+    android:orientation="vertical"
+    style="@style/default_activity_main">
 
     <ListView
-            android:id="@android:id/list"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            />
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
 
     <TextView
 
-            android:id="@android:id/empty"
-            android:text="Sorry for the Ad, but the servers for the online-functions  cost money ( that's why they are just showed there )"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            />
+        android:id="@android:id/empty"
+        android:text="Sorry for the Ad, but the servers for the online-functions  cost money ( that's why they are just showed there )"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" />
 
 
 </LinearLayout>

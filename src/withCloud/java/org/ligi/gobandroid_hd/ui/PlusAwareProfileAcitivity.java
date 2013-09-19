@@ -1,18 +1,8 @@
 package org.ligi.gobandroid_hd.ui;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
 
-import com.androidquery.AQuery;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.plus.PlusClient;
-import com.google.android.gms.plus.model.people.Person;
-
-import org.ligi.gobandroid_hd.CloudHooks;
-import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.tracedroid.logging.Log;
 
 public class PlusAwareProfileAcitivity extends GobandroidFragmentActivity {
 

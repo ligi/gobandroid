@@ -12,7 +12,8 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
 import java.io.File;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Activity to replay GO Games in TV / Lean back style
@@ -25,7 +26,7 @@ import java.util.Vector;
  */
 public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 
-    private Vector<String> avail_file_list;
+    private List<String> avail_file_list;
     private File path_to_play_from;
 
     public Intent getIntent2start() {
@@ -56,7 +57,7 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 
         Intent start_review_intent = new Intent(this, SGFLoadActivity.class);
 
-        avail_file_list = new Vector<String>();
+        avail_file_list = new ArrayList<String>();
         String choosen;
 
         for (File act : path_to_play_from.listFiles()) {

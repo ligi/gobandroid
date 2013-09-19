@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:padding="1dip">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="1dip">
 
     <ImageView
-            android:layout_weight="1"
-            android:focusable="true"
-            android:clickable="true"
-            android:src="@drawable/nav_first"
-            android:id="@+id/btn_first"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/nav_buttons_size"
-            android:background="@drawable/clickable_bg"/>
+        android:layout_weight="1"
+        android:focusable="true"
+        android:clickable="true"
+        android:src="@drawable/nav_first"
+        android:id="@+id/btn_first"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/nav_buttons_size"
+        android:background="@drawable/clickable_bg" />
 
     <ImageView
-            android:layout_weight="1"
-            android:focusable="true"
-            android:clickable="true"
-            android:src="@drawable/nav_prev"
-            android:id="@+id/btn_prev"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/nav_buttons_size"
-            android:background="@drawable/clickable_bg"/>
+        android:layout_weight="1"
+        android:focusable="true"
+        android:clickable="true"
+        android:src="@drawable/nav_prev"
+        android:id="@+id/btn_prev"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/nav_buttons_size"
+        android:background="@drawable/clickable_bg" />
 
     <ImageView
-            android:layout_weight="1"
-            android:focusable="true"
-            android:clickable="true"
-            android:src="@drawable/nav_next"
-            android:id="@+id/btn_next"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/nav_buttons_size"
-            android:background="@drawable/clickable_bg"/>
+        android:layout_weight="1"
+        android:focusable="true"
+        android:clickable="true"
+        android:src="@drawable/nav_next"
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/nav_buttons_size"
+        android:background="@drawable/clickable_bg" />
 
     <ImageView
-            android:layout_weight="1"
-            android:focusable="true"
-            android:clickable="true"
-            android:src="@drawable/nav_last"
-            android:id="@+id/btn_last"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/nav_buttons_size"
-            android:background="@drawable/clickable_bg"/>
+        android:layout_weight="1"
+        android:focusable="true"
+        android:clickable="true"
+        android:src="@drawable/nav_last"
+        android:id="@+id/btn_last"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/nav_buttons_size"
+        android:background="@drawable/clickable_bg" />
 
 </LinearLayout>
 

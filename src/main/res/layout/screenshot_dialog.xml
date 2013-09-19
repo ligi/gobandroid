@@ -1,48 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
-            android:id="@+id/linearLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <ProgressBar
-                android:id="@+id/progressBar1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:id="@+id/progressBar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
-                android:id="@+id/linearLayout2"
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/topic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:text="@string/working"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
-                    android:id="@+id/topic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/working"
-                    android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-            <TextView
-                    android:id="@+id/desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/please_stay_patient"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                android:id="@+id/desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/please_stay_patient"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </LinearLayout>
 
     </LinearLayout>
 
     <org.ligi.gobandroid_hd.ui.GoBoardViewHD
-            android:id="@+id/board_to_shoot"
-            android:layout_width="@dimen/thumbnail_size"
-            android:layout_height="@dimen/thumbnail_size"
-            >
-    </org.ligi.gobandroid_hd.ui.GoBoardViewHD>
+        android:id="@+id/board_to_shoot"
+        android:layout_width="@dimen/thumbnail_size"
+        android:layout_height="@dimen/thumbnail_size"></org.ligi.gobandroid_hd.ui.GoBoardViewHD>
 
 </LinearLayout>

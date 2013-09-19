@@ -1,49 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/shareTypeRadiGroup">
+
+        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/shareTypeRadiGroup"
-            >
+            android:text="via Google-Plus"
+            android:id="@+id/radioButtonGPlus"
+            android:checked="false"
+            android:layout_gravity="left" />
 
         <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="via Google-Plus"
-                android:id="@+id/radioButtonGPlus"
-                android:checked="false"
-                android:layout_gravity="left"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="as Link"
+            android:id="@+id/radioButtonLink"
+            android:checked="false"
+            android:layout_gravity="left" />
 
         <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="as Link"
-                android:id="@+id/radioButtonLink"
-                android:checked="false"
-                android:layout_gravity="left"/>
-
-        <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="as Attachment"
-                android:id="@+id/radioButtonAsAttachment"
-                android:checked="true"
-                android:layout_gravity="left"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="as Attachment"
+            android:id="@+id/radioButtonAsAttachment"
+            android:checked="true"
+            android:layout_gravity="left" />
     </RadioGroup>
 
     <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="public"
-            android:id="@+id/public_cb"
-            android:checked="false"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="public"
+        android:id="@+id/public_cb"
+        android:checked="false" />
 
     <Spinner
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/type_spinner"/>
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/type_spinner" />
 </LinearLayout>

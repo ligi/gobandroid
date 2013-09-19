@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/gnugo_plays"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gnugo_plays"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/gnugo_plays_black_radio"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:text="@string/black" />
 
         <RadioButton
-                android:id="@+id/gnugo_plays_black_radio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/black"/>
+            android:id="@+id/gnugo_plays_white_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/white" />
 
         <RadioButton
-                android:id="@+id/gnugo_plays_white_radio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/white"/>
-
-        <RadioButton
-                android:id="@+id/gnugo_plays_both_radio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/black_and_white"/>
+            android:id="@+id/gnugo_plays_both_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/black_and_white" />
 
     </RadioGroup>
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/gnugo_strength"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gnugo_strength"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <SeekBar
-            android:id="@+id/gnugo_strength_seek"
-            android:max="9"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+        android:id="@+id/gnugo_strength_seek"
+        android:max="9"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

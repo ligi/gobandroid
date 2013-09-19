@@ -23,8 +23,9 @@ import android.graphics.Point;
 
 import org.ligi.tracedroid.logging.Log;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
-import java.util.Vector;
 
 /**
  * Class to represent a Go Game with its rules
@@ -40,7 +41,7 @@ public class GoGame {
         public void onGoGameChange();
     }
 
-    private Vector<GoGameChangeListener> change_listeners = new Vector<GoGameChangeListener>();
+    private List<GoGameChangeListener> change_listeners = new ArrayList<GoGameChangeListener>();
 
     public void addGoGameChangeListener(GoGameChangeListener new_l) {
         change_listeners.add(new_l);
@@ -445,13 +446,13 @@ public class GoGame {
 
         clear_calc_board();
 
-        Vector<GoMove> replay_moves = new Vector<GoMove>();
+        List<GoMove> replay_moves = new ArrayList<GoMove>();
 
         replay_moves.add(move);
         GoMove tmp_move;
         while (true) {
 
-            tmp_move = replay_moves.lastElement();
+            tmp_move = replay_moves.get(replay_moves.size() - 1);
 
             if (tmp_move.isFirstMove() || (tmp_move.getParent() == null))
                 break;
@@ -490,7 +491,6 @@ public class GoGame {
     /**
      * check if a group has liberties
      *
-     * @param group2check - the group to check
      * @return boolean weather the group has liberty
      */
     public boolean hasGroupLiberties(int x, int y) {        /*
@@ -521,19 +521,19 @@ public class GoGame {
                     ptStackX.push(newx - 1);
                     ptStackY.push(newy);
                 }
-			/* check to the right */
+            /* check to the right */
             if (newx < calc_board.getSize() - 1)
                 if (calc_board.areCellsEqual(newx + 1, newy, newx, newy) && (checked_pos[newx + 1][newy] == false)) {
                     ptStackX.push(newx + 1);
                     ptStackY.push(newy);
                 }
-			/* check down */
+            /* check down */
             if (newy > 0)
                 if (calc_board.areCellsEqual(newx, newy - 1, newx, newy) && (checked_pos[newx][newy - 1] == false)) {
                     ptStackX.push(newx);
                     ptStackY.push(newy - 1);
                 }
-			/* check up */
+            /* check up */
             if (newy < calc_board.getSize() - 1)
                 if (calc_board.areCellsEqual(newx, newy + 1, newx, newy) && (checked_pos[newx][newy + 1] == false)) {
                     ptStackX.push(newx);

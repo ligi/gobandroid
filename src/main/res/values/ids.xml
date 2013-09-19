@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="review" type="id"/>
-    <item name="tsumego" type="id"/>
-    <item name="bookmark" type="id"/>
-    <item name="preferences" type="id"/>
-    <item name="links" type="id"/>
-    <item name="help" type="id"/>
-    <item name="profile" type="id"/>
-    <item name="empty" type="id"/>
-    <item name="online_play" type="id"/>
+    <item name="review" type="id" />
+    <item name="tsumego" type="id" />
+    <item name="bookmark" type="id" />
+    <item name="preferences" type="id" />
+    <item name="links" type="id" />
+    <item name="help" type="id" />
+    <item name="profile" type="id" />
+    <item name="empty" type="id" />
+    <item name="online_play" type="id" />
 </resources>

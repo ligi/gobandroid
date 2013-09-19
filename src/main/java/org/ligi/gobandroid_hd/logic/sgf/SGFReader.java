@@ -28,7 +28,8 @@ import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
 import org.ligi.tracedroid.logging.Log;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * class for load games in SGF File-Format
@@ -66,7 +67,7 @@ public class SGFReader {
 
             boolean escape = false;
             // int param_level=0;
-            Vector<GoMove> var_vect = new Vector<GoMove>();
+            List<GoMove> var_vect = new ArrayList<GoMove>();
             boolean consuming_param = false;
 
             String act_param = "";
@@ -137,11 +138,13 @@ public class SGFReader {
                             break;
                         case ')':
                             if (var_vect.size() > 0) {
-                                game.jump(var_vect.lastElement());
-                                var_vect.remove(var_vect.lastElement());
+                                GoMove lastMove = var_vect.get(var_vect.size() - 1);
+                                game.jump(lastMove);
+                                var_vect.remove(lastMove);
                                 Log.w("popping variaton from stack");
-                            } else
+                            } else {
                                 Log.w("variation vector underrun!!");
+                            }
 
                             last_cmd = "";
                             act_cmd = "";

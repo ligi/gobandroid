@@ -19,13 +19,14 @@ import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.tracedroid.logging.Log;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TsumegoActivity extends GoActivity implements GoGameChangeListener {
 
     private GoMove finishing_move;
     private TsumegoGameExtrasFragment myTsumegoExtrasFragment;
-    private Vector<GoMove> on_path_moves = null;
+    private List<GoMove> on_path_moves = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
     private void recursive_add_on_path_moves(GoMove act) {
         if (on_path_moves == null) {
-            on_path_moves = new Vector<GoMove>();
+            on_path_moves = new ArrayList<GoMove>();
         }
         on_path_moves.add(act);
         if (act.hasNextMove()) {
@@ -70,7 +71,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
     private boolean isOnPath() {
         if (on_path_moves == null) {
             Log.i("isOnPath null");
-            // build a on path Vector to do a fast isOnPath() later
+            // build a on path List to do a fast isOnPath() later
             recursive_add_on_path_moves(getGame().getFirstMove());
         }
         Log.i("isOnPath null" + on_path_moves.contains(getGame().getActMove()) + " " + on_path_moves.size());

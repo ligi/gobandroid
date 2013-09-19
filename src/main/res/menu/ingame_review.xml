@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-            android:title="@string/bookmark"
-            android:id="@+id/menu_bookmark"
-            android:icon="@drawable/bookmark"
-            android:showAsAction="ifRoom|withText"></item>
+        android:title="@string/bookmark"
+        android:id="@+id/menu_bookmark"
+        android:icon="@drawable/bookmark"
+        android:showAsAction="ifRoom|withText"></item>
     <item
-            android:title="@string/share"
-            android:id="@+id/menu_game_share"
-            android:showAsAction="withText"></item>
+        android:title="@string/share"
+        android:id="@+id/menu_game_share"
+        android:showAsAction="withText"></item>
 </menu>

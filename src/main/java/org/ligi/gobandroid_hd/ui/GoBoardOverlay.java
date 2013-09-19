@@ -40,7 +40,8 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.tracedroid.logging.Log;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * overlay for the go-board with comments and nav buttons
@@ -71,7 +72,7 @@ public class GoBoardOverlay implements OnClickListener {
         comment_sv = new ScrollView(context);
         comment_sv.addView(comment_tv);
 
-        Vector<ImageButton> control_buttons = new Vector<ImageButton>();
+        List<ImageButton> control_buttons = new ArrayList<ImageButton>();
 
         first = new ImageButton(context);
         first.setImageResource(android.R.drawable.ic_media_previous);

@@ -1,11 +1,7 @@
 package org.ligi.gobandroid_hd.ui.online;
 
 
-import com.google.android.gms.plus.model.moments.ItemScope;
-import com.google.android.gms.plus.model.moments.Moment;
-
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.tracedroid.logging.Log;
 
 public class UploadGameAndShareMoment extends UploadGameToCloudEndpointsBase {
 

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.Light.ActionBar">
-    </style>
+    <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.Light.ActionBar"></style>
 
 
     <style name="dialog_theme" parent="Theme.Sherlock.Light">
@@ -69,9 +68,9 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
-    <style name="MenuDrawer"/>
+    <style name="MenuDrawer" />
 
-    <style name="MenuDrawer.Widget"/>
+    <style name="MenuDrawer.Widget" />
 
     <style name="MenuDrawer.Widget.Category">
         <item name="android:textStyle">bold</item>

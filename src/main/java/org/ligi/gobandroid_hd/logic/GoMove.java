@@ -22,7 +22,8 @@ package org.ligi.gobandroid_hd.logic;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.tracedroid.logging.Log;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class to represent a Go Move
@@ -42,9 +43,9 @@ public class GoMove {
 
     private GoMove parent = null;
 
-    private Vector<GoMove> next_move_variations;
+    private List<GoMove> next_move_variations;
 
-    private Vector<GoMarker> markers;
+    private List<GoMarker> markers;
 
     private int move_pos = 0;
 
@@ -53,8 +54,8 @@ public class GoMove {
     public GoMove(GoMove parent) {
         this.parent = parent;
 
-        next_move_variations = new Vector<GoMove>();
-        markers = new Vector<GoMarker>();
+        next_move_variations = new ArrayList<GoMove>();
+        markers = new ArrayList<GoMarker>();
 
         if (parent != null) {
             black_to_move = !parent.isBlackToMove();
@@ -179,14 +180,14 @@ public class GoMove {
         return did_captures;
     }
 
-    public Vector<GoMove> getNextMoveVariations() {
+    public List<GoMove> getNextMoveVariations() {
         return next_move_variations;
     }
 
     /**
      * @return the markers - e.g. from SGF Problems
      */
-    public Vector<GoMarker> getMarkers() {
+    public List<GoMarker> getMarkers() {
         return markers;
     }
 
@@ -202,21 +203,21 @@ public class GoMove {
     }
 
     public boolean isMarked() {
-        if (parent == null)
+        if (parent == null) {
             return false;
+        }
         return (getGoMarker() != null);
     }
 
     public String getMarkText() {
-        if (parent == null)
+        if (parent == null) {
             return "";
+        }
         return (getGoMarker().getText());
     }
 
     public void destroy() {
         this.getParent().getNextMoveVariations().remove(this);
-        markers.removeAllElements(); // useful?
-        next_move_variations.removeAllElements(); // useful?
     }
 
     public boolean isBlackToMove() {
