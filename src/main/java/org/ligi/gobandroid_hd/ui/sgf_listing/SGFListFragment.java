@@ -77,7 +77,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 getSherlockActivity().startActionMode(new SGFListActionMode(SGFListFragment.this.getActivity(), dir + "/" + menu_items[position], SGFListFragment.this));
-                getListView().setItemChecked(position,true);
+                getListView().setItemChecked(position, true);
                 return true;
             }
         });
@@ -115,7 +115,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
         refresh();
     }
 
-
+    @Override
     public void refresh() {
         Log.i("refreshing sgf");
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity()).setTitle(R.string.problem_listing_sgf);
@@ -167,19 +167,23 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             Arrays.sort(menu_items);
         }
 
-       /* if (adapter!=null)
-            adapter.notifyDataSetChanged();
-         */
-
         InteractionScope interaction_scope = ((App) (getActivity().getApplicationContext())).getInteractionScope();
 
-        if (interaction_scope.getMode() == InteractionScope.MODE_TSUMEGO)
-            adapter = new TsumegoPathViewAdapter(this.getActivity(), menu_items, dir);
-        else if (interaction_scope.getMode() == InteractionScope.MODE_REVIEW)
-            adapter = new ReviewPathViewAdapter(this.getActivity(), menu_items, dir);
+        adapter = getAdapterByInteractionScope(interaction_scope);
 
         this.setListAdapter(adapter);
 
+    }
+
+    private BaseAdapter getAdapterByInteractionScope(InteractionScope interaction_scope) {
+        switch (interaction_scope.getMode()) {
+            case InteractionScope.MODE_TSUMEGO:
+                return new TsumegoPathViewAdapter(this.getActivity(), menu_items, dir);
+
+            case InteractionScope.MODE_REVIEW:
+            default: // use Review adapter as default
+                return new ReviewPathViewAdapter(this.getActivity(), menu_items, dir);
+        }
     }
 
     private App getApp() {
