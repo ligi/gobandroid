@@ -24,8 +24,9 @@ import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.tracedroid.logging.Log;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Vector;
+import java.util.List;
 
 public class SGFListFragment extends GobandroidListFragment implements Refreshable {
 
@@ -137,33 +138,34 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             return;
         }
 
-        Vector<String> fnames = new Vector<String>();
-        for (File file : files)
+        List<String> fileNames = new ArrayList<String>();
+        for (File file : files) {
             if ((file.getName().endsWith(".sgf")) || (file.isDirectory()) || (file.getName().endsWith(".golink"))) {
-                fnames.add(file.getName());
-                Log.i("refresh adding + " + file.getName());
+                fileNames.add(file.getName());
             }
+        }
 
-        if (fnames.size() == 0) {
+        if (fileNames.size() == 0) {
             alert.setMessage(getResources().getString(R.string.there_are_no_files_in) + " " + dir_file.getAbsolutePath()).show();
             return;
         }
 
 
         if (getApp().getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
-            Vector<String> done = new Vector<String>(), undone = new Vector<String>();
-            for (String fname : fnames)
-                if (new SGFMetaData(dir_file.getAbsolutePath() + "/" + fname).is_solved)
+            List<String> done = new ArrayList<String>(), undone = new ArrayList<String>();
+            for (String fname : fileNames)
+                if (new SGFMetaData(dir_file.getAbsolutePath() + "/" + fname).is_solved) {
                     done.add(fname);
-                else
+                } else {
                     undone.add(fname);
+                }
 
             String[] undone_arr = (String[]) undone.toArray(new String[undone.size()]), done_arr = (String[]) done.toArray(new String[done.size()]);
             Arrays.sort(undone_arr);
             Arrays.sort(done_arr);
             menu_items = AndroidHelper.at(undone_arr).combineWith(done_arr);
         } else {
-            menu_items = (String[]) fnames.toArray(new String[fnames.size()]);
+            menu_items = (String[]) fileNames.toArray(new String[fileNames.size()]);
             Arrays.sort(menu_items);
         }
 
