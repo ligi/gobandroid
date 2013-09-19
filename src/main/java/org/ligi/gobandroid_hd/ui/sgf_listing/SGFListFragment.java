@@ -1,11 +1,11 @@
 package org.ligi.gobandroid_hd.ui.sgf_listing;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -13,7 +13,6 @@ import android.widget.ListView;
 import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnCancelListener;
 import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnClickListener;
-import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -22,7 +21,6 @@ import org.ligi.gobandroid_hd.ui.GobandroidListFragment;
 import org.ligi.gobandroid_hd.ui.Refreshable;
 import org.ligi.gobandroid_hd.ui.SGFLoadActivity;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
-import org.ligi.gobandroid_hd.ui.share.ShareAsAttachmentDialog;
 import org.ligi.tracedroid.logging.Log;
 
 import java.io.File;
@@ -47,59 +45,40 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        if (savedInstanceState != null)
+        if (savedInstanceState != null) {
             getEnvFromSavedInstance(savedInstanceState);
+        }
 
-        if (menu_items == null) // we got nothing from savedInstance
+        if (menu_items == null) { // we got nothing from savedInstance
             refresh();
-
+        }
 
     }
 
     private void getEnvFromSavedInstance(Bundle savedInstanceState) {
-        if (menu_items == null)
+        if (menu_items == null) {
             menu_items = savedInstanceState.getStringArray("menu_items");
+        }
 
-        if (dir == null)
+        if (dir == null) {
             dir = savedInstanceState.getString("dir");
+        }
     }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);    //To change body of overridden methods use File | Settings | File Templates.
 
+        getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
         this.getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-
-                new AlertDialog.Builder(getActivity()).setItems(R.array.sgf_longclick_items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                new AlertDialog.Builder(getActivity()).setMessage("Really delete " + dir + "/" + menu_items[position]).setTitle("Delete?")
-                                        .setNegativeButton("NO", new DialogDiscardingOnClickListener())
-                                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                new File(dir + "/" + menu_items[position]).delete();
-                                                refresh();
-                                            }
-                                        })
-
-                                        .show();
-
-                                break;
-                            case 1:
-                                new ShareAsAttachmentDialog(getActivity(), dir + "/" + menu_items[position]).show();
-                                break;
-                        }
-                    }
-                }).show();
-                return false;
+                getSherlockActivity().startActionMode(new SGFListActionMode(SGFListFragment.this.getActivity(), dir + "/" + menu_items[position], SGFListFragment.this));
+                getListView().setItemChecked(position,true);
+                return true;
             }
         });
     }
@@ -108,7 +87,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        Intent intent2start = new Intent(this.getActivity(), SGFLoadActivity.class);
+        Intent intent2start = new Intent(getActivity(), SGFLoadActivity.class);
         String fname = dir + "/" + menu_items[position];
 
         // check if it is directory behind golink or general
@@ -121,6 +100,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
         intent2start.setData(Uri.parse(fname));
         startActivity(intent2start);
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -137,7 +117,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
 
 
     public void refresh() {
-        Log.i("refresh list");
+        Log.i("refreshing sgf");
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity()).setTitle(R.string.problem_listing_sgf);
 
         alert.setPositiveButton(R.string.ok, new ActivityFinishingOnClickListener(getActivity()));

@@ -4,9 +4,11 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 
+import com.actionbarsherlock.app.SherlockListFragment;
+
 import org.ligi.gobandroid_hd.R;
 
-public class GobandroidListFragment extends ListFragment {
+public class GobandroidListFragment extends SherlockListFragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

@@ -43,8 +43,6 @@ import java.io.File;
 
 public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
 
-    private String[] menu_items;
-
     private File dir;
     private SGFListFragment list_fragment;
     private String sgf_path;
@@ -97,8 +95,9 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
 
     @Override
     protected void onStop() {
-        if (my_task != null)
+        if (my_task != null) {
             my_task.cancel(true);
+        }
         super.onStop();
     }
 
@@ -117,7 +116,7 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_refresh:
-                my_task = DownloadProblemsDialog.getAndRunTask(this, (Refreshable) list_fragment);
+                my_task = DownloadProblemsDialog.getAndRunTask(this, list_fragment);
                 return true;
         }
         return super.onOptionsItemSelected(item);
