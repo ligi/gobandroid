@@ -90,8 +90,6 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
                 getListView().setItemChecked(position, true);
                 lastSelectedPosition = position;
                 parent.setSelection(position);
-                //getListView().getCheckedItemIds();
-                //getListView().invalidate();
                 view.refreshDrawableState();
                 return true;
             }
