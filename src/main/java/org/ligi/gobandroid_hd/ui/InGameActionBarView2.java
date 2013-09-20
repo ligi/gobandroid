@@ -58,22 +58,16 @@ public class InGameActionBarView2 extends LinearLayout implements
         activity = _activity;
         app = (App) _activity.getApplicationContext();
 
-        inflater = (LayoutInflater) _activity
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) _activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        ViewGroup top_view = (ViewGroup) inflater.inflate(
-                R.layout.top_nav_and_extras, null);
+        ViewGroup top_view = (ViewGroup) inflater.inflate(R.layout.top_nav_and_extras, null);
 
-        white_captures_tv = (TextView) top_view
-                .findViewById(R.id.white_captures_tv);
-        black_captures_tv = (TextView) top_view
-                .findViewById(R.id.black_captures_tv);
+        white_captures_tv = (TextView) top_view.findViewById(R.id.white_captures_tv);
+        black_captures_tv = (TextView) top_view.findViewById(R.id.black_captures_tv);
         move_tv = (TextView) top_view.findViewById(R.id.move_tv);
         mode_tv = (TextView) top_view.findViewById(R.id.mode_tv);
-        black_info_container = (ViewGroup) top_view
-                .findViewById(R.id.black_info_container);
-        white_info_container = (ViewGroup) top_view
-                .findViewById(R.id.white_info_container);
+        black_info_container = (ViewGroup) top_view.findViewById(R.id.black_info_container);
+        white_info_container = (ViewGroup) top_view.findViewById(R.id.white_info_container);
         // move_tv.setOnClickListener(new ToggleModePopup(context));
 
         top_view.findViewById(R.id.fake_spinner).setOnClickListener(
@@ -154,31 +148,23 @@ public class InGameActionBarView2 extends LinearLayout implements
 
         LinearLayout content_view = new LinearLayout(ctx);
         content_view.setOrientation(LinearLayout.VERTICAL);
-        content_view.setBackgroundDrawable(new BitmapDrawableNoMinimumSize(ctx
-                .getResources(), R.drawable.wood_bg));
+        BitmapDrawableNoMinimumSize background = new BitmapDrawableNoMinimumSize(ctx.getResources(), R.drawable.wood_bg);
+        content_view.setBackgroundDrawable(background);
 
 
-        addModeItem(content_view, InteractionScope.MODE_SETUP,
-                R.string.setup, R.drawable.preferences);
+        addModeItem(content_view, InteractionScope.MODE_SETUP, R.string.setup, R.drawable.preferences);
 
-        addModeItem(content_view, InteractionScope.MODE_RECORD,
-                R.string.play, R.drawable.play);
+        addModeItem(content_view, InteractionScope.MODE_RECORD, R.string.play, R.drawable.play);
 
-        addModeItem(content_view, InteractionScope.MODE_EDIT,
-                R.string.edit, R.drawable.dashboard_record);
+        addModeItem(content_view, InteractionScope.MODE_EDIT, R.string.edit, R.drawable.dashboard_record);
 
-        addModeItem(content_view, InteractionScope.MODE_COUNT,
-                R.string.count, R.drawable.dashboard_score);
+        addModeItem(content_view, InteractionScope.MODE_COUNT, R.string.count, R.drawable.dashboard_score);
 
-        addModeItem(content_view, InteractionScope.MODE_REVIEW,
-                R.string.review, R.drawable.dashboard_review);
-        addModeItem(content_view, InteractionScope.MODE_TELEVIZE,
-                R.string.televize, R.drawable.gobandroid_tv);
-        addModeItem(content_view, InteractionScope.MODE_TSUMEGO,
-                R.string.tsumego, R.drawable.dashboard_tsumego);
+        addModeItem(content_view, InteractionScope.MODE_REVIEW, R.string.review, R.drawable.dashboard_review);
+        addModeItem(content_view, InteractionScope.MODE_TELEVIZE, R.string.televize, R.drawable.gobandroid_tv);
+        addModeItem(content_view, InteractionScope.MODE_TSUMEGO, R.string.tsumego, R.drawable.dashboard_tsumego);
 
-        addModeItem(content_view, InteractionScope.MODE_GNUGO,
-                R.string.gnugo, R.drawable.server);
+        addModeItem(content_view, InteractionScope.MODE_GNUGO, R.string.gnugo, R.drawable.server);
 
         BetterPopupWindow pop = new BetterPopupWindow(mode_tv);
         pop.setContentView(content_view);
@@ -210,24 +196,20 @@ public class InGameActionBarView2 extends LinearLayout implements
 
             @Override
             public void run() {
-                mode_tv.setText(InteractionScope.getModeStringRes(app
-                        .getInteractionScope().getMode()));
+                byte actMode = app.getInteractionScope().getMode();
+                mode_tv.setText(InteractionScope.getModeStringRes(actMode));
 
-                white_captures_tv
-                        .setText("" + app.getGame().getCapturesWhite());
-                black_captures_tv
-                        .setText("" + app.getGame().getCapturesBlack());
-                int highlight_color = app.getResources().getColor(
-                        R.color.dividing_color);
+                white_captures_tv.setText("" + app.getGame().getCapturesWhite());
+                black_captures_tv.setText("" + app.getGame().getCapturesBlack());
+
+                int highlight_color = app.getResources().getColor(R.color.dividing_color);
                 int transparent = getResources().getColor(android.R.color.transparent);
-                white_info_container.setBackgroundColor(app.getGame()
-                        .isBlackToMove() && (!app.getGame().isFinished()) ? transparent
-                        : highlight_color);
-                black_info_container.setBackgroundColor(app.getGame()
-                        .isBlackToMove() || app.getGame().isFinished() ? highlight_color
-                        : transparent);
-                move_tv.setText(app.getResources().getString(R.string.move)
-                        + " " + app.getGame().getActMove().getMovePos());
+
+                boolean isWhitesMove = app.getGame().isBlackToMove() && (!app.getGame().isFinished());
+                white_info_container.setBackgroundColor(isWhitesMove ? transparent : highlight_color);
+                boolean isBlacksMove = app.getGame().isBlackToMove() || app.getGame().isFinished();
+                black_info_container.setBackgroundColor(isBlacksMove ? highlight_color : transparent);
+                move_tv.setText(app.getResources().getString(R.string.move) + app.getGame().getActMove().getMovePos());
 
             }
         });
