@@ -23,8 +23,8 @@ import org.ligi.gobandroid_hd.ui.gnugo.GnuGoHelper;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.tracedroid.logging.Log;
 
-public class InGameActionBarView2 extends LinearLayout implements
-        GoGame.GoGameChangeListener, DialogInterface {
+public class CustomActionBar extends LinearLayout implements
+GoGame.GoGameChangeListener, DialogInterface {
 
     private TextView white_captures_tv;
     private TextView black_captures_tv;
@@ -36,7 +36,7 @@ public class InGameActionBarView2 extends LinearLayout implements
     private App app;
     private Activity activity;
 
-    public InGameActionBarView2(Context ctx, AttributeSet attrs) {
+    public CustomActionBar(Context ctx, AttributeSet attrs) {
         super(ctx, attrs);
     }
 
@@ -52,7 +52,7 @@ public class InGameActionBarView2 extends LinearLayout implements
         app.getGame().removeGoGameChangeListener(this);
     }
 
-    public InGameActionBarView2(Activity _activity) {
+    public CustomActionBar(Activity _activity) {
         super(_activity);
 
         activity = _activity;
@@ -100,7 +100,7 @@ public class InGameActionBarView2 extends LinearLayout implements
 
                     @Override
                     public void onClick(View v) {
-                        listener.onClick(InGameActionBarView2.this, 0);
+                        listener.onClick(CustomActionBar.this, 0);
 
                     }
                 });

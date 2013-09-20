@@ -119,7 +119,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             sound_man = new GoSoundManager(this);
         }
 
-        View customNav = new InGameActionBarView2(this);
+        View customNav = new CustomActionBar(this);
 
         FragmentTransaction fragmentTransAction = this.getSupportFragmentManager().beginTransaction();
 
@@ -178,6 +178,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         handler.post(new Runnable() {
             @Override
             public void run() {
+
 
                 if (getApp().getInteractionScope().getTouchPosition() < 0) {
                     setFragment(getGameExtraFragment());
@@ -496,7 +497,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     @Override
     public void onPause() {
-        super.onPause();
+
         go_board.move_stone_mode = false;
         getApp().setGoActivityActivity(false);
 
@@ -529,7 +530,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                 Log.i("" + e);
             }
         }
-
+        super.onPause();
     }
 
     public boolean doAutosave() {
