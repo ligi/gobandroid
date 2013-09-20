@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -266,17 +265,22 @@ public class NavigationDrawer implements OnItemClickListener {
      * @return - weather we had to unzip files
      */
     public boolean unzipSGFifNeeded(Intent intent_after) {
-        String storrage_state = Environment.getExternalStorageState();
+        // we check for the tsumego path as the base path could already be there but  no valid tsumego
 
-        // we check for the tsumego path as the base path could already be there
-        // but
-        // no valid tsumego
-
-        if ((storrage_state.equals(Environment.MEDIA_MOUNTED) && (!(new File(getApp().getSettings().getTsumegoPath())).isDirectory()))) {
+        String tsumegoPath = getApp().getSettings().getTsumegoPath();
+        if (!(new File(tsumegoPath)).isDirectory()) {
             UnzipSGFsDialog.show(ctx, intent_after);
             return true;
         }
         return false;
+        /*
+        String storrage_state = Environment.getExternalStorageState();
+
+        if ((storrage_state.equals(Environment.MEDIA_MOUNTED) && (!(new File(getApp().getSettings().getTsumegoPath())).isDirectory()))) {
+            UnzipSGFsDialog.show(ctx, intent_after);
+            return true;
+        }*/
+
     }
 
 }
