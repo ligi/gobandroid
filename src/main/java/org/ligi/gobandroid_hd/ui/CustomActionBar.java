@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.ligi.axt.helpers.dialog.DialogDiscardingOnClickListener;
@@ -24,7 +25,7 @@ import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.tracedroid.logging.Log;
 
 public class CustomActionBar extends LinearLayout implements
-GoGame.GoGameChangeListener, DialogInterface {
+        GoGame.GoGameChangeListener, DialogInterface {
 
     private TextView white_captures_tv;
     private TextView black_captures_tv;
@@ -75,7 +76,6 @@ GoGame.GoGameChangeListener, DialogInterface {
 
                     @Override
                     public void onClick(View v) {
-                        // TODO Auto-generated method stub
                         showModePopup(v.getContext());
                     }
 
@@ -145,29 +145,31 @@ GoGame.GoGameChangeListener, DialogInterface {
     }
 
     private void showModePopup(Context ctx) {
-
-        LinearLayout content_view = new LinearLayout(ctx);
-        content_view.setOrientation(LinearLayout.VERTICAL);
+        ScrollView scrollView = new ScrollView(ctx);
+        LinearLayout contentView = new LinearLayout(ctx);
+        contentView.setOrientation(LinearLayout.VERTICAL);
         BitmapDrawableNoMinimumSize background = new BitmapDrawableNoMinimumSize(ctx.getResources(), R.drawable.wood_bg);
-        content_view.setBackgroundDrawable(background);
+        contentView.setBackgroundDrawable(background);
 
 
-        addModeItem(content_view, InteractionScope.MODE_SETUP, R.string.setup, R.drawable.preferences);
+        addModeItem(contentView, InteractionScope.MODE_SETUP, R.string.setup, R.drawable.preferences);
 
-        addModeItem(content_view, InteractionScope.MODE_RECORD, R.string.play, R.drawable.play);
+        addModeItem(contentView, InteractionScope.MODE_RECORD, R.string.play, R.drawable.play);
 
-        addModeItem(content_view, InteractionScope.MODE_EDIT, R.string.edit, R.drawable.dashboard_record);
+        addModeItem(contentView, InteractionScope.MODE_EDIT, R.string.edit, R.drawable.dashboard_record);
 
-        addModeItem(content_view, InteractionScope.MODE_COUNT, R.string.count, R.drawable.dashboard_score);
+        addModeItem(contentView, InteractionScope.MODE_COUNT, R.string.count, R.drawable.dashboard_score);
 
-        addModeItem(content_view, InteractionScope.MODE_REVIEW, R.string.review, R.drawable.dashboard_review);
-        addModeItem(content_view, InteractionScope.MODE_TELEVIZE, R.string.televize, R.drawable.gobandroid_tv);
-        addModeItem(content_view, InteractionScope.MODE_TSUMEGO, R.string.tsumego, R.drawable.dashboard_tsumego);
+        addModeItem(contentView, InteractionScope.MODE_REVIEW, R.string.review, R.drawable.dashboard_review);
+        addModeItem(contentView, InteractionScope.MODE_TELEVIZE, R.string.televize, R.drawable.gobandroid_tv);
+        addModeItem(contentView, InteractionScope.MODE_TSUMEGO, R.string.tsumego, R.drawable.dashboard_tsumego);
 
-        addModeItem(content_view, InteractionScope.MODE_GNUGO, R.string.gnugo, R.drawable.server);
+        addModeItem(contentView, InteractionScope.MODE_GNUGO, R.string.gnugo, R.drawable.server);
 
         BetterPopupWindow pop = new BetterPopupWindow(mode_tv);
-        pop.setContentView(content_view);
+
+        scrollView.addView(contentView);
+        pop.setContentView(scrollView);
 
         pop.showLikePopDownMenu();
     }
