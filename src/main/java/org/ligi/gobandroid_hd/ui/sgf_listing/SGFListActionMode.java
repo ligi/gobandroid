@@ -55,22 +55,24 @@ public class SGFListActionMode implements ActionMode.Callback {
             case R.id.menu_delete:
                 new AlertDialog.Builder(context).setMessage("Really delete " + fileName).setTitle("Delete?")
                         .setNegativeButton("NO", new DialogDiscardingOnClickListener())
-                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                File file = new File(fileName);
-                                AXT.at(file).deleteRecursive();
-                                refreshable.refresh();
-                            }
-                        })
-
+                        .setPositiveButton("YES", getFileOrDirRemovingOnClickListener())
                         .show();
-
                 return true;
 
             default:
                 return false;
         }
+    }
+
+    private DialogInterface.OnClickListener getFileOrDirRemovingOnClickListener() {
+        return new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                File file = new File(fileName);
+                AXT.at(file).deleteRecursive();
+                refreshable.refresh();
+            }
+        };
     }
 
     @Override
