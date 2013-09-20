@@ -38,7 +38,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-import org.ligi.androidhelper.AndroidHelper;
+import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -103,7 +103,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         interaction_scope = getApp().getInteractionScope();
         this.getSupportActionBar().setHomeButtonEnabled(true);
 
-        AndroidHelper.at(this).disableRotation();
+        AXT.at(this).disableRotation();
 
         if (getSettings().isWakeLockEnabled()) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);

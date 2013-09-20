@@ -24,8 +24,8 @@ import android.support.v4.app.Fragment;
 
 import com.actionbarsherlock.app.ActionBar;
 
-import org.ligi.androidhelper.adapters.LinkWithDescription;
-import org.ligi.androidhelper.adapters.LinkWithDescriptionAndTitle;
+import org.ligi.axt.adapters.LinkWithDescription;
+import org.ligi.axt.adapters.LinkWithDescriptionAndTitle;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;

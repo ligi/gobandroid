@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import org.ligi.androidhelper.AndroidHelper;
+import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.MetaDataFormater;
@@ -83,7 +83,7 @@ class ReviewPathViewAdapter extends BaseAdapter {
 
                 }
 
-                sgf_str = AndroidHelper.at(new File(base_fname)).loadToString();
+                sgf_str = AXT.at(new File(base_fname)).loadToString();
                 game = SGFReader.sgf2game(sgf_str, null, SGFReader.BREAKON_FIRSTMOVE);
                 SGFMetaData sgf_meta = new SGFMetaData(base_fname + SGFMetaData.FNAME_ENDING);
 

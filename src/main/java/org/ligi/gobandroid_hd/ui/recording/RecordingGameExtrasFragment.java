@@ -11,7 +11,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import org.ligi.androidhelper.simplifications.SimpleTextWatcher;
+import org.ligi.axt.simplifications.SimpleTextWatcher;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;

@@ -10,7 +10,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-import org.ligi.androidhelper.helpers.dialog.DialogDiscardingOnClickListener;
+import org.ligi.axt.AXT;
+import org.ligi.axt.helpers.dialog.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.Refreshable;
 import org.ligi.gobandroid_hd.ui.share.ShareAsAttachmentDialog;
@@ -57,7 +58,8 @@ public class SGFListActionMode implements ActionMode.Callback {
                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                new File(fileName).delete();
+                                File file = new File(fileName);
+                                AXT.at(file).deleteRecursive();
                                 refreshable.refresh();
                             }
                         })

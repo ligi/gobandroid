@@ -2,7 +2,7 @@ package org.ligi.gobandroid_hd.ui.review;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.ligi.androidhelper.AndroidHelper;
+import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.tracedroid.logging.Log;
 
@@ -37,8 +37,8 @@ public class SGFMetaData {
         meta_fname = fname;
 
         try {
-            Log.i("got json file " + AndroidHelper.at(new File(meta_fname)).loadToString());
-            JSONObject jObject = new JSONObject(AndroidHelper.at(new File(meta_fname)).loadToString());
+            Log.i("got json file " + AXT.at(new File(meta_fname)).loadToString());
+            JSONObject jObject = new JSONObject(AXT.at(new File(meta_fname)).loadToString());
 
             try {
                 rating = (Integer) jObject.getInt("rating");

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnClickListener;
+import org.ligi.axt.helpers.dialog.ActivityFinishingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;

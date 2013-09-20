@@ -7,8 +7,8 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-import org.ligi.androidhelper.adapters.LinkAndDescriptionAdapter;
-import org.ligi.androidhelper.adapters.LinkWithDescription;
+import org.ligi.axt.adapters.LinkAndDescriptionAdapter;
+import org.ligi.axt.adapters.LinkWithDescription;
 import org.ligi.gobandroid_hd.R;
 
 public class LinkListFragment extends ListFragment {

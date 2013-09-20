@@ -33,7 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.ligi.androidhelper.AndroidHelper;
+import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -126,7 +126,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         String res = "";
 
         if (url.startsWith("/")) {
-            return AndroidHelper.at(new File(url)).loadToString();
+            return AXT.at(new File(url)).loadToString();
         }
 
         return res;
@@ -144,7 +144,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
     public String uri2string(Uri intent_uri) throws IOException {
 
         if (intent_uri.toString().startsWith("/")) {
-            return AndroidHelper.at(new File(intent_uri.toString())).loadToString();
+            return AXT.at(new File(intent_uri.toString())).loadToString();
         }
 
         InputStream in;

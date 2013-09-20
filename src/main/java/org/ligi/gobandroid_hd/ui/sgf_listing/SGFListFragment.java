@@ -12,9 +12,9 @@ import android.widget.ListView;
 
 import com.actionbarsherlock.view.ActionMode;
 
-import org.ligi.androidhelper.AndroidHelper;
-import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnCancelListener;
-import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnClickListener;
+import org.ligi.axt.AXT;
+import org.ligi.axt.helpers.dialog.ActivityFinishingOnCancelListener;
+import org.ligi.axt.helpers.dialog.ActivityFinishingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -187,7 +187,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             String[] undone_arr = (String[]) undone.toArray(new String[undone.size()]), done_arr = (String[]) done.toArray(new String[done.size()]);
             Arrays.sort(undone_arr);
             Arrays.sort(done_arr);
-            menu_items = AndroidHelper.at(undone_arr).combineWith(done_arr);
+            menu_items = AXT.at(undone_arr).combineWith(done_arr);
         } else {
             menu_items = (String[]) fileNames.toArray(new String[fileNames.size()]);
             Arrays.sort(menu_items);

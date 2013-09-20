@@ -208,7 +208,7 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
         // is a Legend in the first place
         /** TODO ANDROIDTUDIO
          *
-         AndroidHelper.at(doLegendCheckBoxPref)
+         AXT.at(doLegendCheckBoxPref)
          new SetPreferenceEnabledByCheckBoxPreferenceState(doLegendCheckBoxPref).addPreference2SetEnable(SGFLegendCheckBoxPref);
          */
         /*PreferenceCategory soundPrefCat = new PreferenceCategory(this);
