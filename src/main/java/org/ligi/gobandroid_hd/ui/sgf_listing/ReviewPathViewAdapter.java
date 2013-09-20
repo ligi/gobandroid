@@ -95,8 +95,9 @@ class ReviewPathViewAdapter extends BaseAdapter {
                         if (meta.getWhitePlayerString().equals("")) {
                             ((ImageView) v.findViewById(R.id.player_white_stone_img)).setVisibility(View.GONE);
                             player_white_tv.setVisibility(View.GONE);
-                        } else
+                        } else {
                             player_white_tv.setText(meta.getWhitePlayerString());
+                        }
                     }
 
                     TextView player_black_tv = (TextView) v.findViewById(R.id.player_black);
@@ -106,8 +107,9 @@ class ReviewPathViewAdapter extends BaseAdapter {
                         if (meta.getBlackPlayerString().equals("")) {
                             ((ImageView) v.findViewById(R.id.player_black_stone_img)).setVisibility(View.GONE);
                             player_black_tv.setVisibility(View.GONE);
-                        } else
+                        } else {
                             player_black_tv.setText(meta.getBlackPlayerString());
+                        }
                     }
 
                     TextView title_tv = (TextView) v.findViewById(R.id.game_extra_infos);
@@ -117,10 +119,11 @@ class ReviewPathViewAdapter extends BaseAdapter {
                     }
 
                     RatingBar rating_bar = (RatingBar) v.findViewById(R.id.game_rating);
-                    if (!sgf_meta.hasData())
+                    if (!sgf_meta.hasData()) {
                         rating_bar.setVisibility(View.GONE);
-                    else if (sgf_meta.getRating() != null)
+                    } else if (sgf_meta.getRating() != null) {
                         rating_bar.setRating(.5f * sgf_meta.getRating());
+                    }
                 }
 
             } catch (IOException e) {

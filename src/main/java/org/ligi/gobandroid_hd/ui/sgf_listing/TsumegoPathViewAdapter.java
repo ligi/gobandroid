@@ -89,7 +89,6 @@ class TsumegoPathViewAdapter extends BaseAdapter {
             sgf_str = gl.getSGFString();
         } else {
             try {
-
                 sgf_str = AndroidHelper.at(new File(base_fname)).loadToString();
             } catch (IOException e) {
             }

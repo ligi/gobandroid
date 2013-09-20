@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
+import com.actionbarsherlock.view.ActionMode;
+
 import org.ligi.androidhelper.AndroidHelper;
 import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnCancelListener;
 import org.ligi.androidhelper.helpers.dialog.ActivityFinishingOnClickListener;
@@ -34,6 +36,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
     private String dir;
     private BaseAdapter adapter;
     private File[] files;
+    private int lastSelectedPosition;
 
     public SGFListFragment() {
     }
@@ -71,14 +74,25 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);    //To change body of overridden methods use File | Settings | File Templates.
 
-        getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        getListView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
         this.getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                getSherlockActivity().startActionMode(new SGFListActionMode(SGFListFragment.this.getActivity(), dir + "/" + menu_items[position], SGFListFragment.this));
+                getSherlockActivity().startActionMode(new SGFListActionMode(SGFListFragment.this.getActivity(), dir + "/" + menu_items[position], SGFListFragment.this) {
+                    @Override
+                    public void onDestroyActionMode(ActionMode mode) {
+                        getListView().setItemChecked(lastSelectedPosition, false);
+                        super.onDestroyActionMode(mode);
+                    }
+                });
                 getListView().setItemChecked(position, true);
+                lastSelectedPosition = position;
+                parent.setSelection(position);
+                //getListView().getCheckedItemIds();
+                //getListView().invalidate();
+                view.refreshDrawableState();
                 return true;
             }
         });
