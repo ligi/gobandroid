@@ -22,17 +22,19 @@ public class SGFListActionMode implements ActionMode.Callback {
     final Context context;
     final String fileName;
     final Refreshable refreshable;
+    final int menuResource;
 
-    public SGFListActionMode(Context context, String fileName, Refreshable refreshable) {
+    public SGFListActionMode(Context context, String fileName, Refreshable refreshable, int menuResource) {
         this.context = context;
         this.fileName = fileName;
         this.refreshable = refreshable;
+        this.menuResource = menuResource;
     }
 
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         MenuInflater inflater = mode.getMenuInflater();
-        inflater.inflate(R.menu.list_sgf_action_mode, menu);
+        inflater.inflate(menuResource, menu);
         return true;
     }
 

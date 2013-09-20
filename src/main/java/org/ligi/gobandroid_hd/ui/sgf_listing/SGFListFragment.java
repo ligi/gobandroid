@@ -80,18 +80,30 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                getSherlockActivity().startActionMode(new SGFListActionMode(SGFListFragment.this.getActivity(), dir + "/" + menu_items[position], SGFListFragment.this) {
-                    @Override
-                    public void onDestroyActionMode(ActionMode mode) {
-                        getListView().setItemChecked(lastSelectedPosition, false);
-                        super.onDestroyActionMode(mode);
-                    }
-                });
+                getSherlockActivity().startActionMode(getActionMode(position));
                 getListView().setItemChecked(position, true);
                 lastSelectedPosition = position;
                 parent.setSelection(position);
                 view.refreshDrawableState();
                 return true;
+            }
+
+            private SGFListActionMode getActionMode(final int position) {
+                String fileName = dir + "/" + menu_items[position];
+                File file = new File(fileName);
+                int menuResource = R.menu.list_file_sgf_action_mode;
+
+                if (file.isDirectory()) {
+                    menuResource = R.menu.list_dir_sgf_action_mode;
+                }
+
+                return new SGFListActionMode(SGFListFragment.this.getActivity(), fileName, SGFListFragment.this, menuResource) {
+                    @Override
+                    public void onDestroyActionMode(ActionMode mode) {
+                        getListView().setItemChecked(lastSelectedPosition, false);
+                        super.onDestroyActionMode(mode);
+                    }
+                };
             }
         });
     }
