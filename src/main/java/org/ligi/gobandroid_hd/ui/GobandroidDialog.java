@@ -17,8 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.androidquery.AQuery;
-
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 
@@ -38,7 +36,6 @@ public class GobandroidDialog extends Dialog {
     private Button negative_btn;
 
     private LinearLayout button_container;
-    private AQuery mAQ;
 
     public GobandroidDialog(Context context) {
         super(context);
@@ -184,10 +181,4 @@ public class GobandroidDialog extends Dialog {
         return negative_btn;
     }
 
-    protected AQuery getAQ() {
-        if (mAQ == null) {
-            mAQ = new AQuery(getContext());
-        }
-        return mAQ;
-    }
 }

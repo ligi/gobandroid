@@ -13,8 +13,6 @@ import android.view.WindowManager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.androidquery.AQuery;
-import com.google.android.gms.plus.GooglePlusUtil;
 
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.PlayServicesIntegration;
@@ -26,7 +24,6 @@ import java.lang.reflect.Field;
 
 public class GobandroidFragmentActivity extends SherlockFragmentActivity {
 
-    private AQuery mAQ;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout drawerLayout;
 
@@ -249,9 +246,10 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
         getPlusClient().writeMoment(moment);
          */
 
+        /*
         final int errorCode = GooglePlusUtil.checkGooglePlusApp(this);
         if (errorCode == GooglePlusUtil.SUCCESS) {
-            /*PlusShare.Builder builder = new PlusShare.Builder(this, mPlusClient);
+            PlusShare.Builder builder = new PlusShare.Builder(this, mPlusClient);
 
             // Set call-to-action metadata.
             builder.addCallToAction(
@@ -290,7 +288,7 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
                     .getIntent();
 
             startActivityForResult(shareIntent, 0);
-              */
+
             //workingPostToGPlus();
 
 
@@ -298,21 +296,13 @@ public class GobandroidFragmentActivity extends SherlockFragmentActivity {
             // Prompt the user to install the Google+ app.
             GooglePlusUtil.getErrorDialog(errorCode, this, 0).show();
         }
-
+    */
 
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int responseCode, Intent intent) {
         playServicesIntegration.onActivityResult(requestCode, responseCode, intent);
-    }
-
-    protected AQuery getAQ() {
-        if (mAQ == null) {
-            mAQ = new AQuery(this);
-        }
-        return mAQ;
     }
 
 }
