@@ -24,8 +24,6 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 
-import java.io.File;
-
 /**
  * Class to store and access Preferences used in Gobandroid
  *
@@ -193,30 +191,6 @@ public class GoPrefs {
         } catch (Exception e) {
             return Byte.parseByte(level_str.substring(0, 1));
         }
-    }
-
-    /**
-     * @return all available skins in the skin base path
-     */
-    public static String[] getAllSkinNames() {
-        File f = new File(GOSkin.skin_base_path);
-        int pos = 0;
-
-        File[] file_list;
-
-        if (f.exists())
-            file_list = f.listFiles();
-        else
-            file_list = new File[0];
-
-        String[] skin_strings = new String[1 + file_list.length];
-        skin_strings[pos++] = "no Skin";
-
-        for (File skin : file_list)
-            skin_strings[pos++] = skin.getName();
-
-        return skin_strings;
-
     }
 
     public static String[] getAllAILevelStrings() {

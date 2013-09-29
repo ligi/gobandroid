@@ -28,7 +28,9 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
 
     private String replaceLast(String string, String from, String to) {
         int lastIndex = string.lastIndexOf(from);
-        if (lastIndex < 0) return string;
+        if (lastIndex < 0) {
+            return string;
+        }
         String tail = string.substring(lastIndex).replaceFirst(from, to);
         return string.substring(0, lastIndex) + tail;
     }
@@ -41,6 +43,34 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
      * @return the filename found
      */
     private String calcNextTsumego(String fname) {
+        String old_index = getLastNumberInStringOrNull(fname);
+
+        if (old_index == null) {
+            return null;
+        }
+
+        int index = Integer.parseInt(old_index);
+
+        String new_index = "";
+        // add the leading zeroes
+        for (int i = 0; i < old_index.length() - ((index + 1) / 10 + 1); i++) {
+            new_index += "0";
+        }
+
+        new_index += "" + (index + 1);
+
+        String guessed_fname_str = replaceLast(fname, old_index, new_index);
+
+        // check if it exists
+        if (!new File(guessed_fname_str).exists()) {
+            return null;
+        }
+
+        return guessed_fname_str;
+
+    }
+
+    private String getLastNumberInStringOrNull(String fname) {
         Pattern p = Pattern.compile("\\d+");
         Matcher m = p.matcher(fname);
 
@@ -49,33 +79,19 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
             old_index = m.group();
         }
 
-        // found no index -> exit 
-        if (old_index.equals(""))
+        // found no index -> exit
+        if (old_index.equals("")) {
             return null;
+        }
 
-        int index = Integer.parseInt(old_index);
-
-        String new_index = "";
-        // add the leading zeroes
-        for (int i = 0; i < old_index.length() - ((index + 1) / 10 + 1); i++)
-            new_index += "0";
-
-        new_index += "" + (index + 1);
-
-        String guessed_fname_str = replaceLast(fname, old_index, new_index);
-
-        // check if it exists
-        if (!new File(guessed_fname_str).exists())
-            return null;
-
-        return guessed_fname_str;
-
+        return old_index;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i("creating tsumego");
         res = inflater.inflate(R.layout.game_extra_tsumego, null);
+
         correct_view = (TextView) res.findViewById(R.id.tsumego_correct_view);
         off_path_view = res.findViewById(R.id.tsumego_off_path_view);
         comment = (TextView) res.findViewById(R.id.game_comment);
@@ -86,7 +102,6 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
         setCorrectVisibility(correct_visible);
 
         game = getGame();
-
 
         String next_tsumego_url_str = calcNextTsumego(game.getMetaData().getFileName().replaceFirst("file://", ""));
 
@@ -102,25 +117,28 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
         // the 10 is a bit of a magic number - just want to show comments that
         // have extras here to prevent double comment written - but sometimes
         // there is more info in the comment
-        if (!correct_visible || game.getActMove().getComment().length() > 10) {
+        if (!correct_visible && game.getActMove().getComment().length() > 10) {
             comment.setText(game.getActMove().getComment());
-            if (!game.getActMove().getComment().equals(""))
+            if (!game.getActMove().getComment().equals("")) {
                 CommentHelper.linkifyCommentTextView(comment);
+            }
         }
+
         return res;
     }
 
     public void setOffPathVisibility(boolean visible) {
         off_path_visible = visible;
-        Log.i("visible" + visible);
-        if (off_path_view != null)
+        if (off_path_view != null) {
             off_path_view.setVisibility(visible ? TextView.VISIBLE : TextView.GONE);
+        }
     }
 
     public void setCorrectVisibility(boolean visible) {
         correct_visible = visible;
-        if (correct_view != null)
+        if (correct_view != null) {
             correct_view.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
     }
 
 }
