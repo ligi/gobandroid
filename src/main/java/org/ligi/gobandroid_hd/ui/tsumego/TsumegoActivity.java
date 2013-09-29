@@ -157,8 +157,9 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
     @Override
     public Fragment getGameExtraFragment() {
-        // if(myTsumegoExtrasFragment==null)
-        myTsumegoExtrasFragment = new TsumegoGameExtrasFragment();
+        if (myTsumegoExtrasFragment == null) {
+            myTsumegoExtrasFragment = new TsumegoGameExtrasFragment();
+        }
 
         return myTsumegoExtrasFragment;
     }
