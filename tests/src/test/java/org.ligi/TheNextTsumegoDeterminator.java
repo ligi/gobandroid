@@ -36,6 +36,13 @@ public class TheNextTsumegoDeterminator {
     }
 
     @org.junit.Test
+    public void should_not_expolde_if_no_number_is_in_filename() throws Exception {
+        String result = NextTsumegoDeterminator.calcNextTsumego("FOO");
+
+        assertThat(result).isEqualTo(null);
+    }
+
+    @org.junit.Test
     public void should_find_next_for_single_digit_when_there() throws Exception {
         new File(SINGLE_DIGIT_FILENAME1).createNewFile();
         new File(SINGLE_DIGIT_FILENAME2).createNewFile();
@@ -94,5 +101,7 @@ public class TheNextTsumegoDeterminator {
 
         assertThat(result).isEqualTo(null);
     }
+
+
 
 }
