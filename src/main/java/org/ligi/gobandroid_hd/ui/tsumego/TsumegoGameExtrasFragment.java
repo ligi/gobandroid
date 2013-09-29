@@ -2,6 +2,7 @@ package org.ligi.gobandroid_hd.ui.tsumego;
 
 import android.os.Bundle;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,6 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.fragments.CommentHelper;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
-import org.ligi.tracedroid.logging.Log;
 
 import java.io.File;
 import java.util.regex.Matcher;
@@ -20,11 +20,10 @@ import java.util.regex.Pattern;
 
 public class TsumegoGameExtrasFragment extends GobandroidFragment {
 
-    private TextView correct_view;
-    private View off_path_view, res;
+    private TextView correctView;
+    private View OffPathView, res;
     private boolean off_path_visible = false, correct_visible = false;
-    private TextView comment;
-    private GoGame game;
+    private TextView commentView;
 
     private String replaceLast(String string, String from, String to) {
         int lastIndex = string.lastIndexOf(from);
@@ -88,57 +87,73 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("creating tsumego");
-        res = inflater.inflate(R.layout.game_extra_tsumego, null);
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
 
-        correct_view = (TextView) res.findViewById(R.id.tsumego_correct_view);
-        off_path_view = res.findViewById(R.id.tsumego_off_path_view);
-        comment = (TextView) res.findViewById(R.id.game_comment);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        updateUI();
+    }
 
-
-        // hide both views by default
-        setOffPathVisibility(off_path_visible);
-        setCorrectVisibility(correct_visible);
-
-        game = getGame();
-
-        String next_tsumego_url_str = calcNextTsumego(game.getMetaData().getFileName().replaceFirst("file://", ""));
-
-        if (next_tsumego_url_str != null) {
-
-            correct_view.setMovementMethod(LinkMovementMethod.getInstance());
-
-            String text = getString(R.string.tsumego_correct) + " <a href='tsumego://" + next_tsumego_url_str + "'>" + getString(R.string.next_tsumego) + "</a>";
-            correct_view.setText(Html.fromHtml(text));
+    private void updateUI() {
+        if (OffPathView == null || correctView == null || getActivity() == null) { // views not yet created
+            return; // will come back later
         }
 
+        final GoGame game = getGame();
+
+        OffPathView.setVisibility(off_path_visible ? TextView.VISIBLE : TextView.GONE);
+
+        if (correct_visible) {
+            correctView.setVisibility(View.VISIBLE);
+            String next_tsumego_url_str = calcNextTsumego(game.getMetaData().getFileName().replaceFirst("file://", ""));
+
+            if (next_tsumego_url_str != null) {
+
+                correctView.setMovementMethod(LinkMovementMethod.getInstance());
+
+                String text = getString(R.string.tsumego_correct) + " <a href='tsumego://" + next_tsumego_url_str + "'>" + getString(R.string.next_tsumego) + "</a>" + next_tsumego_url_str;
+                correctView.setText(Html.fromHtml(text));
+            } else {
+                correctView.setText("Correct !-) But sadly no more tsumegos in this folder");
+            }
+        } else {
+            correctView.setVisibility(View.GONE);
+        }
 
         // the 10 is a bit of a magic number - just want to show comments that
-        // have extras here to prevent double comment written - but sometimes
-        // there is more info in the comment
+        // have extras here to prevent double commentView written - but sometimes
+        // there is more info in the commentView
         if (!correct_visible && game.getActMove().getComment().length() > 10) {
-            comment.setText(game.getActMove().getComment());
-            if (!game.getActMove().getComment().equals("")) {
-                CommentHelper.linkifyCommentTextView(comment);
+            commentView.setText(game.getActMove().getComment());
+            if (!TextUtils.isEmpty(game.getActMove().getComment())) {
+                CommentHelper.linkifyCommentTextView(commentView);
             }
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        res = inflater.inflate(R.layout.game_extra_tsumego, null);
+
+        correctView = (TextView) res.findViewById(R.id.tsumego_correct_view);
+        OffPathView = res.findViewById(R.id.tsumego_off_path_view);
+        commentView = (TextView) res.findViewById(R.id.game_comment);
 
         return res;
     }
 
     public void setOffPathVisibility(boolean visible) {
         off_path_visible = visible;
-        if (off_path_view != null) {
-            off_path_view.setVisibility(visible ? TextView.VISIBLE : TextView.GONE);
-        }
+        updateUI();
     }
 
     public void setCorrectVisibility(boolean visible) {
         correct_visible = visible;
-        if (correct_view != null) {
-            correct_view.setVisibility(visible ? View.VISIBLE : View.GONE);
-        }
+        updateUI();
     }
 
 }

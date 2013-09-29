@@ -165,11 +165,8 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
     }
 
     private boolean isCorrectMove(GoMove move) {
-        return (move.getComment().trim().toUpperCase().startsWith("CORRECT") || // gogameguru
-                // style
-                // act_mve.getComment().trim().toUpperCase().startsWith("RIGHT") || //
-                // goproblem.com
-                move.getComment().contains("RIGHT") // goproblem.com
+        return (move.getComment().trim().toUpperCase().startsWith("CORRECT") || // gogameguru style
+                move.getComment().toUpperCase().contains("RIGHT") // goproblem.com style
         );
     }
 
