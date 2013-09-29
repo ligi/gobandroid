@@ -15,7 +15,6 @@ public class GoTerminologyDialog extends GobandroidDialog {
     public final static HashMap<String, Integer> getTerm2resHashMap() {
         return new HashMap<String, Integer>() {
             private static final long serialVersionUID = -8206448225904656388L;
-
             {
                 put("joseki", R.string.goterm_joseki);
                 put("miai", R.string.goterm_miai);
@@ -35,17 +34,14 @@ public class GoTerminologyDialog extends GobandroidDialog {
 
         TextView tv = (TextView) this.findViewById(R.id.go_terms_text);
 
-        if (getTerm2resHashMap().containsKey(term))
+        if (getTerm2resHashMap().containsKey(term)) {
             tv.setText(getTerm2resHashMap().get(term));
-        else {
+        } else {
             tv.setText("no Definition found");
             Log.w("no definition found for " + term);
         }
 
         Linkify.addLinks(tv, Linkify.ALL);
-
-        // ((Button)this.findViewById(R.id.terms_ok_btn)).setOnClickListener(new
-        // ActivityFinishOnViewClickListener(this));
 
     }
 
