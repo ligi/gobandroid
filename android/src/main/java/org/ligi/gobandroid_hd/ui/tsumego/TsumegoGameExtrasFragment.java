@@ -25,66 +25,7 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
     private boolean off_path_visible = false, correct_visible = false;
     private TextView commentView;
 
-    private String replaceLast(String string, String from, String to) {
-        int lastIndex = string.lastIndexOf(from);
-        if (lastIndex < 0) {
-            return string;
-        }
-        String tail = string.substring(lastIndex).replaceFirst(from, to);
-        return string.substring(0, lastIndex) + tail;
-    }
 
-    /**
-     * try to find next tsumego based on filename
-     * searching the last number and incrementing it
-     *
-     * @param fname
-     * @return the filename found
-     */
-    private String calcNextTsumego(String fname) {
-        String old_index = getLastNumberInStringOrNull(fname);
-
-        if (old_index == null) {
-            return null;
-        }
-
-        int index = Integer.parseInt(old_index);
-
-        String new_index = "";
-        // add the leading zeroes
-        for (int i = 0; i < old_index.length() - ((index + 1) / 10 + 1); i++) {
-            new_index += "0";
-        }
-
-        new_index += "" + (index + 1);
-
-        String guessed_fname_str = replaceLast(fname, old_index, new_index);
-
-        // check if it exists
-        if (!new File(guessed_fname_str).exists()) {
-            return null;
-        }
-
-        return guessed_fname_str;
-
-    }
-
-    private String getLastNumberInStringOrNull(String fname) {
-        Pattern p = Pattern.compile("\\d+");
-        Matcher m = p.matcher(fname);
-
-        String old_index = "";
-        while (m.find()) {
-            old_index = m.group();
-        }
-
-        // found no index -> exit
-        if (old_index.equals("")) {
-            return null;
-        }
-
-        return old_index;
-    }
 
     @Override
     public void onResume() {
@@ -103,7 +44,7 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
 
         if (correct_visible) {
             correctView.setVisibility(View.VISIBLE);
-            String next_tsumego_url_str = calcNextTsumego(game.getMetaData().getFileName().replaceFirst("file://", ""));
+            String next_tsumego_url_str = NextTsumegoDeterminator.calcNextTsumego(game.getMetaData().getFileName().replaceFirst("file://", ""));
 
             if (next_tsumego_url_str != null) {
 
