@@ -92,12 +92,6 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
         updateUI();
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        updateUI();
-    }
-
     private void updateUI() {
         if (OffPathView == null || correctView == null || getActivity() == null) { // views not yet created
             return; // will come back later
