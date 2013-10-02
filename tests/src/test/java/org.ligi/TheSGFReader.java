@@ -3,6 +3,7 @@ package org.ligi;
 import org.junit.runner.RunWith;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
+import org.ligi.util.SGFProvider;
 import org.robolectric.RobolectricTestRunner;
 
 import static org.fest.assertions.api.Assertions.assertThat;

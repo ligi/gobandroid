@@ -887,4 +887,53 @@ public class GoGame {
     public String getCloudRole() {
         return cloud_role;
     }
+
+    /**
+     * just content as state is not checked ( position in game )
+     * <p/>
+     * checks:
+     * - size
+     * - moves
+     * - metadata ( TODO )
+     *
+     * @param other
+     * @return
+     */
+    public boolean isContentEqualTo(GoGame other) {
+        if (other.getBoardSize() != getBoardSize()) {
+            return false;
+        }
+
+        return compareMovesRecusive(getFirstMove(), other.getFirstMove());
+    }
+
+    public boolean hasNextMove(GoMove move1, GoMove move2) {
+
+        for (GoMove next_move : move1.getNextMoveVariations()) {
+            if (next_move.isContentEqual(move2)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean compareMovesRecusive(GoMove move1, GoMove move2) {
+        if (!move1.isContentEqual(move2)) {
+            return false;
+        }
+
+        if (move1.hasNextMove() != move2.hasNextMove()) {
+            return false;
+        }
+
+        if (move1.hasNextMove()) {
+            for (GoMove next_move : move1.getNextMoveVariations()) {
+                if (!hasNextMove(move1, next_move)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 }

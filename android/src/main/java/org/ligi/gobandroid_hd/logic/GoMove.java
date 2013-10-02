@@ -20,7 +20,6 @@
 package org.ligi.gobandroid_hd.logic;
 
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
-import org.ligi.tracedroid.logging.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +103,6 @@ public class GoMove {
 
     public void addNextMove(GoMove move) {
         next_move_variations.add(move);
-        Log.i("var count" + next_move_variations.size());
     }
 
     public void setToPassMove() {
@@ -196,9 +194,11 @@ public class GoMove {
     }
 
     public GoMarker getGoMarker() {
-        for (GoMarker marker : parent.getMarkers())
-            if ((this.getX() == marker.getX()) && (this.getY() == marker.getY()))
+        for (GoMarker marker : parent.getMarkers()) {
+            if ((this.getX() == marker.getX()) && (this.getY() == marker.getY())) {
                 return marker;
+            }
+        }
         return null;
     }
 
@@ -228,4 +228,35 @@ public class GoMove {
         this.black_to_move = black_to_move;
     }
 
+    public boolean isContentEqual(GoMove other) {
+        if (!other.isOnXY(x, y)) {
+            return false;
+        }
+
+        if (!comment.equals(other.getComment())) {
+            return false;
+        }
+
+        if (getMarkers().size() != other.getMarkers().size()) {
+            return false;
+        }
+
+        for (GoMarker marker : getMarkers()) {
+            if (!other.getMarkers().contains(marker)) {
+                return false;
+            }
+        }
+
+        if (isBlackToMove() != other.isBlackToMove()) {
+            return false;
+        }
+
+        if (getMovePos() != getMovePos()) {
+            return false;
+        }
+
+        // TODO check if we are complete
+
+        return true;
+    }
 }

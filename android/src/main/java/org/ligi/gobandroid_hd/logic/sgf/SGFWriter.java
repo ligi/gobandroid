@@ -26,14 +26,14 @@ public class SGFWriter {
     }
 
     private static String getSGFSnippet(String cmd, String param) {
-        if ((param == null) || (param.equals("")) || (cmd == null) || (cmd.equals("")))
+        if ((param == null) || (param.equals("")) || (cmd == null) || (cmd.equals(""))) {
             return "";
+        }
         return cmd + "[" + escapeSGF(param) + "]";
     }
 
     public static String game2sgf(GoGame game) {
-        String res = "";
-        res = "(;FF[4]GM[1]AP[gobandroid:0]"; // header
+        String res = "(;FF[4]GM[1]AP[gobandroid:0]"; // header
         res += getSGFSnippet("SZ", "" + game.getBoardSize()); // board_size;
         res += getSGFSnippet("GN", escapeSGF(game.getMetaData().getName()));
         res += getSGFSnippet("PB", escapeSGF(game.getMetaData().getBlackName()));
@@ -45,12 +45,15 @@ public class SGFWriter {
         res += getSGFSnippet("SO", escapeSGF(game.getMetaData().getSource()));
         res += "\n";
 
-        for (int x = 0; x < game.getHandicapBoard().getSize(); x++)
-            for (int y = 0; y < game.getHandicapBoard().getSize(); y++)
-                if (game.getHandicapBoard().isCellWhite(x, y))
+        for (int x = 0; x < game.getHandicapBoard().getSize(); x++) {
+            for (int y = 0; y < game.getHandicapBoard().getSize(); y++) {
+                if (game.getHandicapBoard().isCellWhite(x, y)) {
                     res += "AW" + SGFWriter.coords2SGFFragment(x, y) + "\n";
-                else if (game.getHandicapBoard().isCellBlack(x, y))
+                } else if (game.getHandicapBoard().isCellBlack(x, y)) {
                     res += "AB" + SGFWriter.coords2SGFFragment(x, y) + "\n";
+                }
+            }
+        }
 
         res += SGFWriter.moves2string(game.getFirstMove()) + ")";
 
@@ -64,6 +67,7 @@ public class SGFWriter {
      * @param move - the start move
      * @return
      */
+
     static String moves2string(GoMove move) {
         String res = "";
 
@@ -100,11 +104,13 @@ public class SGFWriter {
             GoMove next_move = null;
 
             if (act_move.hasNextMove()) {
-                if (act_move.hasNextMoveVariations())
-                    for (GoMove var : act_move.getNextMoveVariations())
+                if (act_move.hasNextMoveVariations()) {
+                    for (GoMove var : act_move.getNextMoveVariations()) {
                         res += "(" + moves2string(var) + ")";
-                else
+                    }
+                } else {
                     next_move = act_move.getnextMove(0);
+                }
             }
 
             act_move = next_move;
@@ -120,26 +126,22 @@ public class SGFWriter {
 
         File f = new File(fname);
 
-        if (f.isDirectory())
+        if (f.isDirectory()) {
             throw new IllegalArgumentException("cannot write - fname is a directory");
+        }
 
-        if (f.getParentFile() == null) // not really sure when this can be the
+        if (f.getParentFile() == null) { // not really sure when this can be the
             // case ( perhaps only / ) - but the doc
             // says it can be null and I would get
             // NPE then
             throw new IllegalArgumentException("bad filename " + fname);
+        }
 
-        if (f.getParentFile() != null && !f.getParentFile().isDirectory()) // if
-            // the
-            // path
-            // is
-            // not
-            // there
-            // yet
+        if (f.getParentFile() != null && !f.getParentFile().isDirectory()) { // if  the  path is not there yet
             f.getParentFile().mkdirs();
+        }
 
         try {
-            // f=new File(path+ "/"+fname);
             f.createNewFile();
 
             FileWriter sgf_writer = new FileWriter(f);
@@ -157,6 +159,5 @@ public class SGFWriter {
 
         game.getMetaData().setFileName(fname);
         return true;
-
     }
 }

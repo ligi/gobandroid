@@ -49,4 +49,26 @@ public class GoMarker {
         return text;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof GoMarker)) {
+            return false;
+        }
+
+        GoMarker otherMarker = (GoMarker) o;
+
+        if (!getText().equals(otherMarker.getText())) {
+            return false;
+        }
+
+        if (getX() != otherMarker.getX()) {
+            return false;
+        }
+
+        if (getY() != otherMarker.getY()) {
+            return false;
+        }
+
+        return true; // If we reached this place we can assume the Markers are the same
+    }
 }
