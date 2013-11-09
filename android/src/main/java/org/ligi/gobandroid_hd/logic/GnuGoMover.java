@@ -167,16 +167,20 @@ public class GnuGoMover implements Runnable {
                     // set the size
                     gnu_service.processGTP("boardsize " + game.getBoardSize());
 
-                    for (byte x = 0; x < game.getBoardSize(); x++)
-                        for (byte y = 0; y < game.getBoardSize(); y++)
-                            if (game.getHandicapBoard().isCellBlack(x, y))
+                    for (byte x = 0; x < game.getBoardSize(); x++) {
+                        for (byte y = 0; y < game.getBoardSize(); y++) {
+                            if (game.getHandicapBoard().isCellBlack(x, y)) {
                                 gnu_service.processGTP("black " + coordinates2gtpstr(x, y));
+                            }
+                        }
+                    }
                     Log.i("setting level " + gnu_service.processGTP("level " + level));
                     gnugo_size_set = true;
                 } catch (RemoteException e) {
                 }
 
             if (isMoversMove()) {
+                long startTime = System.currentTimeMillis();
                 thinking = true;
                 if (game.isBlackToMove()) {
                     try {
@@ -212,7 +216,8 @@ public class GnuGoMover implements Runnable {
                     } catch (RemoteException e) {
                     }
                 }
-
+                long time_spent = System.currentTimeMillis() - startTime;
+                Log.i("TimeSpent", "" + time_spent + " - " + (time_spent / 1000f));
                 thinking = false;
             }
 
