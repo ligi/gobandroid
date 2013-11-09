@@ -9,6 +9,6 @@ import org.ligi.gobandroid_hd.logic.GnuGoMover;
 public class GnuGoHelper {
 
     public static boolean isGnuGoAvail(Context ctx) {
-        return (AXT.at(new Intent(GnuGoMover.intent_action_name)).isIntentAvailable(ctx.getPackageManager(), 0));
+        return (AXT.at(new Intent(GnuGoMover.intent_action_name)).isServiceAvailable(ctx.getPackageManager(), 0));
     }
 }
