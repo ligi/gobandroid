@@ -247,4 +247,6 @@
     <string name="drawer_close">close drawer</string>
     <string name="end_review_ok_button">end review</string>
     <string name="end_review_stay_button">stay</string>
+    <string name="del_sgfmeta">clear</string>
+    <string name="del_sgfmeta_prompt">Are you sure to delete all sgfmeta files in this folder?</string>
 </resources>
