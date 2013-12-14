@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui.sgf_listing;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -216,4 +217,44 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
         return (App) getActivity().getApplicationContext();
     }
 
+    public void delete_sgfmeta() {
+        Log.i("delete_sgfmeta");
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity()).setTitle(R.string.del_sgfmeta);
+        alert.setMessage(R.string.del_sgfmeta_prompt);
+
+        if (dir == null) {
+            alert.setMessage(getResources().getString(R.string.sgf_path_invalid) + " " + dir).show();
+            return;
+        }
+
+        File dir_file = new File(dir);
+        files = new File(dir).listFiles();
+
+        if (files == null) {
+            alert.setMessage(getResources().getString(R.string.there_are_no_files_in) + " " + dir_file.getAbsolutePath()).show();
+            return;
+        }
+
+        alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                dialog.dismiss();
+                for (File file : files) {
+                    if (file.getName().endsWith(SGFMetaData.FNAME_ENDING)) {
+                        file.delete();
+                    }
+                }
+                refresh();
+            }
+        });
+
+        alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                dialog.dismiss();
+            }
+        });
+
+        alert.create().show();
+    }
 }

@@ -135,4 +135,7 @@
     <string name="enter_your_comments_here">请在此输入您的评注</string>
     <string name="keep_variant_">保留分支变化图吗？</string>
     <string name="numbered_end">直接显示正解图</string>
+    <string name="del_sgfmeta">清除</string>
+    <string name="del_sgfmeta_prompt">确认要清除此目录记录的结果吗?</string>
+
 </resources>

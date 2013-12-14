@@ -7,6 +7,8 @@ out/
 bin/
 gen/
 gobandroid.iml
+android/android.iml
+tests/tests.iml
 gobandroid.properties
 gobandroid.xml
 module_gobandroid.xml  
