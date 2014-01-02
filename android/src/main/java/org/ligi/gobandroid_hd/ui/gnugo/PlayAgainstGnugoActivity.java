@@ -10,10 +10,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
+import android.view.Menu;
 import android.view.WindowManager;
 import android.widget.Toast;
-
-import com.actionbarsherlock.view.Menu;
 
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
@@ -25,6 +24,9 @@ import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.recording.RecordingGameExtrasFragment;
 import org.ligi.gobandroidhd.ai.gnugo.IGnuGoService;
 import org.ligi.tracedroid.logging.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * the central Application-Context
@@ -45,6 +47,23 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
     private boolean gnugo_size_set = false;
 
     public final static String INTENT_ACTION = "org.ligi.gobandroidhd.ai.gnugo.GnuGoService";
+
+
+    long start_time;
+    List<Long> times = new ArrayList<Long>();
+
+    public void startTimeMeasure() {
+        start_time = System.currentTimeMillis();
+    }
+
+    public void stopTimeMeasure() {
+        times.add(System.currentTimeMillis() - start_time);
+        long sum = 0;
+        for (long l : times) {
+            sum += l;
+        }
+        Log.i("", "TimeSpent #" + times.size() + " d" + (sum / times.size()) + " s" + times.get(times.size() - 1));
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -161,7 +180,7 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.getSupportMenuInflater().inflate(R.menu.ingame_record, menu);
+        this.getMenuInflater().inflate(R.menu.ingame_record, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -241,6 +260,7 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
                 }
 
             if (getGame().isBlackToMove() && playing_black) {
+                startTimeMeasure();
                 try {
                     String answer = gnu_service.processGTP("genmove black");
 
@@ -252,9 +272,11 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
                     Log.i("gugoservice" + gnu_service.processGTP("showboard"));
                 } catch (Exception e) {
                 }
+                stopTimeMeasure();
             }
 
             if ((!getGame().isBlackToMove()) && playing_white) {
+                startTimeMeasure();
                 try {
                     String answer = gnu_service.processGTP("genmove white");
 
@@ -268,6 +290,7 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
                     Log.i("gugoservice" + gnu_service.processGTP("showboard"));
                 } catch (Exception e) {
                 }
+                stopTimeMeasure();
             }
 
 

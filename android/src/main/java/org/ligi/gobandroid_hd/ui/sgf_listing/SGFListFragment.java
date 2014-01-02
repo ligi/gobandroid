@@ -4,13 +4,12 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.view.ActionMode;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-
-import com.actionbarsherlock.view.ActionMode;
 
 import org.ligi.axt.AXT;
 import org.ligi.axt.helpers.dialog.ActivityFinishingOnCancelListener;
@@ -80,7 +79,8 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                getSherlockActivity().startActionMode(getActionMode(position));
+
+                //getActivity().startActionMode(getActionMode(position));
                 getListView().setItemChecked(position, true);
                 lastSelectedPosition = position;
                 parent.setSelection(position);

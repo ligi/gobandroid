@@ -21,6 +21,8 @@ package org.ligi.gobandroid_hd.ui.game_setup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,9 +31,6 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
@@ -247,7 +246,7 @@ public class CopyOfGoSetupActivity extends GoActivity implements OnSeekBarChange
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.getSupportMenuInflater().inflate(R.menu.game_setup, menu);
+        this.getMenuInflater().inflate(R.menu.game_setup, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

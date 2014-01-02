@@ -3,9 +3,8 @@ package org.ligi.gobandroid_hd.ui.tsumego;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import org.ligi.axt.helpers.dialog.ActivityFinishingOnClickListener;
 import org.ligi.axt.helpers.dialog.DialogDiscardingOnClickListener;
@@ -118,7 +117,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
             return super.onCreateOptionsMenu(menu);
         }
 
-        this.getSupportMenuInflater().inflate(R.menu.ingame_tsumego, menu);
+        this.getMenuInflater().inflate(R.menu.ingame_tsumego, menu);
         menu.findItem(R.id.menu_game_hint).setVisible(isFinishingMoveKnown() && isOnPath());
         return super.onCreateOptionsMenu(menu);
     }

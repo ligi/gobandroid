@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.Light.ActionBar"></style>
+    <style name="Widget.Styled.ActionBar" parent="Widget.AppCompat.Light.ActionBar"></style>
 
 
-    <style name="dialog_theme" parent="Theme.Sherlock.Light">
+    <style name="dialog_theme" parent="Theme.AppCompat.Light">
 
     </style>
 
@@ -17,14 +17,13 @@
 		<item name="android:textColor">@android:color/black</item>
      </style>
  -->
-    <style name="base_theme" parent="Theme.Sherlock.Light">
+    <style name="base_theme" parent="Theme.AppCompat.Light">
         <!--	<item name="Background">@android:color/transparent</item>
         <item name="android:textColor">#ff000000</item> -->
         <item name="android:alertDialogStyle">@style/dialog_theme</item>
-        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
         <item name="android:windowBackground">@drawable/shinkaya</item>
-
+        <item name="android:fitsSystemWindows">true</item>
     </style>
 
     <style name="topic_divider">
@@ -37,6 +36,7 @@
     <style name="default_activity_main" parent="base_theme">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
+        <!-- <item name="android:fitsSystemWindows">true</item> -->
     </style>
 
     <style name="DashboardButton">
@@ -51,8 +51,8 @@
         <item name="android:background">@null</item>
     </style>
 
-    <style name="clickable" parent="Widget.Sherlock.ActionButton">
-        <item name="android:focusable">true</item>
+    <style name="clickable" parent="Widget.AppCompat.ActionButton">
+    <item name="android:focusable">true</item>
 
     </style>
     <!--
@@ -60,8 +60,8 @@
 
 </style>
  -->
-    <style name="Theme.Transparent" parent="Theme.Sherlock.Light.NoActionBar">
-        <item name="android:windowIsTranslucent">true</item>
+    <style name="Theme.Transparent" parent="Theme.AppCompat.Light">
+    <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>

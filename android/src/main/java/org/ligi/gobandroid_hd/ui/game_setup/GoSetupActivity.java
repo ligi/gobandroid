@@ -22,9 +22,8 @@ package org.ligi.gobandroid_hd.ui.game_setup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -70,7 +69,7 @@ public class GoSetupActivity extends GoActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.getSupportMenuInflater().inflate(R.menu.game_setup, menu);
+        this.getMenuInflater().inflate(R.menu.game_setup, menu);
         clear_board_menu_item = menu.findItem(R.id.menu_clear_board);
         clear_board_menu_item.setVisible(getGame().getActMove().getParent() != null);
         return super.onCreateOptionsMenu(menu);

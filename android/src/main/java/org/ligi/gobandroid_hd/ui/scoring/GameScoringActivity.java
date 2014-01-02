@@ -2,10 +2,9 @@ package org.ligi.gobandroid_hd.ui.scoring;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.WindowManager;
-
-import com.actionbarsherlock.view.Menu;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -82,7 +81,7 @@ public class GameScoringActivity extends GoActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.getSupportMenuInflater().inflate(R.menu.ingame_score, menu);
+        this.getMenuInflater().inflate(R.menu.ingame_score, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

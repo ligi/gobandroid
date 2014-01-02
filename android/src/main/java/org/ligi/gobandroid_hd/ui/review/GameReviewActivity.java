@@ -3,9 +3,8 @@ package org.ligi.gobandroid_hd.ui.review;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MotionEvent;
-
-import com.actionbarsherlock.view.Menu;
 
 import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.InteractionScope;
@@ -165,7 +164,7 @@ public class GameReviewActivity extends GoActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.getSupportMenuInflater().inflate(R.menu.ingame_review, menu);
+        this.getMenuInflater().inflate(R.menu.ingame_review, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

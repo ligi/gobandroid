@@ -2,10 +2,9 @@ package org.ligi.gobandroid_hd.ui.recording;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.WindowManager;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.InteractionScope;
@@ -122,7 +121,7 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.getSupportMenuInflater().inflate(R.menu.ingame_record, menu);
+        this.getMenuInflater().inflate(R.menu.ingame_record, menu);
         return super.onCreateOptionsMenu(menu);
 
     }

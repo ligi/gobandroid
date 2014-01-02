@@ -25,11 +25,11 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
+import android.view.MenuItem;
 
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
-import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gcm.GCMRegistrar;
 
 import org.ligi.gobandroid_hd.R;
@@ -42,7 +42,7 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
  *         <p/>
  *         This software is licenced with GPLv3
  */
-public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPreferenceChangeListener {
+public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceChangeListener {
 
     private ListPreference viewDistPref;
     private ListPreference boardSkinPref;
@@ -58,7 +58,7 @@ public class GoPrefsActivity extends SherlockPreferenceActivity implements OnPre
         super.onCreate(savedInstanceState);
 
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
 
         setPreferenceScreen(createPreferenceHierarchy());
     }

@@ -5,14 +5,13 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
 
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.PlayServicesIntegration;
@@ -22,7 +21,7 @@ import org.ligi.gobandroid_hd.ui.application.navigation.NavigationDrawer;
 
 import java.lang.reflect.Field;
 
-public class GobandroidFragmentActivity extends SherlockFragmentActivity {
+public class GobandroidFragmentActivity extends ActionBarActivity {
 
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout drawerLayout;

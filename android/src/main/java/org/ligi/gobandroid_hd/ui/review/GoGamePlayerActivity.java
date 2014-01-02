@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.Window;
+import android.view.Window;
 
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -136,7 +135,7 @@ public class GoGamePlayerActivity extends GoActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.getSupportMenuInflater().inflate(R.menu.ingame_review, menu);
+        this.getMenuInflater().inflate(R.menu.ingame_review, menu);
 
         return super.onCreateOptionsMenu(menu);
     }

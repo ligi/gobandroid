@@ -28,15 +28,14 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.Toast;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.InteractionScope;
@@ -252,7 +251,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.getSupportMenuInflater().inflate(R.menu.ingame_common, menu);
+        this.getMenuInflater().inflate(R.menu.ingame_common, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

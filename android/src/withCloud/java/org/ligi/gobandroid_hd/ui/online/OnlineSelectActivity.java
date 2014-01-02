@@ -21,8 +21,8 @@ package org.ligi.gobandroid_hd.ui.online;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.tapfortap.TapForTap;
 
 import org.ligi.gobandroid_hd.App;

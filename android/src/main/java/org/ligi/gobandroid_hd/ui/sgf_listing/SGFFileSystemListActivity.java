@@ -21,9 +21,8 @@ package org.ligi.gobandroid_hd.ui.sgf_listing;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -103,10 +102,10 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (getApp().getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO)
-            this.getSupportMenuInflater().inflate(R.menu.refresh_tsumego, menu);
+            this.getMenuInflater().inflate(R.menu.refresh_tsumego, menu);
 
         if (getApp().getInteractionScope().getMode() == InteractionScope.MODE_REVIEW)
-            this.getSupportMenuInflater().inflate(R.menu.review_menu, menu);
+            this.getMenuInflater().inflate(R.menu.review_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }

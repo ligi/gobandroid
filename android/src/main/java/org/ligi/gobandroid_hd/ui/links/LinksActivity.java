@@ -21,8 +21,7 @@ package org.ligi.gobandroid_hd.ui.links;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-
-import com.actionbarsherlock.app.ActionBar;
+import android.support.v7.app.ActionBar;
 
 import org.ligi.axt.adapters.LinkWithDescription;
 import org.ligi.axt.adapters.LinkWithDescriptionAndTitle;
@@ -123,18 +122,18 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
     }
 
     @Override
-    public void onTabSelected(com.actionbarsherlock.app.ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
+    public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
         App.getTracker().trackEvent("ui_action", "links", act_tab_str_for_analytics, null);
 
         setList((Integer) tab.getTag());
     }
 
     @Override
-    public void onTabUnselected(com.actionbarsherlock.app.ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
+    public void onTabUnselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
     }
 
     @Override
-    public void onTabReselected(com.actionbarsherlock.app.ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
+    public void onTabReselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
     }
 
 }

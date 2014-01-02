@@ -1,9 +1,8 @@
 package org.ligi.gobandroid_hd.ui.editing;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.WindowManager;
-
-import com.actionbarsherlock.view.Menu;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -146,7 +145,7 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.getSupportMenuInflater().inflate(R.menu.ingame_edit, menu);
+        this.getMenuInflater().inflate(R.menu.ingame_edit, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
