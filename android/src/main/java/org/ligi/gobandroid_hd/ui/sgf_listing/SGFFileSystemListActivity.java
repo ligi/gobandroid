@@ -116,6 +116,9 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
             case R.id.menu_refresh:
                 my_task = DownloadProblemsDialog.getAndRunTask(this, list_fragment);
                 return true;
+            case R.id.menu_del_sgfmeta:
+                list_fragment.delete_sgfmeta();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
