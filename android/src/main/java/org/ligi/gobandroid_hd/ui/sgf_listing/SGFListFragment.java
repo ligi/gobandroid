@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.view.ActionMode;
+import android.view.ActionMode;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -79,8 +79,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-
-                //getActivity().startActionMode(getActionMode(position));
+                getActivity().startActionMode(getActionMode(position));
                 getListView().setItemChecked(position, true);
                 lastSelectedPosition = position;
                 parent.setSelection(position);
