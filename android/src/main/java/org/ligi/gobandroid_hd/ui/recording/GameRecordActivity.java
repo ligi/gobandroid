@@ -137,7 +137,7 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
 
             @Override
             public void run() {
-                invalidateOptionsMenu();
+                supportInvalidateOptionsMenu();
 
                 boolean switch_to_count = getGame().isFinished();
 

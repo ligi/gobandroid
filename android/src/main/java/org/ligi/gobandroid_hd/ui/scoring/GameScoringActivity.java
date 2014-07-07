@@ -92,7 +92,7 @@ public class GameScoringActivity extends GoActivity implements
 
             @Override
             public void run() {
-                invalidateOptionsMenu();
+                supportInvalidateOptionsMenu();
             }
         });
     }

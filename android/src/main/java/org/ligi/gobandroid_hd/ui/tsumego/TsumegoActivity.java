@@ -228,7 +228,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                invalidateOptionsMenu();
+                supportInvalidateOptionsMenu();
             }
         });
     }
