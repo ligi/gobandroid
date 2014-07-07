@@ -88,7 +88,8 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
                     return false;
                 }
 
-                actionMode = Optional.fromNullable(((ActionBarActivity) getActivity()).startSupportActionMode(getActionMode(position)));
+                final ActionBarActivity activity = (ActionBarActivity) getActivity();
+                actionMode = Optional.fromNullable(activity.startSupportActionMode(getActionMode(position)));
                 getListView().setItemChecked(position, true);
                 lastSelectedPosition = position;
                 parent.setSelection(position);
