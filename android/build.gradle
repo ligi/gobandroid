@@ -4,10 +4,14 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.12.+'
+        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.10.+'
+        classpath 'com.stanfy.spoon:spoon-gradle-plugin:0.10.0'
     }
 }
 
+apply plugin: 'android-sdk-manager'
 apply plugin: 'android'
+apply plugin: 'spoon'
 
 repositories {
     mavenCentral()
@@ -20,28 +24,33 @@ android {
     compileSdkVersion 19
     buildToolsVersion "19.1"
 
-    flavorGroups "analytics", "cloud"
+    flavorDimensions "analytics", "cloud"
     productFlavors {
         withAnalytics {
-            flavorGroup "analytics"
+            flavorDimension "analytics"
         }
 
         noAnalytics {
-            flavorGroup "analytics"
+            flavorDimension "analytics"
         }
 
         withCloud {
-            flavorGroup "cloud"
+            flavorDimension "cloud"
         }
 
         noCloud {
-            flavorGroup "cloud"
+            flavorDimension "cloud"
         }
 
     }
 
     lintOptions {
         abortOnError false
+    }
+
+    // important for androidTest
+    packagingOptions {
+        exclude 'LICENSE.txt'
     }
 
 }
@@ -56,4 +65,18 @@ dependencies {
     compile 'org.ligi:tracedroid:1.1'
 
     withCloudCompile 'com.google.android.gms:play-services:3.1.36'
+
+    androidTestCompile('com.jakewharton.espresso:espresso:1.1-r3') {
+        exclude group: 'com.android.support'
+        exclude group: 'com.google.guava'
+    }
+
+    androidTestCompile('com.jakewharton.espresso:espresso-support-v4:1.1-r3') {
+        exclude group: 'com.android.support'
+        exclude group: 'com.google.guava'
+    }
+
+    androidTestCompile 'com.squareup.spoon:spoon-client:1.1.1'
+    androidTestCompile 'com.squareup:fest-android:1.0.7'
+
 }
