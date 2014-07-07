@@ -83,19 +83,19 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                if (getActivity() instanceof ActionBarActivity) {
-                    actionMode = Optional.fromNullable(((ActionBarActivity) getActivity()).startSupportActionMode(getActionMode(position)));
-
-                    getListView().setItemChecked(position, true);
-                    lastSelectedPosition = position;
-                    parent.setSelection(position);
-                    view.refreshDrawableState();
-
-                    return true;
+                if (!(getActivity() instanceof ActionBarActivity)) {
+                    Log.w("Activity not instanceof ActionbarActivity - this is not really expected");
+                    return false;
                 }
 
-                Log.w("Activity not instanceof ActionbarActivity - this is not really expected");
-                return false;
+                actionMode = Optional.fromNullable(((ActionBarActivity) getActivity()).startSupportActionMode(getActionMode(position)));
+                getListView().setItemChecked(position, true);
+                lastSelectedPosition = position;
+                parent.setSelection(position);
+                view.refreshDrawableState();
+
+                return true;
+
             }
 
             private SGFListActionMode getActionMode(final int position) {
