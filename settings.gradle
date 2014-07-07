@@ -1,1 +1,2 @@
-include ':android',':tests'
+include ':android'
+//#,':tests'

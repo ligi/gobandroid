@@ -4,12 +4,15 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+
+import com.google.common.base.Optional;
 
 import org.ligi.axt.AXT;
 import org.ligi.axt.helpers.dialog.ActivityFinishingOnCancelListener;
@@ -36,6 +39,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
     private BaseAdapter adapter;
     private File[] files;
     private int lastSelectedPosition;
+    private Optional<ActionMode> actionMode = Optional.absent();
 
     public SGFListFragment() {
     }
@@ -79,13 +83,19 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
+                if (getActivity() instanceof ActionBarActivity) {
+                    actionMode = Optional.fromNullable(((ActionBarActivity) getActivity()).startSupportActionMode(getActionMode(position)));
 
-                //getActivity().startActionMode(getActionMode(position));
-                getListView().setItemChecked(position, true);
-                lastSelectedPosition = position;
-                parent.setSelection(position);
-                view.refreshDrawableState();
-                return true;
+                    getListView().setItemChecked(position, true);
+                    lastSelectedPosition = position;
+                    parent.setSelection(position);
+                    view.refreshDrawableState();
+
+                    return true;
+                }
+
+                Log.w("Activity not instanceof ActionbarActivity - this is not really expected");
+                return false;
             }
 
             private SGFListActionMode getActionMode(final int position) {
@@ -101,6 +111,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
                     @Override
                     public void onDestroyActionMode(ActionMode mode) {
                         getListView().setItemChecked(lastSelectedPosition, false);
+                        actionMode = Optional.absent();
                         super.onDestroyActionMode(mode);
                     }
                 };
@@ -123,6 +134,11 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
         }
 
         intent2start.setData(Uri.parse(fname));
+
+        if (actionMode.isPresent()) {
+            actionMode.get().finish();
+        }
+
         startActivity(intent2start);
     }
 
@@ -153,7 +169,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             return;
         }
 
-        File dir_file = new File(dir);
+        final File dir_file = new File(dir);
 
         files = new File(dir).listFiles();
 
@@ -204,11 +220,11 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
     private BaseAdapter getAdapterByInteractionScope(InteractionScope interaction_scope) {
         switch (interaction_scope.getMode()) {
             case InteractionScope.MODE_TSUMEGO:
-                return new TsumegoPathViewAdapter(this.getActivity(), menu_items, dir);
+                return new TsumegoPathViewAdapter(getActivity(), menu_items, dir);
 
             case InteractionScope.MODE_REVIEW:
             default: // use Review adapter as default
-                return new ReviewPathViewAdapter(this.getActivity(), menu_items, dir);
+                return new ReviewPathViewAdapter(getActivity(), menu_items, dir);
         }
     }
 

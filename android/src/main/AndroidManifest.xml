@@ -199,17 +199,7 @@
         <activity android:name="org.ligi.gobandroid_hd.ui.GoActivity" />
 
         <service android:name="org.ligi.gobandroid_hd.GCMIntentService" />
-        <receiver
-            android:name="com.google.android.gcm.GCMBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <!-- Receive the actual message -->
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <!-- Receive the registration id -->
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="org.ligi.gobandroid_hd" />
-            </intent-filter>
-        </receiver>
+
         <!-- Used for install referrer tracking -->
         <receiver
             android:name="com.google.analytics.tracking.android.AnalyticsReceiver"
