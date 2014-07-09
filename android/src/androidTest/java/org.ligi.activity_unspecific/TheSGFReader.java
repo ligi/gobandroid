@@ -13,14 +13,14 @@ public class TheSGFReader extends AndroidTestCase {
 
     @SmallTest
     public void test_should_recognize19x19() throws Exception {
-        GoGame game=SGFReader.sgf2game(SGFProvider.DEFAULT_SGF_19x19,null);
+        GoGame game = SGFReader.sgf2game(SGFProvider.DEFAULT_SGF_19x19, null);
 
         assertThat(game.getSize()).isEqualTo(19);
     }
 
     @SmallTest
     public void test_should_recognize9x9() throws Exception {
-        GoGame game=SGFReader.sgf2game(SGFProvider.DEFAULT_SGF_9x9,null);
+        GoGame game = SGFReader.sgf2game(SGFProvider.DEFAULT_SGF_9x9, null);
 
         assertThat(game.getSize()).isEqualTo(9);
     }
