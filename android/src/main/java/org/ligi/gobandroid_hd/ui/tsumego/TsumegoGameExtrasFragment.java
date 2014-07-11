@@ -21,8 +21,6 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
     private boolean off_path_visible = false, correct_visible = false;
     private TextView commentView;
 
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -46,10 +44,10 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
 
                 correctView.setMovementMethod(LinkMovementMethod.getInstance());
 
-                String text = getString(R.string.tsumego_correct) + " <a href='tsumego://" + next_tsumego_url_str + "'>" + getString(R.string.next_tsumego) + "</a>";
+                final String text = getString(R.string.tsumego_correct) + " <a href='tsumego://" + next_tsumego_url_str + "'>" + getString(R.string.next_tsumego) + "</a>";
                 correctView.setText(Html.fromHtml(text));
             } else {
-                correctView.setText("Correct !-) But sadly no more tsumegos in this folder");
+                correctView.setText(getString(R.string.correct_but_no_more_tsumegos));
             }
         } else {
             correctView.setVisibility(View.GONE);

@@ -79,7 +79,8 @@ public class CustomActionBar extends LinearLayout implements
                         showModePopup(v.getContext());
                     }
 
-                });
+                }
+        );
 
         this.addView(top_view);
 
@@ -103,7 +104,8 @@ public class CustomActionBar extends LinearLayout implements
                         listener.onClick(CustomActionBar.this, 0);
 
                     }
-                });
+                }
+        );
         container.addView(v);
     }
 
@@ -141,7 +143,8 @@ public class CustomActionBar extends LinearLayout implements
                         activity.startActivity(i);
                     }
 
-                });
+                }
+        );
     }
 
     private void showModePopup(Context ctx) {
@@ -174,19 +177,6 @@ public class CustomActionBar extends LinearLayout implements
         pop.showLikePopDownMenu();
     }
 
-    class IconTextAndMode {
-        public IconTextAndMode(int mode, int text_res, int icon_res) {
-            this.icon_res = icon_res;
-            this.text_res = text_res;
-            this.mode = mode;
-        }
-
-        public int icon_res;
-        public int text_res;
-        public int mode;
-
-    }
-
     @Override
     public void onGoGameChange() {
         Log.i("game changed");
@@ -194,11 +184,11 @@ public class CustomActionBar extends LinearLayout implements
     }
 
     private void refresh() {
-        this.post(new Runnable() {
+        post(new Runnable() {
 
             @Override
             public void run() {
-                byte actMode = app.getInteractionScope().getMode();
+                final byte actMode = app.getInteractionScope().getMode();
                 mode_tv.setText(InteractionScope.getModeStringRes(actMode));
 
                 white_captures_tv.setText("" + app.getGame().getCapturesWhite());

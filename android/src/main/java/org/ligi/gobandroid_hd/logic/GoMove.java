@@ -53,8 +53,8 @@ public class GoMove {
     public GoMove(GoMove parent) {
         this.parent = parent;
 
-        next_move_variations = new ArrayList<GoMove>();
-        markers = new ArrayList<GoMarker>();
+        next_move_variations = new ArrayList<>();
+        markers = new ArrayList<>();
 
         if (parent != null) {
             black_to_move = !parent.isBlackToMove();

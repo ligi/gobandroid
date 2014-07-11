@@ -247,4 +247,5 @@
     <string name="drawer_close">close drawer</string>
     <string name="end_review_ok_button">end review</string>
     <string name="end_review_stay_button">stay</string>
+    <string name="correct_but_no_more_tsumegos">Correct !-) But sadly no more tsumegos in this folder</string>
 </resources>

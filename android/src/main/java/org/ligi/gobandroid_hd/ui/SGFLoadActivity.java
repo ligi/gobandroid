@@ -225,15 +225,13 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
             Log.i("got sgf content:" + sgf);
             game = SGFReader.sgf2game(sgf, this);
 
-
             // if it is a tsumego and we need a transformation to right corner
             // -> do so
             if (getApp().getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
                 int transform = TsumegoHelper.calcTransform(game);
 
                 if (transform != SGFReader.DEFAULT_SGF_TRANSFORM) {
-                    game = SGFReader.sgf2game(sgf, null,
-                            SGFReader.BREAKON_NOTHING, transform);
+                    game = SGFReader.sgf2game(sgf, null, SGFReader.BREAKON_NOTHING, transform);
                 }
             }
 
@@ -271,7 +269,8 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
                                                     .putExtra(
                                                             android.content.Intent.EXTRA_SUBJECT,
                                                             "SGF Problem"
-                                                                    + getApp().getVersionCode());
+                                                                    + getApp().getVersionCode()
+                                                    );
                                             emailIntent
                                                     .putExtra(
                                                             android.content.Intent.EXTRA_TEXT,
@@ -280,13 +279,15 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
                                                                     + " sgf:\n"
                                                                     + sgf
                                                                     + "err:"
-                                                                    + Log.getCachedLog());
+                                                                    + Log.getCachedLog()
+                                                    );
                                             SGFLoadActivity.this.startActivity(Intent
                                                     .createChooser(emailIntent,
                                                             "Send mail..."));
                                             finish();
                                         }
-                                    })
+                                    }
+                            )
                             .setNegativeButton(R.string.no,
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(
@@ -294,7 +295,8 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
                                                 int whichButton) {
                                             finish();
                                         }
-                                    }).show();
+                                    }
+                            ).show();
                 }
             });
 
@@ -304,15 +306,17 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         int move_num = getIntent().getIntExtra("move_num", -1);
 
         if (move_num != -1) {
-            for (int i = 0; i < move_num; i++)
+            for (int i = 0; i < move_num; i++) {
                 game.jump(game.getActMove().getnextMove(0));
+            }
         } else if (cloudgoban_parent_key != null) {
             getApp().getInteractionScope().setMode(InteractionScope.MODE_RECORD);
 
             //game.getMetaData().setCloudParent();
 
-            while (game.getActMove().getNextMoveVariationCount() > -1)
+            while (game.getActMove().getNextMoveVariationCount() > -1) {
                 game.jump(game.getActMove().getnextMove(0));
+            }
 
         }
         getApp().getInteractionScope().setGame(game);

@@ -37,7 +37,7 @@ import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity;
 
 public class LoadActionsActivity extends ListActivity {
 
-    private String[] menu_items = {"SD Card", "Online"};
+    private final static String[] menu_items = {"SD Card", "Online"};
 
     private final static int MENU_SDCARD = 0;
     private final static int MENU_ONLINE = 1;
@@ -52,26 +52,25 @@ public class LoadActionsActivity extends ListActivity {
         GoPrefs.init(this);
 
         setContentView(R.layout.list);
-        this.setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item,
-                menu_items));
+        this.setListAdapter(new ArrayAdapter<>(this, R.layout.list_item, menu_items));
     }
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        Intent go_intent = null;
+        startActivity(getIntentByPosition(position));
+    }
+
+    private Intent getIntentByPosition(final int position) {
         switch (position) {
             case MENU_SDCARD:
-                go_intent = new Intent(this, SGFFileSystemListActivity.class);
-                break;
+                return new Intent(this, SGFFileSystemListActivity.class);
 
             case MENU_ONLINE:
-                go_intent = new Intent(this, SGFOnlineListActivity.class);
-                break;
+                return new Intent(this, SGFOnlineListActivity.class);
         }
-
-        startActivity(go_intent);
+        return null; // never expected
     }
 
 }

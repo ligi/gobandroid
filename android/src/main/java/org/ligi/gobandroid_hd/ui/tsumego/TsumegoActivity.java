@@ -32,7 +32,6 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
         super.onCreate(savedInstanceState);
 
         this.setTitle(R.string.tsumego);
-
     }
 
     private GoMove getFinishingMove() {
@@ -49,7 +48,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
     private void recursive_add_on_path_moves(GoMove act) {
         if (on_path_moves == null) {
-            on_path_moves = new ArrayList<GoMove>();
+            on_path_moves = new ArrayList<>();
         }
         on_path_moves.add(act);
         if (act.hasNextMove()) {
@@ -61,8 +60,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (getGame() != null) // TODO investigate when game can be null here
-        {
+        if (getGame() != null) { // TODO investigate when game can be null here
             getGame().removeGoGameChangeListener(this);
         }
     }
