@@ -30,13 +30,11 @@
                     android:text="" />
 
                 <ImageView
-                    android:id="@+id/imageView1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:src="@drawable/stone_black" />
 
                 <ImageView
-                    android:id="@+id/imageView1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:src="@drawable/stone_white" />
