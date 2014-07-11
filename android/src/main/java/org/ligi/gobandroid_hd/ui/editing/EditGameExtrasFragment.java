@@ -2,9 +2,7 @@ package org.ligi.gobandroid_hd.ui.editing;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +14,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import org.ligi.axt.simplifications.SimpleTextWatcher;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
@@ -24,10 +23,7 @@ import java.util.List;
 
 public class EditGameExtrasFragment extends GobandroidFragment implements GoGameChangeListener {
 
-    private EditText et;
-    private Handler hndl = new Handler();
-    private Context ctx;
-    private LayoutInflater mLayoutInflater;
+    private EditText editText;
     private EditModeItemPool editModePool;
 
     public EditGameExtrasFragment(EditModeItemPool editModePool) {
@@ -35,14 +31,13 @@ public class EditGameExtrasFragment extends GobandroidFragment implements GoGame
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        mLayoutInflater = inflater;
-        View view = inflater.inflate(R.layout.edit_extras, null);
+        final View view = inflater.inflate(R.layout.edit_extras, null);
 
-        ctx = container.getContext();
+        final Context ctx = container.getContext();
 
-        GridView mode_grid = (GridView) view.findViewById(R.id.gridView);
+        final GridView mode_grid = (GridView) view.findViewById(R.id.gridView);
 
         class ModeAdapter extends ArrayAdapter<EditModeItem> {
 
@@ -54,8 +49,8 @@ public class EditGameExtrasFragment extends GobandroidFragment implements GoGame
             public View getView(int position, View convertView, ViewGroup parent) {
                 EditModeItem item = getItem(position);
 
-                View view = mLayoutInflater.inflate(R.layout.edit_mode_item, null);
-                ImageView img_v = (ImageView) view.findViewById(R.id.imageView);
+                final View view = inflater.inflate(R.layout.edit_mode_item, null);
+                final ImageView img_v = (ImageView) view.findViewById(R.id.imageView);
                 img_v.setImageResource(item.icon_resId);
 
                 if (editModePool.getActivatedItem() == position) {
@@ -78,28 +73,19 @@ public class EditGameExtrasFragment extends GobandroidFragment implements GoGame
             }
 
         });
-        et = (EditText) view.findViewById(R.id.comment_et);
+        editText = (EditText) view.findViewById(R.id.comment_et);
 
         getGame().addGoGameChangeListener(this);
 
-        et.setText(getGame().getActMove().getComment());
-        et.setHint(R.string.enter_your_comments_here);
-        et.setGravity(Gravity.TOP);
-        et.setTextColor(this.getResources().getColor(R.color.text_color_on_board_bg));
+        editText.setText(getGame().getActMove().getComment());
+        editText.setHint(R.string.enter_your_comments_here);
+        editText.setGravity(Gravity.TOP);
+        editText.setTextColor(getResources().getColor(R.color.text_color_on_board_bg));
 
-        et.addTextChangedListener(new TextWatcher() {
-
+        editText.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 getGame().getActMove().setComment(s.toString());
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
 
@@ -114,13 +100,15 @@ public class EditGameExtrasFragment extends GobandroidFragment implements GoGame
 
     @Override
     public void onGoGameChange() {
-        hndl.post(new Runnable() {
+        if (editText == null || getActivity() == null) {
+            return; // no user facing action
+        }
+
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if ((et != null) && getActivity() != null)
-                    et.setText(getGame().getActMove().getComment());
+                editText.setText(getGame().getActMove().getComment());
             }
-
         });
     }
 
