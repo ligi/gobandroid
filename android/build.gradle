@@ -24,6 +24,14 @@ android {
     compileSdkVersion 19
     buildToolsVersion "19.1"
 
+    defaultConfig {
+        versionCode 126
+        versionName "1.26"
+        minSdkVersion 8
+        targetSdkVersion 19
+        applicationId "org.ligi.gobandroid_hd"
+    }
+
     flavorDimensions "analytics", "cloud"
     productFlavors {
         withAnalytics {
@@ -57,6 +65,18 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+    buildTypes {
+        release {
+            runProguard false
+            proguardFile 'proguard-project.txt'
+            applicationVariants.all { variant ->
+                def file = variant.outputFile
+                variant.outputFile = new File(file.parent, file.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"))
+            }
+        }
+    }
+
 
 }
 
