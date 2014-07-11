@@ -36,21 +36,23 @@ import org.ligi.gobandroid_hd.logic.GoGame;
  */
 public class GameForwardAlert {
 
-    public static void show(Context ctx, final GoGame game) {
-        if (!game.canRedo())
+    public static void show(final Context ctx, final GoGame game) {
+        if (!game.canRedo()) {
             return;
+        }
 
         if (game.getPossibleVariationCount() > 0) {
-            LinearLayout lin = new LinearLayout(ctx);
-            LinearLayout li = new LinearLayout(ctx);
+            final LinearLayout lin = new LinearLayout(ctx);
+            final LinearLayout li = new LinearLayout(ctx);
 
-            TextView txt = new TextView(ctx);
+            final TextView txt = new TextView(ctx);
 
             // show the comment when there is one - useful for SGF game problems
-            if (game.getActMove().hasComment())
+            if (game.getActMove().hasComment()) {
                 txt.setText(game.getActMove().getComment());
-            else
+            } else {
                 txt.setText("" + (game.getPossibleVariationCount() + 1) + " Variations found for this move - which should we take?");
+            }
 
             txt.setPadding(10, 2, 10, 23);
             lin.addView(txt);
@@ -62,15 +64,17 @@ public class GameForwardAlert {
             View.OnClickListener var_select_listener = new View.OnClickListener() {
 
                 @Override
-                public void onClick(View v) {
-                    if (redoing)
+                public void onClick(View view) {
+                    if (redoing) {
                         return;
+                    }
                     select_dlg.hide();
-                    if (!v.isEnabled())
+                    if (!view.isEnabled()) {
                         return;
-                    v.setEnabled(false);
+                    }
+                    view.setEnabled(false);
 
-                    game.redo((Integer) (v.getTag()));
+                    game.redo((Integer) (view.getTag()));
                 }
             };
 
@@ -78,13 +82,14 @@ public class GameForwardAlert {
             li.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
             for (Integer i = 0; i < game.getPossibleVariationCount() + 1; i++) {
-                Button var_btn = new Button(ctx);
+                final Button var_btn = new Button(ctx);
                 var_btn.setTag(i);
                 var_btn.setOnClickListener(var_select_listener);
-                if (game.getActMove().getnextMove(i).isMarked())
+                if (game.getActMove().getnextMove(i).isMarked()) {
                     var_btn.setText(game.getActMove().getnextMove(i).getMarkText());
-                else
+                } else {
                     var_btn.setText("" + (i + 1));
+                }
 
                 li.addView(var_btn);
 

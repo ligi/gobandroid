@@ -70,13 +70,9 @@ public class UnzipSGFsDialog {
         }
     }
 
-    /**
-     * @param activity
-     * @param autoclose - if the alert should close when connection is established
-     */
-    public static void show(Activity activity, Intent intent_after_finish) {
+    public static void show(final Activity activity, final Intent intent_after_finish) {
 
-        ProgressDialog dialog = ProgressDialog.show(activity, "", "Unziping SGF's. Please wait...", true);
+        final ProgressDialog dialog = ProgressDialog.show(activity, "", "Unziping SGF's. Please wait...", true);
 
         class AlertDialogUpdater implements Runnable {
 

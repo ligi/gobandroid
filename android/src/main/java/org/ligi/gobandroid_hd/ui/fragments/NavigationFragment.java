@@ -146,7 +146,7 @@ public class NavigationFragment extends Fragment implements GoGameChangeListener
     }
 
     public void gameNavNext() {
-        GameForwardAlert.show(this.getActivity(), game);
+        GameForwardAlert.show(getActivity(), game);
     }
 
     public void gameNavPrev() {
