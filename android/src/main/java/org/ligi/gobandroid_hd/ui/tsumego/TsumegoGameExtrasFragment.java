@@ -14,10 +14,6 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.fragments.CommentHelper;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 
-import java.io.File;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class TsumegoGameExtrasFragment extends GobandroidFragment {
 
     private TextView correctView;
@@ -50,7 +46,7 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
 
                 correctView.setMovementMethod(LinkMovementMethod.getInstance());
 
-                String text = getString(R.string.tsumego_correct) + " <a href='tsumego://" + next_tsumego_url_str + "'>" + getString(R.string.next_tsumego) + "</a>" + next_tsumego_url_str;
+                String text = getString(R.string.tsumego_correct) + " <a href='tsumego://" + next_tsumego_url_str + "'>" + getString(R.string.next_tsumego) + "</a>";
                 correctView.setText(Html.fromHtml(text));
             } else {
                 correctView.setText("Correct !-) But sadly no more tsumegos in this folder");
