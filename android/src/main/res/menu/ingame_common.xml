@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto">
     <item
         android:title="@string/game_info"
         android:id="@+id/menu_game_info"
         android:icon="@drawable/info"
-        android:showAsAction="ifRoom|withText"></item>
+        yourapp:showAsAction="ifRoom|withText"></item>
 </menu>
