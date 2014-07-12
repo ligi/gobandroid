@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.ligi.axt.helpers.dialog.ActivityFinishingOnClickListener;
-import org.ligi.axt.helpers.dialog.DialogDiscardingOnClickListener;
+import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
+import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.R;

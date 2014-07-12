@@ -26,7 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.ligi.axt.helpers.dialog.DialogDiscardingOnClickListener;
+import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;

@@ -249,9 +249,19 @@ public class GoGame {
     public byte do_move(byte x, byte y) {
         Log.i("do_move x:" + x + " y:" + y);
 
-        // return with INVALID if x and y are inside the board
-        if ((x < 0) || (x >= calc_board.getSize()) || (y < 0) || (y >= calc_board.getSize()))
+        // check hard preconditions
+        if ((x < 0) || (x >= calc_board.getSize()) || (y < 0) || (y >= calc_board.getSize())) {
+            // return with INVALID if x and y are inside the board
             return MOVE_INVALID_NOT_ON_BOARD;
+        }
+
+        if (isFinished()) { // game is finished - players are marking dead stones
+            return MOVE_VALID;
+        }
+
+        if (!calc_board.isCellFree(x, y)) { // can never place a stone where another is
+            return MOVE_INVALID_CELL_NOT_FREE;
+        }
 
         // check if the "new" move is in the variations - to not have 2 equal
         // move as different variations
@@ -266,16 +276,6 @@ public class GoGame {
             jump(matching_move);
             return MOVE_VALID;
         }
-
-        if (isFinished()) { // game is finished - players are amarking dead
-            // stones
-
-            return MOVE_VALID;
-        }
-
-        if (!calc_board.isCellFree(x, y)) // cant place a stone where another is
-            // allready
-            return MOVE_INVALID_CELL_NOT_FREE;
 
         GoBoard bak_board = calc_board.clone();
 
@@ -505,8 +505,8 @@ public class GoGame {
 		 */
 
         boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board.getSize()];
-        Stack<Integer> ptStackX = new Stack<Integer>();
-        Stack<Integer> ptStackY = new Stack<Integer>();
+        final Stack<Integer> ptStackX = new Stack<>();
+        final Stack<Integer> ptStackY = new Stack<>();
 
 		/* Replace previous code with more efficient flood fill */
         ptStackX.push(x);
@@ -516,10 +516,11 @@ public class GoGame {
             int newx = ptStackX.pop();
             int newy = ptStackY.pop();
 
-            if (cell_has_libertie(newx, newy))
+            if (cell_has_libertie(newx, newy)) {
                 return true;
-            else
+            } else {
                 checked_pos[newx][newy] = true;
+            }
 
 			/* check to the left */
             if (newx > 0)

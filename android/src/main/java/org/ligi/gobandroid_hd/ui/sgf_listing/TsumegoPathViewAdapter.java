@@ -89,7 +89,7 @@ class TsumegoPathViewAdapter extends BaseAdapter {
             sgf_str = gl.getSGFString();
         } else {
             try {
-                sgf_str = AXT.at(new File(base_fname)).loadToString();
+                sgf_str = AXT.at(new File(base_fname)).readToString();
             } catch (IOException e) {
             }
         }

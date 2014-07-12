@@ -10,7 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import org.ligi.axt.AXT;
-import org.ligi.axt.helpers.dialog.DialogDiscardingOnClickListener;
+import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.Refreshable;
 import org.ligi.gobandroid_hd.ui.share.ShareAsAttachmentDialog;

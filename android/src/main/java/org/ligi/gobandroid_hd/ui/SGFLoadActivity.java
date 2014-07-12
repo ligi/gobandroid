@@ -126,7 +126,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         String res = "";
 
         if (url.startsWith("/")) {
-            return AXT.at(new File(url)).loadToString();
+            return AXT.at(new File(url)).readToString();
         }
 
         return res;
@@ -144,7 +144,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
     public String uri2string(Uri intent_uri) throws IOException {
 
         if (intent_uri.toString().startsWith("/")) {
-            return AXT.at(new File(intent_uri.toString())).loadToString();
+            return AXT.at(new File(intent_uri.toString())).readToString();
         }
 
         InputStream in;

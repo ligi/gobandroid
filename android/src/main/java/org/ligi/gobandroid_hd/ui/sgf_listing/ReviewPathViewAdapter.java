@@ -83,7 +83,7 @@ class ReviewPathViewAdapter extends BaseAdapter {
 
                 }
 
-                sgf_str = AXT.at(new File(base_fname)).loadToString();
+                sgf_str = AXT.at(new File(base_fname)).readToString();
                 game = SGFReader.sgf2game(sgf_str, null, SGFReader.BREAKON_FIRSTMOVE);
                 SGFMetaData sgf_meta = new SGFMetaData(base_fname + SGFMetaData.FNAME_ENDING);
 

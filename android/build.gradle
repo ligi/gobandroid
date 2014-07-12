@@ -86,7 +86,7 @@ dependencies {
     //compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
     compile 'com.android.support:support-v4:19.1.0'
     compile 'com.android.support:appcompat-v7:19.1.0'
-    compile 'org.ligi:AXT:0.26'
+    compile 'org.ligi:AXT:0.28'
     compile 'org.ligi:tracedroid:1.1'
 
     withCloudCompile 'com.google.android.gms:play-services:3.1.36'

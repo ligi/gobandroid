@@ -15,8 +15,8 @@ import android.widget.ListView;
 import com.google.common.base.Optional;
 
 import org.ligi.axt.AXT;
-import org.ligi.axt.helpers.dialog.ActivityFinishingOnCancelListener;
-import org.ligi.axt.helpers.dialog.ActivityFinishingOnClickListener;
+import org.ligi.axt.listeners.ActivityFinishingOnCancelListener;
+import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;

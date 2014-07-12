@@ -67,7 +67,7 @@ public class SGFReader {
 
             boolean escape = false;
             // int param_level=0;
-            List<GoMove> var_vect = new ArrayList<GoMove>();
+            final List<GoMove> variationList = new ArrayList<>();
             boolean consuming_param = false;
 
             String act_param = "";
@@ -116,7 +116,7 @@ public class SGFReader {
                                 if ((opener == 1) && (game == null)) {
                                     size = 19;
                                     game = new GoGame((byte) 19);
-                                    var_vect.add(game.getActMove());
+                                    variationList.add(game.getActMove());
                                 }
 
                                 opener++;
@@ -129,7 +129,7 @@ public class SGFReader {
                                 Log.i("   !!! opening variation" + game);
                                 if (game != null) {
 
-                                    var_vect.add(game.getActMove());
+                                    variationList.add(game.getActMove());
                                 }
 
                                 last_cmd = "";
@@ -137,10 +137,10 @@ public class SGFReader {
                             }
                             break;
                         case ')':
-                            if (var_vect.size() > 0) {
-                                GoMove lastMove = var_vect.get(var_vect.size() - 1);
+                            if (variationList.size() > 0) {
+                                GoMove lastMove = variationList.get(variationList.size() - 1);
                                 game.jump(lastMove);
-                                var_vect.remove(lastMove);
+                                variationList.remove(lastMove);
                                 Log.w("popping variaton from stack");
                             } else {
                                 Log.w("variation vector underrun!!");
@@ -260,7 +260,7 @@ public class SGFReader {
                                     size = Byte.parseByte(act_param);
                                     if ((game == null) || (game.getBoardSize() != size)) {
                                         game = new GoGame(size);
-                                        var_vect.add(game.getActMove());
+                                        variationList.add(game.getActMove());
                                     }
                                 }
 
@@ -278,7 +278,7 @@ public class SGFReader {
                                     // size
                                     if (game == null) {
                                         game = new GoGame((byte) 19);
-                                        var_vect.add(game.getActMove());
+                                        variationList.add(game.getActMove());
                                     }
 
                                     if ((breakon & BREAKON_FIRSTMOVE) > 0)
@@ -288,12 +288,21 @@ public class SGFReader {
                                         game.apply_handicap();
                                     }
 
+                                    game.getActMove().setIsBlackToMove(!(act_cmd.equals("Black") || act_cmd.equals("B")));
+
                                     if (act_param.length() == 0)
                                         game.pass();
-                                    else
-                                        game.do_move(param_x, param_y);
+                                    else {
+/*                                        if (game.getActMove().isFirstMove()) {
+                                            game.getActMove().setIsBlackToMove();
+                                        }
+                                        */
+                                        final byte b = game.do_move(param_x, param_y);
+                                        if (b != GoGame.MOVE_VALID) {
+                                            Log.w("There was a problem in this game");
+                                        }
+                                    }
 
-                                    game.getActMove().setIsBlackToMove(act_cmd.equals("Black") || act_cmd.equals("B"));
 
                                 }
 
@@ -307,7 +316,7 @@ public class SGFReader {
                                         // not
                                         // there yet
                                         game = new GoGame((byte) 19);
-                                        var_vect.add(game.getActMove());
+                                        variationList.add(game.getActMove());
                                     }
 
                                     if (act_param.length() != 0) {

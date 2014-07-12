@@ -25,7 +25,7 @@ public class GoLink {
     public GoLink(File file) {
 
         try {
-            String go_lnk = AXT.at(file).loadToString();
+            String go_lnk = AXT.at(file).readToString();
             go_lnk = go_lnk.replace("\n", "").replace("\r", "");
             fname = go_lnk; // backup
             String[] arr_content = go_lnk.split(":#");
@@ -58,7 +58,7 @@ public class GoLink {
      */
     public String getSGFString() {
         try {
-            return AXT.at(new File(fname)).loadToString();
+            return AXT.at(new File(fname)).readToString();
         } catch (IOException e) {
             return "";
         }

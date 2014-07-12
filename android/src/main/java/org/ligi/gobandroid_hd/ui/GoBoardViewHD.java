@@ -34,6 +34,7 @@ import android.view.View;
 
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.GoBoard;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
@@ -138,6 +139,7 @@ public class GoBoardViewHD extends View {
         blackTextPaint = new Paint(whiteTextPaint);
         blackTextPaint.setColor(Color.BLACK);
         blackTextPaint.setShadowLayer(2, 1, 1, Color.WHITE);
+        blackTextPaint.setTextAlign(Paint.Align.CENTER);
 
         gridPaint_h = new Paint();
         gridPaint_h.setColor(0xFF0000FF);
@@ -325,29 +327,30 @@ public class GoBoardViewHD extends View {
 
             }
 
-        FontMetrics fm = whiteTextPaint.getFontMetrics();
+        final FontMetrics fm = whiteTextPaint.getFontMetrics();
 
         // paint the markers
-        for (GoMarker marker : getGame().getActMove().getMarkers())
-
-            if (getGame().getVisualBoard().isCellBlack(marker.getX(), marker.getY()))
-                canvas.drawText(marker.getText(), marker.getX() * stone_size + stone_size / 2.0f, marker.getY() * stone_size - (fm.top + fm.bottom), whiteTextPaint);
-            else
-                canvas.drawText(marker.getText(), marker.getX() * stone_size + stone_size / 2.0f, marker.getY() * stone_size - (fm.top + fm.bottom), blackTextPaint);
+        for (GoMarker marker : getGame().getActMove().getMarkers()) {
+            final Paint markerPaint = getTextPaintForCell(getGame().getVisualBoard(), marker.getX(), marker.getY());
+            final float x = marker.getX() * stone_size + stone_size / 2.0f;
+            final float y = marker.getY() * stone_size + (stone_size - (fm.ascent + fm.descent)) / 2;
+            canvas.drawText(marker.getText(), x, y, markerPaint);
+        }
 
         canvas.restore();
     } // end of onDraw
 
+    private Paint getTextPaintForCell(GoBoard board, int x, int y) {
+        if (getGame().getVisualBoard().isCellBlack(x, y)) {
+            return whiteTextPaint;
+        } else {
+            return blackTextPaint;
+        }
 
-    /**
-     * @return the width/height of the Board in Pixels
-     */
-    public float getBoardPixels() {
-        return stone_size * getGame().getVisualBoard().getSize();
     }
 
     private Bitmap getScaledRes(float size, int resID) {
-        Bitmap unscaled_bitmap = BitmapFactory.decodeResource(this.getResources(), resID);
+        final Bitmap unscaled_bitmap = BitmapFactory.decodeResource(this.getResources(), resID);
         return Bitmap.createScaledBitmap(unscaled_bitmap, (int) size, (int) size, true);
     }
 
