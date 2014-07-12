@@ -3,12 +3,7 @@ package org.ligi.gobandroid_hd;
 import android.app.Application;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
-import android.text.TextUtils;
 
-import com.google.android.gcm.GCMRegistrar;
-
-import org.ligi.gobandroid_hd.backend.GobandroidBackend;
-import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GobandroidTracker;
 import org.ligi.gobandroid_hd.ui.GobandroidTrackerResolver;
@@ -62,8 +57,9 @@ public class App extends Application {
 
     }
 
+
     private void initGCM() {
-        try {
+        /*try {
             // Make sure the device has the proper dependencies.
             GCMRegistrar.checkDevice(this);
 
@@ -78,6 +74,7 @@ public class App extends Application {
         } catch (Exception e) {
             getTracker().trackException("cannot init GCM", e, false);
         }
+        */
     }
 
     public InteractionScope getInteractionScope() {

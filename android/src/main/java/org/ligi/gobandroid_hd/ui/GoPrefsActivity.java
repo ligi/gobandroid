@@ -30,8 +30,6 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.view.MenuItem;
 
-import com.google.android.gcm.GCMRegistrar;
-
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 
@@ -228,12 +226,8 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
         soundCheckBoxPref.setDefaultValue(settings.isSoundEnabled());
         morePrefsCat.addPreference(soundCheckBoxPref);
 
+        /*
         if (!GCMRegistrar.getRegistrationId(this).equals("")) {
-            /*PreferenceCategory notificationsPrefsCat = new PreferenceCategory(this);
-            notificationsPrefsCat.setTitle(R.string.notifications);
-            root.addPreference(notificationsPrefsCat);
-            */
-
             CheckBoxPreference notifyTsumegoCheckBoxPref = new CheckBoxPreference(this);
             notifyTsumegoCheckBoxPref.setKey(GobandroidSettings.KEY_TSUMEGO_PUSH);
             notifyTsumegoCheckBoxPref.setTitle(R.string.push_tsumego);
@@ -242,8 +236,8 @@ public class GoPrefsActivity extends PreferenceActivity implements OnPreferenceC
             morePrefsCat.addPreference(notifyTsumegoCheckBoxPref);
         }
 
-
-		/*
+*/
+        /*
          *
 		 * 
 		 * 
