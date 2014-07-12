@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 
+import java.io.File;
+
 public class GobandroidSettings {
 
     /* the keys */
@@ -35,9 +37,13 @@ public class GobandroidSettings {
             return Environment.getExternalStorageDirectory() + "/gobandroid/sgf/";
         }
 
+        // workaround for Samsung tablet with internal and external SD-card
+        final File probe = new File("/sdcard/Android");
+        if (probe.exists() && probe.isDirectory()) {
+            return "/sdcard/gobandroid/sgf/";
+        }
+
         return ctx.getFilesDir() + "/sgf/";
-
-
     }
 
     public String getTsumegoPath() {
