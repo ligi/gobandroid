@@ -5,9 +5,6 @@ import android.content.Context;
 
 import com.google.analytics.tracking.android.EasyTracker;
 
-/**
- * Created by ligi on 6/1/13.
- */
 public class GobandroidEasyTracker implements GobandroidTracker {
     @Override
     public void init(Context ctx) {
