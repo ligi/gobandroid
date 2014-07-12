@@ -24,7 +24,10 @@ import android.graphics.Point;
 import org.ligi.tracedroid.logging.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -41,7 +44,7 @@ public class GoGame {
         public void onGoGameChange();
     }
 
-    private List<GoGameChangeListener> change_listeners = new ArrayList<GoGameChangeListener>();
+    private Set<GoGameChangeListener> change_listeners = new HashSet<>();
 
     public void addGoGameChangeListener(GoGameChangeListener new_l) {
         change_listeners.add(new_l);
@@ -52,9 +55,10 @@ public class GoGame {
     }
 
     public void notifyGameChange() {
-        for (GoGameChangeListener l : change_listeners)
-            if (l != null)
-                l.onGoGameChange();
+        change_listeners.removeAll(Collections.singleton(null));
+        for (GoGameChangeListener l : change_listeners) {
+            l.onGoGameChange();
+        }
     }
 
     private GoBoard visual_board; // the board to show to the user
@@ -123,6 +127,8 @@ public class GoGame {
         captures_white = game.captures_white;
         dead_black = game.dead_black;
         dead_white = game.dead_white;
+
+        change_listeners.addAll(game.change_listeners);
     }
 
     public GoGame(byte size) {

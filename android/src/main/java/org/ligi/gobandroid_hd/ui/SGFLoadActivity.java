@@ -321,31 +321,18 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         }
         getApp().getInteractionScope().setGame(game);
 
-
         game.getMetaData().setFileName(intent_uri.toString());
 
+        getApp().getInteractionScope().getGame().notifyGameChange();
 
-        /* CloudGobanRemove if (cloudgoban_parent_key != null) {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    alert_dlg.hide();
-                }
-            });
-
-            CloudGobanHelper.registerGame(this, cloudgoban_parent_key, game.isBlackToMove() ? "w" : "b", true, handler, true);
-        } else */
-        {
-
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    alert_dlg.hide();
-                    finish();
-                }
-            });
-            SwitchModeHelper.startGameWithCorrectMode(this);
-        }
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                alert_dlg.hide();
+                finish();
+            }
+        });
+        SwitchModeHelper.startGameWithCorrectMode(this);
 
     }
 

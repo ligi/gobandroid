@@ -30,10 +30,11 @@ public class InteractionScope {
     public void setGame(GoGame p_game) {
         ask_variant_session = true;
 
-        if (game == null)
+        if (game == null) {
             game = p_game;
-        else // keep listeners and stuff
+        } else { // keep listeners and stuff
             game.setGame(p_game);
+        }
     }
 
     /**
