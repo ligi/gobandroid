@@ -18,6 +18,7 @@ import com.google.common.base.Optional;
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.ActivityFinishingOnCancelListener;
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
+import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -38,7 +39,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
     private String[] menu_items;
     private String dir;
     private BaseAdapter adapter;
-    private File[] files;
+
     private int lastSelectedPosition;
     private Optional<ActionMode> actionMode = Optional.absent();
 
@@ -172,8 +173,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
         }
 
         final File dir_file = new File(dir);
-
-        files = new File(dir).listFiles();
+        final File[] files = new File(dir).listFiles();
 
         if (files == null) {
             alert.setMessage(getResources().getString(R.string.there_are_no_files_in) + " " + dir_file.getAbsolutePath()).show();
@@ -235,28 +235,28 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
     }
 
     public void delete_sgfmeta() {
-        Log.i("delete_sgfmeta");
-        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity()).setTitle(R.string.del_sgfmeta);
-        alert.setMessage(R.string.del_sgfmeta_prompt);
+        Log.i("delete sgfmeta files");
+        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity()).setTitle(R.string.del_sgfmeta);
+        alertBuilder.setMessage(R.string.del_sgfmeta_prompt);
 
         if (dir == null) {
-            alert.setMessage(getResources().getString(R.string.sgf_path_invalid) + " " + dir).show();
+            alertBuilder.setMessage(getResources().getString(R.string.sgf_path_invalid) + " " + dir).show();
             return;
         }
 
-        File dir_file = new File(dir);
-        files = new File(dir).listFiles();
+        final File dir_file = new File(dir);
+        final File[] filesToDelete = new File(dir).listFiles();
 
-        if (files == null) {
-            alert.setMessage(getResources().getString(R.string.there_are_no_files_in) + " " + dir_file.getAbsolutePath()).show();
+        if (filesToDelete == null) {
+            alertBuilder.setMessage(getResources().getString(R.string.there_are_no_files_in) + " " + dir_file.getAbsolutePath()).show();
             return;
         }
 
-        alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+        alertBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
                 dialog.dismiss();
-                for (File file : files) {
+                for (File file : filesToDelete) {
                     if (file.getName().endsWith(SGFMetaData.FNAME_ENDING)) {
                         file.delete();
                     }
@@ -265,13 +265,8 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             }
         });
 
-        alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked OK button
-                dialog.dismiss();
-            }
-        });
+        alertBuilder.setNegativeButton(R.string.cancel, new DialogDiscardingOnClickListener());
 
-        alert.create().show();
+        alertBuilder.create().show();
     }
 }
