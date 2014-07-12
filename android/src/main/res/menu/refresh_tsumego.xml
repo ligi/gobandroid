@@ -5,11 +5,11 @@
         yourapp:showAsAction="ifRoom|withText"
         android:id="@+id/menu_refresh"
         android:title="@string/refresh"
-        android:icon="@drawable/refresh"></item>
+        android:icon="@drawable/refresh" />
+
     <item
-        android:showAsAction="ifRoom|withText"
+        yourapp:showAsAction="never"
         android:id="@+id/menu_del_sgfmeta"
-        android:title="@string/del_sgfmeta"
-        android:icon="@drawable/dialog_cancel"></item>
+        android:title="@string/del_sgfmeta" />
 
 </menu>
