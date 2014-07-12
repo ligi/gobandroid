@@ -206,6 +206,10 @@ public class SGFReader {
                                 if (act_cmd.equals("Mark") | act_cmd.equals("MA"))
                                     game.getActMove().addMarker(new GoMarker(param_x, param_y, "X"));
 
+                                // mark with x
+                                if (act_cmd.equals("SL"))
+                                    game.getActMove().addMarker(new GoMarker(param_x, param_y, "+"));
+
                                 // mark with triangle
                                 if (act_cmd.equals("TR")) {
                                     game.getActMove().addMarker(new TriangleMarker(param_x, param_y));
