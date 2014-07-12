@@ -15,6 +15,7 @@ public class GoTerminologyDialog extends GobandroidDialog {
     public final static HashMap<String, Integer> getTerm2resHashMap() {
         return new HashMap<String, Integer>() {
             private static final long serialVersionUID = -8206448225904656388L;
+
             {
                 put("joseki", R.string.goterm_joseki);
                 put("miai", R.string.goterm_miai);
@@ -32,7 +33,7 @@ public class GoTerminologyDialog extends GobandroidDialog {
         setIconResource(R.drawable.info);
         setContentView(R.layout.go_terms_view);
 
-        TextView tv = (TextView) this.findViewById(R.id.go_terms_text);
+        final TextView tv = (TextView) this.findViewById(R.id.go_terms_text);
 
         if (getTerm2resHashMap().containsKey(term)) {
             tv.setText(getTerm2resHashMap().get(term));

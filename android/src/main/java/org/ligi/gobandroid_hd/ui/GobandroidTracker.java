@@ -3,11 +3,7 @@ package org.ligi.gobandroid_hd.ui;
 import android.app.Activity;
 import android.content.Context;
 
-/**
- * Created by ligi on 6/1/13.
- */
 public interface GobandroidTracker {
-
 
     public void init(Context ctx);
 
