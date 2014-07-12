@@ -42,6 +42,7 @@ public class TheSGFReader extends AssetAwareInstrumentationTestCase {
 
 
     @SmallTest
+    // https://github.com/ligi/gobandroid/issues/106
     public void testReadSGFWithFirstMoveWhiteAndCapture() throws Exception {
         GoGame game = SGFReader.sgf2game(readAsset("sgf/first_move_capture_and_white.sgf"), null);
 
