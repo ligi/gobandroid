@@ -27,7 +27,7 @@ android {
     defaultConfig {
         versionCode 127
         versionName "1.27"
-        minSdkVersion 8
+        minSdkVersion 9
         targetSdkVersion 19
         applicationId "org.ligi.gobandroid_hd"
     }
@@ -80,17 +80,18 @@ android {
 
 }
 
-
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
-    //compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
     compile 'com.android.support:support-v4:19.1.0'
     compile 'com.android.support:appcompat-v7:19.1.0'
     compile 'org.ligi:AXT:0.28'
     compile 'com.google.guava:guava:17.0'
     compile 'org.ligi:tracedroid:1.1'
 
-    withCloudCompile 'com.google.android.gms:play-services:3.1.36'
+
+    def play_services = 'com.google.android.gms:play-services:5.0.77'
+
+    withCloudCompile play_services
+    withAnalyticsCompile play_services
 
     androidTestCompile('com.jakewharton.espresso:espresso:1.1-r3') {
         exclude group: 'com.android.support'
