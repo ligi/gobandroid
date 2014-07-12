@@ -1,14 +1,11 @@
 android/gradle.properties
 local.properties
-tests/AndroidManifest.xml
 build
 .gradle
 out/
 bin/
 gen/
-gobandroid.iml
-android/android.iml
-tests/tests.iml
+*.iml
 gobandroid.properties
 gobandroid.xml
 module_gobandroid.xml  
