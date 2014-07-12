@@ -11,13 +11,6 @@ import static org.fest.assertions.api.Assertions.assertThat;
 public class TheSGFReader extends AssetAwareInstrumentationTestCase {
 
     @SmallTest
-    public void testReadSGFWithFirstMoveWhiteAndCapture() throws Exception {
-        GoGame game = SGFReader.sgf2game(readAsset("sgf/first_move_capture_and_white.sgf"), null);
-
-        assertThat(game.getLastMove().getMovePos()).isEqualTo(2);
-    }
-
-    @SmallTest
     public void testReadMinimal19x19SGF() throws Exception {
         GoGame game = SGFReader.sgf2game(readAsset("sgf/minimal_19x19.sgf"), null);
 
@@ -36,6 +29,7 @@ public class TheSGFReader extends AssetAwareInstrumentationTestCase {
         GoGame game = SGFReader.sgf2game(readAsset("sgf/small_19x19.sgf"), null);
 
         assertThat(game.getSize()).isEqualTo(19);
+        assertThat(game.getMetaData().getName()).isEqualTo("SMALL19x19");
     }
 
     @SmallTest
@@ -43,6 +37,14 @@ public class TheSGFReader extends AssetAwareInstrumentationTestCase {
         GoGame game = SGFReader.sgf2game(readAsset("sgf/small_9x9.sgf"), null);
 
         assertThat(game.getSize()).isEqualTo(9);
+        assertThat(game.getMetaData().getName()).isEqualTo("SMALL9x9");
     }
 
+
+    @SmallTest
+    public void testReadSGFWithFirstMoveWhiteAndCapture() throws Exception {
+        GoGame game = SGFReader.sgf2game(readAsset("sgf/first_move_capture_and_white.sgf"), null);
+
+        assertThat(game.getLastMove().getMovePos()).isEqualTo(2);
+    }
 }
