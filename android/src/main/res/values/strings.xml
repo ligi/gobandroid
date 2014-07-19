@@ -232,7 +232,7 @@
     </string>
     <string name="server_problem">Server Problem</string>
     <string name="file_saved">saved %s</string>
-    <string name="file_not_saved">problen saving %s</string>
+    <string name="file_not_saved">problem saving %s</string>
     <string name="game_created">Game Created</string>
     <string name="game_created_msg">Game created - enjoy this game!\nTIP: You can also do something
         else with gobandroid
