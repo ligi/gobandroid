@@ -6,22 +6,26 @@ import android.widget.EditText;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class BaseProfileActivity extends GobandroidFragmentActivity {
 
-    private EditText username_et;
-    private EditText rank_et;
+    @InjectView(R.id.username_edit)
+    EditText username_et;
+
+    @InjectView(R.id.rank_edit)
+    EditText rank_et;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
 
-        username_et = (EditText) findViewById(R.id.username_edit);
-        rank_et = (EditText) findViewById(R.id.rank_edit);
+        ButterKnife.inject(this);
 
         rank_et.setText(getApp().getSettings().getRank());
         username_et.setText(getApp().getSettings().getUsername());
-
     }
 
 
