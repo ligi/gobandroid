@@ -13,6 +13,7 @@ apply plugin: 'android-sdk-manager'
 apply plugin: 'android'
 apply plugin: 'spoon'
 
+
 repositories {
     mavenCentral()
     maven {
@@ -25,8 +26,8 @@ android {
     buildToolsVersion "19.1"
 
     defaultConfig {
-        versionCode 127
-        versionName "1.27"
+        versionCode 128
+        versionName "1.28"
         minSdkVersion 9
         targetSdkVersion 19
         applicationId "org.ligi.gobandroid_hd"
@@ -81,12 +82,13 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:19.1.0'
-    compile 'com.android.support:appcompat-v7:19.1.0'
+    compile 'com.android.support:support-v4:20.0.+'
+    compile 'com.android.support:appcompat-v7:20.0.+'
     compile 'org.ligi:AXT:0.28'
     compile 'com.google.guava:guava:17.0'
     compile 'org.ligi:tracedroid:1.1'
-
+    compile 'com.jakewharton:butterknife:5.1.1'
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
 
     def play_services = 'com.google.android.gms:play-services:5.0.77'
 
