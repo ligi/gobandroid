@@ -5,16 +5,11 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Handler;
 
-import com.google.api.services.cloudgoban.CloudFactory;
-import com.google.api.services.cloudgoban.model.Game;
-import com.google.api.services.cloudgoban.model.GoGameParticipation;
-import com.google.api.services.cloudgoban.model.Text;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
-import org.ligi.gobandroid_hd.ui.online.UserHandler;
 import org.ligi.tracedroid.logging.Log;
 
 import java.io.IOException;
@@ -22,7 +17,7 @@ import java.io.IOException;
 public class CloudGobanHelper {
 
     public static void registerGame(final GobandroidFragmentActivity activity, String game_key, String role, final boolean start_after_reg, Handler handler, boolean setCloudKey) {
-
+/*
         GoGameParticipation gn = new GoGameParticipation();
         gn.setGameKey(game_key);
         gn.setUserKey(UserHandler.getUserKey(activity.getApp()));
@@ -86,6 +81,6 @@ public class CloudGobanHelper {
                 Log.i("cannot sleep");
                 e.printStackTrace();
             }
-
+*/
     }
 }

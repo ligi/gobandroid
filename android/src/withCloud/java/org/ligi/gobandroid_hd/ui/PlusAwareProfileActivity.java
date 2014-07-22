@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
-public class PlusAwareProfileAcitivity extends GobandroidFragmentActivity {
+public class PlusAwareProfileActivity extends GobandroidFragmentActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -3,8 +3,6 @@ package org.ligi.gobandroid_hd;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.google.android.gms.appstate.OnStateLoadedListener;
-
 import org.ligi.gobandroid_hd.helper.PlayServicesHelper;
 import org.ligi.tracedroid.logging.Log;
 
@@ -23,7 +21,7 @@ public class PlayServicesIntegration implements AppLifecycleIntegrator, PlayServ
 
     @Override
     public void onSignInSucceeded() {
-        Log.i("StatCount" + playHelper.getAppStateClient().getMaxNumKeys());
+        /*Log.i("StatCount" + playHelper.getAppStateClient() .getMaxNumKeys());
         playHelper.getAppStateClient().updateState(1, "test".getBytes());
         playHelper.getAppStateClient().loadState(new OnStateLoadedListener() {
             @Override
@@ -36,6 +34,7 @@ public class PlayServicesIntegration implements AppLifecycleIntegrator, PlayServ
                 Log.i("AppStateTest", "conflict " + new String(bytes) + " <> " + new String(bytes2));
             }
         }, 1);
+        */
     }
 
     @Override

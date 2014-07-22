@@ -12,8 +12,7 @@ public class ParseDeepLinkActivity extends Activity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        String deepLinkId = PlusShare.getDeepLinkId(this.getIntent());
-
+        final String deepLinkId = PlusShare.getDeepLinkId(this.getIntent());
 
         Log.i("coming from DeepLink " + deepLinkId);
     }
