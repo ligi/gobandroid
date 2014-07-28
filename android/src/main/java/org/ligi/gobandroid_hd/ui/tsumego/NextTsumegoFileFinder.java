@@ -12,14 +12,14 @@ public class NextTsumegoFileFinder {
      * try to find next tsumego based on filename
      * searching the last number and incrementing it
      *
-     * @param FileName
+     * @param fileName
      * @return the filename found
      */
-    public static String calcNextTsumego(String FileName) {
-        final Optional<String> old_index = getLastNumberInStringOrNull(FileName);
+    public static Optional<String> calcNextTsumego(String fileName) {
+        final Optional<String> old_index = getLastNumberInStringOrNull(fileName);
 
         if (!old_index.isPresent()) {
-            return null;
+            return Optional.absent();
         }
 
         final int index = Integer.parseInt(old_index.get());
@@ -32,14 +32,14 @@ public class NextTsumegoFileFinder {
 
         new_index += "" + (index + 1);
 
-        final String guessedFileNameString = replaceLast(FileName, old_index.get(), new_index);
+        final String guessedFileNameString = replaceLast(fileName, old_index.get(), new_index);
 
         // check if it exists
         if (!new File(guessedFileNameString).exists()) {
-            return null;
+            return Optional.absent();
         }
 
-        return guessedFileNameString;
+        return Optional.of(guessedFileNameString);
 
     }
 

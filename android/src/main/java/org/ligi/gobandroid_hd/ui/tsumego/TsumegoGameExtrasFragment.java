@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.common.base.Optional;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.fragments.CommentHelper;
@@ -38,9 +40,9 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
 
         if (correct_visible) {
             correctView.setVisibility(View.VISIBLE);
-            String next_tsumego_url_str = NextTsumegoFileFinder.calcNextTsumego(game.getMetaData().getFileName().replaceFirst("file://", ""));
+            Optional<String> next_tsumego_url_str = NextTsumegoFileFinder.calcNextTsumego(game.getMetaData().getFileName().replaceFirst("file://", ""));
 
-            if (next_tsumego_url_str != null) {
+            if (!next_tsumego_url_str.isPresent()) {
 
                 correctView.setMovementMethod(LinkMovementMethod.getInstance());
 
