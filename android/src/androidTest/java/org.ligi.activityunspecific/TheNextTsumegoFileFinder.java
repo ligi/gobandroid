@@ -13,7 +13,7 @@ import java.io.File;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-public class TheNextTsumegoDeterminator extends AndroidTestCase {
+public class TheNextTsumegoFileFinder extends AndroidTestCase {
 
     private File path;
     private final static String SINGLE_DIGIT_FILENAME1 = "foo1.sgf";
