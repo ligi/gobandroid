@@ -5,7 +5,7 @@ import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import org.ligi.axt.AXT;
-import org.ligi.gobandroid_hd.ui.tsumego.NextTsumegoDeterminator;
+import org.ligi.gobandroid_hd.ui.tsumego.NextTsumegoFileFinder;
 
 import java.io.File;
 
@@ -37,7 +37,7 @@ public class TheNextTsumegoDeterminator extends AndroidTestCase {
 
     @SmallTest
     public void test_should_not_explode_if_no_number_is_in_filename() throws Exception {
-        String result = NextTsumegoDeterminator.calcNextTsumego("FOO");
+        String result = NextTsumegoFileFinder.calcNextTsumego("FOO");
 
         assertThat(result).isEqualTo(null);
     }
@@ -47,7 +47,7 @@ public class TheNextTsumegoDeterminator extends AndroidTestCase {
         new File(path, SINGLE_DIGIT_FILENAME1).createNewFile();
         new File(path, SINGLE_DIGIT_FILENAME2).createNewFile();
 
-        String result = NextTsumegoDeterminator.calcNextTsumego(path + "/" + SINGLE_DIGIT_FILENAME1);
+        String result = NextTsumegoFileFinder.calcNextTsumego(path + "/" + SINGLE_DIGIT_FILENAME1);
 
         assertThat(result).isEqualTo(path + "/" + SINGLE_DIGIT_FILENAME2);
     }
@@ -57,7 +57,7 @@ public class TheNextTsumegoDeterminator extends AndroidTestCase {
     public void test_should_not_find_next_for_single_digit_when_not_there() throws Exception {
         new File(path, SINGLE_DIGIT_FILENAME1).createNewFile();
 
-        String result = NextTsumegoDeterminator.calcNextTsumego(path + "/" + SINGLE_DIGIT_FILENAME1);
+        String result = NextTsumegoFileFinder.calcNextTsumego(path + "/" + SINGLE_DIGIT_FILENAME1);
 
         assertThat(result).isEqualTo(null);
     }
@@ -67,7 +67,7 @@ public class TheNextTsumegoDeterminator extends AndroidTestCase {
         new File(path, TWO_DIGIT_FILENAME1).createNewFile();
         new File(path, TWO_DIGIT_FILENAME2).createNewFile();
 
-        String result = NextTsumegoDeterminator.calcNextTsumego(path + "/" + TWO_DIGIT_FILENAME1);
+        String result = NextTsumegoFileFinder.calcNextTsumego(path + "/" + TWO_DIGIT_FILENAME1);
 
         assertThat(result).isEqualTo(path + "/" + TWO_DIGIT_FILENAME2);
     }
@@ -77,7 +77,7 @@ public class TheNextTsumegoDeterminator extends AndroidTestCase {
     public void test_should_not_find_next_for_two_digit_when_not_there() throws Exception {
         new File(path, TWO_DIGIT_FILENAME1).createNewFile();
 
-        String result = NextTsumegoDeterminator.calcNextTsumego(path + "/" + TWO_DIGIT_FILENAME1);
+        String result = NextTsumegoFileFinder.calcNextTsumego(path + "/" + TWO_DIGIT_FILENAME1);
 
         assertThat(result).isEqualTo(null);
     }
@@ -88,7 +88,7 @@ public class TheNextTsumegoDeterminator extends AndroidTestCase {
         new File(path, THREE_DIGIT_FILENAME1).createNewFile();
         new File(path, THREE_DIGIT_FILENAME2).createNewFile();
 
-        String result = NextTsumegoDeterminator.calcNextTsumego(path + "/" + THREE_DIGIT_FILENAME1);
+        String result = NextTsumegoFileFinder.calcNextTsumego(path + "/" + THREE_DIGIT_FILENAME1);
 
         assertThat(result).isEqualTo(path + "/" + THREE_DIGIT_FILENAME2);
     }
@@ -98,7 +98,7 @@ public class TheNextTsumegoDeterminator extends AndroidTestCase {
     public void test_should_not_find_next_for_three_digit_when_not_there() throws Exception {
         new File(path, THREE_DIGIT_FILENAME1).createNewFile();
 
-        String result = NextTsumegoDeterminator.calcNextTsumego(path + "/" + THREE_DIGIT_FILENAME1);
+        String result = NextTsumegoFileFinder.calcNextTsumego(path + "/" + THREE_DIGIT_FILENAME1);
 
         assertThat(result).isEqualTo(null);
     }

@@ -38,7 +38,7 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
 
         if (correct_visible) {
             correctView.setVisibility(View.VISIBLE);
-            String next_tsumego_url_str = NextTsumegoDeterminator.calcNextTsumego(game.getMetaData().getFileName().replaceFirst("file://", ""));
+            String next_tsumego_url_str = NextTsumegoFileFinder.calcNextTsumego(game.getMetaData().getFileName().replaceFirst("file://", ""));
 
             if (next_tsumego_url_str != null) {
 
