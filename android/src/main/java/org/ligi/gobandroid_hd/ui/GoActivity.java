@@ -24,7 +24,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -78,7 +77,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     private int last_processed_move_change_num = 0;
 
     private GoMove last_accept;
-    private Handler handler;
 
     public Fragment getGameExtraFragment() {
 
@@ -90,8 +88,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         super.onCreate(savedInstanceState);
 
         GoPrefs.init(this); // TODO remove legacy
-
-        handler = new Handler();
 
         setContentView(R.layout.game);
 
@@ -174,11 +170,9 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         }
         last_processed_move_change_num = getGame().getActMove().getMovePos();
 
-        handler.post(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-
                 if (getApp().getInteractionScope().getTouchPosition() < 0) {
                     setFragment(getGameExtraFragment());
                 }
@@ -220,15 +214,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             go_board.setFocusable(false);
         }
         setBoardPreferences();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                // sound_man.playSound(GoSoundManager.SOUND_START);
-            }
-
-        }, 100);
 
         if (getGame() == null) {
             Log.w("we do not have a game in onStart of a GoGame activity - thats crazy!");
