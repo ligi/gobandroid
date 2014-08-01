@@ -1,4 +1,4 @@
-package org.ligi.base;
+package org.ligi.gobandroidhd.base;
 
 import android.content.res.AssetManager;
 import android.test.InstrumentationTestCase;

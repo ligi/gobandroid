@@ -1,10 +1,10 @@
-package org.ligi;
+package org.ligi.gobandroidhd.unittest;
 
 import android.test.suitebuilder.annotation.SmallTest;
 
-import org.ligi.base.AssetAwareInstrumentationTestCase;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
+import org.ligi.gobandroidhd.base.AssetAwareInstrumentationTestCase;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 

@@ -1,4 +1,4 @@
-package org.ligi;
+package org.ligi.gobandroidhd.unittest;
 
 import android.content.Context;
 import android.test.AndroidTestCase;

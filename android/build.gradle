@@ -31,6 +31,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 19
         applicationId "org.ligi.gobandroid_hd"
+        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
 
     flavorDimensions "analytics", "cloud"
