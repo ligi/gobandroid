@@ -180,7 +180,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             return;
         }
 
-        List<String> fileNames = new ArrayList<String>();
+        List<String> fileNames = new ArrayList<>();
         for (File file : files) {
             if ((file.getName().endsWith(".sgf")) || (file.isDirectory()) || (file.getName().endsWith(".golink"))) {
                 fileNames.add(file.getName());
@@ -269,4 +269,5 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
 
         alertBuilder.create().show();
     }
+
 }
