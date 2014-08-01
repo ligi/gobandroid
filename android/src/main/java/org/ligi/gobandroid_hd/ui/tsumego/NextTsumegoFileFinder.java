@@ -2,9 +2,14 @@ package org.ligi.gobandroid_hd.ui.tsumego;
 
 import com.google.common.base.Optional;
 
+import org.ligi.gobandroid_hd.App;
+import org.ligi.gobandroid_hd.helper.SGFFileNameFilter;
+
 import java.io.File;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Arrays;
+import java.util.List;
+
+import static java.util.Collections.sort;
 
 public class NextTsumegoFileFinder {
 
@@ -16,53 +21,38 @@ public class NextTsumegoFileFinder {
      * @return the filename found
      */
     public static Optional<String> calcNextTsumego(String fileName) {
-        final Optional<String> old_index = getLastNumberInStringOrNull(fileName);
 
-        if (!old_index.isPresent()) {
+        final File file = new File(fileName);
+
+        if (!file.exists()) {
+            App.getTracker().trackException("file given to calcNextTsumego is null", false);
             return Optional.absent();
         }
 
-        final int index = Integer.parseInt(old_index.get());
+        final File dir = file.getParentFile();
 
-        String new_index = "";
-        // add the leading zeroes
-        for (int i = 0; i < old_index.get().length() - ((index + 1) / 10 + 1); i++) {
-            new_index += "0";
-        }
-
-        new_index += "" + (index + 1);
-
-        final String guessedFileNameString = replaceLast(fileName, old_index.get(), new_index);
-
-        // check if it exists
-        if (!new File(guessedFileNameString).exists()) {
+        if (dir == null || !dir.isDirectory()) {
+            App.getTracker().trackException("file given to calcNextTsumego has no valid parent", false);
             return Optional.absent();
         }
 
-        return Optional.of(guessedFileNameString);
+        final String[] fileNames = dir.list(new SGFFileNameFilter());
 
-    }
-
-    private static Optional<String> getLastNumberInStringOrNull(final String fileName) {
-        final Pattern p = Pattern.compile("\\d+");
-        final Matcher m = p.matcher(fileName);
-
-        Optional<String> old_index = Optional.absent();
-
-        while (m.find()) {
-            old_index = Optional.of(m.group());
+        if (fileNames == null || fileNames.length == 0) {
+            App.getTracker().trackException("file given to calcNextTsumego has empty parent", false);
+            return Optional.absent();
         }
 
-        return old_index;
-    }
+        final List<String> fileList = Arrays.asList(fileNames);
+        ;
 
-    private static String replaceLast(String string, String from, String to) {
-        int lastIndex = string.lastIndexOf(from);
-        if (lastIndex < 0) {
-            return string;
+        sort(fileList);
+
+        final int inputFilePos = fileList.lastIndexOf(file.getName());
+        if (inputFilePos + 1 < fileList.size()) {
+            return Optional.of(dir.toString() + "/" + fileList.get(inputFilePos + 1));
         }
-        final String tail = string.substring(lastIndex).replaceFirst(from, to);
-        return string.substring(0, lastIndex) + tail;
+        return Optional.absent();
     }
 
 }

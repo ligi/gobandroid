@@ -22,6 +22,7 @@ public class TheNextTsumegoFileFinder extends AndroidTestCase {
     private final static String TWO_DIGIT_FILENAME2 = "foo02.sgf";
     private final static String THREE_DIGIT_FILENAME1 = "foo201.sgf";
     private final static String THREE_DIGIT_FILENAME2 = "foo202.sgf";
+    private final static String THREE_DIGIT_FILENAME5 = "foo205.sgf";
 
     @Override
     protected void setUp() throws Exception {
@@ -105,5 +106,14 @@ public class TheNextTsumegoFileFinder extends AndroidTestCase {
         assertThat(result.isPresent()).isEqualTo(false);
     }
 
+    @SmallTest
+    public void shouldFindNextTsumegoAfterGap() throws Exception {
+        new File(path, THREE_DIGIT_FILENAME1).createNewFile();
+        new File(path, THREE_DIGIT_FILENAME5).createNewFile();
+
+        Optional<String> result = NextTsumegoFileFinder.calcNextTsumego(path + "/" + THREE_DIGIT_FILENAME1);
+
+        assertThat(result.get()).isEqualTo(path + "/" + THREE_DIGIT_FILENAME5);
+    }
 
 }
