@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.WindowManager;
 
+import org.ligi.gobandroid_hd.App;
+
 import reporting.SpooningFailureHandler;
 
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.setFailureHandler;
@@ -18,7 +20,7 @@ public abstract class BaseIntegration<T extends Activity> extends ActivityInstru
     public void setUp() throws Exception {
         super.setUp();
         setFailureHandler(new SpooningFailureHandler(getInstrumentation().getTargetContext()));
-
+        App.isTesting = true;
     }
 
     @Override

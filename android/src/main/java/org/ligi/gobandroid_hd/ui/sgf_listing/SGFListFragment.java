@@ -36,6 +36,9 @@ import java.util.List;
 
 public class SGFListFragment extends GobandroidListFragment implements Refreshable {
 
+    public static final String EXTRA_DIR = "dir";
+    public static final String EXTRA_MENU_ITEMS = "menu_items";
+
     private String[] menu_items;
     private String dir;
     private BaseAdapter adapter;
@@ -43,11 +46,15 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
     private int lastSelectedPosition;
     private Optional<ActionMode> actionMode = Optional.absent();
 
-    public SGFListFragment() {
-    }
 
-    public SGFListFragment(File dir) {
-        this.dir = dir.getAbsolutePath();
+    public static SGFListFragment newInstance(File dir) {
+        SGFListFragment f = new SGFListFragment();
+
+        Bundle args = new Bundle();
+        args.putString(EXTRA_DIR, dir.getAbsolutePath());
+        f.setArguments(args);
+
+        return f;
     }
 
     @Override
@@ -66,11 +73,11 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
 
     private void getEnvFromSavedInstance(Bundle savedInstanceState) {
         if (menu_items == null) {
-            menu_items = savedInstanceState.getStringArray("menu_items");
+            menu_items = savedInstanceState.getStringArray(EXTRA_MENU_ITEMS);
         }
 
         if (dir == null) {
-            dir = savedInstanceState.getString("dir");
+            dir = savedInstanceState.getString(EXTRA_DIR);
         }
     }
 
@@ -149,8 +156,8 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putStringArray("menu_items", menu_items);
-        outState.putString("dir", dir);
+        outState.putStringArray(EXTRA_MENU_ITEMS, menu_items);
+        outState.putString(EXTRA_DIR, dir);
     }
 
     @Override

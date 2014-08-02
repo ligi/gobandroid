@@ -12,9 +12,9 @@ import static com.google.android.apps.common.testing.ui.espresso.assertion.ViewA
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.isDisplayed;
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withText;
 
-public class TheTsumegoAcitity extends BaseIntegration<TsumegoActivity> {
+public class TheTsumegoActity extends BaseIntegration<TsumegoActivity> {
 
-    public TheTsumegoAcitity() {
+    public TheTsumegoActity() {
         super(TsumegoActivity.class);
     }
 

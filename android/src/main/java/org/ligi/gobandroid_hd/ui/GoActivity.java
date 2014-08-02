@@ -37,6 +37,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.ligi.axt.AXT;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -92,8 +93,10 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         setContentView(R.layout.game);
 
 
-        // if there where stacktraces collected -> give the user the option to send them
-        TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
+        if (!App.isTesting) {
+            // if there where stacktraces collected -> give the user the option to send them
+            TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
+        }
 
         interaction_scope = getApp().getInteractionScope();
         this.getSupportActionBar().setHomeButtonEnabled(true);
@@ -203,7 +206,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     @Override
     protected void onResume() {
         super.onResume();
-        getApp().setGoActivityActivity(true);
 
         if (isBoardFocusWanted()) {
             go_board.setFocusableInTouchMode(true);
@@ -483,7 +485,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     public void onPause() {
 
         go_board.move_stone_mode = false;
-        getApp().setGoActivityActivity(false);
 
         /*
         TODO dismiss ProgressDialog from upload when needed
