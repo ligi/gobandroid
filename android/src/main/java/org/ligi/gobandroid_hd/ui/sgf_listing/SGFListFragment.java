@@ -194,7 +194,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
 
 
         if (getApp().getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
-            List<String> done = new ArrayList<String>(), undone = new ArrayList<String>();
+            List<String> done = new ArrayList<>(), undone = new ArrayList<>();
             for (String fname : fileNames)
                 if (new SGFMetaData(dir_file.getAbsolutePath() + "/" + fname).is_solved) {
                     done.add(fname);
@@ -202,12 +202,12 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
                     undone.add(fname);
                 }
 
-            String[] undone_arr = (String[]) undone.toArray(new String[undone.size()]), done_arr = (String[]) done.toArray(new String[done.size()]);
+            String[] undone_arr = undone.toArray(new String[undone.size()]), done_arr = done.toArray(new String[done.size()]);
             Arrays.sort(undone_arr);
             Arrays.sort(done_arr);
             menu_items = AXT.at(undone_arr).combineWith(done_arr);
         } else {
-            menu_items = (String[]) fileNames.toArray(new String[fileNames.size()]);
+            menu_items = fileNames.toArray(new String[fileNames.size()]);
             Arrays.sort(menu_items);
         }
 
