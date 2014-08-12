@@ -1,6 +1,6 @@
 language: android
 android:
- components:
+  components:
     - build-tools-20.0.0
     - android-19
     - sysimg-19
