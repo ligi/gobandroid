@@ -1,4 +1,4 @@
-[![Build Status](https://ligi.ci.cloudbees.com/buildStatus/icon?job=gobandroid)](https://ligi.ci.cloudbees.com/job/gobandroid/)
+[![Build Status](https://travis-ci.org/ligi/gobandroid.svg?branch=master)](https://travis-ci.org/ligi/gobandroid)
 
 ### Links
  - [gobandroid in the Android-Market](https://market.android.com/details?id=org.ligi.gobandroid_hd)
