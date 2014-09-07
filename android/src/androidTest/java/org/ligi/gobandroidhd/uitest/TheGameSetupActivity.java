@@ -41,7 +41,7 @@ public class TheGameSetupActivity extends BaseIntegration<GoSetupActivity> {
 
 
     @MediumTest
-    public void testThatClickOn9x9createsA13by13game() {
+    public void testThatClickOn13x13createsA13by13game() {
         final GoSetupActivity activity = getActivity();
 
         onView(withId(R.id.size_button13x13)).perform(click());
@@ -51,7 +51,7 @@ public class TheGameSetupActivity extends BaseIntegration<GoSetupActivity> {
     }
 
     @MediumTest
-    public void testThatClickOn9x9createsA19by19game() {
+    public void testThatClickOn19x19createsA19by19game() {
         final GoSetupActivity activity = getActivity();
 
         onView(withId(R.id.size_button19x19)).perform(click());
