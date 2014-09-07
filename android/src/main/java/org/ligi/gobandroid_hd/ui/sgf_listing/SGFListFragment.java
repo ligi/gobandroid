@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui.sgf_listing;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,6 +23,9 @@ import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.helper.SGFFileNameFilter;
+import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import org.ligi.gobandroid_hd.ui.GoLinkLoadActivity;
 import org.ligi.gobandroid_hd.ui.GobandroidListFragment;
 import org.ligi.gobandroid_hd.ui.Refreshable;
@@ -30,9 +34,12 @@ import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.tracedroid.logging.Log;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static android.text.TextUtils.isEmpty;
 
 public class SGFListFragment extends GobandroidListFragment implements Refreshable {
 
@@ -61,9 +68,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null) {
-            getEnvFromSavedInstance(savedInstanceState);
-        }
+            getEnvFromSavedInstance();
 
         if (menu_items == null) { // we got nothing from savedInstance
             refresh();
@@ -71,13 +76,14 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
 
     }
 
-    private void getEnvFromSavedInstance(Bundle savedInstanceState) {
+
+    private void getEnvFromSavedInstance() {
         if (menu_items == null) {
-            menu_items = savedInstanceState.getStringArray(EXTRA_MENU_ITEMS);
+            menu_items = getArguments().getStringArray(EXTRA_MENU_ITEMS);
         }
 
         if (dir == null) {
-            dir = savedInstanceState.getString(EXTRA_DIR);
+            dir = getArguments().getString(EXTRA_DIR);
         }
     }
 
@@ -187,7 +193,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             return;
         }
 
-        List<String> fileNames = new ArrayList<>();
+        final List<String> fileNames = new ArrayList<>();
         for (File file : files) {
             if ((file.getName().endsWith(".sgf")) || (file.isDirectory()) || (file.getName().endsWith(".golink"))) {
                 fileNames.add(file.getName());
@@ -201,6 +207,31 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
 
 
         if (getApp().getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
+
+            if (fileNames.size() > 1000) {
+                try {
+                    final String[] list = dir_file.list(new SGFFileNameFilter());
+                    final GoGame game1 = SGFReader.sgf2game(AXT.at(new File(dir_file, list[10])).readToString(), null, SGFReader.BREAKON_FIRSTMOVE);
+                    final GoGame game2 = SGFReader.sgf2game(AXT.at(new File(dir_file, list[12])).readToString(), null, SGFReader.BREAKON_FIRSTMOVE);
+                    if (!isEmpty(game1.getMetaData().getDifficulty()) && !isEmpty(game2.getMetaData().getDifficulty())) {
+                        new AlertDialog.Builder(getActivity()).setMessage("This looks like the gogameguru offline selection - sort by difficulty")
+                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        new GoProblemsRenaming(getActivity(),dir_file).execute();
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setNegativeButton(R.string.cancel,null)
+
+                                .show();
+                    }
+                } catch (IOException e) {
+                    Log.w("problem in gogameguru rename offer " + e);
+                }
+                return;
+            }
+
             List<String> done = new ArrayList<>(), undone = new ArrayList<>();
             for (String fname : fileNames)
                 if (new SGFMetaData(dir_file.getAbsolutePath() + "/" + fname).is_solved) {
