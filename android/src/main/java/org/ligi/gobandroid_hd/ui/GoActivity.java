@@ -134,7 +134,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         game2ui();
         getZoomFragment();
-        acceptCloudMove(); // this move must be accepted
     }
 
     @SuppressLint("ShowToast")
@@ -440,45 +439,13 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         return true;
     }
 
-    public boolean isCloudGame() {
-        return getGame().getCloudKey() != null && getGame().getCloudRole() != null;
-    }
-
     public boolean isLastMoveAccepted() {
-        if (!isCloudGame()) {
-            return false;
-        }
 
         if (last_accept == null) {
             return false;
         }
 
         return (last_accept.getMovePos() == getGame().getActMove().getMovePos());
-    }
-
-    public void acceptCloudMove() {
-        last_accept = getGame().getActMove();
-    }
-
-    public boolean isCloudMove() {
-        if (!isCloudGame()) {
-            return false;
-        }
-
-		/*
-         * if (isLastMoveAccepted()) return true;
-		 */
-        if (getGame().getCloudRole().equals("s")) {
-            return true;
-        }
-        if (getGame().getCloudRole().equals("b") && getGame().isBlackToMove()) {
-            return true;
-        }
-        if (getGame().getCloudRole().equals("w") && !getGame().isBlackToMove()) {
-            return true;
-        }
-
-        return false;
     }
 
     @Override

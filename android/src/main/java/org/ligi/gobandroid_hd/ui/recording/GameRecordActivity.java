@@ -10,8 +10,6 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.GoActivity;
-import org.ligi.gobandroid_hd.ui.GoPrefs;
-import org.ligi.tracedroid.logging.Log;
 
 
 /**
@@ -30,12 +28,6 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
 
     @Override
     public byte doMoveWithUIFeedback(byte x, byte y) {
-
-        if (isCloudMove()) {
-            Log.i("showing info toast");
-            showInfoToast(R.string.not_your_turn);
-            return GoGame.MOVE_INVALID;
-        }
 
         byte res = super.doMoveWithUIFeedback(x, y);
         if (res == GoGame.MOVE_VALID) {
@@ -89,10 +81,6 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
 
                 boolean switch_to_count = getGame().isFinished();
 
-                if (isCloudGame() && (isCloudMove() && !isLastMoveAccepted())) {
-                    switch_to_count = false;
-                }
-
                 if (switch_to_count) {
                     switchToCounting();
                 }
@@ -106,15 +94,6 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
     @Override
     public Fragment getGameExtraFragment() {
         return new RecordingGameExtrasFragment();
-    }
-
-    @Override
-    public void requestUndo() {
-        if (isCloudGame()) {
-            getGame().undo(GoPrefs.isKeepVariantEnabled());
-        } else {
-            super.requestUndo();
-        }
     }
 
 }

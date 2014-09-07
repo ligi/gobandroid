@@ -25,17 +25,13 @@ import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 
 import com.google.android.gms.appstate.AppStateManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
-
-import com.google.android.gms.games.Game;
 import com.google.android.gms.games.Games;
-import com.google.android.gms.games.multiplayer.Invitation;
 import com.google.android.gms.plus.PlusClient;
 
 import java.util.ArrayList;
@@ -487,7 +483,7 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
             // We have a pending connection result from a previous failure, so
             // start with that.
             debugLog("beginUserInitiatedSignIn: continuing pending sign-in flow.");
-            showProgressDialog(true);
+            //showProgressDialog(true);
             resolveConnectionResult();
         } else {
             // We don't have a pending connection result, so start anew.
@@ -544,7 +540,7 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
             return;
         }
 
-        showProgressDialog(true);
+        //showProgressDialog(true);
 
         // which client should be the next one to connect?
         if (mGamesClient != null && (0 != (pendingClients & CLIENT_GAMES))) {

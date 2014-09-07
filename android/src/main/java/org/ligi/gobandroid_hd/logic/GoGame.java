@@ -108,8 +108,6 @@ public class GoGame {
     private int local_captures = 0;
 
     public void setGame(GoGame game) {
-        cloud_key = game.getCloudKey();
-        cloud_role = game.getCloudRole();
         metadata = game.getMetaData();
         all_handicap_positions = game.all_handicap_positions;
         handicap = game.handicap;
@@ -612,7 +610,7 @@ public class GoGame {
                         int newx = ptStackX.pop();
                         int newy = ptStackY.pop();
                         groups[newx][newy] = group_count;
-						/* check to the left */
+                        /* check to the left */
                         if (newx > 0)
                             if (calc_board.areCellsEqual(newx - 1, newy, newx, newy) && (groups[newx - 1][newy] == -1)) {
                                 ptStackX.push(newx - 1);
@@ -878,21 +876,6 @@ public class GoGame {
 
     public void setDeadBlack(int _dead_black) {
         dead_black = _dead_black;
-    }
-
-    private String cloud_key = null, cloud_role = null;
-
-    public void setCloudDefs(String cloud_key, String cloud_role) {
-        this.cloud_key = cloud_key;
-        this.cloud_role = cloud_role;
-    }
-
-    public String getCloudKey() {
-        return cloud_key;
-    }
-
-    public String getCloudRole() {
-        return cloud_role;
     }
 
     /**
