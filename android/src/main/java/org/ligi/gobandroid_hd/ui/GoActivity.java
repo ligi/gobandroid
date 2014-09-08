@@ -50,6 +50,7 @@ import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.gobandroid_hd.ui.review.BookmarkDialog;
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
+import org.ligi.gobandroid_hd.ui.share.ShareAsAttachmentDialog;
 import org.ligi.gobandroid_hd.ui.share.ShareSGFDialog;
 import org.ligi.tracedroid.logging.Log;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
@@ -286,8 +287,8 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                 return true;
 
             case R.id.menu_game_share:
-                //new ShareAsAttachmentDialog(this).show();
-                new ShareSGFDialog(this).show();
+                new ShareAsAttachmentDialog(this).show();
+                //new ShareSGFDialog(this).show();
                 return true;
         }
 
