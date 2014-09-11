@@ -10,7 +10,7 @@ import org.ligi.gobandroidhd.base.AssetAwareInstrumentationTestCase;
 public class TheSGFWriter extends AssetAwareInstrumentationTestCase {
 
     @SmallTest
-    public void test_all_sgfs_should_survive_roundtrip() throws Exception {
+    public void testAllSGFsShouldSurviveRoundtrip() throws Exception {
         for (String sgf : getInstrumentation().getContext().getAssets().list("sgf")) {
             final GoGame game = SGFReader.sgf2game(readAsset("sgf/" + sgf), null);
             final String newSGF = SGFWriter.game2sgf(game);

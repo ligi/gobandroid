@@ -39,14 +39,14 @@ public class TheNextTsumegoFileFinder extends AndroidTestCase {
     }
 
     @SmallTest
-    public void test_should_not_explode_if_no_number_is_in_filename() throws Exception {
+    public void testShouldNotExplodeIfNoNumberIsInFilename() throws Exception {
         Optional<String> result = NextTsumegoFileFinder.calcNextTsumego("FOO");
 
         assertThat(result.isPresent()).isEqualTo(false);
     }
 
     @SmallTest
-    public void test_should_find_next_for_single_digit_when_there() throws Exception {
+    public void testShouldFindNextForSingleDigitWhenThere() throws Exception {
         new File(path, SINGLE_DIGIT_FILENAME1).createNewFile();
         new File(path, SINGLE_DIGIT_FILENAME2).createNewFile();
 
@@ -57,7 +57,7 @@ public class TheNextTsumegoFileFinder extends AndroidTestCase {
 
 
     @SmallTest
-    public void test_should_not_find_next_for_single_digit_when_not_there() throws Exception {
+    public void testShouldNotFindNextForSingleDigitWhenNotThere() throws Exception {
         new File(path, SINGLE_DIGIT_FILENAME1).createNewFile();
 
         Optional<String> result = NextTsumegoFileFinder.calcNextTsumego(path + "/" + SINGLE_DIGIT_FILENAME1);
@@ -66,7 +66,7 @@ public class TheNextTsumegoFileFinder extends AndroidTestCase {
     }
 
     @SmallTest
-    public void test_should_find_next_for_two_digit_when_there() throws Exception {
+    public void testShouldFindNextForTwoDigitWhenThere() throws Exception {
         new File(path, TWO_DIGIT_FILENAME1).createNewFile();
         new File(path, TWO_DIGIT_FILENAME2).createNewFile();
 
@@ -77,7 +77,7 @@ public class TheNextTsumegoFileFinder extends AndroidTestCase {
 
 
     @SmallTest
-    public void test_should_not_find_next_for_two_digit_when_not_there() throws Exception {
+    public void testShouldNotFindNextForTwoDigitWhenNotThere() throws Exception {
         new File(path, TWO_DIGIT_FILENAME1).createNewFile();
 
         Optional<String> result = NextTsumegoFileFinder.calcNextTsumego(path + "/" + TWO_DIGIT_FILENAME1);
@@ -87,7 +87,7 @@ public class TheNextTsumegoFileFinder extends AndroidTestCase {
 
 
     @SmallTest
-    public void test_should_find_next_for_three_digit_when_there() throws Exception {
+    public void testShouldFindNextForThreeDigitWhenThere() throws Exception {
         new File(path, THREE_DIGIT_FILENAME1).createNewFile();
         new File(path, THREE_DIGIT_FILENAME2).createNewFile();
 
@@ -98,7 +98,7 @@ public class TheNextTsumegoFileFinder extends AndroidTestCase {
 
 
     @SmallTest
-    public void test_should_not_find_next_for_three_digit_when_not_there() throws Exception {
+    public void testShouldNotFindNextForThreeDigitWhenNotThere() throws Exception {
         new File(path, THREE_DIGIT_FILENAME1).createNewFile();
 
         Optional<String> result = NextTsumegoFileFinder.calcNextTsumego(path + "/" + THREE_DIGIT_FILENAME1);
@@ -107,7 +107,7 @@ public class TheNextTsumegoFileFinder extends AndroidTestCase {
     }
 
     @SmallTest
-    public void shouldFindNextTsumegoAfterGap() throws Exception {
+    public void testFindNextTsumegoAfterGap() throws Exception {
         new File(path, THREE_DIGIT_FILENAME1).createNewFile();
         new File(path, THREE_DIGIT_FILENAME5).createNewFile();
 
