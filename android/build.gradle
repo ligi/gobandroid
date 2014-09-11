@@ -75,6 +75,13 @@ android {
         }
     }
 
+    // needed for assertJ
+    packagingOptions {
+        exclude 'asm-license.txt'
+        exclude 'LICENSE'
+        exclude 'NOTICE'
+    }
+
 
 }
 
@@ -101,6 +108,8 @@ dependencies {
         exclude group: 'com.android.support'
         exclude group: 'com.google.guava'
     }
+
+    androidTestCompile 'com.squareup.assertj:assertj-android:1.0.0'
 
     androidTestCompile 'com.squareup.spoon:spoon-client:1.1.1'
     androidTestCompile 'com.squareup:fest-android:1.0.7'

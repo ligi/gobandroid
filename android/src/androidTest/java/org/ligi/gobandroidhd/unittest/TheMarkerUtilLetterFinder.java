@@ -1,0 +1,38 @@
+package org.ligi.gobandroidhd.unittest;
+
+import android.test.suitebuilder.annotation.SmallTest;
+
+import org.ligi.gobandroid_hd.logic.markers.MarkerUtil;
+import org.ligi.gobandroidhd.base.MarkerTestBase;
+
+import static org.fest.assertions.api.Assertions.assertThat;
+
+public class TheMarkerUtilLetterFinder extends MarkerTestBase {
+
+    @SmallTest
+    public void testFindFirst() {
+        final String firstFreeLetter = MarkerUtil.findNextLetter(markerList("C", "B"));
+        assertThat(firstFreeLetter).isEqualTo("A");
+    }
+
+
+    @SmallTest
+    public void testFindLast() {
+        final String firstFreeLetter = MarkerUtil.findNextLetter(markerList("A", "B"));
+        assertThat(firstFreeLetter).isEqualTo("C");
+    }
+
+
+    @SmallTest
+    public void testFindGap() {
+        final String firstFreeLetter = MarkerUtil.findNextLetter(markerList("A", "C"));
+        assertThat(firstFreeLetter).isEqualTo("B");
+    }
+
+
+    @SmallTest
+    public void testSurviveNumbers() {
+        final String firstFreeLetter = MarkerUtil.findNextLetter(markerList("A", "1"));
+        assertThat(firstFreeLetter).isEqualTo("B");
+    }
+}

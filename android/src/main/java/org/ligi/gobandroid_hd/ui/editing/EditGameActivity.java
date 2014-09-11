@@ -9,6 +9,7 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.markers.CircleMarker;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
+import org.ligi.gobandroid_hd.logic.markers.MarkerUtil;
 import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
 import org.ligi.gobandroid_hd.ui.GoActivity;
@@ -28,30 +29,6 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
         // TODO the next line works but needs investigation - i thought more of
         // getBoard().requestFocus(); - but that was not working ..
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-    }
-
-    private int findNextNumber() {
-        for (int i = 1; i < 99; i++) {
-            boolean found = false;
-            for (GoMarker marker : getGame().getActMove().getMarkers())
-                found |= marker.getText().equals("" + i);
-            if (!found) {
-                return i;
-            }
-        }
-        return 0; // should not happen - only if a hundret markers
-    }
-
-    private String findNextLetter() {
-        for (int i = 0; i < 23; i++) {
-            boolean found = false;
-            for (GoMarker marker : getGame().getActMove().getMarkers())
-                found |= marker.getText().equals("" + (char) ('A' + i));
-            if (!found) {
-                return "" + (char) ('A' + i);
-            }
-        }
-        return "a"; // should not happen - only if a hundred markers
     }
 
     public boolean doAutosave() {
@@ -113,11 +90,13 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
                 break;
 
             case NUMBER:
-                getGame().getActMove().getMarkers().add(new GoMarker(x, y, "" + findNextNumber()));
+                final int firstFreeNumber = MarkerUtil.findFirstFreeNumber(getGame().getActMove().getMarkers());
+                getGame().getActMove().getMarkers().add(new GoMarker(x, y, "" + firstFreeNumber));
                 break;
 
             case LETTER:
-                getGame().getActMove().getMarkers().add(new GoMarker(x, y, "" + findNextLetter()));
+                final String nextLetter = MarkerUtil.findNextLetter(getGame().getActMove().getMarkers());
+                getGame().getActMove().getMarkers().add(new GoMarker(x, y, nextLetter));
                 break;
 
         }
