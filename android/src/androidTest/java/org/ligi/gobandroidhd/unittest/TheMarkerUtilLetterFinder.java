@@ -5,7 +5,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 import org.ligi.gobandroid_hd.logic.markers.MarkerUtil;
 import org.ligi.gobandroidhd.base.MarkerTestBase;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TheMarkerUtilLetterFinder extends MarkerTestBase {
 

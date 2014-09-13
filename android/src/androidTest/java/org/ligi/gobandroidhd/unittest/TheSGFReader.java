@@ -6,7 +6,7 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import org.ligi.gobandroidhd.base.AssetAwareInstrumentationTestCase;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TheSGFReader extends AssetAwareInstrumentationTestCase {
 
