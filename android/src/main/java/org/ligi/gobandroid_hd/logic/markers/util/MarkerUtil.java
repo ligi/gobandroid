@@ -1,4 +1,6 @@
-package org.ligi.gobandroid_hd.logic.markers;
+package org.ligi.gobandroid_hd.logic.markers.util;
+
+import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 
 import java.util.ArrayList;
 import java.util.Collections;
