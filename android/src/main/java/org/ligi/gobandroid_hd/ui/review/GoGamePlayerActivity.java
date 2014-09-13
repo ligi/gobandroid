@@ -27,9 +27,9 @@ public class GoGamePlayerActivity extends GoActivity {
     private boolean autoplay_active = true;
 
     // timings in ms
-    private int pause_for_last_move = 30000;
-    private int pause_between_moves = 2300;
-    private int pause_betwen_moves_extra_per_word = 200;
+    private final static int PAUSE_FOR_LAST_MOVE = 30000;
+    private final static int PAUSE_BETWEEN_MOVES = 2300;
+    private final static int PAUSE_BETWEN_MOVES_EXTRA_PER_WORD = 200;
 
     private Handler handler;
 
@@ -116,7 +116,7 @@ public class GoGamePlayerActivity extends GoActivity {
             }
             Log.i("gobandroid", "automove finish " + autoplay_active);
             try {
-                Thread.sleep(pause_for_last_move);
+                Thread.sleep(PAUSE_FOR_LAST_MOVE);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -205,9 +205,9 @@ public class GoGamePlayerActivity extends GoActivity {
     }
 
     private int calcTime() {
-        int res = pause_between_moves;
+        int res = PAUSE_BETWEEN_MOVES;
         if (getGame().getActMove().hasComment())
-            res += pause_betwen_moves_extra_per_word * countWords(getGame().getActMove().getComment());
+            res += PAUSE_BETWEN_MOVES_EXTRA_PER_WORD * countWords(getGame().getActMove().getComment());
         return res;
     }
 
