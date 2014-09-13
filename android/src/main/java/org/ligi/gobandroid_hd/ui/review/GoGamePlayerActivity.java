@@ -35,7 +35,6 @@ public class GoGamePlayerActivity extends GoActivity {
         super.onCreate(savedInstanceState);
 
         supportRequestWindowFeature(Window.FEATURE_PROGRESS);
-        setSupportProgressBarVisibility(true);
 
         getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
 
