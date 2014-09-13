@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui.review;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -60,7 +61,10 @@ public class GoGamePlayerActivity extends GoActivity {
 
         @Override
         public void run() {
-            setSupportProgress((int) (Window.PROGRESS_START + progress_to_display * (Window.PROGRESS_END - Window.PROGRESS_START)));
+            // prevent AppCompat crash https://code.google.com/p/android/issues/detail?id=76120
+            if (Build.VERSION.SDK_INT >= 14) {
+                setSupportProgress((int) (Window.PROGRESS_START + progress_to_display * (Window.PROGRESS_END - Window.PROGRESS_START)));
+            }
         }
 
     };
