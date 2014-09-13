@@ -3,7 +3,6 @@ package org.ligi.gobandroid_hd.ui.review;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -31,22 +30,17 @@ public class GoGamePlayerActivity extends GoActivity {
     private final static int PAUSE_BETWEEN_MOVES = 2300;
     private final static int PAUSE_BETWEN_MOVES_EXTRA_PER_WORD = 200;
 
-    private Handler handler;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_PROGRESS);
-
         super.onCreate(savedInstanceState);
+
+        supportRequestWindowFeature(Window.FEATURE_PROGRESS);
+        setSupportProgressBarVisibility(true);
 
         getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
 
         getBoard().setOnKeyListener(this);
         getBoard().do_actpos_highlight = false;
-
-        handler = new Handler();
-
-        getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
 
     }
 
@@ -83,7 +77,7 @@ public class GoGamePlayerActivity extends GoActivity {
             while (System.currentTimeMillis() < start_time + time) {
                 Thread.sleep(100);
                 progress_to_display = 1f - ((float) (System.currentTimeMillis() - start_time + 1) / time);
-                handler.post(mTimerProgressRunnable);
+                runOnUiThread(mTimerProgressRunnable);
             }
 
         } catch (InterruptedException e) {
@@ -102,7 +96,7 @@ public class GoGamePlayerActivity extends GoActivity {
             while (autoplay_active && (getGame().getActMove().hasNextMove())) {
                 Log.i("gobandroid", "automove move" + getGame().getActMove().hasNextMove());
 
-                handler.post(new Runnable() {
+                runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
