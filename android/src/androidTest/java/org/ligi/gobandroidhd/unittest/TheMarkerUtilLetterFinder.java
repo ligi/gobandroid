@@ -35,4 +35,11 @@ public class TheMarkerUtilLetterFinder extends MarkerTestBase {
         final String firstFreeLetter = MarkerUtil.findNextLetter(markerList("A", "1"));
         assertThat(firstFreeLetter).isEqualTo("B");
     }
+
+
+    @SmallTest
+    public void testFindZ() {
+        final String firstFreeLetter = MarkerUtil.findNextLetter(markerList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y"));
+        assertThat(firstFreeLetter).isEqualTo("Z");
+    }
 }

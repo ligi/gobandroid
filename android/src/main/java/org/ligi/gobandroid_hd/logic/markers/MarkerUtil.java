@@ -32,7 +32,7 @@ public class MarkerUtil {
 
 
     public static String findNextLetter(final List<GoMarker> markers) {
-        for (int i = 0; i < 23; i++) {
+        for (int i = 0; i < 26; i++) {
             boolean found = false;
             for (GoMarker marker : markers)
                 found |= marker.getText().equals("" + (char) ('A' + i));
