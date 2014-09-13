@@ -2,7 +2,7 @@ package org.ligi.gobandroidhd.unittest;
 
 import android.test.suitebuilder.annotation.SmallTest;
 
-import org.ligi.gobandroid_hd.logic.markers.MarkerUtil;
+import org.ligi.gobandroid_hd.logic.markers.util.MarkerUtil;
 import org.ligi.gobandroidhd.base.MarkerTestBase;
 
 import static org.assertj.core.api.Assertions.assertThat;

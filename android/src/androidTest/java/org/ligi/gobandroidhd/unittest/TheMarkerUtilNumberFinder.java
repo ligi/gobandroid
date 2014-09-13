@@ -3,7 +3,7 @@ package org.ligi.gobandroidhd.unittest;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
-import org.ligi.gobandroid_hd.logic.markers.MarkerUtil;
+import org.ligi.gobandroid_hd.logic.markers.util.MarkerUtil;
 import org.ligi.gobandroidhd.base.AssetAwareInstrumentationTestCase;
 
 import java.util.ArrayList;
