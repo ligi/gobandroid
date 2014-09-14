@@ -1,16 +1,16 @@
 package org.ligi.gobandroid_hd.ui.go_terminology;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 
+import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
 import java.util.HashMap;
 
-public class GoTerminologyViewActivity extends GobandroidFragmentActivity {
+public class GoTerminologyViewActivity extends Activity {
 
     public final static HashMap<String, Integer> getTerm2resHashMap() {
         return new HashMap<String, Integer>() {
@@ -33,9 +33,10 @@ public class GoTerminologyViewActivity extends GobandroidFragmentActivity {
         setContentView(R.layout.empty);
         // NaDra setBehindContentView(R.layout.empty);
 
-        String term = this.getIntent().getData().getLastPathSegment();
-        GoTerminologyDialog dialog = new GoTerminologyDialog(this, term);
-        dialog.setPositiveButton(android.R.string.ok, new MyOnClickListener());
+        final String term = this.getIntent().getData().getLastPathSegment();
+
+        final GoTerminologyDialog dialog = new GoTerminologyDialog(this, term);
+        dialog.setPositiveButton(android.R.string.ok, new ActivityFinishingOnClickListener(this));
         dialog.setOnCancelListener(new OnCancelListener() {
 
             @Override
@@ -45,17 +46,6 @@ public class GoTerminologyViewActivity extends GobandroidFragmentActivity {
 
         });
         dialog.show();
-
-
-    }
-
-    class MyOnClickListener implements OnClickListener {
-
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            dialog.dismiss();
-            finish();
-        }
 
     }
 }
