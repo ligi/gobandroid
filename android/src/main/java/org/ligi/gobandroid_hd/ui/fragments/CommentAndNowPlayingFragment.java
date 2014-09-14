@@ -54,7 +54,7 @@ public class CommentAndNowPlayingFragment extends GobandroidFragment implements 
                         }
                     };
 
-                    for (String key : GoTerminologyViewActivity.getTerm2resHashMap().keySet()) {
+                    for (String key : GoTerminologyViewActivity.Term2resMap.keySet()) {
                         Pattern wikiWordMatcher = Pattern.compile("[\\. ](" + key + ")[\\. ]", Pattern.CASE_INSENSITIVE);
                         String wikiViewURL = "goterm://org.ligi.gobandroid_hd.goterms/";
                         Linkify.addLinks(myTextView, wikiWordMatcher, wikiViewURL, null, mentionFilter);

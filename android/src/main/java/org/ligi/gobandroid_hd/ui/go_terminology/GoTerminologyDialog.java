@@ -22,7 +22,7 @@ public class GoTerminologyDialog extends GobandroidDialog {
 
         final TextView tv = (TextView) this.findViewById(R.id.go_terms_text);
 
-        final Map<String, Integer> termMap = GoTerminologyViewActivity.getTerm2resHashMap();
+        final Map<String, Integer> termMap = GoTerminologyViewActivity.Term2resMap;
         if (termMap.containsKey(term)) {
             tv.setText(termMap.get(term));
         } else {
