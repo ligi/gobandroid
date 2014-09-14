@@ -1,7 +1,6 @@
 package org.ligi.gobandroid_hd.ui.review;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
@@ -34,8 +33,6 @@ public class GoGamePlayerActivity extends GoActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        supportRequestWindowFeature(Window.FEATURE_PROGRESS);
-
         getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
 
         getBoard().setOnKeyListener(this);
@@ -54,10 +51,7 @@ public class GoGamePlayerActivity extends GoActivity {
 
         @Override
         public void run() {
-            // prevent AppCompat crash https://code.google.com/p/android/issues/detail?id=76120
-            if (Build.VERSION.SDK_INT >= 14) {
                 setSupportProgress((int) (Window.PROGRESS_START + progress_to_display * (Window.PROGRESS_END - Window.PROGRESS_START)));
-            }
         }
 
     };
@@ -207,5 +201,10 @@ public class GoGamePlayerActivity extends GoActivity {
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         return true; // this is a player - we do not want interaction
+    }
+
+    @Override
+    protected boolean wantsProgressActionBar() {
+        return true;
     }
 }

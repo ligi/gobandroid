@@ -1,6 +1,5 @@
 package org.ligi.gobandroid_hd.ui.application;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -11,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 
 import org.ligi.gobandroid_hd.App;
@@ -90,6 +90,11 @@ public class GobandroidFragmentActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
 
+        if (wantsProgressActionBar()) {
+            supportRequestWindowFeature(Window.FEATURE_PROGRESS);
+        }
+
+
         if (getSupportActionBar() != null) // yes this happens - e.g.
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -118,7 +123,6 @@ public class GobandroidFragmentActivity extends ActionBarActivity {
 		 *
 		 */
 
-        playServicesIntegration = new PlayServicesIntegration(this);
 
     }
 
@@ -176,24 +180,6 @@ public class GobandroidFragmentActivity extends ActionBarActivity {
     @SuppressWarnings("unchecked")
     public <T> T findById(int id) {
         return (T) findViewById(id);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        App.getTracker().activityStop(this); // Add this method.
-        //mPlusClient.disconnect();
-        playServicesIntegration.onStop(this);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        App.getTracker().activityStart(this); // Add this method
-        //mPlusClient.connect();
-
-        playServicesIntegration.onStart(this);
-
     }
 
 
@@ -299,9 +285,7 @@ public class GobandroidFragmentActivity extends ActionBarActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int responseCode, Intent intent) {
-        playServicesIntegration.onActivityResult(requestCode, responseCode, intent);
+    protected boolean wantsProgressActionBar() {
+        return false;
     }
-
 }
