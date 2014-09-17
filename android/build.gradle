@@ -22,10 +22,10 @@ android {
     buildToolsVersion "20"
 
     defaultConfig {
-        versionCode 128
-        versionName "1.28"
+        versionCode 129
+        versionName "1.29"
         minSdkVersion 9
-        targetSdkVersion 19
+        targetSdkVersion 20
         applicationId "org.ligi.gobandroid_hd"
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
