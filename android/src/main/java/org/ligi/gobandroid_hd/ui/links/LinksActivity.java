@@ -46,12 +46,10 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
         this.setContentView(R.layout.list);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        this.setTitle(R.string.link_title);
-
+        setTitle(R.string.link_title);
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        int[] tabs = new int[]{R.string.link_tab_about, R.string.link_tab_credits, R.string.link_tab_sgf};
 
+        final int[] tabs = new int[]{R.string.link_tab_about, R.string.link_tab_credits, R.string.link_tab_sgf};
         for (int tab_str : tabs) {
             ActionBar.Tab tab = getSupportActionBar().newTab();
             tab.setText(tab_str);
@@ -69,11 +67,15 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 
     public void setList(int list) {
         Log.i("list" + list);
-        LinkWithDescription[] links = null;
+        final LinkWithDescription[] links = getLinkWithDescriptions(list);
+        changeFragment(new LinkListFragment(links));
+    }
+
+    private LinkWithDescription[] getLinkWithDescriptions(int list) {
         switch (list) {
             case R.string.link_tab_credits:
                 act_tab_str_for_analytics = "credits";
-                links = new LinkWithDescription[]{new LinkWithDescriptionAndTitle("http://plus.google.com/104849265443273982798", "idea / concept / code ", "Ligi"),
+                return new LinkWithDescription[]{new LinkWithDescriptionAndTitle("http://plus.google.com/104849265443273982798", "idea / concept / code ", "Ligi"),
 
                         new LinkWithDescriptionAndTitle("http://gogameguru.com/", "source of default Tsumego and commented game SGF's", "gogameguru.com"),
                         new LinkWithDescriptionAndTitle("http://actionbarsherlock.com/", "library used for ActionBar backward compatibility ", "ActionBarSherlock"),
@@ -87,19 +89,16 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
                         new LinkWithDescriptionAndTitle("http://plus.google.com/105303388887291066710", "wooden background", "Ruth -lironah- Hinckley on Google+"),
                         new LinkWithDescriptionAndTitle("http://www.silvestre.com.ar/", "GPL'd icons", "Silvestre Herrera"), new LinkWithDescriptionAndTitle("http://www.sente.ch", "FreegGoban stones", "sente.ch"),};
 
-                break;
-
             case R.string.link_tab_about:
                 act_tab_str_for_analytics = "about";
-                links = new LinkWithDescription[]{new LinkWithDescriptionAndTitle("http://plus.google.com/106767057593220295403", "for news, infos, feedback", "Gobandroid Project Page"),
+                return new LinkWithDescription[]{new LinkWithDescriptionAndTitle("http://plus.google.com/106767057593220295403", "for news, infos, feedback", "Gobandroid Project Page"),
                         new LinkWithDescriptionAndTitle("https://plus.google.com/u/0/communities/113554258125816193874", "for questions and participation", "Gobandroid Community"),
                         new LinkWithDescription("http://github.com/ligi/gobandroid", "Code/Issues on GitHub"), new LinkWithDescription("http://play.google.com/store/apps/details?id=org.ligi.gobandroid_hd", "Google Play link"),
                         new LinkWithDescription("http://gplv3.fsf.org/", "GPLv3 License")};
-                break;
 
             case R.string.link_tab_sgf:
                 act_tab_str_for_analytics = "sgf";
-                links = new LinkWithDescription[]{
+                return new LinkWithDescription[]{
 
                         // source pro games
                         new LinkWithDescription("http://www.andromeda.com/people/ddyer/age-summer-94/companion.html", "Companion"),
@@ -115,10 +114,10 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
                         // dead not there anymore new
                         // LinkWithDescription("http://egoban.org/@@recent_games","egoban"),
                 };
-                break;
-
+            default:
+                return null; // not expected
         }
-        changeFragment(new LinkListFragment(links));
+
     }
 
     @Override
