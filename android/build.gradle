@@ -92,17 +92,16 @@ dependencies {
     compile 'com.google.guava:guava:18.0'
     compile 'org.ligi:tracedroid:1.4'
     compile 'com.jakewharton:butterknife:5.1.2'
-    compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
 
     def play_services = 'com.google.android.gms:play-services:5.0.89'
 
     withCloudCompile play_services
     withAnalyticsCompile play_services
 
-        androidTestCompile('com.jakewharton.espresso:espresso:1.1-r3') {
-            exclude group: 'com.android.support'
-            exclude group: 'com.google.guava'
-        }
+    androidTestCompile('com.jakewharton.espresso:espresso:1.1-r3') {
+        exclude group: 'com.android.support'
+        exclude group: 'com.google.guava'
+    }
 
     androidTestCompile('com.jakewharton.espresso:espresso-support-v4:1.1-r3') {
         exclude group: 'com.android.support'
@@ -110,7 +109,5 @@ dependencies {
     }
 
     androidTestCompile 'com.squareup.assertj:assertj-android:1.0.0'
-
     androidTestCompile 'com.squareup.spoon:spoon-client:1.1.1'
-
 }
