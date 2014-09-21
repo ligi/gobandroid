@@ -48,7 +48,7 @@ public class BookmarkDialog extends GobandroidDialog {
      * @return
      */
     public static String getEnsuredFilename(Context ctx) {
-        App app = (App) ctx.getApplicationContext();
+        final App app = (App) ctx.getApplicationContext();
 
         String fname = app.getGame().getMetaData().getFileName();
         if ((fname == null) || (fname.equals(""))) {
@@ -80,8 +80,7 @@ public class BookmarkDialog extends GobandroidDialog {
 
         setIsSmallDialog();
 
-        String inner_fname = getCleanEnsuredFilename(context);
-
+        final String inner_fname = getCleanEnsuredFilename(context);
         final EditText fname_edit = (EditText) findViewById(R.id.bookmark_name);
         ((TextView) findViewById(R.id.message)).setText(context.getResources().getString(R.string.bookmark_to_write_into) + " " + context.getSettings().getBookmarkPath());
         fname_edit.setText(inner_fname);
