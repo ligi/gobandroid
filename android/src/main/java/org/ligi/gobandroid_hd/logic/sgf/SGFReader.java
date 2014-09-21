@@ -36,11 +36,38 @@ import java.util.List;
  */
 public class SGFReader {
 
-
     public final static int BREAKON_NOTHING = 0;
     public final static int BREAKON_FIRSTMOVE = 1;
 
     public final static int DEFAULT_SGF_TRANSFORM = 0;
+
+    private String act_param = "";
+    private String act_cmd = "";
+    private String last_cmd = "";
+    private GoGame game = null;
+    private byte size = -1;
+    private int predef_count_b = 0;
+    private int predef_count_w = 0;
+    private boolean break_pulled = false;
+
+    private final GoGameMetadata metadata;
+    private final List<GoMove> variationList;
+
+    private final String sgf;
+    private final ISGFLoadProgressCallback callback;
+    private final int breakon;
+    private final int transform;
+
+    private SGFReader(String sgf, ISGFLoadProgressCallback callback, int breakon, int transform) {
+        this.sgf = sgf;
+        this.callback = callback;
+        this.breakon = breakon;
+
+        this.transform = transform;
+        metadata = new GoGameMetadata();
+        variationList = new ArrayList<>();
+
+    }
 
     public static GoGame sgf2game(String sgf, ISGFLoadProgressCallback callback) {
         return sgf2game(sgf, callback, BREAKON_NOTHING, DEFAULT_SGF_TRANSFORM);
@@ -58,28 +85,19 @@ public class SGFReader {
      * @return
      */
     public static GoGame sgf2game(String sgf, ISGFLoadProgressCallback callback, int breakon, int transform) {
+        return new SGFReader(sgf, callback, breakon, transform).getGame();
+    }
+
+    public interface ISGFLoadProgressCallback {
+        public void progress(int act, int max, int progress_val);
+    }
+
+    private GoGame getGame() {
         try {
             Log.i("sgf to process:" + sgf);
-            byte size = -1;
-            GoGame game = null;
-
             byte opener = 0;
-
             boolean escape = false;
-            // int param_level=0;
-            final List<GoMove> variationList = new ArrayList<>();
             boolean consuming_param = false;
-
-            String act_param = "";
-            String act_cmd = "";
-            String last_cmd = "";
-
-            int predef_count_b = 0;
-            int predef_count_w = 0;
-
-            GoGameMetadata metadata = new GoGameMetadata();
-
-            boolean break_pulled = false;
 
             for (int p = 0; ((p < sgf.length()) && (!break_pulled)); p++) {
                 char act_char = sgf.charAt(p);
@@ -166,186 +184,7 @@ public class SGFReader {
                                 callback.progress(p, sgf.length(), game.getActMove().getMovePos());
                             if (!escape) {
                                 consuming_param = false;
-
-                                byte param_x = 0, param_y = 0;
-
-                                // if we have a minimum of 2 chars in param - could
-                                // be
-                                // coords - so parse
-                                if (act_param.length() >= 2) {
-                                    param_x = (byte) (act_param.charAt(((transform & 4) == 0) ? 0 : 1) - 'a');
-                                    param_y = (byte) (act_param.charAt(((transform & 4) == 0) ? 1 : 0) - 'a');
-
-                                    if ((transform & 1) > 0)
-                                        param_y = (byte) (size - 1 - param_y);
-
-                                    if ((transform & 2) > 0)
-                                        param_x = (byte) (size - 1 - param_x);
-
-                                }
-
-                                // if command is empty -> use the last command
-                                if (act_cmd.length() == 0)
-                                    act_cmd = last_cmd;
-
-                                // marker section - infos here
-                                // http://www.red-bean.com/sgf/properties.html
-
-                                // marker with text
-                                if (act_cmd.equals("LB")) {
-                                    String[] inner = act_param.split(":");
-                                    String txt = "X";
-                                    // if (inner.length > 1) TODO check why this was
-                                    // done once
-                                    txt = inner[1];
-
-                                    game.getActMove().addMarker(new GoMarker(param_x, param_y, txt));
-                                }
-
-                                // mark with x
-                                if (act_cmd.equals("Mark") | act_cmd.equals("MA"))
-                                    game.getActMove().addMarker(new GoMarker(param_x, param_y, "X"));
-
-                                // mark with x
-                                if (act_cmd.equals("SL"))
-                                    game.getActMove().addMarker(new GoMarker(param_x, param_y, "+"));
-
-                                // mark with triangle
-                                if (act_cmd.equals("TR")) {
-                                    game.getActMove().addMarker(new TriangleMarker(param_x, param_y));
-                                }
-
-                                // mark with square
-                                if (act_cmd.equals("SQ")) {
-                                    game.getActMove().addMarker(new SquareMarker(param_x, param_y));
-                                }
-
-                                // mark with circle
-                                if (act_cmd.equals("CR")) {
-                                    game.getActMove().addMarker(new CircleMarker(param_x, param_y));
-                                }
-
-                                if (act_cmd.equals("GN")) // Game Name
-                                    metadata.setName(act_param);
-
-                                if (act_cmd.equals("DI")) // Difficulty ( found in goproblems.com files )
-                                    metadata.setDifficulty(act_param);
-
-                                if (act_cmd.equals("PW")) // Player White Name
-                                    metadata.setWhiteName(act_param);
-
-                                if (act_cmd.equals("PB")) // Player Black Name
-                                    metadata.setBlackName(act_param);
-
-                                if (act_cmd.equals("WR")) // Player White Rank
-                                    metadata.setWhiteRank(act_param);
-
-                                if (act_cmd.equals("BR")) // Player Black Rank
-                                    metadata.setBlackRank(act_param);
-
-                                if (act_cmd.equals("RE")) // Game Result
-                                    metadata.setResult(act_param);
-
-                                if (act_cmd.equals("SO")) // Source
-                                    metadata.setResult(act_param);
-
-                                // size command
-                                if (act_cmd.equals("SiZe") || act_cmd.equals("SZ")) {
-                                    act_param = act_param.replaceAll("[^0-9]", ""); // had
-                                    // a
-                                    // case
-                                    // of
-                                    // SiZe[
-                                    // 19
-                                    // ]
-                                    // was
-                                    // throwing
-                                    // java.lang.NumberFormatException
-                                    // -
-                                    // so
-                                    // fixing
-                                    size = Byte.parseByte(act_param);
-                                    if ((game == null) || (game.getBoardSize() != size)) {
-                                        game = new GoGame(size);
-                                        variationList.add(game.getActMove());
-                                    }
-                                }
-
-                                // comment command
-                                if (act_cmd.equals("Comment") || act_cmd.equals("C")) {
-                                    if (game != null)
-                                        game.getActMove().setComment(act_param);
-                                }
-
-                                // move command
-                                if (act_cmd.equals("Black") || act_cmd.equals("B") || act_cmd.equals("W") || act_cmd.equals("White")) {
-
-                                    // if still no game open -> open one with
-                                    // default
-                                    // size
-                                    if (game == null) {
-                                        game = new GoGame((byte) 19);
-                                        variationList.add(game.getActMove());
-                                    }
-
-                                    if ((breakon & BREAKON_FIRSTMOVE) > 0)
-                                        break_pulled = true;
-
-                                    if (game.getActMove().isFirstMove()) {
-                                        game.apply_handicap();
-                                    }
-
-                                    game.getActMove().setIsBlackToMove(!(act_cmd.equals("Black") || act_cmd.equals("B")));
-
-                                    if (act_param.length() == 0)
-                                        game.pass();
-                                    else {
-/*                                        if (game.getActMove().isFirstMove()) {
-                                            game.getActMove().setIsBlackToMove();
-                                        }
-                                        */
-                                        final byte b = game.do_move(param_x, param_y);
-                                        if (b != GoGame.MOVE_VALID) {
-                                            Log.w("There was a problem in this game");
-                                        }
-                                    }
-
-
-                                }
-
-                                // TODO support AddEmpty
-                                // handle predefined stones ( mostly handicap stones
-                                // )
-                                // in SGF
-                                if (act_cmd.equals("AddBlack") || act_cmd.equals("AB") || act_cmd.equals("AW") || act_cmd.equals("AddWhite")) {
-
-                                    if (game == null) { // create a game if it is
-                                        // not
-                                        // there yet
-                                        game = new GoGame((byte) 19);
-                                        variationList.add(game.getActMove());
-                                    }
-
-                                    if (act_param.length() != 0) {
-                                        if (game.isBlackToMove() && (act_cmd.equals("AB") || act_cmd.equals("AddBlack"))) {
-                                            predef_count_b++;
-                                            game.getHandicapBoard().setCellBlack(param_x, param_y);
-                                        }
-
-                                        if (game.isBlackToMove() && (act_cmd.equals("AW") || act_cmd.equals("AddWhite"))) {
-                                            predef_count_w++;
-                                            game.getHandicapBoard().setCellWhite(param_x, param_y);
-
-                                        }
-                                    } else
-                                        Log.w("AB / AW command without param");
-
-                                }
-
-                                last_cmd = act_cmd;
-                                act_cmd = "";
-                                act_param = "";
-
+                                processCommand();
                             }
                             break;
                         case '\\':
@@ -367,30 +206,195 @@ public class SGFReader {
 
             if (game != null) {
                 if (game.getActMove().isFirstMove() && predef_count_w == 0 && predef_count_b > 0) {
-                    game.getActMove().setIsBlackToMove(true); // propably
-                    // handycap - so
-                    // make white to
-                    // move - very
-                    // imortant for
-                    // cloud game
-                    // and handycap
+                    game.getActMove().setIsBlackToMove(true); // propably handycap - so  make white
+                    // to  move - very  important for cloud game and handycap
                 }
                 game.setMetadata(metadata);
             }
             return game;
 
         } catch (Exception e) { // some weird sgf - we want to catch to not FC
-            // and have the chance to send the sgf to
-            // analysis
+            // and have the chance to send the sgf to analysis
             Log.w("Problem parsing SGF " + e);
         }
 
         return null;
+
     }
 
-    public interface ISGFLoadProgressCallback {
-        public void progress(int act, int max, int progress_val);
-    }
+    private void processCommand() {
+        byte param_x = 0, param_y = 0;
 
+        // if we have a minimum of 2 chars in param - could
+        // be
+        // coords - so parse
+        if (act_param.length() >= 2) {
+            param_x = (byte) (act_param.charAt(((transform & 4) == 0) ? 0 : 1) - 'a');
+            param_y = (byte) (act_param.charAt(((transform & 4) == 0) ? 1 : 0) - 'a');
+
+            if ((transform & 1) > 0)
+                param_y = (byte) (size - 1 - param_y);
+
+            if ((transform & 2) > 0)
+                param_x = (byte) (size - 1 - param_x);
+
+        }
+
+        // if command is empty -> use the last command
+        if (act_cmd.length() == 0)
+            act_cmd = last_cmd;
+
+        // marker section - infos here http://www.red-bean.com/sgf/properties.html
+        switch (act_cmd) {
+            case "LB":
+                final String[] inner = act_param.split(":");
+                final String txt = (inner.length > 1) ? inner[1] : "X";
+
+                game.getActMove().addMarker(new GoMarker(param_x, param_y, txt));
+                break;
+
+            // mark with x
+            case "Mark":
+            case "MA":
+                game.getActMove().addMarker(new GoMarker(param_x, param_y, "X"));
+                break;
+
+            case "SL":
+                game.getActMove().addMarker(new GoMarker(param_x, param_y, "+"));
+                break;
+
+            // mark with triangle
+            case "TR":
+                game.getActMove().addMarker(new TriangleMarker(param_x, param_y));
+                break;
+
+            case "SQ": // mark with square
+                game.getActMove().addMarker(new SquareMarker(param_x, param_y));
+                break;
+
+            case "CR": // mark with circle
+                game.getActMove().addMarker(new CircleMarker(param_x, param_y));
+                break;
+
+            case "GN": // Game Name
+                metadata.setName(act_param);
+                break;
+
+            case "DI": // Difficulty ( found in goproblems.com files )
+                metadata.setDifficulty(act_param);
+                break;
+
+            case "PW": // Player White Name
+                metadata.setWhiteName(act_param);
+                break;
+
+            case "PB": // Player Black Name
+                metadata.setBlackName(act_param);
+                break;
+
+            case "WR": // Player White Rank
+                metadata.setWhiteRank(act_param);
+                break;
+
+            case "BR": // Player Black Rank
+                metadata.setBlackRank(act_param);
+                break;
+
+            case "RE": // Game Result
+                metadata.setResult(act_param);
+                break;
+
+            case "SO": // Source
+                metadata.setResult(act_param);
+                break;
+        }
+
+
+        // size command
+        if (act_cmd.equals("SiZe") || act_cmd.equals("SZ")) {
+            act_param = act_param.replaceAll("[^0-9]", ""); // had
+            // a case of SiZe[19] was throwing
+            // java.lang.NumberFormatException
+            size = Byte.parseByte(act_param);
+            if ((game == null) || (game.getBoardSize() != size)) {
+                game = new GoGame(size);
+                variationList.add(game.getActMove());
+            }
+        }
+
+        // comment command
+        if (act_cmd.equals("Comment") || act_cmd.equals("C")) {
+            if (game != null)
+                game.getActMove().setComment(act_param);
+        }
+
+        // move command
+        if (act_cmd.equals("Black") || act_cmd.equals("B") || act_cmd.equals("W") || act_cmd.equals("White")) {
+
+            // if still no game open -> open one with
+            // default
+            // size
+            if (game == null) {
+                game = new GoGame((byte) 19);
+                variationList.add(game.getActMove());
+            }
+
+            if ((breakon & BREAKON_FIRSTMOVE) > 0)
+                break_pulled = true;
+
+            if (game.getActMove().isFirstMove()) {
+                game.apply_handicap();
+            }
+
+            game.getActMove().setIsBlackToMove(!(act_cmd.equals("Black") || act_cmd.equals("B")));
+
+            if (act_param.length() == 0)
+                game.pass();
+            else {
+                /* if (game.getActMove().isFirstMove()) {
+                    game.getActMove().setIsBlackToMove();
+                } */
+                final byte b = game.do_move(param_x, param_y);
+                if (b != GoGame.MOVE_VALID) {
+                    Log.w("There was a problem in this game");
+                }
+            }
+
+
+        }
+
+        // TODO support AddEmpty
+        // handle predefined stones ( mostly handicap stones
+        // )
+        // in SGF
+        if (act_cmd.equals("AddBlack") || act_cmd.equals("AB") || act_cmd.equals("AW") || act_cmd.equals("AddWhite")) {
+
+            if (game == null) { // create a game if it is
+                // not
+                // there yet
+                game = new GoGame((byte) 19);
+                variationList.add(game.getActMove());
+            }
+
+            if (act_param.length() != 0) {
+                if (game.isBlackToMove() && (act_cmd.equals("AB") || act_cmd.equals("AddBlack"))) {
+                    predef_count_b++;
+                    game.getHandicapBoard().setCellBlack(param_x, param_y);
+                }
+
+                if (game.isBlackToMove() && (act_cmd.equals("AW") || act_cmd.equals("AddWhite"))) {
+                    predef_count_w++;
+                    game.getHandicapBoard().setCellWhite(param_x, param_y);
+
+                }
+            } else
+                Log.w("AB / AW command without param");
+
+        }
+
+        last_cmd = act_cmd;
+        act_cmd = "";
+        act_param = "";
+    }
 
 }
