@@ -78,7 +78,8 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
                 return new LinkWithDescription[]{new LinkWithDescriptionAndTitle("http://plus.google.com/104849265443273982798", "idea / concept / code ", "Ligi"),
 
                         new LinkWithDescriptionAndTitle("http://gogameguru.com/", "source of default Tsumego and commented game SGF's", "gogameguru.com"),
-                        new LinkWithDescriptionAndTitle("http://actionbarsherlock.com/", "library used for ActionBar backward compatibility ", "ActionBarSherlock"),
+                        new LinkWithDescriptionAndTitle("http://jakewharton.github.io/butterknife/", "library used", "ButterKnife"),
+                        new LinkWithDescriptionAndTitle("https://code.google.com/p/guava-libraries/", "library used and nice fruit", "Guava"),
                         new LinkWithDescriptionAndTitle("http://plus.google.com/107941390233680026764", "Sounds", "Sebastian Blumtritt"), new LinkWithDescriptionAndTitle("http://plus.google.com/107473613683165260026", "Japanese Translation", "Hiroki Ino"),
                         new LinkWithDescriptionAndTitle("http://plus.google.com/102354246669329539149", "Chinese Translation", "Noorudin Ma"), new LinkWithDescriptionAndTitle("http://transimple.de", "German Translation", "Dirk Blasejezak"),
                         new LinkWithDescriptionAndTitle("http://plus.google.com/109272815840179446675", "French Translation #1", "Sylvain Soliman"), new LinkWithDescriptionAndTitle("http://github.com/Zenigata", "French Translation #2", "Zenigata"),
