@@ -41,7 +41,6 @@ import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -51,7 +50,6 @@ import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.gobandroid_hd.ui.review.BookmarkDialog;
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
 import org.ligi.gobandroid_hd.ui.share.ShareAsAttachmentDialog;
-import org.ligi.gobandroid_hd.ui.share.ShareSGFDialog;
 import org.ligi.tracedroid.logging.Log;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 
@@ -77,8 +75,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     private Fragment actFragment;
     private InteractionScope interaction_scope;
     private int last_processed_move_change_num = 0;
-
-    private GoMove last_accept;
 
     public Fragment getGameExtraFragment() {
 
@@ -430,23 +426,12 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             showInfoToast(R.string.wait_gnugo);
         } else if (getGame().getGoMover().isMoversMove()) {
             showInfoToast(R.string.not_your_turn);
-        } else
-        // if (!getSlidingMenu().is)
-        {
+        } else {
             doTouch(event);
         }
 
         // refreshZoomFragment();
         return true;
-    }
-
-    public boolean isLastMoveAccepted() {
-
-        if (last_accept == null) {
-            return false;
-        }
-
-        return (last_accept.getMovePos() == getGame().getActMove().getMovePos());
     }
 
     @Override
