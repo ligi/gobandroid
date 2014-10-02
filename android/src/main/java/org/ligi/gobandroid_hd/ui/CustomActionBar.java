@@ -84,17 +84,16 @@ public class CustomActionBar
 
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        final ViewGroup top_view = (ViewGroup) inflater.inflate(R.layout.top_nav_and_extras, null);
+        final View top_view = inflater.inflate(R.layout.top_nav_and_extras, this);
 
         ButterKnife.inject(this, top_view);
-        addView(top_view);
         refresh();
     }
 
     private void addItem(LinearLayout container, int image_resId,
                          int str_resid, final Runnable listener) {
 
-        final View v = inflater.inflate(R.layout.dropdown_item, null);
+        final View v = inflater.inflate(R.layout.dropdown_item, container, false);
         ((TextView) v.findViewById(R.id.text)).setText(str_resid);
         ((ImageView) v.findViewById(R.id.image)).setImageResource(image_resId);
 
@@ -166,7 +165,7 @@ public class CustomActionBar
 
         addModeItem(contentView, InteractionScope.MODE_GNUGO, R.string.gnugo, R.drawable.server);
 
-        BetterPopupWindow pop = new BetterPopupWindow(mode_tv);
+        final BetterPopupWindow pop = new BetterPopupWindow(mode_tv);
 
         scrollView.addView(contentView);
         pop.setContentView(scrollView);
