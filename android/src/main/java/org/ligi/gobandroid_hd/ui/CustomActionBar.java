@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,8 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.gnugo.GnuGoHelper;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.tracedroid.logging.Log;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -157,13 +161,16 @@ public class CustomActionBar
 
         addModeItem(contentView, InteractionScope.MODE_EDIT, R.string.edit, R.drawable.dashboard_record);
 
-        addModeItem(contentView, InteractionScope.MODE_COUNT, R.string.count, R.drawable.dashboard_score);
+        if (app.getGame().getActMove().getMovePos() > 0) { // these modes only make sense if there is minimum one
+            addModeItem(contentView, InteractionScope.MODE_COUNT, R.string.count, R.drawable.dashboard_score);
+            addModeItem(contentView, InteractionScope.MODE_REVIEW, R.string.review, R.drawable.dashboard_review);
+            addModeItem(contentView, InteractionScope.MODE_TELEVIZE, R.string.televize, R.drawable.gobandroid_tv);
+            addModeItem(contentView, InteractionScope.MODE_TSUMEGO, R.string.tsumego, R.drawable.dashboard_tsumego);
+        }
 
-        addModeItem(contentView, InteractionScope.MODE_REVIEW, R.string.review, R.drawable.dashboard_review);
-        addModeItem(contentView, InteractionScope.MODE_TELEVIZE, R.string.televize, R.drawable.gobandroid_tv);
-        addModeItem(contentView, InteractionScope.MODE_TSUMEGO, R.string.tsumego, R.drawable.dashboard_tsumego);
-
-        addModeItem(contentView, InteractionScope.MODE_GNUGO, R.string.gnugo, R.drawable.server);
+        if (isPlayStoreInstalled() || GnuGoHelper.isGnuGoAvail(activity)) {
+            addModeItem(contentView, InteractionScope.MODE_GNUGO, R.string.gnugo, R.drawable.server);
+        }
 
         final BetterPopupWindow pop = new BetterPopupWindow(mode_tv);
 
@@ -197,6 +204,21 @@ public class CustomActionBar
                 move_tv.setText(app.getResources().getString(R.string.move) + app.getGame().getActMove().getMovePos());
             }
         });
+    }
+
+    private static final String GooglePlayStorePackageNameOld = "com.google.market";
+    private static final String GooglePlayStorePackageNameNew = "com.android.vending";
+
+    private boolean isPlayStoreInstalled() {
+        final PackageManager packageManager = app.getPackageManager();
+        final List<PackageInfo> packages = packageManager.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES);
+        for (PackageInfo packageInfo : packages) {
+            if (packageInfo.packageName.equals(GooglePlayStorePackageNameOld) ||
+                    packageInfo.packageName.equals(GooglePlayStorePackageNameNew)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
