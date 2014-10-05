@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
+        classpath 'com.android.tools.build:gradle:0.13.2'
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
         classpath 'com.stanfy.spoon:spoon-gradle-plugin:0.10.0'
     }
@@ -18,19 +18,8 @@ repositories {
 }
 
 android {
-    compileSdkVersion 20
-    buildToolsVersion "20"
-
-    defaultConfig {
-        versionCode 190
-        versionName "1.9.0"
-        minSdkVersion 9
-        targetSdkVersion 20
-        applicationId "org.ligi.gobandroid_hd"
-        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
-    }
-
     flavorDimensions "analytics", "cloud"
+
     productFlavors {
         withAnalytics {
             flavorDimension "analytics"
@@ -49,6 +38,21 @@ android {
         }
 
     }
+
+    compileSdkVersion 20
+    buildToolsVersion "20"
+
+
+
+    defaultConfig {
+        versionCode 190
+        versionName "1.9.0"
+        minSdkVersion 9
+        targetSdkVersion 20
+        applicationId "org.ligi.gobandroid_hd"
+        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
+    }
+
 
     lintOptions {
         abortOnError false
