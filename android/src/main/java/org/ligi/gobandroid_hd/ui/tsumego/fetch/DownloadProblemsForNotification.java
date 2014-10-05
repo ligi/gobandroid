@@ -8,13 +8,13 @@ import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 public class DownloadProblemsForNotification {
 
     public static void show(Context ctx) {
-
-        App app = (App) ctx.getApplicationContext();
+        final App app = (App) ctx.getApplicationContext();
 
         App.getTracker().trackEvent("ui_action", "tsumego", "refresh_notification", null);
 
         int res = TsumegoDownloadHelper.doDownloadDefault(app);
-        //if (res > 0)
+        if (res > 0) {
             new GobandroidNotifications(ctx).addNewTsumegosNotification(res);
+        }
     }
 }
