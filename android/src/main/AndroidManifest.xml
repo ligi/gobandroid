@@ -3,39 +3,37 @@
     package="org.ligi.gobandroid_hd"
     android:installLocation="auto">
 
-<supports-screens
+    <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:smallScreens="true" />
+
     <!-- Permission to keep the screen awake -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- Only this application can receive the messages and registration result -->
-    <permission
-        android:name="org.ligi.gobandroid_hd.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <!-- This app has permission to register and receive message -->
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
-    <uses-permission android:name="org.ligi.gobandroid_hd.permission.C2D_MESSAGE" />
+
     <!--
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
  	-->
-    <uses-library
-        android:required="false"
-        android:name="com.sec.android.app.multiwindow"></uses-library>
     <application
         android:name=".App"
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:logo="@drawable/ic_launcher"
         android:theme="@style/base_theme">
+
+        <uses-library
+            android:name="com.sec.android.app.multiwindow"
+            android:required="false" />
 
         <activity android:name="org.ligi.gobandroid_hd.ui.game_setup.GoSetupActivity">
 
@@ -53,7 +51,6 @@
                 <category android:name="tv.ouya.intent.category.GAME" />
             </intent-filter>
         </activity>
-        <activity android:name="org.ligi.gobandroid_hd.ui.online.OnlineSelectActivity" />
         <activity
             android:name="org.ligi.gobandroid_hd.ui.GobanDroidTVActivity"
             android:icon="@drawable/gobandroid_tv"
@@ -74,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:theme="@style/TransparentTheme">
-        <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -93,8 +90,8 @@
         <activity android:name="org.ligi.gobandroid_hd.ui.links.LinksActivity" />
         <activity
             android:name="org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity"
-            android:launchMode="singleInstance"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode="singleInstance" />
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadActivity" />
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadFromExternalActivity">
             <intent-filter>
@@ -192,30 +189,7 @@
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFOnlineListActivity" />
         <activity android:name="org.ligi.gobandroid_hd.ui.GoActivity" />
 
-        <service android:name="org.ligi.gobandroid_hd.GCMIntentService" />
 
-        <!-- Used for install referrer tracking -->
-        <receiver
-            android:name="com.google.analytics.tracking.android.AnalyticsReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.google.android.gcm.GCMBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="org.ligi.gobandroid_hd" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="org.ligi.gobandroid_hd" />
-            </intent-filter>
-        </receiver>
-
-        <activity android:name="com.tapfortap.TapForTapActivity" />
         <activity android:name="org.ligi.gobandroid_hd.backend.ParseDeepLinkActivity">
             <intent-filter>
                 <action android:name="com.google.android.apps.plus.VIEW_DEEP_LINK" />
