@@ -33,7 +33,7 @@ public class GobandroidBackend {
         }
     }
 
-    private static String getURLParamSnippet(String key, String val) {
+    public static String getURLParamSnippet(String key, String val) {
         try {
             return key + "=" + URLEncoder.encode(val, "UTF-8");
         } catch (UnsupportedEncodingException e) {

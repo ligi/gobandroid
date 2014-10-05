@@ -1,17 +1,66 @@
 package org.ligi.gobandroid_hd;
 
-import android.app.AlertDialog;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
+import org.ligi.gobandroid_hd.gcm.GCMRegistrationStore;
+import org.ligi.gobandroid_hd.gcm.RegisterDevice;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
 public class CloudHooks {
 
-    public static void onApplicationCreation(App app) {
+    @TargetApi(14)
+    public static void onApplicationCreation(final App app) {
+        if (Build.VERSION.SDK_INT >= 14) {
+            app.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+                @Override
+                public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                    final boolean registrationId = new GCMRegistrationStore(activity).getRegistrationId().isEmpty();
+                    if (registrationId && checkPlayServices(activity)) {
+                        RegisterDevice.registerDevice(app);
+                    }
+                }
+
+                @Override
+                public void onActivityStarted(Activity activity) {
+
+                }
+
+                @Override
+                public void onActivityResumed(Activity activity) {
+
+                }
+
+                @Override
+                public void onActivityPaused(Activity activity) {
+
+                }
+
+                @Override
+                public void onActivityStopped(Activity activity) {
+
+                }
+
+                @Override
+                public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+                }
+
+                @Override
+                public void onActivityDestroyed(Activity activity) {
+
+                }
+            });
+        }
     }
 
     public static void syncUser(App app) {
@@ -57,7 +106,7 @@ public class CloudHooks {
     }
 
     public static void onSolvedTsumego(GobandroidFragmentActivity ctx, GoGame game) {
-  //      new UploadGameAndShareMoment(ctx, "solved_tsumego").execute();
+        //      new UploadGameAndShareMoment(ctx, "solved_tsumego").execute();
     }
 
 
@@ -66,7 +115,7 @@ public class CloudHooks {
     }
 
     public static void uploadGame(GobandroidFragmentActivity ctx, GoGame game, String type) {
-  //      new UploadGameToCloudEndpointsBase(ctx, type).execute();
+        //      new UploadGameToCloudEndpointsBase(ctx, type).execute();
     }
 
     public static void profileOrOnlinePlay(final GobandroidFragmentActivity ctx) {
@@ -83,5 +132,11 @@ public class CloudHooks {
         else
             ctx.startActivity(new Intent(ctx, OnlineSelectActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
 */
+    }
+
+    private static boolean checkPlayServices(Activity activity) {
+        final int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(activity);
+        return resultCode == ConnectionResult.SUCCESS;
+        // TODO check if we want some install option here
     }
 }

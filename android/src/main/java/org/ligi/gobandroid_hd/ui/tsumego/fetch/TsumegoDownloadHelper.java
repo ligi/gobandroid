@@ -54,7 +54,7 @@ public class TsumegoDownloadHelper {
                             BufferedInputStream bis = new BufferedInputStream(ucon.getInputStream());
 
                             ByteArrayBuffer baf = new ByteArrayBuffer(50);
-                            int current = 0;
+                            int current;
                             while ((current = bis.read()) != -1)
                                 baf.append((byte) current);
 

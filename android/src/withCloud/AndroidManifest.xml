@@ -2,7 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.ligi.gobandroid_hd">
 
+
+    <!-- Only this application can receive the messages and registration result -->
+    <permission
+        android:name="org.ligi.gobandroid_hd.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <!-- This app has permission to register and receive message -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="org.ligi.gobandroid_hd.permission.C2D_MESSAGE" />
+
     <application>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <meta-data
             android:name="com.google.android.gms.games.APP_ID"
@@ -15,6 +27,21 @@
         <meta-data
             android:name="com.google.android.gms.appstate.APP_ID"
             android:value="@string/app_id" />
+
+        <service android:name="org.ligi.gobandroid_hd.gcm.GCMIntentService" />
+
+        <receiver
+            android:name="org.ligi.gobandroid_hd.gcm.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="org.ligi.gobandroid_hd" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="org.ligi.gobandroid_hd" />
+            </intent-filter>
+        </receiver>
 
     </application>
 </manifest>

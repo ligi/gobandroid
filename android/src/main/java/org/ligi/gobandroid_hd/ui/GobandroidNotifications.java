@@ -100,7 +100,7 @@ public class GobandroidNotifications {
     private void doNotify(int id) {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
         notificationBuilder.setContentIntent(pendingIntent);
-        notificationManager.notify(id, notificationBuilder.getNotification());
+        notificationManager.notify(id, notificationBuilder.build());
     }
 
     public void cancelCloudMoveNotification() {

@@ -28,14 +28,23 @@ public class App extends Application {
     // the InteractionScope holds things like mode/act game between activities
     private InteractionScope interaction_scope;
 
-    public String getAppVersion() {
+    public static String getVersion() {
         try {
-            return getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
+            return instance.getPackageManager().getPackageInfo(instance.getPackageName(), 0).versionName;
         } catch (NameNotFoundException e) {
             Log.w("cannot determine app version - that's strange but not critical");
             return "vX.Y";
         }
+    }
 
+
+    public static int getVersionCode() {
+        try {
+            return instance.getPackageManager().getPackageInfo(instance.getPackageName(), 0).versionCode;
+        } catch (NameNotFoundException e) {
+            Log.w("cannot determine app version - that's strange but not critical");
+            return 0;
+        }
     }
 
     @Override
@@ -102,14 +111,6 @@ public class App extends Application {
     }
     */
 
-
-    public String getVersionCode() {
-        try {
-            return "v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-        } catch (NameNotFoundException e) {
-            return "v?";
-        }
-    }
 
     public static GobandroidTracker getTracker() {
         return GobandroidTrackerResolver.getTracker();
