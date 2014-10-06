@@ -26,6 +26,10 @@ public class EditGameExtrasFragment extends GobandroidFragment implements GoGame
     private EditText editText;
     private EditModeItemPool editModePool;
 
+    public EditGameExtrasFragment() {
+
+    }
+
     public EditGameExtrasFragment(EditModeItemPool editModePool) {
         this.editModePool = editModePool;
     }
