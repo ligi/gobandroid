@@ -42,11 +42,9 @@ android {
     compileSdkVersion 20
     buildToolsVersion "20"
 
-
-
     defaultConfig {
-        versionCode 190
-        versionName "1.9.0"
+        versionCode 191
+        versionName "1.9.1"
         minSdkVersion 9
         targetSdkVersion 20
         applicationId "org.ligi.gobandroid_hd"
