@@ -1,11 +1,12 @@
 package org.ligi.gobandroid_hd.ui;
 
-/**
- * Created by ligi on 6/1/13.
- */
 public class GobandroidTrackerResolver {
 
+    private static AnalyticsTracker tracker = null;
     public static GobandroidTracker getTracker() {
-        return new GobandroidEasyTracker();
+        if (tracker == null) {
+            tracker = new AnalyticsTracker();
+        }
+        return tracker;
     }
 }

@@ -49,7 +49,6 @@ public class GameInfoAlert extends GobandroidDialog {
 
         final App app = (App) context.getApplicationContext();
 
-
         final EditText game_name_et = (EditText) findViewById(R.id.game_name_et);
         game_name_et.setText(game.getMetaData().getName());
 
@@ -71,6 +70,9 @@ public class GameInfoAlert extends GobandroidDialog {
 
         final EditText game_result_et = (EditText) findViewById(R.id.game_result_et);
         game_result_et.setText(game.getMetaData().getResult());
+
+        final EditText game_difficulty_et = (EditText) findViewById(R.id.game_difficulty_et);
+        game_difficulty_et.setText(game.getMetaData().getDifficulty());
 
         final Button user_is_white_btn = (Button) findViewById(R.id.user_is_white_btn);
 

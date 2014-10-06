@@ -3,12 +3,7 @@ package org.ligi.gobandroid_hd;
 import android.app.Application;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
-import android.text.TextUtils;
 
-import com.google.android.gcm.GCMRegistrar;
-
-import org.ligi.gobandroid_hd.backend.GobandroidBackend;
-import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GobandroidTracker;
 import org.ligi.gobandroid_hd.ui.GobandroidTrackerResolver;
@@ -21,17 +16,17 @@ import org.ligi.tracedroid.logging.Log;
  */
 public class App extends Application {
 
+    private static App instance;
+    public static boolean isTesting = false;
+
+    public static GobandroidSettings getGobandroidSettings() {
+        return new GobandroidSettings(instance);
+    }
+
+    ;
+
     // the InteractionScope holds things like mode/act game between activities
     private InteractionScope interaction_scope;
-    private boolean has_active_go_activity = false;
-
-    public void setGoActivityActivity(boolean active) {
-        has_active_go_activity = active;
-    }
-
-    public boolean hasActiveGoActivity() {
-        return has_active_go_activity;
-    }
 
     public String getAppVersion() {
         try {
@@ -46,6 +41,8 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        instance = this;
 
         getTracker().init(this);
 
@@ -62,8 +59,9 @@ public class App extends Application {
 
     }
 
+
     private void initGCM() {
-        try {
+        /*try {
             // Make sure the device has the proper dependencies.
             GCMRegistrar.checkDevice(this);
 
@@ -78,6 +76,7 @@ public class App extends Application {
         } catch (Exception e) {
             getTracker().trackException("cannot init GCM", e, false);
         }
+        */
     }
 
     public InteractionScope getInteractionScope() {
@@ -106,9 +105,7 @@ public class App extends Application {
 
     public String getVersionCode() {
         try {
-            return "v"
-                    + getPackageManager().getPackageInfo(
-                    getPackageName(), 0).versionName;
+            return "v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (NameNotFoundException e) {
             return "v?";
         }

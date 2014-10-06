@@ -4,33 +4,22 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
-import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.gobandroid_hd.ui.online.OnlineSelectActivity;
-import org.ligi.gobandroid_hd.ui.online.UploadGameAndShareMoment;
-import org.ligi.gobandroid_hd.ui.online.UploadGameToCloudEndpointsBase;
-import org.ligi.gobandroid_hd.ui.online.UserHandler;
-import org.ligi.tracedroid.logging.Log;
-
-import java.io.IOException;
 
 public class CloudHooks {
 
     public static void onApplicationCreation(App app) {
-        UserHandler.syncUser(app);
     }
 
     public static void syncUser(App app) {
-        UserHandler.syncUser(app);
+
     }
 
     public static void onGCMMessage(Context context, Intent intent) {
-        Bundle extras = intent.getExtras();
+/*        Bundle extras = intent.getExtras();
         String game_key = extras.getString("game_key");
         if (game_key != null) { // cloud game message
 
@@ -59,6 +48,7 @@ public class CloudHooks {
                 }
 
         }
+*/
     }
 
     public static void onGoGameChange(GoGame game) {
@@ -67,20 +57,20 @@ public class CloudHooks {
     }
 
     public static void onSolvedTsumego(GobandroidFragmentActivity ctx, GoGame game) {
-        new UploadGameAndShareMoment(ctx, "solved_tsumego").execute();
+  //      new UploadGameAndShareMoment(ctx, "solved_tsumego").execute();
     }
 
 
     public static void uploadGameAndShareMoment(GobandroidFragmentActivity ctx, GoGame game, String type) {
-        new UploadGameAndShareMoment(ctx, type).execute();
+//        new UploadGameAndShareMoment(ctx, type).execute();
     }
 
     public static void uploadGame(GobandroidFragmentActivity ctx, GoGame game, String type) {
-        new UploadGameToCloudEndpointsBase(ctx, type).execute();
+  //      new UploadGameToCloudEndpointsBase(ctx, type).execute();
     }
 
     public static void profileOrOnlinePlay(final GobandroidFragmentActivity ctx) {
-
+/*
         if (ctx.getApp().getSettings().getUsername().equals(""))
             new AlertDialog.Builder(ctx).setMessage(ctx.getString(R.string.enter_username)).setTitle(ctx.getString(R.string.who_are_you))
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -92,6 +82,6 @@ public class CloudHooks {
                     }).show();
         else
             ctx.startActivity(new Intent(ctx, OnlineSelectActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
-
+*/
     }
 }

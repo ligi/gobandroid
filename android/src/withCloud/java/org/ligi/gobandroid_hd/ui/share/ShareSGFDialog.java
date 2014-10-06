@@ -10,12 +10,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
-import org.ligi.axt.helpers.dialog.DialogDiscardingOnClickListener;
+import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.gobandroid_hd.ui.online.UploadGameAndShareIntent;
-import org.ligi.gobandroid_hd.ui.online.UploadGameAndShareToGPplus;
 
 /**
  * Dialog with the intention to share the current Game
@@ -128,12 +126,12 @@ public class ShareSGFDialog extends GobandroidDialog {
 
                     case R.id.radioButtonGPlus:
                         sharedPrefsEditor.putInt(LAST_SHARE_TYPE_SP_KEY, SHARE_TYPE_GPLUS);
-                        new UploadGameAndShareToGPplus((GobandroidFragmentActivity) mContext, type, introText).execute();
+                        //new UploadGameAndShareToGPplus((GobandroidFragmentActivity) mContext, type, introText).execute();
                         break;
 
                     case R.id.radioButtonLink:
                         sharedPrefsEditor.putInt(LAST_SHARE_TYPE_SP_KEY, SHARE_TYPE_LINK);
-                        new UploadGameAndShareIntent((GobandroidFragmentActivity) mContext, type, introText).execute();
+                        //new UploadGameAndShareIntent((GobandroidFragmentActivity) mContext, type, introText).execute();
                         break;
 
                     case R.id.radioButtonAsAttachment:

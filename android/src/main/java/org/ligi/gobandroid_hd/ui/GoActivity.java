@@ -24,7 +24,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -38,6 +37,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.ligi.axt.AXT;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -50,6 +50,7 @@ import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.gobandroid_hd.ui.review.BookmarkDialog;
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
+import org.ligi.gobandroid_hd.ui.share.ShareAsAttachmentDialog;
 import org.ligi.gobandroid_hd.ui.share.ShareSGFDialog;
 import org.ligi.tracedroid.logging.Log;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
@@ -78,7 +79,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     private int last_processed_move_change_num = 0;
 
     private GoMove last_accept;
-    private Handler handler;
 
     public Fragment getGameExtraFragment() {
 
@@ -91,13 +91,13 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         GoPrefs.init(this); // TODO remove legacy
 
-        handler = new Handler();
-
         setContentView(R.layout.game);
 
 
-        // if there where stacktraces collected -> give the user the option to send them
-        TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
+        if (!App.isTesting) {
+            // if there where stacktraces collected -> give the user the option to send them
+            TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
+        }
 
         interaction_scope = getApp().getInteractionScope();
         this.getSupportActionBar().setHomeButtonEnabled(true);
@@ -135,7 +135,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         game2ui();
         getZoomFragment();
-        acceptCloudMove(); // this move must be accepted
     }
 
     @SuppressLint("ShowToast")
@@ -174,11 +173,9 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         }
         last_processed_move_change_num = getGame().getActMove().getMovePos();
 
-        handler.post(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-
                 if (getApp().getInteractionScope().getTouchPosition() < 0) {
                     setFragment(getGameExtraFragment());
                 }
@@ -209,7 +206,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     @Override
     protected void onResume() {
         super.onResume();
-        getApp().setGoActivityActivity(true);
 
         if (isBoardFocusWanted()) {
             go_board.setFocusableInTouchMode(true);
@@ -220,15 +216,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             go_board.setFocusable(false);
         }
         setBoardPreferences();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                // sound_man.playSound(GoSoundManager.SOUND_START);
-            }
-
-        }, 100);
 
         if (getGame() == null) {
             Log.w("we do not have a game in onStart of a GoGame activity - thats crazy!");
@@ -300,8 +287,8 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                 return true;
 
             case R.id.menu_game_share:
-                //new ShareAsAttachmentDialog(this).show();
-                new ShareSGFDialog(this).show();
+                new ShareAsAttachmentDialog(this).show();
+                //new ShareSGFDialog(this).show();
                 return true;
         }
 
@@ -453,14 +440,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         return true;
     }
 
-    public boolean isCloudGame() {
-        return getGame().getCloudKey() != null && getGame().getCloudRole() != null;
-    }
-
     public boolean isLastMoveAccepted() {
-        if (!isCloudGame()) {
-            return false;
-        }
 
         if (last_accept == null) {
             return false;
@@ -469,36 +449,10 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         return (last_accept.getMovePos() == getGame().getActMove().getMovePos());
     }
 
-    public void acceptCloudMove() {
-        last_accept = getGame().getActMove();
-    }
-
-    public boolean isCloudMove() {
-        if (!isCloudGame()) {
-            return false;
-        }
-
-		/*
-         * if (isLastMoveAccepted()) return true;
-		 */
-        if (getGame().getCloudRole().equals("s")) {
-            return true;
-        }
-        if (getGame().getCloudRole().equals("b") && getGame().isBlackToMove()) {
-            return true;
-        }
-        if (getGame().getCloudRole().equals("w") && !getGame().isBlackToMove()) {
-            return true;
-        }
-
-        return false;
-    }
-
     @Override
     public void onPause() {
 
         go_board.move_stone_mode = false;
-        getApp().setGoActivityActivity(false);
 
         /*
         TODO dismiss ProgressDialog from upload when needed

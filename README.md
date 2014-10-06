@@ -1,4 +1,7 @@
-[![Build Status](https://ligi.ci.cloudbees.com/buildStatus/icon?job=gobandroid)](https://ligi.ci.cloudbees.com/job/gobandroid/)
+[![Build Status](https://travis-ci.org/ligi/gobandroid.svg?branch=master)](https://travis-ci.org/ligi/gobandroid)
+
+[![Android app on Google Play](https://developer.android.com/images/brand/en_app_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=org.ligi.gobandroid_hd)
+[![Android app on FDroid](https://f-droid.org/wiki/images/c/c4/F-Droid-button_available-on.png)](https://f-droid.org/repository/browse/?fdid=org.ligi.gobandroid_hd)
 
 ### Links
  - [gobandroid in the Android-Market](https://market.android.com/details?id=org.ligi.gobandroid_hd)

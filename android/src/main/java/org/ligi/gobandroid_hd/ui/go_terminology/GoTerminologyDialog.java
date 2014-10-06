@@ -8,22 +8,10 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.tracedroid.logging.Log;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class GoTerminologyDialog extends GobandroidDialog {
 
-    public final static HashMap<String, Integer> getTerm2resHashMap() {
-        return new HashMap<String, Integer>() {
-            private static final long serialVersionUID = -8206448225904656388L;
-            {
-                put("joseki", R.string.goterm_joseki);
-                put("miai", R.string.goterm_miai);
-                put("shape", R.string.goterm_shape);
-                put("tesuji", R.string.goterm_tesuji);
-                // missing mojo
-            }
-        };
-    }
 
     public GoTerminologyDialog(Activity context, String term) {
         super(context);
@@ -32,10 +20,11 @@ public class GoTerminologyDialog extends GobandroidDialog {
         setIconResource(R.drawable.info);
         setContentView(R.layout.go_terms_view);
 
-        TextView tv = (TextView) this.findViewById(R.id.go_terms_text);
+        final TextView tv = (TextView) this.findViewById(R.id.go_terms_text);
 
-        if (getTerm2resHashMap().containsKey(term)) {
-            tv.setText(getTerm2resHashMap().get(term));
+        final Map<String, Integer> termMap = GoTerminologyViewActivity.Term2resMap;
+        if (termMap.containsKey(term)) {
+            tv.setText(termMap.get(term));
         } else {
             tv.setText("no Definition found");
             Log.w("no definition found for " + term);

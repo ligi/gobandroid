@@ -73,8 +73,8 @@
             android:name="org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/Theme.Transparent">
-            <intent-filter>
+            android:theme="@style/TransparentTheme">
+        <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -94,7 +94,7 @@
         <activity
             android:name="org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity"
             android:launchMode="singleInstance"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadActivity" />
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadFromExternalActivity">
             <intent-filter>

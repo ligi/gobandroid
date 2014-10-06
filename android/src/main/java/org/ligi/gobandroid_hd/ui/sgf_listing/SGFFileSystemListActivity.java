@@ -43,8 +43,7 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
 
     private File dir;
     private SGFListFragment list_fragment;
-    private String sgf_path;
-    private AsyncTask<TsumegoSource[], String, Integer> my_task = null;
+    private AsyncTask<TsumegoSource[], String, Integer> downloadProblemsTask = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,24 +51,33 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
 
         this.getSupportActionBar().setHomeButtonEnabled(true);
         setContentView(R.layout.list);
-        sgf_path = getSettings().getSGFBasePath();
+
 
         if (getIntent().getBooleanExtra(GobandroidNotifications.BOOL_FROM_NOTIFICATION_EXTRA_KEY, false))
             new GobandroidNotifications(this).cancelNewTsumegosNotification();
 
-        if (getIntent().getData() != null)
-            sgf_path = getIntent().getData().getPath();
 
-        if (sgf_path.substring(sgf_path.indexOf('/')).startsWith(getSettings().getTsumegoPath().substring(sgf_path.indexOf('/'))))
+        final String sgfPath = getSGFPath();
+
+        if (sgfPath.substring(sgfPath.indexOf('/')).startsWith(getSettings().getTsumegoPath().substring(sgfPath.indexOf('/'))))
             this.getApp().getInteractionScope().setMode(InteractionScope.MODE_TSUMEGO);
-        if (sgf_path.substring(sgf_path.indexOf('/')).startsWith(getSettings().getReviewPath().substring(sgf_path.indexOf('/'))))
+        if (sgfPath.substring(sgfPath.indexOf('/')).startsWith(getSettings().getReviewPath().substring(sgfPath.indexOf('/'))))
             this.getApp().getInteractionScope().setMode(InteractionScope.MODE_REVIEW);
-        dir = new File(sgf_path);
+
+        dir = new File(sgfPath);
 
         setActionbarProperties();
 
-        list_fragment = new SGFListFragment(dir);
+        list_fragment = SGFListFragment.newInstance(dir);
         getSupportFragmentManager().beginTransaction().replace(R.id.list_fragment, list_fragment).commit();
+    }
+
+    private String getSGFPath() {
+        if (getIntent().getData() != null) {
+            return getIntent().getData().getPath();
+        }
+
+        return getSettings().getSGFBasePath();
     }
 
     private void setActionbarProperties() {
@@ -93,8 +101,8 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
 
     @Override
     protected void onStop() {
-        if (my_task != null) {
-            my_task.cancel(true);
+        if (downloadProblemsTask != null) {
+            downloadProblemsTask.cancel(true);
         }
         super.onStop();
     }
@@ -114,7 +122,7 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_refresh:
-                my_task = DownloadProblemsDialog.getAndRunTask(this, list_fragment);
+                downloadProblemsTask = DownloadProblemsDialog.getAndRunTask(this, list_fragment);
                 return true;
             case R.id.menu_del_sgfmeta:
                 list_fragment.delete_sgfmeta();

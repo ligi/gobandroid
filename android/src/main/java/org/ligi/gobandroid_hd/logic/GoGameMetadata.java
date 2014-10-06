@@ -39,6 +39,8 @@ public class GoGameMetadata {
     private String white_name = "";
     private String white_rank = "";
 
+    private String difficulty = "";
+
     /**
      * set the game name
      *
@@ -169,4 +171,11 @@ public class GoGameMetadata {
         this.filename = filename;
     }
 
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
 }

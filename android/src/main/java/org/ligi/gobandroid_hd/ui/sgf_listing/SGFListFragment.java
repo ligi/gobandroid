@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui.sgf_listing;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,6 +23,9 @@ import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.helper.SGFFileNameFilter;
+import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import org.ligi.gobandroid_hd.ui.GoLinkLoadActivity;
 import org.ligi.gobandroid_hd.ui.GobandroidListFragment;
 import org.ligi.gobandroid_hd.ui.Refreshable;
@@ -30,11 +34,17 @@ import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.tracedroid.logging.Log;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static android.text.TextUtils.isEmpty;
+
 public class SGFListFragment extends GobandroidListFragment implements Refreshable {
+
+    public static final String EXTRA_DIR = "dir";
+    public static final String EXTRA_MENU_ITEMS = "menu_items";
 
     private String[] menu_items;
     private String dir;
@@ -43,20 +53,22 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
     private int lastSelectedPosition;
     private Optional<ActionMode> actionMode = Optional.absent();
 
-    public SGFListFragment() {
-    }
 
-    public SGFListFragment(File dir) {
-        this.dir = dir.getAbsolutePath();
+    public static SGFListFragment newInstance(File dir) {
+        SGFListFragment f = new SGFListFragment();
+
+        Bundle args = new Bundle();
+        args.putString(EXTRA_DIR, dir.getAbsolutePath());
+        f.setArguments(args);
+
+        return f;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null) {
-            getEnvFromSavedInstance(savedInstanceState);
-        }
+            getEnvFromSavedInstance();
 
         if (menu_items == null) { // we got nothing from savedInstance
             refresh();
@@ -64,13 +76,14 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
 
     }
 
-    private void getEnvFromSavedInstance(Bundle savedInstanceState) {
+
+    private void getEnvFromSavedInstance() {
         if (menu_items == null) {
-            menu_items = savedInstanceState.getStringArray("menu_items");
+            menu_items = getArguments().getStringArray(EXTRA_MENU_ITEMS);
         }
 
         if (dir == null) {
-            dir = savedInstanceState.getString("dir");
+            dir = getArguments().getString(EXTRA_DIR);
         }
     }
 
@@ -149,8 +162,8 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putStringArray("menu_items", menu_items);
-        outState.putString("dir", dir);
+        outState.putStringArray(EXTRA_MENU_ITEMS, menu_items);
+        outState.putString(EXTRA_DIR, dir);
     }
 
     @Override
@@ -180,7 +193,7 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
             return;
         }
 
-        List<String> fileNames = new ArrayList<String>();
+        final List<String> fileNames = new ArrayList<>();
         for (File file : files) {
             if ((file.getName().endsWith(".sgf")) || (file.isDirectory()) || (file.getName().endsWith(".golink"))) {
                 fileNames.add(file.getName());
@@ -194,7 +207,32 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
 
 
         if (getApp().getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
-            List<String> done = new ArrayList<String>(), undone = new ArrayList<String>();
+
+            if (fileNames.size() > 1000) {
+                try {
+                    final String[] list = dir_file.list(new SGFFileNameFilter());
+                    final GoGame game1 = SGFReader.sgf2game(AXT.at(new File(dir_file, list[10])).readToString(), null, SGFReader.BREAKON_FIRSTMOVE);
+                    final GoGame game2 = SGFReader.sgf2game(AXT.at(new File(dir_file, list[12])).readToString(), null, SGFReader.BREAKON_FIRSTMOVE);
+                    if (!isEmpty(game1.getMetaData().getDifficulty()) && !isEmpty(game2.getMetaData().getDifficulty())) {
+                        new AlertDialog.Builder(getActivity()).setMessage("This looks like the gogameguru offline selection - sort by difficulty")
+                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        new GoProblemsRenaming(getActivity(),dir_file).execute();
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setNegativeButton(R.string.cancel,null)
+
+                                .show();
+                    }
+                } catch (IOException e) {
+                    Log.w("problem in gogameguru rename offer " + e);
+                }
+                return;
+            }
+
+            List<String> done = new ArrayList<>(), undone = new ArrayList<>();
             for (String fname : fileNames)
                 if (new SGFMetaData(dir_file.getAbsolutePath() + "/" + fname).is_solved) {
                     done.add(fname);
@@ -202,12 +240,12 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
                     undone.add(fname);
                 }
 
-            String[] undone_arr = (String[]) undone.toArray(new String[undone.size()]), done_arr = (String[]) done.toArray(new String[done.size()]);
+            String[] undone_arr = undone.toArray(new String[undone.size()]), done_arr = done.toArray(new String[done.size()]);
             Arrays.sort(undone_arr);
             Arrays.sort(done_arr);
             menu_items = AXT.at(undone_arr).combineWith(done_arr);
         } else {
-            menu_items = (String[]) fileNames.toArray(new String[fileNames.size()]);
+            menu_items = fileNames.toArray(new String[fileNames.size()]);
             Arrays.sort(menu_items);
         }
 
@@ -269,4 +307,5 @@ public class SGFListFragment extends GobandroidListFragment implements Refreshab
 
         alertBuilder.create().show();
     }
+
 }

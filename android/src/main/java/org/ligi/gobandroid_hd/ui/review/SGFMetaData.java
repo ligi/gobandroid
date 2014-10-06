@@ -36,28 +36,32 @@ public class SGFMetaData {
 
         meta_fname = fname;
 
-        try {
-            Log.i("got json file " + AXT.at(new File(meta_fname)).readToString());
-            JSONObject jObject = new JSONObject(AXT.at(new File(meta_fname)).readToString());
+        final File metaFile = new File(meta_fname);
 
+        if (metaFile.exists()) {
             try {
-                rating = (Integer) jObject.getInt("rating");
-            } catch (org.json.JSONException jse) {
-            } // don't care if not there
 
-            try {
-                is_solved = (Boolean) jObject.getBoolean("is_solved");
-            } catch (org.json.JSONException jse) {
-            } // don't care if not there
+                JSONObject jObject = new JSONObject(AXT.at(metaFile).readToString());
 
-            try {
-                hints_used = (Integer) jObject.getInt("hints_used");
-            } catch (org.json.JSONException jse) {
-            } // don't care if not there
+                try {
+                    rating = jObject.getInt("rating");
+                } catch (org.json.JSONException jse) {
+                } // don't care if not there
 
-            has_data = true;
-        } catch (Exception e) {
-            Log.i("got json file " + e);
+                try {
+                    is_solved = jObject.getBoolean("is_solved");
+                } catch (org.json.JSONException jse) {
+                } // don't care if not there
+
+                try {
+                    hints_used = jObject.getInt("hints_used");
+                } catch (org.json.JSONException jse) {
+                } // don't care if not there
+
+                has_data = true;
+            } catch (Exception e) {
+                Log.i("got json file " + e);
+            }
         }
     }
 

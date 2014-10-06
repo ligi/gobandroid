@@ -228,6 +228,9 @@ public class SGFReader {
                                 if (act_cmd.equals("GN")) // Game Name
                                     metadata.setName(act_param);
 
+                                if (act_cmd.equals("DI")) // Difficulty ( found in goproblems.com files )
+                                    metadata.setDifficulty(act_param);
+
                                 if (act_cmd.equals("PW")) // Player White Name
                                     metadata.setWhiteName(act_param);
 

@@ -11,7 +11,10 @@ import org.ligi.gobandroid_hd.logic.markers.CircleMarker;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
+import org.ligi.gobandroid_hd.logic.markers.util.MarkerUtil;
 import org.ligi.gobandroid_hd.ui.GoActivity;
+
+import java.util.List;
 
 /**
  * Activity to record a Game - or play on one device
@@ -30,30 +33,6 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-    private int findNextNumber() {
-        for (int i = 1; i < 99; i++) {
-            boolean found = false;
-            for (GoMarker marker : getGame().getActMove().getMarkers())
-                found |= marker.getText().equals("" + i);
-            if (!found) {
-                return i;
-            }
-        }
-        return 0; // should not happen - only if a hundret markers
-    }
-
-    private String findNextLetter() {
-        for (int i = 0; i < 23; i++) {
-            boolean found = false;
-            for (GoMarker marker : getGame().getActMove().getMarkers())
-                found |= marker.getText().equals("" + (char) ('A' + i));
-            if (!found) {
-                return "" + (char) ('A' + i);
-            }
-        }
-        return "a"; // should not happen - only if a hundred markers
-    }
-
     public boolean doAutosave() {
         return true;
     }
@@ -63,6 +42,7 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
 
         // if it is a marker we have to check if there is one already and
         // remove
+        final List<GoMarker> markers = getGame().getActMove().getMarkers();
         switch (getMode()) {
             case TRIANGLE:
             case SQUARE:
@@ -71,14 +51,14 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
             case LETTER:
                 // remove markers with same coordinates
                 GoMarker marker2remove = null;
-                for (GoMarker marker : getGame().getActMove().getMarkers()) {
+                for (GoMarker marker : markers) {
                     if (marker.getX() == x && marker.getY() == y) {
                         marker2remove = marker;
                     }
                 }
 
                 if (marker2remove != null) {
-                    getGame().getActMove().getMarkers().remove(marker2remove);
+                    markers.remove(marker2remove);
                     return GoGame.MOVE_VALID;
                 }
         }
@@ -103,21 +83,23 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
                 // refresh the board
                 break;
             case TRIANGLE:
-                getGame().getActMove().getMarkers().add(new TriangleMarker(x, y));
+                markers.add(new TriangleMarker(x, y));
                 break;
             case SQUARE:
-                getGame().getActMove().getMarkers().add(new SquareMarker(x, y));
+                markers.add(new SquareMarker(x, y));
                 break;
             case CIRCLE:
-                getGame().getActMove().getMarkers().add(new CircleMarker(x, y));
+                markers.add(new CircleMarker(x, y));
                 break;
 
             case NUMBER:
-                getGame().getActMove().getMarkers().add(new GoMarker(x, y, "" + findNextNumber()));
+                final int firstFreeNumber = MarkerUtil.findFirstFreeNumber(markers);
+                markers.add(new GoMarker(x, y, "" + firstFreeNumber));
                 break;
 
             case LETTER:
-                getGame().getActMove().getMarkers().add(new GoMarker(x, y, "" + findNextLetter()));
+                final String nextLetter = MarkerUtil.findNextLetter(markers);
+                markers.add(new GoMarker(x, y, nextLetter));
                 break;
 
         }
