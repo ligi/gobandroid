@@ -10,8 +10,7 @@ public class EditModeItemPool {
     private int act_activated = 0;
 
     public EditModeItemPool() {
-        list = new ArrayList<EditModeItem>();
-
+        list = new ArrayList<>();
         list.add(new EditModeItem(R.drawable.stone_black, EditGameMode.BLACK));
         list.add(new EditModeItem(R.drawable.stone_white, EditGameMode.WHITE));
         list.add(new EditModeItem(R.drawable.stone_circle, EditGameMode.CIRCLE));
