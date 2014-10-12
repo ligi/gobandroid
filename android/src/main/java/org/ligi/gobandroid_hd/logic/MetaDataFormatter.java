@@ -26,12 +26,12 @@ package org.ligi.gobandroid_hd.logic;
  *         <p/>
  *         This software is licenced with GPLv3
  */
-public class MetaDataFormater {
+public class MetaDataFormatter {
 
     private GoGameMetadata meta;
     private GoGame game;
 
-    public MetaDataFormater(GoGame game) {
+    public MetaDataFormatter(GoGame game) {
         this.meta = game.getMetaData();
         this.game = game;
     }
