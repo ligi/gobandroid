@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EditModeItemPool {
-    private List<EditModeItem> list;
+    private final List<EditModeItem> list;
     private int act_activated = 0;
 
     public EditModeItemPool() {
