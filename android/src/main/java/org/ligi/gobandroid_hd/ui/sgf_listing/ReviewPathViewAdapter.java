@@ -14,7 +14,7 @@ import android.widget.TextView;
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.MetaDataFormater;
+import org.ligi.gobandroid_hd.logic.MetaDataFormatter;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 
@@ -88,7 +88,7 @@ class ReviewPathViewAdapter extends BaseAdapter {
                 SGFMetaData sgf_meta = new SGFMetaData(base_fname + SGFMetaData.FNAME_ENDING);
 
                 if (game != null) {
-                    MetaDataFormater meta = new MetaDataFormater(game);
+                    MetaDataFormatter meta = new MetaDataFormatter(game);
 
                     TextView player_white_tv = (TextView) v.findViewById(R.id.player_white);
                     if (player_white_tv != null) {
