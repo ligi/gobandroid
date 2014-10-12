@@ -14,9 +14,9 @@ import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMat
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.not;
 
-public class TheReviewAcitity extends BaseIntegration<GameReviewActivity> {
+public class TheReviewActivity extends BaseIntegration<GameReviewActivity> {
 
-    public TheReviewAcitity() {
+    public TheReviewActivity() {
         super(GameReviewActivity.class);
     }
 
