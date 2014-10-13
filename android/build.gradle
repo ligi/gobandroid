@@ -95,6 +95,7 @@ dependencies {
     compile 'com.google.guava:guava:18.0'
     compile 'org.ligi:tracedroid:1.4'
     compile 'com.jakewharton:butterknife:5.1.2'
+    compile 'com.wrapp.floatlabelededittext:library:0.0.3'
 
     def play_services = 'com.google.android.gms:play-services:5.0.89'
 

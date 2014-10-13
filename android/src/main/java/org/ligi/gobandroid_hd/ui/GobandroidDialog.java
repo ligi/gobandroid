@@ -70,8 +70,7 @@ public class GobandroidDialog extends Dialog {
     public void setContentView(int content) {
         LinearLayout container = (LinearLayout) this.findViewById(R.id.dialog_content);
 
-        Log.i("", "container" + container + " inflater" + inflater);
-        container.addView(inflater.inflate(content, null));
+        container.addView(inflater.inflate(content, container, false));
     }
 
     public void setContentFill() {

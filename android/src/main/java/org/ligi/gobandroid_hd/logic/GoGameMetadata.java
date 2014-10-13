@@ -41,6 +41,8 @@ public class GoGameMetadata {
 
     private String difficulty = "";
 
+    private String date = "";
+
     /**
      * set the game name
      *
@@ -177,5 +179,13 @@ public class GoGameMetadata {
 
     public String getDifficulty() {
         return difficulty;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getDate() {
+        return date;
     }
 }

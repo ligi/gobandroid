@@ -41,8 +41,9 @@ public class InteractionScope {
      * @return the game instance
      */
     public GoGame getGame() {
-        if (game == null)
+        if (game == null) {
             game = new GoGame((byte) 9);
+        }
         return game;
     }
 
