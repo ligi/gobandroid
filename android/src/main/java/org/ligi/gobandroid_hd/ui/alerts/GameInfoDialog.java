@@ -24,7 +24,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+
+import com.wrapp.floatlabelededittext.FloatLabeledEditText;
 
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
@@ -32,16 +33,48 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * Class to show an Alert with the Game Info ( who plays / rank / game name .. )
- *
- * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
- *         <p/>
- *         License: This software is licensed with GPLv3
  */
-public class GameInfoAlert extends GobandroidDialog {
+public class GameInfoDialog extends GobandroidDialog {
 
-    public GameInfoAlert(final Context context, final GoGame game) {
+    @InjectView(R.id.game_name_et)
+    FloatLabeledEditText nameEdit;
+
+    @InjectView(R.id.black_name_et)
+    FloatLabeledEditText blackNameEdit;
+
+    @InjectView(R.id.user_is_white_btn)
+    Button user_is_white_btn;
+
+    @InjectView(R.id.user_is_black_btn)
+    Button user_is_black_btn;
+
+    @InjectView(R.id.white_name_et)
+    FloatLabeledEditText white_name_et;
+
+    @InjectView(R.id.white_rank_et)
+    FloatLabeledEditText white_rank_et;
+
+    @InjectView(R.id.komi_et)
+    FloatLabeledEditText game_komi_et;
+
+    @InjectView(R.id.game_result_et)
+    FloatLabeledEditText game_result_et;
+
+    @InjectView(R.id.game_difficulty_et)
+    FloatLabeledEditText game_difficulty_et;
+
+    @InjectView(R.id.black_rank_et)
+    FloatLabeledEditText black_rank_et;
+
+    @InjectView(R.id.game_date_et)
+    FloatLabeledEditText game_date_et;
+
+    public GameInfoDialog(final Context context, final GoGame game) {
         super(context);
         setTitle(R.string.game_info);
         setIconResource(R.drawable.info);
@@ -49,46 +82,37 @@ public class GameInfoAlert extends GobandroidDialog {
 
         final App app = (App) context.getApplicationContext();
 
-        final EditText game_name_et = (EditText) findViewById(R.id.game_name_et);
-        game_name_et.setText(game.getMetaData().getName());
+        ButterKnife.inject(this);
 
-        final EditText black_name_et = (EditText) findViewById(R.id.black_name_et);
-        black_name_et.setText(game.getMetaData().getBlackName());
-
-
-        final EditText black_rank_et = (EditText) findViewById(R.id.black_rank_et);
+        nameEdit.setText(game.getMetaData().getName());
+        blackNameEdit.setText(game.getMetaData().getBlackName());
         black_rank_et.setText(game.getMetaData().getBlackRank());
-
-        final EditText white_name_et = (EditText) findViewById(R.id.white_name_et);
         white_name_et.setText(game.getMetaData().getWhiteName());
-
-        final EditText white_rank_et = (EditText) findViewById(R.id.white_rank_et);
         white_rank_et.setText(game.getMetaData().getWhiteRank());
-
-        final EditText game_komi_et = (EditText) findViewById(R.id.komi_et);
         game_komi_et.setText("" + game.getKomi());
-
-        final EditText game_result_et = (EditText) findViewById(R.id.game_result_et);
         game_result_et.setText(game.getMetaData().getResult());
-
-        final EditText game_difficulty_et = (EditText) findViewById(R.id.game_difficulty_et);
         game_difficulty_et.setText(game.getMetaData().getDifficulty());
+        game_date_et.setText(game.getMetaData().getDate());
 
-        final Button user_is_white_btn = (Button) findViewById(R.id.user_is_white_btn);
-
-        if (!game.getMetaData().getWhiteName().equals(""))
-            user_is_white_btn.setVisibility(View.GONE);
-
-        final Button user_is_black_btn = (Button) findViewById(R.id.user_is_black_btn);
-
-        if (!game.getMetaData().getBlackName().equals(""))
+        if (app.getSettings().getUsername().isEmpty()) {
             user_is_black_btn.setVisibility(View.GONE);
+            user_is_white_btn.setVisibility(View.GONE);
+        } else {
+            if (!game.getMetaData().getWhiteName().equals("")) {
+                user_is_white_btn.setVisibility(View.GONE);
+            }
+
+            if (!game.getMetaData().getBlackName().equals("")) {
+                user_is_black_btn.setVisibility(View.GONE);
+            }
+
+        }
 
         user_is_black_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                black_name_et.setText(app.getSettings().getUsername());
+                blackNameEdit.setText(app.getSettings().getUsername());
                 black_rank_et.setText(app.getSettings().getRank());
                 user_is_black_btn.setVisibility(View.GONE);
             }
@@ -109,11 +133,12 @@ public class GameInfoAlert extends GobandroidDialog {
 
         class SaveChangesOnClick implements DialogInterface.OnClickListener {
             public void onClick(DialogInterface dialog, int whichButton) {
-                game.getMetaData().setName(game_name_et.getText().toString());
-                game.getMetaData().setBlackName(black_name_et.getText().toString());
+                game.getMetaData().setName(nameEdit.getText().toString());
+                game.getMetaData().setBlackName(blackNameEdit.getText().toString());
                 game.getMetaData().setBlackRank(black_rank_et.getText().toString());
                 game.getMetaData().setWhiteName(white_name_et.getText().toString());
                 game.getMetaData().setWhiteRank(white_rank_et.getText().toString());
+                game.getMetaData().setDate(game_date_et.getText().toString());
 
                 try {
                     game.setKomi(Float.valueOf(game_komi_et.getText().toString()));

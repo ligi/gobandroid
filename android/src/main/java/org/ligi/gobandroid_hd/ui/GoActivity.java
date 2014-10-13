@@ -42,7 +42,7 @@ import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
-import org.ligi.gobandroid_hd.ui.alerts.GameInfoAlert;
+import org.ligi.gobandroid_hd.ui.alerts.GameInfoDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.fragments.DefaultGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
@@ -246,7 +246,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 		 */
 
             case R.id.menu_game_info:
-                new GameInfoAlert(this, getGame()).show();
+                new GameInfoDialog(this, getGame()).show();
                 return true;
 
             case R.id.menu_game_undo:

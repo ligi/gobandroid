@@ -1,162 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:float="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stretchColumns="1">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:id="@+id/game_name_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            float:fletFloatingHint="@string/game_name" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/game_name" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/game_name_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"></EditText>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/black_name" />
-
-            <EditText
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
                 android:id="@+id/black_name_et"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"></EditText>
+                float:fletFloatingHint="@string/black_name"
+                android:layout_weight="1" />
+
 
             <Button
                 android:id="@+id/user_is_black_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/it_is_me" />
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/black_rank" />
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:id="@+id/black_rank_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            float:fletFloatingHint="@string/black_rank" />
 
-            <EditText
-                android:id="@+id/black_rank_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"></EditText>
-        </TableRow>
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/white_name" />
-
-            <EditText
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
                 android:id="@+id/white_name_et"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"></EditText>
+                float:fletFloatingHint="@string/white_name"
+                android:layout_weight="1" />
+
 
             <Button
                 android:id="@+id/user_is_white_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/it_is_me" />
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:id="@+id/white_rank_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            float:fletFloatingHint="@string/white_rank" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/white_rank" />
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:id="@+id/komi_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            float:fletFloatingHint="@string/komi" />
 
-            <EditText
-                android:id="@+id/white_rank_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"></EditText>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/komi" />
-
-            <EditText
-                android:id="@+id/komi_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"></EditText>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/game_result" />
-
-            <EditText
-                android:id="@+id/game_result_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"></EditText>
-        </TableRow>
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:id="@+id/game_result_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            float:fletFloatingHint="@string/game_result" />
 
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:id="@+id/game_date_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            float:fletFloatingHint="@string/date" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Game Difficulty" />
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:id="@+id/game_difficulty_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            float:fletFloatingHint="@string/game_difficulty" />
 
-            <EditText
-                android:id="@+id/game_difficulty_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"></EditText>
-        </TableRow>
-
-    </TableLayout>
-
+    </LinearLayout>
 </ScrollView>

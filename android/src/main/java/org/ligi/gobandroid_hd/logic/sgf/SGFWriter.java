@@ -36,6 +36,7 @@ public class SGFWriter {
         String res = "(;FF[4]GM[1]AP[gobandroid:0]"; // header
         res += getSGFSnippet("SZ", "" + game.getBoardSize()); // board_size;
         res += getSGFSnippet("GN", escapeSGF(game.getMetaData().getName()));
+        res += getSGFSnippet("DT", escapeSGF(game.getMetaData().getDate()));
         res += getSGFSnippet("PB", escapeSGF(game.getMetaData().getBlackName()));
         res += getSGFSnippet("PW", escapeSGF(game.getMetaData().getWhiteName()));
         res += getSGFSnippet("BR", escapeSGF(game.getMetaData().getBlackRank()));

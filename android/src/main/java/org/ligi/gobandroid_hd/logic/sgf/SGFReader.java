@@ -304,11 +304,14 @@ public class SGFReader {
                 metadata.setResult(act_param);
                 break;
 
+            case "DT":
+                metadata.setDate(act_param);
+                break;
+
             case "SO": // Source
                 metadata.setResult(act_param);
                 break;
         }
-
 
         // size command
         if (act_cmd.equals("SiZe") || act_cmd.equals("SZ")) {
@@ -323,6 +326,7 @@ public class SGFReader {
         }
 
         // comment command
+
         if (act_cmd.equals("Comment") || act_cmd.equals("C")) {
             if (game != null)
                 game.getActMove().setComment(act_param);

@@ -23,8 +23,10 @@ import android.graphics.Point;
 
 import org.ligi.tracedroid.logging.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -145,6 +147,9 @@ public class GoGame {
 
         metadata = new GoGameMetadata();
 
+        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        metadata.setDate(format.format(new Date()));
         calc_board = new GoBoard(size);
 
         handicap_board = calc_board.clone();
@@ -616,7 +621,7 @@ public class GoGame {
                                 ptStackX.push(newx - 1);
                                 ptStackY.push(newy);
                             }
-						/* check to the right */
+                        /* check to the right */
                         if (newx < calc_board.getSize() - 1)
                             if (calc_board.areCellsEqual(newx + 1, newy, newx, newy) && (groups[newx + 1][newy] == -1)) {
                                 ptStackX.push(newx + 1);
