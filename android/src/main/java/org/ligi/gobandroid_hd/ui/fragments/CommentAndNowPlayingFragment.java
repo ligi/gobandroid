@@ -10,30 +10,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CommentAndNowPlayingFragment extends GobandroidFragment implements GoGameChangeListener {
+public class CommentAndNowPlayingFragment extends GobandroidGameAwareFragment {
 
     private TextView myTextView;
 
-    private GoGame game;
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View res = inflater.inflate(R.layout.game_extra_review, container, false);
 
         myTextView = (TextView) res.findViewById(R.id.comments_textview);
 
-        game = getGame();
-        game.addGoGameChangeListener(this);
-
-        // getFragmentManager().beginTransaction().replace(R.id.container_for_nav,
-        // new NavigationFragment()).commit();
         onGoGameChange();
         return res;
     }
@@ -66,11 +57,5 @@ public class CommentAndNowPlayingFragment extends GobandroidFragment implements 
     }
 
     private Handler gameChangeHandler = new Handler();
-
-    @Override
-    public void onDestroyView() {
-        game.removeGoGameChangeListener(this);
-        super.onDestroyView();
-    }
 
 }

@@ -6,10 +6,22 @@
     <org.ligi.gobandroid_hd.ui.GoBoardViewHD
         android:id="@+id/go_board"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"></org.ligi.gobandroid_hd.ui.GoBoardViewHD>
-
-    <LinearLayout
-        android:id="@+id/game_extra_container"
-        android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <FrameLayout
+            android:id="@+id/game_extra_container"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <org.ligi.gobandroid_hd.ui.ZoomingGoBoardViewHD
+            android:id="@+id/zoom_board"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+    </FrameLayout>
 </LinearLayout>
