@@ -220,4 +220,5 @@
     <string name="correct_but_no_more_tsumegos">对了 !-) 这个目录没有新的棋谱了</string>
     <string name="del_sgfmeta">清除</string>
     <string name="del_sgfmeta_prompt">确认要清除此目录记录的结果吗?</string>
+    <string name="ai_is_thinking">忙活着呢 慢点吧</string>
 </resources>
