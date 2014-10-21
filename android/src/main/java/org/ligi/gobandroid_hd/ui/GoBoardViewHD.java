@@ -327,8 +327,11 @@ public class GoBoardViewHD extends View {
         for (GoMarker marker : getGame().getActMove().getMarkers()) {
             final Paint markerPaint = getTextPaintForCell(getGame().getVisualBoard(), marker.getX(), marker.getY());
             final float x = marker.getX() * stone_size + stone_size / 2.0f;
-            final float y = marker.getY() * stone_size + (stone_size - (fm.ascent + fm.descent)) / 2;
-            canvas.drawText(marker.getText(), x, y, markerPaint);
+            final float y = marker.getY() * stone_size + (stone_size) / 2.0f;
+            //canvas.drawText(marker.getText(), x, y, markerPaint);
+
+
+            marker.draw(canvas, stone_size, x, y, markerPaint);
         }
 
         canvas.restore();

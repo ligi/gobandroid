@@ -19,6 +19,9 @@
 
 package org.ligi.gobandroid_hd.logic.markers;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+
 /**
  * class to mark a pos on the board useful for go problems - e.g. from SGF
  */
@@ -66,5 +69,10 @@ public class GoMarker {
         }
 
         return true; // If we reached this place we can assume the Markers are the same
+    }
+
+    public void draw(Canvas c, float size, float x, float y, Paint paint) {
+        final Paint.FontMetrics fm = paint.getFontMetrics();
+        c.drawText(getText(), x, y + size + (fm.ascent + fm.descent), paint);
     }
 }
