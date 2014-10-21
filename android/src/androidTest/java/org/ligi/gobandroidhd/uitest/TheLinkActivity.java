@@ -5,6 +5,7 @@ import android.test.suitebuilder.annotation.MediumTest;
 import com.squareup.spoon.Spoon;
 
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
+import org.ligi.gobandroidhd.base.BaseIntegration;
 
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
 import static com.google.android.apps.common.testing.ui.espresso.assertion.ViewAssertions.matches;

@@ -1,10 +1,12 @@
-package org.ligi.gobandroidhd.uitest;
+package org.ligi.gobandroidhd.base;
 
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.WindowManager;
 
 import org.ligi.gobandroid_hd.App;
+import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 
 import reporting.SpooningFailureHandler;
 
@@ -35,5 +37,13 @@ public abstract class BaseIntegration<T extends Activity> extends ActivityInstru
         });
 
         return activity;
+    }
+
+    protected String readAsset(final String fileName) {
+        return GobandroidTestBaseUtil.readAsset(getInstrumentation().getContext(), fileName);
+    }
+
+    protected GoGame readGame(final String fileName) {
+        return SGFReader.sgf2game(readAsset("sgf/" + fileName + ".sgf"), null);
     }
 }

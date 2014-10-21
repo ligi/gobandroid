@@ -6,6 +6,7 @@ import com.squareup.spoon.Spoon;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GoActivity;
+import org.ligi.gobandroidhd.base.BaseIntegration;
 
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
 import static com.google.android.apps.common.testing.ui.espresso.assertion.ViewAssertions.matches;
