@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Widget.Styled.ActionBar" parent="Widget.AppCompat.Light.ActionBar">
-        <item name="android:background">@android:color/transparent</item>
+    <style name="ActionBarStyle.Transparent" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="android:background">@null</item>
+        <item name="displayOptions" />
     </style>
-
 
     <style name="dialog_theme" parent="Theme.AppCompat.Light">
 
@@ -37,7 +37,8 @@
         <item name="android:alertDialogStyle">@style/dialog_theme</item>
         <item name="android:windowBackground">@drawable/shinkaya</item>
         <item name="android:fitsSystemWindows">true</item>
-        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
+        <item name="actionBarStyle">@style/ActionBarStyle.Transparent</item>
+
     </style>
 
     <style name="topic_divider">
