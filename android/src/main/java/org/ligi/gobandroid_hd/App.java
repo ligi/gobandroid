@@ -2,7 +2,6 @@ package org.ligi.gobandroid_hd;
 
 import android.app.Application;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.Build;
 
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GobandroidTracker;
@@ -22,8 +21,6 @@ public class App extends Application {
     public static GobandroidSettings getGobandroidSettings() {
         return new GobandroidSettings(instance);
     }
-
-    ;
 
     // the InteractionScope holds things like mode/act game between activities
     private InteractionScope interaction_scope;
@@ -60,56 +57,26 @@ public class App extends Application {
 
         interaction_scope = new InteractionScope();
 
-        if (Build.VERSION.SDK_INT > 7) { // need at least 8 for GCM
-            initGCM();
-        }
-
         CloudHooks.onApplicationCreation(this);
 
-    }
-
-
-    private void initGCM() {
-        /*try {
-            // Make sure the device has the proper dependencies.
-            GCMRegistrar.checkDevice(this);
-
-            final String regId = GCMRegistrar.getRegistrationId(this);
-            Log.i("initGCM with regId=" + regId);
-            if (TextUtils.isEmpty(regId)) {
-                // Automatically registers application on startup.
-                GCMRegistrar.register(this, GobandroidConfiguration.GCM_SENDER_ID);
-            } else {
-                GobandroidBackend.registerDevice(this);
-            }
-        } catch (Exception e) {
-            getTracker().trackException("cannot init GCM", e, false);
-        }
-        */
     }
 
     public InteractionScope getInteractionScope() {
         return interaction_scope;
     }
 
-    public GoGame getGame() {
-        return getInteractionScope().getGame();
+    public static GoGame getGame() {
+        return instance.getInteractionScope().getGame();
     }
+
+    public static void setGame(GoGame game) {
+        instance.getInteractionScope().setGame(game);
+    }
+
 
     public GobandroidSettings getSettings() {
         return new GobandroidSettings(this);
     }
-
-
-    /*
-    public Cloudgoban getCloudgoban() {
-        HttpTransport transport = AndroidHttp.newCompatibleTransport();
-        JsonFactory jsonFactory = new GsonFactory();
-
-        return new Cloudgoban(transport, jsonFactory, null);
-
-    }
-    */
 
 
     public static GobandroidTracker getTracker() {
