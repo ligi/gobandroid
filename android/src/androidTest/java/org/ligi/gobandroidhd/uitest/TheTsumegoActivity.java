@@ -49,8 +49,22 @@ public class TheTsumegoActivity extends BaseIntegration<TsumegoActivity> {
         onView(withId(R.id.go_board)).perform(placeStone(1, 1));
 
         onView(withId(R.id.tsumego_off_path_view)).check(matches(isDisplayed()));
-        Spoon.screenshot(activity, "tsumego");
+        Spoon.screenshot(activity, "tsumego_off_path");
     }
+
+    @MediumTest
+    public void testThatCommentComesAndGoes() {
+        App.setGame(readGame("tsumego"));
+        final TsumegoActivity activity = getActivity();
+        onView(withId(R.id.game_comment)).check(matches(withText("testing comment")));
+
+        Spoon.screenshot(activity, "tsumego_comment");
+        onView(withId(R.id.go_board)).perform(placeStone(1, 1));
+
+        onView(withId(R.id.game_comment)).check(matches(not(isDisplayed())));
+        Spoon.screenshot(activity, "tsumego_comment_gone");
+    }
+
 
 
 }

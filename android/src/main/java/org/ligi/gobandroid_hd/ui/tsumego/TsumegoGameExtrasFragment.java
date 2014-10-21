@@ -54,10 +54,13 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
         // have extras here to prevent double commentView written - but sometimes
         // there is more info in the commentView
         if (!correct_visible && game.getActMove().getComment().length() > 10) {
+            commentView.setVisibility(View.VISIBLE);
             commentView.setText(game.getActMove().getComment());
             if (!TextUtils.isEmpty(game.getActMove().getComment())) {
                 CommentHelper.linkifyCommentTextView(commentView);
             }
+        } else {
+            commentView.setVisibility(View.GONE);
         }
     }
 
