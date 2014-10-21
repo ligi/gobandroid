@@ -24,8 +24,8 @@ public class CloudHooks {
             app.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
                 @Override
                 public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                    final boolean registrationId = new GCMRegistrationStore(activity).getRegistrationId().isEmpty();
-                    if (registrationId && checkPlayServices(activity)) {
+                    final boolean noRegistrationId = new GCMRegistrationStore(activity).getRegistrationId().isEmpty();
+                    if (noRegistrationId && checkPlayServices(activity)) {
                         RegisterDevice.registerDevice(app);
                     }
                 }
