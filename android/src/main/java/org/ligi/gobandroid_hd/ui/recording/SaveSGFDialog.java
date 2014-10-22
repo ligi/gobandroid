@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGameMetadata;
 import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
@@ -54,7 +55,7 @@ public class SaveSGFDialog extends GobandroidDialog {
         class SaveSGFOnClickListener implements DialogInterface.OnClickListener {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String fname = getCompleteFileName();
-                boolean res = SGFWriter.saveSGF(getApp().getGame(), fname);
+                boolean res = SGFWriter.saveSGF(App.getGame(), fname);
 
                 if (res)
                     Toast.makeText(context, String.format(context.getString(R.string.file_saved), fname), Toast.LENGTH_SHORT).show();
@@ -96,7 +97,7 @@ public class SaveSGFDialog extends GobandroidDialog {
         });
 
         // get the old filename from the metadata
-        String old_fname = getApp().getGame().getMetaData().getFileName();
+        String old_fname = App.getGame().getMetaData().getFileName();
 
         if ((old_fname != null) && (!old_fname.equals(""))) {
             String suggested_name = old_fname.replace(".sgf", "");
@@ -105,7 +106,7 @@ public class SaveSGFDialog extends GobandroidDialog {
             fname_et.setText(suggested_name);
         }
 
-        final GoGameMetadata game_meta = getApp().getGame().getMetaData();
+        final GoGameMetadata game_meta = App.getGame().getMetaData();
 
         /**
          * this is a OnClickListener to add Stuff to the FileName like
