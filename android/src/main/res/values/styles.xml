@@ -70,11 +70,7 @@
         <item name="android:focusable">true</item>
 
     </style>
-    <!--
-<style name="clickable" parent="Widget.Sherlock.ActionButton">
 
-</style>
- -->
     <style name="MenuDrawer" />
 
     <style name="MenuDrawer.Widget" />
