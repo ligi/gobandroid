@@ -73,11 +73,11 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
             return;
         }
 
-        final String choosen = avail_file_list.get((int) (Math.random() * avail_file_list.size()));
+        final String chosen = avail_file_list.get((int) (Math.random() * avail_file_list.size()));
 
-        App.getTracker().trackEvent("gtv", "start_play_file", choosen, null);
+        App.getTracker().trackEvent("gtv", "start_play_file", chosen, null);
 
-        start_review_intent.setData(Uri.parse("file://" + choosen));
+        start_review_intent.setData(Uri.parse("file://" + chosen));
 
         startActivity(start_review_intent);
 

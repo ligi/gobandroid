@@ -35,11 +35,12 @@ public class GobandroidFragmentActivity extends ActionBarActivity {
     @Override
     public void setContentView(int layoutResId) {
         super.setContentView(R.layout.navigation_drawer_container);
-        View v = getLayoutInflater().inflate(layoutResId, null);
+        View v = getLayoutInflater().inflate(layoutResId, (ViewGroup) findViewById(R.id.drawer_layout), false);
         ViewGroup vg = (ViewGroup) findViewById(R.id.content_frame);
         vg.addView(v);
-        NavigationDrawer mMenuDrawer = new NavigationDrawer(this);
+        new NavigationDrawer(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 drawerLayout,         /* DrawerLayout object */
@@ -51,13 +52,13 @@ public class GobandroidFragmentActivity extends ActionBarActivity {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 getApp().getInteractionScope().setTouchPosition(-1);
-                getApp().getGame().notifyGameChange();
+                App.getGame().notifyGameChange();
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 getApp().getInteractionScope().setTouchPosition(-1);
-                getApp().getGame().notifyGameChange();
+                App.getGame().notifyGameChange();
                 super.onDrawerClosed(drawerView);
             }
 

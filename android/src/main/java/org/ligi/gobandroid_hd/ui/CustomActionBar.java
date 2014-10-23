@@ -9,7 +9,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -47,16 +46,23 @@ public class CustomActionBar
     @InjectView(R.id.mode_tv)
     TextView mode_tv;
 
-    @InjectView(R.id.black_info_container)
-    ViewGroup black_info_container;
+    @InjectView(R.id.blackStoneImageView)
+    View black_info_container;
 
-    @InjectView(R.id.white_info_container)
-    ViewGroup white_info_container;
+    @InjectView(R.id.whiteStoneImageview)
+    View white_info_container;
 
-    @OnClick(R.id.fake_spinner)
-    void onSpinnerCLick() {
+
+    @OnClick(R.id.mode_tv)
+    void onModeSpinnerClick() {
         showModePopup(activity);
     }
+
+    @OnClick(R.id.move_tv)
+    void onMoveSpinnerClick() {
+        showModePopup(activity);
+    }
+
 
     private final LayoutInflater inflater;
     private final App app;
@@ -68,13 +74,13 @@ public class CustomActionBar
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        app.getGame().addGoGameChangeListener(this);
+        App.getGame().addGoGameChangeListener(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        app.getGame().removeGoGameChangeListener(this);
+        App.getGame().removeGoGameChangeListener(this);
     }
 
     public CustomActionBar(Activity activity) {
@@ -161,7 +167,7 @@ public class CustomActionBar
 
         addModeItem(contentView, InteractionScope.MODE_EDIT, R.string.edit, R.drawable.dashboard_record);
 
-        if (app.getGame().getActMove().getMovePos() > 0) { // these modes only make sense if there is minimum one
+        if (App.getGame().getActMove().getMovePos() > 0) { // these modes only make sense if there is minimum one
             addModeItem(contentView, InteractionScope.MODE_COUNT, R.string.count, R.drawable.dashboard_score);
             addModeItem(contentView, InteractionScope.MODE_REVIEW, R.string.review, R.drawable.dashboard_review);
             addModeItem(contentView, InteractionScope.MODE_TELEVIZE, R.string.televize, R.drawable.gobandroid_tv);
@@ -193,15 +199,18 @@ public class CustomActionBar
                 final byte actMode = app.getInteractionScope().getMode();
                 mode_tv.setText(InteractionScope.getModeStringRes(actMode));
 
-                white_captures_tv.setText("" + app.getGame().getCapturesWhite());
-                black_captures_tv.setText("" + app.getGame().getCapturesBlack());
+                white_captures_tv.setText("" + App.getGame().getCapturesWhite());
+                black_captures_tv.setText("" + App.getGame().getCapturesBlack());
 
-                final boolean isWhitesMove = app.getGame().isBlackToMove() && (!app.getGame().isFinished());
+                final boolean isWhitesMove = App.getGame().isBlackToMove() && (!App.getGame().isFinished());
                 white_info_container.setBackgroundColor(isWhitesMove ? transparent : highlight_color);
-                final boolean isBlacksMove = app.getGame().isBlackToMove() || app.getGame().isFinished();
-                black_info_container.setBackgroundColor(isBlacksMove ? highlight_color : transparent);
+                white_captures_tv.setBackgroundColor(isWhitesMove ? transparent : highlight_color);
 
-                move_tv.setText(app.getResources().getString(R.string.move) + app.getGame().getActMove().getMovePos());
+                final boolean isBlacksMove = App.getGame().isBlackToMove() || App.getGame().isFinished();
+                black_info_container.setBackgroundColor(isBlacksMove ? highlight_color : transparent);
+                black_captures_tv.setBackgroundColor(isBlacksMove ? highlight_color : transparent);
+
+                move_tv.setText(app.getResources().getString(R.string.move) + App.getGame().getActMove().getMovePos());
             }
         });
     }

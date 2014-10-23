@@ -12,14 +12,13 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/black_info_container"
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <org.ligi.axt.views.SquareImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/blackStoneImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/black"
@@ -27,17 +26,25 @@
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
                 android:paddingTop="1dp"
-                android:scaleType="centerInside"
                 android:src="@drawable/stone_black" />
 
             <TextView
                 android:id="@+id/black_captures_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
                 android:bufferType="spannable"
-                android:gravity="center|center_vertical"
                 android:text="-"
+
+                android:paddingRight="4dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/move_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="4dp"
+                android:lines="1"
+                tools:text="text"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </LinearLayout>
@@ -50,6 +57,7 @@
             android:orientation="horizontal">
 
             <org.ligi.axt.views.SquareImageView
+                android:id="@+id/whiteStoneImageview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/white"
@@ -63,47 +71,19 @@
                 android:id="@+id/white_captures_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
                 android:text="-"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:paddingRight="4dp" />
 
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/fake_spinner"
-        style="@style/clickable"
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-
-
-        <TextView
-            android:id="@+id/move_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="0dip"
-            android:layout_weight="1"
-            android:lines="1"
-
-            tools:text="text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1"
-
-            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/mode_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:lines="1"
-                android:gravity="center_vertical"
-                android:layout_alignParentLeft="true"
 
+                android:paddingLeft="4dp"
+                android:fontFamily="sans-serif"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <org.ligi.gobandroid_hd.ui.SpinnerTriangleView
@@ -111,9 +91,10 @@
                 android:layout_width="8dp"
                 android:layout_height="8dp"
                 android:layout_gravity="bottom"
+                android:fontFamily="sans-serif"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true" />
-        </RelativeLayout>
-
+        </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

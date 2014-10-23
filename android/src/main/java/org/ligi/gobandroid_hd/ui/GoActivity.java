@@ -97,7 +97,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         }
 
         interaction_scope = getApp().getInteractionScope();
-        this.getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         AXT.at(this).disableRotation();
 
