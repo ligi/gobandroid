@@ -36,10 +36,4 @@ public class SpinnerTriangleView extends View {
         canvas.drawPath(pth, p);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
-        this.setMeasuredDimension(parentHeight, parentHeight);
-    }
 }

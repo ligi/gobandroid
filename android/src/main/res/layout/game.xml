@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    style="@style/default_activity_main">
+    style="@style/default_activity_main"
+    android:orientation="vertical">
 
     <org.ligi.gobandroid_hd.ui.GoBoardViewHD
         android:id="@+id/go_board"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"></org.ligi.gobandroid_hd.ui.GoBoardViewHD>
-
-    <LinearLayout
-        android:id="@+id/game_extra_container"
-        android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <FrameLayout
+            android:id="@+id/game_extra_container"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <org.ligi.gobandroid_hd.ui.ZoomingGoBoardViewHD
+            android:id="@+id/zoom_board"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+    </FrameLayout>
+
 
 </LinearLayout>

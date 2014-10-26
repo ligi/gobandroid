@@ -7,34 +7,27 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 
-public class NavigationFragment extends Fragment implements GoGameChangeListener {
+public class NavigationFragment extends GobandroidGameAwareFragment {
 
     private ImageView next_btn, prev_btn, first_btn, last_btn;
-    private GoGame game;
     private Handler gameChangeHandler = new Handler();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View res = inflater.inflate(R.layout.nav_button_container, container, false);
-        first_btn = (ImageView) res.findViewById(R.id.btn_first);
-        last_btn = (ImageView) res.findViewById(R.id.btn_last);
-        next_btn = (ImageView) res.findViewById(R.id.btn_next);
-        prev_btn = (ImageView) res.findViewById(R.id.btn_prev);
-        game = ((App) (getActivity().getApplicationContext())).getGame();
-        game.addGoGameChangeListener(this);
+        first_btn = findById(res, R.id.btn_first);
+        last_btn = findById(res, R.id.btn_last);
+        next_btn = findById(res, R.id.btn_next);
+        prev_btn = findById(res, R.id.btn_prev);
 
         first_btn.setOnClickListener(new OnClickListener() {
 
@@ -120,7 +113,7 @@ public class NavigationFragment extends Fragment implements GoGameChangeListener
     }
 
     //and here's where the magic happens
-    private Bitmap adjustOpacity(Bitmap bitmap, int opacity) {
+    private static Bitmap adjustOpacity(Bitmap bitmap, int opacity) {
         //make sure bitmap is mutable (copy of needed)
         Bitmap mutableBitmap = bitmap.isMutable()
                 ? bitmap
@@ -137,12 +130,6 @@ public class NavigationFragment extends Fragment implements GoGameChangeListener
 
         //now return the adjusted bitmap
         return mutableBitmap;
-    }
-
-    @Override
-    public void onDestroyView() {
-        game.removeGoGameChangeListener(this);
-        super.onDestroyView();
     }
 
     public void gameNavNext() {

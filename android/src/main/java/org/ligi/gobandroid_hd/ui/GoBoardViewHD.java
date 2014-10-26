@@ -45,10 +45,6 @@ import java.io.FileOutputStream;
 
 /**
  * Class to visually represent a Go Board in Android
- *
- * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
- *         <p/>
- *         This software is licensed with GPLv3
  */
 public class GoBoardViewHD extends View {
 
@@ -78,22 +74,20 @@ public class GoBoardViewHD extends View {
 
     private boolean regenerate_stones_flag = true;
 
-    private boolean enforce_square = true;
-
-    private float zoom = 1.0f;
-
-    public GoBoardViewHD(Context context) {
-        super(context);
-        init();
+    protected boolean enforceSquare() {
+        return true;
     }
 
-    public GoBoardViewHD(Context context, boolean square, float zoom) {
-        super(context);
-        this.zoom = zoom;
-        enforce_square = square;
-        init();
-    }
+    protected float zoom = 1.0f;
 
+    /*
+        public GoBoardViewHD(Context context, boolean square, float zoom) {
+            super(context);
+            this.zoom = zoom;
+            enforce_square = square;
+            init();
+        }
+    */
     public GoBoardViewHD(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
@@ -333,8 +327,11 @@ public class GoBoardViewHD extends View {
         for (GoMarker marker : getGame().getActMove().getMarkers()) {
             final Paint markerPaint = getTextPaintForCell(getGame().getVisualBoard(), marker.getX(), marker.getY());
             final float x = marker.getX() * stone_size + stone_size / 2.0f;
-            final float y = marker.getY() * stone_size + (stone_size - (fm.ascent + fm.descent)) / 2;
-            canvas.drawText(marker.getText(), x, y, markerPaint);
+            final float y = marker.getY() * stone_size + (stone_size) / 2.0f;
+            //canvas.drawText(marker.getText(), x, y, markerPaint);
+
+
+            marker.draw(canvas, stone_size, x, y, markerPaint);
         }
 
         canvas.restore();
@@ -406,7 +403,7 @@ public class GoBoardViewHD extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        if (enforce_square) {
+        if (enforceSquare()) {
             int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
             int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
             int size = Math.min(parentWidth, parentHeight);

@@ -13,7 +13,6 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.gobandroid_hd.ui.fragments.NavigationAndCommentFragment;
-import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.tracedroid.logging.Log;
 
@@ -122,34 +121,7 @@ public class GameReviewActivity extends GoActivity {
     */
     @Override
     public void doTouch(MotionEvent event) {
-        // super.doTouch(event); - Do not call! Not needed and breaks marking
-        // dead stones
-
-        getApp().getInteractionScope().setTouchPosition(getBoard().pixel2boardPos(event.getX(), event.getY()));
-
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            setFragment(getGameExtraFragment());
-        } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            setFragment(getZoomFragment());
-        }
-
-        refreshZoomFragment();
-
-        // calculate position on the field by position on the touchscreen
-
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            doMoveWithUIFeedback((byte) getApp().getInteractionScope().getTouchX(), (byte) getApp().getInteractionScope().getTouchY());
-            getApp().getInteractionScope().setTouchPosition(-1);
-        }
-
-    }
-
-    @Override
-    public ZoomGameExtrasFragment getZoomFragment() {
-        if (myZoomFragment == null) {
-            myZoomFragment = new ZoomGameExtrasFragment(false);
-        }
-        return myZoomFragment;
+        eventForZoomBoard(event);
     }
 
     @Override

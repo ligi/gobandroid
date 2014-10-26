@@ -45,7 +45,6 @@ import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.fragments.DefaultGameExtrasFragment;
-import org.ligi.gobandroid_hd.ui.fragments.ZoomGameExtrasFragment;
 import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.gobandroid_hd.ui.review.BookmarkDialog;
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
@@ -68,9 +67,11 @@ import java.io.IOException;
 
 public class GoActivity extends GobandroidFragmentActivity implements OnTouchListener, OnKeyListener, GoGame.GoGameChangeListener {
 
-    public ZoomGameExtrasFragment myZoomFragment;
     public GoSoundManager sound_man;
     private GoBoardViewHD go_board = null;
+    private GoBoardViewHD zoom_board = null;
+    private View gameExtrasContainer;
+
     private Toast info_toast = null;
     private Fragment actFragment;
     private InteractionScope interaction_scope;
@@ -116,11 +117,12 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         View customNav = new CustomActionBar(this);
 
-        FragmentTransaction fragmentTransAction = this.getSupportFragmentManager().beginTransaction();
-
+        final FragmentTransaction fragmentTransAction = getSupportFragmentManager().beginTransaction();
         fragmentTransAction.add(R.id.game_extra_container, getGameExtraFragment()).commit();
+        getSupportFragmentManager().executePendingTransactions();
 
-        // this.setContentView(R.layout.game);
+        gameExtrasContainer = findById(R.id.game_extra_container);
+
         getSupportActionBar().setCustomView(customNav);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         customNav.setFocusable(false);
@@ -130,7 +132,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         setupBoard();
 
         game2ui();
-        getZoomFragment();
     }
 
     @SuppressLint("ShowToast")
@@ -144,13 +145,8 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
      */
     private void setupBoard() {
 
-        go_board = (GoBoardViewHD) findViewById(R.id.go_board);
-
-        if (go_board == null) {
-            Log.w("requesting board and none there");
-            return; // had an NPE here - TODO figure out why exactly and if this
-            // fix has some disadvantage
-        }
+        go_board = findById(R.id.go_board);
+        zoom_board = findById(R.id.zoom_board);
 
         go_board.setOnTouchListener(this);
         go_board.setOnKeyListener(this);
@@ -168,15 +164,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             }
         }
         last_processed_move_change_num = getGame().getActMove().getMovePos();
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (getApp().getInteractionScope().getTouchPosition() < 0) {
-                    setFragment(getGameExtraFragment());
-                }
-            }
-        });
 
         game2ui();
     }
@@ -218,13 +205,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         } else {
             getGame().addGoGameChangeListener(this);
         }
-    }
-
-    public ZoomGameExtrasFragment getZoomFragment() {
-        if (myZoomFragment == null) {
-            myZoomFragment = new ZoomGameExtrasFragment(true);
-        }
-        return myZoomFragment;
     }
 
     @Override
@@ -396,18 +376,30 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         actFragment = newFragment;
     }
 
+    protected void eventForZoomBoard(MotionEvent event) {
+        getApp().getInteractionScope().setTouchPosition(getBoard().pixel2boardPos(event.getX(), event.getY()));
+
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            gameExtrasContainer.setVisibility(View.VISIBLE);
+            zoom_board.setVisibility(View.GONE);
+        } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            gameExtrasContainer.setVisibility(View.GONE);
+            zoom_board.setVisibility(View.VISIBLE);
+        }
+        refreshZoomFragment();
+    }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
+        eventForZoomBoard(event);
         Log.i("touch in GoActivity");
         if (event.getAction() == MotionEvent.ACTION_UP) {
-            setFragment(getGameExtraFragment());
             if (getResources().getBoolean(R.bool.small)) {
                 this.getSupportActionBar().show();
             }
 
         } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            setFragment(getZoomFragment());
 
             // for very small devices we want to hide the ActionBar to actually
             // see something in the Zoom-Fragment
@@ -430,7 +422,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             doTouch(event);
         }
 
-        // refreshZoomFragment();
+
         return true;
     }
 
@@ -602,15 +594,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     }
 
     public void refreshZoomFragment() {
-        Log.i("refreshZoomFragment()" + getZoomFragment().getBoard() + " " + myZoomFragment.getBoard());
-        if (getZoomFragment().getBoard() == null) // nothing we can do
-        {
-            return;
-        }
-
-        if (myZoomFragment.getBoard() != null) {
-            myZoomFragment.getBoard().postInvalidate();
-        }
+        zoom_board.postInvalidate();
     }
 
     public GoBoardViewHD getBoard() {

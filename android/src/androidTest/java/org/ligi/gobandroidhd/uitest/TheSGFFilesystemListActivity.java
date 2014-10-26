@@ -5,6 +5,7 @@ import android.test.suitebuilder.annotation.MediumTest;
 import com.squareup.spoon.Spoon;
 
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity;
+import org.ligi.gobandroidhd.base.BaseIntegration;
 
 public class TheSGFFilesystemListActivity extends BaseIntegration<SGFFileSystemListActivity> {
 

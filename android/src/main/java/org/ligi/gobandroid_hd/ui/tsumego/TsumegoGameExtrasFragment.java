@@ -19,15 +19,10 @@ import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 public class TsumegoGameExtrasFragment extends GobandroidFragment {
 
     private TextView correctView;
-    private View OffPathView, res;
+    private View OffPathView;
     private boolean off_path_visible = false, correct_visible = false;
     private TextView commentView;
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateUI();
-    }
 
     private void updateUI() {
         if (OffPathView == null || correctView == null || getActivity() == null) { // views not yet created
@@ -40,7 +35,7 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
 
         if (correct_visible) {
             correctView.setVisibility(View.VISIBLE);
-            Optional<String> optionalNextTsumegoURLString = NextTsumegoFileFinder.calcNextTsumego(game.getMetaData().getFileName().replaceFirst("file://", ""));
+            final Optional<String> optionalNextTsumegoURLString = NextTsumegoFileFinder.calcNextTsumego(game.getMetaData().getFileName().replaceFirst("file://", ""));
 
             if (optionalNextTsumegoURLString.isPresent()) {
 
@@ -59,21 +54,25 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
         // have extras here to prevent double commentView written - but sometimes
         // there is more info in the commentView
         if (!correct_visible && game.getActMove().getComment().length() > 10) {
+            commentView.setVisibility(View.VISIBLE);
             commentView.setText(game.getActMove().getComment());
             if (!TextUtils.isEmpty(game.getActMove().getComment())) {
                 CommentHelper.linkifyCommentTextView(commentView);
             }
+        } else {
+            commentView.setVisibility(View.GONE);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        res = inflater.inflate(R.layout.game_extra_tsumego, null);
+        final View res = inflater.inflate(R.layout.game_extra_tsumego, container, false);
 
-        correctView = (TextView) res.findViewById(R.id.tsumego_correct_view);
-        OffPathView = res.findViewById(R.id.tsumego_off_path_view);
-        commentView = (TextView) res.findViewById(R.id.game_comment);
+        correctView = findById(res, R.id.tsumego_correct_view);
+        OffPathView = findById(res, R.id.tsumego_off_path_view);
+        commentView = findById(res, R.id.game_comment);
 
+        updateUI();
         return res;
     }
 
