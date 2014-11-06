@@ -22,12 +22,231 @@
     <string name="cancel">Anuluj</string>
     <string name="results">Wynik</string>
     <string name="settings">Ustawienia</string>
+    <string name="links">Linki</string>
+    <string name="save_as_sgf">Zapisz jako SGF</string>
     <string name="move">Ruch</string>
+    <string name="problem_listing_sgf">Problem z wyświetleniem SGF\'ów</string>
     <string name="there_are_no_files_in">Nie ma plików w</string>
     <string name="sgf_path_invalid">Ścieżka SGF jest nieprawidłowa</string>
     <string name="android_market_problem">Nie ma dostępu do Google Play - trzeba instalować
         ręcznie.
     </string>
     <string name="problem">Problem</string>
+    <string name="gameplay">Rozgrywka</string>
+    <string name="game_results">Wynik gry</string>
     <string name="game_pass">Pas</string>
+    <string name="show_review_controls">Wyświetl kontrolki ocen</string>
+    <string name="hide_review_controls">Ukryj kontrolki ocen</string>
+    <string name="game_ended_in_draw">Gra zakończyła się remisem</string>
+    <string name="variations">Wariacje</string>
+    <string name="territory">Terytorium</string>
+    <string name="captures">Niewole</string>
+    <string name="komi">Komi</string>
+    <string name="filal_points">Punktacja finałowa</string>
+    <string name="save_sgf">zapisz SGF</string>
+    <string name="invalid_move_ko">KO!</string>
+    <string name="invalid_move_no_liberties">bez oddechu!</string>
+    <string name="hint_stone_move">
+        Dotknąłeś bieżący kamień.
+        Inicjuje to ruch kamieniem który co jest wskazane pół przezroczystym Kamieniem.
+    </string>
+    <string name="mark_last_stone">oznacz ostatni kamień</string>
+    <string name="mark_last_stone_summary">niewielki okrąg wskazuje ostatni kamień</string>
+    <string name="first_tap_zooms">piersze dotnięcie przybliża</string>
+    <string name="first_tap_zooms_summary">tzw. tryb gpubych palców</string>
+    <string name="viewable_stone">place stone viewable</string>
+    <string name="viewable_stone_sum">kamień nad palcem by zobaczyć</string>
+    <string name="grid_emboss_summary">dekoruj planszę lub czysta czerń</string>
+    <string name="grid_emboss">dekoracja siatki</string>
+    <string name="show_legend">Wyświetl legendę</string>
+    <string name="show_legend_summary">wyświetl legendę, aby szybko zobaczyć pozycję</string>
+    <string name="variant_mode">Ustawienia Wariantów</string>
+    <string name="variant_mode_summary">co zrobić z wariantami podczas cofania</string>
+    <string name="path">Ścieżka</string>
+    <string name="sgf_path">SGF ścieżka</string>
+    <string name="enter_sgf_path_request">Proszę podaj ścieżkę gdzie SGF powinien być zapisany.
+    </string>
+    <string name="set_ai_strength">Ustaw siłę S.I.</string>
+    <string name="ai_strength">siła S.I.</string>
+    <string name="ai_preferences">ustawienia S.I.</string>
+    <string name="set_skin">Ustaw skórkę</string>
+    <string name="board_skin">Skórka planszy</string>
+    <string name="fullscreen_board">Plansza pełnoekranowa</string>
+    <string name="fullscreen_board_summary">przejżyj inne plansze</string>
+    <string name="constant_light">Stałe światło</string>
+    <string name="drain_your_battery_while_playing">drenuje baterie podczas gry</string>
+    <string name="stone_skin">Powierzchnia kamienii</string>
+    <string name="screen">Ekran</string>
+    <string name="sgf_legend">SGF legenda</string>
+    <string name="sgf_legend_summary">GHJKL zamiast GHIJKL</string>
+    <string name="sgf_preferences">Ustawienia SGF</string>
+    <string name="filename">Nazwa pliku</string>
+    <string name="sgf_filename">Nazwa pliku SGF</string>
+    <string name="game_info">Informacje o grze</string>
+    <string name="add_to_sgf">Dodaj do pliku:</string>
+    <string name="save_sgf_question">Please instruct me on how the file I will write to %s should be
+        named:
+        Poinstruuj mnie jak nazwać plik zapisywany do %s:
+    </string>
+    <string name="share_question">udostępnij po zapisaniu?</string>
+    <string name="gamename">Nazwa gry</string>
+    <string name="date">Data</string>
+    <string name="players">Gracze</string>
+    <string name="time">Czas</string>
+    <string name="enter_default_filename_for_sgf_request">Ustaw domyślną nazwę pliku SGF.
+    </string>
+    <string name="review_game">Oceń</string>
+    <string name="record_game">Zapisz</string>
+    <string name="dashboard_problems">Tsumego</string>
+    <string name="hint">Podpowiedź</string>
+    <string name="link_title">Linki</string>
+    <string name="link_tab_about">O nas</string>
+    <string name="link_tab_credits">Wzmianki</string>
+    <string name="help">Poomoc</string>
+    <string name="link_tab_sgf">SGF\'y</string>
+    <string name="game_mode">Tryb</string>
+    <string name="switch_game_mode">Zmień tryb</string>
+    <string name="bookmark">Zakładki</string>
+    <string name="menu_autoplay">Autoplay</string>
+    <string name="tsumego_off_path">Nieznany wariant - zazwyczaj oznacza to że Twój ruch
+        nie jest optymalny. :-(
+    </string>
+    <string name="tsumego_correct">Poprawnie !-)</string>
+    <string name="refresh">synchronizuj</string>
+    <string name="tsumego_sgf_no_solution">
+        Próbujesz otworzyć ten plik SGF jako Tsumego - jednak nie mogę znaleźć oznaczonego Rozwiązania -
+        możesz wczytać mimo to, jednak nie mogę pogratulować Tobie kiedy rozwiążesz je poprawnie :-(.
+    </string>
+    <string name="working">Pracuję</string>
+    <string name="please_stay_patient">Proszę o cierpliwość</string>
+    <string name="creating_thumbnails">Tworzę miniatury - zachowaj cierpliwość</string>
+    <string name="gnugo">GnuGo</string>
+    <string name="gnugo_not_installed">GnuGo nie jest zainstalowane - aby kontynować zainstaluj!</string>
+    <string name="preferences">Ustawienia</string>
+    <string name="board_setup">Ustawienia planszy</string>
+    <string name="for_recording">do nagrywania</string>
+    <string name="sound">Dzwięk</string>
+    <string name="enable_sound">Włącz dziwęk</string>
+    <string name="enable_sound_summary">Dzwięki kamieni oraz planszy</string>
+    <string name="install_gnugo">Zainstaluj GnuGo</string>
+    <string name="download_report">Pobież raport</string>
+    <string name="game_name">Nazwa gry</string>
+    <string name="black_name">Nazwa czarnych</string>
+    <string name="black_rank">Ranga czarnych</string>
+    <string name="white_name">Nazwa białych</string>
+    <string name="white_rank">Ranga białych</string>
+    <string name="game_result">Rezultat gry</string>
+    <string name="black_won_with">"Czarne zwyciężyły z "</string>
+    <string name="_points_">" Punktów."</string>
+    <string name="white_won_with_">"Białe zwyciężyły z "</string>
+    <string name="bookmark_to_write_into">"zakładka do której dodać "</string>
+    <string name="loading_sgf">Wczytuję SGF</string>
+    <string name="review">Ocena</string>
+    <string name="record">Zapis</string>
+    <string name="autoplay_off">gra automatyczna wyłączona</string>
+    <string name="autoplay_on">gra autmatyczna włączona</string>
+    <string name="mark_next">oznacz natępne</string>
+    <string name="mark_path">oznacz ścieżkę</string>
+    <string name="handicap">Handicap</string>
+    <string name="size">Rozmiar</string>
+    <string name="enter_your_comments_here">twój komentarz</string>
+    <string name="keep_variant_">Zachować wariant?</string>
+    <string name="keep_this_move_as_variation">Czy chcesz zachować ten ruch jako wariant?</string>
+    <string name="numbered_end">number path</string>
+    <string name="icon">ikona</string>
+    <string name="go_tv">GoTV</string>
+    <string name="i_do_not_want_to_keep_variants_for_this_game">nigdy w tej grze</string>
+    <string name="end_review">Zakończ podgląd?</string>
+    <string name="komi_must_be_a_number">Komi musi być liczbą</string>
+    <string name="youtube_tutorial">Wskazówki na YouTube</string>
+    <string name="youtube_tutorial_link">http://www.youtube.com/watch?v=gECcsSeRcNo</string>
+    <string name="wikipedia_rules">Artykuł na Wikipedii</string>
+    <string name="wikipedia_rules_link">http://en.wikipedia.org/wiki/Go_(game)</string>
+    <string name="televize">Nagrywaj</string>
+    <string name="count">Count</string>
+    <string name="notifications">Powiadomienia</string>
+    <string name="push_tsumego">Wyślij Tsumego</string>
+    <string name="push_tsumego_extra">Wiecej Tsumego do rozwiązania każdego tygodnia</string>
+    <string name="gnugo_strength">Siła GnuGo:</string>
+    <string name="gnugo_plays">Gry GnuGo:</string>
+    <string name="black">czarne</string>
+    <string name="white">białe</string>
+    <string name="black_and_white">Czarne &amp; Białe</string>
+    <string name="for_gnugo">dla GnuGo</string>
+    <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">
+        Problem z wczytywaniem SGF. Czy chciałbyś wysłać do Ligi'ego ten SGF aby naprawić ten problem?
+    </string>
+    <string name="go_back">wróć</string>
+    <string name="download_status">Status pobierania</string>
+    <string name="downloading_tsumegos_please_wait">Pobieram Tsumego proszę czekać…</string>
+    <string name="no_new_tsumegos_found">Nie znalazłem nowych Tsumego :-(</string>
+    <string name="downloaded_n_tsumego">Pobrałem %d nowych Tsumego ;-)</string>
+    <string name="overwrite_existing_file">Nadpisz istniejące pliki</string>
+    <string name="share">Podziel się</string>
+    <string name="score">Wynik</string>
+    <string name="edit">Edytuj</string>
+    <string name="play">Graj</string>
+    <string name="setup">Ustawienia</string>
+    <string name="load">Wczytaj</string>
+    <string name="clear_board">wyczyść planszę</string>
+    <string name="invite">Zaproś</string>
+    <string name="accept">akceptuj</string>
+    <string name="new_tsumegos_available">Nowe Tsumego są dostępne!</string>
+    <string name="the_go_game_you_reviewed">Partia Go którą oceniłeś</string>
+    <string name="this_game_has_2_players_but_you_can_only_watch_it">
+        Ta gra ma dwóch graczy, jednak możesz ją obejrzeć.
+    </string>
+    <string name="a_move_in_one_online_game_you_participate_is_done">
+        Ruch w partii online w której uczestniczysz jest zrobiony.
+    </string>
+    <string name="new_move">nowy ruch</string>
+    <string name="in_an_online_game_you_participate">in an online game you participate</string>
+    <string name="choose_invite_method">wybierz metodę zaproszenia</string>
+    <string name="you_are_invited_to_a_go_game">Zostałeś zaproszony do partii Go ( rozmiar: %1$s , kolor:
+        %2$s )
+    </string>
+    <string name="go_game_invitation">Zaproszenie do partii Go</string>
+    <string name="uploading_game">dodawanie gry</string>
+    <string name="profile">Profil</string>
+    <string name="name">nazwa</string>
+    <string name="rank">ranga</string>
+    <string name="empty_board">Pusta plansza</string>
+    <string name="more">Więcej</string>
+    <string name="hints_used">%d podpowiedzi użytych</string>
+    <string name="it_is_me">To ja</string>
+    <string name="next_tsumego">następne tsumego</string>
+    <string name="online">ONLINE</string>
+    <string name="online_play">Online-Go</string>
+    <string name="online_view_game">Objerzyj</string>
+    <string name="online_join_game">Dołącz</string>
+    <string name="online_create_game">Stwórz</string>
+    <string name="online_your_games">Twoje partie</string>
+    <string name="enter_username">Proszę podaj nazwę użytkownika</string>
+    <string name="who_are_you">Kim jesteś?</string>
+    <string name="delete">Skasuj</string>
+    <string name="unknown">Nieznany</string>
+    <string name="cannot_create_game_server_problem">
+        Nie mogę stworzyć gry - proszę spróbuj ponownie później
+    </string>
+    <string name="server_problem">Problem Serwera</string>
+    <string name="file_saved">zapisano %s</string>
+    <string name="file_not_saved">problem z zapisywaniem %s</string>
+    <string name="game_created">Gra stworzona</string>
+    <string name="game_created_msg">
+        Gra stworzona - miłej gry!\nRada: Możesz robić coś innego gdy Gobandroid jest w tle podczas czekania na ruch
+        przeciwnika.
+    </string>
+    <string name="choose_how_to_send_sgf">Wybierz jak wysłać SGF</string>
+    <string name="recorded_game">Zapisz partię</string>
+    <string name="commented_game">Skomentuj partię</string>
+    <string name="situation">Sytuacje</string>
+    <string name="other">Inne</string>
+    <string name="drawer_open">otwórz menu</string>
+    <string name="drawer_close">zamknij menu</string>
+    <string name="end_review_ok_button">zakończ </string>
+    <string name="end_review_stay_button">zostań</string>
+    <string name="correct_but_no_more_tsumegos">Poprawnie !-) Ale niestety nie mam więcej Tsumego w tym folderze</string>
+    <string name="del_sgfmeta">wyczyść historię</string>
+    <string name="del_sgfmeta_prompt">Czy napewno chcesz skasować całą historię plików w tym folderze?</string>
+    <string name="game_difficulty">Trudność gry</string>
 </resources>
