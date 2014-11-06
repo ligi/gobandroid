@@ -52,11 +52,15 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
     long start_time;
     List<Long> times = new ArrayList<Long>();
 
+    private boolean thinking = false;
+
     public void startTimeMeasure() {
         start_time = System.currentTimeMillis();
+        thinking = true ;
     }
 
     public void stopTimeMeasure() {
+        thinking = false ;
         times.add(System.currentTimeMillis() - start_time);
         long sum = 0;
         for (long l : times) {
@@ -199,6 +203,12 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
 
     @Override
     public byte doMoveWithUIFeedback(byte x, byte y) {
+        if(thinking)
+        {
+            Toast.makeText(this, R.string.ai_is_thinking, Toast.LENGTH_LONG).show();
+            return 0;
+        }
+    
         if ((getGame().isBlackToMove() && (!playing_black)))
             processMove("black", x, y);
         else if (((!getGame().isBlackToMove()) && (!playing_white)))
@@ -353,10 +363,11 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
 
     @Override
     public void requestUndo() {
-        if (isMoversMove()) {
+        /*  do not need wait gnugo ai any more . 
+		if (isMoversMove()) {
             Toast.makeText(this, "Please wait for GnuGo", Toast.LENGTH_LONG).show();
             return;
-        }
+        }*/
 
         if (getGame().canUndo()) {
             getGame().undo(GoPrefs.isKeepVariantEnabled());

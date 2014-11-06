@@ -251,4 +251,5 @@
     <string name="del_sgfmeta">clear history</string>
     <string name="del_sgfmeta_prompt">Are you sure to delete all history files in this folder?</string>
     <string name="game_difficulty">Game Difficulty</string>
+    <string name="ai_is_thinking">GnuGo AI is thinking.</string>
 </resources>
