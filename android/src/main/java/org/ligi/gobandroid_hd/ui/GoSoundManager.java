@@ -35,7 +35,7 @@ public class GoSoundManager {
         Log.i("sound_man init");
         mContext = theContext;
         mSoundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 0);
-        mSoundPoolMap = new HashMap<Integer, Integer>();
+        mSoundPoolMap = new HashMap<>();
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
 
         addSound(SOUND_START, R.raw.go_start);
