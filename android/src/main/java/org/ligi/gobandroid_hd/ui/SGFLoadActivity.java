@@ -319,11 +319,11 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
             }
 
         }
-        getApp().getInteractionScope().setGame(game);
+        App.setGame(game);
 
         game.getMetaData().setFileName(intent_uri.toString());
 
-        getApp().getInteractionScope().getGame().notifyGameChange();
+        App.getGame().notifyGameChange();
 
         handler.post(new Runnable() {
             @Override

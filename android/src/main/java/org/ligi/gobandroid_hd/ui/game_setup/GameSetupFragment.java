@@ -12,6 +12,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -121,14 +122,12 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
         GoPrefs.setLastBoardSize(act_size);
         GoPrefs.setLastHandicap(act_handicap);
 
-        InteractionScope is = getApp().getInteractionScope();
-
-        if (is.getGame().getSize() != act_size || is.getGame().getHandicap() != act_handicap) {
-            getApp().getInteractionScope().setGame(new GoGame(act_size, act_handicap));
+        if (App.getGame().getSize() != act_size || App.getGame().getHandicap() != act_handicap) {
+            App.setGame(new GoGame(act_size, act_handicap));
         }
 
         if (getActivity() instanceof GoActivity) {
-            GoBoardViewHD board = ((GoActivity) getActivity()).getBoard();
+            final GoBoardViewHD board = ((GoActivity) getActivity()).getBoard();
 
             if (board != null) {
                 board.regenerateStroneImagesWithNewSize();

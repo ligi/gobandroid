@@ -50,12 +50,12 @@ public class BookmarkDialog extends GobandroidDialog {
     public static String getEnsuredFilename(Context ctx) {
         final App app = (App) ctx.getApplicationContext();
 
-        String fname = app.getGame().getMetaData().getFileName();
+        String fname = App.getGame().getMetaData().getFileName();
         if ((fname == null) || (fname.equals(""))) {
             // was not saved before - do it now ( needed for a bookmark )
 
             fname = getDefaultFilename();
-            SGFWriter.saveSGF(app.getGame(), app.getSettings().getSGFSavePath() + "/autosave/" + fname);
+            SGFWriter.saveSGF(App.getGame(), app.getSettings().getSGFSavePath() + "/autosave/" + fname);
         }
 
         return fname;
@@ -89,7 +89,7 @@ public class BookmarkDialog extends GobandroidDialog {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                GoLink.saveGameToGoLink(getApp().getGame(), context.getSettings().getBookmarkPath(), fname_edit.getText().toString() + ".golink");
+                GoLink.saveGameToGoLink(App.getGame(), context.getSettings().getBookmarkPath(), fname_edit.getText().toString() + ".golink");
                 dialog.dismiss();
             }
 

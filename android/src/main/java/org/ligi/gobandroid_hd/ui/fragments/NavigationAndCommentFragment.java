@@ -26,7 +26,7 @@ public class NavigationAndCommentFragment extends Fragment implements GoGameChan
 
         myTextView = (TextView) res.findViewById(R.id.comments_textview);
         myTextView.setFocusable(false);
-        game = ((App) (getActivity().getApplicationContext())).getGame();
+        game = App.getGame();
         game.addGoGameChangeListener(this);
 
         res.findViewById(R.id.scrollview).setFocusable(false);

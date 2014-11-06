@@ -16,6 +16,8 @@ import org.ligi.tracedroid.logging.Log;
 public class App extends Application {
 
     private static App instance;
+    private static GoGame game;
+
     public static boolean isTesting = false;
 
     public static GobandroidSettings getGobandroidSettings() {
@@ -66,13 +68,21 @@ public class App extends Application {
     }
 
     public static GoGame getGame() {
-        return instance.getInteractionScope().getGame();
+        if (game == null) {
+            game = new GoGame((byte) 9);
+        }
+        return game;
     }
 
-    public static void setGame(GoGame game) {
-        instance.getInteractionScope().setGame(game);
-    }
+    public static void setGame(GoGame p_game) {
+        instance.getInteractionScope().ask_variant_session = true;
 
+        if (game == null) {
+            game = p_game;
+        } else { // keep listeners and stuff
+            game.setGame(p_game);
+        }
+    }
 
     public GobandroidSettings getSettings() {
         return new GobandroidSettings(this);

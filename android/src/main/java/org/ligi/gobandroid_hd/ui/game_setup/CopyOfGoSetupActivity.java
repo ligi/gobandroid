@@ -173,7 +173,7 @@ public class CopyOfGoSetupActivity extends GoActivity implements OnSeekBarChange
         GoPrefs.setLastBoardSize(act_size);
         GoPrefs.setLastHandicap(act_handicap);
 
-        getApp().getInteractionScope().setGame(new GoGame(act_size, act_handicap));
+        App.setGame(new GoGame(act_size, act_handicap));
         if (board != null) {
             board.boardSizeChanged();
             board.invalidate();
@@ -214,7 +214,7 @@ public class CopyOfGoSetupActivity extends GoActivity implements OnSeekBarChange
     private void start_game() {
         GoGame new_game = new GoGame(act_size, act_handicap);
 
-        getApp().getInteractionScope().getGame().setGame(new_game);
+        App.getGame().setGame(new_game);
 
         Intent go_intent;
 
@@ -254,7 +254,7 @@ public class CopyOfGoSetupActivity extends GoActivity implements OnSeekBarChange
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_clear_board:
-                getApp().getInteractionScope().setGame(new GoGame(act_size, act_handicap));
+                App.setGame(new GoGame(act_size, act_handicap));
                 break;
             case R.id.menu_start:
                 start_game();

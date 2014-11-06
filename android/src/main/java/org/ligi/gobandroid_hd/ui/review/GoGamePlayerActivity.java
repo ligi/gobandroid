@@ -7,7 +7,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -33,8 +32,6 @@ public class GoGamePlayerActivity extends GoActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
-
         getBoard().setOnKeyListener(this);
         getBoard().do_actpos_highlight = false;
 
@@ -42,8 +39,9 @@ public class GoGamePlayerActivity extends GoActivity {
 
     @Override
     protected void onStart() {
-        if (autoplay_active)
+        if (autoplay_active) {
             new Thread(new autoPlayRunnable()).start();
+        }
         super.onStart();
     }
 
@@ -51,7 +49,7 @@ public class GoGamePlayerActivity extends GoActivity {
 
         @Override
         public void run() {
-                setSupportProgress((int) (Window.PROGRESS_START + progress_to_display * (Window.PROGRESS_END - Window.PROGRESS_START)));
+            //setSupportProgress((int) (Window.PROGRESS_START + progress_to_display * (Window.PROGRESS_END - Window.PROGRESS_START)));
         }
 
     };
@@ -203,8 +201,4 @@ public class GoGamePlayerActivity extends GoActivity {
         return true; // this is a player - we do not want interaction
     }
 
-    @Override
-    protected boolean wantsProgressActionBar() {
-        return true;
-    }
 }

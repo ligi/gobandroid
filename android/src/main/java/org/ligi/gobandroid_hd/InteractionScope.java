@@ -1,7 +1,5 @@
 package org.ligi.gobandroid_hd;
 
-import org.ligi.gobandroid_hd.logic.GoGame;
-
 public class InteractionScope {
 
     public final static byte MODE_RECORD = 0;
@@ -13,39 +11,11 @@ public class InteractionScope {
     public final static byte MODE_EDIT = 6;
     public final static byte MODE_SETUP = 7;
 
-
     public int touch_position = -1; // negative numbers -> no recent touch
     private byte mode;
     private boolean is_noif_mode = false;
 
     public boolean ask_variant_session = true;
-
-    private GoGame game; // we will most likely interact with a game ;-)
-
-    /**
-     * set the game instance
-     *
-     * @param p_game the game to set as current
-     */
-    public void setGame(GoGame p_game) {
-        ask_variant_session = true;
-
-        if (game == null) {
-            game = p_game;
-        } else { // keep listeners and stuff
-            game.setGame(p_game);
-        }
-    }
-
-    /**
-     * @return the game instance
-     */
-    public GoGame getGame() {
-        if (game == null) {
-            game = new GoGame((byte) 9);
-        }
-        return game;
-    }
 
     public void setTouchPosition(int pos) {
         touch_position = pos;
@@ -56,16 +26,16 @@ public class InteractionScope {
     }
 
     public int getTouchX() {
-        return touch_position % game.getSize();
+        return touch_position % App.getGame().getSize();
     }
 
     public int getTouchY() {
-        return touch_position / game.getSize();
+        return touch_position / App.getGame().getSize();
     }
 
     public boolean hasValidTouchCoord() {
-        return ((touch_position >= 0) && (touch_position < game.getSize()
-                * game.getSize()));
+        final int size = App.getGame().getSize();
+        return ((touch_position >= 0) && (touch_position < size * size));
     }
 
     public byte getMode() {

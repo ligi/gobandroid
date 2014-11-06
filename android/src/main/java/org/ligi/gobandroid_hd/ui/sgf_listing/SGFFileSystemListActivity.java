@@ -35,8 +35,6 @@ import java.io.File;
 
 /**
  * Activity to load SGF's from SD card
- *
- * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
  */
 
 public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
@@ -49,12 +47,14 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
         setContentView(R.layout.list);
 
-
-        if (getIntent().getBooleanExtra(GobandroidNotifications.BOOL_FROM_NOTIFICATION_EXTRA_KEY, false))
+        if (getIntent().getBooleanExtra(GobandroidNotifications.BOOL_FROM_NOTIFICATION_EXTRA_KEY, false)) {
             new GobandroidNotifications(this).cancelNewTsumegosNotification();
+        }
 
 
         final String sgfPath = getSGFPath();

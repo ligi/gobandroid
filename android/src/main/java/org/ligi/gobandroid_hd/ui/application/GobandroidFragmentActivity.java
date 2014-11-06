@@ -2,15 +2,14 @@ package org.ligi.gobandroid_hd.ui.application;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 
 import org.ligi.gobandroid_hd.App;
@@ -35,15 +34,15 @@ public class GobandroidFragmentActivity extends ActionBarActivity {
     @Override
     public void setContentView(int layoutResId) {
         super.setContentView(R.layout.navigation_drawer_container);
-        View v = getLayoutInflater().inflate(layoutResId, null);
+        View v = getLayoutInflater().inflate(layoutResId, (ViewGroup) findViewById(R.id.drawer_layout), false);
         ViewGroup vg = (ViewGroup) findViewById(R.id.content_frame);
         vg.addView(v);
-        NavigationDrawer mMenuDrawer = new NavigationDrawer(this);
+        new NavigationDrawer(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 drawerLayout,         /* DrawerLayout object */
-                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
                 R.string.drawer_open,  /* "open drawer" description */
                 R.string.drawer_close  /* "close drawer" description */
         ) {
@@ -51,13 +50,13 @@ public class GobandroidFragmentActivity extends ActionBarActivity {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 getApp().getInteractionScope().setTouchPosition(-1);
-                getApp().getGame().notifyGameChange();
+                App.getGame().notifyGameChange();
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 getApp().getInteractionScope().setTouchPosition(-1);
-                getApp().getGame().notifyGameChange();
+                App.getGame().notifyGameChange();
                 super.onDrawerClosed(drawerView);
             }
 
@@ -89,14 +88,7 @@ public class GobandroidFragmentActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        if (wantsProgressActionBar()) {
-            supportRequestWindowFeature(Window.FEATURE_PROGRESS);
-        }
-
-
-        if (getSupportActionBar() != null) // yes this happens - e.g.
-        {
+        if (getSupportActionBar() != null) {// yes this happens - e.g.
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         // a little hack because I strongly disagree with the style guide here
@@ -148,7 +140,7 @@ public class GobandroidFragmentActivity extends ActionBarActivity {
     }
 
     public GoGame getGame() {
-        return getApp().getGame();
+        return App.getGame();
     }
 
     public GobandroidSettings getSettings() {
@@ -285,7 +277,4 @@ public class GobandroidFragmentActivity extends ActionBarActivity {
 
     }
 
-    protected boolean wantsProgressActionBar() {
-        return false;
-    }
 }

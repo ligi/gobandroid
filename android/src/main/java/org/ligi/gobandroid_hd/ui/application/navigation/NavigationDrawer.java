@@ -83,10 +83,10 @@ public class NavigationDrawer implements OnItemClickListener {
 
                 return true;
             case R.id.empty:
-                GoGame act_game = getApp().getInteractionScope().getGame();
+                final GoGame act_game = App.getGame();
 
-                getApp().getInteractionScope().setGame(new GoGame((byte) act_game.getSize(), (byte) act_game.getHandicap()));
-                getApp().getInteractionScope().getGame().notifyGameChange();
+                App.setGame(new GoGame((byte) act_game.getSize(), (byte) act_game.getHandicap()));
+                App.getGame().notifyGameChange();
 
                 ctx.startActivity(new Intent(ctx, GameRecordActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 return true;

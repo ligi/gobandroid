@@ -66,7 +66,7 @@ public class SGFMetaData {
     }
 
     public SGFMetaData(App app) {
-        this(app.getGame().getMetaData().getFileName() + FNAME_ENDING);
+        this(App.getGame().getMetaData().getFileName() + FNAME_ENDING);
     }
 
     public void setRating(Integer rating) {

@@ -26,7 +26,6 @@ import java.util.List;
  */
 public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 
-    private List<String> avail_file_list;
     private File path_to_play_from;
 
     public Intent getIntent2start() {
@@ -55,14 +54,14 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
 
     private void startTV() {
 
-        Intent start_review_intent = new Intent(this, SGFLoadActivity.class);
+        final Intent start_review_intent = new Intent(this, SGFLoadActivity.class);
 
-        avail_file_list = new ArrayList<String>();
-        String choosen;
+        final List<String> avail_file_list = new ArrayList<>();
 
         for (File act : path_to_play_from.listFiles()) {
-            if (act.getAbsolutePath().endsWith(".sgf"))
+            if (act.getAbsolutePath().endsWith(".sgf")) {
                 avail_file_list.add(act.getAbsolutePath());
+            }
         }
 
         if (avail_file_list.size() == 0) {
@@ -74,13 +73,13 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
             return;
         }
 
-        choosen = avail_file_list.get((int) (Math.random() * avail_file_list.size()));
+        final String chosen = avail_file_list.get((int) (Math.random() * avail_file_list.size()));
 
-        App.getTracker().trackEvent("gtv", "start_play_file", choosen, null);
+        App.getTracker().trackEvent("gtv", "start_play_file", chosen, null);
 
-        start_review_intent.setData(Uri.parse("file://" + choosen));
+        start_review_intent.setData(Uri.parse("file://" + chosen));
 
-        this.startActivity(start_review_intent);
+        startActivity(start_review_intent);
 
         finish();
     }
