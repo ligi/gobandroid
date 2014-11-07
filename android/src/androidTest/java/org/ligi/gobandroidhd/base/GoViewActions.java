@@ -23,13 +23,17 @@ public class GoViewActions {
                         view.getLocationOnScreen(screenPos);
                         final int gameSize = App.getGame().getSize();
 
-                        final float screenX = screenPos[0] + x * (view.getWidth() / gameSize);
-                        final float screenY = screenPos[1] + y * (view.getHeight() / gameSize);
+                        final float screenX = screenPos[0] + (0.5f + x) * (view.getWidth() / gameSize);
+                        final float screenY = screenPos[1] + (0.5f + y) * (view.getHeight() / gameSize);
                         float[] coordinates = {screenX, screenY};
 
                         return coordinates;
                     }
                 },
                 Press.FINGER);
+    }
+
+    public static ViewAction tapStone(final int x, final int y) {
+        return placeStone(x, y);
     }
 }

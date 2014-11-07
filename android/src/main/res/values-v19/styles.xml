@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="base_theme" parent="Theme.AppCompat.Light">
+        <!--	<item name="Background">@android:color/transparent</item>
+        <item name="android:textColor">#ff000000</item> -->
+        <item name="android:alertDialogStyle">@style/dialog_theme</item>
+        <item name="android:windowBackground">@drawable/shinkaya</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="actionBarStyle">@style/ActionBarStyle.Transparent</item>
+
+
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+    </style>
+
+</resources>
