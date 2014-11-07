@@ -11,13 +11,13 @@ public class EditModeItemPool {
 
     public EditModeItemPool() {
         list = new ArrayList<>();
-        list.add(new EditModeItem(R.drawable.stone_black, EditGameMode.BLACK));
-        list.add(new EditModeItem(R.drawable.stone_white, EditGameMode.WHITE));
-        list.add(new EditModeItem(R.drawable.stone_circle, EditGameMode.CIRCLE));
-        list.add(new EditModeItem(R.drawable.stone_square, EditGameMode.SQUARE));
-        list.add(new EditModeItem(R.drawable.stone_triangle, EditGameMode.TRIANGLE));
-        list.add(new EditModeItem(R.drawable.stone_number, EditGameMode.NUMBER));
-        list.add(new EditModeItem(R.drawable.stone_letter, EditGameMode.LETTER));
+        list.add(new EditModeItem(R.drawable.stone_black, EditGameMode.BLACK, R.string.black));
+        list.add(new EditModeItem(R.drawable.stone_white, EditGameMode.WHITE,  R.string.white));
+        list.add(new EditModeItem(R.drawable.stone_circle, EditGameMode.CIRCLE, R.string.circle));
+        list.add(new EditModeItem(R.drawable.stone_square, EditGameMode.SQUARE, R.string.square ));
+        list.add(new EditModeItem(R.drawable.stone_triangle, EditGameMode.TRIANGLE, R.string.triangle));
+        list.add(new EditModeItem(R.drawable.stone_number, EditGameMode.NUMBER, R.string.number));
+        list.add(new EditModeItem(R.drawable.stone_letter, EditGameMode.LETTER, R.string.letter));
     }
 
     public List<EditModeItem> getList() {

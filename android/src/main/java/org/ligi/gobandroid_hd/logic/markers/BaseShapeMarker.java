@@ -16,6 +16,7 @@ public class BaseShapeMarker extends GoMarker {
             localPaint = new Paint(paint);
             localPaint.setStyle(Paint.Style.STROKE);
             localPaint.setStrokeWidth(3);
+            localPaint.setAntiAlias(true);
         }
     }
 }

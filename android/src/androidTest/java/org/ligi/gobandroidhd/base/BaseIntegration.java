@@ -1,6 +1,7 @@
 package org.ligi.gobandroidhd.base;
 
 import android.app.Activity;
+import android.support.annotation.StringRes;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.WindowManager;
 
@@ -45,5 +46,9 @@ public abstract class BaseIntegration<T extends Activity> extends ActivityInstru
 
     protected GoGame readGame(final String fileName) {
         return SGFReader.sgf2game(readAsset("sgf/" + fileName + ".sgf"), null);
+    }
+
+    protected String getString(@StringRes int resId) {
+        return getInstrumentation().getTargetContext().getString(resId);
     }
 }

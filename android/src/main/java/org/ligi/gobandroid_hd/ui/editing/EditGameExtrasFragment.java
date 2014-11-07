@@ -53,8 +53,8 @@ public class EditGameExtrasFragment extends GobandroidFragment implements GoGame
             public View getView(int position, View convertView, ViewGroup parent) {
 
                 final ImageView view = (ImageView) inflater.inflate(R.layout.edit_mode_item, parent, false);
-                view.setImageResource(getItem(position).icon_resId);
-
+                view.setImageResource(getItem(position).iconResId);
+                view.setContentDescription(getString(getItem(position).contentDescriptionResId));
                 if (editModePool.getActivatedItem() == position) {
                     view.setBackgroundColor(ctx.getResources().getColor(R.color.dividing_color));
                 }
