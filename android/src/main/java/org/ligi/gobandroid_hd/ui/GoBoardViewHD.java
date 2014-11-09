@@ -75,10 +75,6 @@ public class GoBoardViewHD extends SquareView {
 
     private boolean regenerate_stones_flag = true;
 
-    protected boolean enforceSquare() {
-        return true;
-    }
-
     protected float zoom = 1.0f;
 
     /*
@@ -156,11 +152,6 @@ public class GoBoardViewHD extends SquareView {
         // defaults
         setFocusable(true);
         setGridEmboss(true);
-
-		/*
-         * if (getGame() == null) getApp().getInteractionScope().setGame(new
-		 * GoGame((byte) 19));
-		 */
     }
 
     public GoGame getGame() {
@@ -371,11 +362,12 @@ public class GoBoardViewHD extends SquareView {
 
     }
 
-    public void setGridEmboss(boolean grid_embos) {
-        if (grid_embos)
+    public void setGridEmboss(boolean grid_emboss) {
+        if (grid_emboss) {
             gridPaint.setShadowLayer(1, 1, 1, 0xFFFFFFFF);
-        else
+        } else {
             gridPaint.setShadowLayer(1, 1, 1, 0xFF000000);
+        }
     }
 
     @Override
