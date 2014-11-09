@@ -24,19 +24,19 @@ public class GnuGoSetupDialog extends GobandroidDialog {
     private SharedPreferences shared_prefs;
 
     @InjectView(R.id.gnugo_plays_white_radio)
-    private RadioButton gnugo_plays_white_radio;
+    RadioButton gnugo_plays_white_radio;
 
     @InjectView(R.id.gnugo_plays_black_radio)
-    private RadioButton gnugo_plays_black_radio;
+    RadioButton gnugo_plays_black_radio;
 
     @InjectView(R.id.gnugo_plays_both_radio)
-    private RadioButton gnugo_plays_both_radio;
+    RadioButton gnugo_plays_both_radio;
 
     @InjectView(R.id.gnugo_strength)
-    private TextView gnugo_strength_text;
+    TextView gnugo_strength_text;
 
     @InjectView(R.id.gnugo_strength_seek)
-    private SeekBar strengthSeek;
+    SeekBar strengthSeek;
 
     public GnuGoSetupDialog(Context context) {
         super(context);
