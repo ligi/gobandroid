@@ -5,13 +5,13 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:0.14.1'
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
-        //classpath 'com.stanfy.spoon:spoon-gradle-plugin:0.14.0'
+        //classpath 'com.stanfy.spoon:spoongradle-plugin:0.14.0'
     }
 }
 
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
-// apply plugin: 'spoon'
+//apply plugin: 'spoon'
 
 repositories {
     jcenter()
@@ -99,7 +99,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.2'
     compile 'com.wrapp.floatlabelededittext:library:0.0.3'
     compile 'net.sourceforge.jchardet:jchardet:1.0'
-
+    compile 'fr.nicolaspomepuy:discreetapprate:2.0.2@aar'
     compile 'com.android.support:support-annotations:20.0.0'
 
     def play_services = 'com.google.android.gms:play-services:6.1.+'

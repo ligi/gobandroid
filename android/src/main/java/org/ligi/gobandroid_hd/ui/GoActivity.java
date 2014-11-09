@@ -57,6 +57,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import fr.nicolaspomepuy.discreetapprate.AppRate;
+import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
+
 /**
  * Activity for a Go Game
  *
@@ -90,10 +93,14 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         setContentView(R.layout.game);
 
-
         if (!App.isTesting) {
             // if there where stacktraces collected -> give the user the option to send them
-            TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
+            if (!TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this)) {
+                AppRate.with(this)
+                        .retryPolicy(RetryPolicy.EXPONENTIAL)
+                        .initialLaunchCount(5)
+                        .checkAndShow();
+            }
         }
 
         interaction_scope = getApp().getInteractionScope();
