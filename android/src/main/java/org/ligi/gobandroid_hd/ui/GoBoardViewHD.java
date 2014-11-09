@@ -51,11 +51,9 @@ public class GoBoardViewHD extends SquareView {
 
     private int zoom_poi = -1;
 
-    // public boolean grid_embos=true; // GoPrefs.getGridEmbossEnabled()
     public boolean do_legend = true;
     public boolean do_actpos_highlight = true;
     public boolean do_actpos_highlight_ony_if_active = true;
-    // public boolean do_mark_act=true;
     public boolean mark_last_stone = true;
     public boolean legend_sgf_mode = true; // GoPrefs.getLegendSGFMode()
     public boolean show_area_stones = false;
@@ -77,14 +75,6 @@ public class GoBoardViewHD extends SquareView {
 
     protected float zoom = 1.0f;
 
-    /*
-        public GoBoardViewHD(Context context, boolean square, float zoom) {
-            super(context);
-            this.zoom = zoom;
-            enforce_square = square;
-            init();
-        }
-    */
     public GoBoardViewHD(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
@@ -174,8 +164,9 @@ public class GoBoardViewHD extends SquareView {
     }
 
     public PointF getZoomTranslate() {
-        if (zoom <= 1.0f)
+        if (zoom <= 1.0f) {
             return new PointF(0, 0);
+        }
 
         int act_zoom_poi = 0;
 
@@ -186,20 +177,21 @@ public class GoBoardViewHD extends SquareView {
         } else
             Log.w("zoom requested but no POI to center around");
 
-        Point act_zoom_point = getGame().linear_coordinate2Point(act_zoom_poi);
-        PointF res = new PointF(-stone_size * (act_zoom_point.x - getGame().getSize() / 2.0f / zoom), -stone_size * (act_zoom_point.y - getGame().getSize() / 2.0f / zoom));
+        final Point act_zoom_point = getGame().linear_coordinate2Point(act_zoom_poi);
+        final PointF res = new PointF(-stone_size * (act_zoom_point.x - getGame().getSize() / 2.0f / zoom), -stone_size * (act_zoom_point.y - getGame().getSize() / 2.0f / zoom));
 
         return res;
     }
 
     public void screenshot(String sshot_name) {
-        Bitmap bmp = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Config.ARGB_8888);
-        Canvas c = new Canvas(bmp);
+        final Bitmap bmp = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Config.ARGB_8888);
+        final Canvas c = new Canvas(bmp);
         draw2canvas(c);
 
         try {
-            if (sshot_name.indexOf("://") > 0)
+            if (sshot_name.indexOf("://") > 0) {
                 sshot_name = sshot_name.substring(sshot_name.indexOf("://") + 3);
+            }
             Log.i("writing screenshot " + sshot_name);
             new File(sshot_name.substring(0, sshot_name.lastIndexOf("/"))).mkdirs();
             new File(sshot_name).createNewFile();
@@ -228,7 +220,6 @@ public class GoBoardViewHD extends SquareView {
     }
 
     protected void draw2canvas(Canvas canvas) {
-        Log.i("draw");
         canvas.save();
 
         // when we have zoomed in - center translate the canvas around the POI
