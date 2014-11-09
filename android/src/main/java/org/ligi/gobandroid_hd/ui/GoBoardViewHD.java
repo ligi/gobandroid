@@ -47,7 +47,7 @@ import java.io.FileOutputStream;
 /**
  * Class to visually represent a Go Board in Android
  */
-public class GoBoardViewHD extends SquareView {
+public class GoBoardViewHD extends View {
 
     private int zoom_poi = -1;
 
@@ -72,6 +72,10 @@ public class GoBoardViewHD extends SquareView {
     public boolean move_stone_mode = false;
 
     private boolean regenerate_stones_flag = true;
+
+    protected boolean enforceSquare() {
+        return true;
+    }
 
     protected float zoom = 1.0f;
 
@@ -377,6 +381,22 @@ public class GoBoardViewHD extends SquareView {
 
     public void regenerateStoneImagesWithNewSize() {
         setSize(getWidth(), getHeight());
+    }
+
+    public void setRegenerataStonesFlag(boolean new_flag) {
+        regenerate_stones_flag = new_flag;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        if (enforceSquare()) {
+            int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
+            int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
+            int size = Math.min(parentWidth, parentHeight);
+            this.setMeasuredDimension(size, size);
+        }
     }
 
     public void setZoomPOI(int zoom_poi) {
