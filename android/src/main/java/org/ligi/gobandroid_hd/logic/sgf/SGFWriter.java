@@ -5,6 +5,7 @@ import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.logic.markers.CircleMarker;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
+import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
 import org.ligi.tracedroid.logging.Log;
 
@@ -97,8 +98,8 @@ public class SGFWriter {
                     res += "TR" + coords2SGFFragment(marker.getX(), marker.getY());
                 } else if (marker instanceof CircleMarker) {
                     res += "CR" + coords2SGFFragment(marker.getX(), marker.getY());
-                } else {
-                    res += "LB" + coords2SGFFragment(marker.getX(), marker.getY()).replace("]", ":" + marker.getText() + "]");
+                } else if (marker instanceof TextMarker) {
+                    res += "LB" + coords2SGFFragment(marker.getX(), marker.getY()).replace("]", ":" + ((TextMarker)marker).getText() + "]");
                 }
             }
 

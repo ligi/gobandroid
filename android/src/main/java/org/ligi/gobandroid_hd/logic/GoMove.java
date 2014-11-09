@@ -19,6 +19,8 @@
 
 package org.ligi.gobandroid_hd.logic;
 
+import com.google.common.base.Optional;
+
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 
 import java.util.ArrayList;
@@ -193,27 +195,19 @@ public class GoMove {
         markers.add(marker);
     }
 
-    public GoMarker getGoMarker() {
-        for (GoMarker marker : parent.getMarkers()) {
-            if ((this.getX() == marker.getX()) && (this.getY() == marker.getY())) {
-                return marker;
+    public Optional<GoMarker> getGoMarker() {
+        if (parent!=null) {
+            for (GoMarker marker : parent.getMarkers()) {
+                if ((this.getX() == marker.getX()) && (this.getY() == marker.getY())) {
+                    return Optional.of(marker);
+                }
             }
         }
-        return null;
+        return Optional.absent();
     }
 
     public boolean isMarked() {
-        if (parent == null) {
-            return false;
-        }
-        return (getGoMarker() != null);
-    }
-
-    public String getMarkText() {
-        if (parent == null) {
-            return "";
-        }
-        return (getGoMarker().getText());
+        return getGoMarker().isPresent();
     }
 
     public void destroy() {

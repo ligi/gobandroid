@@ -7,6 +7,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
+import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 
@@ -50,7 +51,7 @@ public class TsumegoHintAlert {
         while (true) {
             if (myActMove.isFirstMove())
                 break;
-            finishing_move.addMarker(new GoMarker(myActMove.getX(), myActMove.getY(), "" + p));
+            finishing_move.addMarker(new TextMarker(myActMove.getX(), myActMove.getY(), "" + p));
             p--;
             myActMove = myActMove.getParent();
 
@@ -66,7 +67,7 @@ public class TsumegoHintAlert {
             if (myActMove.isFirstMove())
                 break;
             if (complete || (myActMove.getParent() == game.getActMove()))
-                myActMove.getParent().addMarker(new GoMarker(myActMove.getX(), myActMove.getY(), "X"));
+                myActMove.getParent().addMarker(new TextMarker(myActMove.getX(), myActMove.getY(), "X"));
             myActMove = myActMove.getParent();
         }
 

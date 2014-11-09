@@ -25,6 +25,7 @@ import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.logic.markers.CircleMarker;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
+import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
 import org.ligi.tracedroid.logging.Log;
 
@@ -250,17 +251,17 @@ public class SGFReader {
                 final String[] inner = act_param.split(":");
                 final String txt = (inner.length > 1) ? inner[1] : "X";
 
-                game.getActMove().addMarker(new GoMarker(param_x, param_y, txt));
+                game.getActMove().addMarker(new TextMarker(param_x, param_y, txt));
                 break;
 
             // mark with x
             case "Mark":
             case "MA":
-                game.getActMove().addMarker(new GoMarker(param_x, param_y, "X"));
+                game.getActMove().addMarker(new TextMarker(param_x, param_y, "X"));
                 break;
 
             case "SL":
-                game.getActMove().addMarker(new GoMarker(param_x, param_y, "+"));
+                game.getActMove().addMarker(new TextMarker(param_x, param_y, "+"));
                 break;
 
             // mark with triangle

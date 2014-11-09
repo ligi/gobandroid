@@ -8,7 +8,7 @@ public class BaseShapeMarker extends GoMarker {
     Paint localPaint;
 
     public BaseShapeMarker(byte x, byte y) {
-        super(x, y, "\u25cb"); // initialize with unicode for triangle
+        super(x, y); // initialize with unicode for triangle
     }
 
     public void draw(Canvas c, float size, float x, float y, Paint paint) {

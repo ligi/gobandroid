@@ -9,6 +9,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
+import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
 import org.ligi.gobandroid_hd.ui.editing.EditGameActivity;
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
@@ -87,7 +88,7 @@ public class TheEditGameActivity extends BaseIntegration<EditGameActivity> {
 
         for (byte x = 0; x < 9; x++) {
             for (byte y = 0; y < 3; y++) {
-                assertTrue(hasMarker(new GoMarker(x, y, "" + (9 * y + x+1))));
+                assertTrue(hasMarker(new TextMarker(x, y, "" + (9 * y + x+1))));
             }
         }
         Spoon.screenshot(activity, "numbers");

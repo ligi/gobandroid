@@ -4,6 +4,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
+import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import org.ligi.gobandroidhd.base.AssetAwareInstrumentationTestCase;
 
@@ -57,7 +58,7 @@ public class TheSGFReader extends AssetAwareInstrumentationTestCase {
         final GoMarker createdMarker = game.getLastMove().getMarkers().get(0);
         assertThat(createdMarker.getX()).isEqualTo((byte) 1);
         assertThat(createdMarker.getY()).isEqualTo((byte) 2);
-        assertThat(createdMarker.getText()).isEqualTo("X");
+        assertThat(((TextMarker)createdMarker).getText()).isEqualTo("X");
     }
 
     @SmallTest
@@ -67,6 +68,6 @@ public class TheSGFReader extends AssetAwareInstrumentationTestCase {
         final GoMarker createdMarker = game.getLastMove().getMarkers().get(0);
         assertThat(createdMarker.getX()).isEqualTo((byte) 1);
         assertThat(createdMarker.getY()).isEqualTo((byte) 2);
-        assertThat(createdMarker.getText()).isEqualTo("L");
+        assertThat(((TextMarker)createdMarker).getText()).isEqualTo("L");
     }
 }

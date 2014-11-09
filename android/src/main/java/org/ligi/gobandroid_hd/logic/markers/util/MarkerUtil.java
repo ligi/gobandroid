@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.logic.markers.util;
 
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
+import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,9 +13,11 @@ public class MarkerUtil {
         final List<Integer> presentNumberList = new ArrayList<>();
 
         for (GoMarker marker : markers) {
-            final String markerText = marker.getText();
-            if (markerText.matches("[0-9]*")) {
-                presentNumberList.add(Integer.parseInt(markerText));
+            if (marker instanceof TextMarker) {
+                final String markerText = ((TextMarker)marker).getText();
+                if (markerText.matches("[0-9]*")) {
+                    presentNumberList.add(Integer.parseInt(markerText));
+                }
             }
         }
 
@@ -36,8 +39,12 @@ public class MarkerUtil {
     public static String findNextLetter(final List<GoMarker> markers) {
         for (int i = 0; i < 26; i++) {
             boolean found = false;
-            for (GoMarker marker : markers)
-                found |= marker.getText().equals("" + (char) ('A' + i));
+            for (GoMarker marker : markers) {
+                if (marker instanceof TextMarker) {
+                    found |= ((TextMarker)marker).getText().equals("" + (char) ('A' + i));
+                }
+            }
+
             if (!found) {
                 return "" + (char) ('A' + i);
             }

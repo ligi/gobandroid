@@ -25,43 +25,41 @@ import android.graphics.Paint;
 /**
  * class to mark a pos on the board useful for go problems - e.g. from SGF
  */
-public abstract class GoMarker {
+public class TextMarker extends GoMarker {
 
-    private final byte x, y;
+    private final String text;
 
-    public GoMarker(byte x, byte y) {
-        this.x = x;
-        this.y = y;
+    public TextMarker(byte x, byte y, String text) {
+        super(x,y);
+        this.text = text;
     }
 
-    public byte getX() {
-        return x;
-    }
-
-    public byte getY() {
-        return y;
+    public String getText() {
+        return text;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof GoMarker)) {
+        if (!super.equals(o)) {
             return false;
         }
 
-        GoMarker otherMarker = (GoMarker) o;
-
-        if (getX() != otherMarker.getX()) {
+        if (!(o instanceof TextMarker)) {
             return false;
         }
 
-        if (getY() != otherMarker.getY()) {
+        final TextMarker otherMarker = (TextMarker) o;
+
+        if (!getText().equals(otherMarker.getText())) {
             return false;
         }
+
 
         return true; // If we reached this place we can assume the Markers are the same
     }
 
     public void draw(Canvas c, float size, float x, float y, Paint paint) {
-        // nothing for just a plain marker - children define look
+        final Paint.FontMetrics fm = paint.getFontMetrics();
+        c.drawText(getText(), x, y + size + (fm.ascent + fm.descent), paint);
     }
 }

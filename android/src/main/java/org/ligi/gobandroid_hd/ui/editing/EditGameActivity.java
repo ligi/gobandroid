@@ -10,6 +10,7 @@ import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.markers.CircleMarker;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
+import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
 import org.ligi.gobandroid_hd.logic.markers.util.MarkerUtil;
 import org.ligi.gobandroid_hd.ui.GoActivity;
@@ -94,12 +95,12 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
 
             case NUMBER:
                 final int firstFreeNumber = MarkerUtil.findFirstFreeNumber(markers);
-                markers.add(new GoMarker(x, y, "" + firstFreeNumber));
+                markers.add(new TextMarker(x, y, "" + firstFreeNumber));
                 break;
 
             case LETTER:
                 final String nextLetter = MarkerUtil.findNextLetter(markers);
-                markers.add(new GoMarker(x, y, nextLetter));
+                markers.add(new TextMarker(x, y, nextLetter));
                 break;
 
         }

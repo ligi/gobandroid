@@ -25,6 +25,8 @@ import android.widget.TextView;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.markers.GoMarker;
+import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 
 /**
  * Dialog to show when user wants to go to next move - handles selection of
@@ -86,7 +88,10 @@ public class GameForwardAlert {
                 var_btn.setTag(i);
                 var_btn.setOnClickListener(var_select_listener);
                 if (game.getActMove().getnextMove(i).isMarked()) {
-                    var_btn.setText(game.getActMove().getnextMove(i).getMarkText());
+                    final GoMarker goMarker = game.getActMove().getnextMove(i).getGoMarker().get();
+                    if (goMarker instanceof TextMarker) {
+                        var_btn.setText(((TextMarker)goMarker).getText());
+                    };
                 } else {
                     var_btn.setText("" + (i + 1));
                 }
