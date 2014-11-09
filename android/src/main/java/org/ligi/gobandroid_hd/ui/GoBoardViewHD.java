@@ -392,12 +392,8 @@ public class GoBoardViewHD extends SquareView {
         setSize(this.getWidth(), this.getHeight());
     }
 
-    public void regenerateStroneImagesWithNewSize() {
+    public void regenerateStoneImagesWithNewSize() {
         setSize(getWidth(), getHeight());
-    }
-
-    public void setRegenerataStonesFlag(boolean new_flag) {
-        regenerate_stones_flag = new_flag;
     }
 
     public void setZoomPOI(int zoom_poi) {
