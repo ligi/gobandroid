@@ -35,6 +35,7 @@ import android.widget.TextView;
 
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.App;
+import org.ligi.gobandroid_hd.FileEncodeDetecter;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -45,6 +46,8 @@ import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 import org.ligi.tracedroid.logging.Log;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -52,6 +55,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 /**
  * Activity to load a SGF with a ProgressDialog showing the Progress
@@ -126,7 +130,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         String res = "";
 
         if (url.startsWith("/")) {
-            return AXT.at(new File(url)).readToString();
+            return AXT.at(new File(url)).readToString(FileEncodeDetecter.detect(url));
         }
 
         return res;
@@ -144,7 +148,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
     public String uri2string(Uri intent_uri) throws IOException {
 
         if (intent_uri.toString().startsWith("/")) {
-            return AXT.at(new File(intent_uri.toString())).readToString();
+            return AXT.at(new File(intent_uri.toString())).readToString( FileEncodeDetecter.detect(intent_uri.toString()));
         }
 
         InputStream in;
@@ -174,10 +178,22 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
             file_writer = new FileOutputStream(f);
         }
 
+        ByteArrayOutputStream buf = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = in.read(buffer)) > -1 ) {
+            buf.write(buffer, 0, len);
+            }
+        buf.flush();
+
+        InputStream stream_det  = new ByteArrayInputStream(buf.toByteArray());
+        Charset chrset = FileEncodeDetecter.detect(stream_det);
+
+        InputStream stream_pro  = new ByteArrayInputStream(buf.toByteArray());
         StringBuilder out = new StringBuilder();
         byte[] b = new byte[4096];
-        for (int n; (n = in.read(b)) != -1; ) {
-            out.append(new String(b, 0, n));
+        for (int n; (n = stream_pro.read(b)) != -1; ) {
+            out.append(new String(b, 0, n,chrset));
             if (file_writer != null) {
                 file_writer.write(b, 0, n);
             }
@@ -321,7 +337,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         }
         App.setGame(game);
 
-        game.getMetaData().setFileName(intent_uri.toString());
+        game.getMetaData().setFileName(Uri.decode(intent_uri.toString()));
 
         App.getGame().notifyGameChange();
 
