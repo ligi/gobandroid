@@ -91,7 +91,7 @@ public class GameForwardAlert {
                     final GoMarker goMarker = game.getActMove().getnextMove(i).getGoMarker().get();
                     if (goMarker instanceof TextMarker) {
                         var_btn.setText(((TextMarker)goMarker).getText());
-                    };
+                    }
                 } else {
                     var_btn.setText("" + (i + 1));
                 }
