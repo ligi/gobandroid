@@ -5,5 +5,5 @@
         android:title="@string/game_info"
         android:id="@+id/menu_game_info"
         android:icon="@drawable/info"
-        yourapp:showAsAction="ifRoom|withText"></item>
+        yourapp:showAsAction="ifRoom|withText"/>
 </menu>
