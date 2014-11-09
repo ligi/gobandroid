@@ -471,33 +471,39 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         // calculate position on the field by position on the touchscreen
 
-        if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
-            interaction_scope.setTouchPosition(getBoard().pixel2boardPos(event.getX(), event.getY()));
-        } else if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-            interaction_scope.setTouchPosition(-1);
-        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
+                interaction_scope.setTouchPosition(getBoard().pixel2boardPos(event.getX(), event.getY()));
+                break;
 
-            if (go_board.move_stone_mode) {
-                // TODO check if this is an illegal move ( e.g. in variants )
+            case MotionEvent.ACTION_OUTSIDE:
+                interaction_scope.setTouchPosition(-1);
+                break;
 
-                if (getGame().getVisualBoard().isCellFree(interaction_scope.getTouchX(), interaction_scope.getTouchY())) {
-                    getGame().getActMove().setXY((byte) interaction_scope.getTouchX(), (byte) interaction_scope.getTouchY());
-                    getGame().getActMove().setDidCaptures(true); // TODO check
-                    // if we
-                    // harm sth
-                    // with that
-                    getGame().refreshBoards();
+            case MotionEvent.ACTION_UP:
 
+                if (go_board.move_stone_mode) {
+                    // TODO check if this is an illegal move ( e.g. in variants )
+
+                    if (getGame().getVisualBoard().isCellFree(interaction_scope.getTouchX(), interaction_scope.getTouchY())) {
+                        getGame().getActMove().setXY((byte) interaction_scope.getTouchX(), (byte) interaction_scope.getTouchY());
+                        getGame().getActMove().setDidCaptures(true); // TODO check
+                        // if we
+                        // harm sth
+                        // with that
+                        getGame().refreshBoards();
+
+                    }
+                    go_board.move_stone_mode = false; // moving of stone done
+                } else if ((getGame().getActMove().getX() == interaction_scope.getTouchX()) && (getGame().getActMove().getY() == interaction_scope.getTouchY())) {
+                    initializeStoneMove();
+                } else {
+                    doMoveWithUIFeedback((byte) interaction_scope.getTouchX(), (byte) interaction_scope.getTouchY());
                 }
-                go_board.move_stone_mode = false; // moving of stone done
-            } else if ((getGame().getActMove().getX() == interaction_scope.getTouchX()) && (getGame().getActMove().getY() == interaction_scope.getTouchY())) {
-                initializeStoneMove();
-            } else {
-                doMoveWithUIFeedback((byte) interaction_scope.getTouchX(), (byte) interaction_scope.getTouchY());
-            }
 
-            interaction_scope.setTouchPosition(-1);
-
+                interaction_scope.setTouchPosition(-1);
+                break;
         }
 
         getGame().notifyGameChange();

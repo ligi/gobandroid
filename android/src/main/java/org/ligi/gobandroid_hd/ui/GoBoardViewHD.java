@@ -32,6 +32,7 @@ import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import org.ligi.axt.views.SquareView;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoBoard;
@@ -46,7 +47,7 @@ import java.io.FileOutputStream;
 /**
  * Class to visually represent a Go Board in Android
  */
-public class GoBoardViewHD extends View {
+public class GoBoardViewHD extends SquareView {
 
     private int zoom_poi = -1;
 
@@ -399,25 +400,19 @@ public class GoBoardViewHD extends View {
         regenerate_stones_flag = new_flag;
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        if (enforceSquare()) {
-            int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
-            int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
-            int size = Math.min(parentWidth, parentHeight);
-            this.setMeasuredDimension(size, size);
-        }
-    }
-
     public void setZoomPOI(int zoom_poi) {
         this.zoom_poi = zoom_poi;
         // TODO check use-cases if we need to invalidate here
     }
 
     public int pixel2boardPos(float x, float y) {
-        return (int) ((x - getZoomTranslate().x) / (stone_size) // x
-                + (int) (((y - getZoomTranslate().y)) / (stone_size)) * getGame().getSize());
+        final int board_x = (int)((x - getZoomTranslate().x) / stone_size);
+        final int board_y = (int)((y - getZoomTranslate().y) / stone_size);
+
+        if (board_x>=getGame().getSize() || board_y>=getGame().getSize()) {
+            return -1;
+        }
+
+        return board_x + board_y * getGame().getSize();
     }
 }
