@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
@@ -21,6 +22,7 @@ public class GnuGoSetupDialog extends GobandroidDialog {
     private RadioButton gnugo_plays_white_radio;
     private RadioButton gnugo_plays_black_radio;
     private RadioButton gnugo_plays_both_radio;
+    private TextView gnugo_strength_text;
 
     private SeekBar strange_seek;
 
@@ -37,6 +39,7 @@ public class GnuGoSetupDialog extends GobandroidDialog {
         gnugo_plays_white_radio = (RadioButton) this.findViewById(R.id.gnugo_plays_white_radio);
         gnugo_plays_black_radio = (RadioButton) this.findViewById(R.id.gnugo_plays_black_radio);
         gnugo_plays_both_radio = (RadioButton) this.findViewById(R.id.gnugo_plays_both_radio);
+        gnugo_strength_text = (TextView) this.findViewById(R.id.gnugo_strength);
 
         if (shared_prefs.getBoolean(SP_KEY_PLAYS_BOTH, false))
             gnugo_plays_both_radio.setChecked(true);
@@ -48,9 +51,25 @@ public class GnuGoSetupDialog extends GobandroidDialog {
             // no former selection - default to black
             gnugo_plays_black_radio.setChecked(true);
 
+        int level = shared_prefs.getInt(SP_KEY_STRENGTH, 0);
         strange_seek = ((SeekBar) this.findViewById(R.id.gnugo_strength_seek));
-        strange_seek.setProgress(shared_prefs.getInt(SP_KEY_STRENGTH, 0));
+        strange_seek.setProgress(level);
+        gnugo_strength_text.setText(getContext().getString(R.string.gnugo_strength) + String.valueOf(level));
 
+        strange_seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                if(fromUser)
+                    gnugo_strength_text.setText(getContext().getString(R.string.gnugo_strength) + String.valueOf(progress));
+            }
+        });
     }
 
     public boolean isWhiteActive() {

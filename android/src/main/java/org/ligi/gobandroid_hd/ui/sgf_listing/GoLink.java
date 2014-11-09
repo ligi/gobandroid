@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui.sgf_listing;
 
 import org.ligi.axt.AXT;
+import org.ligi.gobandroid_hd.FileEncodeDetecter;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.tracedroid.logging.Log;
 
@@ -58,7 +59,7 @@ public class GoLink {
      */
     public String getSGFString() {
         try {
-            return AXT.at(new File(fname)).readToString();
+            return AXT.at(new File(fname)).readToString(FileEncodeDetecter.detect(fname));
         } catch (IOException e) {
             return "";
         }

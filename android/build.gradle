@@ -44,7 +44,7 @@ android {
     }
 
     compileSdkVersion 21
-    buildToolsVersion "21"
+    buildToolsVersion "21.0.2"
 
     defaultConfig {
         versionCode 196
@@ -102,6 +102,7 @@ dependencies {
     compile 'org.ligi:tracedroid:1.4'
     compile 'com.jakewharton:butterknife:5.1.2'
     compile 'com.wrapp.floatlabelededittext:library:0.0.3'
+    compile 'net.sourceforge.jchardet:jchardet:1.0'
 
     def play_services = 'com.google.android.gms:play-services:6.1.+'
 

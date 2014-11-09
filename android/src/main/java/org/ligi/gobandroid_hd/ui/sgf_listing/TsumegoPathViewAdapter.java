@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.ligi.axt.AXT;
+import org.ligi.gobandroid_hd.FileEncodeDetecter;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
@@ -89,7 +90,7 @@ class TsumegoPathViewAdapter extends BaseAdapter {
             sgf_str = gl.getSGFString();
         } else {
             try {
-                sgf_str = AXT.at(new File(base_fname)).readToString();
+                sgf_str = AXT.at(new File(base_fname)).readToString(FileEncodeDetecter.detect(base_fname));
             } catch (IOException e) {
             }
         }

@@ -141,7 +141,7 @@
     <string name="icon">图标</string>
     <string name="go_tv">电视围棋</string>
     <string name="i_do_not_want_to_keep_variants_for_this_game">不再提示</string>
-    <string name="end_review">结束复盘?</string>
+    <string name="end_review">结束复盘</string>
     <string name="komi_must_be_a_number">请以数字形式來表示贴目</string>
     <string name="youtube_tutorial">观看YouTube上的视频</string>
     <string name="youtube_tutorial_link">http://www.youtube.com/watch?v=gECcsSeRcNo</string>
@@ -152,11 +152,11 @@
     <string name="notifications">通知</string>
     <string name="push_tsumego">获得诘碁</string>
     <string name="push_tsumego_extra">尝试每周更新新的诘碁文档</string>
-    <string name="gnugo_strength">GnuGo 强度：</string>
+    <string name="gnugo_strength">GnuGo 等级：</string>
     <string name="gnugo_plays">GnuGo 选手：</string>
     <string name="black">黑</string>
     <string name="white">白</string>
-    <string name="black_and_white">黑 &amp; 白</string>
+    <string name="black_and_white">黑和白</string>
     <string name="for_gnugo">为 GnuGo</string>
     <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">加载棋谱文件失败,  你想给 ligi 大神发个邮件看看是什么问题吗?</string>
     <string name="go_back">上一步</string>
