@@ -10,6 +10,9 @@ import android.widget.TextView;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class GnuGoSetupDialog extends GobandroidDialog {
 
     private static final String SP_KEY_PLAYS_BLACK = "plays_black";
@@ -19,12 +22,21 @@ public class GnuGoSetupDialog extends GobandroidDialog {
     private static final String SP_KEY_STRENGTH = "strength";
 
     private SharedPreferences shared_prefs;
+
+    @InjectView(R.id.gnugo_plays_white_radio)
     private RadioButton gnugo_plays_white_radio;
+
+    @InjectView(R.id.gnugo_plays_black_radio)
     private RadioButton gnugo_plays_black_radio;
+
+    @InjectView(R.id.gnugo_plays_both_radio)
     private RadioButton gnugo_plays_both_radio;
+
+    @InjectView(R.id.gnugo_strength)
     private TextView gnugo_strength_text;
 
-    private SeekBar strange_seek;
+    @InjectView(R.id.gnugo_strength_seek)
+    private SeekBar strengthSeek;
 
     public GnuGoSetupDialog(Context context) {
         super(context);
@@ -36,38 +48,38 @@ public class GnuGoSetupDialog extends GobandroidDialog {
         setContentFill();
         setContentView(R.layout.setup_gnugo);
 
-        gnugo_plays_white_radio = (RadioButton) this.findViewById(R.id.gnugo_plays_white_radio);
-        gnugo_plays_black_radio = (RadioButton) this.findViewById(R.id.gnugo_plays_black_radio);
-        gnugo_plays_both_radio = (RadioButton) this.findViewById(R.id.gnugo_plays_both_radio);
-        gnugo_strength_text = (TextView) this.findViewById(R.id.gnugo_strength);
+        ButterKnife.inject(this);
 
-        if (shared_prefs.getBoolean(SP_KEY_PLAYS_BOTH, false))
+        if (shared_prefs.getBoolean(SP_KEY_PLAYS_BOTH, false)) {
             gnugo_plays_both_radio.setChecked(true);
-        else if (shared_prefs.getBoolean(SP_KEY_PLAYS_WHITE, false))
+        } else if (shared_prefs.getBoolean(SP_KEY_PLAYS_WHITE, false)) {
             gnugo_plays_white_radio.setChecked(true);
-        else if (shared_prefs.getBoolean(SP_KEY_PLAYS_BLACK, false))
+        } else if (shared_prefs.getBoolean(SP_KEY_PLAYS_BLACK, false)) {
             gnugo_plays_black_radio.setChecked(true);
-        else
+        } else {
             // no former selection - default to black
             gnugo_plays_black_radio.setChecked(true);
+        }
 
-        int level = shared_prefs.getInt(SP_KEY_STRENGTH, 0);
-        strange_seek = ((SeekBar) this.findViewById(R.id.gnugo_strength_seek));
-        strange_seek.setProgress(level);
-        gnugo_strength_text.setText(getContext().getString(R.string.gnugo_strength) + String.valueOf(level));
+        final int level = shared_prefs.getInt(SP_KEY_STRENGTH, 0);
+        strengthSeek.setProgress(level);
+        gnugo_strength_text.setText(getContext().getString(R.string.gnugo_strength) + " " + String.valueOf(level));
 
-        strange_seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        strengthSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
-                if(fromUser)
+                if (fromUser) {
                     gnugo_strength_text.setText(getContext().getString(R.string.gnugo_strength) + String.valueOf(progress));
+                }
             }
         });
     }
@@ -85,11 +97,11 @@ public class GnuGoSetupDialog extends GobandroidDialog {
     }
 
     public int getStrength() {
-        return strange_seek.getProgress();
+        return strengthSeek.getProgress();
     }
 
     public void saveRecentAsDefault() {
-        SharedPreferences.Editor edit = shared_prefs.edit();
+        final SharedPreferences.Editor edit = shared_prefs.edit();
         edit.putInt(SP_KEY_STRENGTH, getStrength());
 
         edit.putBoolean(SP_KEY_PLAYS_WHITE, isWhiteActive());
