@@ -84,9 +84,9 @@
     <string name="sgf_filename">Nazwa pliku SGF</string>
     <string name="game_info">Informacje o grze</string>
     <string name="add_to_sgf">Dodaj do pliku:</string>
-    <string name="save_sgf_question">Please instruct me on how the file I will write to %s should be
+    <string name="save_sgf_question">Please instruct me on how the file I will write to %1$s should be
         named:
-        Poinstruuj mnie jak nazwać plik zapisywany do %s:
+        Poinstruuj mnie jak nazwać plik zapisywany do  %2$s:
     </string>
     <string name="share_question">udostępnij po zapisaniu?</string>
     <string name="gamename">Nazwa gry</string>
@@ -174,7 +174,7 @@
     <string name="black_and_white">Czarne &amp; Białe</string>
     <string name="for_gnugo">dla GnuGo</string>
     <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">
-        Problem z wczytywaniem SGF. Czy chciałbyś wysłać do Ligi'ego ten SGF aby naprawić ten problem?
+        Problem z wczytywaniem SGF. Czy chciałbyś wysłać do Ligi\'ego ten SGF aby naprawić ten problem?
     </string>
     <string name="go_back">wróć</string>
     <string name="download_status">Status pobierania</string>
