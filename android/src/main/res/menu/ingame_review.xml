@@ -5,9 +5,9 @@
         android:title="@string/bookmark"
         android:id="@+id/menu_bookmark"
         android:icon="@drawable/bookmark"
-        yourapp:showAsAction="ifRoom|withText"></item>
+        yourapp:showAsAction="ifRoom|withText"/>
     <item
         android:title="@string/share"
         android:id="@+id/menu_game_share"
-        yourapp:showAsAction="withText"></item>
+        yourapp:showAsAction="withText"/>
 </menu>

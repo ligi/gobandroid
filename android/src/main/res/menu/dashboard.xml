@@ -5,5 +5,5 @@
         android:title="@string/help"
         android:id="@+id/help"
         android:icon="@drawable/help"
-        yourapp:showAsAction="ifRoom|withText"></item>
+        yourapp:showAsAction="ifRoom|withText"/>
 </menu>

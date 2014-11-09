@@ -5,28 +5,23 @@
         android:title="@string/undo"
         android:id="@+id/menu_game_undo"
         android:icon="@drawable/undo"
-        yourapp:showAsAction="ifRoom|withText"></item>
-    <item
-        android:title="@string/accept"
-        android:id="@+id/menu_game_accept"
-        android:icon="@drawable/next"
-        yourapp:showAsAction="ifRoom|withText"></item>
+        yourapp:showAsAction="ifRoom|withText"/>
     <item
         android:title="@string/save_as_sgf"
         android:id="@+id/menu_write_sgf"
         android:icon="@drawable/save"
-        yourapp:showAsAction="ifRoom|withText"></item>
+        yourapp:showAsAction="ifRoom|withText"/>
     <item
         android:title="@string/game_pass"
         android:id="@+id/menu_game_pass"
         android:icon="@drawable/yin_yan"
-        yourapp:showAsAction="ifRoom|withText"></item>
+        yourapp:showAsAction="ifRoom|withText"/>
     <!--     <item android:title="@string/game_results" android:id="@+id/menu_game_results"  android:showAsAction="withText"></item>
      -->
     <item
         android:title="@string/share"
         android:id="@+id/menu_game_share"
-        yourapp:showAsAction="withText"></item>
+        yourapp:showAsAction="withText"/>
     <!--
     <item android:title="@string/invite" android:id="@+id/menu_game_invite" android:showAsAction="withText"></item>
     -->

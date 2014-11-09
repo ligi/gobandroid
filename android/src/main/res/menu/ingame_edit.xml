@@ -4,5 +4,5 @@
     <item
         android:title="@string/share"
         android:id="@+id/menu_game_share"
-        yourapp:showAsAction="withText"></item>
+        yourapp:showAsAction="withText"/>
 </menu>
