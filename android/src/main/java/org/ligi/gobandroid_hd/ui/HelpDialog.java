@@ -17,14 +17,12 @@ import org.ligi.gobandroid_hd.R;
  */
 public class HelpDialog extends GobandroidDialog {
 
-    private Resources res;
-
     public HelpDialog(final Context context) {
         super(context);
-        this.setIconResource(R.drawable.help);
-        this.setTitle(R.string.help);
-        this.setIsSmallDialog();
-        res = context.getResources();
+        setIconResource(R.drawable.help);
+        setTitle(R.string.help);
+
+        final Resources res=context.getResources();
 
         this.addItem(R.drawable.yt_icon, R.string.youtube_tutorial, new OnClickListener() {
 

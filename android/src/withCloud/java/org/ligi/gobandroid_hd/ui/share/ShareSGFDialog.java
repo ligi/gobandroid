@@ -99,8 +99,6 @@ public class ShareSGFDialog extends GobandroidDialog {
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         typeSpinner.setAdapter(adapter);
 
-        setIsSmallDialog();
-
         shareTypeRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

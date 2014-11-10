@@ -25,7 +25,7 @@ public class App extends Application {
     }
 
     // the InteractionScope holds things like mode/act game between activities
-    private InteractionScope interaction_scope;
+    private static InteractionScope interaction_scope;
 
     public static String getVersion() {
         try {
@@ -63,7 +63,7 @@ public class App extends Application {
 
     }
 
-    public InteractionScope getInteractionScope() {
+    public static InteractionScope getInteractionScope() {
         return interaction_scope;
     }
 

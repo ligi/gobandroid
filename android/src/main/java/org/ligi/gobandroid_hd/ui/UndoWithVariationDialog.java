@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.CheckBox;
 
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 
 public class UndoWithVariationDialog extends GobandroidDialog {
@@ -13,7 +14,6 @@ public class UndoWithVariationDialog extends GobandroidDialog {
         setTitle(R.string.keep_variant_);
         setIconResource(R.drawable.help);
         setContentView(R.layout.dialog_keep_variant);
-        setIsSmallDialog();
 
         final CheckBox prevent_cb = (CheckBox) findViewById(R.id.keep_variant_session_cb);
 
@@ -21,9 +21,10 @@ public class UndoWithVariationDialog extends GobandroidDialog {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                getApp().getGame().undo(true);
-                if (prevent_cb.isChecked())
-                    getApp().getInteractionScope().ask_variant_session = false;
+                App.getGame().undo(true);
+                if (prevent_cb.isChecked()) {
+                    App.getInteractionScope().ask_variant_session = false;
+                }
 
                 dialog.dismiss();
             }
@@ -34,9 +35,10 @@ public class UndoWithVariationDialog extends GobandroidDialog {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                getApp().getGame().undo(false);
-                if (prevent_cb.isChecked())
-                    getApp().getInteractionScope().ask_variant_session = false;
+                App.getGame().undo(false);
+                if (prevent_cb.isChecked()) {
+                    App.getInteractionScope().ask_variant_session = false;
+                }
 
                 dialog.dismiss();
             }

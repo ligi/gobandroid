@@ -6,8 +6,7 @@
         <item name="displayOptions" />
     </style>
 
-    <style name="dialog_theme" parent="Theme.AppCompat.Light">
-
+    <style name="dialog_theme" parent="Base.Theme.AppCompat.Light.Dialog">
     </style>
 
     <style name="TransparentTheme" parent="@style/Theme.AppCompat">

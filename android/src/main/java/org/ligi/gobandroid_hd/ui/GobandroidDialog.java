@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.StringRes;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
+import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 
@@ -29,8 +31,7 @@ import org.ligi.gobandroid_hd.R;
  */
 public class GobandroidDialog extends Dialog {
 
-    private ContextThemeWrapper ctx;
-    private LayoutInflater inflater;
+    private final LayoutInflater inflater;
 
     private Button positive_btn;
     private Button negative_btn;
@@ -38,28 +39,17 @@ public class GobandroidDialog extends Dialog {
     private LinearLayout button_container;
 
     public GobandroidDialog(Context context) {
-        super(context);
+        super(context,R.style.dialog_theme);
 
-        ctx = new ContextThemeWrapper(context, R.style.dialog_theme);
-        inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        super.setContentView(inflater.inflate(R.layout.gobandroid_dialog, null));
+        inflater = LayoutInflater.from(context);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.setContentView(R.layout.gobandroid_dialog);
 
         // this sounds misleading but behaves right - we just do not want to
         // start with keyboard open
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         button_container = (LinearLayout) findViewById(R.id.button_container);
-    }
-
-    // dirty hack - but works and finding another workaround costed me hours
-    // without success in sight ..
-    public void setIsSmallDialog() {
-        findViewById(R.id.dialog_main_container).setBackgroundResource(R.drawable.shinkaya_half);
-    }
-
-    public App getApp() {
-        return (App) ctx.getApplicationContext();
     }
 
     public void setIconResource(int ico_res) {
@@ -79,9 +69,8 @@ public class GobandroidDialog extends Dialog {
     }
 
     public void addItem(int image_resId, int str_resid, final OnClickListener listener) {
-        LinearLayout container = (LinearLayout) this.findViewById(R.id.dialog_items);
-        Log.i("", "container" + container + " inflater" + inflater);
-        View v = inflater.inflate(R.layout.dialog_item, null);
+        final LinearLayout container = (LinearLayout) this.findViewById(R.id.dialog_items);
+        View v = inflater.inflate(R.layout.dialog_item, container,false);
         ((TextView) v.findViewById(R.id.text)).setText(str_resid);
         ((ImageView) v.findViewById(R.id.image)).setImageResource(image_resId);
 
@@ -121,10 +110,6 @@ public class GobandroidDialog extends Dialog {
         ((TextView) this.findViewById(R.id.dialog_title)).setText(title);
     }
 
-    public Context getThemedContext() {
-        return ctx;
-    }
-
     class DialogOnClickWrapper implements View.OnClickListener {
 
         private DialogInterface.OnClickListener listener;
@@ -140,13 +125,14 @@ public class GobandroidDialog extends Dialog {
 
     }
 
-    public void setPositiveButton(int text_stringres) {
-        getPositiveButton().setText(text_stringres);
-        getPositiveButton().setOnClickListener(new DialogOnClickWrapper(new DefaultOnClickListener()));
+    public void setPositiveButton(@StringRes int text) {
+        getPositiveButton().setText(text);
+        getPositiveButton().setOnClickListener(new DialogOnClickWrapper(new DialogDiscardingOnClickListener()));
+
     }
 
-    public void setPositiveButton(int text_stringres, DialogInterface.OnClickListener listener) {
-        getPositiveButton().setText(text_stringres);
+    public void setPositiveButton(@StringRes int text, DialogInterface.OnClickListener listener) {
+        getPositiveButton().setText(text);
         getPositiveButton().setOnClickListener(new DialogOnClickWrapper(listener));
     }
 

@@ -78,8 +78,6 @@ public class BookmarkDialog extends GobandroidDialog {
         setIconResource(R.drawable.bookmark);
         setContentView(R.layout.save_bookmark);
 
-        setIsSmallDialog();
-
         final String inner_fname = getCleanEnsuredFilename(context);
         final EditText fname_edit = (EditText) findViewById(R.id.bookmark_name);
         ((TextView) findViewById(R.id.message)).setText(context.getResources().getString(R.string.bookmark_to_write_into) + " " + context.getSettings().getBookmarkPath());

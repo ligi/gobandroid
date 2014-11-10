@@ -65,7 +65,7 @@ public class SGFMetaData {
         }
     }
 
-    public SGFMetaData(App app) {
+    public SGFMetaData() {
         this(App.getGame().getMetaData().getFileName() + FNAME_ENDING);
     }
 

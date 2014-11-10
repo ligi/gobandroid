@@ -23,6 +23,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
@@ -53,7 +54,7 @@ public class EndReviewDialog extends GobandroidDialog {
     public EndReviewDialog(final GobandroidFragmentActivity context) {
         super(context);
 
-        meta = new SGFMetaData(this.getApp());
+        meta = new SGFMetaData();
         setContentView(R.layout.end_review_dialog);
 
         setTitle(R.string.end_review);
@@ -68,8 +69,9 @@ public class EndReviewDialog extends GobandroidDialog {
 
         rating_bar = (RatingBar) findViewById(R.id.game_rating);
 
-        if (meta.getRating() != null)
+        if (meta.getRating() != null) {
             rating_bar.setRating(.5f * meta.getRating());
+        }
 
         save_bookmark_cp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -86,7 +88,7 @@ public class EndReviewDialog extends GobandroidDialog {
             public void onClick(DialogInterface dialog, int which) {
 
                 if (save_bookmark_cp.isChecked()) {
-                    GoLink.saveGameToGoLink(getApp().getGame(), context.getSettings().getBookmarkPath(), bookmark_name.getText().toString() + ".golink");
+                    GoLink.saveGameToGoLink(App.getGame(), context.getSettings().getBookmarkPath(), bookmark_name.getText().toString() + ".golink");
                 }
 
                 if (bookmark_notification.isChecked()) {

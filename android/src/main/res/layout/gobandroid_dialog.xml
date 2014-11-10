@@ -1,57 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="@drawable/shinkaya"
-    android:id="@+id/dialog_main_container">
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignBottom="@+id/dialog_main_container"
+        android:layout_alignStart="@+id/dialog_main_container"
+        android:layout_alignEnd="@+id/dialog_main_container"
+        android:layout_alignLeft="@+id/dialog_main_container"
+        android:layout_alignRight="@+id/dialog_main_container"
+        android:layout_alignTop="@+id/dialog_main_container"
+        android:scaleType="fitXY"
+        android:src="@drawable/shinkaya"
+
+        />
 
     <LinearLayout
+        android:id="@+id/dialog_main_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/dialog_icon"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:src="@null"
-            android:padding="3dp" />
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/dialog_title"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/dialog_icon"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:padding="3dp"
+                android:src="@null" />
+
+            <TextView
+                android:id="@+id/dialog_title"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text=""
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_height="2px"
+            android:background="@color/dividing_color" />
+
+        <LinearLayout
+            android:id="@+id/dialog_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            android:padding="5dp" />
+
+
+        <LinearLayout
+            android:id="@+id/dialog_items"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp" />
+
+        <LinearLayout
+            android:id="@+id/button_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="2px"
-        android:background="@color/dividing_color" />
-
-    <LinearLayout
-        android:id="@+id/dialog_content"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="5dp"
-        android:layout_weight="1"
-        android:orientation="vertical" />
-
-
-    <LinearLayout
-        android:id="@+id/dialog_items"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:orientation="vertical" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button_container"
-        android:orientation="horizontal" />
-
-</LinearLayout>
+</RelativeLayout>
