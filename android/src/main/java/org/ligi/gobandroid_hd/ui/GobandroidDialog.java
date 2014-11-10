@@ -4,8 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.StringRes;
-import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,7 +17,6 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 
 /**
@@ -43,7 +40,7 @@ public class GobandroidDialog extends Dialog {
 
         inflater = LayoutInflater.from(context);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        super.setContentView(R.layout.gobandroid_dialog);
+        super.setContentView(R.layout.dialog_gobandroid);
 
         // this sounds misleading but behaves right - we just do not want to
         // start with keyboard open

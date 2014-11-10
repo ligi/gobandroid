@@ -3,7 +3,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -15,7 +14,6 @@
         android:layout_alignTop="@+id/dialog_main_container"
         android:scaleType="fitXY"
         android:src="@drawable/shinkaya"
-
         />
 
     <LinearLayout

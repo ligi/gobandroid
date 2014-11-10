@@ -13,7 +13,6 @@ import android.widget.Spinner;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
-import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
 /**
  * Dialog with the intention to share the current Game
@@ -53,7 +52,7 @@ public class ShareSGFDialog extends GobandroidDialog {
         setTitle(R.string.share);
         setIconResource(android.R.drawable.ic_menu_share);
 
-        shareTypeRG = (RadioGroup) findViewById(R.id.shareTypeRadiGroup);
+        shareTypeRG = (RadioGroup) findViewById(R.id.shareTypeRadioGroup);
 
 
         publicCheckBox = (CheckBox) findViewById(R.id.public_cb);

@@ -41,7 +41,7 @@ public class SaveSGFDialog extends GobandroidDialog {
 
         context = _context;
 
-        setContentView(R.layout.save_sgf_dialog);
+        setContentView(R.layout.dialog_save_sgf);
 
         setIconResource(R.drawable.save);
         TextView intro_text = (TextView) findViewById(R.id.intro_txt);
