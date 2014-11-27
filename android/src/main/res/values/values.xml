@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FloatingLabelLayout"><attr format="reference" name="floatLabelTextAppearance"/><attr format="enum" name="floatLabelTrigger"><enum name="text" value="0"/><enum name="focus" value="1"/></attr><attr format="reference|dimension" name="floatLabelSidePadding"/></declare-styleable>
+    <!-- From: file:/home/ligi/git/FloatingLabelLayout/floatinglabel/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="TextAppearance.GameInfo.FloatLabel" parent="android:TextAppearance.Small">
+        <item name="android:textColor">@drawable/game_info_float_label</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

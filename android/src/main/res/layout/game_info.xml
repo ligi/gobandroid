@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:float="http://schemas.android.com/apk/res-auto"
+    xmlns:fll="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:minWidth="@dimen/dialog_minwidth">
 
     <LinearLayout
@@ -10,24 +11,41 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:id="@+id/game_name_et"
+        <org.ligi.floatlabel.FloatingLabelLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            float:fletFloatingHint="@string/game_name" />
+            fll:floatLabelTextAppearance="@style/TextAppearance.GameInfo.FloatLabel"
+            fll:floatLabelTrigger="text">
+
+            <EditText
+                android:id="@+id/game_name_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/game_name"
+                android:inputType="textNoSuggestions" />
+        </org.ligi.floatlabel.FloatingLabelLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.wrapp.floatlabelededittext.FloatLabeledEditText
-                android:id="@+id/black_name_et"
+
+            <org.ligi.floatlabel.FloatingLabelLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                float:fletFloatingHint="@string/black_name"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                fll:floatLabelTextAppearance="@style/TextAppearance.GameInfo.FloatLabel"
+                fll:floatLabelTrigger="text">
 
+                <EditText
+                    android:id="@+id/black_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/black_name" />
+
+            </org.ligi.floatlabel.FloatingLabelLayout>
 
             <Button
                 android:id="@+id/user_is_black_btn"
@@ -37,25 +55,38 @@
         </LinearLayout>
 
 
-        <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:id="@+id/black_rank_et"
+        <org.ligi.floatlabel.FloatingLabelLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            float:fletFloatingHint="@string/black_rank" />
+            fll:floatLabelTextAppearance="@style/TextAppearance.GameInfo.FloatLabel"
+            fll:floatLabelTrigger="text">
 
+            <EditText
+                android:id="@+id/black_rank_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/black_rank" />
+        </org.ligi.floatlabel.FloatingLabelLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.wrapp.floatlabelededittext.FloatLabeledEditText
-                android:id="@+id/white_name_et"
+            <org.ligi.floatlabel.FloatingLabelLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                float:fletFloatingHint="@string/white_name"
-                android:layout_weight="1" />
+                android:layout_weight="1"
 
+                fll:floatLabelTextAppearance="@style/TextAppearance.GameInfo.FloatLabel"
+                fll:floatLabelTrigger="text">
+
+                <EditText
+                    android:id="@+id/white_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/white_name" />
+            </org.ligi.floatlabel.FloatingLabelLayout>
 
             <Button
                 android:id="@+id/user_is_white_btn"
@@ -64,36 +95,69 @@
                 android:text="@string/it_is_me" />
         </LinearLayout>
 
-        <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:id="@+id/white_rank_et"
+        <org.ligi.floatlabel.FloatingLabelLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            float:fletFloatingHint="@string/white_rank" />
+            fll:floatLabelTextAppearance="@style/TextAppearance.GameInfo.FloatLabel"
+            fll:floatLabelTrigger="text">
 
-        <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:id="@+id/komi_et"
+            <EditText
+                android:id="@+id/white_rank_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/white_rank" />
+        </org.ligi.floatlabel.FloatingLabelLayout>
+
+        <org.ligi.floatlabel.FloatingLabelLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            float:fletFloatingHint="@string/komi" />
+            fll:floatLabelTextAppearance="@style/TextAppearance.GameInfo.FloatLabel"
+            fll:floatLabelTrigger="text">
 
-        <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:id="@+id/game_result_et"
+            <EditText
+                android:id="@+id/komi_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/komi" />
+        </org.ligi.floatlabel.FloatingLabelLayout>
+
+        <org.ligi.floatlabel.FloatingLabelLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            float:fletFloatingHint="@string/game_result" />
+            fll:floatLabelTextAppearance="@style/TextAppearance.GameInfo.FloatLabel"
+            fll:floatLabelTrigger="text">
 
+            <EditText
+                android:id="@+id/game_result_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/game_result" />
+        </org.ligi.floatlabel.FloatingLabelLayout>
 
-        <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:id="@+id/game_date_et"
+        <org.ligi.floatlabel.FloatingLabelLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            float:fletFloatingHint="@string/date" />
+            fll:floatLabelTextAppearance="@style/TextAppearance.GameInfo.FloatLabel"
+            fll:floatLabelTrigger="text">
 
-        <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:id="@+id/game_difficulty_et"
+            <EditText
+                android:id="@+id/game_date_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/date" />
+        </org.ligi.floatlabel.FloatingLabelLayout>
+
+        <org.ligi.floatlabel.FloatingLabelLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            float:fletFloatingHint="@string/game_difficulty" />
+            fll:floatLabelTextAppearance="@style/TextAppearance.GameInfo.FloatLabel"
+            fll:floatLabelTrigger="text">
 
+            <EditText
+                android:id="@+id/game_difficulty_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/game_difficulty" />
+        </org.ligi.floatlabel.FloatingLabelLayout>
     </LinearLayout>
 </ScrollView>

@@ -24,17 +24,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
-import com.wrapp.floatlabelededittext.FloatLabeledEditText;
-
+import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.GoGameMetadata;
+import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 /**
  * Class to show an Alert with the Game Info ( who plays / rank / game name .. )
@@ -42,10 +46,10 @@ import butterknife.InjectView;
 public class GameInfoDialog extends GobandroidDialog {
 
     @InjectView(R.id.game_name_et)
-    FloatLabeledEditText nameEdit;
+    EditText nameEdit;
 
     @InjectView(R.id.black_name_et)
-    FloatLabeledEditText blackNameEdit;
+    EditText blackNameEdit;
 
     @InjectView(R.id.user_is_white_btn)
     Button user_is_white_btn;
@@ -54,33 +58,63 @@ public class GameInfoDialog extends GobandroidDialog {
     Button user_is_black_btn;
 
     @InjectView(R.id.white_name_et)
-    FloatLabeledEditText white_name_et;
+    EditText white_name_et;
 
     @InjectView(R.id.white_rank_et)
-    FloatLabeledEditText white_rank_et;
+    EditText white_rank_et;
 
     @InjectView(R.id.komi_et)
-    FloatLabeledEditText game_komi_et;
+    EditText game_komi_et;
 
     @InjectView(R.id.game_result_et)
-    FloatLabeledEditText game_result_et;
+    EditText game_result_et;
 
     @InjectView(R.id.game_difficulty_et)
-    FloatLabeledEditText game_difficulty_et;
+    EditText game_difficulty_et;
 
     @InjectView(R.id.black_rank_et)
-    FloatLabeledEditText black_rank_et;
+    EditText black_rank_et;
 
     @InjectView(R.id.game_date_et)
-    FloatLabeledEditText game_date_et;
+    EditText game_date_et;
+
+    @OnClick(R.id.user_is_black_btn)
+    void onBlack() {
+        if (checkUserNamePresent()) {
+            blackNameEdit.setText(App.getGobandroidSettings().getUsername());
+            white_rank_et.setText(App.getGobandroidSettings().getRank());
+        }
+        EditText et;
+    }
+
+    @OnTextChanged({R.id.black_name_et, R.id.white_name_et})
+    void onWhiteTextChanged() {
+        updateItsMeButtonVisibility();
+    }
+
+    private boolean checkUserNamePresent() {
+        if (App.getGobandroidSettings().getUsername().isEmpty()) {
+
+            AXT.at(getContext()).startCommonIntent().activityFromClass(BaseProfileActivity.class);
+            return false;
+        }
+        return true;
+    }
+
+    @OnClick(R.id.user_is_white_btn)
+    void onWhite() {
+        if (checkUserNamePresent()) {
+            white_name_et.setText(App.getGobandroidSettings().getUsername());
+            white_rank_et.setText(App.getGobandroidSettings().getRank());
+        }
+    }
+
 
     public GameInfoDialog(final Context context, final GoGame game) {
         super(context);
         setTitle(R.string.game_info);
         setIconResource(R.drawable.info);
         setContentView(R.layout.game_info);
-
-        final App app = (App) context.getApplicationContext();
 
         ButterKnife.inject(this);
 
@@ -94,45 +128,12 @@ public class GameInfoDialog extends GobandroidDialog {
         game_difficulty_et.setText(game.getMetaData().getDifficulty());
         game_date_et.setText(game.getMetaData().getDate());
 
-        if (app.getSettings().getUsername().isEmpty()) {
-            user_is_black_btn.setVisibility(View.GONE);
-            user_is_white_btn.setVisibility(View.GONE);
-        } else {
-            if (!game.getMetaData().getWhiteName().equals("")) {
-                user_is_white_btn.setVisibility(View.GONE);
-            }
+        updateItsMeButtonVisibility();
 
-            if (!game.getMetaData().getBlackName().equals("")) {
-                user_is_black_btn.setVisibility(View.GONE);
-            }
-
-        }
-
-        user_is_black_btn.setOnClickListener(new View.OnClickListener() {
+        setPositiveButton(android.R.string.ok, new OnClickListener() {
 
             @Override
-            public void onClick(View v) {
-                blackNameEdit.setText(app.getSettings().getUsername());
-                black_rank_et.setText(app.getSettings().getRank());
-                user_is_black_btn.setVisibility(View.GONE);
-            }
-
-        });
-
-        user_is_white_btn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                white_name_et.setText(app.getSettings().getUsername());
-                white_rank_et.setText(app.getSettings().getRank());
-                user_is_white_btn.setVisibility(View.GONE);
-            }
-
-        });
-
-
-        class SaveChangesOnClick implements DialogInterface.OnClickListener {
-            public void onClick(DialogInterface dialog, int whichButton) {
+            public void onClick(DialogInterface dialog, int which) {
                 game.getMetaData().setName(nameEdit.getText().toString());
                 game.getMetaData().setBlackName(blackNameEdit.getText().toString());
                 game.getMetaData().setBlackRank(black_rank_et.getText().toString());
@@ -149,9 +150,15 @@ public class GameInfoDialog extends GobandroidDialog {
 
                 game.getMetaData().setResult(game_result_et.getText().toString());
                 dialog.dismiss();
-            }
-        }
 
-        setPositiveButton(android.R.string.ok, new SaveChangesOnClick());
+            }
+        });
+    }
+
+    private void updateItsMeButtonVisibility() {
+        final GoGameMetadata metaData = App.getGame().getMetaData();
+
+        user_is_white_btn.setVisibility(white_name_et.getText().toString().isEmpty() ? View.VISIBLE : View.GONE);
+        user_is_black_btn.setVisibility(blackNameEdit.getText().toString().isEmpty() ? View.VISIBLE : View.GONE);
     }
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- The color when activated/focused (usually your app's accent color) -->
+    <item android:color="@color/accent_material_light" android:state_activated="true" />
+
+    <!-- The color when not activated/focused (usually grey) -->
+    <item android:color="@color/accent_material_dark" />
+
+</selector><!-- From: file:/home/ligi/git/FloatingLabelLayout/floatinglabel/src/main/res/drawable/game_info_float_label.xmlxml -->

@@ -21,6 +21,7 @@ public class BaseProfileActivity extends GobandroidFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
+        setTitle(R.string.profile);
 
         ButterKnife.inject(this);
 
