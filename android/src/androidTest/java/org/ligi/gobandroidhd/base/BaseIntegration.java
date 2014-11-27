@@ -51,4 +51,12 @@ public abstract class BaseIntegration<T extends Activity> extends ActivityInstru
     protected String getString(@StringRes int resId) {
         return getInstrumentation().getTargetContext().getString(resId);
     }
+
+    protected void sleep(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

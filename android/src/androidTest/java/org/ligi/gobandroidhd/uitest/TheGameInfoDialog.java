@@ -66,11 +66,8 @@ public class TheGameInfoDialog extends BaseIntegration<GameReviewActivity> {
 
         onView(withId(R.id.game_result_et)).perform(scrollTo(),clearText() ,typeText(CUSTOM_KOMI),closeSoftKeyboard());
 
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(100);
+
         onView(withText(android.R.string.ok)).check(matches(isDisplayed()));
         onView(withText(android.R.string.ok)).perform(click());
 
@@ -92,6 +89,8 @@ public class TheGameInfoDialog extends BaseIntegration<GameReviewActivity> {
         final GameReviewActivity activity = getActivity();
         onView(withId(R.id.menu_game_info)).perform(click());
         onView(withId(R.id.komi_et)).perform(scrollTo(),clearText() ,typeText("a"),closeSoftKeyboard());
+
+        sleep(100);
 
         onView(withText(android.R.string.ok)).check(matches(isDisplayed()));
         onView(withText(android.R.string.ok)).perform(click());
