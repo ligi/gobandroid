@@ -23,6 +23,8 @@ public class BaseProfileActivity extends GobandroidFragmentActivity {
         setContentView(R.layout.profile);
         setTitle(R.string.profile);
 
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
         ButterKnife.inject(this);
 
         rank_et.setText(getApp().getSettings().getRank());
