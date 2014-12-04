@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -56,11 +57,11 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
 
     public void startTimeMeasure() {
         start_time = System.currentTimeMillis();
-        thinking = true ;
+        thinking = true;
     }
 
     public void stopTimeMeasure() {
-        thinking = false ;
+        thinking = false;
         times.add(System.currentTimeMillis() - start_time);
         long sum = 0;
         for (long l : times) {
@@ -146,7 +147,15 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
         };
 
         // gnugo_size_set=false;
-        getApplication().bindService(new Intent(INTENT_ACTION), conn, Context.BIND_AUTO_CREATE);
+
+        final Intent intent = new Intent(INTENT_ACTION);
+        final ResolveInfo resolveInfo = getPackageManager().resolveService(intent, 0);
+
+        final ComponentName name = new ComponentName(resolveInfo.serviceInfo.packageName, resolveInfo.serviceInfo.name);
+
+        intent.setComponent(name);
+
+        getApplication().bindService(intent, conn, Context.BIND_AUTO_CREATE);
 
         new Thread(this).start();
 
@@ -203,12 +212,11 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
 
     @Override
     public byte doMoveWithUIFeedback(byte x, byte y) {
-        if(thinking)
-        {
+        if (thinking) {
             Toast.makeText(this, R.string.ai_is_thinking, Toast.LENGTH_LONG).show();
             return 0;
         }
-    
+
         if ((getGame().isBlackToMove() && (!playing_black)))
             processMove("black", x, y);
         else if (((!getGame().isBlackToMove()) && (!playing_white)))
@@ -364,7 +372,7 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
     @Override
     public void requestUndo() {
         /*  do not need wait gnugo ai any more . 
-		if (isMoversMove()) {
+        if (isMoversMove()) {
             Toast.makeText(this, "Please wait for GnuGo", Toast.LENGTH_LONG).show();
             return;
         }*/
