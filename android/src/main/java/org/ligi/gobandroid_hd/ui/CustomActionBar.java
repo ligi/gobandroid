@@ -145,7 +145,7 @@ public class CustomActionBar
                         }
                         activity.finish();
                         Log.i("set mode" + mode);
-                        app.getInteractionScope().setMode(mode);
+                        App.getInteractionScope().setMode(mode);
                         final Intent i = SwitchModeHelper.getIntentByMode(app, mode);
                         activity.startActivity(i);
                     }
@@ -196,7 +196,7 @@ public class CustomActionBar
 
             @Override
             public void run() {
-                final byte actMode = app.getInteractionScope().getMode();
+                final byte actMode = App.getInteractionScope().getMode();
                 mode_tv.setText(InteractionScope.getModeStringRes(actMode));
 
                 white_captures_tv.setText("" + App.getGame().getCapturesWhite());
