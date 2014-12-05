@@ -34,7 +34,7 @@
         <item name="actionBarStyle">@style/ActionBarStyle.Transparent</item>
 
         <item name="android:windowContentOverlay">@null</item>
-
+        <item name="actionModeBackground">@color/action_bg</item>
     </style>
 
     <style name="topic_divider">
