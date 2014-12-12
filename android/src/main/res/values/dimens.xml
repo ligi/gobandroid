@@ -8,4 +8,6 @@
     <dimen name="thumbnail_size">150dp</dimen>
     <dimen name="menu_drawer_width">230dp</dimen>
     <dimen name="profile_size">128dp</dimen>
+
+    <dimen name="cardview_elevated_elevation">8dp</dimen>
 </resources>

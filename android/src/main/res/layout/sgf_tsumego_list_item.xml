@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android.support.v7.cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/clickable_bg">
+    android.support.v7.cardview:cardBackgroundColor="@android:color/transparent"
+    android.support.v7.cardview:cardMaxElevation="4dp"
+    android:layout_margin="4dp"
+    android.support.v7.cardview:cardUseCompatPadding="true">
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+    <RelativeLayout style="@style/item_relative_style">
 
-        <LinearLayout
-            android:id="@+id/thumb_container"
-            android:layout_width="@dimen/thumbnail_size"
-            android:layout_height="@dimen/thumbnail_size"
-            android:layout_margin="5dp"
-            android:orientation="horizontal" />
+        <ImageView
+            android:id="@+id/solve_status_image"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            tools:src="@drawable/dashboard_tsumego" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
+        <TextView
+            android:id="@+id/filename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/solve_status_image"
+            android:layout_toRightOf="@id/solve_status_image"
+            android:fontFamily="sans-serif"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/black"
+            tools:text="Large Text" />
+
+        <TextView
+            android:id="@+id/hints_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/filename"
+            android:layout_toEndOf="@id/solve_status_image"
+            android:layout_toRightOf="@id/solve_status_image"
+            android:fontFamily="sans-serif-light"
+            tools:text="TextView" />
+
+
+        <org.ligi.gobandroid_hd.ui.PreviewView
+            android:id="@+id/previewView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hints_tv"
+            android:layout_margin="5dp" />
 
-            <TextView
-                android:id="@+id/filename"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Large Text"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@android:color/black" />
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/hints_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="TextView" />
-
-            <ImageView
-                android:id="@+id/solve_status_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:src="@drawable/dashboard_tsumego" />
-        </LinearLayout>
-    </LinearLayout>
-
-</LinearLayout>
+</android.support.v7.widget.CardView>

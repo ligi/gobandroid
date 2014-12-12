@@ -95,7 +95,6 @@ public class SGFReader {
 
     private GoGame getGame() {
         try {
-            Log.i("sgf to process:" + sgf);
             byte opener = 0;
             boolean escape = false;
             boolean consuming_param = false;

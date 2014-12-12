@@ -1,5 +1,7 @@
 package org.ligi.gobandroid_hd.ui.tsumego;
 
+import android.graphics.Point;
+
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
 
@@ -27,6 +29,20 @@ public class TsumegoHelper {
 
         return max;
     }
+
+    public static Point calcSpanAsPoint(GoGame game, boolean with_moves) {
+        Point res=new Point(0,0);
+        for (int x = 0; x < game.getSize(); x++)
+            for (int y = 0; y < game.getSize(); y++) {
+                if ((x >res.x) && !game.getHandicapBoard().isCellFree(x, y))
+                    res.x = x;
+                if ((y > res.y) && !game.getHandicapBoard().isCellFree(x, y))
+                    res.y = y;
+            }
+
+        return res;
+    }
+
 
     public static int calcMaxMove(GoMove move, int act_max) {
         if (move == null)

@@ -6,8 +6,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.util.AttributeSet;
 import android.view.View;
 
+import org.ligi.axt.views.SquareView;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
@@ -23,55 +26,88 @@ public class PreviewView extends View {
 
     private GoGame game;
     private Bitmap white_stone_bitmap, black_stone_bitmap;
-    private int span;
+    private Point span;
     private int stone_size;
     private Paint black_line_paint;
 
-    public PreviewView(Context context, GoGame game) {
+    public PreviewView(Context context) {
         super(context);
+        init();
+    }
 
-        span = TsumegoHelper.calcSpan(game, false) + 1;
+    public PreviewView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
 
-        this.game = game;
+    private void init() {
         black_line_paint = new Paint();
         black_line_paint.setColor(Color.BLACK);
     }
 
     private Bitmap getScaledRes(float size, int resID) {
-        Bitmap unscaled_bitmap = BitmapFactory.decodeResource(
-                this.getResources(), resID);
-        return Bitmap.createScaledBitmap(unscaled_bitmap, (int) size,
-                (int) size, true);
+        final Bitmap unscaled_bitmap = BitmapFactory.decodeResource(getResources(), resID);
+        return Bitmap.createScaledBitmap(unscaled_bitmap, (int) size, (int) size, true);
     }
 
     public GoGame getGame() {
         return game;
     }
 
+    public void setGame(GoGame game) {
+        this.game = game;
+        span = TsumegoHelper.calcSpanAsPoint(game, false) ;
+        white_stone_bitmap = null;
+        requestLayout();
+    }
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        stone_size = (int) (h / span);
-        white_stone_bitmap = getScaledRes(stone_size, R.drawable.stone_white);
-        black_stone_bitmap = getScaledRes(stone_size, R.drawable.stone_black);
+
+        white_stone_bitmap = null;
+    }
+
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        if (span!=null) {
+            final int parentWidth = View.MeasureSpec.getSize(widthMeasureSpec);
+            final float ratio=(span.y+1)/(float)(span.x+1);
+            this.setMeasuredDimension((parentWidth), (int)(parentWidth*ratio));
+        }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        // int offset=game.getSize()-span;
 
-        for (int x = 0; x < span; x++) {
+        if (span == null) {
+            return;
+        }
+
+        if (white_stone_bitmap == null) {
+            stone_size = getWidth() / (span.x+1);
+            white_stone_bitmap = getScaledRes(stone_size, R.drawable.stone_white);
+            black_stone_bitmap = getScaledRes(stone_size, R.drawable.stone_black);
+        }
+
+        for (int x = 0; x <= span.y; x++) {
             canvas.drawLine(0.5f * stone_size, (0.5f + x) * stone_size,
-                    (0.5f + span) * stone_size, (0.5f + x) * stone_size,
-                    black_line_paint);
-            canvas.drawLine((0.5f + x) * stone_size, 0.5f * stone_size,
-                    (0.5f + x) * stone_size, (.5f + span) * stone_size,
+                    (0.5f + span.x) * stone_size, (0.5f + x) * stone_size,
                     black_line_paint);
         }
 
-        for (int x = 0; x < span; x++)
-            for (int y = 0; y < span; y++) {
+        for (int y = 0; y <= span.x; y++) {
+            canvas.drawLine((0.5f + y) * stone_size, 0.5f * stone_size,
+                    (0.5f + y) * stone_size, (.5f + span.y) * stone_size,
+                    black_line_paint);
+        }
+
+        for (int x = 0; x <= span.x; x++)
+            for (int y = 0; y <= span.y; y++) {
                 if (game.getVisualBoard().isCellBlack(x, y))
                     canvas.drawBitmap(black_stone_bitmap, x * stone_size, y
                             * stone_size, null);

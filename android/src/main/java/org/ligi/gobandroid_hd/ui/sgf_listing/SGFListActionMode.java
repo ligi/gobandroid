@@ -67,8 +67,12 @@ public class SGFListActionMode implements ActionMode.Callback {
         return new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                File file = new File(fileName);
-                AXT.at(file).deleteRecursive();
+                final File file = new File(fileName);
+                if (file.isDirectory()) {
+                    AXT.at(file).deleteRecursive();
+                } else {
+                    file.delete();
+                }
                 refreshable.refresh();
             }
         };

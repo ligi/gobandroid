@@ -35,7 +35,7 @@ import android.widget.TextView;
 
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.App;
-import org.ligi.gobandroid_hd.FileEncodeDetecter;
+import org.ligi.gobandroid_hd.FileEncodeDetector;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -130,7 +130,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         String res = "";
 
         if (url.startsWith("/")) {
-            return AXT.at(new File(url)).readToString(FileEncodeDetecter.detect(url));
+            return AXT.at(new File(url)).readToString(FileEncodeDetector.detect(new File(url)));
         }
 
         return res;
@@ -148,7 +148,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
     public String uri2string(Uri intent_uri) throws IOException {
 
         if (intent_uri.toString().startsWith("/")) {
-            return AXT.at(new File(intent_uri.toString())).readToString( FileEncodeDetecter.detect(intent_uri.toString()));
+            return AXT.at(new File(intent_uri.toString())).readToString( FileEncodeDetector.detect(intent_uri.toString()));
         }
 
         InputStream in;
@@ -187,7 +187,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         buf.flush();
 
         InputStream stream_det  = new ByteArrayInputStream(buf.toByteArray());
-        Charset chrset = FileEncodeDetecter.detect(stream_det);
+        Charset chrset = FileEncodeDetector.detect(stream_det);
 
         InputStream stream_pro  = new ByteArrayInputStream(buf.toByteArray());
         StringBuilder out = new StringBuilder();

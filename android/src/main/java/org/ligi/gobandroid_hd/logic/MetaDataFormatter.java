@@ -37,30 +37,30 @@ public class MetaDataFormatter {
     }
 
     public String getBlackPlayerString() {
-        StringBuilder res = new StringBuilder();
-        res.append(meta.getBlackName());
-
-        if (!meta.getBlackRank().equals(""))
-            res.append(" (" + meta.getBlackRank() + ")");
-
-        return res.toString();
+        return getPlayerString(meta.getBlackName(),  meta.getBlackRank());
     }
 
     public String getWhitePlayerString() {
-        StringBuilder res = new StringBuilder();
-        res.append(meta.getWhiteName());
+        return getPlayerString(meta.getWhiteName(), meta.getWhiteRank());
+    }
 
-        if (!meta.getWhiteRank().equals(""))
-            res.append(" (" + meta.getWhiteRank() + ")");
+    private String getPlayerString(String name, String rank) {
+        final StringBuilder res = new StringBuilder();
+        res.append(name);
+
+        if (!rank.isEmpty()) {
+            res.append(" (").append(rank).append(")");
+        }
 
         return res.toString();
     }
 
     public String getExtrasString() {
-        StringBuilder res = new StringBuilder("Komi: " + game.getKomi());
+        final StringBuilder res = new StringBuilder("Komi: " + game.getKomi());
 
-        if (!meta.getResult().equals(""))
-            res.append(" Result: " + meta.getResult());
+        if (!meta.getResult().isEmpty()) {
+            res.append(" Result: ").append(meta.getResult());
+        }
 
         return res.toString();
     }

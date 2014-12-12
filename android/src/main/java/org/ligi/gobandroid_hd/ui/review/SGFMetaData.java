@@ -19,7 +19,7 @@ public class SGFMetaData {
 
     public Integer rating = null;
     public boolean is_solved = false;
-    private String meta_fname = null;
+    private File metaFile = null;
     private Integer hints_used = 0;
 
     private boolean has_data = false;
@@ -27,16 +27,25 @@ public class SGFMetaData {
     public final static String FNAME_ENDING = ".sgfmeta";
 
     public SGFMetaData(String fname) {
+        this(new File(sanitizeFileName(fname)));
+    }
 
-        if (fname.startsWith("file://"))
-            fname = fname.substring(8);
+    public final static String sanitizeFileName(String fname) {
+        String result=fname;
 
-        if (!fname.endsWith(FNAME_ENDING))
-            fname += FNAME_ENDING;
+        if (fname.startsWith("file://")) {
+            result = fname.substring(8);
+        }
 
-        meta_fname = fname;
+        if (!fname.endsWith(FNAME_ENDING)) {
+            result += FNAME_ENDING;
+        }
 
-        final File metaFile = new File(meta_fname);
+        return result;
+    }
+    public SGFMetaData(File metaFile) {
+
+        this.metaFile =metaFile;
 
         if (metaFile.exists()) {
             try {
@@ -87,21 +96,20 @@ public class SGFMetaData {
 
     public void persist() {
         try {
-            JSONObject object = new JSONObject();
+            final JSONObject object = new JSONObject();
             try {
-                if (rating != null)
+                if (rating != null) {
                     object.put("rating", rating);
+                }
                 object.put("is_solved", is_solved);
                 object.put("hints_used", hints_used);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            String json_str = object.toString();
-
-            FileWriter sgf_writer = new FileWriter(new File(meta_fname));
-
-            BufferedWriter out = new BufferedWriter(sgf_writer);
+            final String json_str = object.toString();
+            final FileWriter sgf_writer = new FileWriter(metaFile);
+            final BufferedWriter out = new BufferedWriter(sgf_writer);
 
             out.write(json_str);
             out.close();
