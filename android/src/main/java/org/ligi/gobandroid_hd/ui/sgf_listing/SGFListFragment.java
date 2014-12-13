@@ -94,7 +94,10 @@ public class SGFListFragment extends Fragment implements Refreshable {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View inflate = View.inflate(container.getContext(), R.layout.recycler_view, null);
         final RecyclerView recylerView = (RecyclerView) inflate.findViewById(R.id.content_recycler);
-        recylerView.setLayoutManager(new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL));
+
+        final int rows = getResources().getInteger(R.integer.sgf_list_rows);
+
+        recylerView.setLayoutManager(new StaggeredGridLayoutManager(rows, OrientationHelper.VERTICAL));
         recylerView.setAdapter(new RecyclerView.Adapter() {
 
             private final static int TYPE_PATH = 0;

@@ -8,4 +8,6 @@
         <item name="android:textSize">11sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <integer name="sgf_list_rows">1</integer>
 </resources>
