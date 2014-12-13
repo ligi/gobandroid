@@ -10,4 +10,5 @@
     <dimen name="profile_size">128dp</dimen>
 
     <dimen name="cardview_elevated_elevation">8dp</dimen>
+    <dimen name="cardview_unelevated_elevation">1dp</dimen>
 </resources>

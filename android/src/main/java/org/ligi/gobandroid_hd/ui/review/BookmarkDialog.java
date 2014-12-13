@@ -16,8 +16,8 @@
 
 package org.ligi.gobandroid_hd.ui.review;
 
-import android.content.Context;
 import android.content.DialogInterface;
+import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -44,30 +44,28 @@ public class BookmarkDialog extends GobandroidDialog {
      * sometimes for saving bookmarks we need an ensured saved file e.g. when
      * coming directly from recording - this should ensure this
      *
-     * @param ctx
      * @return
      */
-    public static String getEnsuredFilename(Context ctx) {
-        final App app = (App) ctx.getApplicationContext();
+    public static String getEnsuredFilename() {
 
         String fname = App.getGame().getMetaData().getFileName();
-        if ((fname == null) || (fname.equals(""))) {
+        if (TextUtils.isEmpty(fname)) {
             // was not saved before - do it now ( needed for a bookmark )
 
             fname = getDefaultFilename();
-            SGFWriter.saveSGF(App.getGame(), app.getSettings().getSGFSavePath() + "/autosave/" + fname);
+            SGFWriter.saveSGF(App.getGame(), App.getGobandroidSettings().getSGFSavePath() + "/autosave/" + fname);
         }
 
         return fname;
     }
 
-    public static String getCleanEnsuredFilename(Context ctx) {
-        String[] path_components = getEnsuredFilename(ctx).split("/");
+    public static String getCleanEnsuredFilename() {
+        final String[] path_components = getEnsuredFilename().split("/");
         return path_components[path_components.length - 1].replace(".sgf", "");
     }
 
     public static String getDefaultFilename() {
-        SimpleDateFormat date_formatter = new SimpleDateFormat("dd.MMM.yyyy_HH_mm_ss");
+        final SimpleDateFormat date_formatter = new SimpleDateFormat("dd.MMM.yyyy_HH_mm_ss");
         return date_formatter.format(new Date()) + ".sgf";
     }
 
@@ -78,16 +76,16 @@ public class BookmarkDialog extends GobandroidDialog {
         setIconResource(R.drawable.bookmark);
         setContentView(R.layout.save_bookmark);
 
-        final String inner_fname = getCleanEnsuredFilename(context);
-        final EditText fname_edit = (EditText) findViewById(R.id.bookmark_name);
+        final String innerFileName = getCleanEnsuredFilename();
+        final EditText fileNameEdit = (EditText) findViewById(R.id.bookmark_name);
         ((TextView) findViewById(R.id.message)).setText(context.getResources().getString(R.string.bookmark_to_write_into) + " " + context.getSettings().getBookmarkPath());
-        fname_edit.setText(inner_fname);
+        fileNameEdit.setText(innerFileName);
 
         class SaveBookmarkOnClickListener implements OnClickListener {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                GoLink.saveGameToGoLink(App.getGame(), context.getSettings().getBookmarkPath(), fname_edit.getText().toString() + ".golink");
+                GoLink.saveGameToGoLink(App.getGame(), context.getSettings().getBookmarkPath(), fileNameEdit.getText().toString() + ".golink");
                 dialog.dismiss();
             }
 

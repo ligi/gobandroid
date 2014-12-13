@@ -9,4 +9,6 @@
     <item name="profile" type="id" />
     <item name="empty" type="id" />
     <item name="online_play" type="id" />
+
+    <item name="tag_actionmode" type="id"/>
 </resources>

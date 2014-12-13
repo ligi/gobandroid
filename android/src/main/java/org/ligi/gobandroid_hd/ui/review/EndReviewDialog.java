@@ -65,7 +65,7 @@ public class EndReviewDialog extends GobandroidDialog {
 
         bookmark_notification = (CheckBox) findViewById(R.id.bookmark_notification_cb);
         bookmark_name = (EditText) findViewById(R.id.bookmark_name_et);
-        bookmark_name.setText(BookmarkDialog.getCleanEnsuredFilename(context));
+        bookmark_name.setText(BookmarkDialog.getCleanEnsuredFilename());
 
         rating_bar = (RatingBar) findViewById(R.id.game_rating);
 

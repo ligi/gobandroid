@@ -51,7 +51,7 @@
         <TextView
             android:id="@+id/filename"
             style="@style/review_list_text"
-            android:layout_below="@id/player_black_stone_img"
+            android:layout_below="@id/player_black"
             tools:text="filename" />
 
         <RatingBar

@@ -14,6 +14,7 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -150,6 +151,27 @@ public class SGFListFragment extends Fragment implements Refreshable {
 
                 final CardView cardView = (CardView) holder.itemView;
 
+                cardView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (v.getTag(R.id.tag_actionmode)!=null) {
+                            return false;
+                        }
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_CANCEL:
+                            case MotionEvent.ACTION_UP:
+                                cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_default_elevation));
+                                break;
+
+                            case MotionEvent.ACTION_DOWN:
+                                cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_unelevated_elevation));
+                                break;
+                        }
+                        return false;
+                    }
+                });
+
+
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -183,10 +205,11 @@ public class SGFListFragment extends Fragment implements Refreshable {
                             return false;
                         }
 
+                        v.setTag(R.id.tag_actionmode,Boolean.TRUE);
+
                         final ActionBarActivity activity = (ActionBarActivity) getActivity();
                         actionMode = Optional.fromNullable(activity.startSupportActionMode(getActionMode(position)));
 
-                        cardView.setMaxCardElevation(getResources().getDimension(R.dimen.cardview_elevated_elevation));
                         cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_elevated_elevation));
 
                         return true;
@@ -206,6 +229,7 @@ public class SGFListFragment extends Fragment implements Refreshable {
                             public void onDestroyActionMode(ActionMode mode) {
                                 actionMode = Optional.absent();
                                 cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_default_elevation));
+                                cardView.setTag(R.id.tag_actionmode,null);
                                 super.onDestroyActionMode(mode);
                             }
                         };

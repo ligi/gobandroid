@@ -11,7 +11,6 @@
     <TextView
         android:id="@+id/pathName"
         style="@style/item_relative_style"
-        android:background="@drawable/clickable_bg"
         android:drawableLeft="@drawable/folder"
         android:drawableStart="@drawable/folder"
         android:fontFamily="sans-serif"
