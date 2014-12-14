@@ -104,7 +104,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.0.0'
     compile 'org.ligi:floatlabel:0.2.0'
     compile 'net.sourceforge.jchardet:jchardet:1.0'
-    compile 'fr.nicolaspomepuy:discreetapprate:2.0.2@aar'
+    compile 'fr.nicolaspomepuy:discreetapprate:2.0.3@aar'
     compile 'com.android.support:support-annotations:20.0.0'
 
     def play_services = 'com.google.android.gms:play-services-base:6.5.+'
