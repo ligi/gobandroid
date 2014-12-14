@@ -25,6 +25,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -105,7 +106,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             }
         }
 
-        interaction_scope = getApp().getInteractionScope();
+        interaction_scope = App.getInteractionScope();
         getSupportActionBar().setHomeButtonEnabled(true);
 
         AXT.at(this).disableRotation();
@@ -229,10 +230,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {        /*
-         * case R.id.menu_game_switchmode: new SwitchModeDialog(this).show();
-		 * return true;
-		 */
+        switch (item.getItemId()) {
 
             case R.id.menu_game_info:
                 new GameInfoDialog(this, getGame()).show();
@@ -252,20 +250,9 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
                 return true;
 
-			/*
-             * case R.id.menu_game_results: new GameResultsAlert(this,
-			 * getGame()).show(); return true;
-			 */
             case R.id.menu_write_sgf:
                 new SaveSGFDialog(this).show();
                 return true;
-
-            /*
-            case R.id.menu_game_invite:
-                getGame().setCloudDefs(null, null);
-                new UploadGameToCloudEndpointsWithSend(this, "private_invite").execute();
-                return true;
-            */
 
             case R.id.menu_bookmark:
                 new BookmarkDialog(this).show();
@@ -282,7 +269,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     public void switchToCounting() {
 
-        getApp().getInteractionScope().setMode(InteractionScope.MODE_COUNT);
+        App.getInteractionScope().setMode(InteractionScope.MODE_COUNT);
         startActivity(new Intent(this, GameScoringActivity.class));
         finish();
 
@@ -301,10 +288,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         // sound_man.playSound(GoSoundManager.SOUND_END);
         getGame().getGoMover().stop();
         finish();
-
-        if (toHome) {
-            // startActivity(new Intent(this, gobandroid.class));
-        }
     }
 
     public void quit(final boolean toHome) {
@@ -339,24 +322,28 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
      *
      * @param resId
      */
-    protected void showInfoToast(int resId) {
-        // info_toast.cancel();
+    protected void showInfoToast(@StringRes int resId) {
         info_toast.setText(resId);
         info_toast.show();
     }
 
     protected byte doMoveWithUIFeedback(byte x, byte y) {
 
-        byte res = getGame().do_move(x, y);
+        final byte res = getGame().do_move(x, y);
+        showInfoToast(getToastForResult(res));
+        return res;
+    }
+
+    private int getToastForResult(byte res) {
         switch (res) {
             case GoGame.MOVE_INVALID_IS_KO:
-                showInfoToast(R.string.invalid_move_ko);
-                break;
+                return R.string.invalid_move_ko;
+
             case GoGame.MOVE_INVALID_CELL_NO_LIBERTIES:
-                showInfoToast(R.string.invalid_move_no_liberties);
-                break;
+                return R.string.invalid_move_no_liberties;
         }
-        return res;
+
+        throw (new RuntimeException("Illegal game result " + res));
     }
 
     public void game2ui() {
@@ -371,8 +358,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             return;
         }
 
-        FragmentTransaction fragmentTransAction = getSupportFragmentManager().beginTransaction();
-
+        final FragmentTransaction fragmentTransAction = getSupportFragmentManager().beginTransaction();
 
         if (actFragment != null) {
             fragmentTransAction.remove(actFragment);
@@ -386,7 +372,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     }
 
     protected void eventForZoomBoard(MotionEvent event) {
-        getApp().getInteractionScope().setTouchPosition(getBoard().pixel2boardPos(event.getX(), event.getY()));
+        App.getInteractionScope().setTouchPosition(getBoard().pixel2boardPos(event.getX(), event.getY()));
 
         if (event.getAction() == MotionEvent.ACTION_UP) {
             gameExtrasContainer.setVisibility(View.VISIBLE);
@@ -402,10 +388,10 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     public boolean onTouch(View v, MotionEvent event) {
 
         eventForZoomBoard(event);
-        Log.i("touch in GoActivity");
+
         if (event.getAction() == MotionEvent.ACTION_UP) {
             if (getResources().getBoolean(R.bool.small)) {
-                this.getSupportActionBar().show();
+                getSupportActionBar().show();
             }
 
         } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -413,7 +399,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             // for very small devices we want to hide the ActionBar to actually
             // see something in the Zoom-Fragment
             if (getResources().getBoolean(R.bool.small)) {
-                this.getSupportActionBar().hide();
+                getSupportActionBar().hide();
             }
 
             if (getGame().isBlackToMove()) {
@@ -440,14 +426,8 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         go_board.move_stone_mode = false;
 
-        /*
-        TODO dismiss ProgressDialog from upload when needed
-
-        if (pd != null)
-            pd.dismiss();
-          */
         if (getGame() == null) {
-            Log.w("we do not have a game (anymore) in onStop of a GoGame activity - thats crazy!");
+            Log.w("we do not have a game (anymore) in onStop of a GoGame activity - that's crazy!");
         } else {
             getGame().removeGoGameChangeListener(this);
         }
@@ -497,12 +477,8 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
                     if (getGame().getVisualBoard().isCellFree(interaction_scope.getTouchX(), interaction_scope.getTouchY())) {
                         getGame().getActMove().setXY((byte) interaction_scope.getTouchX(), (byte) interaction_scope.getTouchY());
-                        getGame().getActMove().setDidCaptures(true); // TODO check
-                        // if we
-                        // harm sth
-                        // with that
+                        getGame().getActMove().setDidCaptures(true); // TODO check if we harm sth with that
                         getGame().refreshBoards();
-
                     }
                     go_board.move_stone_mode = false; // moving of stone done
                 } else if ((getGame().getActMove().getX() == interaction_scope.getTouchX()) && (getGame().getActMove().getY() == interaction_scope.getTouchY())) {
@@ -521,14 +497,11 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     public void initializeStoneMove() {
 
-        if (getGame().getGoMover().isPlayingInThisGame()) // dont allow with a
-        // mover
-        {
+        if (getGame().getGoMover().isPlayingInThisGame()) { // dont allow with a mover
             return;
         }
 
-        if (go_board.move_stone_mode) // already in the mode
-        {
+        if (go_board.move_stone_mode) { // already in the mode
             return; // -> do nothing
         }
 
@@ -548,7 +521,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     }
 
     public boolean doAskToKeepVariant() {
-        return GoPrefs.isAskVariantEnabled() && getApp().getInteractionScope().ask_variant_session;
+        return GoPrefs.isAskVariantEnabled() && App.getInteractionScope().ask_variant_session;
     }
 
     @Override
