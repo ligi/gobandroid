@@ -23,6 +23,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -95,7 +96,8 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         if (!App.isTesting) {
             // if there where stacktraces collected -> give the user the option to send them
-            if (!TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this)) {
+            if (!TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this)
+                    && Build.VERSION.SDK_INT < 21) {
                 AppRate.with(this)
                         .retryPolicy(RetryPolicy.EXPONENTIAL)
                         .initialLaunchCount(5)
