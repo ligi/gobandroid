@@ -87,11 +87,11 @@ public class GoPrefs {
     }
 
     public static void setAnnounceMoveActive(boolean announce) {
-        shared_prefs.edit().putBoolean(KEY_ANNOUNCE_MOVE, announce).commit();
+        shared_prefs.edit().putBoolean(KEY_ANNOUNCE_MOVE, announce).apply();
     }
 
     public static void setLastBoardSize(int size) {
-        shared_prefs.edit().putInt(KEY_LAST_BOARD_SIZE, size).commit();
+        shared_prefs.edit().putInt(KEY_LAST_BOARD_SIZE, size).apply();
     }
 
     public static int getLastBoardSize() {
@@ -99,7 +99,7 @@ public class GoPrefs {
     }
 
     public static void setLastHandicap(int size) {
-        shared_prefs.edit().putInt(KEY_LAST_HANDICAP, size).commit();
+        shared_prefs.edit().putInt(KEY_LAST_HANDICAP, size).apply();
     }
 
     public static int getLastHandicap() {
@@ -115,11 +115,11 @@ public class GoPrefs {
     }
 
     public static void setLastPlayerWhite(String last_player) {
-        shared_prefs.edit().putString(KEY_LAST_PLAYER_WHITE, last_player).commit();
+        shared_prefs.edit().putString(KEY_LAST_PLAYER_WHITE, last_player).apply();
     }
 
     public static void setLastPlayerBlack(String last_player) {
-        shared_prefs.edit().putString(KEY_LAST_PLAYER_BLACK, last_player).commit();
+        shared_prefs.edit().putString(KEY_LAST_PLAYER_BLACK, last_player).apply();
     }
 
     public static boolean getGridEmbossEnabled() {
