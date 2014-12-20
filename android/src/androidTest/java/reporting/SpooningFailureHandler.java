@@ -13,6 +13,8 @@ import org.hamcrest.Matcher;
 import android.support.test.espresso.FailureHandler;
 import android.support.test.espresso.base.DefaultFailureHandler;
 
+import java.util.Collection;
+
 public class SpooningFailureHandler implements FailureHandler {
 
     private final FailureHandler delegate;
@@ -41,7 +43,7 @@ public class SpooningFailureHandler implements FailureHandler {
         instrumentation.runTestOnUiThread(new Runnable() {
             @Override
             public void run() {
-                java.util.Collection<Activity> activites = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
+                final Collection<Activity> activites = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
                 activity[0] = com.google.common.collect.Iterables.getOnlyElement(activites);
             }
         });
