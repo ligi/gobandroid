@@ -1,16 +1,17 @@
 package reporting;
 
 import android.app.Activity;
+import android.support.test.internal.runner.lifecycle.ActivityLifecycleMonitorRegistry;
+import android.support.test.runner.lifecycle.Stage;
 import android.test.InstrumentationTestCase;
 import android.view.View;
 
-import com.google.android.apps.common.testing.testrunner.ActivityLifecycleMonitorRegistry;
-import com.google.android.apps.common.testing.testrunner.Stage;
-import com.google.android.apps.common.testing.ui.espresso.FailureHandler;
-import com.google.android.apps.common.testing.ui.espresso.base.DefaultFailureHandler;
 import com.squareup.spoon.Spoon;
 
 import org.hamcrest.Matcher;
+
+import android.support.test.espresso.FailureHandler;
+import android.support.test.espresso.base.DefaultFailureHandler;
 
 public class SpooningFailureHandler implements FailureHandler {
 

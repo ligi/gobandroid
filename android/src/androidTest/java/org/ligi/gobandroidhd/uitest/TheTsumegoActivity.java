@@ -9,11 +9,11 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity;
 import org.ligi.gobandroidhd.base.BaseIntegration;
 
-import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
-import static com.google.android.apps.common.testing.ui.espresso.assertion.ViewAssertions.matches;
-import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.isDisplayed;
-import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
-import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.not;
 import static org.ligi.gobandroidhd.base.GoViewActions.placeStone;
 
@@ -46,6 +46,7 @@ public class TheTsumegoActivity extends BaseIntegration<TsumegoActivity> {
         App.setGame(readGame("tsumego"));
         final TsumegoActivity activity = getActivity();
 
+        onView(withId(R.id.go_board)).check(matches(not(isDisplayed())));
         onView(withId(R.id.go_board)).perform(placeStone(1, 1));
 
         onView(withId(R.id.tsumego_off_path_view)).check(matches(isDisplayed()));
@@ -59,6 +60,7 @@ public class TheTsumegoActivity extends BaseIntegration<TsumegoActivity> {
         onView(withId(R.id.game_comment)).check(matches(withText("testing comment")));
 
         Spoon.screenshot(activity, "tsumego_comment");
+        onView(withId(R.id.go_board)).check(matches(not(isDisplayed())));
         onView(withId(R.id.go_board)).perform(placeStone(1, 1));
 
         onView(withId(R.id.game_comment)).check(matches(not(isDisplayed())));
