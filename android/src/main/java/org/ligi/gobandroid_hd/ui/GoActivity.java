@@ -59,6 +59,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import fr.nicolaspomepuy.discreetapprate.AppRate;
 import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
 
@@ -73,9 +75,15 @@ import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
 public class GoActivity extends GobandroidFragmentActivity implements OnTouchListener, OnKeyListener, GoGame.GoGameChangeListener {
 
     public GoSoundManager sound_man;
-    private GoBoardViewHD go_board = null;
-    private GoBoardViewHD zoom_board = null;
-    private View gameExtrasContainer;
+
+    @InjectView(R.id.go_board)
+    GoBoardViewHD go_board = null;
+
+    @InjectView(R.id.zoom_board)
+    GoBoardViewHD zoom_board = null;
+
+    @InjectView(R.id.game_extra_container)
+    View gameExtrasContainer;
 
     private Toast info_toast = null;
     private Fragment actFragment;
@@ -94,6 +102,8 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         GoPrefs.init(this); // TODO remove legacy
 
         setContentView(R.layout.game);
+
+        ButterKnife.inject(this);
 
         if (!App.isTesting) {
             // if there where stacktraces collected -> give the user the option to send them
@@ -125,13 +135,12 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             sound_man = new GoSoundManager(this);
         }
 
-        View customNav = new CustomActionBar(this);
+        final View customNav = new CustomActionBar(this);
 
         final FragmentTransaction fragmentTransAction = getSupportFragmentManager().beginTransaction();
         fragmentTransAction.add(R.id.game_extra_container, getGameExtraFragment()).commit();
         getSupportFragmentManager().executePendingTransactions();
 
-        gameExtrasContainer = findById(R.id.game_extra_container);
 
         getSupportActionBar().setCustomView(customNav);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
@@ -154,10 +163,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
      * find the go board widget and set up some properties
      */
     private void setupBoard() {
-
-        go_board = findById(R.id.go_board);
-        zoom_board = findById(R.id.zoom_board);
-
         go_board.setOnTouchListener(this);
         go_board.setOnKeyListener(this);
         go_board.move_stone_mode = false;
