@@ -25,9 +25,8 @@ public class GoViewActions {
 
                         final float screenX = screenPos[0] + (0.5f + x) * (view.getWidth() / gameSize);
                         final float screenY = screenPos[1] + (0.5f + y) * (view.getHeight() / gameSize);
-                        float[] coordinates = {screenX, screenY};
 
-                        return coordinates;
+                        return new float[]{screenX, screenY};
                     }
                 },
                 Press.FINGER);
