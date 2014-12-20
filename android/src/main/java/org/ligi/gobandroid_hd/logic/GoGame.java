@@ -103,7 +103,6 @@ public class GoGame {
     public final static byte MOVE_INVALID_CELL_NOT_FREE = 2;
     public final static byte MOVE_INVALID_CELL_NO_LIBERTIES = 3;
     public final static byte MOVE_INVALID_IS_KO = 4;
-    public final static byte MOVE_INVALID = 5;
 
     private boolean[][] all_handicap_positions;
 
