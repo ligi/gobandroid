@@ -335,7 +335,13 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     protected byte doMoveWithUIFeedback(byte x, byte y) {
 
         final byte res = getGame().do_move(x, y);
-        showInfoToast(getToastForResult(res));
+
+        switch (res) {
+            case GoGame.MOVE_INVALID_IS_KO:
+            case GoGame.MOVE_INVALID_CELL_NO_LIBERTIES:
+                showInfoToast(getToastForResult(res));
+        }
+
         return res;
     }
 
