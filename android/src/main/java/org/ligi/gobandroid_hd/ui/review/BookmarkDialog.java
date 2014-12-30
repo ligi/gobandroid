@@ -31,6 +31,10 @@ import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+
 /**
  * Dialog to show when user wants to set a BookMark
  *
@@ -40,13 +44,19 @@ import java.util.Date;
  */
 public class BookmarkDialog extends GobandroidDialog {
 
+    @InjectView(R.id.bookmark_name)
+    EditText fileNameEdit;
+
+    @InjectView(R.id.message)
+    TextView message;
+
     /**
      * sometimes for saving bookmarks we need an ensured saved file e.g. when
      * coming directly from recording - this should ensure this
      *
-     * @return
+     * @return the ensured Filename
      */
-    public static String getEnsuredFilename() {
+    private static String getEnsuredFilename() {
 
         String fname = App.getGame().getMetaData().getFileName();
         if (TextUtils.isEmpty(fname)) {
@@ -64,7 +74,7 @@ public class BookmarkDialog extends GobandroidDialog {
         return path_components[path_components.length - 1].replace(".sgf", "");
     }
 
-    public static String getDefaultFilename() {
+    private static String getDefaultFilename() {
         final SimpleDateFormat date_formatter = new SimpleDateFormat("dd.MMM.yyyy_HH_mm_ss");
         return date_formatter.format(new Date()) + ".sgf";
     }
@@ -76,9 +86,10 @@ public class BookmarkDialog extends GobandroidDialog {
         setIconResource(R.drawable.bookmark);
         setContentView(R.layout.save_bookmark);
 
+        ButterKnife.inject(this);
         final String innerFileName = getCleanEnsuredFilename();
-        final EditText fileNameEdit = (EditText) findViewById(R.id.bookmark_name);
-        ((TextView) findViewById(R.id.message)).setText(context.getResources().getString(R.string.bookmark_to_write_into) + " " + context.getSettings().getBookmarkPath());
+
+        message.setText(context.getResources().getString(R.string.bookmark_to_write_into) + " " + context.getSettings().getBookmarkPath());
         fileNameEdit.setText(innerFileName);
 
         class SaveBookmarkOnClickListener implements OnClickListener {
