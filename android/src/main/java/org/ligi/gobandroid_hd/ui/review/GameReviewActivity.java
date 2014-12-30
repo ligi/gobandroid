@@ -71,7 +71,7 @@ public class GameReviewActivity extends GoActivity {
                 case KeyEvent.KEYCODE_FORWARD:
                 case KeyEvent.KEYCODE_MEDIA_NEXT:
                     //case KeyEvent.KEYCODE_MEDIA_:
-                    GameForwardAlert.show(this, getGame());
+                    GameForwardAlert.showIfNeeded(this, getGame());
                     return true;
 
                 case KeyEvent.KEYCODE_DPAD_UP:

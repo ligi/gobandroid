@@ -16,9 +16,9 @@
 
 package org.ligi.gobandroid_hd.ui.alerts;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +27,10 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
+import org.ligi.gobandroid_hd.ui.GobandroidDialog;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Dialog to show when user wants to go to next move - handles selection of
@@ -36,76 +40,79 @@ import org.ligi.gobandroid_hd.logic.markers.TextMarker;
  *         <p/>
  *         License: This software is licensed with GPLv3
  */
-public class GameForwardAlert {
+public class GameForwardAlert extends GobandroidDialog {
 
-    public static void show(final Context ctx, final GoGame game) {
+    final GoGame game;
+
+    @InjectView(R.id.message)
+    TextView message;
+
+    @InjectView(R.id.buttonContainer)
+    ViewGroup buttonContainer;
+
+    public GameForwardAlert(final Context context, final GoGame game) {
+        super(context);
+        this.game = game;
+
+        setContentView(R.layout.dlg_game_forward);
+        ButterKnife.inject(this);
+
+        // show the comment when there is one - useful for SGF game problems
+        if (game.getActMove().hasComment()) {
+            message.setText(game.getActMove().getComment());
+        } else {
+            message.setText("" + (game.getPossibleVariationCount() + 1) + " Variations found for this move - which should we take?");
+        }
+
+        final View.OnClickListener var_select_listener = new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                dismiss();
+
+                if (!view.isEnabled()) {
+                    return;
+                }
+                view.setEnabled(false);
+
+                game.redo((Integer) (view.getTag()));
+            }
+        };
+
+
+        for (Integer i = 0; i < game.getPossibleVariationCount() + 1; i++) {
+            final Button var_btn = new Button(context);
+            var_btn.setTag(i);
+            var_btn.setOnClickListener(var_select_listener);
+            if (game.getActMove().getnextMove(i).isMarked()) {
+                final GoMarker goMarker = game.getActMove().getnextMove(i).getGoMarker().get();
+                if (goMarker instanceof TextMarker) {
+                    var_btn.setText(((TextMarker) goMarker).getText());
+                }
+            } else {
+                var_btn.setText(String.valueOf(i + 1));
+            }
+
+            buttonContainer.addView(var_btn);
+
+            var_btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+        }
+
+        setTitle(R.string.variations);
+
+    }
+
+
+    public static void showIfNeeded(final Context ctx, final GoGame game) {
         if (!game.canRedo()) {
             return;
         }
 
         if (game.getPossibleVariationCount() > 0) {
-            final LinearLayout lin = new LinearLayout(ctx);
-            final LinearLayout li = new LinearLayout(ctx);
-
-            final TextView txt = new TextView(ctx);
-
-            // show the comment when there is one - useful for SGF game problems
-            if (game.getActMove().hasComment()) {
-                txt.setText(game.getActMove().getComment());
-            } else {
-                txt.setText("" + (game.getPossibleVariationCount() + 1) + " Variations found for this move - which should we take?");
-            }
-
-            txt.setPadding(10, 2, 10, 23);
-            lin.addView(txt);
-            lin.addView(li);
-            lin.setOrientation(LinearLayout.VERTICAL);
-
-            final Dialog select_dlg = new Dialog(ctx);
-            final Boolean redoing = false;
-            View.OnClickListener var_select_listener = new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    if (redoing) {
-                        return;
-                    }
-                    select_dlg.hide();
-                    if (!view.isEnabled()) {
-                        return;
-                    }
-                    view.setEnabled(false);
-
-                    game.redo((Integer) (view.getTag()));
-                }
-            };
-
-            li.setWeightSum(1.0f * (game.getPossibleVariationCount() + 1));
-            li.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-            for (Integer i = 0; i < game.getPossibleVariationCount() + 1; i++) {
-                final Button var_btn = new Button(ctx);
-                var_btn.setTag(i);
-                var_btn.setOnClickListener(var_select_listener);
-                if (game.getActMove().getnextMove(i).isMarked()) {
-                    final GoMarker goMarker = game.getActMove().getnextMove(i).getGoMarker().get();
-                    if (goMarker instanceof TextMarker) {
-                        var_btn.setText(((TextMarker)goMarker).getText());
-                    }
-                } else {
-                    var_btn.setText("" + (i + 1));
-                }
-
-                li.addView(var_btn);
-
-                var_btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-            }
-
-            select_dlg.setTitle(R.string.variations);
-            select_dlg.setContentView(lin);
-
-            select_dlg.show();
-        } else
+            new GameForwardAlert(ctx, game).show();
+        } else {
             game.redo(0);
+        }
     }
 }

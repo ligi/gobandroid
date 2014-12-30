@@ -133,7 +133,7 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     }
 
     public void gameNavNext() {
-        GameForwardAlert.show(getActivity(), game);
+        GameForwardAlert.showIfNeeded(getActivity(), game);
     }
 
     public void gameNavPrev() {

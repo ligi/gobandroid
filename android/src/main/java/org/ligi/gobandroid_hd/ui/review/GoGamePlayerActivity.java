@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -156,14 +157,15 @@ public class GoGamePlayerActivity extends GoActivity {
 
                 case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
                 case KeyEvent.KEYCODE_DPAD_LEFT:
-                    if (!getGame().canUndo())
-                        return true;
-                    getGame().undo();
+                    if (getGame().canUndo()) {
+                        getGame().undo();
+                    }
+
                     return true;
 
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
                 case KeyEvent.KEYCODE_MEDIA_NEXT:
-                    GameForwardAlert.show(this, getGame());
+                    GameForwardAlert.showIfNeeded(this, getGame());
                     return true;
 
                 case KeyEvent.KEYCODE_DPAD_UP:
@@ -181,7 +183,7 @@ public class GoGamePlayerActivity extends GoActivity {
 
     public int countWords(String sentence) {
         int words = 0;
-        if (!getApp().getInteractionScope().is_in_noif_mode())
+        if (!App.getInteractionScope().is_in_noif_mode())
             for (int i = 0; i < sentence.length(); i++)
                 if (sentence.charAt(i) == ' ')
                     words++;
