@@ -125,16 +125,6 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         super.onResume();
     }
 
-    public String contentToString(String url) throws IOException {
-        String res = "";
-
-        if (url.startsWith("/")) {
-            return AXT.at(new File(url)).readToString(FileEncodeDetector.detect(new File(url)));
-        }
-
-        return res;
-    }
-
     /**
      * get the content-string from a uri
      *
@@ -228,7 +218,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
         if (intent_uri.toString().startsWith("tsumego")) {
             intent_uri = Uri.parse(intent_uri.toString().replaceFirst("tsumego", "file"));
-            getApp().getInteractionScope().setMode(InteractionScope.MODE_TSUMEGO);
+            App.getInteractionScope().setMode(InteractionScope.MODE_TSUMEGO);
         }
 
         try {
@@ -242,7 +232,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
             // if it is a tsumego and we need a transformation to right corner
             // -> do so
-            if (getApp().getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
+            if (App.getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
                 int transform = TsumegoHelper.calcTransform(game);
 
                 if (transform != SGFReader.DEFAULT_SGF_TRANSFORM) {
