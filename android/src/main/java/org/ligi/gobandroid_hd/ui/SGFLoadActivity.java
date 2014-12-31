@@ -24,7 +24,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
+
 import android.os.Looper;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
@@ -74,7 +74,6 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
     private ProgressBar progress;
     private int act_progress;
     private int max_progress;
-    private Handler handler = new Handler();
     private AlertDialog alert_dlg;
     private TextView message_tv;
     private String act_message;
@@ -258,7 +257,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         }
 
         if (game == null) {
-            handler.post(new Runnable() {
+            runOnUiThread(new Runnable() {
 
                 @Override
                 /** if the sgf loading fails - give the user the option to send this SGF to me - to perhaps fix the
@@ -326,7 +325,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
                 game.jump(game.getActMove().getnextMove(0));
             }
         } else if (cloudgoban_parent_key != null) {
-            getApp().getInteractionScope().setMode(InteractionScope.MODE_RECORD);
+            App.getInteractionScope().setMode(InteractionScope.MODE_RECORD);
 
             //game.getMetaData().setCloudParent();
 
@@ -341,7 +340,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
         App.getGame().notifyGameChange();
 
-        handler.post(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 alert_dlg.hide();
@@ -356,10 +355,9 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
     public void progress(int act, int max, int progress_val) {
         act_progress = act;
         max_progress = max;
-        act_message = getResources().getString(R.string.move) + " "
-                + progress_val;
+        act_message = getResources().getString(R.string.move) + " " + progress_val;
 
-        handler.post(new Runnable() {
+        runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
