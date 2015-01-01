@@ -16,7 +16,7 @@
             tools:text="Size 9x9"
             android:paddingLeft="10sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></TextView>
+            android:layout_height="wrap_content"/>
 
         <SeekBar
             android:id="@+id/size_slider"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="7pt"
             android:layout_marginRight="7pt"
-            android:max="21"></SeekBar>
+            android:max="21"/>
 
         <LinearLayout
             android:id="@+id/LinearLayout02"
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="9x9"
-                tools:ignore="HardcodedText"></Button>
+                tools:ignore="HardcodedText"/>
 
             <Button
                 android:id="@+id/size_button13x13"
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="13x13"
-                tools:ignore="HardcodedText"></Button>
+                tools:ignore="HardcodedText"/>
 
             <Button
                 android:id="@+id/size_button19x19"
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="19x19"
-                tools:ignore="HardcodedText"></Button>
+                tools:ignore="HardcodedText"/>
         </LinearLayout>
 
         <include layout="@layout/horizontal_divider" />
@@ -64,7 +64,7 @@
             android:id="@+id/handicap_label"
             android:paddingLeft="10sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></TextView>
+            android:layout_height="wrap_content"/>
 
         <SeekBar
             android:id="@+id/handicap_seek"
@@ -73,7 +73,7 @@
             android:max="9"
             android:paddingBottom="7pt"
             android:paddingLeft="7pt"
-            android:paddingRight="7pt"></SeekBar>
+            android:paddingRight="7pt"/>
         <!-- <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Start" android:layout_gravity="center" android:id="@+id/game_start_button"/> -->
     </LinearLayout>
 
