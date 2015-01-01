@@ -32,7 +32,6 @@ import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.View;
 
-import org.ligi.axt.views.SquareView;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoBoard;
@@ -49,6 +48,7 @@ import java.io.FileOutputStream;
  */
 public class GoBoardViewHD extends View {
 
+    private final static float SMALL_STONE_SCALE_FACTOR = 0.6f;
     private int zoom_poi = -1;
 
     public boolean do_legend = true;
@@ -161,11 +161,11 @@ public class GoBoardViewHD extends View {
     /**
      * set the zoom factor - 1.0 ( default ) means no zoom
      *
-     * @param zoom
+     * @param zoom - the new Zoom-factor
      */
     public void setZoom(float zoom) {
         this.zoom = zoom;
-        setSize(this.getWidth(), this.getHeight());
+        regenerateStoneImagesWithNewSize();
     }
 
     public PointF getZoomTranslate() {
@@ -173,22 +173,24 @@ public class GoBoardViewHD extends View {
             return new PointF(0, 0);
         }
 
-        int act_zoom_poi = 0;
-
-        if (zoom_poi >= 0) {
-            act_zoom_poi = zoom_poi;
-        } else if (App.getInteractionScope().getTouchPosition() >= 0) {
-            act_zoom_poi = App.getInteractionScope().getTouchPosition();
-        } else
-            Log.w("zoom requested but no POI to center around");
-
-        final Point act_zoom_point = getGame().linear_coordinate2Point(act_zoom_poi);
+        final Point act_zoom_point = getGame().linear_coordinate2Point(calcActZoomPOI());
 
         return new PointF(-stone_size * (act_zoom_point.x - getGame().getSize() / 2.0f / zoom), -stone_size * (act_zoom_point.y - getGame().getSize() / 2.0f / zoom));
     }
 
+    private int calcActZoomPOI() {
+        if (zoom_poi >= 0) {
+            return zoom_poi;
+        } else if (App.getInteractionScope().getTouchPosition() >= 0) {
+            return App.getInteractionScope().getTouchPosition();
+        }
+
+        Log.w("zoom requested but no POI to center around");
+        return 0;
+    }
+
     public void screenshot(String sshot_name) {
-        final Bitmap bmp = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Config.ARGB_8888);
+        final Bitmap bmp = Bitmap.createBitmap(getWidth(), getHeight(), Config.ARGB_8888);
         final Canvas c = new Canvas(bmp);
         draw2canvas(c);
 
@@ -196,10 +198,9 @@ public class GoBoardViewHD extends View {
             if (sshot_name.indexOf("://") > 0) {
                 sshot_name = sshot_name.substring(sshot_name.indexOf("://") + 3);
             }
-            Log.i("writing screenshot " + sshot_name);
             new File(sshot_name.substring(0, sshot_name.lastIndexOf("/"))).mkdirs();
             new File(sshot_name).createNewFile();
-            FileOutputStream out = new FileOutputStream(sshot_name);
+            final FileOutputStream out = new FileOutputStream(sshot_name);
             bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
             out.close();
         } catch (Exception e) {
@@ -231,8 +232,9 @@ public class GoBoardViewHD extends View {
             canvas.translate(getZoomTranslate().x, getZoomTranslate().y);
         }
 
-        if (regenerate_stones_flag)
+        if (regenerate_stones_flag) {
             regenerate_images();
+        }
 
         boolean actpos_highlight_condition = false;
 
@@ -310,19 +312,16 @@ public class GoBoardViewHD extends View {
 
         // paint the markers
         for (GoMarker marker : getGame().getActMove().getMarkers()) {
-            final Paint markerPaint = getTextPaintForCell(getGame().getVisualBoard(), marker.getX(), marker.getY());
+            final Paint markerPaint = getTextPaintForCell(marker.getX(), marker.getY());
             final float x = marker.getX() * stone_size + stone_size / 2.0f;
             final float y = marker.getY() * stone_size + (stone_size) / 2.0f;
-            //canvas.drawText(marker.getText(), x, y, markerPaint);
-
-
             marker.draw(canvas, stone_size, x, y, markerPaint);
         }
 
         canvas.restore();
     } // end of onDraw
 
-    private Paint getTextPaintForCell(GoBoard board, int x, int y) {
+    private Paint getTextPaintForCell(int x, int y) {
         if (getGame().getVisualBoard().isCellBlack(x, y)) {
             return whiteTextPaint;
         } else {
@@ -341,12 +340,10 @@ public class GoBoardViewHD extends View {
      */
     public void regenerate_images() {
 
-        Log.i("regenerating images to stone size " + stone_size);
-        float SMALL_STONE_SCALER = 0.6f;
         white_stone_bitmap = getScaledRes(stone_size, R.drawable.stone_white);
         black_stone_bitmap = getScaledRes(stone_size, R.drawable.stone_black);
-        white_stone_bitmap_small = getScaledRes(stone_size * SMALL_STONE_SCALER, R.drawable.stone_white);
-        black_stone_bitmap_small = getScaledRes(stone_size * SMALL_STONE_SCALER, R.drawable.stone_black);
+        white_stone_bitmap_small = getScaledRes(stone_size * SMALL_STONE_SCALE_FACTOR, R.drawable.stone_white);
+        black_stone_bitmap_small = getScaledRes(stone_size * SMALL_STONE_SCALE_FACTOR, R.drawable.stone_black);
 
         regenerate_stones_flag = false;
 
@@ -356,11 +353,7 @@ public class GoBoardViewHD extends View {
     }
 
     public void setGridEmboss(boolean grid_emboss) {
-        if (grid_emboss) {
-            gridPaint.setShadowLayer(1, 1, 1, 0xFFFFFFFF);
-        } else {
-            gridPaint.setShadowLayer(1, 1, 1, 0xFF000000);
-        }
+        gridPaint.setShadowLayer(1, 1, 1, grid_emboss ? 0xFFFFFFFF : 0xFF000000);
     }
 
     @Override
@@ -373,16 +366,8 @@ public class GoBoardViewHD extends View {
         regenerate_stones_flag = true;
     }
 
-    public void boardSizeChanged() {
-        setSize(this.getWidth(), this.getHeight());
-    }
-
     public void regenerateStoneImagesWithNewSize() {
         setSize(getWidth(), getHeight());
-    }
-
-    public void setRegenerataStonesFlag(boolean new_flag) {
-        regenerate_stones_flag = new_flag;
     }
 
     @Override
@@ -390,10 +375,10 @@ public class GoBoardViewHD extends View {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         if (enforceSquare()) {
-            int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
-            int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
-            int size = Math.min(parentWidth, parentHeight);
-            this.setMeasuredDimension(size, size);
+            final int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
+            final int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
+            final int size = Math.min(parentWidth, parentHeight);
+            setMeasuredDimension(size, size);
         }
     }
 
@@ -403,10 +388,10 @@ public class GoBoardViewHD extends View {
     }
 
     public int pixel2boardPos(float x, float y) {
-        final int board_x = (int)((x - getZoomTranslate().x) / stone_size);
-        final int board_y = (int)((y - getZoomTranslate().y) / stone_size);
+        final int board_x = (int) ((x - getZoomTranslate().x) / stone_size);
+        final int board_y = (int) ((y - getZoomTranslate().y) / stone_size);
 
-        if (board_x>=getGame().getSize() || board_y>=getGame().getSize()) {
+        if (board_x >= getGame().getSize() || board_y >= getGame().getSize()) {
             return -1;
         }
 
