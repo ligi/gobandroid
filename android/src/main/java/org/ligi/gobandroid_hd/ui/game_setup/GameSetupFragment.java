@@ -21,49 +21,61 @@ import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 
-public class GameSetupFragment extends GobandroidFragment implements OnSeekBarChangeListener, OnClickListener {
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+
+public class GameSetupFragment extends GobandroidFragment implements OnSeekBarChangeListener {
 
     public byte act_size = 9;
     public byte act_handicap = 0;
 
     private final static int size_offset = 2;
 
-    private SeekBar size_seek;
-    private SeekBar handicap_seek;
+    @InjectView(R.id.size_slider)
+    SeekBar size_seek;
 
-    private TextView size_text;
-    private Button size_button9x9;
-    private Button size_button13x13;
-    private Button size_button19x19;
+    @InjectView(R.id.handicap_seek)
+    SeekBar handicap_seek;
 
-    private TextView handicap_text;
+    @InjectView(R.id.game_size_label)
+    TextView size_text;
+
+    @InjectView(R.id.handicap_label)
+    TextView handicap_text;
+
+    @OnClick(R.id.size_button9x9)
+    void setSize9x9() {
+        setSize((byte) 9);
+    }
+
+
+    @OnClick(R.id.size_button13x13)
+    void setSize13x13() {
+        setSize((byte) 13);
+    }
+
+    @OnClick(R.id.size_button19x19)
+    void setSize19x19() {
+        setSize((byte)19);
+    }
+
+    private void setSize(byte size) {
+        act_size = size;
+        refresh_ui();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
         GoPrefs.init(getActivity()); // TODO remove legacy
 
-        View view = inflater.inflate(R.layout.game_setup_inner, null);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        view.setLayoutParams(lp);
+        final View view = inflater.inflate(R.layout.game_setup_inner, container, false);
 
-        size_seek = findById(view, R.id.size_slider);
+        ButterKnife.inject(this, view);
+
         size_seek.setOnSeekBarChangeListener(this);
-
-        size_text = findById(view, R.id.game_size_label);
-
-        size_button9x9 = findById(view, R.id.size_button9x9);
-        size_button9x9.setOnClickListener(this);
-
-        size_button13x13 = findById(view, R.id.size_button13x13);
-        size_button13x13.setOnClickListener(this);
-
-        size_button19x19 = findById(view, R.id.size_button19x19);
-        size_button19x19.setOnClickListener(this);
-
-        handicap_text = findById(view, R.id.handicap_label);
-        handicap_seek = findById(view, R.id.handicap_seek);
         handicap_seek.setOnSeekBarChangeListener(this);
 
         // set defaults
@@ -72,19 +84,6 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
 
         refresh_ui();
         return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        if (v == size_button9x9)
-            act_size = 9;
-        if (v == size_button13x13)
-            act_size = 13;
-        else if (v == size_button19x19)
-            act_size = 19;
-
-        refresh_ui();
     }
 
     @Override
@@ -113,7 +112,7 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
         if (act_handicap != handicap_seek.getProgress())
             handicap_seek.setProgress(act_handicap);
 
-        if (getApp().getInteractionScope().getMode() == InteractionScope.MODE_GNUGO)
+        if (App.getInteractionScope().getMode() == InteractionScope.MODE_GNUGO)
             size_seek.setMax(19 - size_offset);
 
         // only enable handicap seeker when the size is 9x9 or 13x13 or 19x19

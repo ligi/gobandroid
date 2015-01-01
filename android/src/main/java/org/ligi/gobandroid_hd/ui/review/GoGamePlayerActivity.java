@@ -108,7 +108,7 @@ public class GoGamePlayerActivity extends GoActivity {
             }
             Log.i("gobandroid", "automove asleep");
 
-            if (!getApp().getInteractionScope().is_in_noif_mode()) {
+            if (!App.getInteractionScope().is_in_noif_mode()) {
                 Intent next_intent = new Intent(GoGamePlayerActivity.this, GobanDroidTVActivity.class);
 
                 if (autoplay_active) {

@@ -54,7 +54,7 @@ public class GameForwardAlert extends GobandroidDialog {
         super(context);
         this.game = game;
 
-        setContentView(R.layout.dlg_game_forward);
+        setContentView(R.layout.dialog_game_forward);
         ButterKnife.inject(this);
 
         // show the comment when there is one - useful for SGF game problems

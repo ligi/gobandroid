@@ -153,8 +153,9 @@ public class GoBoardViewHD extends View {
     }
 
     public void prepare_keyinput() {
-        if (getApp().getInteractionScope().getTouchPosition() < 0)
-            getApp().getInteractionScope().setTouchPosition(0);
+        if (App.getInteractionScope().getTouchPosition() < 0) {
+            App.getInteractionScope().setTouchPosition(0);
+        }
     }
 
     /**
@@ -176,15 +177,14 @@ public class GoBoardViewHD extends View {
 
         if (zoom_poi >= 0) {
             act_zoom_poi = zoom_poi;
-        } else if (getApp().getInteractionScope().getTouchPosition() >= 0) {
-            act_zoom_poi = getApp().getInteractionScope().getTouchPosition();
+        } else if (App.getInteractionScope().getTouchPosition() >= 0) {
+            act_zoom_poi = App.getInteractionScope().getTouchPosition();
         } else
             Log.w("zoom requested but no POI to center around");
 
         final Point act_zoom_point = getGame().linear_coordinate2Point(act_zoom_poi);
-        final PointF res = new PointF(-stone_size * (act_zoom_point.x - getGame().getSize() / 2.0f / zoom), -stone_size * (act_zoom_point.y - getGame().getSize() / 2.0f / zoom));
 
-        return res;
+        return new PointF(-stone_size * (act_zoom_point.x - getGame().getSize() / 2.0f / zoom), -stone_size * (act_zoom_point.y - getGame().getSize() / 2.0f / zoom));
     }
 
     public void screenshot(String sshot_name) {
@@ -237,23 +237,21 @@ public class GoBoardViewHD extends View {
         boolean actpos_highlight_condition = false;
 
         if (!(do_actpos_highlight_ony_if_active && (!isFocused()))) {
-            actpos_highlight_condition = do_actpos_highlight && getApp().getInteractionScope().hasValidTouchCoord();
+            actpos_highlight_condition = do_actpos_highlight && App.getInteractionScope().hasValidTouchCoord();
         }
 
         // draw semi transparent stone on current touch pos as a shadow
         if ((!move_stone_mode) && actpos_highlight_condition) {
-            canvas.drawBitmap(((getGame().isBlackToMove()) ? black_stone_bitmap : white_stone_bitmap), getApp().getInteractionScope().getTouchX() * stone_size, getApp().getInteractionScope().getTouchY() * stone_size, placeStonePaint);
+            canvas.drawBitmap(((getGame().isBlackToMove()) ? black_stone_bitmap : white_stone_bitmap), App.getInteractionScope().getTouchX() * stone_size, App.getInteractionScope().getTouchY() * stone_size, placeStonePaint);
         }
 
         // draw the vertical lines for the grid
         for (byte x = 0; x < getGameSize(); x++)
-            canvas.drawLine(stone_size / 2.0f + x * stone_size, stone_size / 2.0f, stone_size / 2.0f + x * stone_size, stone_size * (float) (getGame().getVisualBoard().getSize() - 1) + stone_size / 2.0f, (actpos_highlight_condition && (getApp()
-                    .getInteractionScope().getTouchX() == x)) ? gridPaint_h : gridPaint);
+            canvas.drawLine(stone_size / 2.0f + x * stone_size, stone_size / 2.0f, stone_size / 2.0f + x * stone_size, stone_size * (float) (getGame().getVisualBoard().getSize() - 1) + stone_size / 2.0f, (actpos_highlight_condition && (App.getInteractionScope().getTouchX() == x)) ? gridPaint_h : gridPaint);
 
         // draw the horizontal lines and the legend
         for (byte x = 0; x < getGame().getVisualBoard().getSize(); x++) {
-            canvas.drawLine(stone_size / 2.0f, stone_size / 2.0f + x * stone_size, stone_size * (float) (getGame().getVisualBoard().getSize() - 1) + stone_size / 2.0f, stone_size / 2.0f + x * stone_size, (actpos_highlight_condition && (getApp()
-                    .getInteractionScope().getTouchY() == x)) ? gridPaint_h : gridPaint);
+            canvas.drawLine(stone_size / 2.0f, stone_size / 2.0f + x * stone_size, stone_size * (float) (getGame().getVisualBoard().getSize() - 1) + stone_size / 2.0f, stone_size / 2.0f + x * stone_size, (actpos_highlight_condition && (App.getInteractionScope().getTouchY() == x)) ? gridPaint_h : gridPaint);
             if (do_legend) {
                 canvas.drawText("" + (getGameSize() - x), 6 + stone_size * (float) (getGameSize() - 1) + stone_size / 2.0f, stone_size / 2.0f + x * stone_size + gridPaint.getTextSize() / 3, legendPaint);
 

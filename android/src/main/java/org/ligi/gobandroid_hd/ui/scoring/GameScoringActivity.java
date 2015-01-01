@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
@@ -37,15 +38,15 @@ public class GameScoringActivity extends GoActivity implements
         //super.doTouch(event); - Do not call! Not needed and breaks marking dead stones
 
         eventForZoomBoard(event);
-        getApp().getInteractionScope().setTouchPosition(getBoard().pixel2boardPos(
+        App.getInteractionScope().setTouchPosition(getBoard().pixel2boardPos(
                 event.getX(), event.getY()));
 
         // calculate position on the field by position on the touchscreen
 
         if (event.getAction() == MotionEvent.ACTION_UP) {
-            doMoveWithUIFeedback((byte) getApp().getInteractionScope().getTouchX(),
-                    (byte) getApp().getInteractionScope().getTouchY());
-            getApp().getInteractionScope().setTouchPosition(-1);
+            doMoveWithUIFeedback((byte) App.getInteractionScope().getTouchX(),
+                    (byte) App.getInteractionScope().getTouchY());
+            App.getInteractionScope().setTouchPosition(-1);
         }
 
 

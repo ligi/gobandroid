@@ -69,7 +69,6 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         Runnable, SGFReader.ISGFLoadProgressCallback {
 
     public Uri intent_uri;
-    private GoGame game = null;
     private String sgf;
     private ProgressBar progress;
     private int act_progress;
@@ -221,6 +220,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
             App.getInteractionScope().setMode(InteractionScope.MODE_TSUMEGO);
         }
 
+        GoGame game = null;
         try {
 
             Log.i("load" + intent_uri);
@@ -274,7 +274,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
                                                     .putExtra(
                                                             android.content.Intent.EXTRA_SUBJECT,
                                                             "SGF Problem"
-                                                                    + getApp().getVersionCode()
+                                                                    + App.getVersionCode()
                                                     );
                                             emailIntent
                                                     .putExtra(

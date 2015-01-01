@@ -36,20 +36,12 @@
             android:required="false" />
 
         <activity android:name="org.ligi.gobandroid_hd.ui.game_setup.GoSetupActivity">
-
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="tv.ouya.intent.category.GAME" />
-            </intent-filter>
         </activity>
         <activity
             android:name="org.ligi.gobandroid_hd.ui.GobanDroidTVActivity"
@@ -58,6 +50,11 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="tv.ouya.intent.category.GAME" />
             </intent-filter>
         </activity>
         <activity android:name="org.ligi.gobandroid_hd.ui.GobanDroidTVActivityNOIF">
@@ -185,7 +182,6 @@
         <activity android:name="org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity" />
         <activity android:name="org.ligi.gobandroid_hd.ui.review.GameReviewActivity" />
         <activity android:name="org.ligi.gobandroid_hd.ui.GoPrefsActivity" />
-        <activity android:name="org.ligi.gobandroid_hd.ui.LoadActionsActivity" />
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFOnlineListActivity" />
         <activity android:name="org.ligi.gobandroid_hd.ui.GoActivity" />
 
