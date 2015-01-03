@@ -24,14 +24,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.os.Looper;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.App;
@@ -40,6 +34,7 @@ import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
+import org.ligi.gobandroid_hd.ui.alerts.GameLoadingDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
@@ -68,15 +63,14 @@ import java.nio.charset.Charset;
 public class SGFLoadActivity extends GobandroidFragmentActivity implements
         Runnable, SGFReader.ISGFLoadProgressCallback {
 
-    public Uri intent_uri;
+    public static final String INTENT_EXTRA_MOVE_NUM = "move_num";
+    private Uri intent_uri;
     private String sgf;
-    private ProgressBar progress;
     private int act_progress;
     private int max_progress;
-    private AlertDialog alert_dlg;
-    private TextView message_tv;
     private String act_message;
-    private String cloudgoban_parent_key = null;
+    private GameLoadingDialog dlg;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,36 +80,10 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
         GoPrefs.init(this);
 
-        progress = new ProgressBar(this, null,
-                android.R.attr.progressBarStyleHorizontal);
-        progress.setMax(100);
-        progress.setProgress(10);
+        dlg = new GameLoadingDialog(this);
+        dlg.show();
 
-        LinearLayout lin = new LinearLayout(this);
-
-        ImageView img = new ImageView(this);
-        img.setImageResource(R.drawable.ic_launcher);
-        img.setLayoutParams(new LinearLayout.LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-        lin.setOrientation(LinearLayout.VERTICAL);
-
-        lin.addView(img);
-
-        FrameLayout frame = new FrameLayout(this);
-        frame.addView(progress);
-        message_tv = new TextView(this);
-        message_tv.setText("starting");
-        message_tv.setTextColor(0xFF000000);
-        message_tv.setPadding(7, 0, 0, 0);
-        frame.addView(message_tv);
-
-        lin.addView(frame);
-
-        alert_dlg = new AlertDialog.Builder(this).setCancelable(false)
-                .setTitle(R.string.loading_sgf).setView(lin).show();
-
-        App.getTracker().trackEvent("ui_action", "load_sgf",
-                getIntent().getData().toString(), null);
+        App.getTracker().trackEvent("ui_action", "load_gf", getIntent().getData().toString(), null);
         new Thread(this).start();
     }
 
@@ -136,7 +104,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
     public String uri2string(Uri intent_uri) throws IOException {
 
         if (intent_uri.toString().startsWith("/")) {
-            return AXT.at(new File(intent_uri.toString())).readToString( FileEncodeDetector.detect(intent_uri.toString()));
+            return AXT.at(new File(intent_uri.toString())).readToString(FileEncodeDetector.detect(intent_uri.toString()));
         }
 
         InputStream in;
@@ -151,8 +119,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
             Log.i("downloading CloudGoban game");
             return cg.games().get(cloudgoban_parent_key).execute().getSgf().getValue();
         } */ else {
-            in = new BufferedInputStream(new URL("" + intent_uri).openStream(),
-                    4096);
+            in = new BufferedInputStream(new URL("" + intent_uri).openStream(), 4096);
         }
 
         FileOutputStream file_writer = null;
@@ -160,8 +127,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         // if it comes from network
         if (intent_uri.toString().startsWith("http")) { // https catched also
             new File(GoPrefs.getSGFPath() + "/downloads").mkdirs();
-            File f = new File(GoPrefs.getSGFPath() + "/downloads/"
-                    + intent_uri.getLastPathSegment());
+            final File f = new File(GoPrefs.getSGFPath() + "/downloads/" + intent_uri.getLastPathSegment());
             f.createNewFile();
             file_writer = new FileOutputStream(f);
         }
@@ -169,19 +135,19 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
         int len;
-        while ((len = in.read(buffer)) > -1 ) {
+        while ((len = in.read(buffer)) > -1) {
             buf.write(buffer, 0, len);
-            }
+        }
         buf.flush();
 
-        InputStream stream_det  = new ByteArrayInputStream(buf.toByteArray());
-        Charset chrset = FileEncodeDetector.detect(stream_det);
+        final InputStream stream_det = new ByteArrayInputStream(buf.toByteArray());
+        final Charset chrset = FileEncodeDetector.detect(stream_det);
 
-        InputStream stream_pro  = new ByteArrayInputStream(buf.toByteArray());
-        StringBuilder out = new StringBuilder();
-        byte[] b = new byte[4096];
+        final InputStream stream_pro = new ByteArrayInputStream(buf.toByteArray());
+        final StringBuilder out = new StringBuilder();
+        final byte[] b = new byte[4096];
         for (int n; (n = stream_pro.read(b)) != -1; ) {
-            out.append(new String(b, 0, n,chrset));
+            out.append(new String(b, 0, n, chrset));
             if (file_writer != null) {
                 file_writer.write(b, 0, n);
             }
@@ -208,9 +174,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         }
 
         if (intent_uri.toString().endsWith(".golink")) {
-            Intent i = getIntent();
-            i.setClass(this, GoLinkLoadActivity.class);
-            this.startActivity(i);
+            AXT.at(this).startCommonIntent().activityFromClass(GoLinkLoadActivity.class);
             finish();
             return;
         }
@@ -222,12 +186,8 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
         GoGame game = null;
         try {
-
-            Log.i("load" + intent_uri);
-
             sgf = uri2string(intent_uri);
 
-            Log.i("got sgf content:" + sgf);
             game = SGFReader.sgf2game(sgf, this);
 
             // if it is a tsumego and we need a transformation to right corner
@@ -253,7 +213,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
                 /** if the sgf loading fails - give the user the option to send this SGF to me - to perhaps fix the
                  * parser to load more SGF's - TODO remove this block if all SGF's load fine ;-) */
                 public void run() {
-                    alert_dlg.hide();
+                    dlg.hide();
                     new AlertDialog.Builder(SGFLoadActivity.this)
                             .setTitle(R.string.results)
                             .setMessage(
@@ -308,21 +268,12 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
             return;
         }
 
-        int move_num = getIntent().getIntExtra("move_num", -1);
+        final int move_num = getIntent().getIntExtra(INTENT_EXTRA_MOVE_NUM, -1);
 
         if (move_num != -1) {
             for (int i = 0; i < move_num; i++) {
                 game.jump(game.getActMove().getnextMove(0));
             }
-        } else if (cloudgoban_parent_key != null) {
-            App.getInteractionScope().setMode(InteractionScope.MODE_RECORD);
-
-            //game.getMetaData().setCloudParent();
-
-            while (game.getActMove().getNextMoveVariationCount() > -1) {
-                game.jump(game.getActMove().getnextMove(0));
-            }
-
         }
         App.setGame(game);
 
@@ -333,7 +284,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                alert_dlg.hide();
+                dlg.hide();
                 finish();
             }
         });
@@ -351,9 +302,9 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
             @Override
             public void run() {
-                progress.setProgress(act_progress);
-                progress.setMax(max_progress);
-                message_tv.setText(act_message);
+                dlg.progress.setProgress(act_progress);
+                dlg.progress.setMax(max_progress);
+                dlg.message.setText(act_message);
             }
         });
     }

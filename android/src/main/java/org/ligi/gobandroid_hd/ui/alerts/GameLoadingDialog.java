@@ -37,21 +37,20 @@ import butterknife.InjectView;
  */
 public class GameLoadingDialog extends GobandroidDialog {
 
-    final GoGame game;
-
     @InjectView(R.id.message)
-    TextView message;
+    public TextView message;
 
     @InjectView(R.id.progressBar)
-    ProgressBar progress;
+    public ProgressBar progress;
 
-    public GameLoadingDialog(final Context context, final GoGame game) {
+    public GameLoadingDialog(final Context context) {
         super(context);
-        this.game = game;
 
         setContentView(R.layout.dialog_game_load);
         ButterKnife.inject(this);
 
+        setTitle(R.string.loading_sgf);
+        setCancelable(false);
     }
 
 }
