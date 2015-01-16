@@ -62,7 +62,7 @@ public class TsumegoViewHolder extends RecyclerView.ViewHolder implements ViewHo
         GoGame game = SGFReader.sgf2game(sgf_str, null, SGFReader.BREAKON_FIRSTMOVE);
 
         if (game != null) {
-            final SGFMetaData meta = new SGFMetaData(file);
+            final SGFMetaData meta = new SGFMetaData(file.getAbsolutePath());
 
             hints_tv.setText(String.format(hints_used_fmt, meta.getHintsUsed()));
 
@@ -78,7 +78,7 @@ public class TsumegoViewHolder extends RecyclerView.ViewHolder implements ViewHo
             }
         }
 
-        if (new SGFMetaData(file).getIsSolved()) {
+        if (new SGFMetaData(file.getAbsolutePath()).getIsSolved()) {
             solvedStatusImage.setImageResource(R.drawable.solved);
         } else {
             solvedStatusImage.setImageResource(R.drawable.dashboard_tsumego);

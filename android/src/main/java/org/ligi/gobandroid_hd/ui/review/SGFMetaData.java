@@ -26,26 +26,27 @@ public class SGFMetaData {
 
     public final static String FNAME_ENDING = ".sgfmeta";
 
-    public SGFMetaData(String fname) {
-        this(new File(sanitizeFileName(fname)));
+    public SGFMetaData(String fileName) {
+        this(new File(sanitizeFileName(fileName)));
     }
 
-    public final static String sanitizeFileName(String fname) {
-        String result=fname;
+    public static String sanitizeFileName(String fileName) {
+        String result = fileName;
 
-        if (fname.startsWith("file://")) {
-            result = fname.substring(8);
+        if (fileName.startsWith("file://")) {
+            result = fileName.substring(8);
         }
 
-        if (!fname.endsWith(FNAME_ENDING)) {
+        if (!fileName.endsWith(FNAME_ENDING)) {
             result += FNAME_ENDING;
         }
 
         return result;
     }
-    public SGFMetaData(File metaFile) {
 
-        this.metaFile =metaFile;
+    private SGFMetaData(File metaFile) {
+
+        this.metaFile = metaFile;
 
         if (metaFile.exists()) {
             try {

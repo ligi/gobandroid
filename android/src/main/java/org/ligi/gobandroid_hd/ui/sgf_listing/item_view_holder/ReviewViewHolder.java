@@ -59,8 +59,7 @@ public class ReviewViewHolder extends RecyclerView.ViewHolder implements ViewHol
 
         try {
             if (GoLink.isGoLink(file)) {
-                GoLink gl = new GoLink(file);
-
+                final GoLink gl = new GoLink(file);
                 file = new File(gl.getFileName());
                 game_link_extra_info.setText("Move #" + gl.getMoveDepth());
             } else {
@@ -69,7 +68,7 @@ public class ReviewViewHolder extends RecyclerView.ViewHolder implements ViewHol
 
             final String sgf_str = AXT.at(file).readToString(FileEncodeDetector.detect(file));
             final GoGame game = SGFReader.sgf2game(sgf_str, null, SGFReader.BREAKON_FIRSTMOVE);
-            final SGFMetaData sgf_meta = new SGFMetaData(file);
+            final SGFMetaData sgf_meta = new SGFMetaData(file.getAbsolutePath());
 
             if (game != null) {
                 final MetaDataFormatter metaFormatter = new MetaDataFormatter(game);
@@ -81,7 +80,7 @@ public class ReviewViewHolder extends RecyclerView.ViewHolder implements ViewHol
                     player_white.setText(metaFormatter.getWhitePlayerString());
                 }
 
-                if (metaFormatter.getBlackPlayerString().equals("")) {
+                if (metaFormatter.getBlackPlayerString().isEmpty()) {
                     player_black_stone_img.setVisibility(View.GONE);
                     player_black.setVisibility(View.GONE);
                 } else {
@@ -93,6 +92,7 @@ public class ReviewViewHolder extends RecyclerView.ViewHolder implements ViewHol
                 if (!sgf_meta.hasData()) {
                     game_rating.setVisibility(View.GONE);
                 } else if (sgf_meta.getRating() != null) {
+                    game_rating.setVisibility(View.VISIBLE);
                     game_rating.setRating(.5f * sgf_meta.getRating());
                 }
             }
