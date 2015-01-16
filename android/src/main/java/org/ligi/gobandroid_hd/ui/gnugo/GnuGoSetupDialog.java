@@ -45,7 +45,7 @@ public class GnuGoSetupDialog extends GobandroidDialog {
 
         setTitle(R.string.gnugo);
         setIconResource(R.drawable.preferences);
-        setContentFill();
+
         setContentView(R.layout.setup_gnugo);
 
         ButterKnife.inject(this);
@@ -108,7 +108,7 @@ public class GnuGoSetupDialog extends GobandroidDialog {
         edit.putBoolean(SP_KEY_PLAYS_BLACK, isBlackActive());
         edit.putBoolean(SP_KEY_PLAYS_BOTH, isBothActive());
 
-        edit.commit();
+        edit.apply();
     }
 
 }

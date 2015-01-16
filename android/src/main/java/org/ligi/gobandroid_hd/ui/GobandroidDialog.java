@@ -3,6 +3,8 @@ package org.ligi.gobandroid_hd.ui;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -21,55 +23,43 @@ import org.ligi.gobandroid_hd.R;
 
 /**
  * A styled Dialog fit in the gobandroid style
- *
- * @author <a href="http://ligi.de">Marcus -LiGi- Bueschleb </a>
- *         <p/>
- *         This software is licenced with GPLv3
  */
 public class GobandroidDialog extends Dialog {
 
     private final LayoutInflater inflater;
+    private final LinearLayout button_container;
 
     private Button positive_btn;
     private Button negative_btn;
 
-    private LinearLayout button_container;
-
     public GobandroidDialog(Context context) {
-        super(context,R.style.dialog_theme);
+        super(context, R.style.dialog_theme);
 
         inflater = LayoutInflater.from(context);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.setContentView(R.layout.dialog_gobandroid);
 
-        // this sounds misleading but behaves right - we just do not want to
-        // start with keyboard open
+        // this sounds misleading but behaves right - we just do not want to  start with keyboard open
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         button_container = (LinearLayout) findViewById(R.id.button_container);
     }
 
-    public void setIconResource(int ico_res) {
-        ((ImageView) findViewById(R.id.dialog_icon)).setImageResource(ico_res);
+    public void setIconResource(@DrawableRes int icon) {
+        ((TextView) findViewById(R.id.dialog_title)).setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
     }
 
     @Override
-    public void setContentView(int content) {
-        LinearLayout container = (LinearLayout) this.findViewById(R.id.dialog_content);
-
+    public void setContentView(@LayoutRes int content) {
+        final LinearLayout container = (LinearLayout) findViewById(R.id.dialog_content);
         container.addView(inflater.inflate(content, container, false));
     }
 
-    public void setContentFill() {
-        LinearLayout container = (LinearLayout) this.findViewById(R.id.dialog_content);
-        container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-    }
-
-    public void addItem(int image_resId, int str_resid, final OnClickListener listener) {
+    public void addItem(@DrawableRes int image, @StringRes int text, final OnClickListener listener) {
         final LinearLayout container = (LinearLayout) this.findViewById(R.id.dialog_items);
-        View v = inflater.inflate(R.layout.dialog_item, container,false);
-        ((TextView) v.findViewById(R.id.text)).setText(str_resid);
-        ((ImageView) v.findViewById(R.id.image)).setImageResource(image_resId);
+        final View v = inflater.inflate(R.layout.dialog_item, container, false);
+        ((TextView) v.findViewById(R.id.text)).setText(text);
+        ((ImageView) v.findViewById(R.id.image)).setImageResource(image);
 
         v.setOnTouchListener(new OnTouchListener() {
 
@@ -93,15 +83,6 @@ public class GobandroidDialog extends Dialog {
 
     }
 
-    class DefaultOnClickListener implements OnClickListener {
-
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            dismiss();
-        }
-
-    }
-
     @Override
     public void setTitle(CharSequence title) {
         ((TextView) this.findViewById(R.id.dialog_title)).setText(title);
@@ -109,7 +90,7 @@ public class GobandroidDialog extends Dialog {
 
     class DialogOnClickWrapper implements View.OnClickListener {
 
-        private DialogInterface.OnClickListener listener;
+        private final DialogInterface.OnClickListener listener;
 
         public DialogOnClickWrapper(DialogInterface.OnClickListener listener) {
             this.listener = listener;
@@ -135,32 +116,33 @@ public class GobandroidDialog extends Dialog {
 
     public Button getPositiveButton() {
         if (positive_btn == null) {
-            positive_btn = new Button(getContext());
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
-            positive_btn.setLayoutParams(lp);
-            button_container.addView(positive_btn);
+            button_container.addView(positive_btn = createButton());
         }
         return positive_btn;
     }
 
-    public void setNegativeButton(int text_stringres) {
-        getNegativeButton().setText(text_stringres);
-        getNegativeButton().setOnClickListener(new DialogOnClickWrapper(new DefaultOnClickListener()));
+    public void setNegativeButton(@StringRes int text) {
+        getNegativeButton().setText(text);
+        getNegativeButton().setOnClickListener(new DialogOnClickWrapper(new DialogDiscardingOnClickListener()));
     }
 
-    public void setNegativeButton(int text_stringres, DialogInterface.OnClickListener listener) {
-        getNegativeButton().setText(text_stringres);
+    public void setNegativeButton(@StringRes int text, DialogInterface.OnClickListener listener) {
+        getNegativeButton().setText(text);
         getNegativeButton().setOnClickListener(new DialogOnClickWrapper(listener));
     }
 
     private Button getNegativeButton() {
         if (negative_btn == null) {
-            negative_btn = new Button(getContext());
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
-            negative_btn.setLayoutParams(lp);
-            button_container.addView(negative_btn);
+            button_container.addView(negative_btn = createButton());
         }
         return negative_btn;
+    }
+
+    private Button createButton() {
+        final Button res = new Button(getContext());
+        final LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1f);
+        res.setLayoutParams(lp);
+        return res;
     }
 
 }
