@@ -39,6 +39,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.ligi.axt.AXT;
+import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -66,12 +67,7 @@ import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
 
 /**
  * Activity for a Go Game
- *
- * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
- *         <p/>
- *         License: This software is licensed with GPLv3
  */
-
 public class GoActivity extends GobandroidFragmentActivity implements OnTouchListener, OnKeyListener, GoGame.GoGameChangeListener {
 
     public GoSoundManager sound_man;
@@ -281,15 +277,13 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     }
 
     /**
-     * control whether we want to ask the user - different in modes
-     *
-     * @return
+     * @return true if we want to ask the user - different in modes
      */
     public boolean isAsk4QuitEnabled() {
         return true;
     }
 
-    private void shutdown(boolean toHome) {
+    private void shutdown() {
         // sound_man.playSound(GoSoundManager.SOUND_END);
         getGame().getGoMover().stop();
         finish();
@@ -297,18 +291,14 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     public void quit(final boolean toHome) {
         if (!isAsk4QuitEnabled()) {
-            shutdown(toHome);
-            return;
+            shutdown();
+        } else {
+            new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title).setMessage(R.string.quit_confirm).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    shutdown();
+                }
+            }).setCancelable(true).setNegativeButton(R.string.no, new DialogDiscardingOnClickListener()).show();
         }
-
-        new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title).setMessage(R.string.quit_confirm).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                shutdown(toHome);
-            }
-        }).setCancelable(true).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-            }
-        }).show();
     }
 
     @Override
@@ -324,8 +314,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     /**
      * show a the info toast with a specified text from a resource ID
-     *
-     * @param resId
      */
     protected void showInfoToast(@StringRes int resId) {
         info_toast.setText(resId);
