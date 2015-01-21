@@ -496,7 +496,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     public void initializeStoneMove() {
 
-        if (getGame().getGoMover().isPlayingInThisGame()) { // dont allow with a mover
+        if (getGame().getGoMover().isPlayingInThisGame()) { // don't allow with a mover
             return;
         }
 
