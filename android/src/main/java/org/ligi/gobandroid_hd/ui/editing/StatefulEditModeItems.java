@@ -5,11 +5,11 @@ import org.ligi.gobandroid_hd.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditModeItemPool {
+public class StatefulEditModeItems {
     private final List<EditModeItem> list;
     private int act_activated = 0;
 
-    public EditModeItemPool() {
+    public StatefulEditModeItems() {
         list = new ArrayList<>();
         list.add(new EditModeItem(R.drawable.stone_black, EditGameMode.BLACK, R.string.black));
         list.add(new EditModeItem(R.drawable.stone_white, EditGameMode.WHITE,  R.string.white));
@@ -24,7 +24,7 @@ public class EditModeItemPool {
         return list;
     }
 
-    public void setActivateItem(int id) {
+    public void setActivatedItem(int id) {
         act_activated = id;
     }
 

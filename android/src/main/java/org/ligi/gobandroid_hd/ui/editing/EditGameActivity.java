@@ -18,13 +18,11 @@ import org.ligi.gobandroid_hd.ui.GoActivity;
 import java.util.List;
 
 /**
- * Activity to record a Game - or play on one device
- *
- * @author ligi
+ * Activity to edit a Game
  */
 public class EditGameActivity extends GoActivity implements GoGameChangeListener {
 
-    private EditModeItemPool editModePool = new EditModeItemPool();
+    private StatefulEditModeItems statefulEditModeItems = new StatefulEditModeItems();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,36 +32,13 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-    public boolean doAutosave() {
+    @Override
+    public boolean doAutoSave() {
         return true;
     }
 
     @Override
     public byte doMoveWithUIFeedback(byte x, byte y) {
-
-        // if it is a marker we have to check if there is one already and
-        // remove
-        final List<GoMarker> markers = getGame().getActMove().getMarkers();
-        switch (getMode()) {
-            case TRIANGLE:
-            case SQUARE:
-            case CIRCLE:
-            case NUMBER:
-            case LETTER:
-                // remove markers with same coordinates
-                GoMarker marker2remove = null;
-                for (GoMarker marker : markers) {
-                    if (marker.getX() == x && marker.getY() == y) {
-                        marker2remove = marker;
-                    }
-                }
-
-                if (marker2remove != null) {
-                    markers.remove(marker2remove);
-                    return GoGame.MOVE_VALID;
-                }
-        }
-
         switch (getMode()) {
             case BLACK:
                 if (getGame().getHandicapBoard().isCellBlack(x, y)) {
@@ -71,65 +46,74 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
                 } else {
                     getGame().getHandicapBoard().setCellBlack(x, y);
                 }
-                getGame().jump(getGame().getActMove()); // we need to totally
-                // refresh the board
-                break;
+                getGame().jump(getGame().getActMove()); // we need to totally refresh the board
+                return GoGame.MOVE_VALID;
+
             case WHITE:
                 if (getGame().getHandicapBoard().isCellWhite(x, y)) {
                     getGame().getHandicapBoard().setCellFree(x, y);
                 } else {
                     getGame().getHandicapBoard().setCellWhite(x, y);
                 }
-                getGame().jump(getGame().getActMove()); // we need to totally
-                // refresh the board
-                break;
+                getGame().jump(getGame().getActMove()); // we need to totally refresh the board
+                return GoGame.MOVE_VALID;
+
             case TRIANGLE:
-                markers.add(new TriangleMarker(x, y));
-                break;
             case SQUARE:
-                markers.add(new SquareMarker(x, y));
-                break;
             case CIRCLE:
-                markers.add(new CircleMarker(x, y));
-                break;
-
             case NUMBER:
-                final int firstFreeNumber = MarkerUtil.findFirstFreeNumber(markers);
-                markers.add(new TextMarker(x, y, "" + firstFreeNumber));
-                break;
-
             case LETTER:
-                final String nextLetter = MarkerUtil.findNextLetter(markers);
-                markers.add(new TextMarker(x, y, nextLetter));
-                break;
+                final List<GoMarker> markers = getGame().getActMove().getMarkers();
+
+                // remove markers with same coordinates
+                for (GoMarker marker : markers) {
+                    if (marker.getX() == x && marker.getY() == y) {
+                        markers.remove(marker);
+                        return GoGame.MOVE_VALID;
+                    }
+                }
+
+                markers.add(removeOldAndGetNewMarker(x, y, markers));
 
         }
         getGame().notifyGameChange();
         return GoGame.MOVE_VALID;
     }
 
-    private EditGameMode getMode() {
-        return editModePool.getActMode();
+    private GoMarker removeOldAndGetNewMarker(byte x, byte y, List<GoMarker> markers) {
+        switch (getMode()) {
+            case TRIANGLE:
+                return new TriangleMarker(x, y);
+            case SQUARE:
+                return new SquareMarker(x, y);
+            case CIRCLE:
+                return new  CircleMarker(x, y);
+            case NUMBER:
+                final int firstFreeNumber = MarkerUtil.findFirstFreeNumber(markers);
+                return new TextMarker(x, y, "" + firstFreeNumber);
+            case LETTER:
+                final String nextLetter = MarkerUtil.findNextLetter(markers);
+                return new TextMarker(x, y, nextLetter);
+        }
+        throw new IllegalArgumentException("unknown mode " + getMode());
     }
 
-    /**
-     * crashes with share and imho not needed any more - but investigate
-     *
-     * @Override public void onGoGameChange() {
-     * super.onGoGameChange();
-     * this.invalidateOptionsMenu();
-     * }
-     */
+    private EditGameMode getMode() {
+        return statefulEditModeItems.getActMode();
+    }
 
     @Override
     public EditGameExtrasFragment getGameExtraFragment() {
-        return new EditGameExtrasFragment(editModePool);
+        return new EditGameExtrasFragment();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.ingame_edit, menu);
+        getMenuInflater().inflate(R.menu.ingame_edit, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    public StatefulEditModeItems getStatefulEditModeItems() {
+        return statefulEditModeItems;
+    }
 }

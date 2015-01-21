@@ -443,7 +443,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             getGame().removeGoGameChangeListener(this);
         }
 
-        if (doAutosave()) {
+        if (doAutoSave()) {
             try {
                 File f = new File(getSettings().getSGFSavePath() + "/autosave.sgf");
                 f.createNewFile();
@@ -463,7 +463,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         super.onPause();
     }
 
-    public boolean doAutosave() {
+    public boolean doAutoSave() {
         return false;
     }
 

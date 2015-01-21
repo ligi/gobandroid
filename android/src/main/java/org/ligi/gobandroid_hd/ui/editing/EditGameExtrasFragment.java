@@ -15,39 +15,32 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import org.ligi.axt.simplifications.SimpleTextWatcher;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class EditGameExtrasFragment extends GobandroidFragment implements GoGameChangeListener {
 
-    private EditText editText;
-    private EditModeItemPool editModePool;
-
-    public EditGameExtrasFragment() {
-
-    }
-
-    public EditGameExtrasFragment(EditModeItemPool editModePool) {
-        this.editModePool = editModePool;
-    }
+    @InjectView(R.id.comment_et)
+    EditText editText;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.edit_extras, null);
+        final StatefulEditModeItems editModePool = ((EditGameActivity) getActivity()).getStatefulEditModeItems();
+        final View view = inflater.inflate(R.layout.edit_extras, container, false);
 
         final Context ctx = container.getContext();
 
         final GridView mode_grid = (GridView) view.findViewById(R.id.gridView);
 
-        class ModeAdapter extends ArrayAdapter<EditModeItem> {
-
-            public ModeAdapter(Context context, int textViewResourceId, List<EditModeItem> objects) {
-                super(context, textViewResourceId, objects);
-            }
+        mode_grid.setAdapter(new ArrayAdapter<EditModeItem>(ctx, R.layout.edit_mode_item, editModePool.getList()) {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -61,25 +54,23 @@ public class EditGameExtrasFragment extends GobandroidFragment implements GoGame
 
                 return view;
             }
-
-        }
-
-        mode_grid.setAdapter(new ModeAdapter(ctx, R.layout.edit_mode_item, editModePool.getList()));
+        });
 
         mode_grid.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> adapter, View arg1, int postion, long arg3) {
-                editModePool.setActivateItem(postion);
+            public void onItemClick(AdapterView<?> adapter, View arg1, int position, long arg3) {
+                editModePool.setActivatedItem(position);
                 ((ArrayAdapter<?>) adapter.getAdapter()).notifyDataSetChanged();
             }
 
         });
-        editText = (EditText) view.findViewById(R.id.comment_et);
 
-        getGame().addGoGameChangeListener(this);
+        ButterKnife.inject(this, view);
 
-        editText.setText(getGame().getActMove().getComment());
+        App.getGame().addGoGameChangeListener(this);
+
+        editText.setText(App.getGame().getActMove().getComment());
         editText.setHint(R.string.enter_your_comments_here);
         editText.setGravity(Gravity.TOP);
         editText.setTextColor(getResources().getColor(R.color.text_color_on_board_bg));
@@ -87,7 +78,7 @@ public class EditGameExtrasFragment extends GobandroidFragment implements GoGame
         editText.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                getGame().getActMove().setComment(s.toString());
+                App.getGame().getActMove().setComment(s.toString());
             }
         });
 
@@ -96,20 +87,20 @@ public class EditGameExtrasFragment extends GobandroidFragment implements GoGame
 
     @Override
     public void onDestroyView() {
-        getGame().removeGoGameChangeListener(this);
+        App.getGame().removeGoGameChangeListener(this);
         super.onDestroyView();
     }
 
     @Override
     public void onGoGameChange() {
-        if (editText == null || getActivity() == null) {
+        if (getActivity() == null) {
             return; // no user facing action
         }
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                editText.setText(getGame().getActMove().getComment());
+                editText.setText(App.getGame().getActMove().getComment());
             }
         });
     }

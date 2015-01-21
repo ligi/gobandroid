@@ -67,7 +67,7 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
 
     }
 
-    public boolean doAutosave() {
+    public boolean doAutoSave() {
         return true;
     }
 
