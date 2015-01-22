@@ -29,8 +29,8 @@ package org.ligi.gobandroid_hd.logic;
 
 public class GoBoard {
 
-    private byte size;
-    public byte[][] board;
+    private final byte size;
+    public final byte[][] board;
 
     public GoBoard(byte size) {
         this.size = size;
@@ -38,14 +38,12 @@ public class GoBoard {
     }
 
     public GoBoard(byte size, byte[][] predefined_board) {
-
-        this.size = size;
-        board = new byte[size][size];
+        this(size);
 
         // copy the board
-        for (int x = 0; x < size; x++)
-            for (int y = 0; y < size; y++)
-                board[x][y] = predefined_board[x][y];
+        for (int x = 0; x < size; x++) {
+            System.arraycopy(predefined_board[x], 0, board[x], 0, size);
+        }
     }
 
     /**
@@ -83,26 +81,23 @@ public class GoBoard {
      * print a visual representation of the board via Log.d
      */
     public String toString() {
-        String res = "";
-        String tmp_str = "";
+        final StringBuilder b = new StringBuilder(size * size + size);
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
                 if (board[x][y] == GoDefinitions.STONE_NONE)
-                    tmp_str += ".";
+                    b.append('.');
                 else if (board[x][y] == GoDefinitions.STONE_BLACK)
-                    tmp_str += "B";
+                    b.append('B');
                 else if (board[x][y] == GoDefinitions.STONE_WHITE)
-                    tmp_str += "W";
+                    b.append('W');
                 else if (board[x][y] == -GoDefinitions.STONE_BLACK)
-                    tmp_str += "b";
+                    b.append('b');
                 else if (board[x][y] == -GoDefinitions.STONE_WHITE)
-                    tmp_str += "w";
-
+                    b.append('w');
             }
-            res += tmp_str + "\n";
-            tmp_str = "";
+            b.append('\n');
         }
-        return res;
+        return b.toString();
     }
 
     /**

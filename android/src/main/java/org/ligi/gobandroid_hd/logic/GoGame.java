@@ -30,7 +30,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Stack;
 
 /**
  * Class to represent a Go Game with its rules
@@ -454,7 +453,7 @@ public class GoGame {
 
         clear_calc_board();
 
-        List<GoMove> replay_moves = new ArrayList<GoMove>();
+        List<GoMove> replay_moves = new ArrayList<>();
 
         replay_moves.add(move);
         GoMove tmp_move;
@@ -478,6 +477,10 @@ public class GoGame {
         notifyGameChange();
     }
 
+    public boolean cell_has_libertie(Cell p) {
+        return cell_has_libertie(p.x, p.y);
+    }
+
     public boolean cell_has_libertie(int x, int y) {
 
         return (((x != 0) && (calc_board.isCellFree(x - 1, y))) || ((y != 0) && (calc_board.isCellFree(x, y - 1))) || ((x != (calc_board.getSize() - 1)) && (calc_board.isCellFree(x + 1, y))) || ((y != (calc_board.getSize() - 1)) && (calc_board.isCellFree(
@@ -497,57 +500,22 @@ public class GoGame {
     }
 
     /**
-     * check if a group has liberties
+     * check if a group has liberties via flood fill
      *
      * @return boolean weather the group has liberty
      */
-    public boolean hasGroupLiberties(int x, int y) {        /*
-         * do a depth search first from point if (calc_board.isCellFree(x,y))
-		 * return true;
-		 */
+    public boolean hasGroupLiberties(int x, int y) {
 
-        boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board.getSize()];
-        final Stack<Integer> ptStackX = new Stack<>();
-        final Stack<Integer> ptStackY = new Stack<>();
-
-		/* Replace previous code with more efficient flood fill */
-        ptStackX.push(x);
-        ptStackY.push(y);
+        final FloodFillStackStack ptStackX = new FloodFillStackStack(new BoardCell(x, y, calc_board));
 
         while (!ptStackX.empty()) {
-            int newx = ptStackX.pop();
-            int newy = ptStackY.pop();
+            final BoardCell point = ptStackX.pop();
 
-            if (cell_has_libertie(newx, newy)) {
+            if (cell_has_libertie(point)) {
                 return true;
-            } else {
-                checked_pos[newx][newy] = true;
             }
 
-			/* check to the left */
-            if (newx > 0)
-                if (calc_board.areCellsEqual(newx - 1, newy, newx, newy) && (checked_pos[newx - 1][newy] == false)) {
-                    ptStackX.push(newx - 1);
-                    ptStackY.push(newy);
-                }
-            /* check to the right */
-            if (newx < calc_board.getSize() - 1)
-                if (calc_board.areCellsEqual(newx + 1, newy, newx, newy) && (checked_pos[newx + 1][newy] == false)) {
-                    ptStackX.push(newx + 1);
-                    ptStackY.push(newy);
-                }
-            /* check down */
-            if (newy > 0)
-                if (calc_board.areCellsEqual(newx, newy - 1, newx, newy) && (checked_pos[newx][newy - 1] == false)) {
-                    ptStackX.push(newx);
-                    ptStackY.push(newy - 1);
-                }
-            /* check up */
-            if (newy < calc_board.getSize() - 1)
-                if (calc_board.areCellsEqual(newx, newy + 1, newx, newy) && (checked_pos[newx][newy + 1] == false)) {
-                    ptStackX.push(newx);
-                    ptStackY.push(newy + 1);
-                }
+            ptStackX.pushSurroundingWithCheck(point);
         }
 
         return false;
@@ -600,44 +568,16 @@ public class GoGame {
             for (int y = 0; y < calc_board.getSize(); y++)
                 groups[x][y] = -1;
 
-        Stack<Integer> ptStackX = new Stack<Integer>();
-        Stack<Integer> ptStackY = new Stack<Integer>();
-
-		/* Replace previous code with more efficient flood fill */
         for (int x = 0; x < calc_board.getSize(); x++)
             for (int y = 0; y < calc_board.getSize(); y++) {
                 if (groups[x][y] == -1) {
-                    ptStackX.push(x);
-                    ptStackY.push(y);
+                    final FloodFillStackStack stack = new FloodFillStackStack(new BoardCell(x, y, calc_board));
 
-                    while (!ptStackX.empty()) {
-                        int newx = ptStackX.pop();
-                        int newy = ptStackY.pop();
-                        groups[newx][newy] = group_count;
-                        /* check to the left */
-                        if (newx > 0)
-                            if (calc_board.areCellsEqual(newx - 1, newy, newx, newy) && (groups[newx - 1][newy] == -1)) {
-                                ptStackX.push(newx - 1);
-                                ptStackY.push(newy);
-                            }
-                        /* check to the right */
-                        if (newx < calc_board.getSize() - 1)
-                            if (calc_board.areCellsEqual(newx + 1, newy, newx, newy) && (groups[newx + 1][newy] == -1)) {
-                                ptStackX.push(newx + 1);
-                                ptStackY.push(newy);
-                            }
-						/* check down */
-                        if (newy > 0)
-                            if (calc_board.areCellsEqual(newx, newy - 1, newx, newy) && (groups[newx][newy - 1] == -1)) {
-                                ptStackX.push(newx);
-                                ptStackY.push(newy - 1);
-                            }
-						/* check up */
-                        if (newy < calc_board.getSize() - 1)
-                            if (calc_board.areCellsEqual(newx, newy + 1, newx, newy) && (groups[newx][newy + 1] == -1)) {
-                                ptStackX.push(newx);
-                                ptStackY.push(newy + 1);
-                            }
+                    while (!stack.empty()) {
+                        BoardCell cell = stack.pop();
+                        groups[cell.x][cell.y] = group_count;
+
+                        stack.pushSurroundingWithCheck(cell);
                     }
                     group_count++;
                 }
@@ -710,7 +650,7 @@ public class GoGame {
         if (ignore_x > 0)
             if ((!hasGroupLiberties(ignore_x - 1, ignore_y)) && (!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x - 1, ignore_y)))
                 remove_group(ignore_x - 1, (int) ignore_y);
-		/* check right */
+        /* check right */
         if (ignore_x < calc_board.getSize() - 1)
             if ((!hasGroupLiberties(ignore_x + 1, ignore_y)) && (!calc_board.areCellsEqual(ignore_x, ignore_y, ignore_x + 1, ignore_y)))
                 remove_group(ignore_x + 1, (int) ignore_y);
@@ -730,56 +670,17 @@ public class GoGame {
 
     private void remove_group(int x, int y) {
 
-        if (calc_board.isCellFree(x, y)) // this is no "group" in the sense we
-            // want
+        if (calc_board.isCellFree(x, y)) // this is no "group" in the sense we want
             return;
 
-        boolean checked_pos[][] = new boolean[calc_board.getSize()][calc_board.getSize()];
-        Stack<Integer> ptStackX = new Stack<Integer>();
-        Stack<Integer> ptStackY = new Stack<Integer>();
 
-		/* Replace previous code with more efficient flood fill */
-        ptStackX.push(x);
-        ptStackY.push(y);
-        checked_pos[x][y] = true;
+        final FloodFillStackStack stack = new FloodFillStackStack(new BoardCell(x, y, calc_board));
 
-        while (!ptStackX.empty()) {
-            int newx = ptStackX.pop();
-            int newy = ptStackY.pop();
-
-			/* check to the left */
-            if (newx > 0)
-                if (calc_board.areCellsEqual(newx - 1, newy, newx, newy) && (checked_pos[newx - 1][newy] == false)) {
-                    ptStackX.push(newx - 1);
-                    ptStackY.push(newy);
-                    checked_pos[newx - 1][newy] = true;
-                }
-			/* check to the right */
-            if (newx < calc_board.getSize() - 1)
-                if (calc_board.areCellsEqual(newx + 1, newy, newx, newy) && (checked_pos[newx + 1][newy] == false)) {
-                    ptStackX.push(newx + 1);
-                    ptStackY.push(newy);
-                    checked_pos[newx + 1][newy] = true;
-                }
-			/* check down */
-            if (newy > 0)
-                if (calc_board.areCellsEqual(newx, newy - 1, newx, newy) && (checked_pos[newx][newy - 1] == false)) {
-                    ptStackX.push(newx);
-                    ptStackY.push(newy - 1);
-                    checked_pos[newx][newy - 1] = true;
-                }
-			/* check up */
-            if (newy < calc_board.getSize() - 1)
-                if (calc_board.areCellsEqual(newx, newy + 1, newx, newy) && (checked_pos[newx][newy + 1] == false)) {
-                    ptStackX.push(newx);
-                    ptStackY.push(newy + 1);
-                    checked_pos[newx][newy + 1] = true;
-                }
-
+        while (!stack.empty()) {
+            final BoardCell cell = stack.pop();
+            stack.pushSurroundingWithCheck(cell);
             local_captures++;
-
-            calc_board.setCellFree(newx, newy);
-
+            calc_board.setCellFree(cell.x, cell.y);
         }
 
     }
@@ -889,16 +790,10 @@ public class GoGame {
      * - size
      * - moves
      * - metadata ( TODO )
-     *
-     * @param other
-     * @return
      */
     public boolean isContentEqualTo(GoGame other) {
-        if (other.getBoardSize() != getBoardSize()) {
-            return false;
-        }
+        return other.getBoardSize() == getBoardSize() && compareMovesRecursive(getFirstMove(), other.getFirstMove());
 
-        return compareMovesRecusive(getFirstMove(), other.getFirstMove());
     }
 
     public boolean hasNextMove(GoMove move1, GoMove move2) {
@@ -911,7 +806,7 @@ public class GoGame {
         return false;
     }
 
-    private boolean compareMovesRecusive(GoMove move1, GoMove move2) {
+    private boolean compareMovesRecursive(GoMove move1, GoMove move2) {
         if (!move1.isContentEqual(move2)) {
             return false;
         }
