@@ -775,14 +775,6 @@ public class GoGame {
         return new Point(lin % getSize(), lin / getSize());
     }
 
-    public void setDeadWhite(int _dead_white) {
-        dead_white = _dead_white;
-    }
-
-    public void setDeadBlack(int _dead_black) {
-        dead_black = _dead_black;
-    }
-
     /**
      * just content as state is not checked ( position in game )
      * <p/>
@@ -825,4 +817,24 @@ public class GoGame {
 
         return true;
     }
+
+    public void calculateDead() {
+
+        int _dead_white = 0;
+        int _dead_black = 0;
+
+        for (int xg = 0; xg < getCalcBoard().getSize(); xg++)
+            for (int yg = 0; yg < getCalcBoard().getSize(); yg++)
+                if (getCalcBoard().isCellDead(xg, yg)) {
+                    if (getCalcBoard().isCellDeadBlack(xg, yg))
+                        _dead_black++;
+
+                    else if (getCalcBoard().isCellDeadWhite(xg, yg))
+                        _dead_white++;
+                }
+
+        dead_white=_dead_white;
+        dead_black=_dead_black;
+    }
+
 }

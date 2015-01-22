@@ -8,6 +8,8 @@ import android.view.WindowManager;
 
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.BoardCell;
+import org.ligi.gobandroid_hd.logic.FloodFillStackStack;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.GoActivity;
@@ -108,35 +110,18 @@ public class GameScoringActivity extends GoActivity implements
             return; // not on board
         }
 
-        getGame().buildGroups();
+        if ((!getGame().getCalcBoard().isCellFree(x, y)) || getGame().getCalcBoard().isCellDead(x, y)) { // if there is a stone/group
+            final FloodFillStackStack stack=new FloodFillStackStack(new BoardCell(x,y,getGame().getCalcBoard()));
 
-        if ((!getGame().getCalcBoard().isCellFree(x, y)) || getGame().getCalcBoard().isCellDead(x, y)) // if
-            // there is a stone/group
-            for (byte xg = 0; xg < getGame().getCalcBoard().getSize(); xg++)
-                // toggle the whole group dead TODO: should better be done
-                // via flood-fill than group compare
-                for (byte yg = 0; yg < getGame().getCalcBoard().getSize(); yg++)
-                    if (getGame().getGroup(xg, yg) == getGame().getGroup(x, y)) {
-                        getGame().getCalcBoard().toggleCellDead(xg, yg);
-                    }
+            while (!stack.isEmpty()) {
+                final BoardCell pop = stack.pop();
+                getGame().getCalcBoard().toggleCellDead(pop.x,pop.y);
+                stack.pushSurroundingWithCheck(pop);
+            }
+        }
 
         getGame().buildAreaGroups();
-
-        int _dead_white = 0;
-        int _dead_black = 0;
-
-        for (int xg = 0; xg < getGame().getCalcBoard().getSize(); xg++)
-            for (int yg = 0; yg < getGame().getCalcBoard().getSize(); yg++)
-                if (getGame().getCalcBoard().isCellDead(xg, yg)) {
-                    if (getGame().getCalcBoard().isCellDeadBlack(xg, yg))
-                        _dead_black++;
-
-                    if (getGame().getCalcBoard().isCellDeadWhite(xg, yg))
-                        _dead_white++;
-                }
-
-        getGame().setDeadWhite(_dead_white);
-        getGame().setDeadBlack(_dead_black);
+        getGame().calculateDead();
     }
 
 }
