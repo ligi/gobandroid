@@ -21,15 +21,11 @@ package org.ligi.gobandroid_hd.logic;
 
 /**
  * store the metadata ( such as player names/ranks) for a game
- *
- * @author Marcus -ligi- Bueschleb
- *         <p/>
- *         This software is licenced with GPLv3
  */
 public class MetaDataFormatter {
 
-    private GoGameMetadata meta;
-    private GoGame game;
+    private final GoGameMetadata meta;
+    private final GoGame game;
 
     public MetaDataFormatter(GoGame game) {
         this.meta = game.getMetaData();
