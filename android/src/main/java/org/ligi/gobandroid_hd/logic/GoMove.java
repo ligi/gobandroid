@@ -28,10 +28,6 @@ import java.util.List;
 
 /**
  * Class to represent a Go Move
- *
- * @author <a href="http://ligi.de">Marcus -LiGi- Bueschleb </a>
- *         <p/>
- *         This software is licenced with GPLv3
  */
 
 public class GoMove {
