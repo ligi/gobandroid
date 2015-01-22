@@ -157,7 +157,7 @@ public class GoMove {
     }
 
     public boolean hasComment() {
-        return !comment.equals("");
+        return !comment.isEmpty();
     }
 
     public String getComment() {
