@@ -75,7 +75,7 @@ public class App extends Application {
     }
 
     public static void setGame(GoGame p_game) {
-        instance.getInteractionScope().ask_variant_session = true;
+        getInteractionScope().ask_variant_session = true;
 
         if (game == null) {
             game = p_game;

@@ -17,8 +17,6 @@ import org.ligi.tracedroid.logging.Log;
 
 /**
  * Activity to score a Game
- *
- * @author ligi
  */
 public class GameScoringActivity extends GoActivity implements
         GoGameChangeListener {
@@ -28,11 +26,9 @@ public class GameScoringActivity extends GoActivity implements
         super.onCreate(savedInstanceState);
         // TODO the next line works but needs investigation - i thought more of
         // getBoard().requestFocus(); - but that was not working ..
-        getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         getBoard().show_area_stones = true;
         getGame().buildAreaGroups();
-
     }
 
     @Override
@@ -111,11 +107,11 @@ public class GameScoringActivity extends GoActivity implements
         }
 
         if ((!getGame().getCalcBoard().isCellFree(x, y)) || getGame().getCalcBoard().isCellDead(x, y)) { // if there is a stone/group
-            final FloodFillStackStack stack=new FloodFillStackStack(new BoardCell(x,y,getGame().getCalcBoard()));
+            final FloodFillStackStack stack = new FloodFillStackStack(new BoardCell(x, y, getGame().getCalcBoard()));
 
             while (!stack.isEmpty()) {
                 final BoardCell pop = stack.pop();
-                getGame().getCalcBoard().toggleCellDead(pop.x,pop.y);
+                getGame().getCalcBoard().toggleCellDead(pop.x, pop.y);
                 stack.pushSurroundingWithCheck(pop);
             }
         }
