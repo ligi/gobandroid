@@ -245,7 +245,7 @@ public class GoMove {
             return false;
         }
 
-        if (getMovePos() != getMovePos()) {
+        if (getMovePos() != other.getMovePos()) {
             return false;
         }
 
