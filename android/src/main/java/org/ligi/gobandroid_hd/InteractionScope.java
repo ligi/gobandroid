@@ -1,5 +1,8 @@
 package org.ligi.gobandroid_hd;
 
+import org.ligi.gobandroid_hd.logic.BoardCell;
+import org.ligi.gobandroid_hd.logic.Cell;
+
 public class InteractionScope {
 
     public final static byte MODE_RECORD = 0;
@@ -11,31 +14,26 @@ public class InteractionScope {
     public final static byte MODE_EDIT = 6;
     public final static byte MODE_SETUP = 7;
 
-    public int touch_position = -1; // negative numbers -> no recent touch
+    public Cell touch_position = null;
     private byte mode;
     private boolean is_noif_mode = false;
 
     public boolean ask_variant_session = true;
 
-    public void setTouchPosition(int pos) {
-        touch_position = pos;
+    public void setTouchPosition(Cell touchCell) {
+        touch_position = touchCell;
     }
 
-    public int getTouchPosition() {
+    public Cell getTouchPosition() {
         return touch_position;
     }
 
-    public int getTouchX() {
-        return touch_position % App.getGame().getSize();
-    }
-
-    public int getTouchY() {
-        return touch_position / App.getGame().getSize();
+    public Cell getTouchCell() {
+        return touch_position;
     }
 
     public boolean hasValidTouchCoord() {
-        final int size = App.getGame().getSize();
-        return ((touch_position >= 0) && (touch_position < size * size));
+        return touch_position!=null && new BoardCell(touch_position, App.getGame().getCalcBoard()).isOnBoard();
     }
 
     public byte getMode() {
@@ -77,5 +75,15 @@ public class InteractionScope {
                 return R.string.empty_str;
         }
 
+    }
+
+    /**
+     * @return some ensured touch_position - if there was none set to (0,0)
+     */
+    public Cell getEnsuredTouchPosition() {
+        if (touch_position == null) {
+            touch_position = new Cell(0, 0);
+        }
+        return touch_position;
     }
 }

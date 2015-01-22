@@ -108,31 +108,32 @@ public class GnuGoMover implements Runnable {
         return (playing_black || playing_white);
     }
 
-    public String coordinates2gtpstr(byte x, byte y) {
+    public String coordinates2gtpstr(Cell cell) {
         if (game == null) {
             Log.w("coordinates2gtpstr called with game==null");
             return "";
         }
-        if (x >= 8)
+        int x=cell.x;
+        if (cell.x >= 8)
             x++; // "I" is missing decrease human OCR-error but increase
         // computer bugs ...
-        y = (byte) (game.getBoardSize() - (y));
+        int y = (byte) (game.getBoardSize() - (cell.y));
         return "" + (char) ('A' + x) + "" + (y);
     }
 
-    public void processWhiteMove(byte x, byte y) {
+    public void processWhiteMove(Cell cell) {
         try {
-            gnu_service.processGTP("white " + coordinates2gtpstr(x, y));
+            gnu_service.processGTP("white " + coordinates2gtpstr(cell));
         } catch (Exception e) {
-            Log.w("problem processing white move to " + coordinates2gtpstr(x, y));
+            Log.w("problem processing white move to " + coordinates2gtpstr(cell));
         }
     }
 
-    public void processBlackMove(byte x, byte y) {
+    public void processBlackMove(Cell cell) {
         try {
-            gnu_service.processGTP("black " + coordinates2gtpstr(x, y));
+            gnu_service.processGTP("black " + coordinates2gtpstr(cell));
         } catch (Exception e) {
-            Log.w("problem processing black move to " + coordinates2gtpstr(x, y));
+            Log.w("problem processing black move to " + coordinates2gtpstr(cell));
         }
     }
 
@@ -167,11 +168,9 @@ public class GnuGoMover implements Runnable {
                     // set the size
                     gnu_service.processGTP("boardsize " + game.getBoardSize());
 
-                    for (byte x = 0; x < game.getBoardSize(); x++) {
-                        for (byte y = 0; y < game.getBoardSize(); y++) {
-                            if (game.getHandicapBoard().isCellBlack(x, y)) {
-                                gnu_service.processGTP("black " + coordinates2gtpstr(x, y));
-                            }
+                    for (Cell cell : game.getCalcBoard().getAllCells()) {
+                        if (game.getHandicapBoard().isCellBlack(cell)) {
+                            gnu_service.processGTP("black " + coordinates2gtpstr(cell));
                         }
                     }
                     Log.i("setting level " + gnu_service.processGTP("level " + level));
@@ -247,9 +246,8 @@ public class GnuGoMover implements Runnable {
      * @return if it is a move the mover has to process
      */
     public boolean isMoversMove() {
-        if (!isPlayingInThisGame())
-            return false;
-        return (game.isBlackToMove() && (playing_black)) || (!game.isBlackToMove() && (playing_white));
+        return isPlayingInThisGame()
+                && ((game.isBlackToMove() && playing_black) || (!game.isBlackToMove() && playing_white));
     }
 
     public String getProblemString() {

@@ -2,6 +2,7 @@ package org.ligi.gobandroidhd.unittest;
 
 import android.test.suitebuilder.annotation.SmallTest;
 
+import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.markers.util.MarkerUtil;
@@ -44,7 +45,7 @@ public class TheMarkerUtilNumberFinder extends AssetAwareInstrumentationTestCase
     private List<GoMarker> markerList(String... markers) {
         final List<GoMarker> result = new ArrayList<>();
         for (String marker : markers) {
-            result.add(new TextMarker((byte) 1, (byte) 1, marker));
+            result.add(new TextMarker(new Cell(1,1), marker));
         }
         return result;
     }

@@ -4,24 +4,38 @@ public class Cell {
     public final int x;
     public final int y;
 
+    public Cell(Cell cell) {
+        this(cell.x, cell.y);
+    }
+
     public Cell(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public Cell left() {
-        return new Cell(x - 1, y);
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof Cell)) {
+            return false;
+        }
+
+        Cell other = (Cell) o;
+
+        return ((other.x == x) && (other.y == y));
+
     }
 
-    public Cell right() {
-        return new Cell(x + 1, y);
+    @Override
+    public String toString() {
+        return "x:" + x + " y:" + y;
     }
 
-    public Cell up() {
-        return new Cell(x, y - 1);
-    }
-
-    public Cell down() {
-        return new Cell(x, y + 1);
+    @Override
+    public int hashCode() {
+        return x << 8 | y;
     }
 }

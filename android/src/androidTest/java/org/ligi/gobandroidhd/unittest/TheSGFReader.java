@@ -56,9 +56,9 @@ public class TheSGFReader extends AssetAwareInstrumentationTestCase {
         GoGame game = SGFReader.sgf2game(readAsset("sgf/default_marker.sgf"), null);
 
         final GoMarker createdMarker = game.getLastMove().getMarkers().get(0);
-        assertThat(createdMarker.getX()).isEqualTo((byte) 1);
-        assertThat(createdMarker.getY()).isEqualTo((byte) 2);
-        assertThat(((TextMarker)createdMarker).getText()).isEqualTo("X");
+        assertThat(createdMarker.x).isEqualTo(1);
+        assertThat(createdMarker.y).isEqualTo(2);
+        assertThat(((TextMarker) createdMarker).getText()).isEqualTo("X");
     }
 
     @SmallTest
@@ -66,8 +66,8 @@ public class TheSGFReader extends AssetAwareInstrumentationTestCase {
         GoGame game = SGFReader.sgf2game(readAsset("sgf/named_marker.sgf"), null);
 
         final GoMarker createdMarker = game.getLastMove().getMarkers().get(0);
-        assertThat(createdMarker.getX()).isEqualTo((byte) 1);
-        assertThat(createdMarker.getY()).isEqualTo((byte) 2);
-        assertThat(((TextMarker)createdMarker).getText()).isEqualTo("L");
+        assertThat(createdMarker.x).isEqualTo(1);
+        assertThat(createdMarker.y).isEqualTo(2);
+        assertThat(((TextMarker) createdMarker).getText()).isEqualTo("L");
     }
 }

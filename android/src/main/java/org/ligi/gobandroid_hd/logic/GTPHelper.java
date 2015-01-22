@@ -54,12 +54,11 @@ public class GTPHelper {
         }
 
         try {
-            byte x = (byte) (gtp_str.charAt(0) - 'A');
-            if (x > 8)
-                x--; // the I is missing ^^ - took me some time to find that out
-            gtp_str = gtp_str.substring(1);
-            byte y = (byte) (game.getBoardSize() - (Byte.parseByte(gtp_str)));
-            game.do_move(x, y); // internal here?
+            BoardCell boardCell = new BoardCell((byte) (gtp_str.charAt(0) - 'A'), (byte) (game.getBoardSize() - (Byte.parseByte(gtp_str.substring(1)))), game.getCalcBoard());
+            if (boardCell.x > 8)
+                boardCell=boardCell.left(); // the I is missing ^^ - took me some time to find that out
+
+            game.do_move(boardCell); // internal here?
             return true;
         } catch (Exception e) {
             Log.w("Problem parsing coordinates from GTP " + e.toString());

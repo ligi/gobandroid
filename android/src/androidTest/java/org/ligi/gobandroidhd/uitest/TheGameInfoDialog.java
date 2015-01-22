@@ -68,8 +68,7 @@ public class TheGameInfoDialog extends BaseIntegration<GameReviewActivity> {
 
         sleep(100);
 
-        onView(withText(android.R.string.ok)).check(matches(isDisplayed()));
-        onView(withText(android.R.string.ok)).perform(click());
+        onView(withText(android.R.string.ok)).perform(scrollTo(),click());
 
         final GoGameMetadata metaData = App.getGame().getMetaData();
 
@@ -92,8 +91,7 @@ public class TheGameInfoDialog extends BaseIntegration<GameReviewActivity> {
 
         sleep(100);
 
-        onView(withText(android.R.string.ok)).check(matches(isDisplayed()));
-        onView(withText(android.R.string.ok)).perform(click());
+        onView(withText(android.R.string.ok)).perform(scrollTo(),click());
 
         onView(withText(R.string.komi_must_be_a_number)).check(matches(isDisplayed()));
 

@@ -10,8 +10,24 @@ public class BoardCell extends Cell {
     }
 
     public BoardCell(Cell cell, GoBoard board) {
-        super(cell.x, cell.y);
+        super(cell);
         this.board = board;
+    }
+
+    public BoardCell left() {
+        return new BoardCell(new Cell(x-1, y),board);
+    }
+
+    public BoardCell right() {
+        return new BoardCell(new Cell(x+1, y),board);
+    }
+
+    public BoardCell up() {
+        return new BoardCell(new Cell(x, y - 1),board);
+    }
+
+    public BoardCell down() {
+        return new BoardCell(new Cell(x, y + 1),board);
     }
 
     public boolean hasLeft() {
@@ -31,7 +47,12 @@ public class BoardCell extends Cell {
     }
 
     public boolean isInGroupWith(Cell cell) {
-        return board.areCellsEqual(x, y, cell.x, cell.y);
+        return board.areCellsEqual(this, cell);
     }
+
+    public boolean isOnBoard() {
+        return x < board.getSize() && y < board.getSize() && x >= 0 && y >= 0;
+    }
+
 
 }

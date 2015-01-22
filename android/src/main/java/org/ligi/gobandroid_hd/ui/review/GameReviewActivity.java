@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
@@ -23,7 +24,7 @@ public class GameReviewActivity extends GoActivity {
     }
 
     @Override
-    public byte doMoveWithUIFeedback(byte x, byte y) {
+    public byte doMoveWithUIFeedback(Cell cell) {
         // we want the user not to be able to edit in review mode
         return GoGame.MOVE_VALID;
     }

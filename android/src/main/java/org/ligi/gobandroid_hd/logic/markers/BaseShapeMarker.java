@@ -3,12 +3,14 @@ package org.ligi.gobandroid_hd.logic.markers;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import org.ligi.gobandroid_hd.logic.Cell;
+
 public class BaseShapeMarker extends GoMarker {
 
     Paint localPaint;
 
-    public BaseShapeMarker(byte x, byte y) {
-        super(x, y); // initialize with unicode for triangle
+    public BaseShapeMarker(Cell cell) {
+        super(cell);
     }
 
     public void draw(Canvas c, float size, float x, float y, Paint paint) {

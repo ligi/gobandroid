@@ -6,12 +6,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.View;
 
-import org.ligi.axt.views.SquareView;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.Cell;
+import org.ligi.gobandroid_hd.logic.CellFactory;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 
@@ -26,7 +26,7 @@ public class PreviewView extends View {
 
     private GoGame game;
     private Bitmap white_stone_bitmap, black_stone_bitmap;
-    private Point span;
+    private Cell span;
     private int stone_size;
     private Paint black_line_paint;
 
@@ -56,7 +56,7 @@ public class PreviewView extends View {
 
     public void setGame(GoGame game) {
         this.game = game;
-        span = TsumegoHelper.calcSpanAsPoint(game, false) ;
+        span = TsumegoHelper.calcSpanAsPoint(game);
         white_stone_bitmap = null;
         requestLayout();
     }
@@ -73,10 +73,10 @@ public class PreviewView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        if (span!=null) {
+        if (span != null) {
             final int parentWidth = View.MeasureSpec.getSize(widthMeasureSpec);
-            final float ratio=(span.y+1)/(float)(span.x+1);
-            this.setMeasuredDimension((parentWidth), (int)(parentWidth*ratio));
+            final float ratio = (span.y + 1) / (float) (span.x + 1);
+            this.setMeasuredDimension((parentWidth), (int) (parentWidth * ratio));
         }
     }
 
@@ -89,7 +89,7 @@ public class PreviewView extends View {
         }
 
         if (white_stone_bitmap == null) {
-            stone_size = getWidth() / (span.x+1);
+            stone_size = getWidth() / (span.x + 1);
             white_stone_bitmap = getScaledRes(stone_size, R.drawable.stone_white);
             black_stone_bitmap = getScaledRes(stone_size, R.drawable.stone_black);
         }
@@ -106,15 +106,15 @@ public class PreviewView extends View {
                     black_line_paint);
         }
 
-        for (int x = 0; x <= span.x; x++)
-            for (int y = 0; y <= span.y; y++) {
-                if (game.getVisualBoard().isCellBlack(x, y))
-                    canvas.drawBitmap(black_stone_bitmap, x * stone_size, y
-                            * stone_size, null);
-                if (game.getVisualBoard().isCellWhite(x, y))
-                    canvas.drawBitmap(white_stone_bitmap, x * stone_size, y
-                            * stone_size, null);
-            }
+        for (Cell cell : CellFactory.getAllCellsForRect(span.x, span.y)) {
+            if (game.getVisualBoard().isCellBlack(cell))
+                canvas.drawBitmap(black_stone_bitmap, cell.x * stone_size, cell.y
+                        * stone_size, null);
+            if (game.getVisualBoard().isCellWhite(cell))
+                canvas.drawBitmap(white_stone_bitmap, cell.x * stone_size, cell.y
+                        * stone_size, null);
+        }
+
     }
 
 }

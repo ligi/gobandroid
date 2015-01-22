@@ -45,7 +45,7 @@ public class GoDefinitions {
      * @param board_size - return handicap array for which board_size
      * @return handicap array
      */
-    public final static byte[][] getHandicapArray(int board_size) {
+    public static byte[][] getHandicapArray(int board_size) {
         switch (board_size) {
             case 9:
                 return hoshis9x9;

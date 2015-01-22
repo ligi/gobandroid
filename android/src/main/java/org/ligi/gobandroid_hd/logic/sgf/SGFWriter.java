@@ -1,5 +1,6 @@
 package org.ligi.gobandroid_hd.logic.sgf;
 
+import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.logic.markers.CircleMarker;
@@ -47,13 +48,11 @@ public class SGFWriter {
         res += getSGFSnippet("SO", escapeSGF(game.getMetaData().getSource()));
         res += "\n";
 
-        for (int x = 0; x < game.getHandicapBoard().getSize(); x++) {
-            for (int y = 0; y < game.getHandicapBoard().getSize(); y++) {
-                if (game.getHandicapBoard().isCellWhite(x, y)) {
-                    res += "AW" + SGFWriter.coords2SGFFragment(x, y) + "\n";
-                } else if (game.getHandicapBoard().isCellBlack(x, y)) {
-                    res += "AB" + SGFWriter.coords2SGFFragment(x, y) + "\n";
-                }
+        for (Cell cell : game.getCalcBoard().getAllCells()) {
+            if (game.getHandicapBoard().isCellWhite(cell)) {
+                res += "AW" + SGFWriter.coords2SGFFragment(cell) + "\n";
+            } else if (game.getHandicapBoard().isCellBlack(cell)) {
+                res += "AB" + SGFWriter.coords2SGFFragment(cell) + "\n";
             }
         }
 
@@ -83,23 +82,23 @@ public class SGFWriter {
                 if (act_move.isPassMove())
                     res += "[]";
                 else
-                    res += coords2SGFFragment(act_move.getX(), act_move.getY()) + "\n";
+                    res += coords2SGFFragment(act_move.getCell()) + "\n";
             }
 
             // add the comment
-            if (!act_move.getComment().equals(""))
+            if (!act_move.getComment().isEmpty())
                 res += "C[" + act_move.getComment() + "]\n";
 
             // add markers
             for (GoMarker marker : act_move.getMarkers()) {
                 if (marker instanceof SquareMarker) {
-                    res += "SQ" + coords2SGFFragment(marker.getX(), marker.getY());
+                    res += "SQ" + coords2SGFFragment(marker);
                 } else if (marker instanceof TriangleMarker) {
-                    res += "TR" + coords2SGFFragment(marker.getX(), marker.getY());
+                    res += "TR" + coords2SGFFragment(marker);
                 } else if (marker instanceof CircleMarker) {
-                    res += "CR" + coords2SGFFragment(marker.getX(), marker.getY());
+                    res += "CR" + coords2SGFFragment(marker);
                 } else if (marker instanceof TextMarker) {
-                    res += "LB" + coords2SGFFragment(marker.getX(), marker.getY()).replace("]", ":" + ((TextMarker)marker).getText() + "]");
+                    res += "LB" + coords2SGFFragment(marker).replace("]", ":" + ((TextMarker) marker).getText() + "]");
                 }
             }
 
@@ -120,8 +119,8 @@ public class SGFWriter {
         return res;
     }
 
-    final static String coords2SGFFragment(int x, int y) {
-        return "[" + (char) ('a' + x) + (char) ('a' + y) + "]";
+    static String coords2SGFFragment(Cell cell) {
+        return "[" + (char) ('a' + cell.x) + (char) ('a' + cell.y) + "]";
     }
 
     public static boolean saveSGF(GoGame game, String fname) {
@@ -133,13 +132,11 @@ public class SGFWriter {
         }
 
         if (f.getParentFile() == null) { // not really sure when this can be the
-            // case ( perhaps only / ) - but the doc
-            // says it can be null and I would get
-            // NPE then
+            // case ( perhaps only / ) - but the doc says it can be null and I would get NPE then
             throw new IllegalArgumentException("bad filename " + fname);
         }
 
-        if (f.getParentFile() != null && !f.getParentFile().isDirectory()) { // if  the  path is not there yet
+        if (!f.getParentFile().isDirectory()) { // if  the  path is not there yet
             f.getParentFile().mkdirs();
         }
 

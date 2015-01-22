@@ -6,16 +6,14 @@ import com.squareup.spoon.Spoon;
 
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.Cell;
+import org.ligi.gobandroid_hd.logic.CellFactory;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
 import org.ligi.gobandroid_hd.ui.editing.EditGameActivity;
-import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
 import org.ligi.gobandroidhd.base.BaseIntegration;
-
-import java.util.List;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -23,8 +21,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.containsString;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.ligi.gobandroidhd.base.GoViewActions.tapStone;
 
 public class TheEditGameActivity extends BaseIntegration<EditGameActivity> {
@@ -43,69 +40,53 @@ public class TheEditGameActivity extends BaseIntegration<EditGameActivity> {
 
     @MediumTest
     public void testThatLettersWork() {
-        App.setGame(new GoGame((byte) 9));
+        App.setGame(new GoGame(9));
 
         final EditGameActivity activity = getActivity();
 
         onView(withContentDescription(getString(R.string.letter))).perform(click());
 
-        for (int y = 0; y < 3; y++) {
-            for (int x = 0; x < 9; x++) {
-
-                onView(withId(R.id.go_board)).perform(tapStone(x, y));
-            }
-        }
-
+        tap9x3Field();
 
         Spoon.screenshot(activity, "letters");
     }
 
-    private boolean hasMarker(GoMarker leftMarker) {
-        final List<GoMarker> markers = App.getGame().getActMove().getMarkers();
-        for (GoMarker rightMarker : markers) {
-            if (rightMarker.equals(leftMarker )) {
-                return true;
-            }
+    private void tap9x3Field() {
+        for (Cell cell : CellFactory.getAllCellsForRect(9, 3)) {
+            onView(withId(R.id.go_board)).perform(tapStone(cell));
         }
-        return false;
     }
 
     @MediumTest
     public void testThatNumbersWork() {
-        App.setGame(new GoGame((byte) 9));
+        App.setGame(new GoGame(9));
 
         final EditGameActivity activity = getActivity();
 
         onView(withContentDescription(getString(R.string.number))).perform(click());
 
-        for (int y = 0; y < 3; y++) {
-            for (int x = 0; x < 9; x++) {
+        tap9x3Field();
 
-                onView(withId(R.id.go_board)).perform(tapStone(x, y));
-            }
+        for (Cell cell : CellFactory.getAllCellsForRect(9, 3)) {
+            assertThat(App.getGame().getActMove().getMarkers()).contains(new TextMarker(cell, "" + (9 * cell.y + cell.x + 1)));
         }
 
-
-        for (byte x = 0; x < 9; x++) {
-            for (byte y = 0; y < 3; y++) {
-                assertTrue(hasMarker(new TextMarker(x, y, "" + (9 * y + x+1))));
-            }
-        }
         Spoon.screenshot(activity, "numbers");
     }
 
 
     @MediumTest
     public void testThatSquareWorks() {
-        App.setGame(new GoGame((byte) 9));
+        App.setGame(new GoGame(9));
 
         final EditGameActivity activity = getActivity();
 
         onView(withContentDescription(getString(R.string.square))).perform(click());
 
-        onView(withId(R.id.go_board)).perform(tapStone(1, 2));
+        final Cell cell = new Cell(1, 2);
+        onView(withId(R.id.go_board)).perform(tapStone(cell));
 
-        assertTrue(hasMarker(new SquareMarker((byte)1,(byte)2)));
+        assertThat(App.getGame().getActMove().getMarkers()).contains(new SquareMarker(cell));
 
         Spoon.screenshot(activity, "square");
     }
@@ -113,15 +94,15 @@ public class TheEditGameActivity extends BaseIntegration<EditGameActivity> {
 
     @MediumTest
     public void testThatTriangleWorks() {
-        App.setGame(new GoGame((byte) 9));
+        App.setGame(new GoGame(9));
 
         final EditGameActivity activity = getActivity();
 
         onView(withContentDescription(getString(R.string.triangle))).perform(click());
 
-        onView(withId(R.id.go_board)).perform(tapStone(1, 2));
+        onView(withId(R.id.go_board)).perform(tapStone(new Cell(1, 2)));
 
-        assertTrue(hasMarker(new TriangleMarker((byte)1,(byte)2)));
+        assertThat(App.getGame().getActMove().getMarkers()).contains(new TriangleMarker(new Cell(1, 2)));
 
         Spoon.screenshot(activity, "triangle");
     }

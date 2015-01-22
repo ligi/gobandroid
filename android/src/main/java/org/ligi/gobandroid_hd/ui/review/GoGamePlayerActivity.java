@@ -11,6 +11,7 @@ import android.view.View;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
@@ -141,7 +142,7 @@ public class GoGamePlayerActivity extends GoActivity {
     }
 
     @Override
-    public byte doMoveWithUIFeedback(byte x, byte y) {
+    public byte doMoveWithUIFeedback(Cell cell) {
         // we want the user not to be able to edit in review mode
         return GoGame.MOVE_VALID;
     }

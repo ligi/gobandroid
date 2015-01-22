@@ -32,7 +32,7 @@ import java.util.List;
 
 public class GoMove {
 
-    private byte x, y;
+    private Cell cell;
 
     private String comment = "";
 
@@ -47,6 +47,9 @@ public class GoMove {
     private int move_pos = 0;
 
     private boolean black_to_move = true;
+
+    private boolean isPassMove = false;
+    private boolean isFirstMove = false;
 
     public GoMove(GoMove parent) {
         this.parent = parent;
@@ -68,11 +71,10 @@ public class GoMove {
         }
     }
 
-    public GoMove(byte x, byte y, GoMove parent) {
+    public GoMove(Cell cell, GoMove parent) {
         this(parent);
 
-        this.x = x;
-        this.y = y;
+        this.cell = cell;
     }
 
     public void setDidCaptures(boolean did) {
@@ -104,44 +106,28 @@ public class GoMove {
     }
 
     public void setToPassMove() {
-        x = -1;
+        cell = null;
+        isPassMove = true;
     }
 
     public boolean isPassMove() {
-        return (x == -1);
+        return isPassMove;
     }
 
     public void setIsFirstMove() {
-        x = -2;
+        isFirstMove = true;
     }
 
     public boolean isFirstMove() {
-        return (x == -2);
+        return isFirstMove;
     }
 
-    public void setXY(byte x, byte y) {
-        setX(x);
-        setY(y);
+    public void setCell(Cell cell) {
+        this.cell = cell;
     }
 
-    public void setX(byte x) {
-        this.x = x;
-    }
-
-    public void setY(byte y) {
-        this.y = y;
-    }
-
-    public byte getX() {
-        return x;
-    }
-
-    public byte getY() {
-        return y;
-    }
-
-    public boolean isOnXY(byte x, byte y) {
-        return ((getX() == x) && (getY() == y));
+    public boolean isOnCell(Cell cell) {
+        return cell == this.cell || this.cell != null && this.cell.equals(cell);
     }
 
     public GoMove getParent() {
@@ -153,7 +139,7 @@ public class GoMove {
     }
 
     public String toString() {
-        return "" + x + " " + y;
+        return "" + cell.x + " " + cell.y;
     }
 
     public boolean hasComment() {
@@ -192,9 +178,9 @@ public class GoMove {
     }
 
     public Optional<GoMarker> getGoMarker() {
-        if (parent!=null) {
+        if (parent != null) {
             for (GoMarker marker : parent.getMarkers()) {
-                if ((this.getX() == marker.getX()) && (this.getY() == marker.getY())) {
+                if (marker.equals(cell)) {
                     return Optional.of(marker);
                 }
             }
@@ -219,7 +205,7 @@ public class GoMove {
     }
 
     public boolean isContentEqual(GoMove other) {
-        if (!other.isOnXY(x, y)) {
+        if (!other.isOnCell(cell)) {
             return false;
         }
 
@@ -249,4 +235,9 @@ public class GoMove {
 
         return true;
     }
+
+    public Cell getCell() {
+        return cell;
+    }
+
 }

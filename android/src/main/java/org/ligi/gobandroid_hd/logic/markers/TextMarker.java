@@ -22,6 +22,8 @@ package org.ligi.gobandroid_hd.logic.markers;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import org.ligi.gobandroid_hd.logic.Cell;
+
 /**
  * class to mark a pos on the board useful for go problems - e.g. from SGF
  */
@@ -29,8 +31,8 @@ public class TextMarker extends GoMarker {
 
     private final String text;
 
-    public TextMarker(byte x, byte y, String text) {
-        super(x,y);
+    public TextMarker(Cell cell, String text) {
+        super(cell);
         this.text = text;
     }
 
@@ -50,12 +52,20 @@ public class TextMarker extends GoMarker {
 
         final TextMarker otherMarker = (TextMarker) o;
 
+        if (!isInCell(otherMarker)) {
+            return false;
+        }
+
         if (!getText().equals(otherMarker.getText())) {
             return false;
         }
 
-
         return true; // If we reached this place we can assume the Markers are the same
+    }
+
+    @Override
+    public String toString() {
+        return "TextMarker:" + super.toString() + text;
     }
 
     public void draw(Canvas c, float size, float x, float y, Paint paint) {

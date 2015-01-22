@@ -27,6 +27,7 @@ import android.view.MenuItem;
 
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
@@ -77,8 +78,8 @@ public class GoSetupActivity extends GoActivity {
     }
 
     @Override
-    public byte doMoveWithUIFeedback(byte x, byte y) {
-        byte res = super.doMoveWithUIFeedback(x, y);
+    public byte doMoveWithUIFeedback(Cell cell) {
+        byte res = super.doMoveWithUIFeedback(cell);
         if (res == GoGame.MOVE_VALID)
             if (getGame().getActMove().hasNextMove())
                 getGame().jump(getGame().getActMove().getnextMove(0));

@@ -19,6 +19,8 @@
 
 package org.ligi.gobandroid_hd.logic;
 
+import java.util.List;
+
 /**
  * Class to represent a Go Board
  *
@@ -29,21 +31,25 @@ package org.ligi.gobandroid_hd.logic;
 
 public class GoBoard {
 
-    private final byte size;
+    private final int size;
     public final byte[][] board;
 
-    public GoBoard(byte size) {
+    public GoBoard(int size) {
         this.size = size;
         board = new byte[size][size];
     }
 
-    public GoBoard(byte size, byte[][] predefined_board) {
+    public GoBoard(int size, byte[][] predefined_board) {
         this(size);
 
         // copy the board
         for (int x = 0; x < size; x++) {
             System.arraycopy(predefined_board[x], 0, board[x], 0, size);
         }
+    }
+
+    public List<Cell> getAllCells() {
+        return CellFactory.getAllCellsForSquareCached(size);
     }
 
     /**
@@ -69,10 +75,10 @@ public class GoBoard {
             return false;
 
         // check if all stones are placed equally
-        for (int x = 0; x < size; x++)
-            for (int y = 0; y < size; y++)
-                if (board[x][y] != other.board[x][y])
-                    return false;
+        for (Cell cell : getAllCells()) {
+            if (board[cell.x][cell.y] != other.board[cell.x][cell.y])
+                return false;
+        }
 
         return true;
     }
@@ -107,48 +113,44 @@ public class GoBoard {
         return size;
     }
 
-    public boolean isCellFree(int x, int y) {
-        return board[x][y] == GoDefinitions.STONE_NONE // no stone on board
-                || (board[x][y] < 0); // or dead stone;
+    public boolean isCellFree(Cell cell) {
+        return board[cell.x][cell.y] <= 0;
     }
 
-    public boolean isCellBlack(int x, int y) {
-        return (board[x][y] == GoDefinitions.STONE_BLACK);
+    public boolean isCellKind(Cell cell, byte kind) {
+        return board[cell.x][cell.y] == kind;
     }
 
-    public boolean isCellWhite(int x, int y) {
-        return (board[x][y] == GoDefinitions.STONE_WHITE);
+    public boolean isCellBlack(Cell cell) {
+        return board[cell.x][cell.y] == GoDefinitions.STONE_BLACK;
     }
 
-    public boolean isCellDeadBlack(int x, int y) {
-        return (-board[x][y] == GoDefinitions.STONE_BLACK);
+    public boolean isCellWhite(Cell cell) {
+        return board[cell.x][cell.y] == GoDefinitions.STONE_WHITE;
     }
 
-    public boolean isCellDeadWhite(int x, int y) {
-        return (-board[x][y] == GoDefinitions.STONE_WHITE);
+    public boolean isCellDeadBlack(Cell cell) {
+        return -board[cell.x][cell.y] == GoDefinitions.STONE_BLACK;
     }
 
-    public boolean areCellsEqual(int x, int y, int x2, int y2) {
-        return ((board[x][y] == board[x2][y2]) || (isCellFree(x, y) && isCellFree(x2, y2)));
+    public boolean isCellDeadWhite(Cell cell) {
+        return -board[cell.x][cell.y] == GoDefinitions.STONE_WHITE;
     }
 
-    public void setCellFree(int x, int y) {
-        board[x][y] = GoDefinitions.STONE_NONE;
+    public boolean areCellsEqual(Cell one, Cell other) {
+        return board[one.x][one.y] == board[other.x][other.y];
     }
 
-    public void setCellBlack(int x, int y) {
-        board[x][y] = GoDefinitions.STONE_BLACK;
+    public void setCell(Cell cell, byte newStatus) {
+        board[cell.x][cell.y] = newStatus;
     }
 
-    public void setCellWhite(int x, int y) {
-        board[x][y] = GoDefinitions.STONE_WHITE;
+    public void toggleCellDead(Cell cell) {
+        board[cell.x][cell.y] *= -1;
     }
 
-    public void toggleCellDead(int x, int y) {
-        board[x][y] *= -1;
+    public boolean isCellDead(Cell cell) {
+        return (board[cell.x][cell.y] < 0);
     }
 
-    public boolean isCellDead(int x, int y) {
-        return (board[x][y] < 0);
-    }
 }

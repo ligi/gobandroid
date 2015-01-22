@@ -11,6 +11,7 @@ import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoMove;
@@ -75,9 +76,10 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
         return on_path_moves.contains(getGame().getActMove());
     }
 
-    public byte doMoveWithUIFeedback(byte x, byte y) {
+    @Override
+    public byte doMoveWithUIFeedback(Cell cell) {
 
-        byte res = super.doMoveWithUIFeedback(x, y);
+        byte res = super.doMoveWithUIFeedback(cell);
 
         // if the move was valid and we have a counter move -> we will play it
         if (res == GoGame.MOVE_VALID) {

@@ -51,7 +51,7 @@ public class TsumegoHintAlert {
         while (true) {
             if (myActMove.isFirstMove())
                 break;
-            finishing_move.addMarker(new TextMarker(myActMove.getX(), myActMove.getY(), "" + p));
+            finishing_move.addMarker(new TextMarker(myActMove.getCell(), "" + p));
             p--;
             myActMove = myActMove.getParent();
 
@@ -67,7 +67,7 @@ public class TsumegoHintAlert {
             if (myActMove.isFirstMove())
                 break;
             if (complete || (myActMove.getParent() == game.getActMove()))
-                myActMove.getParent().addMarker(new TextMarker(myActMove.getX(), myActMove.getY(), "X"));
+                myActMove.getParent().addMarker(new TextMarker(myActMove.getCell(), "X"));
             myActMove = myActMove.getParent();
         }
 

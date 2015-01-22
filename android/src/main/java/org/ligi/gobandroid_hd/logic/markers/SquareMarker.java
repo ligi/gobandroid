@@ -3,10 +3,12 @@ package org.ligi.gobandroid_hd.logic.markers;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import org.ligi.gobandroid_hd.logic.Cell;
+
 public class SquareMarker extends BaseShapeMarker {
 
-    public SquareMarker(byte x, byte y) {
-        super(x, y);
+    public SquareMarker(Cell cell) {
+        super(cell);
     }
 
     @Override

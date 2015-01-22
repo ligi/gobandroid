@@ -22,46 +22,21 @@ package org.ligi.gobandroid_hd.logic.markers;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import org.ligi.gobandroid_hd.logic.Cell;
+
 /**
  * class to mark a pos on the board useful for go problems - e.g. from SGF
  */
-public abstract class GoMarker {
+public abstract class GoMarker extends Cell {
 
-    private final byte x, y;
-
-    public GoMarker(byte x, byte y) {
-        this.x = x;
-        this.y = y;
+    public GoMarker(Cell cell) {
+        super(cell);
     }
 
-    public byte getX() {
-        return x;
+    public abstract void draw(Canvas c, float size, float x, float y, Paint paint);
+
+    public boolean isInCell(Cell cell) {
+        return super.equals(cell);
     }
 
-    public byte getY() {
-        return y;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof GoMarker)) {
-            return false;
-        }
-
-        GoMarker otherMarker = (GoMarker) o;
-
-        if (getX() != otherMarker.getX()) {
-            return false;
-        }
-
-        if (getY() != otherMarker.getY()) {
-            return false;
-        }
-
-        return true; // If we reached this place we can assume the Markers are the same
-    }
-
-    public void draw(Canvas c, float size, float x, float y, Paint paint) {
-        // nothing for just a plain marker - children define look
-    }
 }

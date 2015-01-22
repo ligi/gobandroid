@@ -43,6 +43,8 @@ import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.BoardCell;
+import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoDialog;
@@ -320,9 +322,9 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         info_toast.show();
     }
 
-    protected byte doMoveWithUIFeedback(byte x, byte y) {
+    protected byte doMoveWithUIFeedback(Cell cell) {
 
-        final byte res = getGame().do_move(x, y);
+        final byte res = getGame().do_move(cell);
 
         switch (res) {
             case GoGame.MOVE_INVALID_IS_KO:
@@ -371,7 +373,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     }
 
     protected void eventForZoomBoard(MotionEvent event) {
-        App.getInteractionScope().setTouchPosition(getBoard().pixel2boardPos(event.getX(), event.getY()));
+        App.getInteractionScope().setTouchPosition(getBoard().pixel2cell(event.getX(), event.getY()));
 
         if (event.getAction() == MotionEvent.ACTION_UP) {
             gameExtrasContainer.setVisibility(View.VISIBLE);
@@ -462,11 +464,11 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-                interaction_scope.setTouchPosition(getBoard().pixel2boardPos(event.getX(), event.getY()));
+                interaction_scope.setTouchPosition(getBoard().pixel2cell(event.getX(), event.getY()));
                 break;
 
             case MotionEvent.ACTION_OUTSIDE:
-                interaction_scope.setTouchPosition(-1);
+                interaction_scope.setTouchPosition(null);
                 break;
 
             case MotionEvent.ACTION_UP:
@@ -474,19 +476,19 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                 if (go_board.move_stone_mode) {
                     // TODO check if this is an illegal move ( e.g. in variants )
 
-                    if (getGame().getVisualBoard().isCellFree(interaction_scope.getTouchX(), interaction_scope.getTouchY())) {
-                        getGame().getActMove().setXY((byte) interaction_scope.getTouchX(), (byte) interaction_scope.getTouchY());
+                    if (getGame().getVisualBoard().isCellFree(interaction_scope.getTouchCell())) {
+                        getGame().getActMove().setCell(interaction_scope.getTouchCell());
                         getGame().getActMove().setDidCaptures(true); // TODO check if we harm sth with that
                         getGame().refreshBoards();
                     }
                     go_board.move_stone_mode = false; // moving of stone done
-                } else if ((getGame().getActMove().getX() == interaction_scope.getTouchX()) && (getGame().getActMove().getY() == interaction_scope.getTouchY())) {
+                } else if ((getGame().getActMove().isOnCell(interaction_scope.getTouchCell()))) {
                     initializeStoneMove();
                 } else {
-                    doMoveWithUIFeedback((byte) interaction_scope.getTouchX(), (byte) interaction_scope.getTouchY());
+                    doMoveWithUIFeedback(interaction_scope.getTouchCell());
                 }
 
-                interaction_scope.setTouchPosition(-1);
+                interaction_scope.setTouchPosition(null);
                 break;
         }
 
@@ -526,45 +528,44 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            final Cell ensuredTouchPosition = interaction_scope.getEnsuredTouchPosition();
+            final BoardCell boardCell = new BoardCell(ensuredTouchPosition, getGame().getCalcBoard());
+
             switch (keyCode) {
                 case KeyEvent.KEYCODE_DPAD_UP:
-                    go_board.prepare_keyinput();
-                    if (interaction_scope.getTouchY() > 0) {
-                        interaction_scope.touch_position -= getGame().getSize();
+                    if (boardCell.hasUp()) {
+                        interaction_scope.touch_position = boardCell.up();
                     } else {
                         return false;
                     }
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_LEFT:
-                    go_board.prepare_keyinput();
-                    if (interaction_scope.getTouchX() > 0) {
-                        interaction_scope.touch_position--;
+                    if (boardCell.hasLeft()) {
+                        interaction_scope.touch_position = boardCell.left();
                     } else {
                         return false;
                     }
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_DOWN:
-                    go_board.prepare_keyinput();
-                    if (interaction_scope.getTouchY() < getGame().getVisualBoard().getSize() - 1) {
-                        interaction_scope.touch_position += getGame().getSize();
+                    if (boardCell.hasDown()) {
+                        interaction_scope.touch_position = boardCell.down();
                     } else {
                         return false;
                     }
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
-                    go_board.prepare_keyinput();
-                    if (interaction_scope.getTouchX() < getGame().getVisualBoard().getSize() - 1) {
-                        interaction_scope.touch_position++;
+                    if (boardCell.hasRight()) {
+                        interaction_scope.touch_position = boardCell.right();
                     } else {
                         return false;
                     }
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_CENTER:
-                    doMoveWithUIFeedback((byte) interaction_scope.getTouchX(), (byte) interaction_scope.getTouchY());
+                    doMoveWithUIFeedback(boardCell);
                     break;
 
                 default:

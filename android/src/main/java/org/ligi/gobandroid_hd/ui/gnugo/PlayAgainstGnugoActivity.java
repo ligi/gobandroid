@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GTPHelper;
 import org.ligi.gobandroid_hd.logic.GoBoard;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
@@ -51,7 +52,7 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
 
 
     long start_time;
-    List<Long> times = new ArrayList<Long>();
+    List<Long> times = new ArrayList<>();
 
     private boolean thinking = false;
 
@@ -211,25 +212,25 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
     }
 
     @Override
-    public byte doMoveWithUIFeedback(byte x, byte y) {
+    public byte doMoveWithUIFeedback(Cell cell) {
         if (thinking) {
             Toast.makeText(this, R.string.ai_is_thinking, Toast.LENGTH_LONG).show();
             return 0;
         }
 
         if ((getGame().isBlackToMove() && (!playing_black)))
-            processMove("black", x, y);
+            processMove("black", cell);
         else if (((!getGame().isBlackToMove()) && (!playing_white)))
-            processMove("white", x, y);
+            processMove("white", cell);
 
-        return super.doMoveWithUIFeedback(x, y);
+        return super.doMoveWithUIFeedback(cell);
     }
 
-    public void processMove(String color, byte x, byte y) {
+    public void processMove(final String color, final Cell cell) {
         try {
-            gnu_service.processGTP(color + " " + coordinates2gtpstr(x, y));
+            gnu_service.processGTP(color + " " + coordinates2gtpstr(cell));
         } catch (Exception e) {
-            Log.w("problem processing " + color + " move to " + coordinates2gtpstr(x, y));
+            Log.w("problem processing " + color + " move to " + coordinates2gtpstr(cell));
         }
     }
 
@@ -248,11 +249,7 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
                 continue;
 
             if (gnugo_size_set && !checkGnuGoSync()) { // check if gobandroid
-                // and gnugo see the
-                // same board -
-                // otherwise tell gnugo
-                // about the truth
-                // afterwards ;-)
+                // and gnugo see the same board - otherwise tell gnugo about the truth afterwards ;-)
                 try {
                     Log.i("gnugo sync check problem" + gnu_service.processGTP("showboard") + getGame().getVisualBoard().toString());
                     gnugo_size_set = false;
@@ -265,14 +262,17 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
                     // set the size
                     gnu_service.processGTP("boardsize " + getGame().getBoardSize());
 
+                    for (Cell cell : getGame().getCalcBoard().getAllCells()) {
+                        if (getGame().getVisualBoard().isCellBlack(cell))
+                            gnu_service.processGTP("black " + coordinates2gtpstr(cell));
+                        else if (getGame().getVisualBoard().isCellWhite(cell))
+                            gnu_service.processGTP("white " + coordinates2gtpstr(cell));
+
+                    }
                     for (byte x = 0; x < getGame().getBoardSize(); x++)
                         for (byte y = 0; y < getGame().getBoardSize(); y++)
-                            if (getGame().getVisualBoard().isCellBlack(x, y))
-                                gnu_service.processGTP("black " + coordinates2gtpstr(x, y));
-                            else if (getGame().getVisualBoard().isCellWhite(x, y))
-                                gnu_service.processGTP("white " + coordinates2gtpstr(x, y));
 
-                    Log.i("setting level " + gnu_service.processGTP("level " + level));
+                            Log.i("setting level " + gnu_service.processGTP("level " + level));
                     gnugo_size_set = true;
                 } catch (Exception e) {
                 }
@@ -327,16 +327,17 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
             for (int gnugo_y = 2; gnugo_y <= b.getSize() + 1; gnugo_y++) {
                 String act_line = split_board[gnugo_y].replace(" ", "").replace("" + (getGame().getBoardSize() - (gnugo_y - 2)), "");
                 for (int gnugo_x = 0; gnugo_x < b.getSize(); gnugo_x++) {
+                    final Cell cell = new Cell(gnugo_x, gnugo_y - 2);
                     if (act_line.charAt(gnugo_x) == '.')
-                        if (!getGame().getVisualBoard().isCellFree(gnugo_x, gnugo_y - 2))
+                        if (!getGame().getVisualBoard().isCellFree(cell))
                             return false;
 
                     if (act_line.charAt(gnugo_x) == 'X')
-                        if (!getGame().getVisualBoard().isCellBlack(gnugo_x, gnugo_y - 2))
+                        if (!getGame().getVisualBoard().isCellBlack(cell))
                             return false;
 
                     if (act_line.charAt(gnugo_x) == 'O')
-                        if (!getGame().getVisualBoard().isCellWhite(gnugo_x, gnugo_y - 2))
+                        if (!getGame().getVisualBoard().isCellWhite(cell))
                             return false;
                     // Log.i("checking " +act_line.charAt(gnugo_x));
                 }
@@ -350,16 +351,14 @@ public class PlayAgainstGnugoActivity extends GoActivity implements GoGameChange
         return true;
     }
 
-    private String coordinates2gtpstr(byte x, byte y) {
+    private String coordinates2gtpstr(Cell cell) {
         if (getGame() == null) {
             Log.w("coordinates2gtpstr called with game==null");
             return "";
         }
-        if (x >= 8)
-            x++; // "I" is missing decrease human OCR-error but increase
-        // computer bugs ...
-        y = (byte) (getGame().getBoardSize() - (y));
-        return "" + (char) ('A' + x) + "" + (y);
+        // "I" is missing decrease human OCR-error but increase computer bugs ...
+        final int x_offset = (cell.x >= 8) ? 1 : 0;
+        return "" + (char) ('A' + cell.x + x_offset) + "" + (getGame().getBoardSize() - cell.y);
     }
 
     /**

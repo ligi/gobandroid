@@ -5,6 +5,8 @@ import android.view.Menu;
 import android.view.WindowManager;
 
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.Cell;
+import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.markers.CircleMarker;
@@ -16,6 +18,9 @@ import org.ligi.gobandroid_hd.logic.markers.util.MarkerUtil;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 
 import java.util.List;
+
+import static org.ligi.gobandroid_hd.logic.GoDefinitions.STONE_BLACK;
+import static org.ligi.gobandroid_hd.logic.GoDefinitions.STONE_WHITE;
 
 /**
  * Activity to edit a Game
@@ -38,22 +43,22 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
     }
 
     @Override
-    public byte doMoveWithUIFeedback(byte x, byte y) {
+    public byte doMoveWithUIFeedback(Cell cell) {
         switch (getMode()) {
             case BLACK:
-                if (getGame().getHandicapBoard().isCellBlack(x, y)) {
-                    getGame().getHandicapBoard().setCellFree(x, y);
+                if (getGame().getHandicapBoard().isCellKind(cell, STONE_BLACK)) {
+                    getGame().getHandicapBoard().setCell(cell, GoDefinitions.STONE_NONE);
                 } else {
-                    getGame().getHandicapBoard().setCellBlack(x, y);
+                    getGame().getHandicapBoard().setCell(cell, STONE_BLACK);
                 }
                 getGame().jump(getGame().getActMove()); // we need to totally refresh the board
                 return GoGame.MOVE_VALID;
 
             case WHITE:
-                if (getGame().getHandicapBoard().isCellWhite(x, y)) {
-                    getGame().getHandicapBoard().setCellFree(x, y);
+                if (getGame().getHandicapBoard().isCellKind(cell, STONE_WHITE)) {
+                    getGame().getHandicapBoard().setCell(cell, GoDefinitions.STONE_NONE);
                 } else {
-                    getGame().getHandicapBoard().setCellWhite(x, y);
+                    getGame().getHandicapBoard().setCell(cell,STONE_WHITE);
                 }
                 getGame().jump(getGame().getActMove()); // we need to totally refresh the board
                 return GoGame.MOVE_VALID;
@@ -67,33 +72,33 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
 
                 // remove markers with same coordinates
                 for (GoMarker marker : markers) {
-                    if (marker.getX() == x && marker.getY() == y) {
+                    if (marker.isInCell(cell)) {
                         markers.remove(marker);
                         return GoGame.MOVE_VALID;
                     }
                 }
 
-                markers.add(removeOldAndGetNewMarker(x, y, markers));
+                markers.add(removeOldAndGetNewMarker(cell, markers));
 
         }
         getGame().notifyGameChange();
         return GoGame.MOVE_VALID;
     }
 
-    private GoMarker removeOldAndGetNewMarker(byte x, byte y, List<GoMarker> markers) {
+    private GoMarker removeOldAndGetNewMarker(Cell cell, List<GoMarker> markers) {
         switch (getMode()) {
             case TRIANGLE:
-                return new TriangleMarker(x, y);
+                return new TriangleMarker(cell);
             case SQUARE:
-                return new SquareMarker(x, y);
+                return new SquareMarker(cell);
             case CIRCLE:
-                return new  CircleMarker(x, y);
+                return new  CircleMarker(cell);
             case NUMBER:
                 final int firstFreeNumber = MarkerUtil.findFirstFreeNumber(markers);
-                return new TextMarker(x, y, "" + firstFreeNumber);
+                return new TextMarker(cell, String.valueOf(firstFreeNumber));
             case LETTER:
                 final String nextLetter = MarkerUtil.findNextLetter(markers);
-                return new TextMarker(x, y, nextLetter);
+                return new TextMarker(cell, nextLetter);
         }
         throw new IllegalArgumentException("unknown mode " + getMode());
     }

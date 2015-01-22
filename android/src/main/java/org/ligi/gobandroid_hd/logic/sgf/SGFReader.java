@@ -19,11 +19,12 @@
 
 package org.ligi.gobandroid_hd.logic.sgf;
 
+import org.ligi.gobandroid_hd.logic.Cell;
+import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameMetadata;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.logic.markers.CircleMarker;
-import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
@@ -206,7 +207,7 @@ public class SGFReader {
 
             if (game != null) {
                 if (game.getActMove().isFirstMove() && predef_count_w == 0 && predef_count_b > 0) {
-                    game.getActMove().setIsBlackToMove(true); // propably handycap - so  make white
+                    game.getActMove().setIsBlackToMove(true); // probably handycap - so  make white
                     // to  move - very  important for cloud game and handycap
                 }
                 game.setMetadata(metadata);
@@ -223,57 +224,57 @@ public class SGFReader {
     }
 
     private void processCommand() {
-        byte param_x = 0, param_y = 0;
+        int param_x = 0, param_y = 0;
 
-        // if we have a minimum of 2 chars in param - could
-        // be
-        // coords - so parse
+        // if we have a minimum of 2 chars in param - could be coords - so parse
         if (act_param.length() >= 2) {
-            param_x = (byte) (act_param.charAt(((transform & 4) == 0) ? 0 : 1) - 'a');
-            param_y = (byte) (act_param.charAt(((transform & 4) == 0) ? 1 : 0) - 'a');
+            param_x = act_param.charAt(((transform & 4) == 0) ? 0 : 1) - 'a';
+            param_y = act_param.charAt(((transform & 4) == 0) ? 1 : 0) - 'a';
 
-            if ((transform & 1) > 0)
-                param_y = (byte) (size - 1 - param_y);
+            if (size>-1) {
+                if ((transform & 1) > 0)
+                    param_y = (byte) (size - 1 - param_y);
 
-            if ((transform & 2) > 0)
-                param_x = (byte) (size - 1 - param_x);
-
+                if ((transform & 2) > 0)
+                    param_x = (byte) (size - 1 - param_x);
+            }
         }
 
+        final Cell cell = new Cell(param_x, param_y);
         // if command is empty -> use the last command
         if (act_cmd.length() == 0)
             act_cmd = last_cmd;
 
-        // marker section - infos here http://www.red-bean.com/sgf/properties.html
+        // marker section - info here http://www.red-bean.com/sgf/properties.html
         switch (act_cmd) {
             case "LB":
                 final String[] inner = act_param.split(":");
                 final String txt = (inner.length > 1) ? inner[1] : "X";
 
-                game.getActMove().addMarker(new TextMarker(param_x, param_y, txt));
+                game.getActMove().addMarker(new TextMarker(cell, txt));
                 break;
 
             // mark with x
             case "Mark":
             case "MA":
-                game.getActMove().addMarker(new TextMarker(param_x, param_y, "X"));
+                game.getActMove().addMarker(new TextMarker(cell, "X"));
                 break;
 
             case "SL":
-                game.getActMove().addMarker(new TextMarker(param_x, param_y, "+"));
+                game.getActMove().addMarker(new TextMarker(cell, "+"));
                 break;
 
             // mark with triangle
             case "TR":
-                game.getActMove().addMarker(new TriangleMarker(param_x, param_y));
+                game.getActMove().addMarker(new TriangleMarker(cell));
                 break;
 
             case "SQ": // mark with square
-                game.getActMove().addMarker(new SquareMarker(param_x, param_y));
+                game.getActMove().addMarker(new SquareMarker(cell));
                 break;
 
             case "CR": // mark with circle
-                game.getActMove().addMarker(new CircleMarker(param_x, param_y));
+                game.getActMove().addMarker(new CircleMarker(cell));
                 break;
 
             case "GN": // Game Name
@@ -358,7 +359,7 @@ public class SGFReader {
                 /* if (game.getActMove().isFirstMove()) {
                     game.getActMove().setIsBlackToMove();
                 } */
-                final byte b = game.do_move(param_x, param_y);
+                final byte b = game.do_move(cell);
                 if (b != GoGame.MOVE_VALID) {
                     Log.w("There was a problem in this game");
                 }
@@ -368,9 +369,7 @@ public class SGFReader {
         }
 
         // TODO support AddEmpty
-        // handle predefined stones ( mostly handicap stones
-        // )
-        // in SGF
+        // handle predefined stones ( mostly handicap stones ) in SGF
         if (act_cmd.equals("AddBlack") || act_cmd.equals("AB") || act_cmd.equals("AW") || act_cmd.equals("AddWhite")) {
 
             if (game == null) { // create a game if it is
@@ -383,13 +382,12 @@ public class SGFReader {
             if (act_param.length() != 0) {
                 if (game.isBlackToMove() && (act_cmd.equals("AB") || act_cmd.equals("AddBlack"))) {
                     predef_count_b++;
-                    game.getHandicapBoard().setCellBlack(param_x, param_y);
+                    game.getHandicapBoard().setCell(cell, GoDefinitions.STONE_BLACK);
                 }
 
                 if (game.isBlackToMove() && (act_cmd.equals("AW") || act_cmd.equals("AddWhite"))) {
                     predef_count_w++;
-                    game.getHandicapBoard().setCellWhite(param_x, param_y);
-
+                    game.getHandicapBoard().setCell(cell, GoDefinitions.STONE_WHITE);
                 }
             } else
                 Log.w("AB / AW command without param");

@@ -3,10 +3,12 @@ package org.ligi.gobandroid_hd.logic.markers;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import org.ligi.gobandroid_hd.logic.Cell;
+
 public class CircleMarker extends BaseShapeMarker {
 
-    public CircleMarker(byte x, byte y) {
-        super(x, y);
+    public CircleMarker(Cell cell) {
+        super(cell);
     }
 
     public void draw(Canvas c, float size, float x, float y, Paint paint) {

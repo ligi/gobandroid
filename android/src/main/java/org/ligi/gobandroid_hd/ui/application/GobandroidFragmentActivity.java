@@ -49,13 +49,13 @@ public class GobandroidFragmentActivity extends ActionBarActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                App.getInteractionScope().setTouchPosition(-1);
+                App.getInteractionScope().setTouchPosition(null);
                 App.getGame().notifyGameChange();
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
-                App.getInteractionScope().setTouchPosition(-1);
+                App.getInteractionScope().setTouchPosition(null);
                 App.getGame().notifyGameChange();
                 super.onDrawerClosed(drawerView);
             }
