@@ -45,17 +45,17 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
 
     @OnClick(R.id.size_button9x9)
     void setSize9x9() {
-        setSize((byte) 9);
+        setSize(9);
     }
 
     @OnClick(R.id.size_button13x13)
     void setSize13x13() {
-        setSize((byte) 13);
+        setSize(13);
     }
 
     @OnClick(R.id.size_button19x19)
     void setSize19x19() {
-        setSize((byte) 19);
+        setSize(19);
     }
 
     private void setSize(int size) {
@@ -66,9 +66,9 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
             public void run() {
                 if (act_size != wanted_size) {
                     act_size += (act_size > wanted_size) ? -1 : 1;
-                    refresh_ui();
                     uiHandler.postDelayed(this, 16);
                 }
+                refresh_ui();
             }
         });
 
@@ -108,12 +108,27 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
         refresh_ui();
     }
 
+    private boolean isAnimating() {
+        return act_size != wanted_size;
+    }
+
     /**
      * refresh the ui elements with values from act_size / act_handicap
      */
     public void refresh_ui() {
+
         size_text.setText(getString(R.string.size) + " " + act_size + "x" + act_size);
-        handicap_text.setText(getString(R.string.handicap) + " " + act_handicap);
+
+        if (!isAnimating()) {
+            // only enable handicap seeker when the size is 9x9 or 13x13 or 19x19
+            handicap_seek.setEnabled((act_size == 9) || (act_size == 13) || (act_size == 19));
+
+            if (handicap_seek.isEnabled()) {
+                handicap_text.setText(getString(R.string.handicap) + " " + act_handicap);
+            } else {
+                handicap_text.setText("Handycap only for 9x9 / 13x13 / 19x19");
+            }
+        }
 
         // the checks for change here are important - otherwise samsung moment
         // will die here with stack overflow
@@ -126,8 +141,6 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
         if (App.getInteractionScope().getMode() == InteractionScope.MODE_GNUGO)
             size_seek.setMax(19 - size_offset);
 
-        // only enable handicap seeker when the size is 9x9 or 13x13 or 19x19
-        handicap_seek.setEnabled((act_size == 9) || (act_size == 13) || (act_size == 19));
 
         GoPrefs.setLastBoardSize(act_size);
         GoPrefs.setLastHandicap(act_handicap);

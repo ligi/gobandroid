@@ -14,7 +14,7 @@
         <TextView
             android:id="@+id/game_size_label"
             tools:text="Size 9x9"
-            android:paddingLeft="10sp"
+            android:paddingLeft="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -22,8 +22,7 @@
             android:id="@+id/size_slider"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7pt"
-            android:layout_marginRight="7pt"
+            android:padding="16dp"
             android:max="21"/>
 
         <LinearLayout
@@ -61,7 +60,8 @@
 
         <TextView
             android:id="@+id/handicap_label"
-            android:paddingLeft="10sp"
+            android:paddingLeft="8dp"
+            tools:text="Handycap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -70,9 +70,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:max="9"
-            android:paddingBottom="7pt"
-            android:paddingLeft="7pt"
-            android:paddingRight="7pt"/>
+            android:padding="16dp"/>
         <!-- <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Start" android:layout_gravity="center" android:id="@+id/game_start_button"/> -->
     </LinearLayout>
 
