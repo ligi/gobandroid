@@ -27,7 +27,7 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
     public int act_size = 9;
     private int wanted_size;
 
-    public byte act_handicap = 0;
+    public int act_handicap = 0;
 
     private final static int size_offset = 2;
 
@@ -90,8 +90,8 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
         handicap_seek.setOnSeekBarChangeListener(this);
 
         // set defaults
-        act_size = (byte) GoPrefs.getLastBoardSize();
-        act_handicap = (byte) GoPrefs.getLastHandicap();
+        act_size = GoPrefs.getLastBoardSize();
+        act_handicap = GoPrefs.getLastHandicap();
 
         refresh_ui();
         return view;
