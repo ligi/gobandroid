@@ -1,13 +1,10 @@
 package org.ligi.gobandroid_hd.ui.game_setup;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -27,7 +24,9 @@ import butterknife.OnClick;
 
 public class GameSetupFragment extends GobandroidFragment implements OnSeekBarChangeListener {
 
-    public byte act_size = 9;
+    public int act_size = 9;
+    private int wanted_size;
+
     public byte act_handicap = 0;
 
     private final static int size_offset = 2;
@@ -49,7 +48,6 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
         setSize((byte) 9);
     }
 
-
     @OnClick(R.id.size_button13x13)
     void setSize13x13() {
         setSize((byte) 13);
@@ -57,18 +55,31 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
 
     @OnClick(R.id.size_button19x19)
     void setSize19x19() {
-        setSize((byte)19);
+        setSize((byte) 19);
     }
 
-    private void setSize(byte size) {
-        act_size = size;
-        refresh_ui();
+    private void setSize(int size) {
+        wanted_size = size;
+
+        uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (act_size != wanted_size) {
+                    act_size += (act_size > wanted_size) ? -1 : 1;
+                    refresh_ui();
+                    uiHandler.postDelayed(this, 16);
+                }
+            }
+        });
+
     }
 
+    private Handler uiHandler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        uiHandler = new Handler();
         GoPrefs.init(getActivity()); // TODO remove legacy
 
         final View view = inflater.inflate(R.layout.game_setup_inner, container, false);
@@ -90,7 +101,7 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
         if ((seekBar == size_seek) && (act_size != (byte) (progress + size_offset)))
-            act_size = (byte) (progress + size_offset);
+            setSize(progress + size_offset);
         else if ((seekBar == handicap_seek) && (act_handicap != (byte) progress))
             act_handicap = (byte) progress;
 
