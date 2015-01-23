@@ -47,6 +47,9 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(R.string.link_title);
+
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         final int[] tabs = new int[]{R.string.link_tab_about, R.string.link_tab_credits, R.string.link_tab_sgf};
