@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
@@ -44,7 +45,7 @@ public class GameScoringExtrasFragment extends GobandroidFragment implements GoG
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        getGame().addGoGameChangeListener(this);
+        App.getGame().addGoGameChangeListener(this);
 
         final View view = inflater.inflate(R.layout.game_result, container, false);
         ButterKnife.inject(this, view);
@@ -55,10 +56,9 @@ public class GameScoringExtrasFragment extends GobandroidFragment implements GoG
 
     @Override
     public void onDestroyView() {
-        getGame().removeGoGameChangeListener(this);
+        App.getGame().removeGoGameChangeListener(this);
         super.onDestroyView();
     }
-
 
     @Override
     public void onGoGameChange() {
@@ -73,20 +73,20 @@ public class GameScoringExtrasFragment extends GobandroidFragment implements GoG
     }
 
     private void refresh() {
-        final GoGame game = getGame();
+        final GoGame game = App.getGame();
 
         result_txt.setText(getFinTXT(game));
 
-        territory_black.setText("" + game.territory_black);
-        territory_white.setText("" + game.territory_white);
+        territory_black.setText(Integer.toString(game.territory_black));
+        territory_white.setText(Integer.toString(game.territory_white));
 
-        captures_black.setText("" + game.getCapturesBlack());
-        captures_white.setText("" + game.getCapturesWhite());
+        captures_black.setText(Integer.toString(game.getCapturesBlack()));
+        captures_white.setText(Integer.toString(game.getCapturesWhite()));
 
-        komi.setText("" + game.getKomi());
+        komi.setText(Float.toString(game.getKomi()));
 
-        final_black.setText("" + game.getPointsBlack());
-        final_white.setText("" + game.getPointsWhite());
+        final_black.setText(Float.toString(game.getPointsBlack()));
+        final_white.setText(Float.toString(game.getPointsWhite()));
     }
 
     private String getFinTXT(GoGame game) {
@@ -98,6 +98,5 @@ public class GameScoringExtrasFragment extends GobandroidFragment implements GoG
             return (getString(R.string.white_won_with_) + (game.getPointsWhite() - game.getPointsBlack()) + getString(R.string._points_));
         }
         return getResources().getString(R.string.game_ended_in_draw);
-
     }
 }
