@@ -31,7 +31,7 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
 
     private final static int size_offset = 2;
 
-    @InjectView(R.id.size_slider)
+    @InjectView(R.id.size_seek)
     SeekBar size_seek;
 
     @InjectView(R.id.handicap_seek)
@@ -126,7 +126,7 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
             if (handicap_seek.isEnabled()) {
                 handicap_text.setText(getString(R.string.handicap) + " " + act_handicap);
             } else {
-                handicap_text.setText("Handycap only for 9x9 / 13x13 / 19x19");
+                handicap_text.setText(getString(R.string.handicap_only_for));
             }
         }
 

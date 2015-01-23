@@ -257,4 +257,5 @@
     <string name="triangle">triangle</string>
     <string name="number">number</string>
     <string name="letter">letter</string>
+    <string name="handicap_only_for">Handicap only for 9x9 / 13x13 / 19x19</string>
 </resources>

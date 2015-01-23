@@ -6,7 +6,6 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/handicap_slider"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -20,7 +19,7 @@
             android:layout_height="wrap_content"/>
 
         <SeekBar
-            android:id="@+id/size_slider"
+            android:id="@+id/size_seek"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"

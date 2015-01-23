@@ -1,5 +1,7 @@
 package org.ligi.gobandroidhd.base;
 
+import android.support.test.espresso.UiController;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.view.View;
 
 import android.support.test.espresso.ViewAction;
@@ -7,7 +9,9 @@ import android.support.test.espresso.action.CoordinatesProvider;
 import android.support.test.espresso.action.GeneralClickAction;
 import android.support.test.espresso.action.Press;
 import android.support.test.espresso.action.Tap;
+import android.widget.SeekBar;
 
+import org.hamcrest.Matcher;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.logic.Cell;
 
@@ -35,5 +39,23 @@ public class GoViewActions {
 
     public static ViewAction tapStone(Cell cell) {
         return placeStone(cell);
+    }
+
+    public static ViewAction setProgress(final int progress) {
+        return new ViewAction() {
+            @Override
+            public void perform(UiController uiController, View view) {
+                SeekBar seekBar = (SeekBar) view;
+                seekBar.setProgress(progress);
+            }
+            @Override
+            public String getDescription() {
+                return "Set a progress on a SeekBar";
+            }
+            @Override
+            public Matcher<View> getConstraints() {
+                return ViewMatchers.isAssignableFrom(SeekBar.class);
+            }
+        };
     }
 }
