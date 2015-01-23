@@ -31,29 +31,16 @@ public class TheGameSetupActivity extends BaseIntegration<GoSetupActivity> {
     }
 
     @MediumTest
-    public void testThatClickOn9x9createsA9by9game() {
+    public void testThatClickOnButtonOpensCorrectGame() {
         final GoSetupActivity activity = getActivity();
 
         onView(withId(R.id.size_button9x9)).perform(click());
         onView(withId(R.id.game_size_label)).check(matches(withText(containsString("9x9"))));
-
         Spoon.screenshot(activity, "setup_9x9");
-    }
-
-
-    @MediumTest
-    public void testThatClickOn13x13createsA13by13game() {
-        final GoSetupActivity activity = getActivity();
 
         onView(withId(R.id.size_button13x13)).perform(click());
         onView(withId(R.id.game_size_label)).check(matches(withText(containsString("13x13"))));
-
         Spoon.screenshot(activity, "setup_13x13");
-    }
-
-    @MediumTest
-    public void testThatClickOn19x19createsA19by19game() {
-        final GoSetupActivity activity = getActivity();
 
         onView(withId(R.id.size_button19x19)).perform(click());
         onView(withId(R.id.game_size_label)).check(matches(withText(containsString("19x19"))));
