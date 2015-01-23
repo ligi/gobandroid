@@ -1,7 +1,5 @@
 package org.ligi.gobandroid_hd.ui.tsumego;
 
-import android.graphics.Point;
-
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
@@ -11,15 +9,16 @@ public class TsumegoHelper {
 
     static class Max {
 
-        private final int value;
+        private int value;
 
         public Max(int value) {
             this.value = value;
         }
 
         public Max update(int candidate) {
-            if (candidate > value)
-                return new Max(candidate);
+            if (candidate > value) {
+                value = candidate;
+            }
 
             return this;
         }
@@ -78,18 +77,6 @@ public class TsumegoHelper {
 
         return act_max;
     }
-
-	
-	/*
-     *
-	 * public static int calcSpan(GoGame game) { int min_x=game.getSize(); int
-	 * min_y=game.getSize(); for (int x=0;x<game.getSize();x++) for (int
-	 * y=0;y<game.getSize();y++) { if
-	 * ((x<min_x)&&!game.getHandicapBoard().isCellFree(x, y)) min_x=x; if
-	 * ((y<min_y)&&!game.getHandicapBoard().isCellFree(x, y)) min_y=y; }
-	 * 
-	 * return Math.max(game.getSize()-min_x, game.getSize()-min_y); }
-	 */
 
     /**
      * calculate a Zoom factor so that all stones in handicap fit on bottom
