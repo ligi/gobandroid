@@ -30,8 +30,7 @@
             android:id="@+id/LinearLayout02"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4pt"
-            android:layout_marginLeft="7pt">
+            android:layout_margin="4dp">
 
             <Button
                 android:id="@+id/size_button9x9"
