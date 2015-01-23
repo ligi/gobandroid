@@ -170,6 +170,10 @@ public class GoBoardViewHD extends View {
 
         final Cell act_zoom_point = calcActZoomPOI();
 
+        if (act_zoom_point == null) {
+            return new PointF(0, 0);
+        }
+        
         return new PointF(-stone_size * (act_zoom_point.x - getGame().getSize() / 2.0f / zoom), -stone_size * (act_zoom_point.y - getGame().getSize() / 2.0f / zoom));
     }
 
@@ -285,7 +289,7 @@ public class GoBoardViewHD extends View {
 
             } else {
 
-                boolean should_draw_opaque = (move_stone_mode && getGame().getActMove().getCell().equals(cell));
+                boolean should_draw_opaque = (move_stone_mode && cell.equals(getGame().getActMove().getCell()));
 
                 if (board.isCellWhite(cell))
                     canvas.drawBitmap(white_stone_bitmap, cell.x * stone_size, cell.y * stone_size, should_draw_opaque ? opaque_paint : bitmapPaint);

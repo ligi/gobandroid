@@ -323,6 +323,9 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     }
 
     protected byte doMoveWithUIFeedback(Cell cell) {
+        if (cell == null) {
+            return GoGame.MOVE_INVALID_NOT_ON_BOARD;
+        }
 
         final byte res = getGame().do_move(cell);
 
