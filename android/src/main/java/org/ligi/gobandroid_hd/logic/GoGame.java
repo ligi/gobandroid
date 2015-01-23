@@ -76,8 +76,6 @@ public class GoGame {
     public byte[][] area_assign; // cache to which player a area belongs in a
     // finished game
 
-    private int group_count = -1;
-
     private int captures_white; // counter for the captures from black
     private int captures_black; // counter for the captures from white
 
@@ -96,8 +94,6 @@ public class GoGame {
     private GnuGoMover go_mover = null;
 
     private GoGameMetadata metadata = null;
-
-    private int area_group_count = 0;
 
     public final static byte MOVE_VALID = 0;
     public final static byte MOVE_INVALID_NOT_ON_BOARD = 1;
@@ -542,7 +538,7 @@ public class GoGame {
      * the result is written in groups[][]
      */
     public void buildGroups() {
-        group_count = 0;
+        int group_count = 0;
 
         // reset groups
         for (int x = 0; x < calc_board.getSize(); x++)
@@ -564,7 +560,7 @@ public class GoGame {
     }
 
     public void buildAreaGroups() {
-        area_group_count = 0;
+        int area_group_count = 0;
 
         // reset groups
         for (Cell cell : calc_board.getAllCells()) {

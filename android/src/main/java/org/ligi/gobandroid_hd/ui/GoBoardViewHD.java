@@ -26,7 +26,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.FontMetrics;
 import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.View;
@@ -173,7 +172,7 @@ public class GoBoardViewHD extends View {
         if (act_zoom_point == null) {
             return new PointF(0, 0);
         }
-        
+
         return new PointF(-stone_size * (act_zoom_point.x - getGame().getSize() / 2.0f / zoom), -stone_size * (act_zoom_point.y - getGame().getSize() / 2.0f / zoom));
     }
 
@@ -266,47 +265,40 @@ public class GoBoardViewHD extends View {
             }
         }
 
-        for (Cell cell : board.getAllCells()) {
-            if (getGame().isCellHoschi(cell))
+        for (BoardCell cell : board.getAllCells()) {
+            if (getGame().isCellHoschi(cell)) {
                 drawBoardCircle(canvas, cell.x, cell.y, 2f + stone_size / 10, hoshi_paint);
+            }
 
             // paint the territory with alpha opaque stones
             if (show_area_stones) {
                 if (getGame().area_assign[cell.x][cell.y] == GoDefinitions.PLAYER_BLACK)
                     canvas.drawBitmap(black_stone_bitmap, cell.x * stone_size, cell.y * stone_size, opaque_paint);
 
-                if (getGame().area_assign[cell.x][cell.y] == GoDefinitions.PLAYER_WHITE)
+                else if (getGame().area_assign[cell.x][cell.y] == GoDefinitions.PLAYER_WHITE)
                     canvas.drawBitmap(white_stone_bitmap, cell.x * stone_size, cell.y * stone_size, opaque_paint);
 
             }
 
-            if (board.isCellDead(cell)) {
-                if (board.isCellDeadWhite(cell))
-                    canvas.drawBitmap(white_stone_bitmap_small, cell.x * stone_size + (stone_size - white_stone_bitmap_small.getWidth()) / 2, cell.y * stone_size + (stone_size - white_stone_bitmap_small.getHeight()) / 2, bitmapPaint);
-
-                if (board.isCellDeadBlack(cell))
-                    canvas.drawBitmap(black_stone_bitmap_small, cell.x * stone_size + (stone_size - black_stone_bitmap_small.getWidth()) / 2, cell.y * stone_size + (stone_size - black_stone_bitmap_small.getHeight()) / 2, bitmapPaint);
-
-            } else {
-
-                boolean should_draw_opaque = (move_stone_mode && cell.equals(getGame().getActMove().getCell()));
-
-                if (board.isCellWhite(cell))
-                    canvas.drawBitmap(white_stone_bitmap, cell.x * stone_size, cell.y * stone_size, should_draw_opaque ? opaque_paint : bitmapPaint);
-                if (board.isCellBlack(cell))
-                    canvas.drawBitmap(black_stone_bitmap, cell.x * stone_size, cell.y * stone_size, should_draw_opaque ? opaque_paint : bitmapPaint);
-
-                if (mark_last_stone) { // if the last stone should be marked
-                    /** mark the last move */
-                    if (getGame().getActMove().isOnCell(cell)) {
-                        drawBoardCircle(canvas, cell.x, cell.y, 2f + stone_size / 4f, (board.isCellWhite(cell)) ? blackLastStoneCirclePaint : whiteLastStoneCirclePaint);
-                    }
-                }
+            if (board.isCellDeadWhite(cell)) {
+                canvas.drawBitmap(white_stone_bitmap_small, cell.x * stone_size + (stone_size - white_stone_bitmap_small.getWidth()) / 2, cell.y * stone_size + (stone_size - white_stone_bitmap_small.getHeight()) / 2, bitmapPaint);
+            } else if (board.isCellDeadBlack(cell)) {
+                canvas.drawBitmap(black_stone_bitmap_small, cell.x * stone_size + (stone_size - black_stone_bitmap_small.getWidth()) / 2, cell.y * stone_size + (stone_size - black_stone_bitmap_small.getHeight()) / 2, bitmapPaint);
+            } else if (board.isCellWhite(cell)) {
+                canvas.drawBitmap(white_stone_bitmap, cell.x * stone_size, cell.y * stone_size, getStonePaintForCell(cell));
+            } else if (board.isCellBlack(cell)) {
+                canvas.drawBitmap(black_stone_bitmap, cell.x * stone_size, cell.y * stone_size, getStonePaintForCell(cell));
             }
 
         }
 
-        final FontMetrics fm = whiteTextPaint.getFontMetrics();
+        if (mark_last_stone) {
+            final Cell lastMoveCell = getGame().getActMove().getCell();
+            if (lastMoveCell!=null) {
+                final Paint paint = (board.isCellWhite(lastMoveCell)) ? blackLastStoneCirclePaint : whiteLastStoneCirclePaint;
+                drawBoardCircle(canvas, lastMoveCell.x, lastMoveCell.y, 2f + stone_size / 4f, paint);
+            }
+        }
 
         // paint the markers
         for (GoMarker marker : getGame().getActMove().getMarkers()) {
@@ -318,6 +310,14 @@ public class GoBoardViewHD extends View {
 
         canvas.restore();
     } // end of onDraw
+
+    private Paint getStonePaintForCell(Cell cell) {
+        if (move_stone_mode && cell.equals(getGame().getActMove().getCell())) {
+            return opaque_paint;
+        } else {
+            return bitmapPaint;
+        }
+    }
 
     private Paint getTextPaintForCell(Cell cell) {
         if (getGame().getVisualBoard().isCellBlack(cell)) {

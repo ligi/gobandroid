@@ -20,6 +20,18 @@ public class CellFactory {
         return created;
     }
 
+    public static List<BoardCell> getAllCellsForSquare(final int size, GoBoard board) {
+        final List<BoardCell> result = new ArrayList<>();
+
+        for (int y = 0; y < size; y++) {
+            for (int x = 0; x < size; x++) {
+                result.add(new BoardCell(x, y, board));
+            }
+        }
+
+        return result;
+    }
+
     public static List<Cell> getAllCellsForRect(final int sizeX, final int sizeY) {
         final List<Cell> created = new ArrayList<>();
 

@@ -48,8 +48,13 @@ public class GoBoard {
         }
     }
 
-    public List<Cell> getAllCells() {
-        return CellFactory.getAllCellsForSquareCached(size);
+    private List<BoardCell> allCells;
+
+    public List<BoardCell> getAllCells() {
+        if (allCells==null) {
+            allCells=CellFactory.getAllCellsForSquare(size,this);
+        }
+        return allCells;
     }
 
     /**

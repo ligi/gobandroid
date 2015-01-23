@@ -15,19 +15,19 @@ public class BoardCell extends Cell {
     }
 
     public BoardCell left() {
-        return new BoardCell(new Cell(x-1, y),board);
+        return new BoardCell(new Cell(x - 1, y), board);
     }
 
     public BoardCell right() {
-        return new BoardCell(new Cell(x+1, y),board);
+        return new BoardCell(new Cell(x + 1, y), board);
     }
 
     public BoardCell up() {
-        return new BoardCell(new Cell(x, y - 1),board);
+        return new BoardCell(new Cell(x, y - 1), board);
     }
 
     public BoardCell down() {
-        return new BoardCell(new Cell(x, y + 1),board);
+        return new BoardCell(new Cell(x, y + 1), board);
     }
 
     public boolean hasLeft() {
@@ -54,5 +54,8 @@ public class BoardCell extends Cell {
         return x < board.getSize() && y < board.getSize() && x >= 0 && y >= 0;
     }
 
+    public boolean is(byte kind) {
+        return board.isCellKind(this, kind);
+    }
 
 }
