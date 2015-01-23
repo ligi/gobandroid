@@ -8,7 +8,7 @@ import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.editing.EditGameActivity;
 import org.ligi.gobandroid_hd.ui.game_setup.GoSetupActivity;
-import org.ligi.gobandroid_hd.ui.gnugo.PlayAgainstGnugoActivity;
+import org.ligi.gobandroid_hd.ui.gnugo.PlayAgainstGnuGoActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 import org.ligi.gobandroid_hd.ui.review.GameReviewActivity;
 import org.ligi.gobandroid_hd.ui.review.GoGamePlayerActivity;
@@ -39,7 +39,7 @@ public class SwitchModeHelper {
                 return new Intent(ctx, GameScoringActivity.class);
 
             case InteractionScope.MODE_GNUGO:
-                return new Intent(ctx, PlayAgainstGnugoActivity.class);
+                return new Intent(ctx, PlayAgainstGnuGoActivity.class);
 
             case InteractionScope.MODE_SETUP:
                 return new Intent(ctx, GoSetupActivity.class);

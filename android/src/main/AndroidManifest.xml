@@ -79,7 +79,7 @@
                     android:scheme="goterm" />
             </intent-filter>
         </activity>
-        <activity android:name="org.ligi.gobandroid_hd.ui.gnugo.PlayAgainstGnugoActivity" />
+        <activity android:name=".ui.gnugo.PlayAgainstGnuGoActivity" />
         <activity android:name=".ui.BaseProfileActivity" />
         <activity android:name="org.ligi.gobandroid_hd.ui.review.GoGamePlayerActivity" />
         <activity android:name="org.ligi.gobandroid_hd.ui.editing.EditGameActivity" />
