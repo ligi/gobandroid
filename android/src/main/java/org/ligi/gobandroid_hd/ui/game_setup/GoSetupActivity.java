@@ -34,33 +34,12 @@ import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 
 /**
  * Activity for setting up a game ( board size / handicap / .. )
- * <p/>
- * TODO needs cleaning
- *
- * @author <a href="http://ligi.de">Marcus -Ligi- Bueschleb</a>
- *         <p/>
- *         This software is licensed with GPLv3
  */
 
 public class GoSetupActivity extends GoActivity {
 
     private GameSetupFragment setup_fragment;
     private MenuItem clear_board_menu_item;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-/*
-        MarketService ms = new MarketService(this);
-        ms.level(MarketService.MINOR).checkVersion();
-
-        getApp().getInteractionScope().setMode(InteractionScope.MODE_SETUP);
-        // TODO the next line works but needs investigation - i thought more of
-        // getBoard().requestFocus(); - but that was not working ..
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        Log.i("starting setup");
-*/
-    }
 
     @Override
     public Fragment getGameExtraFragment() {
@@ -85,7 +64,7 @@ public class GoSetupActivity extends GoActivity {
                 getGame().jump(getGame().getActMove().getnextMove(0));
 
         getGame().notifyGameChange();
-        this.startActivity(new Intent(this, GameRecordActivity.class));
+        startActivity(new Intent(this, GameRecordActivity.class));
         finish();
         return res;
     }
