@@ -193,7 +193,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
             // if it is a tsumego and we need a transformation to right corner
             // -> do so
             if (App.getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
-                int transform = TsumegoHelper.calcTransform(game);
+                final int transform = TsumegoHelper.calcTransform(game);
 
                 if (transform != SGFReader.DEFAULT_SGF_TRANSFORM) {
                     game = SGFReader.sgf2game(sgf, null, SGFReader.BREAKON_NOTHING, transform);
