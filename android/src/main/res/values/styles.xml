@@ -26,6 +26,8 @@
     </style>
 
     <style name="base_theme" parent="Theme.AppCompat.Light">
+        <item name="android:windowAnimationStyle">@null</item>
+
         <!--	<item name="Background">@android:color/transparent</item>
         <item name="android:textColor">#ff000000</item> -->
         <item name="android:alertDialogStyle">@style/dialog_theme</item>
