@@ -19,6 +19,8 @@
 
 package org.ligi.gobandroid_hd.logic;
 
+import com.google.common.base.Optional;
+
 import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer;
 import org.ligi.tracedroid.logging.Log;
 
@@ -29,6 +31,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_BLACK;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_WHITE;
@@ -486,16 +490,28 @@ public class GoGame {
      */
     public boolean hasGroupLiberties(Cell cell) {
 
-        final MustBeConnectedCellGatherer cellGathering = new MustBeConnectedCellGatherer(new BoardCell(cell, calc_board));
+        final BoardCell startCell = new BoardCell(cell, calc_board);
 
-        for (BoardCell boardCell : cellGathering) {
-            // TODO maybe optimize - do not have to collect all when just searching this one
-            if (cell_has_neighbour(boardCell, STONE_NONE)) {
-                return true;
+        final AtomicBoolean found=new AtomicBoolean();
+
+        new MustBeConnectedCellGatherer(startCell) {
+            @Override
+            public boolean add(BoardCell object) {
+                if (cell_has_neighbour(object, STONE_NONE)) {
+                    found.set(true);
+                }
+                return super.add(object);
             }
-        }
 
-        return false;
+            @Override
+            protected void pushWithCheck(BoardCell cell) {
+                if (!found.get()) { // no need to process any more cells
+                    super.pushWithCheck(cell);
+                }
+            }
+        };
+
+        return found.get();
     }
 
     public boolean isAreaGroupBlacks(int group2check) {
