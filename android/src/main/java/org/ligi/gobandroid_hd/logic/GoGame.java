@@ -19,8 +19,6 @@
 
 package org.ligi.gobandroid_hd.logic;
 
-import com.google.common.base.Optional;
-
 import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer;
 import org.ligi.tracedroid.logging.Log;
 
@@ -32,7 +30,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_BLACK;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_WHITE;
@@ -492,7 +489,7 @@ public class GoGame {
 
         final BoardCell startCell = new BoardCell(cell, calc_board);
 
-        final AtomicBoolean found=new AtomicBoolean();
+        final AtomicBoolean found = new AtomicBoolean();
 
         new MustBeConnectedCellGatherer(startCell) {
             @Override
@@ -561,18 +558,17 @@ public class GoGame {
             for (int y = 0; y < calc_board.getSize(); y++)
                 groups[x][y] = -1;
 
-        for (int x = 0; x < calc_board.getSize(); x++)
-            for (int y = 0; y < calc_board.getSize(); y++) {
-                if (groups[x][y] == -1) {
-                    final MustBeConnectedCellGatherer cellGathering = new MustBeConnectedCellGatherer(new BoardCell(x, y, calc_board));
+        for (BoardCell boardCell : calc_board.getAllCells()) {
+            if (groups[boardCell.x][boardCell.y] == -1 && !boardCell.is(GoDefinitions.STONE_NONE)) {
+                final MustBeConnectedCellGatherer cellGathering = new MustBeConnectedCellGatherer(boardCell);
 
-                    for (BoardCell groupCell : cellGathering) {
-                        groups[groupCell.x][groupCell.y] = group_count;
-                    }
-
-                    group_count++;
+                for (BoardCell groupCell : cellGathering) {
+                    groups[groupCell.x][groupCell.y] = group_count;
                 }
+
+                group_count++;
             }
+        }
     }
 
     public void buildAreaGroups() {

@@ -4,7 +4,6 @@ import org.ligi.gobandroid_hd.logic.BoardCell;
 
 public class MustBeConnectedCellGatherer extends CellGatherer {
 
-
     public MustBeConnectedCellGatherer(BoardCell root) {
         super(root);
     }
