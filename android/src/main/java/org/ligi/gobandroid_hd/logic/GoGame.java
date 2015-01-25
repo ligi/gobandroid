@@ -560,9 +560,8 @@ public class GoGame {
 
         for (BoardCell boardCell : calc_board.getAllCells()) {
             if (groups[boardCell.x][boardCell.y] == -1 && !boardCell.is(GoDefinitions.STONE_NONE)) {
-                final MustBeConnectedCellGatherer cellGathering = new MustBeConnectedCellGatherer(boardCell);
 
-                for (BoardCell groupCell : cellGathering) {
+                for (BoardCell groupCell : new MustBeConnectedCellGatherer(boardCell)) {
                     groups[groupCell.x][groupCell.y] = group_count;
                 }
 
