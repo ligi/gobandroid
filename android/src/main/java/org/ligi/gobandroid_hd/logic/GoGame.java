@@ -74,8 +74,7 @@ public class GoGame {
     private int[][] groups; // array to build groups
 
     public int[][] area_groups; // array to build groups
-    public byte[][] area_assign; // cache to which player a area belongs in a
-    // finished game
+    public byte[][] area_assign; // cache to which player a area belongs in a  finished game
 
     private int captures_white; // counter for the captures from black
     private int captures_black; // counter for the captures from white
@@ -263,11 +262,7 @@ public class GoGame {
 
         // check if the "new" move is in the variations - to not have 2 equal
         // move as different variations
-        GoMove matching_move = null;
-
-        for (GoMove move_matcher : act_move.getNextMoveVariations())
-            if (move_matcher.isOnCell(cell))
-                matching_move = move_matcher;
+        final GoMove matching_move = act_move.getNextMoveOnCell(cell);
 
         // if there is one matching use this move and we are done
         if (matching_move != null) {
@@ -275,15 +270,11 @@ public class GoGame {
             return MOVE_VALID;
         }
 
-        GoBoard bak_board = calc_board.clone();
-
-        // int tmp_cap=captures_black+captures_white;
+        final GoBoard bak_board = calc_board.clone();
 
         calc_board.setCell(cell, isBlackToMove() ? STONE_BLACK : STONE_WHITE);
 
-        // buildGroups();
         remove_dead(cell);
-        // remove_dead((byte)0,(byte)0);
 
         // move is a KO -> Invalid
         if (calc_board.equals(pre_last_board)) {
@@ -298,7 +289,7 @@ public class GoGame {
             return MOVE_INVALID_CELL_NO_LIBERTIES;
         }
 
-        // if we reach this point it is avalid move
+        // if we reach this point it is a valid move
         // -> do things needed to do after a valid move
 
         if (isBlackToMove())
@@ -729,20 +720,12 @@ public class GoGame {
         return calc_board.getSize(); // TODO cache?
     }
 
-    public int getGroup(byte x, byte y) {
-        return groups[x][y];
-    }
-
     public int getHandicap() {
         return handicap;
     }
 
     public GoBoard getHandicapBoard() {
         return handicap_board;
-    }
-
-    public void setGoMover(GnuGoMover go_mover) {
-        this.go_mover = go_mover;
     }
 
     public GnuGoMover getGoMover() {

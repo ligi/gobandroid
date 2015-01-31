@@ -93,6 +93,15 @@ public class GoMove {
         return (next_move_variations.size() > 0);
     }
 
+    public GoMove getNextMoveOnCell(Cell cell) {
+        for (GoMove next_move_variation : next_move_variations) {
+            if (next_move_variation.getCell().equals(cell)) {
+                return next_move_variation;
+            }
+        }
+        return null;
+    }
+
     public boolean hasNextMoveVariations() {
         return (next_move_variations.size() > 1);
     }
