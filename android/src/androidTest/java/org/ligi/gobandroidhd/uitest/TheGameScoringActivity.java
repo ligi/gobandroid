@@ -12,6 +12,7 @@ import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
 import org.ligi.gobandroidhd.base.BaseIntegration;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -42,6 +43,7 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
 
         onView(withId(R.id.go_board)).perform(tapStone(new Cell(0, 0)));
 
+        onView(withId(R.id.final_black)).perform(scrollTo());
         onView(withId(R.id.final_black)).check(matches(withText(containsString("80.0"))));
         onView(withId(R.id.captures_black)).check(matches(withText(containsString("0"))));
         onView(withId(R.id.result_txt)).check(matches(withText(containsString("Black"))));
@@ -60,6 +62,7 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
 
         onView(withId(R.id.go_board)).perform(tapStone(new Cell(0, 0)));
 
+        onView(withId(R.id.final_black)).perform(scrollTo());
         onView(withId(R.id.final_black)).check(matches(withText(containsString("81.0"))));
         onView(withId(R.id.captures_black)).check(matches(withText(containsString("1"))));
         onView(withId(R.id.result_txt)).check(matches(withText(containsString("Black"))));
@@ -77,6 +80,7 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
 
         onView(withId(R.id.go_board)).perform(tapStone(new Cell(0, 1)));
 
+        onView(withId(R.id.final_white)).perform(scrollTo());
         onView(withId(R.id.final_white)).check(matches(withText(containsString("87.5"))));
         onView(withId(R.id.captures_black)).check(matches(withText(containsString("0"))));
         onView(withId(R.id.captures_white)).check(matches(withText(containsString("1"))));
