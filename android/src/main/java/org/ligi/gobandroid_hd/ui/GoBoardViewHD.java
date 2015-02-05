@@ -294,7 +294,7 @@ public class GoBoardViewHD extends View {
 
         if (mark_last_stone) {
             final Cell lastMoveCell = getGame().getActMove().getCell();
-            if (lastMoveCell!=null) {
+            if (lastMoveCell != null) {
                 final Paint paint = (board.isCellWhite(lastMoveCell)) ? blackLastStoneCirclePaint : whiteLastStoneCirclePaint;
                 drawBoardCircle(canvas, lastMoveCell.x, lastMoveCell.y, 2f + stone_size / 4f, paint);
             }
@@ -385,11 +385,12 @@ public class GoBoardViewHD extends View {
         // TODO check use-cases if we need to invalidate here
     }
 
-    public Cell pixel2cell(float x, float y) {
-        final BoardCell cell = new BoardCell((int) ((x - getZoomTranslate().x) / stone_size),
-                (int) ((y - getZoomTranslate().y) / stone_size), getGame().getCalcBoard());
+    public Cell pixel2cell(float pixelX, float pixelY) {
+        final int cellX = (int) ((pixelX - getZoomTranslate().x) / stone_size);
+        final int cellY = (int) ((pixelY - getZoomTranslate().y) / stone_size);
+        final Cell cell = new Cell(cellX, cellY);
 
-        if (cell.isOnBoard()) {
+        if (getGame().getCalcBoard().isCellOnBoard(cell)) {
             return cell;
         }
         return null;

@@ -19,6 +19,8 @@
 
 package org.ligi.gobandroid_hd.logic;
 
+import android.util.SparseArray;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,11 +35,38 @@ public class GoBoard {
 
     private final int size;
     public final byte[][] board;
+    private SparseArray<BoardCell> cells = new SparseArray<>();
+    private List<BoardCell> allCells = new ArrayList<>();
 
     public GoBoard(int size) {
         this.size = size;
         board = new byte[size][size];
+        for (int x=0 ; x<size;x++)
+            for (int y=0 ; y<size;y++) {
+                final int key = y * size + x;
+                final BoardCell boardCell = new BoardCell(x, y, this);
+                allCells.add(boardCell);
+                cells.put(key,boardCell);
+            }
+
+        for (BoardCell allCell : allCells)
+            allCell.assignNeighbours();
     }
+
+    public BoardCell getCell(Cell cell) {
+        return getCell(cell.x,cell.y);
+    }
+
+    public BoardCell getCell(final int x, final int y) {
+        final int key = y * size + x;
+        return cells.get(key);
+    }
+
+    public boolean isCellOnBoard(Cell cell) {
+        return getCell(cell)!=null;
+    }
+
+
 
     public GoBoard(int size, byte[][] predefined_board) {
         this(size);
@@ -48,12 +77,7 @@ public class GoBoard {
         }
     }
 
-    private List<BoardCell> allCells;
-
     public List<BoardCell> getAllCells() {
-        if (allCells==null) {
-            allCells=CellFactory.getAllCellsForSquare(size,this);
-        }
         return allCells;
     }
 
@@ -80,10 +104,9 @@ public class GoBoard {
             return false;
 
         // check if all stones are placed equally
-        for (Cell cell : getAllCells()) {
+        for (Cell cell : getAllCells())
             if (board[cell.x][cell.y] != other.board[cell.x][cell.y])
                 return false;
-        }
 
         return true;
     }

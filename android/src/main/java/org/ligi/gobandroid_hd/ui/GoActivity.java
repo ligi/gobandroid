@@ -532,36 +532,36 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             final Cell ensuredTouchPosition = interaction_scope.getEnsuredTouchPosition();
-            final BoardCell boardCell = new BoardCell(ensuredTouchPosition, getGame().getCalcBoard());
+            final BoardCell boardCell =  getGame().getCalcBoard().getCell(ensuredTouchPosition);
 
             switch (keyCode) {
                 case KeyEvent.KEYCODE_DPAD_UP:
-                    if (boardCell.hasUp()) {
-                        interaction_scope.touch_position = boardCell.up();
+                    if (boardCell.up!=null) {
+                        interaction_scope.touch_position = boardCell.up;
                     } else {
                         return false;
                     }
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_LEFT:
-                    if (boardCell.hasLeft()) {
-                        interaction_scope.touch_position = boardCell.left();
+                    if (boardCell.left!=null) {
+                        interaction_scope.touch_position = boardCell.left;
                     } else {
                         return false;
                     }
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_DOWN:
-                    if (boardCell.hasDown()) {
-                        interaction_scope.touch_position = boardCell.down();
+                    if (boardCell.down!=null) {
+                        interaction_scope.touch_position = boardCell.down;
                     } else {
                         return false;
                     }
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
-                    if (boardCell.hasRight()) {
-                        interaction_scope.touch_position = boardCell.right();
+                    if (boardCell.right!=null) {
+                        interaction_scope.touch_position = boardCell.right;
                     } else {
                         return false;
                     }

@@ -56,7 +56,7 @@ public class GTPHelper {
         try {
             BoardCell boardCell = new BoardCell((byte) (gtp_str.charAt(0) - 'A'), (byte) (game.getBoardSize() - (Byte.parseByte(gtp_str.substring(1)))), game.getCalcBoard());
             if (boardCell.x > 8)
-                boardCell=boardCell.left(); // the I is missing ^^ - took me some time to find that out
+                boardCell = boardCell.left; // the I is missing ^^ - took me some time to find that out
 
             game.do_move(boardCell); // internal here?
             return true;

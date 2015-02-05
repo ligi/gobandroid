@@ -50,7 +50,7 @@ public class GameScoringActivity extends GoActivity implements
         final Set<Set<BoardCell>> allGroups = new HashSet<>();
 
         for (Cell cell : getGame().getCalcBoard().getAllCells()) {
-            final Set<BoardCell> inGroup = new LooseConnectedCellGatherer(new BoardCell(cell, getGame().getCalcBoard()));
+            final Set<BoardCell> inGroup = new LooseConnectedCellGatherer(getGame().getCalcBoard().getCell(cell));
             allProcessed.addAll(inGroup);
             if (!getGame().getCalcBoard().isCellFree(cell)) {
                 allGroups.add(inGroup);
@@ -134,7 +134,7 @@ public class GameScoringActivity extends GoActivity implements
     public void do_score_touch(Cell cell) {
 
         if ((!getGame().getCalcBoard().isCellFree(cell)) || getGame().getCalcBoard().isCellDead(cell)) { // if there is a stone/cellGathering
-            final MustBeConnectedCellGatherer cellGathering = new MustBeConnectedCellGatherer(new BoardCell(cell, getGame().getCalcBoard()));
+            final MustBeConnectedCellGatherer cellGathering = new MustBeConnectedCellGatherer(getGame().getCalcBoard().getCell(cell));
             for (Cell groupCell : cellGathering) {
                 getGame().getCalcBoard().toggleCellDead(groupCell);
             }

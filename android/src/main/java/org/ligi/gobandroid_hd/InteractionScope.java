@@ -24,16 +24,12 @@ public class InteractionScope {
         touch_position = touchCell;
     }
 
-    public Cell getTouchPosition() {
-        return touch_position;
-    }
-
     public Cell getTouchCell() {
         return touch_position;
     }
 
     public boolean hasValidTouchCoord() {
-        return touch_position!=null && new BoardCell(touch_position, App.getGame().getCalcBoard()).isOnBoard();
+        return touch_position!=null && App.getGame().getCalcBoard().getCell(touch_position)!=null;
     }
 
     public byte getMode() {

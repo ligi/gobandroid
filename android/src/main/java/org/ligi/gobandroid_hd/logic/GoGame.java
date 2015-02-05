@@ -247,7 +247,7 @@ public class GoGame {
         Log.i("do_move x:" + cell);
 
         // check hard preconditions
-        if (!new BoardCell(cell, calc_board).isOnBoard()) {
+        if (!calc_board.isCellOnBoard(cell)) {
             // return with INVALID if x and y are inside the board
             return MOVE_INVALID_NOT_ON_BOARD;
         }
@@ -336,12 +336,8 @@ public class GoGame {
     public void do_internal_move(GoMove move) {
 
         act_move = move;
-        if (move.isFirstMove())
+        if (move.isFirstMove() || move.isPassMove())
             return;
-
-        if (move.isPassMove()) {
-            return;
-        }
 
         calc_board.setCell(move.getCell(), move.isBlackToMove() ? STONE_BLACK : STONE_WHITE);
 
@@ -435,7 +431,7 @@ public class GoGame {
 
         clear_calc_board();
 
-        List<GoMove> replay_moves = new ArrayList<>();
+        final List<GoMove> replay_moves = new ArrayList<>();
 
         replay_moves.add(move);
         GoMove tmp_move;
@@ -463,12 +459,12 @@ public class GoGame {
         visual_board = calc_board.clone();
     }
 
-    public boolean cell_has_neighbour(Cell cell, byte kind) {
-        BoardCell boardCell = new BoardCell(cell, calc_board);
-        return (boardCell.hasLeft() && (calc_board.isCellKind(boardCell.left(), kind)))
-                || (boardCell.hasRight() && (calc_board.isCellKind(boardCell.right(), kind)))
-                || (boardCell.hasUp() && (calc_board.isCellKind(boardCell.up(), kind)))
-                || (boardCell.hasDown() && (calc_board.isCellKind(boardCell.down(), kind)));
+    public boolean cell_has_neighbour(BoardCell boardCell, byte kind) {
+        for (BoardCell cell : boardCell.getNeighbors())
+            if (cell.is(kind))
+                return true;
+
+        return false;
     }
 
     /**
@@ -478,7 +474,7 @@ public class GoGame {
      */
     public boolean hasGroupLiberties(Cell cell) {
 
-        final BoardCell startCell = new BoardCell(cell, calc_board);
+        final BoardCell startCell = calc_board.getCell(cell);
 
         final AtomicBoolean found = new AtomicBoolean();
 
@@ -506,7 +502,7 @@ public class GoGame {
         if (group2check == -1)
             return false;
         boolean res = false;
-        for (Cell cell : calc_board.getAllCells()) {
+        for (BoardCell cell : calc_board.getAllCells()) {
             if (area_groups[cell.x][cell.y] == group2check)
                 if (cell_has_neighbour(cell, STONE_WHITE))
                     return false;
@@ -522,7 +518,7 @@ public class GoGame {
         if (group2check == -1)
             return false;
         boolean res = false;
-        for (Cell cell : calc_board.getAllCells()) {
+        for (BoardCell cell : calc_board.getAllCells()) {
             if (area_groups[cell.x][cell.y] == group2check)
                 if (cell_has_neighbour(cell, STONE_BLACK))
                     return false;
@@ -573,10 +569,10 @@ public class GoGame {
         for (Cell cell : calc_board.getAllCells()) {
             if (calc_board.isCellFree(cell)) {
 
-                final BoardCell boardCell = new BoardCell(cell, calc_board);
+                final BoardCell boardCell = calc_board.getCell(cell);
 
-                if (boardCell.hasLeft()) {
-                    if (!calc_board.areCellsEqual(boardCell, boardCell.left())) {
+                if (boardCell.left!=null) {
+                    if (!calc_board.areCellsEqual(boardCell, boardCell.left)) {
                         area_group_count++;
                         area_groups[cell.x][cell.y] = area_group_count;
                     } else
@@ -586,8 +582,8 @@ public class GoGame {
                     area_groups[cell.x][cell.y] = area_group_count;
                 }
 
-                if (boardCell.hasUp()) {
-                    final Cell up = boardCell.up();
+                if (boardCell.up!=null) {
+                    final Cell up = boardCell.up;
                     if (calc_board.areCellsEqual(boardCell, up)) {
                         int from_grp = area_groups[cell.x][cell.y];
 
@@ -625,35 +621,11 @@ public class GoGame {
     private void remove_dead(Cell where) {
         local_captures = 0;
 
-        BoardCell boardWhere = new BoardCell(where, calc_board);
+        BoardCell boardWhere = calc_board.getCell(where);
 
-        if (boardWhere.hasLeft()) {
-            final Cell left = boardWhere.left();
-            if ((!hasGroupLiberties(left)) && (!calc_board.areCellsEqual(boardWhere, left))) {
-                remove_group(left);
-            }
-        }
-
-        if (boardWhere.hasRight()) {
-            final Cell right = boardWhere.right();
-            if ((!hasGroupLiberties(right)) && (!calc_board.areCellsEqual(boardWhere, right))) {
-                remove_group(right);
-            }
-        }
-
-        if (boardWhere.hasUp()) {
-            final Cell up = boardWhere.up();
-            if ((!hasGroupLiberties(up)) && (!calc_board.areCellsEqual(boardWhere, up))) {
-                remove_group(up);
-            }
-        }
-
-        if (boardWhere.hasDown()) {
-            final Cell down = boardWhere.down();
-            if ((!hasGroupLiberties(down)) && (!calc_board.areCellsEqual(boardWhere, down))) {
-                remove_group(down);
-            }
-        }
+        for (BoardCell boardCell : boardWhere.getNeighbors())
+            if ((!hasGroupLiberties(boardCell)) && (!calc_board.areCellsEqual(boardWhere, boardCell)))
+                remove_group(boardCell);
     }
 
     private void remove_group(Cell where) {
@@ -661,7 +633,7 @@ public class GoGame {
         if (calc_board.isCellFree(where)) // this is no "group" in the sense we want
             return;
 
-        final MustBeConnectedCellGatherer cellGathering = new MustBeConnectedCellGatherer(new BoardCell(where, calc_board));
+        final MustBeConnectedCellGatherer cellGathering = new MustBeConnectedCellGatherer(calc_board.getCell(where));
 
         for (BoardCell cell : cellGathering) {
             local_captures++;

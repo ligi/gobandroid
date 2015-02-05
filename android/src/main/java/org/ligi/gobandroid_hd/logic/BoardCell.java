@@ -1,61 +1,53 @@
 package org.ligi.gobandroid_hd.logic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BoardCell extends Cell {
 
     public final GoBoard board;
+    private List<BoardCell> neighbours = new ArrayList<>();
+    public BoardCell left, right, up, down;
+
 
     public BoardCell(int x, int y, GoBoard board) {
         super(x, y);
         this.board = board;
     }
 
-    public BoardCell(Cell cell, GoBoard board) {
-        super(cell);
-        this.board = board;
+    public void assignNeighbours() {
+        if (x > 0) {
+            left = board.getCell(x - 1, y);
+            neighbours.add(left);
+        }
+
+        if (y > 0) {
+            up = board.getCell(x , y-1);
+            neighbours.add(up);
+        }
+
+        if (y < board.getSize() - 1) {
+            down = board.getCell(x,y+1);
+            neighbours.add(down);
+        }
+
+
+        if (x < board.getSize() - 1) {
+            right = board.getCell(x+1,y);
+            neighbours.add(right);
+        }
     }
 
-    public BoardCell left() {
-        return new BoardCell(new Cell(x - 1, y), board);
-    }
-
-    public BoardCell right() {
-        return new BoardCell(new Cell(x + 1, y), board);
-    }
-
-    public BoardCell up() {
-        return new BoardCell(new Cell(x, y - 1), board);
-    }
-
-    public BoardCell down() {
-        return new BoardCell(new Cell(x, y + 1), board);
-    }
-
-    public boolean hasLeft() {
-        return x > 0;
-    }
-
-    public boolean hasRight() {
-        return x < board.getSize() - 1;
-    }
-
-    public boolean hasUp() {
-        return y > 0;
-    }
-
-    public boolean hasDown() {
-        return y < board.getSize() - 1;
-    }
 
     public boolean isInGroupWith(Cell cell) {
         return board.areCellsEqual(this, cell);
-    }
-
-    public boolean isOnBoard() {
-        return x < board.getSize() && y < board.getSize() && x >= 0 && y >= 0;
     }
 
     public boolean is(byte kind) {
         return board.isCellKind(this, kind);
     }
 
+    public List<BoardCell> getNeighbors() {
+        return neighbours;
+    }
 }
