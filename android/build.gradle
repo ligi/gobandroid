@@ -108,9 +108,13 @@ dependencies {
     compile 'com.android.support:support-annotations:20.0.0'
 
     def play_services = 'com.google.android.gms:play-services-base:6.5.+'
-
     withCloudCompile play_services
     withAnalyticsCompile play_services
+
+    withCloudCompile  'com.google.android.gms:play-services-games:6.5.+'
+    withCloudCompile  'com.google.android.gms:play-services-plus:6.5.+'
+    withCloudCompile  'com.google.android.gms:play-services-appstate:6.5.+'
+
 
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
