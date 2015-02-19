@@ -1,3 +1,5 @@
+package org.ligi.gobandroidhd;
+
 import android.test.suitebuilder.annotation.SmallTest;
 
 import org.junit.Test;
