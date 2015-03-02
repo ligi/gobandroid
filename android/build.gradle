@@ -101,7 +101,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.3'
     compile 'com.android.support:cardview-v7:21.0.3'
 
-    compile 'org.ligi:AXT:0.31'
+    compile 'org.ligi:AXT:0.32'
     compile 'com.google.guava:guava:18.0'
     compile 'org.ligi:tracedroid:1.4'
     compile 'com.jakewharton:butterknife:6.1.0'
@@ -127,7 +127,7 @@ dependencies {
 
     testCompile 'com.squareup.assertj:assertj-android:1.0.0'
     testCompile 'com.android.support:support-annotations:21.0.3'
-    testCompile 'junit:junit:4.11'
+    testCompile 'junit:junit:4.12'
 
     androidTestCompile 'com.squareup.spoon:spoon-client:1.1.2'
 }
