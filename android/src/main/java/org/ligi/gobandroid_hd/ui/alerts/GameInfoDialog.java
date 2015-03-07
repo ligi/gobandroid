@@ -84,7 +84,6 @@ public class GameInfoDialog extends GobandroidDialog {
             blackNameEdit.setText(App.getGobandroidSettings().getUsername());
             black_rank_et.setText(App.getGobandroidSettings().getRank());
         }
-        EditText et;
     }
 
     @OnTextChanged({R.id.black_name_et, R.id.white_name_et})
@@ -156,8 +155,6 @@ public class GameInfoDialog extends GobandroidDialog {
     }
 
     private void updateItsMeButtonVisibility() {
-        final GoGameMetadata metaData = App.getGame().getMetaData();
-
         user_is_white_btn.setVisibility(white_name_et.getText().toString().isEmpty() ? View.VISIBLE : View.GONE);
         user_is_black_btn.setVisibility(blackNameEdit.getText().toString().isEmpty() ? View.VISIBLE : View.GONE);
     }
