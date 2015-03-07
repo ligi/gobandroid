@@ -82,7 +82,7 @@ public class GameInfoDialog extends GobandroidDialog {
     void onBlack() {
         if (checkUserNamePresent()) {
             blackNameEdit.setText(App.getGobandroidSettings().getUsername());
-            white_rank_et.setText(App.getGobandroidSettings().getRank());
+            black_rank_et.setText(App.getGobandroidSettings().getRank());
         }
         EditText et;
     }
