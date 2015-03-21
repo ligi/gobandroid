@@ -206,9 +206,13 @@ public class SGFReader {
             }
 
             if (game != null) {
-                if (game.getActMove().isFirstMove() && predef_count_w == 0 && predef_count_b > 0) {
-                    game.getActMove().setIsBlackToMove(true); // probably handycap - so  make white
-                    // to  move - very  important for cloud game and handycap
+                if (game.getActMove().isFirstMove()) {
+                    game.apply_handicap();
+                    game.copyVisualBoard();
+                    if (predef_count_w == 0 && predef_count_b > 0) {
+                        game.getActMove().setIsBlackToMove(true); // probably handycap - so  make white
+                        // to  move - very  important for cloud game and handycap
+                    }
                 }
                 game.setMetadata(metadata);
             }
@@ -371,6 +375,8 @@ public class SGFReader {
         // TODO support AddEmpty
         // handle predefined stones ( mostly handicap stones ) in SGF
         if (act_cmd.equals("AddBlack") || act_cmd.equals("AB") || act_cmd.equals("AW") || act_cmd.equals("AddWhite")) {
+
+            Log.i("Adding stone " + act_cmd + " " + act_param + " at " + cell);
 
             if (game == null) { // create a game if it is
                 // not
