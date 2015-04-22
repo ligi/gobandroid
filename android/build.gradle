@@ -40,7 +40,7 @@ android {
     }
 
     compileSdkVersion 22
-    buildToolsVersion "22"
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         versionCode 205
@@ -87,8 +87,8 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:22.0.0'
-    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:support-v4:22.1.0'
+    compile 'com.android.support:appcompat-v7:22.1.0'
     compile 'com.android.support:recyclerview-v7:22.0.0'
     compile 'com.android.support:cardview-v7:22.0.0'
 
@@ -105,9 +105,9 @@ dependencies {
     withCloudCompile play_services
     withAnalyticsCompile play_services
 
-    withCloudCompile  'com.google.android.gms:play-services-games:6.5.+'
-    withCloudCompile  'com.google.android.gms:play-services-plus:6.5.+'
-    withCloudCompile  'com.google.android.gms:play-services-appstate:6.5.+'
+    withCloudCompile  'com.google.android.gms:play-services-games:7.0.0'
+    withCloudCompile  'com.google.android.gms:play-services-plus:7.0.0'
+    withCloudCompile  'com.google.android.gms:play-services-appstate:7.0.0'
 
 
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
