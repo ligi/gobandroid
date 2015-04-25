@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.OrientationHelper;
@@ -17,9 +17,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.google.common.base.Optional;
-
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.ActivityFinishingOnCancelListener;
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
@@ -39,13 +42,6 @@ import org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder.ReviewViewHolder;
 import org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder.TsumegoViewHolder;
 import org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder.ViewHolderInterface;
 import org.ligi.tracedroid.logging.Log;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static android.text.TextUtils.isEmpty;
 
 public class SGFListFragment extends Fragment implements Refreshable {
@@ -157,7 +153,7 @@ public class SGFListFragment extends Fragment implements Refreshable {
                 cardView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
-                        if (v.getTag(R.id.tag_actionmode)!=null) {
+                        if (v.getTag(R.id.tag_actionmode) != null) {
                             return false;
                         }
                         switch (event.getAction()) {
@@ -203,14 +199,14 @@ public class SGFListFragment extends Fragment implements Refreshable {
                     @Override
                     public boolean onLongClick(View v) {
 
-                        if (!(getActivity() instanceof ActionBarActivity)) {
-                            Log.w("Activity not instanceof ActionbarActivity - this is not really expected");
+                        if (!(getActivity() instanceof AppCompatActivity)) {
+                            Log.w("Activity not instanceof AppCompatActivity - this is not really expected");
                             return false;
                         }
 
-                        v.setTag(R.id.tag_actionmode,Boolean.TRUE);
+                        v.setTag(R.id.tag_actionmode, Boolean.TRUE);
 
-                        final ActionBarActivity activity = (ActionBarActivity) getActivity();
+                        final AppCompatActivity activity = (AppCompatActivity) getActivity();
                         actionMode = Optional.fromNullable(activity.startSupportActionMode(getActionMode(position)));
 
                         cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_elevated_elevation));
@@ -232,7 +228,7 @@ public class SGFListFragment extends Fragment implements Refreshable {
                             public void onDestroyActionMode(ActionMode mode) {
                                 actionMode = Optional.absent();
                                 cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_default_elevation));
-                                cardView.setTag(R.id.tag_actionmode,null);
+                                cardView.setTag(R.id.tag_actionmode, null);
                                 super.onDestroyActionMode(mode);
                             }
                         };
@@ -307,16 +303,16 @@ public class SGFListFragment extends Fragment implements Refreshable {
                     final GoGame game2 = SGFReader.sgf2game(AXT.at(new File(dir_file, list[12])).readToString(), null, SGFReader.BREAKON_FIRSTMOVE);
                     if (!isEmpty(game1.getMetaData().getDifficulty()) && !isEmpty(game2.getMetaData().getDifficulty())) {
                         new AlertDialog.Builder(getActivity()).setMessage("This looks like the gogameguru offline selection - sort by difficulty")
-                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        new GoProblemsRenaming(getActivity(), dir_file).execute();
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .setNegativeButton(R.string.cancel, null)
+                                                              .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                                                  @Override
+                                                                  public void onClick(DialogInterface dialog, int which) {
+                                                                      new GoProblemsRenaming(getActivity(), dir_file).execute();
+                                                                      dialog.dismiss();
+                                                                  }
+                                                              })
+                                                              .setNegativeButton(R.string.cancel, null)
 
-                                .show();
+                                                              .show();
                     }
                 } catch (IOException e) {
                     Log.w("problem in gogameguru rename offer " + e);

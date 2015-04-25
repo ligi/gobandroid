@@ -3,24 +3,22 @@ package org.ligi.gobandroid_hd.ui.application;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-
+import java.lang.reflect.Field;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.PlayServicesIntegration;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.application.navigation.NavigationDrawer;
 
-import java.lang.reflect.Field;
-
-public class GobandroidFragmentActivity extends ActionBarActivity {
+public class GobandroidFragmentActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout drawerLayout;
@@ -40,12 +38,10 @@ public class GobandroidFragmentActivity extends ActionBarActivity {
         new NavigationDrawer(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                drawerLayout,         /* DrawerLayout object */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-        ) {
+        mDrawerToggle = new ActionBarDrawerToggle(this,                  /* host Activity */
+                                                  drawerLayout,         /* DrawerLayout object */
+                                                  R.string.drawer_open,  /* "open drawer" description */
+                                                  R.string.drawer_close  /* "close drawer" description */) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
