@@ -28,17 +28,15 @@ import android.util.Log;
 
 import com.google.android.gms.appstate.AppStateManager;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.games.Games;
-import com.google.android.gms.plus.PlusClient;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener {
+public class PlayServicesHelper {
 
     /**
      * Listener for sign-in success or failure events.
@@ -82,7 +80,6 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
 
     // Client objects we manage. If a given client is not enabled, it is null.
     Games mGamesClient = null;
-    PlusClient mPlusClient = null;
     AppStateManager mAppStateClient = null;
 
     // What clients we manage (OR-able values, can be combined as flags)
@@ -265,14 +262,14 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
     /**
      * Returns the PlusClient object. In order to call this method, you must have
      * called @link{#setup} with a set of clients that includes CLIENT_PLUS.
-     */
+
     public PlusClient getPlusClient() {
         if (mPlusClient == null) {
             throw new IllegalStateException("No PlusClient. Did you request it at setup?");
         }
         return mPlusClient;
     }
-
+     */
     /**
      * Returns whether or not the user is signed in.
      */
@@ -410,10 +407,11 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
         mSignedIn = false;
         mSignInError = false;
 
+        /*
         if (mPlusClient != null && mPlusClient.isConnected()) {
             mPlusClient.clearDefaultAccount();
         }
-        /*e gme;
+        e gme;
 
         if (mGamesClient != null && mGamesClient.isConnected()) {
             showProgressDialog(false);
@@ -546,10 +544,10 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
         if (mGamesClient != null && (0 != (pendingClients & CLIENT_GAMES))) {
             debugLog("Connecting GamesClient.");
             mClientCurrentlyConnecting = CLIENT_GAMES;
-        } else if (mPlusClient != null && (0 != (pendingClients & CLIENT_PLUS))) {
+        } /*else if (mPlusClient != null && (0 != (pendingClients & CLIENT_PLUS))) {
             debugLog("Connecting PlusClient.");
             mClientCurrentlyConnecting = CLIENT_PLUS;
-        } else if (mAppStateClient != null && (0 != (pendingClients & CLIENT_APPSTATE))) {
+        } */else if (mAppStateClient != null && (0 != (pendingClients & CLIENT_APPSTATE))) {
             debugLog("Connecting AppStateClient.");
             mClientCurrentlyConnecting = CLIENT_APPSTATE;
         } else {
@@ -618,7 +616,6 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
     /**
      * Called when we successfully obtain a connection to a client.
      */
-    @Override
     public void onConnected(Bundle connectionHint) {
         /*debugLog("onConnected: connected! client=" + mClientCurrentlyConnecting);
 
@@ -658,7 +655,6 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
     /**
      * Handles a connection failure reported by a client.
      */
-    @Override
     public void onConnectionFailed(ConnectionResult result) {
         // save connection result for later reference
         mConnectionResult = result;
@@ -749,7 +745,6 @@ public class PlayServicesHelper implements GooglePlayServicesClient.ConnectionCa
     /**
      * Called when we are disconnected from a client.
      */
-    @Override
     public void onDisconnected() {
         debugLog("onDisconnected.");
         mConnectionResult = null;
