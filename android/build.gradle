@@ -105,11 +105,11 @@ dependencies {
 
     withAnalyticsCompile 'com.google.android.gms:play-services-analytics:7.3.0'
 
-    withCloudCompile  'com.google.android.gms:play-services-games:7.3.0'
-    withCloudCompile  'com.google.android.gms:play-services-plus:7.3.0'
-    withCloudCompile  'com.google.android.gms:play-services-appstate:7.3.0'
-        withCloudCompile  'com.google.android.gms:play-services-gcm:7.3.0'
-	        withCloudCompile  'com.google.android.gms:play-services-plus:7.3.0'
+    withCloudCompile 'com.google.android.gms:play-services-games:7.3.0'
+    withCloudCompile 'com.google.android.gms:play-services-plus:7.3.0'
+    withCloudCompile 'com.google.android.gms:play-services-appstate:7.3.0'
+    withCloudCompile 'com.google.android.gms:play-services-gcm:7.3.0'
+    withCloudCompile 'com.google.android.gms:play-services-plus:7.3.0'
 
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
