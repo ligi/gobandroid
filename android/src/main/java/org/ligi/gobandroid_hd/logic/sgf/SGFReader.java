@@ -25,7 +25,6 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameMetadata;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.logic.markers.CircleMarker;
-import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
@@ -48,8 +47,6 @@ public class SGFReader {
     private String act_cmd = "";
     private String last_cmd = "";
     private GoGame game = null;
-    // The appropriate current move to add markers to. Before the move has been set in game it is a virtual GoMove instance, whose markers will be added to the actual game move once it's added.
-    private GoMove curr_move = null;
     private byte size = -1;
     private int predef_count_b = 0;
     private int predef_count_w = 0;
@@ -108,15 +105,9 @@ public class SGFReader {
                 if (!consuming_param)
                     // consuming command
                     switch (act_char) {
-                        case ';':
-                            // Virtual move, so that markers/comments which come before the actual move position can be collected.
-                            curr_move = new GoMove(null);
-                            last_cmd = "";
-                            act_cmd = "";
-                            break;
-
                         case '\r':
                         case '\n':
+                        case ';':
                         case '\t':
                         case ' ':
                             if (!act_cmd.equals(""))
@@ -264,30 +255,30 @@ public class SGFReader {
                 final String[] inner = act_param.split(":");
                 final String txt = (inner.length > 1) ? inner[1] : "X";
 
-                curr_move.addMarker(new TextMarker(cell, txt));
+                game.getActMove().addMarker(new TextMarker(cell, txt));
                 break;
 
             // mark with x
             case "Mark":
             case "MA":
-                curr_move.addMarker(new TextMarker(cell, "X"));
+                game.getActMove().addMarker(new TextMarker(cell, "X"));
                 break;
 
             case "SL":
-                curr_move.addMarker(new TextMarker(cell, "+"));
+                game.getActMove().addMarker(new TextMarker(cell, "+"));
                 break;
 
             // mark with triangle
             case "TR":
-                curr_move.addMarker(new TriangleMarker(cell));
+                game.getActMove().addMarker(new TriangleMarker(cell));
                 break;
 
             case "SQ": // mark with square
-                curr_move.addMarker(new SquareMarker(cell));
+                game.getActMove().addMarker(new SquareMarker(cell));
                 break;
 
             case "CR": // mark with circle
-                curr_move.addMarker(new CircleMarker(cell));
+                game.getActMove().addMarker(new CircleMarker(cell));
                 break;
 
             case "GN": // Game Name
@@ -343,7 +334,7 @@ public class SGFReader {
 
         if (act_cmd.equals("Comment") || act_cmd.equals("C")) {
             if (game != null)
-                curr_move.setComment(act_param);
+                game.getActMove().setComment(act_param);
         }
 
         // move command
@@ -366,7 +357,6 @@ public class SGFReader {
 
             game.getActMove().setIsBlackToMove(!(act_cmd.equals("Black") || act_cmd.equals("B")));
 
-            Log.i("Adding move " + act_cmd + " " + act_param + " at " + cell);
             if (act_param.length() == 0)
                 game.pass();
             else {
@@ -374,17 +364,7 @@ public class SGFReader {
                     game.getActMove().setIsBlackToMove();
                 } */
                 final byte b = game.do_move(cell);
-                if (b == GoGame.MOVE_VALID) {
-                    // Copy any markers/comments from virtual node.
-                    if (curr_move.hasComment()) {
-                        game.getActMove().setComment(curr_move.getComment());
-                    }
-                    for (GoMarker marker : curr_move.getMarkers()) {
-                        game.getActMove().addMarker(marker);
-                    }
-                    // Update curr_move so that future markings get applied to the actual move.
-                    curr_move = game.getActMove();
-                } else {
+                if (b != GoGame.MOVE_VALID) {
                     Log.w("There was a problem in this game");
                 }
             }
