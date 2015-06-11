@@ -219,8 +219,8 @@ public class SGFReader {
                     game.apply_handicap();
                     game.copyVisualBoard();
                     if (predef_count_w == 0 && predef_count_b > 0) {
-                        game.getActMove().setIsBlackToMove(true); // probably handycap - so  make white
-                        // to  move - very  important for cloud game and handycap
+                        game.getActMove().setIsBlackToMove(true); // probably handicap - so  make white
+                        // to  move - very  important for cloud game and handicap
                     }
                 }
                 game.setMetadata(metadata);
