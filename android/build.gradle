@@ -93,10 +93,10 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:22.1.1'
-    compile 'com.android.support:appcompat-v7:22.1.1'
-    compile 'com.android.support:recyclerview-v7:22.1.1'
-    compile 'com.android.support:cardview-v7:22.1.1'
+    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:recyclerview-v7:22.2.0'
+    compile 'com.android.support:cardview-v7:22.2.0'
 
     compile 'org.ligi:AXT:0.33'
     compile 'com.google.guava:guava:18.0'
@@ -105,24 +105,24 @@ dependencies {
     compile 'org.ligi:floatlabel:0.2.0'
     compile 'net.sourceforge.jchardet:jchardet:1.0'
     compile 'fr.nicolaspomepuy:discreetapprate:2.0.4@aar'
-    compile 'com.android.support:support-annotations:22.1.1'
+    compile 'com.android.support:support-annotations:22.2.0'
 
-    withAnalyticsCompile 'com.google.android.gms:play-services-analytics:7.3.0'
+    withAnalyticsCompile 'com.google.android.gms:play-services-analytics:7.5.0'
 
-    withCloudCompile 'com.google.android.gms:play-services-games:7.3.0'
-    withCloudCompile 'com.google.android.gms:play-services-plus:7.3.0'
-    withCloudCompile 'com.google.android.gms:play-services-appstate:7.3.0'
-    withCloudCompile 'com.google.android.gms:play-services-gcm:7.3.0'
-    withCloudCompile 'com.google.android.gms:play-services-plus:7.3.0'
+    withCloudCompile 'com.google.android.gms:play-services-games:7.5.0'
+    withCloudCompile 'com.google.android.gms:play-services-plus:7.5.0'
+    withCloudCompile 'com.google.android.gms:play-services-appstate:7.5.0'
+    withCloudCompile 'com.google.android.gms:play-services-gcm:7.5.0'
+    withCloudCompile 'com.google.android.gms:play-services-plus:7.5.0'
 
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
 
     androidTestCompile 'com.squareup.assertj:assertj-android:1.0.0'
-    androidTestCompile 'com.android.support:support-annotations:22.1.1'
+    androidTestCompile 'com.android.support:support-annotations:22.2.0'
 
     testCompile 'com.squareup.assertj:assertj-android:1.0.0'
-    testCompile 'com.android.support:support-annotations:22.1.1'
+    testCompile 'com.android.support:support-annotations:22.2.0'
     testCompile 'junit:junit:4.12'
 
     androidTestCompile 'com.squareup.spoon:spoon-client:1.1.9'
