@@ -54,6 +54,7 @@
 # Needed by Guava
 # See https://groups.google.com/forum/#!topic/guava-discuss/YCZzeCiIVoI
 
+
 -dontwarn sun.misc.Unsafe
 -dontwarn com.google.common.collect.MinMaxPriorityQueue
 
@@ -70,6 +71,9 @@
 -dontwarn butterknife.internal.**
 -keep class **$$ViewInjector { *; }
 -keepnames class * { @butterknife.InjectView *;}
+
+#### for support 22
+-dontwarn android.support.**
 
 #### for guava
 -dontwarn javax.annotation.**
