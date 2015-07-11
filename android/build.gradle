@@ -24,19 +24,19 @@ android {
 
     productFlavors {
         withAnalytics {
-            flavorDimension "analytics"
+            dimension "analytics"
         }
 
         noAnalytics {
-            flavorDimension "analytics"
+            dimension "analytics"
         }
 
         withCloud {
-            flavorDimension "cloud"
+            dimension "cloud"
         }
 
         noCloud {
-            flavorDimension "cloud"
+            dimension "cloud"
         }
 
     }
