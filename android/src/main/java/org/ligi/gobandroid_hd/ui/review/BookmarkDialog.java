@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import butterknife.Bind;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
@@ -32,7 +33,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Dialog to show when user wants to set a BookMark
@@ -43,10 +43,10 @@ import butterknife.InjectView;
  */
 public class BookmarkDialog extends GobandroidDialog {
 
-    @InjectView(R.id.bookmark_name)
+    @Bind(R.id.bookmark_name)
     EditText fileNameEdit;
 
-    @InjectView(R.id.message)
+    @Bind(R.id.message)
     TextView message;
 
     /**
@@ -85,7 +85,7 @@ public class BookmarkDialog extends GobandroidDialog {
         setIconResource(R.drawable.bookmark);
         setContentView(R.layout.save_bookmark);
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         final String innerFileName = getCleanEnsuredFilename();
 
         message.setText(context.getResources().getString(R.string.bookmark_to_write_into) + " " + context.getSettings().getBookmarkPath());

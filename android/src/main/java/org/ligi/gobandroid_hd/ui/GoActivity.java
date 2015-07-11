@@ -38,6 +38,7 @@ import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import butterknife.Bind;
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
@@ -63,7 +64,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import fr.nicolaspomepuy.discreetapprate.AppRate;
 import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
 
@@ -74,13 +74,13 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     public GoSoundManager sound_man;
 
-    @InjectView(R.id.go_board)
+    @Bind(R.id.go_board)
     GoBoardViewHD go_board = null;
 
-    @InjectView(R.id.zoom_board)
+    @Bind(R.id.zoom_board)
     GoBoardViewHD zoom_board = null;
 
-    @InjectView(R.id.game_extra_container)
+    @Bind(R.id.game_extra_container)
     View gameExtrasContainer;
 
     private Toast info_toast = null;
@@ -101,7 +101,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         setContentView(R.layout.game);
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         if (!App.isTesting) {
             // if there where stacktraces collected -> give the user the option to send them

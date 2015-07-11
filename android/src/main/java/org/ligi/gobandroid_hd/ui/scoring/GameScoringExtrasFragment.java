@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import butterknife.Bind;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -13,32 +14,31 @@ import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class GameScoringExtrasFragment extends GobandroidFragment implements GoGameChangeListener {
 
-    @InjectView(R.id.territory_black)
+    @Bind(R.id.territory_black)
     TextView territory_black;
 
-    @InjectView(R.id.territory_white)
+    @Bind(R.id.territory_white)
     TextView territory_white;
 
-    @InjectView(R.id.captures_black)
+    @Bind(R.id.captures_black)
     TextView captures_black;
 
-    @InjectView(R.id.captures_white)
+    @Bind(R.id.captures_white)
     TextView captures_white;
 
-    @InjectView(R.id.final_black)
+    @Bind(R.id.final_black)
     TextView final_black;
 
-    @InjectView(R.id.final_white)
+    @Bind(R.id.final_white)
     TextView final_white;
 
-    @InjectView(R.id.komi)
+    @Bind(R.id.komi)
     TextView komi;
 
-    @InjectView(R.id.result_txt)
+    @Bind(R.id.result_txt)
     TextView result_txt;
 
     @Override
@@ -48,7 +48,7 @@ public class GameScoringExtrasFragment extends GobandroidFragment implements GoG
         App.getGame().addGoGameChangeListener(this);
 
         final View view = inflater.inflate(R.layout.game_result, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         refresh();
         return view;
     }

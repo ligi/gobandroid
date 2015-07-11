@@ -1,20 +1,19 @@
 /**
- * gobandroid 
- * by Marcus -Ligi- Bueschleb 
+ * gobandroid
+ * by Marcus -Ligi- Bueschleb
  * http://ligi.de
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as 
- * published by the Free Software Foundation; 
- *
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation;
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details. 
- *
+ * GNU General Public License for more details.
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  **/
 
 package org.ligi.gobandroid_hd.ui.alerts;
@@ -25,57 +24,54 @@ import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGameMetadata;
 import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
-import butterknife.OnTextChanged;
 
 /**
  * Class to show an Alert with the Game Info ( who plays / rank / game name .. )
  */
 public class GameInfoDialog extends GobandroidDialog {
 
-    @InjectView(R.id.game_name_et)
+    @Bind(R.id.game_name_et)
     EditText nameEdit;
 
-    @InjectView(R.id.black_name_et)
+    @Bind(R.id.black_name_et)
     EditText blackNameEdit;
 
-    @InjectView(R.id.user_is_white_btn)
+    @Bind(R.id.user_is_white_btn)
     Button user_is_white_btn;
 
-    @InjectView(R.id.user_is_black_btn)
+    @Bind(R.id.user_is_black_btn)
     Button user_is_black_btn;
 
-    @InjectView(R.id.white_name_et)
+    @Bind(R.id.white_name_et)
     EditText white_name_et;
 
-    @InjectView(R.id.white_rank_et)
+    @Bind(R.id.white_rank_et)
     EditText white_rank_et;
 
-    @InjectView(R.id.komi_et)
+    @Bind(R.id.komi_et)
     EditText game_komi_et;
 
-    @InjectView(R.id.game_result_et)
+    @Bind(R.id.game_result_et)
     EditText game_result_et;
 
-    @InjectView(R.id.game_difficulty_et)
+    @Bind(R.id.game_difficulty_et)
     EditText game_difficulty_et;
 
-    @InjectView(R.id.black_rank_et)
+    @Bind(R.id.black_rank_et)
     EditText black_rank_et;
 
-    @InjectView(R.id.game_date_et)
+    @Bind(R.id.game_date_et)
     EditText game_date_et;
 
     @OnClick(R.id.user_is_black_btn)
@@ -115,7 +111,7 @@ public class GameInfoDialog extends GobandroidDialog {
         setIconResource(R.drawable.info);
         setContentView(R.layout.game_info);
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         nameEdit.setText(game.getMetaData().getName());
         blackNameEdit.setText(game.getMetaData().getBlackName());
@@ -143,7 +139,10 @@ public class GameInfoDialog extends GobandroidDialog {
                 try {
                     game.setKomi(Float.valueOf(game_komi_et.getText().toString()));
                 } catch (NumberFormatException ne) {
-                    new AlertDialog.Builder(context).setMessage(R.string.komi_must_be_a_number).setPositiveButton(android.R.string.ok, new DialogDiscardingOnClickListener()).setTitle(R.string.problem).show();
+                    new AlertDialog.Builder(context).setMessage(R.string.komi_must_be_a_number)
+                                                    .setPositiveButton(android.R.string.ok, new DialogDiscardingOnClickListener())
+                                                    .setTitle(R.string.problem)
+                                                    .show();
                     return;
                 }
 

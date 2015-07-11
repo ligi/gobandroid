@@ -13,7 +13,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import java.util.List;
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
@@ -24,32 +27,24 @@ import org.ligi.gobandroid_hd.ui.gnugo.GnuGoHelper;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.tracedroid.logging.Log;
 
-import java.util.List;
+public class CustomActionBar extends LinearLayout implements GoGame.GoGameChangeListener {
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
-
-public class CustomActionBar
-        extends LinearLayout
-        implements GoGame.GoGameChangeListener {
-
-    @InjectView(R.id.white_captures_tv)
+    @Bind(R.id.white_captures_tv)
     TextView white_captures_tv;
 
-    @InjectView(R.id.black_captures_tv)
+    @Bind(R.id.black_captures_tv)
     TextView black_captures_tv;
 
-    @InjectView(R.id.move_tv)
+    @Bind(R.id.move_tv)
     TextView move_tv;
 
-    @InjectView(R.id.mode_tv)
+    @Bind(R.id.mode_tv)
     TextView mode_tv;
 
-    @InjectView(R.id.blackStoneImageView)
+    @Bind(R.id.blackStoneImageView)
     View black_info_container;
 
-    @InjectView(R.id.whiteStoneImageview)
+    @Bind(R.id.whiteStoneImageview)
     View white_info_container;
 
 
@@ -96,51 +91,49 @@ public class CustomActionBar
 
         final View top_view = inflater.inflate(R.layout.top_nav_and_extras, this);
 
-        ButterKnife.inject(this, top_view);
+        ButterKnife.bind(this, top_view);
         refresh();
     }
 
-    private void addItem(LinearLayout container, int image_resId,
-                         int str_resid, final Runnable listener) {
+    private void addItem(LinearLayout container, int image_resId, int str_resid, final Runnable listener) {
 
         final View v = inflater.inflate(R.layout.dropdown_item, container, false);
         ((TextView) v.findViewById(R.id.text)).setText(str_resid);
         ((ImageView) v.findViewById(R.id.image)).setImageResource(image_resId);
 
-        v.findViewById(R.id.click_container).setOnClickListener(
-                new View.OnClickListener() {
+        v.findViewById(R.id.click_container).setOnClickListener(new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View v) {
-                        listener.run();
-                    }
-                }
-        );
+                                                                    @Override
+                                                                    public void onClick(View v) {
+                                                                        listener.run();
+                                                                    }
+                                                                });
         container.addView(v);
     }
 
-    private void addModeItem(LinearLayout container, final byte mode,
-                             int string_res, int icon_res) {
+    private void addModeItem(LinearLayout container, final byte mode, int string_res, int icon_res) {
         if (mode == app.getInteractionScope().getMode()) {
             return; // already in this mode - no need to present the user with this option
         }
 
-        addItem(container, icon_res, string_res,
-                new Runnable() {
+        addItem(container, icon_res, string_res, new Runnable() {
 
                     @Override
                     public void run() {
 
                         if (mode == InteractionScope.MODE_GNUGO && !(GnuGoHelper.isGnuGoAvail(activity))) {
-                            new AlertDialog.Builder(activity).setTitle(R.string.install_gnugo).setMessage(R.string.gnugo_not_installed)
-                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            AXT.at(activity).startCommonIntent().openUrl("market://details?id=org.ligi.gobandroidhd.ai.gnugo");
-                                        }
-                                    })
-                                    .setNegativeButton(android.R.string.cancel, new DialogDiscardingOnClickListener())
-                                    .show();
+                            new AlertDialog.Builder(activity).setTitle(R.string.install_gnugo)
+                                                             .setMessage(R.string.gnugo_not_installed)
+                                                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                                 @Override
+                                                                 public void onClick(DialogInterface dialog, int which) {
+                                                                     AXT.at(activity)
+                                                                        .startCommonIntent()
+                                                                        .openUrl("market://details?id=org.ligi.gobandroidhd.ai.gnugo");
+                                                                 }
+                                                             })
+                                                             .setNegativeButton(android.R.string.cancel, new DialogDiscardingOnClickListener())
+                                                             .show();
                             return;
                         }
                         activity.finish();
@@ -150,8 +143,7 @@ public class CustomActionBar
                         activity.startActivity(i);
                     }
 
-                }
-        );
+                });
     }
 
     private void showModePopup(Context ctx) {
@@ -222,8 +214,7 @@ public class CustomActionBar
         final PackageManager packageManager = app.getPackageManager();
         final List<PackageInfo> packages = packageManager.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES);
         for (PackageInfo packageInfo : packages) {
-            if (packageInfo.packageName.equals(GooglePlayStorePackageNameOld) ||
-                    packageInfo.packageName.equals(GooglePlayStorePackageNameNew)) {
+            if (packageInfo.packageName.equals(GooglePlayStorePackageNameOld) || packageInfo.packageName.equals(GooglePlayStorePackageNameNew)) {
                 return true;
             }
         }

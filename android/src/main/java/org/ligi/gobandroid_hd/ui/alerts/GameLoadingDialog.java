@@ -20,12 +20,11 @@ import android.content.Context;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import butterknife.Bind;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Dialog to show when user wants to go to next move - handles selection of
@@ -37,17 +36,17 @@ import butterknife.InjectView;
  */
 public class GameLoadingDialog extends GobandroidDialog {
 
-    @InjectView(R.id.message)
+    @Bind(R.id.message)
     public TextView message;
 
-    @InjectView(R.id.progressBar)
+    @Bind(R.id.progressBar)
     public ProgressBar progress;
 
     public GameLoadingDialog(final Context context) {
         super(context);
 
         setContentView(R.layout.dialog_game_load);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         setTitle(R.string.loading_sgf);
         setCancelable(false);

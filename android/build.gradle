@@ -93,7 +93,7 @@ dependencies {
     compile 'org.ligi:AXT:0.33'
     compile 'com.google.guava:guava:18.0'
     compile 'org.ligi:tracedroid:1.4'
-    compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
     compile 'org.ligi:floatlabel:0.2.0'
     compile 'net.sourceforge.jchardet:jchardet:1.0'
     compile 'fr.nicolaspomepuy:discreetapprate:2.0.4@aar'

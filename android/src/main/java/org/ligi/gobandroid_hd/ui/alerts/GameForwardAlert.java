@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import butterknife.Bind;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
@@ -30,7 +31,6 @@ import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Dialog to show when user wants to go to next move - handles selection of
@@ -44,10 +44,10 @@ public class GameForwardAlert extends GobandroidDialog {
 
     final GoGame game;
 
-    @InjectView(R.id.message)
+    @Bind(R.id.message)
     TextView message;
 
-    @InjectView(R.id.buttonContainer)
+    @Bind(R.id.buttonContainer)
     ViewGroup buttonContainer;
 
     public GameForwardAlert(final Context context, final GoGame game) {
@@ -55,7 +55,7 @@ public class GameForwardAlert extends GobandroidDialog {
         this.game = game;
 
         setContentView(R.layout.dialog_game_forward);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         // show the comment when there is one - useful for SGF game problems
         if (game.getActMove().hasComment()) {

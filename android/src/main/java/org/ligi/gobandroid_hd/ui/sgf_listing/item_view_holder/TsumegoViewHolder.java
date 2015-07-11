@@ -4,7 +4,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import java.io.File;
+import java.io.IOException;
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.FileEncodeDetector;
 import org.ligi.gobandroid_hd.R;
@@ -15,30 +18,24 @@ import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 
-import java.io.File;
-import java.io.IOException;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-
 public class TsumegoViewHolder extends RecyclerView.ViewHolder implements ViewHolderInterface {
 
-    @InjectView(R.id.previewView)
+    @Bind(R.id.previewView)
     PreviewView previewView;
 
-    @InjectView(R.id.solve_status_image)
+    @Bind(R.id.solve_status_image)
     ImageView solvedStatusImage;
 
-    @InjectView(R.id.filename)
+    @Bind(R.id.filename)
     TextView title;
 
-    @InjectView(R.id.hints_tv)
+    @Bind(R.id.hints_tv)
     TextView hints_tv;
 
 
     public TsumegoViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.inject(this, itemView);
+        ButterKnife.bind(this, itemView);
     }
 
     @Override

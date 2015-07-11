@@ -6,12 +6,10 @@ import android.preference.PreferenceManager;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class GnuGoSetupDialog extends GobandroidDialog {
 
@@ -23,19 +21,19 @@ public class GnuGoSetupDialog extends GobandroidDialog {
 
     private SharedPreferences shared_prefs;
 
-    @InjectView(R.id.gnugo_plays_white_radio)
+    @Bind(R.id.gnugo_plays_white_radio)
     RadioButton gnugo_plays_white_radio;
 
-    @InjectView(R.id.gnugo_plays_black_radio)
+    @Bind(R.id.gnugo_plays_black_radio)
     RadioButton gnugo_plays_black_radio;
 
-    @InjectView(R.id.gnugo_plays_both_radio)
+    @Bind(R.id.gnugo_plays_both_radio)
     RadioButton gnugo_plays_both_radio;
 
-    @InjectView(R.id.gnugo_strength)
+    @Bind(R.id.gnugo_strength)
     TextView gnugo_strength_text;
 
-    @InjectView(R.id.gnugo_strength_seek)
+    @Bind(R.id.gnugo_strength_seek)
     SeekBar strengthSeek;
 
     public GnuGoSetupDialog(Context context) {
@@ -48,7 +46,7 @@ public class GnuGoSetupDialog extends GobandroidDialog {
 
         setContentView(R.layout.setup_gnugo);
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         if (shared_prefs.getBoolean(SP_KEY_PLAYS_BOTH, false)) {
             gnugo_plays_both_radio.setChecked(true);
@@ -75,8 +73,7 @@ public class GnuGoSetupDialog extends GobandroidDialog {
             }
 
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                                          boolean fromUser) {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
                     gnugo_strength_text.setText(getContext().getString(R.string.gnugo_strength) + String.valueOf(progress));
                 }

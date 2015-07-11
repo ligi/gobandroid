@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import butterknife.Bind;
 import org.ligi.axt.simplifications.SimpleTextWatcher;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
@@ -23,11 +24,11 @@ import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+
 
 public class EditGameExtrasFragment extends GobandroidFragment implements GoGameChangeListener {
 
-    @InjectView(R.id.comment_et)
+    @Bind(R.id.comment_et)
     EditText editText;
 
     @Override
@@ -66,7 +67,7 @@ public class EditGameExtrasFragment extends GobandroidFragment implements GoGame
 
         });
 
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         App.getGame().addGoGameChangeListener(this);
 
