@@ -51,6 +51,7 @@ android {
         targetSdkVersion 22
         applicationId "org.ligi.gobandroid_hd"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        archivesBaseName = "Gobandroid-$versionName"
     }
 
 
@@ -63,16 +64,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-
             proguardFile 'proguard-project.txt'
-
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-
-                    def file = output.outputFile
-                    output.outputFile = new File(file.parent, file.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"))
-                }
-            }
         }
     }
 
