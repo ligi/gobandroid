@@ -5,7 +5,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:1.2.3'
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
-        classpath('com.stanfy.spoon:spoon-gradle-plugin:1.0.0') {
+        classpath('com.stanfy.spoon:spoon-gradle-plugin:1.0.3') {
             exclude module: "guava"
         }
     }
@@ -117,5 +117,5 @@ dependencies {
     testCompile 'com.android.support:support-annotations:22.2.0'
     testCompile 'junit:junit:4.12'
 
-    androidTestCompile 'com.squareup.spoon:spoon-client:1.1.9'
+    androidTestCompile 'com.squareup.spoon:spoon-client:1.1.10'
 }
