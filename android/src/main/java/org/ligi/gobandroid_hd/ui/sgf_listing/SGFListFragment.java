@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import com.google.common.base.Optional;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,7 +50,9 @@ public class SGFListFragment extends Fragment implements Refreshable {
 
     private String[] menu_items;
     private String dir;
-    private Optional<ActionMode> actionMode = Optional.absent();
+
+    @Nullable
+    private ActionMode actionMode;
 
     public static SGFListFragment newInstance(File dir) {
         final SGFListFragment f = new SGFListFragment();
@@ -186,8 +187,8 @@ public class SGFListFragment extends Fragment implements Refreshable {
 
                         intent2start.setData(Uri.parse(fileName));
 
-                        if (actionMode.isPresent()) {
-                            actionMode.get().finish();
+                        if (actionMode!=null) {
+                            actionMode.finish();
                         }
 
                         startActivity(intent2start);
@@ -207,7 +208,7 @@ public class SGFListFragment extends Fragment implements Refreshable {
                         v.setTag(R.id.tag_actionmode, Boolean.TRUE);
 
                         final AppCompatActivity activity = (AppCompatActivity) getActivity();
-                        actionMode = Optional.fromNullable(activity.startSupportActionMode(getActionMode(position)));
+                        actionMode = activity.startSupportActionMode(getActionMode(position));
 
                         cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_elevated_elevation));
 
@@ -226,7 +227,7 @@ public class SGFListFragment extends Fragment implements Refreshable {
                         return new SGFListActionMode(SGFListFragment.this.getActivity(), fileName, SGFListFragment.this, menuResource) {
                             @Override
                             public void onDestroyActionMode(ActionMode mode) {
-                                actionMode = Optional.absent();
+                                actionMode = null;
                                 cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_default_elevation));
                                 cardView.setTag(R.id.tag_actionmode, null);
                                 super.onDestroyActionMode(mode);

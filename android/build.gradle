@@ -91,7 +91,6 @@ dependencies {
     compile 'com.android.support:cardview-v7:22.2.0'
 
     compile 'org.ligi:AXT:0.33'
-    compile 'com.google.guava:guava:18.0'
     compile 'org.ligi:tracedroid:1.4'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'org.ligi:floatlabel:0.2.0'

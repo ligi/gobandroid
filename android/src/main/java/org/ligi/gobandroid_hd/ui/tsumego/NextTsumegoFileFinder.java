@@ -1,7 +1,6 @@
 package org.ligi.gobandroid_hd.ui.tsumego;
 
-import com.google.common.base.Optional;
-
+import android.support.annotation.Nullable;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.helper.SGFFileNameFilter;
 
@@ -20,27 +19,28 @@ public class NextTsumegoFileFinder {
      * @param fileName
      * @return the filename found
      */
-    public static Optional<String> calcNextTsumego(String fileName) {
+    @Nullable
+    public static String calcNextTsumego(String fileName) {
 
         final File file = new File(fileName);
 
         if (!file.exists()) {
             App.getTracker().trackException("file given to calcNextTsumego is null", false);
-            return Optional.absent();
+            return null;
         }
 
         final File dir = file.getParentFile();
 
         if (dir == null || !dir.isDirectory()) {
             App.getTracker().trackException("file given to calcNextTsumego has no valid parent", false);
-            return Optional.absent();
+            return null;
         }
 
         final String[] fileNames = dir.list(new SGFFileNameFilter());
 
         if (fileNames == null || fileNames.length == 0) {
             App.getTracker().trackException("file given to calcNextTsumego has empty parent", false);
-            return Optional.absent();
+            return null;
         }
 
         final List<String> fileList = Arrays.asList(fileNames);
@@ -50,9 +50,9 @@ public class NextTsumegoFileFinder {
 
         final int inputFilePos = fileList.lastIndexOf(file.getName());
         if (inputFilePos + 1 < fileList.size()) {
-            return Optional.of(dir.toString() + "/" + fileList.get(inputFilePos + 1));
+            return dir.toString() + "/" + fileList.get(inputFilePos + 1);
         }
-        return Optional.absent();
+        return null;
     }
 
 }

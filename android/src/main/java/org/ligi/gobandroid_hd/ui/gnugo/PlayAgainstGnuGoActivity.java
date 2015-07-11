@@ -15,8 +15,6 @@ import android.view.Menu;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.google.common.base.Stopwatch;
-
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
@@ -26,10 +24,9 @@ import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.recording.RecordingGameExtrasFragment;
+import org.ligi.gobandroid_hd.util.SimpleStopwatch;
 import org.ligi.gobandroidhd.ai.gnugo.IGnuGoService;
 import org.ligi.tracedroid.logging.Log;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Activity to play vs GnoGo
@@ -49,12 +46,12 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
 
     public final static String INTENT_ACTION = "org.ligi.gobandroidhd.ai.gnugo.GnuGoService";
 
-    private Stopwatch stopwatch = Stopwatch.createUnstarted();
+    private SimpleStopwatch simpleStopwatch = new SimpleStopwatch();
     private long avgTimeInMillis = 0;
 
     public void stopTimeMeasure() {
-        final long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-        stopwatch.reset();
+        final long elapsed = simpleStopwatch.elapsed();
+        simpleStopwatch.reset();
         avgTimeInMillis = (avgTimeInMillis + elapsed) / 2;
         Log.i("TimeSpent average:" + avgTimeInMillis + " last:" + elapsed);
     }
@@ -203,7 +200,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
 
     @Override
     public byte doMoveWithUIFeedback(Cell cell) {
-        if (stopwatch.isRunning()) {
+        if (simpleStopwatch.isRunning()) {
             Toast.makeText(this, R.string.ai_is_thinking, Toast.LENGTH_LONG).show();
             return 0;
         }
@@ -283,7 +280,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
     }
 
     private void doMove(final String color) {
-        stopwatch.start();
+        simpleStopwatch.start();
         try {
             final String answer = service.processGTP("genmove " + color);
 

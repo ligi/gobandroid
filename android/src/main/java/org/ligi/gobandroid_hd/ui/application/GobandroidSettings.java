@@ -33,7 +33,7 @@ public class GobandroidSettings {
     }
 
     public String getSGFBasePath() {
-        if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             return Environment.getExternalStorageDirectory() + "/gobandroid/sgf/";
         }
 

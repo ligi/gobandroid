@@ -1,30 +1,27 @@
 /**
- * gobandroid 
- * by Marcus -Ligi- Bueschleb 
+ * gobandroid
+ * by Marcus -Ligi- Bueschleb
  * http://ligi.de
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as 
- * published by the Free Software Foundation; 
- *
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation;
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details. 
- *
+ * GNU General Public License for more details.
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  **/
 
 package org.ligi.gobandroid_hd.logic;
 
-import com.google.common.base.Optional;
-
-import org.ligi.gobandroid_hd.logic.markers.GoMarker;
-
+import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 
 /**
  * Class to represent a Go Move
@@ -148,7 +145,14 @@ public class GoMove {
     }
 
     public String toString() {
-        return "" + cell.x + " " + cell.y;
+        String s = "{ cell=";
+        if (cell != null) {
+            s += cell.toString();
+        } else {
+            s += "null";
+        }
+        s += "; comment=" + comment;
+        return s + "}";
     }
 
     public boolean hasComment() {
@@ -186,19 +190,20 @@ public class GoMove {
         markers.add(marker);
     }
 
-    public Optional<GoMarker> getGoMarker() {
+    @Nullable
+    public GoMarker getGoMarker() {
         if (parent != null) {
             for (GoMarker marker : parent.getMarkers()) {
                 if (marker.equals(cell)) {
-                    return Optional.of(marker);
+                    return marker;
                 }
             }
         }
-        return Optional.absent();
+        return null;
     }
 
     public boolean isMarked() {
-        return getGoMarker().isPresent();
+        return getGoMarker() == null;
     }
 
     public void destroy() {
