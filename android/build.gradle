@@ -106,8 +106,9 @@ dependencies {
     withCloudCompile 'com.google.android.gms:play-services-gcm:7.5.0'
     withCloudCompile 'com.google.android.gms:play-services-plus:7.5.0'
 
-    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
+    androidTestCompile 'com.android.support.test:runner:0.3'
+    androidTestCompile 'com.android.support.test:rules:0.3'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2'
 
     androidTestCompile 'com.squareup.assertj:assertj-android:1.0.0'
     androidTestCompile 'com.android.support:support-annotations:22.2.0'
