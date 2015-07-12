@@ -58,6 +58,7 @@ public class TheGameInfoDialog extends BaseIntegration<GameReviewActivity> {
         onView(withId(R.id.black_name_et)).perform(typeText(CUSTOM_BLACK_NAME));
         onView(withId(R.id.user_is_black_btn)).check(matches(not(isDisplayed())));
 
+        onView(withId(R.id.white_rank_et)).perform(scrollTo());
         onView(withId(R.id.white_rank_et)).perform(typeText(CUSTOM_WHITE_RANK));
         onView(withId(R.id.white_name_et)).perform(typeText(CUSTOM_WHITE_NAME));
 
