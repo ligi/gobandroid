@@ -23,7 +23,7 @@ public class RegisterDevice implements Runnable {
         this.app = app;
     }
 
-    public final static void registerDevice(App app) {
+    public static void registerDevice(App app) {
         new Thread(new RegisterDevice(app)).start();
     }
 
