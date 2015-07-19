@@ -85,18 +85,18 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:22.2.0'
-    compile 'com.android.support:appcompat-v7:22.2.0'
-    compile 'com.android.support:recyclerview-v7:22.2.0'
-    compile 'com.android.support:cardview-v7:22.2.0'
-    compile 'com.android.support:design:22.2.0'
+    compile 'com.android.support:support-v4:22.2.1'
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.android.support:cardview-v7:22.2.1'
+    compile 'com.android.support:design:22.2.1'
 
     compile 'org.ligi:AXT:0.33'
     compile 'org.ligi:tracedroid:1.4'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'net.sourceforge.jchardet:jchardet:1.0'
     compile 'fr.nicolaspomepuy:discreetapprate:2.0.4@aar'
-    compile 'com.android.support:support-annotations:22.2.0'
+    compile 'com.android.support:support-annotations:22.2.1'
 
     withAnalyticsCompile 'com.google.android.gms:play-services-analytics:7.5.0'
 
@@ -111,10 +111,10 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2'
 
     androidTestCompile 'com.squareup.assertj:assertj-android:1.0.0'
-    androidTestCompile 'com.android.support:support-annotations:22.2.0'
+    androidTestCompile 'com.android.support:support-annotations:22.2.1'
 
     testCompile 'com.squareup.assertj:assertj-android:1.0.0'
-    testCompile 'com.android.support:support-annotations:22.2.0'
+    testCompile 'com.android.support:support-annotations:22.2.1'
     testCompile 'junit:junit:4.12'
 
     androidTestCompile 'com.squareup.spoon:spoon-client:1.1.10'
