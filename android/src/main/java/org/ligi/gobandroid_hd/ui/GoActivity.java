@@ -1,16 +1,16 @@
 /**
- * gobandroid 
- * by Marcus -Ligi- Bueschleb 
+ * gobandroid
+ * by Marcus -Ligi- Bueschleb
  * http://ligi.de
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as 
- * published by the Free Software Foundation; 
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details. 
+ * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
@@ -23,7 +23,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
@@ -37,8 +36,12 @@ import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.Toast;
-
 import butterknife.Bind;
+import butterknife.ButterKnife;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
@@ -55,17 +58,10 @@ import org.ligi.gobandroid_hd.ui.recording.SaveSGFDialog;
 import org.ligi.gobandroid_hd.ui.review.BookmarkDialog;
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
 import org.ligi.gobandroid_hd.ui.share.ShareAsAttachmentDialog;
+import org.ligi.snackengage.SnackEngage;
+import org.ligi.snackengage.snacks.DefaultRateSnack;
 import org.ligi.tracedroid.logging.Log;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
-import butterknife.ButterKnife;
-import fr.nicolaspomepuy.discreetapprate.AppRate;
-import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
 
 /**
  * Activity for a Go Game
@@ -105,12 +101,8 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         if (!App.isTesting) {
             // if there where stacktraces collected -> give the user the option to send them
-            if (!TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this)
-                    && Build.VERSION.SDK_INT < 21) {
-                AppRate.with(this)
-                        .retryPolicy(RetryPolicy.EXPONENTIAL)
-                        .initialLaunchCount(5)
-                        .checkAndShow();
+            if (!TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this)) {
+                SnackEngage.from(go_board).withSnack(new DefaultRateSnack()).build().engageWhenAppropriate();
             }
         }
 

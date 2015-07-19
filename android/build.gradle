@@ -93,9 +93,10 @@ dependencies {
 
     compile 'org.ligi:AXT:0.33'
     compile 'org.ligi:tracedroid:1.4'
+    compile 'org.ligi:snackengage:0.2'
+
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'net.sourceforge.jchardet:jchardet:1.0'
-    compile 'fr.nicolaspomepuy:discreetapprate:2.0.4@aar'
     compile 'com.android.support:support-annotations:22.2.1'
 
     withAnalyticsCompile 'com.google.android.gms:play-services-analytics:7.5.0'
