@@ -4,6 +4,8 @@ public class Cell {
     public final int x;
     public final int y;
 
+    private final int hash;
+
     public Cell(Cell cell) {
         this(cell.x, cell.y);
     }
@@ -11,6 +13,7 @@ public class Cell {
     public Cell(int x, int y) {
         this.x = x;
         this.y = y;
+        hash = y << 8 | x;
     }
 
     @Override
@@ -36,6 +39,7 @@ public class Cell {
 
     @Override
     public int hashCode() {
-        return x << 8 | y;
+        return hash;
     }
+
 }
