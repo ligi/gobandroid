@@ -91,7 +91,7 @@ public class SGFReader {
     }
 
     public interface ISGFLoadProgressCallback {
-        public void progress(int act, int max, int progress_val);
+        void progress(int act, int max, int progress_val);
     }
 
     private GoGame getGame() {
@@ -216,6 +216,8 @@ public class SGFReader {
                 }
                 game.setMetadata(metadata);
             }
+
+            //if (game.getFirstMove())
             return game;
 
         } catch (Exception e) { // some weird sgf - we want to catch to not FC
