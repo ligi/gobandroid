@@ -22,18 +22,18 @@ public class BoardCell extends Cell {
         }
 
         if (y > 0) {
-            up = board.getCell(x , y-1);
+            up = board.getCell(x, y - 1);
             neighbours.add(up);
         }
 
         if (y < board.getSize() - 1) {
-            down = board.getCell(x,y+1);
+            down = board.getCell(x, y + 1);
             neighbours.add(down);
         }
 
 
         if (x < board.getSize() - 1) {
-            right = board.getCell(x+1,y);
+            right = board.getCell(x + 1, y);
             neighbours.add(right);
         }
     }
