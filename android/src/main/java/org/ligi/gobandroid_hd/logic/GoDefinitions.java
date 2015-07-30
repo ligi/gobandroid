@@ -19,6 +19,10 @@
 
 package org.ligi.gobandroid_hd.logic;
 
+import android.support.annotation.IntDef;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
  * some definitions for the game of Go
  *
@@ -30,6 +34,11 @@ public class GoDefinitions {
 
     public final static byte PLAYER_BLACK = 1;
     public final static byte PLAYER_WHITE = 2;
+
+    @IntDef({STONE_NONE, STONE_BLACK, STONE_WHITE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface CellStatus {}
+
 
     public final static byte STONE_NONE = 0;
     public final static byte STONE_BLACK = 1;

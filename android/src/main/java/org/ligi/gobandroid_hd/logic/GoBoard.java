@@ -21,6 +21,7 @@ package org.ligi.gobandroid_hd.logic;
 import android.util.SparseArray;
 import java.util.ArrayList;
 import java.util.List;
+import org.ligi.gobandroid_hd.logic.GoDefinitions.CellStatus;
 
 /**
  * Class to represent a Go Board
@@ -33,7 +34,10 @@ import java.util.List;
 public class GoBoard {
 
     private final int size;
+
+    @CellStatus
     public final byte[][] board;
+
     private SparseArray<BoardCell> cells = new SparseArray<>();
     private List<BoardCell> allCells = new ArrayList<>();
 
@@ -162,7 +166,7 @@ public class GoBoard {
         return board[one.x][one.y] == board[other.x][other.y];
     }
 
-    public void setCell(Cell cell, byte newStatus) {
+    public void setCell(Cell cell, @CellStatus byte newStatus) {
         board[cell.x][cell.y] = newStatus;
     }
 
