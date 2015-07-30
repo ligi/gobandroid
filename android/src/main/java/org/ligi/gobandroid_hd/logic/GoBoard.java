@@ -1,20 +1,19 @@
 /**
- * gobandroid 
- * by Marcus -Ligi- Bueschleb 
+ * gobandroid
+ * by Marcus -Ligi- Bueschleb
  * http://ligi.de
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as 
- * published by the Free Software Foundation; 
- *
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation;
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details. 
- *
+ * GNU General Public License for more details.
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  **/
 
 package org.ligi.gobandroid_hd.logic;
@@ -41,20 +40,23 @@ public class GoBoard {
     public GoBoard(int size) {
         this.size = size;
         board = new byte[size][size];
-        for (int x=0 ; x<size;x++)
-            for (int y=0 ; y<size;y++) {
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
                 final int key = y * size + x;
                 final BoardCell boardCell = new BoardCell(x, y, this);
                 allCells.add(boardCell);
-                cells.put(key,boardCell);
+                cells.put(key, boardCell);
             }
 
-        for (BoardCell allCell : allCells)
+        }
+
+        for (BoardCell allCell : allCells) {
             allCell.assignNeighbours();
+        }
     }
 
     public BoardCell getCell(Cell cell) {
-        return getCell(cell.x,cell.y);
+        return getCell(cell.x, cell.y);
     }
 
     public BoardCell getCell(final int x, final int y) {
@@ -63,9 +65,8 @@ public class GoBoard {
     }
 
     public boolean isCellOnBoard(Cell cell) {
-        return getCell(cell)!=null;
+        return getCell(cell) != null;
     }
-
 
 
     public GoBoard(int size, byte[][] predefined_board) {
@@ -96,17 +97,14 @@ public class GoBoard {
     public boolean equals(GoBoard other) {
 
         // cannot be the same if board is null
-        if (other == null)
-            return false;
+        if (other == null) return false;
 
         // if the size is not matching the boards can't be equal
-        if (size != other.size)
-            return false;
+        if (size != other.size) return false;
 
         // check if all stones are placed equally
         for (Cell cell : getAllCells())
-            if (board[cell.x][cell.y] != other.board[cell.x][cell.y])
-                return false;
+            if (board[cell.x][cell.y] != other.board[cell.x][cell.y]) return false;
 
         return true;
     }
@@ -118,16 +116,11 @@ public class GoBoard {
         final StringBuilder b = new StringBuilder(size * size + size);
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
-                if (board[x][y] == GoDefinitions.STONE_NONE)
-                    b.append('.');
-                else if (board[x][y] == GoDefinitions.STONE_BLACK)
-                    b.append('B');
-                else if (board[x][y] == GoDefinitions.STONE_WHITE)
-                    b.append('W');
-                else if (board[x][y] == -GoDefinitions.STONE_BLACK)
-                    b.append('b');
-                else if (board[x][y] == -GoDefinitions.STONE_WHITE)
-                    b.append('w');
+                if (board[x][y] == GoDefinitions.STONE_NONE) b.append('.');
+                else if (board[x][y] == GoDefinitions.STONE_BLACK) b.append('B');
+                else if (board[x][y] == GoDefinitions.STONE_WHITE) b.append('W');
+                else if (board[x][y] == -GoDefinitions.STONE_BLACK) b.append('b');
+                else if (board[x][y] == -GoDefinitions.STONE_WHITE) b.append('w');
             }
             b.append('\n');
         }
