@@ -16,7 +16,12 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowContentOverlay">@null</item>
-
+        <item name="actionModeStyle">@style/LStyled.ActionMode</item>
     </style>
+
+    <style name="LStyled.ActionMode" parent="@style/Widget.AppCompat.ActionMode">
+        <item name="background">@null</item>
+    </style>
+
 
 </resources>
