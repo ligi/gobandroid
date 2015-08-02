@@ -74,4 +74,11 @@ public class TheSGFReader {
         assertThat(createdMarker.y).isEqualTo(2);
         assertThat(((TextMarker) createdMarker).getText()).isEqualTo("L");
     }
+
+    @Test
+    public void testThatKomiWorks() throws Exception {
+        GoGame game = SGFReader.sgf2game(readAsset("test_sgfs/komi.sgf"), null);
+
+        assertThat(game.getKomi()).isEqualTo(7f);
+    }
 }

@@ -19,6 +19,8 @@
 
 package org.ligi.gobandroid_hd.logic.sgf;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -29,9 +31,6 @@ import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
 import org.ligi.tracedroid.logging.Log;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * class for load games in SGF File-Format
@@ -317,6 +316,10 @@ public class SGFReader {
 
             case "SO": // Source
                 metadata.setResult(act_param);
+                break;
+
+            case "KM":
+                game.setKomi(Float.parseFloat(act_param));
                 break;
         }
 
