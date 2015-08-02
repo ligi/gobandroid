@@ -8,5 +8,5 @@ package org.ligi.gobandroid_hd.ui;
  *         This software is licenced with GPLv3
  */
 public interface Refreshable {
-    public void refresh();
+    void refresh();
 }
