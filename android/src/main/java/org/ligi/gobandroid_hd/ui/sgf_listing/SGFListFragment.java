@@ -53,6 +53,7 @@ public class SGFListFragment extends Fragment implements Refreshable {
 
     @Nullable
     private ActionMode actionMode;
+    private RecyclerView.Adapter adapter;
 
     public static SGFListFragment newInstance(File dir) {
         final SGFListFragment f = new SGFListFragment();
@@ -95,156 +96,8 @@ public class SGFListFragment extends Fragment implements Refreshable {
         final int rows = getResources().getInteger(R.integer.sgf_list_rows);
 
         recylerView.setLayoutManager(new StaggeredGridLayoutManager(rows, OrientationHelper.VERTICAL));
-        recylerView.setAdapter(new RecyclerView.Adapter() {
-
-            private final static int TYPE_PATH = 0;
-            private final static int TYPE_TSUMEGO = 1;
-            private final static int TYPE_GOLINK = 2;
-            private final static int TYPE_REVIEW = 3;
-
-            @Override
-            public int getItemViewType(int position) {
-
-                if (getFile(position).isDirectory()) {
-                    return TYPE_PATH;
-                }
-
-                if (GoLink.isGoLink(getFile(position))) {
-                    return TYPE_GOLINK;
-                }
-
-                if (App.getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
-                    return TYPE_TSUMEGO;
-                }
-
-                return TYPE_REVIEW;
-            }
-
-            private File getFile(int position) {
-                final String fileName = dir + "/" + menu_items[position];
-                return new File(fileName);
-            }
-
-            @Override
-            public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                final LayoutInflater inflator = LayoutInflater.from(parent.getContext());
-
-                switch (viewType) {
-                    case TYPE_PATH:
-                        return new PathViewHolder(inflator.inflate(R.layout.sgf_dir_list_item, parent, false));
-                    case TYPE_TSUMEGO:
-                        return new TsumegoViewHolder(inflator.inflate(R.layout.sgf_tsumego_list_item, parent, false));
-
-                    case TYPE_GOLINK:
-                    case TYPE_REVIEW:
-                        return new ReviewViewHolder(inflator.inflate(R.layout.sgf_review_game_details_list_item, parent, false));
-
-                    default:
-                        throw new IllegalStateException("unknown view-type " + viewType);
-                }
-            }
-
-            @Override
-            public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-                ((ViewHolderInterface) holder).apply(getFile(position));
-
-
-                final CardView cardView = (CardView) holder.itemView;
-
-                cardView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        if (v.getTag(R.id.tag_actionmode) != null) {
-                            return false;
-                        }
-                        switch (event.getAction()) {
-                            case MotionEvent.ACTION_CANCEL:
-                            case MotionEvent.ACTION_UP:
-                                cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_default_elevation));
-                                break;
-
-                            case MotionEvent.ACTION_DOWN:
-                                cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_unelevated_elevation));
-                                break;
-                        }
-                        return false;
-                    }
-                });
-
-
-                cardView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        final Intent intent2start = new Intent(getActivity(), SGFLoadActivity.class);
-                        final String fileName = dir + "/" + menu_items[position];
-
-                        // check if it is directory behind golink or general
-                        if (GoLink.isGoLink(fileName)) {
-                            intent2start.setClass(getActivity(), GoLinkLoadActivity.class);
-                        } else if (!fileName.endsWith(".sgf")) {
-                            intent2start.setClass(getActivity(), SGFFileSystemListActivity.class);
-                        }
-
-                        intent2start.setData(Uri.parse(fileName));
-
-                        if (actionMode!=null) {
-                            actionMode.finish();
-                        }
-
-                        startActivity(intent2start);
-
-                    }
-                });
-
-                cardView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-
-                        if (!(getActivity() instanceof AppCompatActivity)) {
-                            Log.w("Activity not instanceof AppCompatActivity - this is not really expected");
-                            return false;
-                        }
-
-                        v.setTag(R.id.tag_actionmode, Boolean.TRUE);
-
-                        final AppCompatActivity activity = (AppCompatActivity) getActivity();
-                        actionMode = activity.startSupportActionMode(getActionMode(position));
-
-                        cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_elevated_elevation));
-
-                        return true;
-                    }
-
-                    private SGFListActionMode getActionMode(final int position) {
-                        String fileName = dir + "/" + menu_items[position];
-                        File file = new File(fileName);
-                        int menuResource = R.menu.list_file_sgf_action_mode;
-
-                        if (file.isDirectory()) {
-                            menuResource = R.menu.list_dir_sgf_action_mode;
-                        }
-
-                        return new SGFListActionMode(SGFListFragment.this.getActivity(), fileName, SGFListFragment.this, menuResource) {
-                            @Override
-                            public void onDestroyActionMode(ActionMode mode) {
-                                actionMode = null;
-                                cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_default_elevation));
-                                cardView.setTag(R.id.tag_actionmode, null);
-                                super.onDestroyActionMode(mode);
-                            }
-                        };
-                    }
-                });
-            }
-
-            @Override
-            public int getItemCount() {
-                if (menu_items == null) {
-                    return 0;
-                }
-                return menu_items.length;
-            }
-        });
+        adapter = new SGFListAdapter();
+        recylerView.setAdapter(adapter);
         return inflate;
     }
 
@@ -263,7 +116,6 @@ public class SGFListFragment extends Fragment implements Refreshable {
 
     @Override
     public void refresh() {
-        Log.i("refreshing sgf");
         final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity()).setTitle(R.string.problem_listing_sgf);
 
         alert.setPositiveButton(R.string.ok, new ActivityFinishingOnClickListener(getActivity()));
@@ -338,6 +190,9 @@ public class SGFListFragment extends Fragment implements Refreshable {
             Arrays.sort(menu_items);
         }
 
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 
     public void delete_sgfmeta() {
@@ -376,4 +231,154 @@ public class SGFListFragment extends Fragment implements Refreshable {
         alertBuilder.create().show();
     }
 
+    private class SGFListAdapter extends RecyclerView.Adapter {
+
+        private final static int TYPE_PATH = 0;
+        private final static int TYPE_TSUMEGO = 1;
+        private final static int TYPE_GOLINK = 2;
+        private final static int TYPE_REVIEW = 3;
+
+        @Override
+        public int getItemViewType(int position) {
+
+            if (getFile(position).isDirectory()) {
+                return TYPE_PATH;
+            }
+
+            if (GoLink.isGoLink(getFile(position))) {
+                return TYPE_GOLINK;
+            }
+
+            if (App.getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
+                return TYPE_TSUMEGO;
+            }
+
+            return TYPE_REVIEW;
+        }
+
+        private File getFile(int position) {
+            final String fileName = dir + "/" + menu_items[position];
+            return new File(fileName);
+        }
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            final LayoutInflater inflator = LayoutInflater.from(parent.getContext());
+
+            switch (viewType) {
+                case TYPE_PATH:
+                    return new PathViewHolder(inflator.inflate(R.layout.sgf_dir_list_item, parent, false));
+                case TYPE_TSUMEGO:
+                    return new TsumegoViewHolder(inflator.inflate(R.layout.sgf_tsumego_list_item, parent, false));
+
+                case TYPE_GOLINK:
+                case TYPE_REVIEW:
+                    return new ReviewViewHolder(inflator.inflate(R.layout.sgf_review_game_details_list_item, parent, false));
+
+                default:
+                    throw new IllegalStateException("unknown view-type " + viewType);
+            }
+        }
+
+        @Override
+        public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+            ((ViewHolderInterface) holder).apply(getFile(position));
+
+
+            final CardView cardView = (CardView) holder.itemView;
+
+            cardView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (v.getTag(R.id.tag_actionmode) != null) {
+                        return false;
+                    }
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_CANCEL:
+                        case MotionEvent.ACTION_UP:
+                            cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_default_elevation));
+                            break;
+
+                        case MotionEvent.ACTION_DOWN:
+                            cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_unelevated_elevation));
+                            break;
+                    }
+                    return false;
+                }
+            });
+
+
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Intent intent2start = new Intent(getActivity(), SGFLoadActivity.class);
+                    final String fileName = dir + "/" + menu_items[position];
+
+                    // check if it is directory behind golink or general
+                    if (GoLink.isGoLink(fileName)) {
+                        intent2start.setClass(getActivity(), GoLinkLoadActivity.class);
+                    } else if (!fileName.endsWith(".sgf")) {
+                        intent2start.setClass(getActivity(), SGFFileSystemListActivity.class);
+                    }
+
+                    intent2start.setData(Uri.parse(fileName));
+
+                    if (actionMode != null) {
+                        actionMode.finish();
+                    }
+
+                    startActivity(intent2start);
+
+                }
+            });
+
+            cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    if (!(getActivity() instanceof AppCompatActivity)) {
+                        Log.w("Activity not instanceof AppCompatActivity - this is not really expected");
+                        return false;
+                    }
+
+                    v.setTag(R.id.tag_actionmode, Boolean.TRUE);
+
+                    final AppCompatActivity activity = (AppCompatActivity) getActivity();
+                    actionMode = activity.startSupportActionMode(getActionMode(position));
+
+                    cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_elevated_elevation));
+
+                    return true;
+                }
+
+                private SGFListActionMode getActionMode(final int position) {
+                    String fileName = dir + "/" + menu_items[position];
+                    File file = new File(fileName);
+                    int menuResource = R.menu.list_file_sgf_action_mode;
+
+                    if (file.isDirectory()) {
+                        menuResource = R.menu.list_dir_sgf_action_mode;
+                    }
+
+                    return new SGFListActionMode(SGFListFragment.this.getActivity(), fileName, SGFListFragment.this, menuResource) {
+                        @Override
+                        public void onDestroyActionMode(ActionMode mode) {
+                            actionMode = null;
+                            cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_default_elevation));
+                            cardView.setTag(R.id.tag_actionmode, null);
+                            super.onDestroyActionMode(mode);
+                        }
+                    };
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            if (menu_items == null) {
+                return 0;
+            }
+            return menu_items.length;
+        }
+    }
 }
