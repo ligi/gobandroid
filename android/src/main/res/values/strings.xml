@@ -48,7 +48,7 @@
     <string name="invalid_move_no_liberties">no liberties!</string>
     <string name="hint_stone_move">You tapped on the current stone. This initiates moving a stone
         which is indicated by
-        a half transparent Stone.
+        a semi-transparent Stone.
     </string>
     <string name="mark_last_stone">mark last stone</string>
     <string name="mark_last_stone_summary">little circle showing last stone</string>
