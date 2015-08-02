@@ -40,7 +40,7 @@
     <string name="territory">地盘</string>
     <string name="captures">死子</string>
     <string name="komi">贴目</string>
-    <string name="filal_points">终局的目数</string>
+    <string name="final_points">终局的目数</string>
     <string name="save_sgf">储存 SGF</string>
     <string name="invalid_move_ko">劫！</string>
     <string name="invalid_move_no_liberties">落子没气，不入子！</string>

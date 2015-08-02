@@ -42,7 +42,7 @@
     <string name="territory">Territory</string>
     <string name="captures">Captures</string>
     <string name="komi">Komi</string>
-    <string name="filal_points">Final Points</string>
+    <string name="final_points">Final Points</string>
     <string name="save_sgf">save SGF</string>
     <string name="invalid_move_ko">KO!</string>
     <string name="invalid_move_no_liberties">no liberties!</string>

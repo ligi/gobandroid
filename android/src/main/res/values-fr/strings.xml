@@ -42,7 +42,7 @@
     <string name="territory">Territoire</string>
     <string name="captures">Prisonniers</string>
     <string name="komi">Komi</string>
-    <string name="filal_points">Total</string>
+    <string name="final_points">Total</string>
     <string name="save_sgf">Sauvegarde du SGF</string>
     <string name="invalid_move_ko">KO !</string>
     <string name="invalid_move_no_liberties">Coup suicide</string>

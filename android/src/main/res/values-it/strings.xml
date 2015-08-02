@@ -43,7 +43,7 @@
     <string name="territory">Territorio</string>
     <string name="captures">Catture</string>
     <string name="komi">Komi</string>
-    <string name="filal_points">Punteggio finale</string>
+    <string name="final_points">Punteggio finale</string>
     <string name="save_sgf">salva SGF</string>
     <string name="invalid_move_ko">KO!</string>
     <string name="invalid_move_no_liberties">nessuna libertà!</string>

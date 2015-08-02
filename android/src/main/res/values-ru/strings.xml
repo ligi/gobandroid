@@ -41,7 +41,7 @@
     <string name="territory">Территория</string>
     <string name="captures">Пленные</string>
     <string name="komi">Коми</string>
-    <string name="filal_points">Итоговый счет</string>
+    <string name="final_points">Итоговый счет</string>
     <string name="save_sgf">сохранить SGF</string>
     <string name="invalid_move_ko">КО!</string>
     <string name="invalid_move_no_liberties">нет пунктов дыхания!</string>

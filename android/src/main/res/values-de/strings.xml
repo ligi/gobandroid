@@ -42,7 +42,7 @@
     <string name="territory">Gebiet</string>
     <string name="captures">Gefangene</string>
     <string name="komi">Komi</string>
-    <string name="filal_points">Punkte</string>
+    <string name="final_points">Punkte</string>
     <string name="save_sgf">SGF speichern</string>
     <string name="invalid_move_ko">KO!</string>
     <string name="invalid_move_no_liberties">Keine Freiheiten!</string>

@@ -40,7 +40,7 @@
     <string name="territory">地</string>
     <string name="captures">アゲハマ</string>
     <string name="komi">コミ</string>
-    <string name="filal_points">目数</string>
+    <string name="final_points">目数</string>
     <string name="save_sgf">SGF保存</string>
     <string name="invalid_move_ko">コウ!</string>
     <string name="invalid_move_no_liberties">自殺手!</string>

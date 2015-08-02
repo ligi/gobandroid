@@ -42,7 +42,7 @@
     <string name="territory">Terytorium</string>
     <string name="captures">Niewole</string>
     <string name="komi">Komi</string>
-    <string name="filal_points">Punktacja finałowa</string>
+    <string name="final_points">Punktacja finałowa</string>
     <string name="save_sgf">zapisz SGF</string>
     <string name="invalid_move_ko">KO!</string>
     <string name="invalid_move_no_liberties">bez oddechu!</string>

@@ -41,7 +41,7 @@
     <string name="territory">Territorium</string>
     <string name="captures">Fångar</string>
     <string name="komi">Komi</string>
-    <string name="filal_points">Resultat</string>
+    <string name="final_points">Resultat</string>
     <string name="save_sgf">spara SGF</string>
     <string name="invalid_move_ko">KO!</string>
     <string name="invalid_move_no_liberties">inga friheter!</string>

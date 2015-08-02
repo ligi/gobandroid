@@ -42,7 +42,7 @@
     <string name="territory">Territori</string>
     <string name="captures">Captures</string>
     <string name="komi">Komi</string>
-    <string name="filal_points">Punts finals</string>
+    <string name="final_points">Punts finals</string>
     <string name="save_sgf">desar SGF</string>
     <string name="invalid_move_ko">KO!</string>
     <string name="invalid_move_no_liberties">no queden llibertats!</string>
