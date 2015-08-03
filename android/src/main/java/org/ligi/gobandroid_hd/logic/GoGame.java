@@ -19,9 +19,6 @@
 
 package org.ligi.gobandroid_hd.logic;
 
-import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer;
-import org.ligi.tracedroid.logging.Log;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +27,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-
+import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer;
+import org.ligi.tracedroid.logging.Log;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_BLACK;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_WHITE;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.STONE_BLACK;
@@ -244,7 +242,7 @@ public class GoGame {
      * MOVE_INVALID_CELL_NO_LIBERTIES MOVE_INVALID_IS_KO
      */
     public byte do_move(Cell cell) {
-        Log.i("do_move x:" + cell);
+        Log.i("do_move " + cell);
 
         // check hard preconditions
         if (!calc_board.isCellOnBoard(cell)) {
