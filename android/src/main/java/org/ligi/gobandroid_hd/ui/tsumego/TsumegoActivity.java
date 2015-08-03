@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
@@ -18,9 +19,6 @@ import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.tracedroid.logging.Log;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TsumegoActivity extends GoActivity implements GoGameChangeListener {
 
@@ -119,6 +117,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
         this.getMenuInflater().inflate(R.menu.ingame_tsumego, menu);
         menu.findItem(R.id.menu_game_hint).setVisible(isFinishingMoveKnown() && isOnPath());
+        menu.findItem(R.id.menu_game_undo).setVisible(!getGame().getActMove().isFirstMove());
         return super.onCreateOptionsMenu(menu);
     }
 
