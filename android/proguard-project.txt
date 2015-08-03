@@ -25,16 +25,11 @@
 -dontusemixedcaseclassnames 
 -dontskipnonpubliclibraryclasses 
 
-# ActionBarSherlock 
+# AppCompat
 
--keep class android.support.** { *; } 
-
--keep interface android.support.** { *; } 
-
--keep class com.actionbarsherlock.** { *; } 
-
--keep interface com.actionbarsherlock.** { *; } 
-
+-dontwarn android.support.v7.**
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.** { *; }
 
 # Keep line numbers to alleviate debugging stack traces 
 
