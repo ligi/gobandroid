@@ -1,10 +1,5 @@
 package org.ligi.gobandroid_hd.ui.fragments;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -12,7 +7,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 
@@ -83,73 +77,33 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     }
 
     private void updateButtonStates() {
-        adjustImageBtn(first_btn, R.drawable.nav_first, game.canUndo());
-        adjustImageBtn(prev_btn, R.drawable.nav_prev, game.canUndo());
-
-        adjustImageBtn(next_btn, R.drawable.nav_next, game.canRedo());
-        adjustImageBtn(last_btn, R.drawable.nav_last, game.canRedo());
-    }
-
-    public void adjustImageBtn(ImageView img, int res, boolean enabled) {
-
-        if (getActivity() == null) {
+        if (first_btn == null) {
             return;
         }
 
-        if (img.isEnabled() == enabled) { // all good - no work here
-            return;
-        }
+        first_btn.setVisibility(game.canUndo() ? View.VISIBLE : View.INVISIBLE);
+        prev_btn.setVisibility(game.canUndo() ? View.VISIBLE : View.INVISIBLE);
 
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), res);
-        if (!enabled) {
-            img.setEnabled(false);
-            img.setFocusable(false);
-            bm = adjustOpacity(bm, 128);
-        } else {
-            img.setFocusable(true);
-            img.setEnabled(true);
-        }
-        img.setImageDrawable(new BitmapDrawable(bm));
+        next_btn.setVisibility(game.canRedo() ? View.VISIBLE : View.INVISIBLE);
+        last_btn.setVisibility(game.canRedo() ? View.VISIBLE : View.INVISIBLE);
     }
 
-    //and here's where the magic happens
-    private static Bitmap adjustOpacity(Bitmap bitmap, int opacity) {
-        //make sure bitmap is mutable (copy of needed)
-        Bitmap mutableBitmap = bitmap.isMutable()
-                ? bitmap
-                : bitmap.copy(Bitmap.Config.ARGB_8888, true);
-
-        //draw the bitmap into a canvas
-        Canvas canvas = new Canvas(mutableBitmap);
-
-        //create a color with the specified opacity
-        int colour = (opacity & 0xFF) << 24;
-
-        //draw the colour over the bitmap using PorterDuff mode DST_IN
-        canvas.drawColor(colour, PorterDuff.Mode.DST_IN);
-
-        //now return the adjusted bitmap
-        return mutableBitmap;
-    }
 
     public void gameNavNext() {
         GameForwardAlert.showIfNeeded(getActivity(), game);
     }
 
     public void gameNavPrev() {
-        if (!game.canUndo())
-            return;
+        if (!game.canUndo()) return;
 
-        // dont do it if the mover has to move at the moment
-        if (game.getGoMover().isMoversMove())
-            return;
+        // don't do it if the mover has to move at the moment
+        if (game.getGoMover().isMoversMove()) return;
 
         game.getGoMover().paused = true;
         game.undo();
 
         // undo twice if there is a mover
-        if (game.canUndo() && (game.getGoMover().isMoversMove()))
-            game.undo();
+        if (game.canUndo() && (game.getGoMover().isMoversMove())) game.undo();
 
         game.getGoMover().paused = false;
     }
