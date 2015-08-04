@@ -64,8 +64,8 @@
 
 #### for butterknife
 -dontwarn butterknife.internal.**
--keep class **$$ViewInjector { *; }
--keepnames class * { @butterknife.InjectView *;}
+-keep class **$$ViewBinder { *; }
+-keepnames class * { @butterknife.Bind *;}
 
 #### for support 22
 -dontwarn android.support.**
