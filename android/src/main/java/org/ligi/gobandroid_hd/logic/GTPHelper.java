@@ -71,4 +71,11 @@ public class GTPHelper {
         return false;
 
     }
+
+    public static String coordinates2gtpstr(final Cell cell, final int gameSize) {
+
+        // "I" is missing decrease human OCR-error but increase computer bugs ...
+        final int x_offset = (cell.x >= 8) ? 1 : 0;
+        return "" + (char) ('A' + cell.x + x_offset) + "" + (gameSize - cell.y);
+    }
 }

@@ -14,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.WindowManager;
 import android.widget.Toast;
-
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
@@ -334,9 +333,8 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
             Log.w("coordinates2gtpstr called with game==null");
             return "";
         }
-        // "I" is missing decrease human OCR-error but increase computer bugs ...
-        final int x_offset = (cell.x >= 8) ? 1 : 0;
-        return "" + (char) ('A' + cell.x + x_offset) + "" + (getGame().getBoardSize() - cell.y);
+
+        return GTPHelper.coordinates2gtpstr(cell, getGame().getSize());
     }
 
     @Override
