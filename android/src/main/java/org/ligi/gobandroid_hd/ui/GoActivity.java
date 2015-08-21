@@ -71,10 +71,10 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     public GoSoundManager sound_man;
 
     @Bind(R.id.go_board)
-    GoBoardViewHD go_board = null;
+    GoBoardViewHD go_board;
 
     @Bind(R.id.zoom_board)
-    GoBoardViewHD zoom_board = null;
+    GoBoardViewHD zoom_board;
 
     @Bind(R.id.game_extra_container)
     View gameExtrasContainer;
