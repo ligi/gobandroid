@@ -15,7 +15,9 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.R;
@@ -28,10 +30,6 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class NavigationDrawer implements OnItemClickListener {
 
@@ -109,16 +107,18 @@ public class NavigationDrawer implements OnItemClickListener {
             case R.id.tsumego:
                 Intent next = startSGFListForPath(getApp().getSettings().getTsumegoPath());
 
-                if (!unzipSGFifNeeded(next))
+                if (!unzipSGFifNeeded(next)) {
                     ctx.startActivity(next);
+                }
 
                 return true;
 
             case R.id.review:
                 Intent next2 = startSGFListForPath(getApp().getSettings().getReviewPath());
 
-                if (!unzipSGFifNeeded(next2))
+                if (!unzipSGFifNeeded(next2)) {
                     ctx.startActivity(next2);
+                }
 
                 return true;
 
@@ -137,7 +137,7 @@ public class NavigationDrawer implements OnItemClickListener {
     }
 
     private Intent startSGFListForPath(String path) {
-        Intent i = new Intent(ctx, SGFFileSystemListActivity.class);
+        final Intent i = new Intent(ctx, SGFFileSystemListActivity.class);
         i.setData(Uri.parse("file://" + path));
         return i;
     }
@@ -148,9 +148,9 @@ public class NavigationDrawer implements OnItemClickListener {
 
     private class Item {
 
-        String mTitle;
-        int mIconRes;
-        int id;
+        final String mTitle;
+        final int mIconRes;
+        final int id;
 
         Item(int id, int title, int iconRes) {
             this.id = id;
@@ -161,7 +161,7 @@ public class NavigationDrawer implements OnItemClickListener {
 
     private class Category {
 
-        String mTitle;
+        final String mTitle;
 
         Category(int title) {
             mTitle = ctx.getString(title);
@@ -240,13 +240,6 @@ public class NavigationDrawer implements OnItemClickListener {
                 tv.setCompoundDrawablesWithIntrinsicBounds(bmp_d, null, null, null);
             }
 
-			/*
-             * v.setTag(R.id.mdActiveViewPosition, position);
-			 *
-			 * if (position == mActivePosition) { mMenuDrawer.setActiveView(v,
-			 * position); }
-			 */
-
             return v;
         }
     }
@@ -256,7 +249,6 @@ public class NavigationDrawer implements OnItemClickListener {
         if (handleId((Integer) arg1.getTag())) {
             ctx.closeDrawers();
         }
-        ;
     }
 
     /**
@@ -267,19 +259,12 @@ public class NavigationDrawer implements OnItemClickListener {
     public boolean unzipSGFifNeeded(Intent intent_after) {
         // we check for the tsumego path as the base path could already be there but  no valid tsumego
 
-        String tsumegoPath = getApp().getSettings().getTsumegoPath();
+        final String tsumegoPath = getApp().getSettings().getTsumegoPath();
         if (!(new File(tsumegoPath)).isDirectory()) {
             UnzipSGFsDialog.show(ctx, intent_after);
             return true;
         }
         return false;
-        /*
-        String storrage_state = Environment.getExternalStorageState();
-
-        if ((storrage_state.equals(Environment.MEDIA_MOUNTED) && (!(new File(getApp().getSettings().getTsumegoPath())).isDirectory()))) {
-            UnzipSGFsDialog.show(ctx, intent_after);
-            return true;
-        }*/
 
     }
 

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.Refreshable;
@@ -47,7 +46,7 @@ public class DownloadProblemsDialogTask extends AsyncTask<TsumegoSource[], Strin
         String msg = ctx.getString(R.string.no_new_tsumegos_found);
 
         if (result > 0) {
-            msg = String.format(ctx.getString(R.string.downloaded_n_tsumego, result));
+            msg = ctx.getString(R.string.downloaded_n_tsumego, result);
             refreshable.refresh();
         }
 

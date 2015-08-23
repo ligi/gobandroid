@@ -1,15 +1,14 @@
 package org.ligi.gobandroid_hd.ui.tsumego.fetch;
 
 import android.content.Context;
-import java.io.BufferedInputStream;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import org.apache.http.util.ByteArrayBuffer;
+import okio.BufferedSink;
+import okio.Okio;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.backend.GobandroidBackend;
-import org.ligi.tracedroid.logging.Log;
 
 public class TsumegoDownloadHelper {
 
@@ -35,6 +34,8 @@ public class TsumegoDownloadHelper {
             boolean finished = false;
             int pos = 10;
 
+            final OkHttpClient client = new OkHttpClient();
+
             while (!finished) {
 
                 while (new File(src.local_path + src.getFnameByPos(pos)).exists()) {
@@ -44,22 +45,19 @@ public class TsumegoDownloadHelper {
                 if (pos >= limit) {
                     finished = true;
                 } else try {
-                    final URL url = new URL(src.remote_path + src.getFnameByPos(pos));
-                    final URLConnection urlConnection = url.openConnection();
-                    final BufferedInputStream bis = new BufferedInputStream(urlConnection.getInputStream());
+                    final Request build = new Request.Builder().url(src.remote_path + src.getFnameByPos(pos)).build();
 
-                    final ByteArrayBuffer baf = new ByteArrayBuffer(50);
-                    int current;
-                    while ((current = bis.read()) != -1) baf.append((byte) current);
+                    final Response response = client.newCall(build).execute();
+                    File downloadedFile = new File(src.local_path + src.getFnameByPos(pos));
 
-                    final FileOutputStream fos = new FileOutputStream(new File(src.local_path + src.getFnameByPos(pos)));
-                    fos.write(baf.toByteArray());
-                    fos.close();
+                    BufferedSink sink = Okio.buffer(Okio.sink(downloadedFile));
+                    sink.writeAll(response.body().source());
+                    sink.close();
 
                     download_count++;
 
                 } catch (Exception e) {
-                    Log.i("", e);
+                    e.printStackTrace();
                     finished = true;
                 }
 
