@@ -8,7 +8,7 @@ buildscript {
         classpath('com.stanfy.spoon:spoon-gradle-plugin:1.0.3') {
             exclude module: "guava"
         }
-        classpath 'de.mobilej.unmock:UnMockPlugin:0.3.0'
+        classpath 'de.mobilej.unmock:UnMockPlugin:0.3.5'
     }
 }
 
@@ -128,24 +128,4 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     androidTestCompile 'com.squareup.spoon:spoon-client:1.1.10'
-}
-
-unMock {
-    // URI to download the android-all.jar from. e.g. https://oss.sonatype.org/content/groups/public/org/robolectric/android-all/
-    downloadFrom 'https://oss.sonatype.org/content/groups/public/org/robolectric/android-all/4.3_r2-robolectric-0/android-all-4.3_r2-robolectric-0.jar'
-
-    keepStartingWith "android.text.TextUtils"
-    keepStartingWith "android.util."
-    keepStartingWith "android.text."
-    keepStartingWith "android.content.ContentValues"
-    keepStartingWith "android.content.Intent"
-    keep "android.location.Location"
-    keepStartingWith "android.content.res.Configuration"
-    keepStartingWith "org."
-    keepStartingWith "libcore."
-    keepStartingWith "com.android.internal.R"
-    keepStartingWith "com.android.internal.util."
-    keep "android.net.Uri"
-
-    keepAndRename "java.nio.charset.Charsets" to "xjava.nio.charset.Charsets"
 }
