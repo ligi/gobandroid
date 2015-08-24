@@ -22,7 +22,6 @@ package org.ligi.gobandroid_hd.ui.links;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
-
 import org.ligi.axt.adapters.LinkWithDescription;
 import org.ligi.axt.adapters.LinkWithDescriptionAndTitle;
 import org.ligi.gobandroid_hd.App;
@@ -45,13 +44,13 @@ public class LinksActivity extends GobandroidFragmentActivity implements ActionB
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.list);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(true);
+            getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        }
+
         setTitle(R.string.link_title);
-
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-
-        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
         final int[] tabs = new int[]{R.string.link_tab_about, R.string.link_tab_credits, R.string.link_tab_sgf};
         for (int tab_str : tabs) {
             ActionBar.Tab tab = getSupportActionBar().newTab();
