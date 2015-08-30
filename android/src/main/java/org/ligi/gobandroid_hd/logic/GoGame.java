@@ -73,9 +73,6 @@ public class GoGame {
     private int captures_white; // counter for the captures from black
     private int captures_black; // counter for the captures from white
 
-    public int territory_white; // counter for the captures from black
-    public int territory_black; // counter for the captures from white
-
     private int handicap = 0;
 
     private float komi = 6.5f;

@@ -90,8 +90,8 @@ public class GameScoringExtrasFragment extends GobandroidFragment implements GoG
 
         result_txt.setText(getFinTXT(scorer));
 
-        territory_black.setText(Integer.toString(game.territory_black));
-        territory_white.setText(Integer.toString(game.territory_white));
+        territory_black.setText(Integer.toString(scorer.territory_black));
+        territory_white.setText(Integer.toString(scorer.territory_white));
 
         captures_black.setText(getCapturesString(game.getCapturesBlack(), scorer.dead_white));
         captures_white.setText(getCapturesString(game.getCapturesWhite(), scorer.dead_black));
