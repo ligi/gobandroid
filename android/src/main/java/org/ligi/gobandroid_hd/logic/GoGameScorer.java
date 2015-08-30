@@ -142,11 +142,11 @@ public class GoGameScorer {
     }
 
     public float getPointsWhite() {
-        return game.getKomi() + game.getCapturesWhite() + territory_white + dead_white;
+        return game.getKomi() + game.getCapturesWhite() + territory_white + dead_black;
     }
 
     public float getPointsBlack() {
-        return game.getCapturesBlack() + territory_black + dead_black;
+        return game.getCapturesBlack() + territory_black + dead_white;
     }
 
 }
