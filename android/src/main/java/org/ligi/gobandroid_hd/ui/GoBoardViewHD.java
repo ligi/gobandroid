@@ -29,7 +29,8 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.View;
-
+import java.io.File;
+import java.io.FileOutputStream;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.BoardCell;
@@ -39,9 +40,6 @@ import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.tracedroid.logging.Log;
-
-import java.io.File;
-import java.io.FileOutputStream;
 
 /**
  * Class to visually represent a Go Board in Android
@@ -56,7 +54,6 @@ public class GoBoardViewHD extends View {
     public boolean do_actpos_highlight_ony_if_active = true;
     public boolean mark_last_stone = true;
     public boolean legend_sgf_mode = true; // GoPrefs.getLegendSGFMode()
-    public boolean show_area_stones = false;
 
     // we need a lot of paints, but so we have a efficient onDraw with less
     // calls and the mem does not matter compared to bitmaps
@@ -82,10 +79,6 @@ public class GoBoardViewHD extends View {
     public GoBoardViewHD(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
-    }
-
-    public App getApp() {
-        return (App) getContext().getApplicationContext();
     }
 
     public void init() {
@@ -271,11 +264,11 @@ public class GoBoardViewHD extends View {
             }
 
             // paint the territory with alpha opaque stones
-            if (show_area_stones) {
-                if (getGame().area_assign[cell.x][cell.y] == GoDefinitions.PLAYER_BLACK)
+            if (getGame().getScorer() != null) {
+                if (getGame().getScorer().area_assign[cell.x][cell.y] == GoDefinitions.PLAYER_BLACK)
                     canvas.drawBitmap(black_stone_bitmap, cell.x * stone_size, cell.y * stone_size, opaque_paint);
 
-                else if (getGame().area_assign[cell.x][cell.y] == GoDefinitions.PLAYER_WHITE)
+                else if (getGame().getScorer().area_assign[cell.x][cell.y] == GoDefinitions.PLAYER_WHITE)
                     canvas.drawBitmap(white_stone_bitmap, cell.x * stone_size, cell.y * stone_size, opaque_paint);
 
             }
