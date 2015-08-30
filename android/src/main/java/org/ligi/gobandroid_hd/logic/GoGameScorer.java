@@ -47,7 +47,7 @@ public class GoGameScorer {
         area_assign = new byte[game.getSize()][game.getSize()];
     }
 
-    public void buildAreaGroups() {
+    public void calculateScore() {
         int area_group_count = 0;
 
         // reset groups

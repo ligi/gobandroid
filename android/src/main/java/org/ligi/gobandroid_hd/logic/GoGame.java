@@ -107,7 +107,7 @@ public class GoGame {
 
     public void initScorer() {
         scorer = new GoGameScorer(this);
-        scorer.buildAreaGroups();
+        scorer.calculateScore();
     }
 
 

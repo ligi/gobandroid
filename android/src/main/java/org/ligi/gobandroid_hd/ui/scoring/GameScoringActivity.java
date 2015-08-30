@@ -144,7 +144,7 @@ public class GameScoringActivity extends GoActivity implements GoGameChangeListe
         }
 
         if (getGame().getScorer() != null) {
-            getGame().getScorer().buildAreaGroups();
+            getGame().getScorer().calculateScore();
         }
     }
 }
