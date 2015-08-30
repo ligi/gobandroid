@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-
 import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -18,9 +19,6 @@ import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class GameSetupFragment extends GobandroidFragment implements OnSeekBarChangeListener {
 
@@ -68,7 +66,10 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
                     act_size += (act_size > wanted_size) ? -1 : 1;
                     uiHandler.postDelayed(this, 16);
                 }
-                refresh_ui();
+
+                if (!getActivity().isFinishing()) {
+                    refresh_ui();
+                }
             }
         });
 
