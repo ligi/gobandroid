@@ -1,21 +1,14 @@
 package org.ligi.gobandroidhd;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import org.junit.Test;
-import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TheSGFReader {
+public class TheSGFReader extends AssetAwareTest {
 
-    private String readAsset(String file) throws IOException, URISyntaxException {
-        return AXT.at(new File(getClass().getClassLoader().getResource(file).toURI())).readToString();
-    }
     @Test
     public void testReadMinimal19x19SGF() throws Exception {
         GoGame game = SGFReader.sgf2game(readAsset("test_sgfs/minimal_19x19.sgf"), null);

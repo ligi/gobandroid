@@ -1,8 +1,4 @@
-/**
- * gobandroid
- * by Marcus -Ligi- Bueschleb
- * http://ligi.de
- * <p/>
+/*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
  * published by the Free Software Foundation;
@@ -22,6 +18,7 @@ import android.util.SparseArray;
 import java.util.ArrayList;
 import java.util.List;
 import org.ligi.gobandroid_hd.logic.GoDefinitions.CellStatus;
+import static org.ligi.gobandroid_hd.logic.GoDefinitions.getStringFromCellStatus;
 
 /**
  * Class to represent a Go Board
@@ -39,17 +36,16 @@ public class GoBoard {
     public final byte[][] board;
 
     private SparseArray<BoardCell> cells = new SparseArray<>();
-    private List<BoardCell> allCells = new ArrayList<>();
+    private List<BoardCell> allCells = new ArrayList<>(); // as we cannot iterate ofter
 
     public GoBoard(int size) {
         this.size = size;
         board = new byte[size][size];
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
-                final int key = y * size + x;
                 final BoardCell boardCell = new BoardCell(x, y, this);
                 allCells.add(boardCell);
-                cells.put(key, boardCell);
+                cells.put(getKey(x,y), boardCell);
             }
 
         }
@@ -63,9 +59,12 @@ public class GoBoard {
         return getCell(cell.x, cell.y);
     }
 
+    public int getKey(final int x, final int y) {
+        return y * size + x;
+    }
+
     public BoardCell getCell(final int x, final int y) {
-        final int key = y * size + x;
-        return cells.get(key);
+        return cells.get(getKey(x,y));
     }
 
     public boolean isCellOnBoard(Cell cell) {
@@ -120,11 +119,8 @@ public class GoBoard {
         final StringBuilder b = new StringBuilder(size * size + size);
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
-                if (board[x][y] == GoDefinitions.STONE_NONE) b.append('.');
-                else if (board[x][y] == GoDefinitions.STONE_BLACK) b.append('B');
-                else if (board[x][y] == GoDefinitions.STONE_WHITE) b.append('W');
-                else if (board[x][y] == -GoDefinitions.STONE_BLACK) b.append('b');
-                else if (board[x][y] == -GoDefinitions.STONE_WHITE) b.append('w');
+                @CellStatus final byte cellStatus = board[x][y];
+                b.append(getStringFromCellStatus(cellStatus));
             }
             b.append('\n');
         }

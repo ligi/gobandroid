@@ -65,4 +65,23 @@ public class GoDefinitions {
         }
         return null; // no handicap definition for this size
     }
+
+
+    public static char getStringFromCellStatus(@CellStatus int cellStatus) {
+        switch (cellStatus) {
+            case GoDefinitions.STONE_BLACK:
+                return 'B';
+            case GoDefinitions.STONE_WHITE:
+                return 'W';
+            case -GoDefinitions.STONE_BLACK:
+                return 'b';
+            case -GoDefinitions.STONE_WHITE:
+                return 'w';
+
+            case -GoDefinitions.STONE_NONE:
+            default:
+                return '.';
+        }
+    }
+
 }
