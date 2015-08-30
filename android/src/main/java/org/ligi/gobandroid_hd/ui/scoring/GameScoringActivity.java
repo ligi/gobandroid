@@ -5,7 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.WindowManager;
-
+import java.util.HashSet;
+import java.util.Set;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.BoardCell;
@@ -16,14 +17,10 @@ import org.ligi.gobandroid_hd.logic.cell_gatherer.LooseConnectedCellGatherer;
 import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Activity to score a Game
  */
-public class GameScoringActivity extends GoActivity implements
-        GoGameChangeListener {
+public class GameScoringActivity extends GoActivity implements GoGameChangeListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +28,6 @@ public class GameScoringActivity extends GoActivity implements
         // TODO the next line works but needs investigation - i thought more of
         // getBoard().requestFocus(); - but that was not working ..
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        getBoard().show_area_stones = true;
 
         for (Set<BoardCell> boardCells : getInclusiveGroups()) {
             // TODO find a nicer approach to detect dead stones - this does only cover the common cases
@@ -42,8 +38,14 @@ public class GameScoringActivity extends GoActivity implements
             }
         }
 
-        getGame().buildAreaGroups();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getGame().initScorer();
+    }
+
 
     private Set<Set<BoardCell>> getInclusiveGroups() {
         final Set<Cell> allProcessed = new HashSet<>();
@@ -123,6 +125,7 @@ public class GameScoringActivity extends GoActivity implements
         }
 
         getGame().copyVisualBoard();
+        getGame().removeScorer();
     }
 
     @Override
@@ -140,6 +143,8 @@ public class GameScoringActivity extends GoActivity implements
             }
         }
 
-        getGame().buildAreaGroups();
+        if (getGame().getScorer() != null) {
+            getGame().getScorer().buildAreaGroups();
+        }
     }
 }

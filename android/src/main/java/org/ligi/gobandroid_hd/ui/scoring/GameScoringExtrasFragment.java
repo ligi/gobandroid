@@ -5,15 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
+import org.ligi.gobandroid_hd.logic.GoGameScorer;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
-
-import butterknife.ButterKnife;
 
 public class GameScoringExtrasFragment extends GobandroidFragment implements GoGameChangeListener {
 
@@ -42,8 +41,7 @@ public class GameScoringExtrasFragment extends GobandroidFragment implements GoG
     TextView result_txt;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         App.getGame().addGoGameChangeListener(this);
 
@@ -66,36 +64,51 @@ public class GameScoringExtrasFragment extends GobandroidFragment implements GoG
             @Override
             public void run() {
                 refresh();
-
             }
 
         });
     }
 
+    private static String getCapturesString(int captures, int deadStones) {
+        final String result = Integer.toString(captures);
+
+        if (deadStones > 0) {
+            return result + " + " + deadStones;
+        }
+
+        return result;
+    }
+
     private void refresh() {
         final GoGame game = App.getGame();
+        final GoGameScorer scorer = game.getScorer();
 
-        result_txt.setText(getFinTXT(game));
+        if (scorer == null) {
+            return;
+        }
 
-        territory_black.setText(Integer.toString(game.territory_black));
-        territory_white.setText(Integer.toString(game.territory_white));
 
-        captures_black.setText(Integer.toString(game.getCapturesBlack()));
-        captures_white.setText(Integer.toString(game.getCapturesWhite()));
+        result_txt.setText(getFinTXT(scorer));
+
+        territory_black.setText(Integer.toString(scorer.territory_black));
+        territory_white.setText(Integer.toString(scorer.territory_white));
+
+        captures_black.setText(getCapturesString(game.getCapturesBlack(), scorer.dead_white));
+        captures_white.setText(getCapturesString(game.getCapturesWhite(), scorer.dead_black));
 
         komi.setText(Float.toString(game.getKomi()));
 
-        final_black.setText(Float.toString(game.getPointsBlack()));
-        final_white.setText(Float.toString(game.getPointsWhite()));
+        final_black.setText(Float.toString(scorer.getPointsBlack()));
+        final_white.setText(Float.toString(scorer.getPointsWhite()));
     }
 
-    private String getFinTXT(GoGame game) {
-        if (game.getPointsBlack() > game.getPointsWhite()) {
-            return (getString(R.string.black_won_with) + (game.getPointsBlack() - game.getPointsWhite()) + getString(R.string._points_));
+    private String getFinTXT(final GoGameScorer scorer) {
+        if (scorer.getPointsBlack() > scorer.getPointsWhite()) {
+            return (getString(R.string.black_won_with) + (scorer.getPointsBlack() - scorer.getPointsWhite()) + getString(R.string._points_));
         }
 
-        if (game.getPointsWhite() > game.getPointsBlack()) {
-            return (getString(R.string.white_won_with_) + (game.getPointsWhite() - game.getPointsBlack()) + getString(R.string._points_));
+        if (scorer.getPointsWhite() > scorer.getPointsBlack()) {
+            return (getString(R.string.white_won_with_) + (scorer.getPointsWhite() - scorer.getPointsBlack()) + getString(R.string._points_));
         }
         return getResources().getString(R.string.game_ended_in_draw);
     }

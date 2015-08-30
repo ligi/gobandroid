@@ -1,36 +1,34 @@
 /**
- * gobandroid 
- * by Marcus -Ligi- Bueschleb 
+ * gobandroid
+ * by Marcus -Ligi- Bueschleb
  * http://ligi.de
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as 
- * published by the Free Software Foundation; 
- *
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation;
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details. 
- *
+ * GNU General Public License for more details.
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  **/
 
 package org.ligi.gobandroid_hd.logic;
 
+import android.support.annotation.Nullable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer;
 import org.ligi.tracedroid.logging.Log;
-import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_BLACK;
-import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_WHITE;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.STONE_BLACK;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.STONE_NONE;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.STONE_WHITE;
@@ -43,7 +41,7 @@ import static org.ligi.gobandroid_hd.logic.GoDefinitions.getHandicapArray;
 public class GoGame {
 
     public interface GoGameChangeListener {
-        public void onGoGameChange();
+        void onGoGameChange();
     }
 
     private Set<GoGameChangeListener> change_listeners = new HashSet<>();
@@ -57,7 +55,7 @@ public class GoGame {
     }
 
     public void notifyGameChange() {
-        change_listeners.removeAll(Collections.singleton(null));
+        change_listeners.remove(null);
         for (GoGameChangeListener l : change_listeners) {
             l.onGoGameChange();
         }
@@ -71,17 +69,9 @@ public class GoGame {
 
     private int[][] groups; // array to build groups
 
-    public int[][] area_groups; // array to build groups
-    public byte[][] area_assign; // cache to which player a area belongs in a  finished game
 
     private int captures_white; // counter for the captures from black
     private int captures_black; // counter for the captures from white
-
-    private int dead_white; // counter for the captures from black
-    private int dead_black; // counter for the captures from white
-
-    public int territory_white; // counter for the captures from black
-    public int territory_black; // counter for the captures from white
 
     private int handicap = 0;
 
@@ -103,6 +93,24 @@ public class GoGame {
 
     private int local_captures = 0;
 
+    @Nullable
+    private GoGameScorer scorer;
+
+    @Nullable
+    public GoGameScorer getScorer() {
+        return scorer;
+    }
+
+    public void removeScorer() {
+        scorer = null;
+    }
+
+    public void initScorer() {
+        scorer = new GoGameScorer(this);
+        scorer.buildAreaGroups();
+    }
+
+
     public void setGame(GoGame game) {
         metadata = game.getMetaData();
         all_handicap_positions = game.all_handicap_positions;
@@ -115,12 +123,8 @@ public class GoGame {
         handicap_board = game.handicap_board;
         act_move = game.act_move;
         groups = game.groups;
-        area_groups = game.area_groups;
-        area_assign = game.area_assign;
         captures_black = game.captures_black;
         captures_white = game.captures_white;
-        dead_black = game.dead_black;
-        dead_white = game.dead_white;
 
         change_listeners.addAll(game.change_listeners);
     }
@@ -141,7 +145,7 @@ public class GoGame {
 
         metadata = new GoGameMetadata();
 
-        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
         metadata.setDate(format.format(new Date()));
         calc_board = new GoBoard(size);
@@ -150,8 +154,7 @@ public class GoGame {
 
         all_handicap_positions = new boolean[size][size];
 
-        if (handicap > 0)
-            setKomi(0.5f);
+        if (handicap > 0) setKomi(0.5f);
 
         if (getHandicapArray(size) != null) {
             byte[][] handicapArray = getHandicapArray(size);
@@ -161,8 +164,7 @@ public class GoGame {
                     if (i == 5 || i == 7) {
                         handicap_board.setCell(new Cell(handicapArray[4][0], handicapArray[4][1]), STONE_NONE);
                         handicap_board.setCell(new Cell(handicapArray[i + 1][0], handicapArray[i + 1][1]), STONE_BLACK);
-                    } else if (i == 6 || i == 8)
-                        handicap_board.setCell(new Cell(handicapArray[4][0], handicapArray[4][1]), STONE_BLACK);
+                    } else if (i == 6 || i == 8) handicap_board.setCell(new Cell(handicapArray[4][0], handicapArray[4][1]), STONE_BLACK);
                 }
                 all_handicap_positions[handicapArray[i][0]][handicapArray[i][1]] = true;
             }
@@ -176,9 +178,6 @@ public class GoGame {
 
         // create the array for group calculations
         groups = new int[size][size];
-
-        area_groups = new int[size][size];
-        area_assign = new byte[size][size];
 
         act_move = new GoMove(null);
         act_move.setIsFirstMove();
@@ -196,14 +195,6 @@ public class GoGame {
         komi = newKomi;
     }
 
-    public float getPointsWhite() {
-        return komi + getCapturesWhite() + territory_white;
-    }
-
-    public float getPointsBlack() {
-        return getCapturesBlack() + territory_black;
-    }
-
     /**
      * set the handicap stones on the calc board
      */
@@ -217,8 +208,6 @@ public class GoGame {
         captures_black = 0;
         captures_white = 0;
 
-        dead_black = 0;
-        dead_white = 0;
     }
 
     public void pass() {
@@ -227,7 +216,6 @@ public class GoGame {
             act_move.setToPassMove();
 
             buildGroups();
-            buildAreaGroups();
         } else {
             act_move = new GoMove(act_move);
             act_move.setToPassMove();
@@ -290,10 +278,8 @@ public class GoGame {
         // if we reach this point it is a valid move
         // -> do things needed to do after a valid move
 
-        if (isBlackToMove())
-            getGoMover().processBlackMove(cell);
-        else
-            getGoMover().processWhiteMove(cell);
+        if (isBlackToMove()) getGoMover().processBlackMove(cell);
+        else getGoMover().processWhiteMove(cell);
 
         pre_last_board = last_board.clone();
         last_board = calc_board.clone();
@@ -301,10 +287,8 @@ public class GoGame {
 
         act_move = new GoMove(cell, act_move);
 
-        if (!calc_board.isCellKind(cell, STONE_WHITE))
-            captures_black += local_captures;
-        else
-            captures_white += local_captures;
+        if (!calc_board.isCellKind(cell, STONE_WHITE)) captures_black += local_captures;
+        else captures_white += local_captures;
 
         act_move.setDidCaptures(local_captures > 0);
         notifyGameChange();
@@ -322,8 +306,7 @@ public class GoGame {
     }
 
     public int getPossibleVariationCount() {
-        if (act_move == null)
-            return 0;
+        if (act_move == null) return 0;
         return (act_move.getNextMoveVariationCount());
     }
 
@@ -334,8 +317,7 @@ public class GoGame {
     public void do_internal_move(GoMove move) {
 
         act_move = move;
-        if (move.isFirstMove() || move.isPassMove())
-            return;
+        if (move.isFirstMove() || move.isPassMove()) return;
 
         calc_board.setCell(move.getCell(), move.isBlackToMove() ? STONE_BLACK : STONE_WHITE);
 
@@ -343,10 +325,8 @@ public class GoGame {
             buildGroups();
             remove_dead(move.getCell());
 
-            if (calc_board.isCellKind(move.getCell(), STONE_BLACK))
-                captures_black += local_captures;
-            else
-                captures_white += local_captures;
+            if (calc_board.isCellKind(move.getCell(), STONE_BLACK)) captures_black += local_captures;
+            else captures_white += local_captures;
 
         }
     }
@@ -367,8 +347,7 @@ public class GoGame {
 
         GoMove mLastMove = act_move;
         jump(mLastMove.getParent());
-        if (!keep_move)
-            mLastMove.destroy();
+        if (!keep_move) mLastMove.destroy();
         getGoMover().undo();
 
         getGoMover().paused = false;
@@ -377,8 +356,7 @@ public class GoGame {
     public void undo(boolean keep_move) {
         _undo(keep_move);
 
-        if (canUndo() && (getGoMover().isMoversMove()))
-            _undo(keep_move);
+        if (canUndo() && (getGoMover().isMoversMove())) _undo(keep_move);
     }
 
     public void redo(int var) {
@@ -393,8 +371,7 @@ public class GoGame {
         GoMove move = getActMove();
 
         while (true) {
-            if (move.isFirstMove())
-                return move;
+            if (move.isFirstMove()) return move;
             move = move.getParent();
         }
     }
@@ -410,8 +387,7 @@ public class GoGame {
     public GoMove getLastMove() {
         GoMove move = getActMove();
         while (true) {
-            if (!move.hasNextMove())
-                return move;
+            if (!move.hasNextMove()) return move;
             move = move.getnextMove(0);
         }
     }
@@ -437,8 +413,7 @@ public class GoGame {
 
             tmp_move = replay_moves.get(replay_moves.size() - 1);
 
-            if (tmp_move.isFirstMove() || (tmp_move.getParent() == null))
-                break;
+            if (tmp_move.isFirstMove() || (tmp_move.getParent() == null)) break;
 
             replay_moves.add(tmp_move.getParent());
         }
@@ -459,8 +434,7 @@ public class GoGame {
 
     public boolean cell_has_neighbour(BoardCell boardCell, byte kind) {
         for (BoardCell cell : boardCell.getNeighbors())
-            if (cell.is(kind))
-                return true;
+            if (cell.is(kind)) return true;
 
         return false;
     }
@@ -496,36 +470,6 @@ public class GoGame {
         return found.get();
     }
 
-    public boolean isAreaGroupBlacks(int group2check) {
-        if (group2check == -1)
-            return false;
-        boolean res = false;
-        for (BoardCell cell : calc_board.getAllCells()) {
-            if (area_groups[cell.x][cell.y] == group2check)
-                if (cell_has_neighbour(cell, STONE_WHITE))
-                    return false;
-                else
-                    res |= (cell_has_neighbour(cell, STONE_BLACK));
-
-        }
-
-        return res; // found no stone in the group with liberty
-    }
-
-    public boolean isAreaGroupWhites(int group2check) {
-        if (group2check == -1)
-            return false;
-        boolean res = false;
-        for (BoardCell cell : calc_board.getAllCells()) {
-            if (area_groups[cell.x][cell.y] == group2check)
-                if (cell_has_neighbour(cell, STONE_BLACK))
-                    return false;
-                else
-                    res |= (cell_has_neighbour(cell, STONE_WHITE));
-        }
-        return res; // found no stone in the group with liberty
-    }
-
     public void clear_calc_board() {
         apply_handicap();
     }
@@ -555,63 +499,6 @@ public class GoGame {
         }
     }
 
-    public void buildAreaGroups() {
-        int area_group_count = 0;
-
-        // reset groups
-        for (Cell cell : calc_board.getAllCells()) {
-            area_groups[cell.x][cell.y] = -1;
-            area_assign[cell.x][cell.y] = 0;
-        }
-
-        for (Cell cell : calc_board.getAllCells()) {
-            if (calc_board.isCellFree(cell)) {
-
-                final BoardCell boardCell = calc_board.getCell(cell);
-
-                if (boardCell.left!=null) {
-                    if (!calc_board.areCellsEqual(boardCell, boardCell.left)) {
-                        area_group_count++;
-                        area_groups[cell.x][cell.y] = area_group_count;
-                    } else
-                        area_groups[cell.x][cell.y] = area_groups[cell.x - 1][cell.y];
-                } else {
-                    area_group_count++;
-                    area_groups[cell.x][cell.y] = area_group_count;
-                }
-
-                if (boardCell.up!=null) {
-                    final Cell up = boardCell.up;
-                    if (calc_board.areCellsEqual(boardCell, up)) {
-                        int from_grp = area_groups[cell.x][cell.y];
-
-                        for (int xg = 0; xg < calc_board.getSize(); xg++)
-                            for (int yg = 0; yg < calc_board.getSize(); yg++)
-                                if (area_groups[xg][yg] == from_grp)
-                                    area_groups[xg][yg] = area_groups[up.x][up.y];
-                    }
-                }
-
-            }
-        }
-
-        territory_black = 0;
-        territory_white = 0;
-        for (int x = 0; x < calc_board.getSize(); x++)
-            for (int y = 0; y < calc_board.getSize(); y++)
-                if (isAreaGroupWhites(area_groups[x][y])) {
-                    area_assign[x][y] = PLAYER_WHITE;
-                    territory_white++;
-                } else if (isAreaGroupBlacks(area_groups[x][y])) {
-                    territory_black++;
-                    area_assign[x][y] = PLAYER_BLACK;
-                }
-
-        calculateDead();
-        copyVisualBoard();
-        notifyGameChange();
-    }
-
     /**
      * remove dead groups from the board - e.g. after a move
      * the cell with ignore_x and ignore_y is ignored - e.g. last move
@@ -622,8 +509,7 @@ public class GoGame {
         BoardCell boardWhere = calc_board.getCell(where);
 
         for (BoardCell boardCell : boardWhere.getNeighbors())
-            if ((!hasGroupLiberties(boardCell)) && (!calc_board.areCellsEqual(boardWhere, boardCell)))
-                remove_group(boardCell);
+            if ((!hasGroupLiberties(boardCell)) && (!calc_board.areCellsEqual(boardWhere, boardCell))) remove_group(boardCell);
     }
 
     private void remove_group(Cell where) {
@@ -659,12 +545,10 @@ public class GoGame {
     }
 
     public boolean isFinished() {
-        if (getActMove().isFirstMove())
-            return false;
+        if (getActMove().isFirstMove()) return false;
 
         // need at least 2 moves to finish a game ( 2 passes )
-        if (getActMove().getParent() == null)
-            return false;
+        if (getActMove().getParent() == null) return false;
 
         // w passes
         return getActMove().isPassMove() && getActMove().getParent().isPassMove();
@@ -679,11 +563,11 @@ public class GoGame {
     }
 
     public int getCapturesBlack() {
-        return captures_black + dead_white;
+        return captures_black;
     }
 
     public int getCapturesWhite() {
-        return captures_white + dead_black;
+        return captures_white;
     }
 
     public int getBoardSize() {
@@ -760,19 +644,5 @@ public class GoGame {
         return true;
     }
 
-    public void calculateDead() {
-        dead_white = 0;
-        dead_black = 0;
-
-        for (Cell cell : getCalcBoard().getAllCells()) {
-            if (getCalcBoard().isCellDead(cell)) {
-                if (getCalcBoard().isCellDeadBlack(cell))
-                    dead_black++;
-
-                else if (getCalcBoard().isCellDeadWhite(cell))
-                    dead_white++;
-            }
-        }
-    }
 
 }
