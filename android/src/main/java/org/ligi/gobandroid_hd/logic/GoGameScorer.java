@@ -18,6 +18,9 @@
 
 package org.ligi.gobandroid_hd.logic;
 
+import java.util.HashSet;
+import java.util.Set;
+import org.ligi.gobandroid_hd.logic.cell_gatherer.AreaCellGatherer;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_BLACK;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_WHITE;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.STONE_BLACK;
@@ -30,7 +33,7 @@ import static org.ligi.gobandroid_hd.logic.GoDefinitions.STONE_WHITE;
 
 public class GoGameScorer {
 
-    public int[][] area_groups; // array to build groups
+    private int[][] area_groups; // array to build groups
     public byte[][] area_assign; // cache to which player a area belongs in a  finished game
 
     public int territory_white; // counter for the captures from black
@@ -48,7 +51,6 @@ public class GoGameScorer {
     }
 
     public void calculateScore() {
-        int area_group_count = 0;
 
         // reset groups
         final GoBoard calc_board = game.getCalcBoard();
@@ -57,32 +59,28 @@ public class GoGameScorer {
             area_assign[cell.x][cell.y] = 0;
         }
 
+        Set<Set<BoardCell>> areas = new HashSet<>();
+        Set<Cell> processed = new HashSet<>();
+
         for (Cell cell : calc_board.getAllCells()) {
-            if (calc_board.isCellFree(cell)) {
+            boolean unprocessed = processed.add(cell);
 
+            if (unprocessed) {
                 final BoardCell boardCell = calc_board.getCell(cell);
+                final AreaCellGatherer areaCellGatherer = new AreaCellGatherer(boardCell);
 
-                if (boardCell.left != null) {
-                    if (!calc_board.areCellsEqual(boardCell, boardCell.left)) {
-                        area_group_count++;
-                        area_groups[cell.x][cell.y] = area_group_count;
-                    } else area_groups[cell.x][cell.y] = area_groups[cell.x - 1][cell.y];
-                } else {
-                    area_group_count++;
-                    area_groups[cell.x][cell.y] = area_group_count;
+                if (boardCell.isFree()) {
+                    areas.add(areaCellGatherer);
+                    processed.addAll(areaCellGatherer.getProcessed());
                 }
+            }
+        }
 
-                if (boardCell.up != null) {
-                    final Cell up = boardCell.up;
-                    if (calc_board.areCellsEqual(boardCell, up)) {
-                        int from_grp = area_groups[cell.x][cell.y];
-
-                        for (int xg = 0; xg < calc_board.getSize(); xg++)
-                            for (int yg = 0; yg < calc_board.getSize(); yg++)
-                                if (area_groups[xg][yg] == from_grp) area_groups[xg][yg] = area_groups[up.x][up.y];
-                    }
-                }
-
+        int currentArea = 0;
+        for (final Set<BoardCell> area : areas) {
+            ++currentArea;
+            for (final BoardCell boardCell : area) {
+                area_groups[boardCell.x][boardCell.y] = currentArea;
             }
         }
 

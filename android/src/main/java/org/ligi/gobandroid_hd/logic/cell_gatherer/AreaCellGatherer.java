@@ -2,9 +2,9 @@ package org.ligi.gobandroid_hd.logic.cell_gatherer;
 
 import org.ligi.gobandroid_hd.logic.BoardCell;
 
-public class LooseConnectedCellGatherer extends CellGatherer {
+public class AreaCellGatherer extends CellGatherer {
 
-    public LooseConnectedCellGatherer(BoardCell root) {
+    public AreaCellGatherer(BoardCell root) {
         super(root);
     }
 
@@ -12,7 +12,7 @@ public class LooseConnectedCellGatherer extends CellGatherer {
     protected void pushWithCheck(BoardCell cell) {
         final boolean unProcessed = processed.add(cell);
 
-        if (cell.isInHomogeneousGroupWith(root)) {
+        if (cell.isInAreaGroupWith(root)) {
             add(cell);
             if (unProcessed) {
                 pushSurroundingWithCheck(cell);
@@ -23,5 +23,6 @@ public class LooseConnectedCellGatherer extends CellGatherer {
             pushSurroundingWithCheck(cell);
         }
     }
+
 
 }

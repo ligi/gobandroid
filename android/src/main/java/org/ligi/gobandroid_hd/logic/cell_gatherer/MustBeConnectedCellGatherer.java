@@ -12,7 +12,7 @@ public class MustBeConnectedCellGatherer extends CellGatherer {
     protected void pushWithCheck(BoardCell cell) {
         final boolean unProcessed = processed.add(cell);
 
-        if (cell.isInGroupWith(root)) {
+        if (cell.isInHomogeneousGroupWith(root)) {
             add(cell);
             if (unProcessed) {
                 pushSurroundingWithCheck(cell);

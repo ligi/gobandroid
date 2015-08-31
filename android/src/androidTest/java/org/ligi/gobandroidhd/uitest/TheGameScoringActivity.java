@@ -1,16 +1,13 @@
 package org.ligi.gobandroidhd.uitest;
 
 import android.test.suitebuilder.annotation.MediumTest;
-
 import com.squareup.spoon.Spoon;
-
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
 import org.ligi.gobandroidhd.base.BaseIntegration;
-
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -89,6 +86,23 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
         Spoon.screenshot(activity, "count_white_wins");
     }
 
+    @MediumTest
+    // https://github.com/ligi/gobandroid/issues/143
+    public void testThatScoringWorksWhenTerritoryIsInsideDeadStones() {
+        App.setGame(new GoGame((byte) 3));
+        App.getGame().do_move(new Cell(0, 1));
+        App.getGame().do_move(new Cell(2, 2));
+        App.getGame().do_move(new Cell(1, 0));
+
+        final GameScoringActivity activity = getActivity();
+
+        onView(withId(R.id.go_board)).perform(tapStone(new Cell(2, 2)));
+
+        onView(withId(R.id.final_white)).perform(scrollTo());
+        onView(withId(R.id.final_white)).check(matches(withText(containsString("16.5"))));
+
+        Spoon.screenshot(activity, "count_scoring_territory_in_dead_stones");
+    }
 
     @MediumTest
     public void testThatGroupMarkingWorks() {

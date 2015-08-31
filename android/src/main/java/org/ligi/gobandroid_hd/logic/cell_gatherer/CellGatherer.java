@@ -1,9 +1,8 @@
 package org.ligi.gobandroid_hd.logic.cell_gatherer;
 
-import org.ligi.gobandroid_hd.logic.BoardCell;
-
 import java.util.HashSet;
 import java.util.Set;
+import org.ligi.gobandroid_hd.logic.BoardCell;
 
 public abstract class CellGatherer extends HashSet<BoardCell> {
 
@@ -16,6 +15,7 @@ public abstract class CellGatherer extends HashSet<BoardCell> {
         pushWithCheck(root);
     }
 
+
     abstract protected void pushWithCheck(BoardCell cell);
 
     protected void pushSurroundingWithCheck(BoardCell cell) {
@@ -23,4 +23,9 @@ public abstract class CellGatherer extends HashSet<BoardCell> {
             pushWithCheck(boardCell);
         }
     }
+
+    public Set<BoardCell> getProcessed() {
+        return processed;
+    }
+
 }

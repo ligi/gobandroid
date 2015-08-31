@@ -45,7 +45,7 @@ public class GoBoard {
             for (int y = 0; y < size; y++) {
                 final BoardCell boardCell = new BoardCell(x, y, this);
                 allCells.add(boardCell);
-                cells.put(getKey(x,y), boardCell);
+                cells.put(getKey(x, y), boardCell);
             }
 
         }
@@ -64,7 +64,7 @@ public class GoBoard {
     }
 
     public BoardCell getCell(final int x, final int y) {
-        return cells.get(getKey(x,y));
+        return cells.get(getKey(x, y));
     }
 
     public boolean isCellOnBoard(Cell cell) {
@@ -160,6 +160,10 @@ public class GoBoard {
 
     public boolean areCellsEqual(Cell one, Cell other) {
         return board[one.x][one.y] == board[other.x][other.y];
+    }
+
+    public boolean areCellsTogetherInArea(Cell one, Cell other) {
+        return Math.max(board[one.x][one.y], 0) == Math.max(board[other.x][other.y], 0);
     }
 
     public void setCell(Cell cell, @CellStatus byte newStatus) {

@@ -39,12 +39,20 @@ public class BoardCell extends Cell {
     }
 
 
-    public boolean isInGroupWith(Cell cell) {
+    public boolean is(byte kind) {
+        return board.isCellKind(this, kind);
+    }
+
+    public boolean isFree() {
+        return board.isCellFree(this);
+    }
+
+    public boolean isInHomogeneousGroupWith(Cell cell) {
         return board.areCellsEqual(this, cell);
     }
 
-    public boolean is(byte kind) {
-        return board.isCellKind(this, kind);
+    public boolean isInAreaGroupWith(Cell cell) {
+        return board.areCellsTogetherInArea(this, cell);
     }
 
     public List<BoardCell> getNeighbors() {
