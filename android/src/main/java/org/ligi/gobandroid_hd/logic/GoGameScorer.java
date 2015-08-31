@@ -22,9 +22,8 @@ import java.util.HashSet;
 import java.util.Set;
 import org.ligi.gobandroid_hd.logic.cell_gatherer.AreaCellGatherer;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_BLACK;
+import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_NONE;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_WHITE;
-import static org.ligi.gobandroid_hd.logic.GoDefinitions.STONE_BLACK;
-import static org.ligi.gobandroid_hd.logic.GoDefinitions.STONE_WHITE;
 
 
 /**
@@ -55,11 +54,12 @@ public class GoGameScorer {
         // reset groups
         final GoBoard calc_board = game.getCalcBoard();
         for (Cell cell : calc_board.getAllCells()) {
-            area_groups[cell.x][cell.y] = -1;
             area_assign[cell.x][cell.y] = 0;
         }
 
-        Set<Set<BoardCell>> areas = new HashSet<>();
+        territory_black = 0;
+        territory_white = 0;
+
         Set<Cell> processed = new HashSet<>();
 
         for (Cell cell : calc_board.getAllCells()) {
@@ -70,59 +70,44 @@ public class GoGameScorer {
                 final AreaCellGatherer areaCellGatherer = new AreaCellGatherer(boardCell);
 
                 if (boardCell.isFree()) {
-                    areas.add(areaCellGatherer);
+
+                    final byte assign;
+
+                    if (containsOneOfButNotTheOther(areaCellGatherer.getProcessed(), PLAYER_BLACK)) {
+                        assign = PLAYER_BLACK;
+                        territory_black += areaCellGatherer.size();
+                    } else if (containsOneOfButNotTheOther(areaCellGatherer.getProcessed(), PLAYER_WHITE)) {
+                        assign = PLAYER_WHITE;
+                        territory_white += areaCellGatherer.size();
+                    } else {
+                        assign = PLAYER_NONE;
+                    }
+
+                    if (assign > 0) for (final BoardCell areaBoardCell : areaCellGatherer) {
+                        area_assign[areaBoardCell.x][areaBoardCell.y] = assign;
+                    }
                     processed.addAll(areaCellGatherer.getProcessed());
                 }
             }
         }
 
-        int currentArea = 0;
-        for (final Set<BoardCell> area : areas) {
-            ++currentArea;
-            for (final BoardCell boardCell : area) {
-                area_groups[boardCell.x][boardCell.y] = currentArea;
-            }
-        }
-
-        territory_black = 0;
-        territory_white = 0;
-        for (int x = 0; x < calc_board.getSize(); x++)
-            for (int y = 0; y < calc_board.getSize(); y++)
-                if (isAreaGroupWhites(area_groups[x][y])) {
-                    area_assign[x][y] = PLAYER_WHITE;
-                    territory_white++;
-                } else if (isAreaGroupBlacks(area_groups[x][y])) {
-                    territory_black++;
-                    area_assign[x][y] = PLAYER_BLACK;
-                }
 
         calculateDead();
         game.copyVisualBoard();
     }
 
 
-    public boolean isAreaGroupBlacks(int group2check) {
-        if (group2check == -1) return false;
+    private boolean containsOneOfButNotTheOther(Set<BoardCell> set, byte kind) {
         boolean res = false;
-        for (BoardCell cell : game.getCalcBoard().getAllCells()) {
-            if (area_groups[cell.x][cell.y] == group2check) if (game.cell_has_neighbour(cell, STONE_WHITE)) return false;
-            else res |= (game.cell_has_neighbour(cell, STONE_BLACK));
-
+        for (final BoardCell boardCell : set) {
+            if (boardCell.is(GoDefinitions.theOtherKind(kind))) {
+                return false;
+            }
+            res |= boardCell.is(kind);
         }
 
-        return res; // found no stone in the group with liberty
+        return res;
     }
-
-    public boolean isAreaGroupWhites(int group2check) {
-        if (group2check == -1) return false;
-        boolean res = false;
-        for (BoardCell cell : game.getCalcBoard().getAllCells()) {
-            if (area_groups[cell.x][cell.y] == group2check) if (game.cell_has_neighbour(cell, STONE_BLACK)) return false;
-            else res |= (game.cell_has_neighbour(cell, STONE_WHITE));
-        }
-        return res; // found no stone in the group with liberty
-    }
-
 
     public void calculateDead() {
         dead_white = 0;

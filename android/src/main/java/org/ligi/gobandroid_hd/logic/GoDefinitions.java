@@ -1,20 +1,19 @@
 /**
- * gobandroid 
- * by Marcus -Ligi- Bueschleb 
+ * gobandroid
+ * by Marcus -Ligi- Bueschleb
  * http://ligi.de
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as 
- * published by the Free Software Foundation; 
- *
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation;
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details. 
- *
+ * GNU General Public License for more details.
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  **/
 
 package org.ligi.gobandroid_hd.logic;
@@ -32,12 +31,28 @@ import java.lang.annotation.RetentionPolicy;
  */
 public class GoDefinitions {
 
+    public final static byte PLAYER_NONE = 0;
     public final static byte PLAYER_BLACK = 1;
     public final static byte PLAYER_WHITE = 2;
 
+
+    /**
+     * @param kind - the kind to turn around
+     * @return if white -> black
+     * if black -> white
+     * anything else -> black ( should not be used )
+     */
+    public static byte theOtherKind(byte kind) {
+        if (kind == PLAYER_BLACK) {
+            return PLAYER_WHITE;
+        }
+        return PLAYER_BLACK;
+    }
+
     @IntDef({STONE_NONE, STONE_BLACK, STONE_WHITE})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface CellStatus {}
+    public @interface CellStatus {
+    }
 
 
     public final static byte STONE_NONE = 0;
