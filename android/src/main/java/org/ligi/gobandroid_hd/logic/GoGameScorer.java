@@ -25,14 +25,11 @@ import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_BLACK;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_NONE;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_WHITE;
 
-
 /**
- * Class to represent a Go Game with its rules
+ * Class to calculate score a GoGame
  */
-
 public class GoGameScorer {
 
-    private int[][] area_groups; // array to build groups
     public byte[][] area_assign; // cache to which player a area belongs in a  finished game
 
     public int territory_white; // counter for the captures from black
@@ -45,7 +42,6 @@ public class GoGameScorer {
 
     public GoGameScorer(GoGame game) {
         this.game = game;
-        area_groups = new int[game.getSize()][game.getSize()];
         area_assign = new byte[game.getSize()][game.getSize()];
     }
 
@@ -97,7 +93,7 @@ public class GoGameScorer {
     }
 
 
-    private boolean containsOneOfButNotTheOther(Set<BoardCell> set, byte kind) {
+    private static boolean containsOneOfButNotTheOther(Set<BoardCell> set, byte kind) {
         boolean res = false;
         for (final BoardCell boardCell : set) {
             if (boardCell.is(GoDefinitions.theOtherKind(kind))) {
