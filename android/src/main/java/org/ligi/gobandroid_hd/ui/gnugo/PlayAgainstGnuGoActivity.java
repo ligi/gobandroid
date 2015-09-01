@@ -20,6 +20,7 @@ import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GTPHelper;
 import org.ligi.gobandroid_hd.logic.GoBoard;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
+import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.recording.RecordingGameExtrasFragment;
@@ -248,11 +249,17 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
                     // set the size
                     service.processGTP("boardsize " + getGame().getBoardSize());
 
-                    for (Cell cell : getGame().getCalcBoard().getAllCells()) {
-                        if (getGame().getVisualBoard().isCellBlack(cell)) {
-                            service.processGTP("black " + coordinates2gtpstr(cell));
-                        } else if (getGame().getVisualBoard().isCellWhite(cell)) {
-                            service.processGTP("white " + coordinates2gtpstr(cell));
+                    GoMove currentMove = getGame().getFirstMove();
+
+                    while (currentMove.hasNextMove()) {
+                        currentMove = currentMove.getnextMove(0);
+
+                        final String gtpMove = getGtpMoveFromMove(currentMove);
+
+                        if (currentMove.isBlackToMove()) {
+                            service.processGTP("play black " + gtpMove);
+                        } else {
+                            service.processGTP("play white " + gtpMove);
                         }
 
                     }
@@ -276,7 +283,16 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
         }
         stop();
 
-        Log.i("a stopthread  " + connection);
+    }
+
+    private String getGtpMoveFromMove(final GoMove currentMove) {
+        final String gtpMove;
+        if (currentMove.isPassMove()) {
+            gtpMove = "pass";
+        } else {
+            gtpMove = coordinates2gtpstr(currentMove.getCell());
+        }
+        return gtpMove;
     }
 
     private void doMove(final String color) {
