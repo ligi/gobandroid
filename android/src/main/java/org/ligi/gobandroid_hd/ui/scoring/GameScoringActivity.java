@@ -8,11 +8,9 @@ import android.view.WindowManager;
 import java.util.HashSet;
 import java.util.Set;
 import org.ligi.gobandroid_hd.App;
-import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.BoardCell;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.cell_gatherer.LooseConnectedCellGatherer;
 import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer;
 import org.ligi.gobandroid_hd.ui.GoActivity;
@@ -20,7 +18,7 @@ import org.ligi.gobandroid_hd.ui.GoActivity;
 /**
  * Activity to score a Game
  */
-public class GameScoringActivity extends GoActivity implements GoGameChangeListener {
+public class GameScoringActivity extends GoActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,23 +94,6 @@ public class GameScoringActivity extends GoActivity implements GoGameChangeListe
         return true;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.ingame_score, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public void onGoGameChange() {
-        super.onGoGameChange();
-        runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-                supportInvalidateOptionsMenu();
-            }
-        });
-    }
 
     @Override
     public void onPause() {
