@@ -1,20 +1,19 @@
 /**
- * gobandroid 
- * by Marcus -Ligi- Bueschleb 
+ * gobandroid
+ * by Marcus -Ligi- Bueschleb
  * http://ligi.de
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as 
- * published by the Free Software Foundation; 
- *
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation;
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details. 
- *
+ * GNU General Public License for more details.
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  **/
 
 package org.ligi.gobandroid_hd.logic;
@@ -41,8 +40,9 @@ public class GTPHelper {
         Log.i("processing gtp str" + gtp_str);
 
         // remove chars we do not need
-        for (String c : new String[]{" ", "=", "\r", "\n", "\t"})
+        for (String c : new String[]{" ", "=", "\r", "\n", "\t"}) {
             gtp_str = gtp_str.replace(c, "");
+        }
 
         if (gtp_str.toUpperCase().equals("RESIGN")) {
             game.pass(); // TODO handle this case better
@@ -55,10 +55,14 @@ public class GTPHelper {
 
         try {
 
-            BoardCell boardCell = game.getCalcBoard()
-                                      .getCell((byte) (gtp_str.charAt(0) - 'A'), (byte) (game.getBoardSize() - (Byte.parseByte(gtp_str.substring(1)))));
-            if (boardCell.x > 8)
-                boardCell = boardCell.left; // the I is missing ^^ - took me some time to find that out
+            final byte y = (byte) (game.getBoardSize() - (Byte.parseByte(gtp_str.substring(1))));
+            byte x = (byte) (gtp_str.charAt(0) - 'A');
+
+            if (x > 8) {
+                x--; // the I is missing ^^ - took me some time to find that out
+            }
+
+            final BoardCell boardCell = game.getCalcBoard().getCell(x, y);
 
             game.do_move(boardCell); // internal here?
             return true;
