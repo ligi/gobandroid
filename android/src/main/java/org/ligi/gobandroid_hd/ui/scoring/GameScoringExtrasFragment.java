@@ -79,14 +79,13 @@ public class GameScoringExtrasFragment extends GobandroidFragment implements GoG
         return result;
     }
 
-    private void refresh() {
+    public void refresh() {
         final GoGame game = App.getGame();
         final GoGameScorer scorer = game.getScorer();
 
         if (scorer == null) {
             return;
         }
-
 
         result_txt.setText(getFinTXT(scorer));
 
