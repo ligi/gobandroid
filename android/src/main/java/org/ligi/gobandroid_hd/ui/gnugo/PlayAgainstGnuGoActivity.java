@@ -122,7 +122,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
                 try {
                     Log.i("Service bound " + PlayAgainstGnuGoActivity.this.service.processGTP("test"));
                 } catch (RemoteException e) {
-                    Log.w("RemoteException when connecting",e);
+                    Log.w("RemoteException when connecting", e);
                 }
             }
 
@@ -164,7 +164,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
             getApplication().unbindService(connection);
             getApplication().stopService(new Intent(INTENT_ACTION));
         } catch (Exception e) {
-            Log.w("Exception in stop()",e);
+            Log.w("Exception in stop()", e);
         }
         connection = null;
 
@@ -204,10 +204,8 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
             return 0;
         }
 
-        if ((getGame().isBlackToMove() && (!playingBlack)))
-            processMove("black", cell);
-        else if (((!getGame().isBlackToMove()) && (!playingWhite)))
-            processMove("white", cell);
+        if ((getGame().isBlackToMove() && (!playingBlack))) processMove("black", cell);
+        else if (((!getGame().isBlackToMove()) && (!playingWhite))) processMove("white", cell);
 
         return super.doMoveWithUIFeedback(cell);
     }
@@ -231,8 +229,9 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
             }
 
             // blocker for the following steps
-            if ((service == null) || getGame().isFinished() || (connection == null))
+            if (service == null || getGame().isFinished() || connection == null) {
                 continue;
+            }
 
             if (gnugoSizeSet && !checkGnuGoSync()) { // check if gobandroid
                 // and gnugo see the same board - otherwise tell gnugo about the truth afterwards ;-)
@@ -240,20 +239,21 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
                     Log.i("gnugo sync check problem" + service.processGTP("showboard") + getGame().getVisualBoard().toString());
                     gnugoSizeSet = false;
                 } catch (RemoteException e) {
-                    Log.w("RemoteException when syncing",e);
+                    Log.w("RemoteException when syncing", e);
                 }
             }
 
-            if (!gnugoSizeSet)
+            if (!gnugoSizeSet) {
                 try {
                     // set the size
                     service.processGTP("boardsize " + getGame().getBoardSize());
 
                     for (Cell cell : getGame().getCalcBoard().getAllCells()) {
-                        if (getGame().getVisualBoard().isCellBlack(cell))
+                        if (getGame().getVisualBoard().isCellBlack(cell)) {
                             service.processGTP("black " + coordinates2gtpstr(cell));
-                        else if (getGame().getVisualBoard().isCellWhite(cell))
+                        } else if (getGame().getVisualBoard().isCellWhite(cell)) {
                             service.processGTP("white " + coordinates2gtpstr(cell));
+                        }
 
                     }
 
@@ -261,14 +261,15 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
 
                     gnugoSizeSet = true;
                 } catch (Exception e) {
-                    Log.w("RemoteException when configuring",e);
+                    Log.w("RemoteException when configuring", e);
                 }
+            }
 
             if (getGame().isBlackToMove() && playingBlack) {
                 doMove("black");
             }
 
-            if ((!getGame().isBlackToMove()) && playingWhite) {
+            if (!getGame().isBlackToMove() && playingWhite) {
                 doMove("white");
             }
 
@@ -290,32 +291,32 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
             }
             Log.i("gugoservice" + service.processGTP("showboard"));
         } catch (Exception e) {
-            Log.w("RemoteException when moving",e);
+            Log.w("RemoteException when moving", e);
         }
         stopTimeMeasure();
     }
 
     public boolean checkGnuGoSync() {
         try {
-            String board_str = service.processGTP("showboard");
-            GoBoard b = new GoBoard((byte) getGame().getBoardSize());
-            String[] split_board = board_str.split("\n");
+            final String board_str = service.processGTP("showboard");
+            final GoBoard b = new GoBoard((byte) getGame().getBoardSize());
+            final String[] split_board = board_str.split("\n");
 
             for (int gnugo_y = 2; gnugo_y <= b.getSize() + 1; gnugo_y++) {
-                String act_line = split_board[gnugo_y].replace(" ", "").replace("" + (getGame().getBoardSize() - (gnugo_y - 2)), "");
+                final String act_line = split_board[gnugo_y].replace(" ", "").replace("" + (getGame().getBoardSize() - (gnugo_y - 2)), "");
                 for (int gnugo_x = 0; gnugo_x < b.getSize(); gnugo_x++) {
                     final Cell cell = new Cell(gnugo_x, gnugo_y - 2);
-                    if (act_line.charAt(gnugo_x) == '.')
-                        if (!getGame().getVisualBoard().isCellFree(cell))
-                            return false;
+                    if (act_line.charAt(gnugo_x) == '.' && !getGame().getVisualBoard().isCellFree(cell)) {
+                        return false;
+                    }
 
-                    if (act_line.charAt(gnugo_x) == 'X')
-                        if (!getGame().getVisualBoard().isCellBlack(cell))
-                            return false;
+                    if (act_line.charAt(gnugo_x) == 'X' && !getGame().getVisualBoard().isCellBlack(cell)) {
+                        return false;
+                    }
 
-                    if (act_line.charAt(gnugo_x) == 'O')
-                        if (!getGame().getVisualBoard().isCellWhite(cell))
-                            return false;
+                    if (act_line.charAt(gnugo_x) == 'O' && !getGame().getVisualBoard().isCellWhite(cell)) {
+                        return false;
+                    }
                     // Log.i("checking " +act_line.charAt(gnugo_x));
                 }
 
@@ -351,7 +352,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
         try {
             Log.i("gugoservice undo 1" + service.processGTP("gg-undo 2"));
         } catch (Exception e) {
-            Log.w("RemoteException when undoing",e);
+            Log.w("RemoteException when undoing", e);
         }
 
     }
