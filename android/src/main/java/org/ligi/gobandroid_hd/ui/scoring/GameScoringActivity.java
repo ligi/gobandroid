@@ -1,7 +1,6 @@
 package org.ligi.gobandroid_hd.ui.scoring;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.WindowManager;
@@ -19,6 +18,8 @@ import org.ligi.gobandroid_hd.ui.GoActivity;
  * Activity to score a Game
  */
 public class GameScoringActivity extends GoActivity {
+
+    private GameScoringExtrasFragment gameScoringExtrasFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,9 @@ public class GameScoringActivity extends GoActivity {
     protected void onResume() {
         super.onResume();
         getGame().initScorer();
+        if (gameScoringExtrasFragment != null) {
+            gameScoringExtrasFragment.refresh();
+        }
     }
 
 
@@ -110,8 +114,11 @@ public class GameScoringActivity extends GoActivity {
     }
 
     @Override
-    public Fragment getGameExtraFragment() {
-        return new GameScoringExtrasFragment();
+    public GameScoringExtrasFragment getGameExtraFragment() {
+        if (gameScoringExtrasFragment == null) {
+            gameScoringExtrasFragment = new GameScoringExtrasFragment();
+        }
+        return gameScoringExtrasFragment;
     }
 
 
