@@ -1,6 +1,7 @@
 package org.ligi.gobandroidhd;
 
 import org.junit.Test;
+import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoBoard;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,4 +22,19 @@ public class TheGoBoard extends AssetAwareTest {
         assertThat(board.toString()).isEqualTo("W.\n..\n");
     }
 
+
+    @Test
+    public void toThatIsCellOnBoardWorksForOutside() throws Exception {
+        final GoBoard board = new GoBoard(9);
+
+        assertThat(board.isCellOnBoard(new Cell(10, 1))).isFalse();
+    }
+
+
+    @Test
+    public void toThatIsCellOnBoardWorksForInside() throws Exception {
+        final GoBoard board = new GoBoard(9);
+
+        assertThat(board.isCellOnBoard(new Cell(4, 4))).isTrue();
+    }
 }

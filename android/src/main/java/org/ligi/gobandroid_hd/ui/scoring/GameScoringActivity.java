@@ -77,7 +77,7 @@ public class GameScoringActivity extends GoActivity {
 
         // calculate position on the field by position on the touchscreen
 
-        if (event.getAction() == MotionEvent.ACTION_UP) {
+        if (event.getAction() == MotionEvent.ACTION_UP && touchCell != null) {
             doMoveWithUIFeedback(touchCell);
             App.getInteractionScope().setTouchPosition(null);
         }

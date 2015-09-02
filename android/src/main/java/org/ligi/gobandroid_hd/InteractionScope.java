@@ -1,6 +1,6 @@
 package org.ligi.gobandroid_hd;
 
-import org.ligi.gobandroid_hd.logic.BoardCell;
+import android.support.annotation.Nullable;
 import org.ligi.gobandroid_hd.logic.Cell;
 
 public class InteractionScope {
@@ -24,6 +24,7 @@ public class InteractionScope {
         touch_position = touchCell;
     }
 
+    @Nullable
     public Cell getTouchCell() {
         return touch_position;
     }

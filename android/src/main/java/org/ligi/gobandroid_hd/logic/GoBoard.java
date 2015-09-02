@@ -14,6 +14,7 @@
 
 package org.ligi.gobandroid_hd.logic;
 
+import android.support.annotation.NonNull;
 import android.util.SparseArray;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +68,12 @@ public class GoBoard {
         return cells.get(getKey(x, y));
     }
 
+    /**
+     * @param cell the cell to test
+     * @return if the cell is on board
+     */
     public boolean isCellOnBoard(Cell cell) {
-        return getCell(cell) != null;
+        return cell.x < size && cell.y < size && cell.x >= 0 && cell.y >= 0;
     }
 
 
@@ -106,8 +111,9 @@ public class GoBoard {
         if (size != other.size) return false;
 
         // check if all stones are placed equally
-        for (Cell cell : getAllCells())
+        for (Cell cell : getAllCells()) {
             if (board[cell.x][cell.y] != other.board[cell.x][cell.y]) return false;
+        }
 
         return true;
     }
@@ -134,7 +140,7 @@ public class GoBoard {
         return size;
     }
 
-    public boolean isCellFree(Cell cell) {
+    public boolean isCellFree(@NonNull Cell cell) {
         return board[cell.x][cell.y] <= 0;
     }
 

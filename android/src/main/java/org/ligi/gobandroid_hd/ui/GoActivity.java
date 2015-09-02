@@ -2,19 +2,18 @@
  * gobandroid
  * by Marcus -Ligi- Bueschleb
  * http://ligi.de
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
  * published by the Free Software Foundation;
- *
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  **/
 
 package org.ligi.gobandroid_hd.ui;
@@ -287,11 +286,16 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         if (!isAsk4QuitEnabled()) {
             shutdown();
         } else {
-            new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title).setMessage(R.string.quit_confirm).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    shutdown();
-                }
-            }).setCancelable(true).setNegativeButton(R.string.no, new DialogDiscardingOnClickListener()).show();
+            new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
+                                         .setMessage(R.string.quit_confirm)
+                                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                             public void onClick(DialogInterface dialog, int whichButton) {
+                                                 shutdown();
+                                             }
+                                         })
+                                         .setCancelable(true)
+                                         .setNegativeButton(R.string.no, new DialogDiscardingOnClickListener())
+                                         .show();
         }
     }
 
@@ -471,7 +475,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                 if (go_board.move_stone_mode) {
                     // TODO check if this is an illegal move ( e.g. in variants )
 
-                    if (getGame().getVisualBoard().isCellFree(interaction_scope.getTouchCell())) {
+                    if (interaction_scope.getTouchCell() != null && getGame().getVisualBoard().isCellFree(interaction_scope.getTouchCell())) {
                         getGame().getActMove().setCell(interaction_scope.getTouchCell());
                         getGame().getActMove().setDidCaptures(true); // TODO check if we harm sth with that
                         getGame().refreshBoards();
@@ -508,11 +512,12 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
             new AlertDialog.Builder(this).setMessage(R.string.hint_stone_move).setPositiveButton(R.string.ok,
 
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            GoPrefs.setAnnounceMoveActive(false);
-                        }
-                    }).show();
+                                                                                                 new DialogInterface.OnClickListener() {
+                                                                                                     public void onClick(DialogInterface dialog,
+                                                                                                                         int whichButton) {
+                                                                                                         GoPrefs.setAnnounceMoveActive(false);
+                                                                                                     }
+                                                                                                 }).show();
         }
     }
 
@@ -524,11 +529,11 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             final Cell ensuredTouchPosition = interaction_scope.getEnsuredTouchPosition();
-            final BoardCell boardCell =  getGame().getCalcBoard().getCell(ensuredTouchPosition);
+            final BoardCell boardCell = getGame().getCalcBoard().getCell(ensuredTouchPosition);
 
             switch (keyCode) {
                 case KeyEvent.KEYCODE_DPAD_UP:
-                    if (boardCell.up!=null) {
+                    if (boardCell.up != null) {
                         interaction_scope.touch_position = boardCell.up;
                     } else {
                         return false;
@@ -536,7 +541,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_LEFT:
-                    if (boardCell.left!=null) {
+                    if (boardCell.left != null) {
                         interaction_scope.touch_position = boardCell.left;
                     } else {
                         return false;
@@ -544,7 +549,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_DOWN:
-                    if (boardCell.down!=null) {
+                    if (boardCell.down != null) {
                         interaction_scope.touch_position = boardCell.down;
                     } else {
                         return false;
@@ -552,7 +557,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
-                    if (boardCell.right!=null) {
+                    if (boardCell.right != null) {
                         interaction_scope.touch_position = boardCell.right;
                     } else {
                         return false;
