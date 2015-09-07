@@ -121,7 +121,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
                 PlayAgainstGnuGoActivity.this.service = IGnuGoService.Stub.asInterface(service);
 
                 try {
-                    Log.i("Service bound " + PlayAgainstGnuGoActivity.this.service.processGTP("test"));
+                    Log.i("Service bound to " + PlayAgainstGnuGoActivity.this.service.processGTP("version"));
                 } catch (RemoteException e) {
                     Log.w("RemoteException when connecting", e);
                 }
@@ -373,6 +373,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
 
     }
 
+    @Override
     public boolean doAutoSave() {
         return true;
     }
