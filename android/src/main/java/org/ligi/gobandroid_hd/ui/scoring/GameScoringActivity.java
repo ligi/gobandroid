@@ -13,10 +13,12 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.BoardCell;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.GoGameMetadata;
 import org.ligi.gobandroid_hd.logic.cell_gatherer.LooseConnectedCellGatherer;
 import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.gnugo.PlayAgainstGnuGoActivity;
+import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 
 /**
  * Activity to score a Game
@@ -106,10 +108,18 @@ public class GameScoringActivity extends GoActivity {
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_game_again:
+                final GoGameMetadata metaData = getGame().getMetaData();
                 App.setGame(new GoGame(getGame().getSize()));
+                if (metaData.getBlackName().toLowerCase().equals("gnugo") || metaData.getWhiteName().toLowerCase().equals("gnugo")) {
+                    AXT.at(this).startCommonIntent().activityFromClass(PlayAgainstGnuGoActivity.class);
+                } else {
 
-                AXT.at(this).startCommonIntent().activityFromClass(PlayAgainstGnuGoActivity.class);
+                    AXT.at(this).startCommonIntent().activityFromClass(GameRecordActivity.class);
+                }
+
                 return true;
+
+
         }
         return super.onOptionsItemSelected(item);
     }
