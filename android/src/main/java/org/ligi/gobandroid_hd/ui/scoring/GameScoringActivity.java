@@ -2,17 +2,21 @@ package org.ligi.gobandroid_hd.ui.scoring;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import java.util.HashSet;
 import java.util.Set;
+import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.App;
+import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.BoardCell;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.cell_gatherer.LooseConnectedCellGatherer;
 import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer;
 import org.ligi.gobandroid_hd.ui.GoActivity;
+import org.ligi.gobandroid_hd.ui.gnugo.PlayAgainstGnuGoActivity;
 
 /**
  * Activity to score a Game
@@ -46,6 +50,13 @@ public class GameScoringActivity extends GoActivity {
         if (gameScoringExtrasFragment != null) {
             gameScoringExtrasFragment.refresh();
         }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.ingame_score, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
 
@@ -92,12 +103,16 @@ public class GameScoringActivity extends GoActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_game_again:
+                App.setGame(new GoGame(getGame().getSize()));
 
-        return true;
+                AXT.at(this).startCommonIntent().activityFromClass(PlayAgainstGnuGoActivity.class);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onPause() {
