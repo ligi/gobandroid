@@ -79,8 +79,6 @@ public class GoGame {
 
     private GoMove act_move = null;
 
-    private GnuGoMover go_mover = null;
-
     private GoGameMetadata metadata = null;
 
     public final static byte MOVE_VALID = 0;
@@ -278,9 +276,6 @@ public class GoGame {
         // if we reach this point it is a valid move
         // -> do things needed to do after a valid move
 
-        if (isBlackToMove()) getGoMover().processBlackMove(cell);
-        else getGoMover().processWhiteMove(cell);
-
         pre_last_board = last_board.clone();
         last_board = calc_board.clone();
         copyVisualBoard();
@@ -343,20 +338,15 @@ public class GoGame {
     }
 
     private void _undo(boolean keep_move) {
-        getGoMover().paused = true;
-
         GoMove mLastMove = act_move;
         jump(mLastMove.getParent());
         if (!keep_move) mLastMove.destroy();
-        getGoMover().undo();
-
-        getGoMover().paused = false;
     }
 
     public void undo(boolean keep_move) {
         _undo(keep_move);
 
-        if (canUndo() && (getGoMover().isMoversMove())) _undo(keep_move);
+        if (canUndo()) _undo(keep_move);
     }
 
     public void redo(int var) {
@@ -580,13 +570,6 @@ public class GoGame {
 
     public GoBoard getHandicapBoard() {
         return handicap_board;
-    }
-
-    public GnuGoMover getGoMover() {
-        if (go_mover == null)
-            // an inactive "dummy" go mover
-            return new GnuGoMover();
-        return go_mover;
     }
 
     public GoGameMetadata getMetaData() {

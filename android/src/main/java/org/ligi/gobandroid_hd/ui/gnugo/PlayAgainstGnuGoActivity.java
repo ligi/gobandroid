@@ -12,6 +12,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.Toast;
 import org.ligi.gobandroid_hd.App;
@@ -107,6 +108,17 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
 
         });
         dlg.show();
+
+    }
+
+    @Override
+    public void doTouch(final MotionEvent event) {
+
+        if (gnugoNowBlack() | gnugoNowWhite()) {
+            showInfoToast(R.string.not_your_turn);
+        } else {
+            super.doTouch(event);
+        }
 
     }
 
@@ -272,17 +284,25 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
                 }
             }
 
-            if (getGame().isBlackToMove() && playingBlack) {
+            if (gnugoNowBlack()) {
                 doMove("black");
             }
 
-            if (!getGame().isBlackToMove() && playingWhite) {
+            if (gnugoNowWhite()) {
                 doMove("white");
             }
 
         }
         stop();
 
+    }
+
+    private boolean gnugoNowWhite() {
+        return !getGame().isBlackToMove() && playingWhite;
+    }
+
+    private boolean gnugoNowBlack() {
+        return getGame().isBlackToMove() && playingBlack;
     }
 
     private String getGtpMoveFromMove(final GoMove currentMove) {
@@ -377,4 +397,10 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
     public boolean doAutoSave() {
         return true;
     }
+
+    @Override
+    public void initializeStoneMove() {
+        // we do not want this behaviour so we override and do nothing
+    }
+
 }

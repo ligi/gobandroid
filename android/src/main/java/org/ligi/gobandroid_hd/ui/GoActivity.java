@@ -276,21 +276,15 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         return true;
     }
 
-    private void shutdown() {
-        // sound_man.playSound(GoSoundManager.SOUND_END);
-        getGame().getGoMover().stop();
-        finish();
-    }
-
     public void quit(final boolean toHome) {
         if (!isAsk4QuitEnabled()) {
-            shutdown();
+            finish();
         } else {
             new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
                                          .setMessage(R.string.quit_confirm)
                                          .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                              public void onClick(DialogInterface dialog, int whichButton) {
-                                                 shutdown();
+                                                 finish();
                                              }
                                          })
                                          .setCancelable(true)
@@ -409,15 +403,8 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             }
         }
 
-        if (!getGame().getGoMover().isReady()) {
-            showInfoToast(R.string.wait_gnugo);
-        } else if (getGame().getGoMover().isMoversMove()) {
-            showInfoToast(R.string.not_your_turn);
-        } else {
-            doTouch(event);
-        }
-
-
+        doTouch(event);
+        
         return true;
     }
 
@@ -496,10 +483,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
 
     public void initializeStoneMove() {
-
-        if (getGame().getGoMover().isPlayingInThisGame()) { // don't allow with a mover
-            return;
-        }
 
         if (go_board.move_stone_mode) { // already in the mode
             return; // -> do nothing

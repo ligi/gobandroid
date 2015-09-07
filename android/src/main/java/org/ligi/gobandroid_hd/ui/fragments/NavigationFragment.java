@@ -97,15 +97,11 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
         if (!game.canUndo()) return;
 
         // don't do it if the mover has to move at the moment
-        if (game.getGoMover().isMoversMove()) return;
-
-        game.getGoMover().paused = true;
         game.undo();
 
         // undo twice if there is a mover
-        if (game.canUndo() && (game.getGoMover().isMoversMove())) game.undo();
+        if (game.canUndo()) game.undo();
 
-        game.getGoMover().paused = false;
     }
 
 }
