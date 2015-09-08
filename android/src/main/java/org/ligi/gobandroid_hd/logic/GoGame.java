@@ -334,20 +334,15 @@ public class GoGame {
      * undo the last move
      */
     public void undo() {
-        _undo(true);
+        undo(true);
     }
 
-    private void _undo(boolean keep_move) {
+    public void undo(boolean keep_move) {
         GoMove mLastMove = act_move;
         jump(mLastMove.getParent());
         if (!keep_move) mLastMove.destroy();
     }
 
-    public void undo(boolean keep_move) {
-        _undo(keep_move);
-
-        if (canUndo()) _undo(keep_move);
-    }
 
     public void redo(int var) {
         Log.i("redoing " + act_move.getnextMove(var).toString());
