@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import com.davekoelle.alphanum.AlphanumComparator;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -182,8 +183,9 @@ public class SGFListFragment extends Fragment implements Refreshable {
                 }
 
             final String[] undone_arr = undone.toArray(new String[undone.size()]), done_arr = done.toArray(new String[done.size()]);
-            Arrays.sort(undone_arr);
-            Arrays.sort(done_arr);
+            final AlphanumComparator alphanumComparator = new AlphanumComparator();
+            Arrays.sort(undone_arr, alphanumComparator);
+            Arrays.sort(done_arr, alphanumComparator);
             menu_items = AXT.at(undone_arr).combineWith(done_arr);
         } else {
             menu_items = fileNames.toArray(new String[fileNames.size()]);
