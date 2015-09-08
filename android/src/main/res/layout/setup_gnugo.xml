@@ -43,7 +43,7 @@
 
     <SeekBar
         android:id="@+id/gnugo_strength_seek"
-        android:max="9"
+        android:max="23"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
