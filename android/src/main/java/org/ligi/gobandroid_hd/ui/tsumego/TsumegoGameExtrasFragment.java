@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.fragments.CommentHelper;
@@ -26,44 +27,53 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
             return; // will come back later
         }
 
-        final GoGame game = getGame();
+        final GoGame game = App.getGame();
 
-        OffPathView.setVisibility(off_path_visible ? TextView.VISIBLE : TextView.GONE);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
 
-        if (correct_visible) {
-            correctView.setVisibility(View.VISIBLE);
-            final String optionalNextTsumegoURLString = NextTsumegoFileFinder.calcNextTsumego(game.getMetaData().getFileName().replaceFirst("file://", ""));
+                OffPathView.setVisibility(off_path_visible ? TextView.VISIBLE : TextView.GONE);
 
-            if (optionalNextTsumegoURLString != null) {
+                if (correct_visible) {
+                    correctView.setVisibility(View.VISIBLE);
+                    final String optionalNextTsumegoURLString = NextTsumegoFileFinder.calcNextTsumego(game.getMetaData()
+                                                                                                          .getFileName()
+                                                                                                          .replaceFirst("file://", ""));
 
-                correctView.setMovementMethod(LinkMovementMethod.getInstance());
+                    if (optionalNextTsumegoURLString != null) {
 
-                final String text = getString(R.string.tsumego_correct) +
-                                    " <a href='tsumego://" +
-                                    optionalNextTsumegoURLString +
-                                    "'>" +
-                                    getString(R.string.next_tsumego) +
-                                    "</a>";
-                correctView.setText(Html.fromHtml(text));
-            } else {
-                correctView.setText(getString(R.string.correct_but_no_more_tsumegos));
+                        correctView.setMovementMethod(LinkMovementMethod.getInstance());
+
+                        final String text = getString(R.string.tsumego_correct) +
+                                            " <a href='tsumego://" +
+                                            optionalNextTsumegoURLString +
+                                            "'>" +
+                                            getString(R.string.next_tsumego) +
+                                            "</a>";
+                        correctView.setText(Html.fromHtml(text));
+                    } else {
+                        correctView.setText(getString(R.string.correct_but_no_more_tsumegos));
+                    }
+                } else {
+                    correctView.setVisibility(View.GONE);
+                }
+
+                // the 10 is a bit of a magic number - just want to show comments that
+                // have extras here to prevent double commentView written - but sometimes
+                // there is more info in the commentView
+                if (!correct_visible && game.getActMove().getComment().length() > 10) {
+                    commentView.setVisibility(View.VISIBLE);
+                    commentView.setText(game.getActMove().getComment());
+                    if (!TextUtils.isEmpty(game.getActMove().getComment())) {
+                        CommentHelper.linkifyCommentTextView(commentView);
+                    }
+                } else {
+                    commentView.setVisibility(View.GONE);
+                }
             }
-        } else {
-            correctView.setVisibility(View.GONE);
-        }
+        });
 
-        // the 10 is a bit of a magic number - just want to show comments that
-        // have extras here to prevent double commentView written - but sometimes
-        // there is more info in the commentView
-        if (!correct_visible && game.getActMove().getComment().length() > 10) {
-            commentView.setVisibility(View.VISIBLE);
-            commentView.setText(game.getActMove().getComment());
-            if (!TextUtils.isEmpty(game.getActMove().getComment())) {
-                CommentHelper.linkifyCommentTextView(commentView);
-            }
-        } else {
-            commentView.setVisibility(View.GONE);
-        }
     }
 
     @Override
