@@ -1,5 +1,6 @@
 package org.ligi.gobandroid_hd.logic.sgf;
 
+import android.support.annotation.NonNull;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -26,8 +27,8 @@ public class SGFWriter {
         return txt;
     }
 
-    private static String getSGFSnippet(String cmd, String param) {
-        if ((param == null) || (param.equals("")) || (cmd == null) || (cmd.equals(""))) {
+    private static String getSGFSnippet(@NonNull String cmd, @NonNull String param) {
+        if ((param.isEmpty()) || (cmd.isEmpty())) {
             return "";
         }
         return cmd + "[" + escapeSGF(param) + "]";
@@ -69,7 +70,7 @@ public class SGFWriter {
      */
 
     static String moves2string(GoMove move) {
-        String res = "";
+        StringBuilder res = new StringBuilder();
 
         GoMove act_move = move;
 
@@ -77,24 +78,30 @@ public class SGFWriter {
 
             // add the move
             if (!act_move.isFirstMove()) {
-                res += ";" + (act_move.isBlackToMove() ? "B" : "W");
-                if (act_move.isPassMove()) res += "[]";
-                else res += coords2SGFFragment(act_move.getCell()) + "\n";
+                res.append(";").append(act_move.isBlackToMove() ? "B" : "W");
+                if (act_move.isPassMove()) {
+                    res.append("[]");
+                } else {
+                    res.append(coords2SGFFragment(act_move.getCell())).append("\n");
+                }
             }
 
             // add the comment
-            if (!act_move.getComment().isEmpty()) res += "C[" + act_move.getComment() + "]\n";
+            if (!act_move.getComment().isEmpty()) {
+                res.append("C[").append(act_move.getComment()).append("]\n");
+            }
 
             // add markers
             for (GoMarker marker : act_move.getMarkers()) {
                 if (marker instanceof SquareMarker) {
-                    res += "SQ" + coords2SGFFragment(marker);
+                    res.append("SQ").append(coords2SGFFragment(marker));
                 } else if (marker instanceof TriangleMarker) {
-                    res += "TR" + coords2SGFFragment(marker);
+                    res.append("TR").append(coords2SGFFragment(marker));
                 } else if (marker instanceof CircleMarker) {
-                    res += "CR" + coords2SGFFragment(marker);
+                    res.append("CR").append(coords2SGFFragment(marker));
                 } else if (marker instanceof TextMarker) {
-                    res += "LB" + coords2SGFFragment(marker).replace("]", ":" + ((TextMarker) marker).getText() + "]");
+                    res.append("LB");
+                    res.append(coords2SGFFragment(marker).replace("]", ":" + ((TextMarker) marker).getText() + "]"));
                 }
             }
 
@@ -103,7 +110,7 @@ public class SGFWriter {
             if (act_move.hasNextMove()) {
                 if (act_move.hasNextMoveVariations()) {
                     for (GoMove var : act_move.getNextMoveVariations()) {
-                        res += "(" + moves2string(var) + ")";
+                        res.append("(").append(moves2string(var)).append(")");
                     }
                 } else {
                     next_move = act_move.getnextMove(0);
@@ -112,7 +119,7 @@ public class SGFWriter {
 
             act_move = next_move;
         }
-        return res;
+        return res.toString();
     }
 
     static String coords2SGFFragment(Cell cell) {

@@ -1,23 +1,24 @@
 /**
- * gobandroid 
- * by Marcus -Ligi- Bueschleb 
+ * gobandroid
+ * by Marcus -Ligi- Bueschleb
  * http://ligi.de
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as 
- * published by the Free Software Foundation; 
- *
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation;
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details. 
- *
+ * GNU General Public License for more details.
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  **/
 
 package org.ligi.gobandroid_hd.logic;
+
+import android.support.annotation.NonNull;
 
 /**
  * store the metadata ( such as player names/ranks) for a game
@@ -48,7 +49,7 @@ public class GoGameMetadata {
      *
      * @param name
      */
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 
@@ -57,6 +58,7 @@ public class GoGameMetadata {
      *
      * @return the game name
      */
+    @NonNull
     public String getName() {
         return name;
     }
@@ -66,7 +68,7 @@ public class GoGameMetadata {
      *
      * @param white_rank - rank of white
      */
-    public void setWhiteRank(String white_rank) {
+    public void setWhiteRank(@NonNull String white_rank) {
         this.white_rank = white_rank;
     }
 
@@ -75,6 +77,7 @@ public class GoGameMetadata {
      *
      * @return whites rank
      */
+    @NonNull
     public String getWhiteRank() {
         return white_rank;
     }
@@ -82,9 +85,9 @@ public class GoGameMetadata {
     /**
      * set the name of white
      *
-     * @param white_name
+     * @param white_name the name for white
      */
-    public void setWhiteName(String white_name) {
+    public void setWhiteName(@NonNull String white_name) {
         this.white_name = white_name;
     }
 
@@ -93,6 +96,7 @@ public class GoGameMetadata {
      *
      * @return whites name
      */
+    @NonNull
     public String getWhiteName() {
         return white_name;
     }
@@ -102,7 +106,7 @@ public class GoGameMetadata {
      *
      * @param black_name the name of black
      */
-    public void setBlackName(String black_name) {
+    public void setBlackName(@NonNull String black_name) {
         this.black_name = black_name;
     }
 
@@ -111,6 +115,7 @@ public class GoGameMetadata {
      *
      * @return the name of black
      */
+    @NonNull
     public String getBlackName() {
         return black_name;
     }
@@ -120,7 +125,8 @@ public class GoGameMetadata {
      *
      * @param black_rank the rank of black
      */
-    public void setBlackRank(String black_rank) {
+    @NonNull
+    public void setBlackRank(@NonNull String black_rank) {
         this.black_rank = black_rank;
     }
 
@@ -129,6 +135,7 @@ public class GoGameMetadata {
      *
      * @return blacks rank
      */
+    @NonNull
     public String getBlackRank() {
         return black_rank;
     }
@@ -138,24 +145,24 @@ public class GoGameMetadata {
      *
      * @param result the games result
      */
-    public void setResult(String result) {
+    public void setResult(@NonNull String result) {
         this.result = result;
     }
 
     /**
-     * get the result of the game
-     *
-     * @return
+     * @return the result of the game
      */
+    @NonNull
     public String getResult() {
         return result;
     }
 
+    @NonNull
     public String getSource() {
         return source;
     }
 
-    public void setSource(String source) {
+    public void setSource(@NonNull String source) {
         this.source = source;
     }
 
@@ -165,26 +172,29 @@ public class GoGameMetadata {
      *
      * @return
      */
+    @NonNull
     public String getFileName() {
         return filename;
     }
 
-    public void setFileName(String filename) {
+    public void setFileName(@NonNull String filename) {
         this.filename = filename;
     }
 
-    public void setDifficulty(String difficulty) {
+    public void setDifficulty(@NonNull String difficulty) {
         this.difficulty = difficulty;
     }
 
+    @NonNull
     public String getDifficulty() {
         return difficulty;
     }
 
-    public void setDate(String date) {
+    public void setDate(@NonNull String date) {
         this.date = date;
     }
 
+    @NonNull
     public String getDate() {
         return date;
     }
