@@ -1,13 +1,14 @@
 package org.ligi.gobandroid_hd.ui.fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.logic.GoGame;
 
-public abstract class GobandroidGameAwareFragment extends GobandroidFragment implements GoGame.GoGameChangeListener {
+public abstract class GobandroidGameAwareFragment extends Fragment implements GoGame.GoGameChangeListener {
 
     protected GoGame game;
 
@@ -18,7 +19,7 @@ public abstract class GobandroidGameAwareFragment extends GobandroidFragment imp
         return createView(inflater, container, savedInstanceState);
     }
 
-    abstract View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
+    public abstract View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
     @Override
     public void onDestroyView() {

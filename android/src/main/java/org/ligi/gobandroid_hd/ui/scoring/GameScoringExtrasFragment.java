@@ -10,11 +10,10 @@ import butterknife.ButterKnife;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoGameScorer;
-import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
+import org.ligi.gobandroid_hd.ui.fragments.GobandroidGameAwareFragment;
 
-public class GameScoringExtrasFragment extends GobandroidFragment implements GoGameChangeListener {
+public class GameScoringExtrasFragment extends GobandroidGameAwareFragment {
 
     @Bind(R.id.territory_black)
     TextView territory_black;
@@ -41,21 +40,11 @@ public class GameScoringExtrasFragment extends GobandroidFragment implements GoG
     TextView result_txt;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        App.getGame().addGoGameChangeListener(this);
-
+    public View createView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.game_result, container, false);
         ButterKnife.bind(this, view);
         refresh();
         return view;
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        App.getGame().removeGoGameChangeListener(this);
-        super.onDestroyView();
     }
 
     @Override
@@ -89,16 +78,16 @@ public class GameScoringExtrasFragment extends GobandroidFragment implements GoG
 
         result_txt.setText(getFinTXT(scorer));
 
-        territory_black.setText(Integer.toString(scorer.territory_black));
-        territory_white.setText(Integer.toString(scorer.territory_white));
+        territory_black.setText(String.format("%d", scorer.territory_black));
+        territory_white.setText(String.format("%d", scorer.territory_white));
 
         captures_black.setText(getCapturesString(game.getCapturesBlack(), scorer.dead_white));
         captures_white.setText(getCapturesString(game.getCapturesWhite(), scorer.dead_black));
 
-        komi.setText(Float.toString(game.getKomi()));
+        komi.setText(String.format("%f", game.getKomi()));
 
-        final_black.setText(Float.toString(scorer.getPointsBlack()));
-        final_white.setText(Float.toString(scorer.getPointsWhite()));
+        final_black.setText(String.format("%f", scorer.getPointsBlack()));
+        final_white.setText(String.format("%f", scorer.getPointsWhite()));
     }
 
     private String getFinTXT(final GoGameScorer scorer) {

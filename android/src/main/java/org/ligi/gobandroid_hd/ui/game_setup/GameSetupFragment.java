@@ -2,6 +2,7 @@ package org.ligi.gobandroid_hd.ui.game_setup;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,8 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
-import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 
-public class GameSetupFragment extends GobandroidFragment implements OnSeekBarChangeListener {
+public class GameSetupFragment extends Fragment implements OnSeekBarChangeListener {
 
     public int act_size = 9;
     private int wanted_size;
@@ -101,10 +101,8 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-        if ((seekBar == size_seek) && (act_size != (byte) (progress + size_offset)))
-            setSize(progress + size_offset);
-        else if ((seekBar == handicap_seek) && (act_handicap != (byte) progress))
-            act_handicap = (byte) progress;
+        if ((seekBar == size_seek) && (act_size != (byte) (progress + size_offset))) setSize(progress + size_offset);
+        else if ((seekBar == handicap_seek) && (act_handicap != (byte) progress)) act_handicap = (byte) progress;
 
         refresh_ui();
     }
@@ -133,14 +131,11 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
 
         // the checks for change here are important - otherwise samsung moment
         // will die here with stack overflow
-        if ((act_size - size_offset) != size_seek.getProgress())
-            size_seek.setProgress(act_size - size_offset);
+        if ((act_size - size_offset) != size_seek.getProgress()) size_seek.setProgress(act_size - size_offset);
 
-        if (act_handicap != handicap_seek.getProgress())
-            handicap_seek.setProgress(act_handicap);
+        if (act_handicap != handicap_seek.getProgress()) handicap_seek.setProgress(act_handicap);
 
-        if (App.getInteractionScope().getMode() == InteractionScope.MODE_GNUGO)
-            size_seek.setMax(19 - size_offset);
+        if (App.getInteractionScope().getMode() == InteractionScope.MODE_GNUGO) size_seek.setMax(19 - size_offset);
 
 
         GoPrefs.setLastBoardSize(act_size);

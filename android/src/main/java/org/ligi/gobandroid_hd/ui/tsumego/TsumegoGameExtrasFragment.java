@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui.tsumego;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
@@ -8,19 +9,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.fragments.CommentHelper;
-import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 
-public class TsumegoGameExtrasFragment extends GobandroidFragment {
+public class TsumegoGameExtrasFragment extends Fragment {
 
-    private TextView correctView;
-    private View OffPathView;
+    @Bind(R.id.tsumego_correct_view)
+    TextView correctView;
+
+    @Bind(R.id.tsumego_off_path_view)
+    View OffPathView;
+
+    @Bind(R.id.game_comment)
+    TextView commentView;
+
     private boolean off_path_visible = false, correct_visible = false;
-    private TextView commentView;
-
 
     private void updateUI() {
         if (OffPathView == null || correctView == null || getActivity() == null) { // views not yet created
@@ -80,9 +87,7 @@ public class TsumegoGameExtrasFragment extends GobandroidFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View res = inflater.inflate(R.layout.game_extra_tsumego, container, false);
 
-        correctView = findById(res, R.id.tsumego_correct_view);
-        OffPathView = findById(res, R.id.tsumego_off_path_view);
-        commentView = findById(res, R.id.game_comment);
+        ButterKnife.bind(this, res);
 
         updateUI();
         return res;

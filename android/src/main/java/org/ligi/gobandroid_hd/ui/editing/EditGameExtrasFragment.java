@@ -13,26 +13,21 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
-
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import org.ligi.axt.simplifications.SimpleTextWatcher;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
-import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
-
-import java.util.List;
-
-import butterknife.ButterKnife;
+import org.ligi.gobandroid_hd.ui.fragments.GobandroidGameAwareFragment;
 
 
-public class EditGameExtrasFragment extends GobandroidFragment implements GoGameChangeListener {
+public class EditGameExtrasFragment extends GobandroidGameAwareFragment {
 
     @Bind(R.id.comment_et)
     EditText editText;
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View createView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 
         final StatefulEditModeItems editModePool = ((EditGameActivity) getActivity()).getStatefulEditModeItems();
         final View view = inflater.inflate(R.layout.edit_extras, container, false);
@@ -84,12 +79,6 @@ public class EditGameExtrasFragment extends GobandroidFragment implements GoGame
         });
 
         return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        App.getGame().removeGoGameChangeListener(this);
-        super.onDestroyView();
     }
 
     @Override

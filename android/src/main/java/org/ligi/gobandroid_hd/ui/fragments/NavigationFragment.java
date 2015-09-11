@@ -7,22 +7,49 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 
 public class NavigationFragment extends GobandroidGameAwareFragment {
 
-    private ImageView next_btn, prev_btn, first_btn, last_btn;
+    @Bind(R.id.btn_next)
+    ImageView next_btn;
+
+    @Bind(R.id.btn_prev)
+    ImageView prev_btn;
+
+    @Bind(R.id.btn_first)
+    ImageView first_btn;
+
+    @Bind(R.id.btn_last)
+    ImageView last_btn;
+
+    @OnClick(R.id.btn_next)
+    public void gameNavNext() {
+        GameForwardAlert.showIfNeeded(getActivity(), game);
+    }
+
+    @OnClick(R.id.btn_prev)
+    public void gameNavPrev() {
+        if (!game.canUndo()) return;
+
+        // don't do it if the mover has to move at the moment
+        game.undo();
+
+        // undo twice if there is a mover
+        if (game.canUndo()) game.undo();
+    }
+
     private Handler gameChangeHandler = new Handler();
 
     @Override
-    View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View res = inflater.inflate(R.layout.nav_button_container, container, false);
-        first_btn = findById(res, R.id.btn_first);
-        last_btn = findById(res, R.id.btn_last);
-        next_btn = findById(res, R.id.btn_next);
-        prev_btn = findById(res, R.id.btn_prev);
+    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.nav_button_container, container, false);
 
+        ButterKnife.bind(this, view);
         first_btn.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -31,7 +58,6 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
             }
 
         });
-
         last_btn.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -41,26 +67,8 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
 
         });
 
-        next_btn.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                gameNavNext();
-            }
-
-        });
-
-        prev_btn.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                gameNavPrev();
-            }
-
-        });
-
         updateButtonStates();
-        return res;
+        return view;
     }
 
     @Override
@@ -89,19 +97,5 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     }
 
 
-    public void gameNavNext() {
-        GameForwardAlert.showIfNeeded(getActivity(), game);
-    }
-
-    public void gameNavPrev() {
-        if (!game.canUndo()) return;
-
-        // don't do it if the mover has to move at the moment
-        game.undo();
-
-        // undo twice if there is a mover
-        if (game.canUndo()) game.undo();
-
-    }
 
 }
