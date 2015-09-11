@@ -122,7 +122,7 @@ public class SGFWriter {
         return res.toString();
     }
 
-    static String coords2SGFFragment(Cell cell) {
+    private static String coords2SGFFragment(Cell cell) {
         return "[" + (char) ('a' + cell.x) + (char) ('a' + cell.y) + "]";
     }
 
