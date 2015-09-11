@@ -34,30 +34,30 @@ public class SGFWriter {
     }
 
     public static String game2sgf(GoGame game) {
-        String res = "(;FF[4]GM[1]AP[gobandroid:0]"; // header
-        res += getSGFSnippet("SZ", "" + game.getBoardSize()); // board_size;
-        res += getSGFSnippet("GN", escapeSGF(game.getMetaData().getName()));
-        res += getSGFSnippet("DT", escapeSGF(game.getMetaData().getDate()));
-        res += getSGFSnippet("PB", escapeSGF(game.getMetaData().getBlackName()));
-        res += getSGFSnippet("PW", escapeSGF(game.getMetaData().getWhiteName()));
-        res += getSGFSnippet("BR", escapeSGF(game.getMetaData().getBlackRank()));
-        res += getSGFSnippet("WR", escapeSGF(game.getMetaData().getWhiteRank()));
-        res += getSGFSnippet("KM", escapeSGF(Float.toString(game.getKomi())));
-        res += getSGFSnippet("RE", escapeSGF(game.getMetaData().getResult()));
-        res += getSGFSnippet("SO", escapeSGF(game.getMetaData().getSource()));
-        res += "\n";
+        final StringBuilder res = new StringBuilder("(;FF[4]GM[1]AP[gobandroid:0]"); // header
+        res.append(getSGFSnippet("SZ", "" + game.getBoardSize())); // board_size;
+        res.append(getSGFSnippet("GN", escapeSGF(game.getMetaData().getName())));
+        res.append(getSGFSnippet("DT", escapeSGF(game.getMetaData().getDate())));
+        res.append(getSGFSnippet("PB", escapeSGF(game.getMetaData().getBlackName())));
+        res.append(getSGFSnippet("PW", escapeSGF(game.getMetaData().getWhiteName())));
+        res.append(getSGFSnippet("BR", escapeSGF(game.getMetaData().getBlackRank())));
+        res.append(getSGFSnippet("WR", escapeSGF(game.getMetaData().getWhiteRank())));
+        res.append(getSGFSnippet("KM", escapeSGF(Float.toString(game.getKomi()))));
+        res.append(getSGFSnippet("RE", escapeSGF(game.getMetaData().getResult())));
+        res.append(getSGFSnippet("SO", escapeSGF(game.getMetaData().getSource())));
+        res.append("\n");
 
         for (Cell cell : game.getCalcBoard().getAllCells()) {
             if (game.getHandicapBoard().isCellWhite(cell)) {
-                res += "AW" + SGFWriter.coords2SGFFragment(cell) + "\n";
+                res.append("AW").append(SGFWriter.coords2SGFFragment(cell)).append("\n");
             } else if (game.getHandicapBoard().isCellBlack(cell)) {
-                res += "AB" + SGFWriter.coords2SGFFragment(cell) + "\n";
+                res.append("AB").append(SGFWriter.coords2SGFFragment(cell)).append("\n");
             }
         }
 
-        res += SGFWriter.moves2string(game.getFirstMove()) + ")";
+        res.append(SGFWriter.moves2string(game.getFirstMove())).append(")");
 
-        return res;
+        return res.toString();
     }
 
     /**
