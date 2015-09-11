@@ -3,6 +3,9 @@ package org.ligi.gobandroid_hd.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Petri dish
+ */
 public class CellFactory {
 
     public static List<Cell> getAllCellsForRect(final int sizeX, final int sizeY) {
