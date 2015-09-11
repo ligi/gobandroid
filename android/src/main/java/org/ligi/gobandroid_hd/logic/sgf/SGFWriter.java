@@ -1,5 +1,9 @@
 package org.ligi.gobandroid_hd.logic.sgf;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
@@ -10,20 +14,15 @@ import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
 import org.ligi.tracedroid.logging.Log;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
 /**
  * logic to save SGF files ( serialize )
  */
 public class SGFWriter {
 
     public static String escapeSGF(String txt) {
-        txt.replace("]", "\\]");
-        txt.replace(")", "\\)");
-        txt.replace("\\", "\\\\");
+        txt = txt.replace("]", "\\]");
+        txt = txt.replace(")", "\\)");
+        txt = txt.replace("\\", "\\\\");
         return txt;
     }
 
@@ -79,15 +78,12 @@ public class SGFWriter {
             // add the move
             if (!act_move.isFirstMove()) {
                 res += ";" + (act_move.isBlackToMove() ? "B" : "W");
-                if (act_move.isPassMove())
-                    res += "[]";
-                else
-                    res += coords2SGFFragment(act_move.getCell()) + "\n";
+                if (act_move.isPassMove()) res += "[]";
+                else res += coords2SGFFragment(act_move.getCell()) + "\n";
             }
 
             // add the comment
-            if (!act_move.getComment().isEmpty())
-                res += "C[" + act_move.getComment() + "]\n";
+            if (!act_move.getComment().isEmpty()) res += "C[" + act_move.getComment() + "]\n";
 
             // add markers
             for (GoMarker marker : act_move.getMarkers()) {
