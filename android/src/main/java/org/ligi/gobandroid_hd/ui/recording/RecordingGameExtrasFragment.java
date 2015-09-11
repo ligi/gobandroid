@@ -10,16 +10,18 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-
 import org.ligi.axt.simplifications.SimpleTextWatcher;
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 
 public class RecordingGameExtrasFragment extends GobandroidFragment implements GoGameChangeListener {
 
     private EditText et;
-    private Handler hndl = new Handler();
+    private Handler handler = new Handler();
+    private GoGame game;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,9 +29,10 @@ public class RecordingGameExtrasFragment extends GobandroidFragment implements G
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         et = new EditText(getActivity());
 
-        getGame().addGoGameChangeListener(this);
+        game = App.getGame();
+        game.addGoGameChangeListener(this);
 
-        et.setText(getGame().getActMove().getComment());
+        et.setText(game.getActMove().getComment());
         et.setHint(R.string.enter_your_comments_here);
         et.setGravity(Gravity.TOP);
         et.setTextColor(this.getResources().getColor(R.color.text_color_on_board_bg));
@@ -37,7 +40,7 @@ public class RecordingGameExtrasFragment extends GobandroidFragment implements G
         et.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                getGame().getActMove().setComment(s.toString());
+                game.getActMove().setComment(s.toString());
             }
         });
 
@@ -47,17 +50,17 @@ public class RecordingGameExtrasFragment extends GobandroidFragment implements G
 
     @Override
     public void onDestroyView() {
-        getGame().removeGoGameChangeListener(this);
+        game.removeGoGameChangeListener(this);
         super.onDestroyView();
     }
 
     @Override
     public void onGoGameChange() {
-        hndl.post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 if ((et != null) && getActivity() != null) {
-                    et.setText(getGame().getActMove().getComment());
+                    et.setText(game.getActMove().getComment());
                 }
             }
 
