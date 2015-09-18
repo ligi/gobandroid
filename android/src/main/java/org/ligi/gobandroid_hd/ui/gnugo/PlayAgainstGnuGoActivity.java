@@ -287,13 +287,11 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
     }
 
     private String getGtpMoveFromMove(final GoMove currentMove) {
-        final String gtpMove;
         if (currentMove.isPassMove()) {
-            gtpMove = "pass";
+            return "pass";
         } else {
-            gtpMove = coordinates2gtpstr(currentMove.getCell());
+            return coordinates2gtpstr(currentMove.getCell());
         }
-        return gtpMove;
     }
 
     private void doMove(final String color) {
