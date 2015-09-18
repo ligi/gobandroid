@@ -384,7 +384,8 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
         }
 
         try {
-            Log.i("gugoservice undo 1" + service.processGTP("gg-undo 2"));
+            final String undoResult = service.processGTP("gg-undo 2");
+            Log.i("gugoservice undo " + undoResult);
         } catch (Exception e) {
             Log.w("RemoteException when undoing", e);
         }
