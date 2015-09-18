@@ -47,15 +47,9 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
 
     public final static String INTENT_ACTION = "org.ligi.gobandroidhd.ai.gnugo.GnuGoService";
 
-    private SimpleStopwatch simpleStopwatch = new SimpleStopwatch();
     private long avgTimeInMillis = 0;
 
-    public void stopTimeMeasure() {
-        final long elapsed = simpleStopwatch.elapsed();
-        simpleStopwatch.reset();
-        avgTimeInMillis = (avgTimeInMillis + elapsed) / 2;
-        Log.i("TimeSpent average:" + avgTimeInMillis + " last:" + elapsed);
-    }
+    private boolean aiIsThinking = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -212,7 +206,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
 
     @Override
     public byte doMoveWithUIFeedback(Cell cell) {
-        if (simpleStopwatch.isRunning()) {
+        if (aiIsThinking) {
             Toast.makeText(this, R.string.ai_is_thinking, Toast.LENGTH_LONG).show();
             return 0;
         }
@@ -316,7 +310,8 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
     }
 
     private void doMove(final String color) {
-        simpleStopwatch.start();
+        aiIsThinking = true;
+        final SimpleStopwatch simpleStopwatch = new SimpleStopwatch();
         try {
             final String answer = service.processGTP("genmove " + color);
 
@@ -329,7 +324,10 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
         } catch (Exception e) {
             Log.w("RemoteException when moving", e);
         }
-        stopTimeMeasure();
+        final long elapsed = simpleStopwatch.elapsed();
+        avgTimeInMillis = (avgTimeInMillis + elapsed) / 2;
+        Log.i("TimeSpent average:" + avgTimeInMillis + " last:" + elapsed);
+        aiIsThinking = false;
     }
 
     public boolean checkGnuGoSync() {
