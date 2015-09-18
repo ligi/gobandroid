@@ -36,19 +36,13 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
     private IGnuGoService service;
     private ServiceConnection connection;
 
-    private boolean playingBlack = false;
-    private boolean playingWhite = false;
-    private byte level;
-
     private GnuGoSetupDialog dlg;
 
     private boolean gnugoSizeSet = false;
 
-    public final static String INTENT_ACTION = "org.ligi.gobandroidhd.ai.gnugo.GnuGoService";
-
     private long avgTimeInMillis = 0;
 
-    private boolean aiIsThinking = false;
+    private GnuGoGame gnuGoGame;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,26 +59,14 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                playingBlack = dlg.isBlackActive() | dlg.isBothActive();
-                playingWhite = dlg.isWhiteActive() | dlg.isBothActive();
 
-                if (dlg.isBlackActive()) {
-                    getGame().getMetaData().setBlackName(getString(R.string.gnugo));
-                    getGame().getMetaData().setBlackRank("");
-                } else {
-                    getGame().getMetaData().setBlackName(getApp().getSettings().getUsername());
-                    getGame().getMetaData().setBlackRank(getApp().getSettings().getRank());
-                }
+                gnuGoGame = new GnuGoGame(dlg.isBlackActive() | dlg.isBothActive(),
+                                          dlg.isWhiteActive() | dlg.isBothActive(),
+                                          (byte) dlg.getStrength(),
+                                          getGame());
 
-                if (dlg.isWhiteActive()) {
-                    getGame().getMetaData().setWhiteName(getString(R.string.gnugo));
-                    getGame().getMetaData().setWhiteRank("");
-                } else {
-                    getGame().getMetaData().setWhiteName(getApp().getSettings().getUsername());
-                    getGame().getMetaData().setWhiteRank(getApp().getSettings().getRank());
-                }
 
-                level = (byte) dlg.getStrength();
+                gnuGoGame.setMetaDataForGame(getApp());
                 dlg.saveRecentAsDefault();
                 dialog.dismiss();
             }
@@ -107,7 +89,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
     @Override
     public void doTouch(final MotionEvent event) {
 
-        if (gnugoNowBlack() | gnugoNowWhite()) {
+        if (gnuGoGame != null && (gnuGoGame.gnugoNowBlack() | gnuGoGame.gnugoNowWhite())) {
             showInfoToast(R.string.not_your_turn);
         } else {
             super.doTouch(event);
@@ -138,14 +120,14 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
             }
         };
 
-        final Intent intent = new Intent(INTENT_ACTION);
+        final Intent intent = new Intent(GnuGoHelper.INTENT_ACTION_NAME);
         final ResolveInfo resolveInfo = getPackageManager().resolveService(intent, 0);
 
         final ComponentName name = new ComponentName(resolveInfo.serviceInfo.packageName, resolveInfo.serviceInfo.name);
 
         intent.setComponent(name);
 
-        getApplication().bindService(intent, connection, Context.BIND_AUTO_CREATE);
+        getApp().bindService(intent, connection, Context.BIND_AUTO_CREATE);
 
         new Thread(this).start();
 
@@ -168,7 +150,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
         Log.i("GnuGoDebug stopping");
         try {
             getApplication().unbindService(connection);
-            getApplication().stopService(new Intent(INTENT_ACTION));
+            getApplication().stopService(new Intent(GnuGoHelper.INTENT_ACTION_NAME));
         } catch (Exception e) {
             Log.w("Exception in stop()", e);
         }
@@ -205,13 +187,19 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
 
     @Override
     public byte doMoveWithUIFeedback(Cell cell) {
-        if (aiIsThinking) {
-            Toast.makeText(this, R.string.ai_is_thinking, Toast.LENGTH_LONG).show();
-            return 0;
-        }
+        if (gnuGoGame != null) {
+            if (gnuGoGame.aiIsThinking) {
+                Toast.makeText(this, R.string.ai_is_thinking, Toast.LENGTH_LONG).show();
+                return 0;
+            }
 
-        if ((getGame().isBlackToMove() && (!playingBlack))) processMove("black", cell);
-        else if (((!getGame().isBlackToMove()) && (!playingWhite))) processMove("white", cell);
+            if ((getGame().isBlackToMove() && (!gnuGoGame.playingBlack))) {
+                processMove("black", cell);
+            } else if (((!getGame().isBlackToMove()) && (!gnuGoGame.playingWhite))) {
+                processMove("white", cell);
+            }
+
+        }
 
         return super.doMoveWithUIFeedback(cell);
     }
@@ -277,7 +265,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
 
                     }
 
-                    Log.i("setting level " + service.processGTP("level " + level));
+                    Log.i("setting level " + service.processGTP("level " + gnuGoGame.level));
 
                     gnugoSizeSet = true;
                 } catch (Exception e) {
@@ -285,25 +273,17 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
                 }
             }
 
-            if (gnugoNowBlack()) {
+            if (gnuGoGame.gnugoNowBlack()) {
                 doMove("black");
             }
 
-            if (gnugoNowWhite()) {
+            if (gnuGoGame.gnugoNowWhite()) {
                 doMove("white");
             }
 
         }
         stop();
 
-    }
-
-    private boolean gnugoNowWhite() {
-        return !getGame().isBlackToMove() && playingWhite;
-    }
-
-    private boolean gnugoNowBlack() {
-        return getGame().isBlackToMove() && playingBlack;
     }
 
     private String getGtpMoveFromMove(final GoMove currentMove) {
@@ -317,7 +297,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
     }
 
     private void doMove(final String color) {
-        aiIsThinking = true;
+        gnuGoGame.aiIsThinking = true;
         final SimpleStopwatch simpleStopwatch = new SimpleStopwatch();
         try {
             final String answer = service.processGTP("genmove " + color);
@@ -334,7 +314,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
         final long elapsed = simpleStopwatch.elapsed();
         avgTimeInMillis = (avgTimeInMillis + elapsed) / 2;
         Log.i("TimeSpent average:" + avgTimeInMillis + " last:" + elapsed);
-        aiIsThinking = false;
+        gnuGoGame.aiIsThinking = false;
     }
 
     private String coordinates2gtpstr(Cell cell) {
