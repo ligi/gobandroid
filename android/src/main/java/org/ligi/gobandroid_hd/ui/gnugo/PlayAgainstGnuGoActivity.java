@@ -19,7 +19,6 @@ import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GTPHelper;
-import org.ligi.gobandroid_hd.logic.GoBoard;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
@@ -225,6 +224,14 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
         }
     }
 
+    private boolean checkGnuGoSync() {
+        try {
+            return GnuGoHelper.checkGnuGoSync(service.processGTP("showboard"), getGame());
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
     @Override
     public void run() {
         Log.i("GnuGoDebug startthread " + connection);
@@ -328,39 +335,6 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
         avgTimeInMillis = (avgTimeInMillis + elapsed) / 2;
         Log.i("TimeSpent average:" + avgTimeInMillis + " last:" + elapsed);
         aiIsThinking = false;
-    }
-
-    public boolean checkGnuGoSync() {
-        try {
-            final String board_str = service.processGTP("showboard");
-            final GoBoard b = new GoBoard((byte) getGame().getBoardSize());
-            final String[] split_board = board_str.split("\n");
-
-            for (int gnugo_y = 2; gnugo_y <= b.getSize() + 1; gnugo_y++) {
-                final String act_line = split_board[gnugo_y].replace(" ", "").replace("" + (getGame().getBoardSize() - (gnugo_y - 2)), "");
-                for (int gnugo_x = 0; gnugo_x < b.getSize(); gnugo_x++) {
-                    final Cell cell = new Cell(gnugo_x, gnugo_y - 2);
-                    if (act_line.charAt(gnugo_x) == '.' && !getGame().getVisualBoard().isCellFree(cell)) {
-                        return false;
-                    }
-
-                    if (act_line.charAt(gnugo_x) == 'X' && !getGame().getVisualBoard().isCellBlack(cell)) {
-                        return false;
-                    }
-
-                    if (act_line.charAt(gnugo_x) == 'O' && !getGame().getVisualBoard().isCellWhite(cell)) {
-                        return false;
-                    }
-                    // Log.i("checking " +act_line.charAt(gnugo_x));
-                }
-
-            }
-
-        } catch (Exception e) {
-            Log.w("exception in check of gnugo sync " + e);
-            return false;
-        }
-        return true;
     }
 
     private String coordinates2gtpstr(Cell cell) {
