@@ -4,17 +4,15 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
-
-import org.ligi.gobandroid_hd.App;
-import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
-import org.ligi.tracedroid.logging.Log;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import org.ligi.gobandroid_hd.App;
+import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
+import org.ligi.tracedroid.logging.Log;
 
 public class UnzipSGFsDialog {
 
@@ -72,7 +70,7 @@ public class UnzipSGFsDialog {
 
     public static void show(final Activity activity, final Intent intent_after_finish) {
 
-        final ProgressDialog dialog = ProgressDialog.show(activity, "", "Unziping SGF's. Please wait...", true);
+        final ProgressDialog dialog = ProgressDialog.show(activity, "", activity.getString(R.string.copy_sgf_dialog_message), true);
 
         class AlertDialogUpdater implements Runnable {
 

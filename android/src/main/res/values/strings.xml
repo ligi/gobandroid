@@ -260,4 +260,5 @@
     <string name="handicap_only_for">Handicap only for 9x9 / 13x13 / 19x19</string>
     <string name="new_game">New game</string>
     <string name="no_definition_found">no Definition found</string>
+    <string name="copy_sgf_dialog_message">Copying SGF\'s. Please wait...</string>
 </resources>
