@@ -4,5 +4,4 @@
     android:id="@+id/imageView"
     android:layout_width="@dimen/actionbar_height"
     android:layout_height="@dimen/actionbar_height"
-    android:padding="3dp"
-    android:src="@drawable/actionbar_bg" />
+           android:padding="3dp"/>
