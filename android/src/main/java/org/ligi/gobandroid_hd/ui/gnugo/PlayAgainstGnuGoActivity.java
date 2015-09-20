@@ -155,7 +155,6 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         menu.findItem(R.id.menu_game_pass).setVisible(!getGame().isFinished());
-        // menu.findItem(R.id.menu_game_results).setVisible(getGame().isFinished());
         return true;
     }
 
