@@ -4,21 +4,19 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Activity to replay GO Games in TV / Lean back style
  * <p/>
- * TODO subdirs
+ * TODO subdirectories
  *
  * @author <a href="http://ligi.de">Marcus -LiGi- Bueschleb </a>
  *         <p/>
