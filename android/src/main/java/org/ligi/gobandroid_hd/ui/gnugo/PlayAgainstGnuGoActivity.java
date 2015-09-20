@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.Toast;
+import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
@@ -73,15 +74,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
 
         });
 
-        dlg.setNegativeButton(R.string.cancel, new OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                finish();
-            }
-
-        });
+        dlg.setNegativeButton(R.string.cancel, new ActivityFinishingOnClickListener(this));
         dlg.show();
 
     }
