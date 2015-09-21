@@ -16,6 +16,7 @@
         android:fontFamily="sans-serif"
         android:textColor="@android:color/black"
         android:textSize="@dimen/text_size_large"
+        android:background="@drawable/clickable_bg"
         tools:text="Folder Name" />
 
 </android.support.v7.widget.CardView>

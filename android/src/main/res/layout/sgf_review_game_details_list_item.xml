@@ -1,76 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:android.support.v7.cardview="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/clickable_bg"
-    android:orientation="vertical"
-    android.support.v7.cardview:cardBackgroundColor="@android:color/transparent"
-    android.support.v7.cardview:cardMaxElevation="4dp"
-    android.support.v7.cardview:cardUseCompatPadding="true">
+                                    xmlns:android.support.v7.cardview="http://schemas.android.com/apk/res-auto"
+                                    xmlns:tools="http://schemas.android.com/tools"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/clickable_bg"
+                                    android:orientation="vertical"
+                                    android.support.v7.cardview:cardBackgroundColor="@android:color/transparent"
+                                    android.support.v7.cardview:cardMaxElevation="4dp"
+                                    android.support.v7.cardview:cardUseCompatPadding="true">
 
     <RelativeLayout
-        style="@style/item_relative_style">
+            style="@style/item_relative_style"
+            android:background="@drawable/clickable_bg">
 
         <ImageView
-            android:id="@+id/player_white_stone_img"
-            android:layout_width="18sp"
-            android:layout_height="18sp"
-            android:layout_marginRight="8dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/stone_white"
-            android:contentDescription="@string/white" />
+                android:id="@+id/player_white_stone_img"
+                android:layout_width="18sp"
+                android:layout_height="18sp"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/stone_white"
+                android:contentDescription="@string/white"/>
 
         <TextView
-            android:id="@+id/player_white"
-            style="@style/review_list_text"
-            android:layout_toRightOf="@+id/player_white_stone_img"
-            android:layout_toEndOf="@+id/player_white_stone_img"
-            tools:text="white" />
+                android:id="@+id/player_white"
+                style="@style/review_list_text"
+                android:layout_toRightOf="@+id/player_white_stone_img"
+                android:layout_toEndOf="@+id/player_white_stone_img"
+                android:fontFamily="sans-serif"
+                tools:text="white"/>
 
         <ImageView
-            android:id="@+id/player_black_stone_img"
-            android:layout_width="18sp"
-            android:layout_height="18sp"
-            android:layout_marginRight="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_below="@id/player_white"
-            android:src="@drawable/stone_black"
-            android:contentDescription="@string/black"/>
+                android:id="@+id/player_black_stone_img"
+                android:layout_width="18sp"
+                android:layout_height="18sp"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_below="@id/player_white"
+                android:src="@drawable/stone_black"
+                android:contentDescription="@string/black"/>
 
         <TextView
-            android:id="@+id/player_black"
-            android:layout_toRightOf="@+id/player_black_stone_img"
-            android:layout_toEndOf="@+id/player_black_stone_img"
-            android:layout_below="@id/player_white"
-            style="@style/review_list_text"
-            tools:text="black" />
+                android:id="@+id/player_black"
+                android:layout_toRightOf="@+id/player_black_stone_img"
+                android:layout_toEndOf="@+id/player_black_stone_img"
+                android:layout_below="@id/player_white"
+                style="@style/review_list_text"
+                android:fontFamily="sans-serif"
+                tools:text="black"/>
 
 
         <TextView
-            android:id="@+id/filename"
-            style="@style/review_list_text"
-            android:layout_below="@id/player_black"
-            tools:text="filename" />
+                android:id="@+id/filename"
+                style="@style/review_list_text"
+                android:layout_below="@id/player_black"
+                tools:text="filename"
+                android:fontFamily="sans-serif-light"/>
 
         <RatingBar
-            android:id="@+id/game_rating"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/filename"
-            android:isIndicator="true" />
+                android:id="@+id/game_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/filename"
+                android:isIndicator="true"/>
 
         <TextView
-            android:layout_below="@id/game_rating"
-            android:id="@+id/game_extra_infos"
-            style="@style/review_list_text" />
+                android:layout_below="@id/game_rating"
+                android:id="@+id/game_extra_infos"
+                android:fontFamily="sans-serif-light"
+                style="@style/review_list_text"/>
 
         <TextView
-            android:layout_below="@id/game_extra_infos"
-            android:id="@+id/game_link_extra_infos"
-            style="@style/review_list_text" />
+                android:layout_below="@id/game_extra_infos"
+                android:id="@+id/game_link_extra_infos"
+                android:fontFamily="sans-serif-light"
+                style="@style/review_list_text"/>
 
     </RelativeLayout>
 

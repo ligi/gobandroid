@@ -9,7 +9,9 @@
     android:layout_margin="4dp"
     android.support.v7.cardview:cardUseCompatPadding="true">
 
-    <RelativeLayout style="@style/item_relative_style">
+    <RelativeLayout
+            style="@style/item_relative_style"
+            android:background="@drawable/clickable_bg">
 
         <ImageView
             android:id="@+id/solve_status_image"
