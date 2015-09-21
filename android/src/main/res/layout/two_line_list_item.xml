@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="3dp">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                    xmlns:android.support.v7.cardview="http://schemas.android.com/apk/res-auto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android.support.v7.cardview:cardBackgroundColor="@android:color/transparent"
+                                    android.support.v7.cardview:cardMaxElevation="4dp"
+                                    android:layout_margin="4dp"
 
-    <TextView
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@android:id/text1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#000000" />
+                                    android.support.v7.cardview:cardUseCompatPadding="true">
 
-    <TextView
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@android:id/text2"
-        android:textColor="#000000" />
-</LinearLayout> 
+    <LinearLayout
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:background="@drawable/clickable_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@android:id/text1"
+                android:layout_width="fill_parent"
+                android:fontFamily="sans-serif"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"/>
+
+        <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@android:id/text2"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#000000"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

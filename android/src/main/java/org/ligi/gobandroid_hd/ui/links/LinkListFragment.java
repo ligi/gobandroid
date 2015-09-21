@@ -1,39 +1,25 @@
 package org.ligi.gobandroid_hd.ui.links;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ListView;
-
-import org.ligi.axt.adapters.LinkAndDescriptionAdapter;
-import org.ligi.axt.adapters.LinkWithDescription;
+import android.view.ViewGroup;
 import org.ligi.gobandroid_hd.R;
 
-public class LinkListFragment extends ListFragment {
+public abstract class LinkListFragment extends Fragment {
 
-    public LinkWithDescription[] links;
-
-    public LinkListFragment() {
-    }
-
-    public LinkListFragment(LinkWithDescription[] links) {
-        this.links = links;
-    }
-
+    @Nullable
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (links != null) {
-            this.setListAdapter(LinkAndDescriptionAdapter.createByArray(this.getActivity(), links, R.layout.two_line_list_item));
-            this.getListView().setCacheColorHint(0);
-        }
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+        RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.recycler_view, container, false);
+        recyclerView.setAdapter(new TwoLineRecyclerAdapter(getData()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
+        return recyclerView;
     }
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        startActivity(new Intent("android.intent.action.VIEW", Uri.parse(links[position].getURL())));
-    }
+    abstract TwoLinedWithLink[] getData();
 }

@@ -10,11 +10,13 @@ import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.Toast;
+import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
@@ -113,7 +115,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
             }
         };
 
-        final Intent intent = new Intent(GnuGoHelper.INTENT_ACTION_NAME);
+        final Intent intent = getGnuGoIntent();
         final ResolveInfo resolveInfo = getPackageManager().resolveService(intent, 0);
 
         final ComponentName name = new ComponentName(resolveInfo.serviceInfo.packageName, resolveInfo.serviceInfo.name);
@@ -143,12 +145,17 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
         Log.i("GnuGoDebug stopping");
         try {
             getApplication().unbindService(connection);
-            getApplication().stopService(new Intent(GnuGoHelper.INTENT_ACTION_NAME));
+            getApplication().stopService(getGnuGoIntent());
         } catch (Exception e) {
             Log.w("Exception in stop()", e);
         }
         connection = null;
 
+    }
+
+    @NonNull
+    private Intent getGnuGoIntent() {
+        return AXT.at(new Intent(GnuGoHelper.INTENT_ACTION_NAME)).makeExplicit(this);
     }
 
     @Override
@@ -223,7 +230,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
             }
 
             // blocker for the following steps
-            if (service == null || getGame().isFinished() || connection == null) {
+            if (service == null || gnuGoGame == null || getGame().isFinished() || connection == null) {
                 continue;
             }
 
