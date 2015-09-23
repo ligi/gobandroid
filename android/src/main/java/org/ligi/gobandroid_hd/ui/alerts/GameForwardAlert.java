@@ -89,6 +89,8 @@ public class GameForwardAlert extends GobandroidDialog {
                 final GoMarker goMarker = game.getActMove().getnextMove(i).getGoMarker();
                 if (goMarker instanceof TextMarker) {
                     var_btn.setText(((TextMarker) goMarker).getText());
+                } else {
+                    var_btn.setText(String.valueOf(i + 1));
                 }
             } else {
                 var_btn.setText(String.valueOf(i + 1));
