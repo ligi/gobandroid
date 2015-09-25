@@ -38,7 +38,7 @@ import org.ligi.gobandroid_hd.ui.tsumego.fetch.TsumegoSource;
 public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
 
     private SGFListFragment list_fragment;
-    private AsyncTask<TsumegoSource[], String, Integer> downloadProblemsTask = null;
+    private AsyncTask<TsumegoSource[], String, Integer> downloadProblemsTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
