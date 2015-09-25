@@ -32,8 +32,8 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
     @Override
     public void setContentView(int layoutResId) {
         super.setContentView(R.layout.navigation_drawer_container);
-        View v = getLayoutInflater().inflate(layoutResId, (ViewGroup) findViewById(R.id.drawer_layout), false);
-        ViewGroup vg = (ViewGroup) findViewById(R.id.content_frame);
+        final View v = getLayoutInflater().inflate(layoutResId, (ViewGroup) findViewById(R.id.drawer_layout), false);
+        final ViewGroup vg = (ViewGroup) findViewById(R.id.content_frame);
         vg.addView(v);
         new NavigationDrawer(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -93,8 +93,8 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
         // key really helps discoverability
         // http://stackoverflow.com/questions/9286822/how-to-force-use-of-overflow-menu-on-devices-with-menu-button
         try {
-            ViewConfiguration config = ViewConfiguration.get(this);
-            Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+            final ViewConfiguration config = ViewConfiguration.get(this);
+            final Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
             if (menuKeyField != null) {
                 menuKeyField.setAccessible(true);
                 menuKeyField.setBoolean(config, false);
@@ -125,9 +125,9 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
         //NaDra mMenuDrawer.refresh();
 
         if (doFullScreen()) {
-            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         } else {
-            this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
 
@@ -163,13 +163,6 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
-    // very nice hint by Jake Wharton via twitter
-    @SuppressWarnings("unchecked")
-    public <T> T findById(int id) {
-        return (T) findViewById(id);
-    }
-
 
     /*
         private void workingPostToGPlus() {
