@@ -1,20 +1,19 @@
 /**
- * gobandroid 
- * by Marcus -Ligi- Bueschleb 
+ * gobandroid
+ * by Marcus -Ligi- Bueschleb
  * http://ligi.de
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as 
- * published by the Free Software Foundation; 
- *
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation;
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details. 
- *
+ * GNU General Public License for more details.
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  **/
 
 package org.ligi.gobandroid_hd.ui.sgf_listing;
@@ -23,7 +22,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import java.io.File;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -32,15 +31,12 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsDialog;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.TsumegoSource;
 
-import java.io.File;
-
 /**
  * Activity to load SGF's from SD card
  */
 
 public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
 
-    private File dir;
     private SGFListFragment list_fragment;
     private AsyncTask<TsumegoSource[], String, Integer> downloadProblemsTask = null;
 
@@ -48,26 +44,25 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-
         setContentView(R.layout.list);
 
         if (getIntent().getBooleanExtra(GobandroidNotifications.BOOL_FROM_NOTIFICATION_EXTRA_KEY, false)) {
             new GobandroidNotifications(this).cancelNewTsumegosNotification();
         }
 
-
         final String sgfPath = getSGFPath();
 
-        if (sgfPath.substring(sgfPath.indexOf('/')).startsWith(getSettings().getTsumegoPath().substring(sgfPath.indexOf('/'))))
+        if (sgfPath.substring(sgfPath.indexOf('/')).startsWith(getSettings().getTsumegoPath().substring(sgfPath.indexOf('/')))) {
             App.getInteractionScope().setMode(InteractionScope.MODE_TSUMEGO);
-        if (sgfPath.substring(sgfPath.indexOf('/')).startsWith(getSettings().getReviewPath().substring(sgfPath.indexOf('/'))))
+        }
+
+        if (sgfPath.substring(sgfPath.indexOf('/')).startsWith(getSettings().getReviewPath().substring(sgfPath.indexOf('/')))) {
             App.getInteractionScope().setMode(InteractionScope.MODE_REVIEW);
+        }
 
-        dir = new File(sgfPath);
+        final File dir = new File(sgfPath);
 
-        setActionbarProperties();
+        setActionbarProperties(dir);
 
         list_fragment = SGFListFragment.newInstance(dir);
         getSupportFragmentManager().beginTransaction().replace(R.id.list_fragment, list_fragment).commit();
@@ -81,10 +76,10 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
         return getSettings().getSGFBasePath();
     }
 
-    private void setActionbarProperties() {
+    private void setActionbarProperties(final File dir) {
         switch (App.getInteractionScope().getMode()) {
             case InteractionScope.MODE_TSUMEGO:
-                this.setTitle(R.string.load_tsumego);
+                setTitle(R.string.load_tsumego);
                 break;
             default:
                 // we can only show stuff for tsumego and review - if in doubt -
@@ -93,11 +88,15 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
                 // fall wanted
 
             case InteractionScope.MODE_REVIEW:
-                this.setTitle(R.string.load_game);
+                setTitle(R.string.load_game);
                 break;
         }
 
-        this.getSupportActionBar().setSubtitle(dir.getAbsolutePath());
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(true);
+            getSupportActionBar().setSubtitle(dir.getAbsolutePath());
+        }
     }
 
     @Override
@@ -110,11 +109,13 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (App.getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO)
-            this.getMenuInflater().inflate(R.menu.refresh_tsumego, menu);
+        if (App.getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
+            getMenuInflater().inflate(R.menu.refresh_tsumego, menu);
+        }
 
-        if (App.getInteractionScope().getMode() == InteractionScope.MODE_REVIEW)
-            this.getMenuInflater().inflate(R.menu.review_menu, menu);
+        if (App.getInteractionScope().getMode() == InteractionScope.MODE_REVIEW) {
+            getMenuInflater().inflate(R.menu.review_menu, menu);
+        }
 
         return super.onCreateOptionsMenu(menu);
     }
