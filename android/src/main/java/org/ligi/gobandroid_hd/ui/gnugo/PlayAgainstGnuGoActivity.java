@@ -217,13 +217,13 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
         Log.i("GnuGoDebug startthread " + connection);
         while (connection != null) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
             // blocker for the following steps
-            if (service == null || getGame().isFinished() || connection == null) {
+            if (service == null || getGame().isFinished() || connection == null || gnuGoGame == null) {
                 continue;
             }
 
@@ -257,7 +257,8 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
 
                     }
 
-                    Log.i("setting level " + service.processGTP("level " + gnuGoGame.level));
+					service.processGTP("level " + gnuGoGame.level);
+                    Log.i("setting level " + gnuGoGame.level);
 
                     gnugoSizeSet = true;
                 } catch (Exception e) {

@@ -60,6 +60,7 @@ public class GnuGoSetupDialog extends GobandroidDialog {
         }
 
         final int level = shared_prefs.getInt(SP_KEY_STRENGTH, 0);
+        strengthSeek.setMax(10);
         strengthSeek.setProgress(level);
         gnugo_strength_text.setText(getContext().getString(R.string.gnugo_strength) + " " + String.valueOf(level));
 
