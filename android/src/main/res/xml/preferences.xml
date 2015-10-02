@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/screen">
+
+        <CheckBoxPreference
+                android:title="@string/fullscreen_board"
+                android:key="@string/prefs_fullscreen"
+                android:summary="@string/fullscreen_board_summary"/>
+
+        <CheckBoxPreference
+                android:title="@string/show_legend"
+                android:key="@string/prefs_do_legend"
+                android:summary="@string/show_legend_summary"/>
+
+        <CheckBoxPreference
+                android:title="@string/sgf_legend"
+                android:key="@string/prefs_sgf_legend"
+                android:summary="@string/sgf_legend_summary"/>
+
+        <CheckBoxPreference
+                android:title="@string/grid_emboss"
+                android:key="@string/prefs_grid_emboss"
+                android:summary="@string/grid_emboss_summary"/>
+
+        <CheckBoxPreference
+                android:title="@string/constant_light"
+                android:key="@string/prefs_constant_light"
+                android:summary="@string/drain_your_battery_while_playing"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/more">
+
+        <CheckBoxPreference
+                android:title="@string/enable_sound"
+                android:key="@string/prefs_do_sound"
+                android:summary="@string/enable_sound_summary"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

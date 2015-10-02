@@ -1,20 +1,19 @@
 /**
- * gobandroid 
- * by Marcus -Ligi- Bueschleb 
+ * gobandroid
+ * by Marcus -Ligi- Bueschleb
  * http://ligi.de
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as 
- * published by the Free Software Foundation; 
- *
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation;
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details. 
- *
+ * GNU General Public License for more details.
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  **/
 
 package org.ligi.gobandroid_hd.ui;
@@ -166,7 +165,8 @@ public class GoBoardViewHD extends View {
             return new PointF(0, 0);
         }
 
-        return new PointF(-stone_size * (act_zoom_point.x - getGame().getSize() / 2.0f / zoom), -stone_size * (act_zoom_point.y - getGame().getSize() / 2.0f / zoom));
+        return new PointF(-stone_size * (act_zoom_point.x - getGame().getSize() / 2.0f / zoom),
+                          -stone_size * (act_zoom_point.y - getGame().getSize() / 2.0f / zoom));
     }
 
     private Cell calcActZoomPOI() {
@@ -243,18 +243,33 @@ public class GoBoardViewHD extends View {
         // draw the vertical lines for the grid
         final GoBoard board = getGame().getVisualBoard();
         for (byte x = 0; x < getGameSize(); x++)
-            canvas.drawLine(stone_size / 2.0f + x * stone_size, stone_size / 2.0f, stone_size / 2.0f + x * stone_size, stone_size * (float) (board.getSize() - 1) + stone_size / 2.0f, (actpos_highlight_condition && (App.getInteractionScope().getTouchCell().x == x)) ? gridPaint_h : gridPaint);
+            canvas.drawLine(stone_size / 2.0f + x * stone_size,
+                            stone_size / 2.0f,
+                            stone_size / 2.0f + x * stone_size,
+                            stone_size * (float) (board.getSize() - 1) + stone_size / 2.0f,
+                            (actpos_highlight_condition && (App.getInteractionScope().getTouchCell().x == x)) ? gridPaint_h : gridPaint);
 
         // draw the horizontal lines and the legend
         for (byte x = 0; x < board.getSize(); x++) {
-            canvas.drawLine(stone_size / 2.0f, stone_size / 2.0f + x * stone_size, stone_size * (float) (board.getSize() - 1) + stone_size / 2.0f, stone_size / 2.0f + x * stone_size, (actpos_highlight_condition && (App.getInteractionScope().getTouchCell().x == x)) ? gridPaint_h : gridPaint);
+            canvas.drawLine(stone_size / 2.0f,
+                            stone_size / 2.0f + x * stone_size,
+                            stone_size * (float) (board.getSize() - 1) + stone_size / 2.0f,
+                            stone_size / 2.0f + x * stone_size,
+                            (actpos_highlight_condition && (App.getInteractionScope().getTouchCell().x == x)) ? gridPaint_h : gridPaint);
             if (do_legend) {
-                canvas.drawText("" + (getGameSize() - x), 6 + stone_size * (float) (getGameSize() - 1) + stone_size / 2.0f, stone_size / 2.0f + x * stone_size + gridPaint.getTextSize() / 3, legendPaint);
+                canvas.drawText("" + (getGameSize() - x),
+                                6 + stone_size * (float) (getGameSize() - 1) + stone_size / 2.0f,
+                                stone_size / 2.0f + x * stone_size + gridPaint.getTextSize() / 3,
+                                legendPaint);
 
-                if ((x > 7) && legend_sgf_mode)
-                    canvas.drawText("" + (char) ('A' + (x + 1)), stone_size / 2.0f + x * stone_size, stone_size * (float) (getGameSize() - 1) + stone_size / 2.0f + 1 + gridPaint.getTextSize(), legendPaint);
-                else
-                    canvas.drawText("" + (char) ('A' + x), stone_size / 2.0f + x * stone_size, stone_size * (float) (getGameSize() - 1) + stone_size / 2.0f + 1 + gridPaint.getTextSize(), legendPaint);
+                if ((x > 7) && legend_sgf_mode) canvas.drawText("" + (char) ('A' + (x + 1)),
+                                                                stone_size / 2.0f + x * stone_size,
+                                                                stone_size * (float) (getGameSize() - 1) + stone_size / 2.0f + 1 + gridPaint.getTextSize(),
+                                                                legendPaint);
+                else canvas.drawText("" + (char) ('A' + x),
+                                     stone_size / 2.0f + x * stone_size,
+                                     stone_size * (float) (getGameSize() - 1) + stone_size / 2.0f + 1 + gridPaint.getTextSize(),
+                                     legendPaint);
             }
         }
 
@@ -274,9 +289,15 @@ public class GoBoardViewHD extends View {
             }
 
             if (board.isCellDeadWhite(cell)) {
-                canvas.drawBitmap(white_stone_bitmap_small, cell.x * stone_size + (stone_size - white_stone_bitmap_small.getWidth()) / 2, cell.y * stone_size + (stone_size - white_stone_bitmap_small.getHeight()) / 2, bitmapPaint);
+                canvas.drawBitmap(white_stone_bitmap_small,
+                                  cell.x * stone_size + (stone_size - white_stone_bitmap_small.getWidth()) / 2,
+                                  cell.y * stone_size + (stone_size - white_stone_bitmap_small.getHeight()) / 2,
+                                  bitmapPaint);
             } else if (board.isCellDeadBlack(cell)) {
-                canvas.drawBitmap(black_stone_bitmap_small, cell.x * stone_size + (stone_size - black_stone_bitmap_small.getWidth()) / 2, cell.y * stone_size + (stone_size - black_stone_bitmap_small.getHeight()) / 2, bitmapPaint);
+                canvas.drawBitmap(black_stone_bitmap_small,
+                                  cell.x * stone_size + (stone_size - black_stone_bitmap_small.getWidth()) / 2,
+                                  cell.y * stone_size + (stone_size - black_stone_bitmap_small.getHeight()) / 2,
+                                  bitmapPaint);
             } else if (board.isCellWhite(cell)) {
                 canvas.drawBitmap(white_stone_bitmap, cell.x * stone_size, cell.y * stone_size, getStonePaintForCell(cell));
             } else if (board.isCellBlack(cell)) {

@@ -1,20 +1,19 @@
 /**
- * gobandroid 
- * by Marcus -Ligi- Bueschleb 
+ * gobandroid
+ * by Marcus -Ligi- Bueschleb
  * http://ligi.de
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as 
- * published by the Free Software Foundation; 
- *
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation;
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details. 
- *
+ * GNU General Public License for more details.
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  **/
 
 package org.ligi.gobandroid_hd.ui;
@@ -36,7 +35,6 @@ public class GoPrefs {
 
     private static SharedPreferences shared_prefs;
 
-    public final static String KEY_FATFINGER = "fatfinger";
     public final static String KEY_VIEWABLESTONE = "viewablestone";
     public final static String KEY_VIEW_STONE_DISTANCE = "view_stone_distance";
 
@@ -165,6 +163,7 @@ public class GoPrefs {
     }
 
     public static boolean getLegendSGFMode() {
+
         return shared_prefs.getBoolean(KEY_SGF_LEGEND, false);
     }
 
@@ -180,12 +179,9 @@ public class GoPrefs {
         return shared_prefs.getString(KEY_SGF_PATH, DEFAULT_SGF_PATH);
     }
 
-    public static String getSGFFname() {
-        return shared_prefs.getString(KEY_SGF_FNAME, DEFAULT_SGF_FNAME);
-    }
 
     public static byte getAILevel() {
-        String level_str = shared_prefs.getString(KEY_AI_LEVEL, DEFAULT_AI_LEVEL);
+        final String level_str = shared_prefs.getString(KEY_AI_LEVEL, DEFAULT_AI_LEVEL);
         try {
             return Byte.parseByte(level_str.substring(0, 2));
         } catch (Exception e) {
@@ -197,7 +193,4 @@ public class GoPrefs {
         return new String[]{"1 fast/weak", "2", "3", "4", "5 balance", "6", "7", "8", "9", "10 slow/strong"};
     }
 
-    public static String getAILevelString() {
-        return getAllAILevelStrings()[getAILevel() - 1];
-    }
 }
