@@ -209,7 +209,7 @@
     <string name="game_created">对局已创建</string>
     <string name="game_created_msg">对局已创建 - 尽情享受吧!\nTIP:  等待对手思考的时候,  你想干点啥就干点啥吧</string>
     <string name="choose_how_to_send_sgf">选择和朋友分享棋谱 SGF格式 </string>
-    <string name="recorded_game">记录对对局</string>
+    <string name="recorded_game">记录的对局</string>
     <string name="commented_game">推荐的对局</string>
     <string name="situation">情况</string>
     <string name="other">其它</string>
@@ -221,4 +221,18 @@
     <string name="del_sgfmeta">清除</string>
     <string name="del_sgfmeta_prompt">确认要清除此目录记录的结果吗?</string>
     <string name="ai_is_thinking">忙活着呢 慢点吧</string>
+    <string name="copy_sgf_dialog_message">拷贝棋谱...  请稍等</string>
+    <string name="circle">圆圈</string>
+    <string name="game_difficulty">对局难度</string>
+    <string name="goterm_joseki">围棋术语 定式</string>
+    <string name="goterm_miai">围棋术语 见合</string>
+    <string name="goterm_shape">围棋术语 形</string>
+    <string name="goterm_tesuji">围棋术语 手筋</string>
+    <string name="handicap_only_for">9x9 / 13x13 / 19x19 时让子（授子）</string>
+    <string name="letter">信</string>
+    <string name="new_game">新对局</string>
+    <string name="no_definition_found">没有找到定义</string>
+    <string name="number">数字</string>
+    <string name="square">方块</string>
+    <string name="triangle">三角形</string>
 </resources>
