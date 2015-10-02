@@ -58,6 +58,7 @@
     <string name="viewable_stone_sum">stone above finger to see it</string>
     <string name="grid_emboss_summary">emboss the grid or pure black</string>
     <string name="grid_emboss">Grid Emboss</string>
+    <string name="legend">Legend</string>
     <string name="show_legend">Show Legend</string>
     <string name="show_legend_summary">show legend to see position fast</string>
     <string name="variant_mode">Variant Handling</string>

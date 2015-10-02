@@ -110,7 +110,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         AXT.at(this).disableRotation();
 
-        if (getSettings().isWakeLockEnabled()) {
+        if (getSettings().isConstantLightWanted()) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 

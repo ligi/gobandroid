@@ -4,25 +4,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-
+import android.support.annotation.StringRes;
 import java.io.File;
+import org.ligi.gobandroid_hd.R;
 
 public class GobandroidSettings {
-
-    /* the keys */
-    public final static String KEY_FULLSCREEN = "fullscreen";
-    public final static String KEY_SOUND = "do_sound";
-    public final static String KEY_DO_LEGEND = "do_legend";
-    public final static String KEY_SGF_LEGEND = "sgf_legend";
-    public static final String KEY_WAKE_LOCK = "wake_lock";
-    public static final String KEY_GRID_EMBOSS = "grid_emboss";
-    public static final String KEY_TSUMEGO_PUSH = "push_tsumego";
 
     public static final String KEY_USERNAME = "username";
     public static final String KEY_RANK = "rank";
 
     // we need some context
-    private Context ctx;
+    private final Context ctx;
 
     public GobandroidSettings(Context ctx) {
         this.ctx = ctx;
@@ -63,31 +55,31 @@ public class GobandroidSettings {
     }
 
     public boolean isFullscreenEnabled() {
-        return getPreferences().getBoolean(KEY_FULLSCREEN, false);
+        return getPreferences().getBoolean(ctx.getString(R.string.prefs_fullscreen), false);
     }
 
     public boolean isSoundEnabled() {
-        return getPreferences().getBoolean(KEY_SOUND, true);
+        return getBoolForKey(R.string.prefs_do_sound, true);
     }
 
     public boolean isLegendEnabled() {
-        return getPreferences().getBoolean(KEY_DO_LEGEND, false);
+        return getBoolForKey(R.string.prefs_do_legend, true);
     }
 
     public boolean isSGFLegendEnabled() {
-        return getPreferences().getBoolean(KEY_SGF_LEGEND, false);
+        return getBoolForKey(R.string.prefs_sgf_legend, true);
     }
 
-    public boolean isWakeLockEnabled() {
-        return getPreferences().getBoolean(KEY_WAKE_LOCK, true);
+    public boolean isConstantLightWanted() {
+        return getBoolForKey(R.string.prefs_constant_light, true);
     }
 
     public boolean isGridEmbossEnabled() {
-        return getPreferences().getBoolean(KEY_GRID_EMBOSS, true);
+        return getBoolForKey(R.string.prefs_grid_emboss, true);
     }
 
     public boolean isTsumegoPushEnabled() {
-        return getPreferences().getBoolean(KEY_TSUMEGO_PUSH, true);
+        return getBoolForKey(R.string.prefs_push_tsumego, true);
     }
 
     public String getUsername() {
@@ -106,4 +98,7 @@ public class GobandroidSettings {
         getPreferences().edit().putString(KEY_RANK, rank).commit();
     }
 
+    private boolean getBoolForKey(@StringRes int stringRes, boolean defaultValue) {
+        return getPreferences().getBoolean(ctx.getString(stringRes), defaultValue);
+    }
 }
