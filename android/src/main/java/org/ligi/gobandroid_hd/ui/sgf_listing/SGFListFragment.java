@@ -174,7 +174,7 @@ public class SGFListFragment extends Fragment implements Refreshable {
                 return;
             }
 
-            List<String> done = new ArrayList<>(), undone = new ArrayList<>();
+            final List<String> done = new ArrayList<>(), undone = new ArrayList<>();
             for (String fileName : fileNames)
                 if (new SGFMetaData(dir_file.getAbsolutePath() + "/" + fileName).is_solved) {
                     done.add(fileName);
@@ -183,19 +183,23 @@ public class SGFListFragment extends Fragment implements Refreshable {
                 }
 
             final String[] undone_arr = undone.toArray(new String[undone.size()]), done_arr = done.toArray(new String[done.size()]);
-            final AlphanumComparator alphanumComparator = new AlphanumComparator();
-            Arrays.sort(undone_arr, alphanumComparator);
-            Arrays.sort(done_arr, alphanumComparator);
+            sortListing(undone_arr);
+            sortListing(done_arr);
             menu_items = AXT.at(undone_arr).combineWith(done_arr);
         } else {
             menu_items = fileNames.toArray(new String[fileNames.size()]);
-            Arrays.sort(menu_items);
+            sortListing(menu_items);
         }
 
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
     }
+
+    private void sortListing(final String[] done_arr) {
+        Arrays.sort(done_arr, new AlphanumComparator());
+    }
+
 
     public void delete_sgfmeta() {
         Log.i("delete sgfmeta files");
