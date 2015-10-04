@@ -136,13 +136,17 @@ public class SGFListFragment extends Fragment implements Refreshable {
         }
 
         final List<String> fileNames = new ArrayList<>();
+        final List<String> directoryNames = new ArrayList<>();
+
         for (File file : files) {
-            if ((file.getName().endsWith(".sgf")) || (file.isDirectory()) || (file.getName().endsWith(".golink"))) {
+            if (file.isDirectory()) {
+                directoryNames.add(file.getName());
+            } else if ((file.getName().endsWith(".sgf")) || (file.getName().endsWith(".golink"))) {
                 fileNames.add(file.getName());
             }
         }
 
-        if (fileNames.size() == 0) {
+        if (fileNames.size() + directoryNames.size() == 0) {
             alert.setMessage(getResources().getString(R.string.there_are_no_files_in) + " " + dir_file.getAbsolutePath()).show();
             return;
         }
@@ -190,7 +194,10 @@ public class SGFListFragment extends Fragment implements Refreshable {
             menu_items = fileNames.toArray(new String[fileNames.size()]);
             sortListing(menu_items);
         }
+        final String[] dirs = directoryNames.toArray(new String[directoryNames.size()]);
+        sortListing(dirs);
 
+        menu_items = AXT.at(dirs).combineWith(menu_items);
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
