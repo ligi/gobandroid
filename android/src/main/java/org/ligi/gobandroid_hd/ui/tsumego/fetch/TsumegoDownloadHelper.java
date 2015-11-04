@@ -48,11 +48,13 @@ public class TsumegoDownloadHelper {
                     final Request build = new Request.Builder().url(src.remote_path + src.getFnameByPos(pos)).build();
 
                     final Response response = client.newCall(build).execute();
-                    File downloadedFile = new File(src.local_path + src.getFnameByPos(pos));
+                    final File downloadedFile = new File(src.local_path + src.getFnameByPos(pos));
 
-                    BufferedSink sink = Okio.buffer(Okio.sink(downloadedFile));
+                    final BufferedSink sink = Okio.buffer(Okio.sink(downloadedFile));
                     sink.writeAll(response.body().source());
                     sink.close();
+
+                    response.body().close();
 
                     download_count++;
 
