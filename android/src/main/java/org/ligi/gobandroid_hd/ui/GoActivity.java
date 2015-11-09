@@ -22,10 +22,12 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +35,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 import butterknife.Bind;
@@ -125,15 +128,16 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         }
 
         final View customNav = new CustomActionBar(this);
+        customNav.setFocusable(false);
 
         final FragmentTransaction fragmentTransAction = getSupportFragmentManager().beginTransaction();
         fragmentTransAction.add(R.id.game_extra_container, getGameExtraFragment()).commit();
         getSupportFragmentManager().executePendingTransactions();
 
-
-        getSupportActionBar().setCustomView(customNav);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        customNav.setFocusable(false);
+
+        final ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams((int) getResources().getDimension(R.dimen.actionbar_custom_view_width), ViewGroup.LayoutParams.MATCH_PARENT);
+        getSupportActionBar().setCustomView(customNav,layoutParams);
 
         createInfoToast();
 

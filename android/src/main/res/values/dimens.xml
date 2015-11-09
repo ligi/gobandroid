@@ -9,6 +9,8 @@
     <dimen name="menu_drawer_width">230dp</dimen>
     <dimen name="profile_size">128dp</dimen>
 
+    <dimen name="actionbar_custom_view_width">128dp</dimen>
+
     <dimen name="cardview_elevated_elevation">8dp</dimen>
     <dimen name="cardview_unelevated_elevation">1dp</dimen>
 </resources>
