@@ -47,8 +47,8 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        versionCode 211
-        versionName "2.1.1"
+        versionCode 212
+        versionName "2.1.2-russian-edit-fix"
         minSdkVersion 9
         targetSdkVersion 22
         applicationId "org.ligi.gobandroid_hd"
