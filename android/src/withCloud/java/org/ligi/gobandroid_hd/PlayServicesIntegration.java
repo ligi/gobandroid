@@ -12,7 +12,7 @@ public class PlayServicesIntegration implements AppLifecycleIntegrator, PlayServ
 
     public PlayServicesIntegration(Activity context) {
         playHelper = new PlayServicesHelper(context);
-        playHelper.setup(this, PlayServicesHelper.CLIENT_PLUS | PlayServicesHelper.CLIENT_APPSTATE);
+        playHelper.setup(this, PlayServicesHelper.CLIENT_PLUS );
     }
 
     @Override
@@ -21,20 +21,6 @@ public class PlayServicesIntegration implements AppLifecycleIntegrator, PlayServ
 
     @Override
     public void onSignInSucceeded() {
-        /*Log.i("StatCount" + playHelper.getAppStateClient() .getMaxNumKeys());
-        playHelper.getAppStateClient().updateState(1, "test".getBytes());
-        playHelper.getAppStateClient().loadState(new OnStateLoadedListener() {
-            @Override
-            public void onStateLoaded(int i, int i2, byte[] bytes) {
-                Log.i("AppStateTest", "load?? {" + new String(bytes) + "}");
-            }
-
-            @Override
-            public void onStateConflict(int i, String s, byte[] bytes, byte[] bytes2) {
-                Log.i("AppStateTest", "conflict " + new String(bytes) + " <> " + new String(bytes2));
-            }
-        }, 1);
-        */
     }
 
     @Override
@@ -47,11 +33,4 @@ public class PlayServicesIntegration implements AppLifecycleIntegrator, PlayServ
         playHelper.onStop();
     }
 
-    public void onActivityResult(int requestCode, int responseCode, Intent intent) {
-        playHelper.onActivityResult(requestCode, responseCode, intent);
-    }
-
-    public PlayServicesHelper getHelper() {
-        return playHelper;
-    }
 }

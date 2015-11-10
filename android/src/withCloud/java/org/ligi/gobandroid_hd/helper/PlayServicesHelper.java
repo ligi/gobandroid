@@ -26,12 +26,10 @@ import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.google.android.gms.appstate.AppStateManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.games.Games;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,14 +78,12 @@ public class PlayServicesHelper {
 
     // Client objects we manage. If a given client is not enabled, it is null.
     Games mGamesClient = null;
-    AppStateManager mAppStateClient = null;
 
     // What clients we manage (OR-able values, can be combined as flags)
     public final static int CLIENT_NONE = 0x00;
     public final static int CLIENT_GAMES = 0x01;
     public final static int CLIENT_PLUS = 0x02;
-    public final static int CLIENT_APPSTATE = 0x04;
-    public final static int CLIENT_ALL = CLIENT_GAMES | CLIENT_PLUS | CLIENT_APPSTATE;
+    public final static int CLIENT_ALL = CLIENT_GAMES | CLIENT_PLUS;
 
     // What clients were requested? (bit flags)
     int mRequestedClients = CLIENT_NONE;
@@ -206,9 +202,6 @@ public class PlayServicesHelper {
         if (0 != (clientsToUse & CLIENT_PLUS)) {
             scopesList.add(Scopes.PLUS_LOGIN);
         }
-        if (0 != (clientsToUse & CLIENT_APPSTATE)) {
-            scopesList.add(Scopes.APP_STATE);
-        }
 /*
         mScopes = scopesList.toArray(new String[scopesList.size()]);
 
@@ -237,38 +230,17 @@ public class PlayServicesHelper {
   */
     }
 
-    /**
-     * Returns the GamesClient object. In order to call this method, you must have
-     * called @link{setup} with a set of clients that includes CLIENT_GAMES.
-
-    public GamesClient getGamesClient() {
-        if (mGamesClient == null) {
-            throw new IllegalStateException("No GamesClient. Did you request it at setup?");
-        }
-        return mGamesClient;
-    }
-
-    /**
-     * Returns the AppStateClient object. In order to call this method, you must have
-     * called @link{#setup} with a set of clients that includes CLIENT_APPSTATE.
-     */
-    public AppStateManager getAppStateClient() {
-        if (mAppStateClient == null) {
-            throw new IllegalStateException("No AppStateClient. Did you request it at setup?");
-        }
-        return mAppStateClient;
-    }
 
     /**
      * Returns the PlusClient object. In order to call this method, you must have
      * called @link{#setup} with a set of clients that includes CLIENT_PLUS.
 
-    public PlusClient getPlusClient() {
-        if (mPlusClient == null) {
-            throw new IllegalStateException("No PlusClient. Did you request it at setup?");
-        }
-        return mPlusClient;
-    }
+     public PlusClient getPlusClient() {
+     if (mPlusClient == null) {
+     throw new IllegalStateException("No PlusClient. Did you request it at setup?");
+     }
+     return mPlusClient;
+     }
      */
     /**
      * Returns whether or not the user is signed in.
@@ -391,9 +363,6 @@ public class PlayServicesHelper {
         }
         if (0 != (clientsToUse & CLIENT_PLUS)) {
             addToScope(scopeStringBuilder, Scopes.PLUS_LOGIN);
-        }
-        if (0 != (clientsToUse & CLIENT_APPSTATE)) {
-            addToScope(scopeStringBuilder, Scopes.APP_STATE);
         }
         return scopeStringBuilder.toString();
     }
@@ -547,14 +516,11 @@ public class PlayServicesHelper {
         } /*else if (mPlusClient != null && (0 != (pendingClients & CLIENT_PLUS))) {
             debugLog("Connecting PlusClient.");
             mClientCurrentlyConnecting = CLIENT_PLUS;
-        } */else if (mAppStateClient != null && (0 != (pendingClients & CLIENT_APPSTATE))) {
-            debugLog("Connecting AppStateClient.");
-            mClientCurrentlyConnecting = CLIENT_APPSTATE;
-        } else {
+        } */
          /*   throw new AssertionError("Not all clients connected, yet no one is next. R="
                     + mRequestedClients + ", C=" + mConnectedClients);
                     */
-        }
+        //}
 
         connectCurrentClient();
     }
