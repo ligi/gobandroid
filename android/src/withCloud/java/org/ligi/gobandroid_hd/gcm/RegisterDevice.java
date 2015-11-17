@@ -2,6 +2,7 @@ package org.ligi.gobandroid_hd.gcm;
 
 import android.os.Build;
 import android.provider.Settings;
+import android.support.design.BuildConfig;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -43,7 +44,7 @@ public class RegisterDevice implements Runnable {
             String url_str = "https://" + GobandroidConfiguration.backend_domain + "/gcm/register?"
                     + getURLParamSnippet("device_id", device_id)
                     + "&" + getURLParamSnippet("push_key", push_id)
-                    + "&" + getURLParamSnippet("app_version", App.getVersion());
+                    + "&" + getURLParamSnippet("app_version", BuildConfig.VERSION_NAME);
 
             if (app.getSettings().isTsumegoPushEnabled()) {
                 url_str += "&" + getURLParamSnippet("want_tsumego", "t");

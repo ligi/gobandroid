@@ -27,16 +27,6 @@ public class App extends Application {
     // the InteractionScope holds things like mode/act game between activities
     private static InteractionScope interaction_scope;
 
-    public static String getVersion() {
-        try {
-            return instance.getPackageManager().getPackageInfo(instance.getPackageName(), 0).versionName;
-        } catch (NameNotFoundException e) {
-            Log.w("cannot determine app version - that's strange but not critical");
-            return "vX.Y";
-        }
-    }
-
-
     public static int getVersionCode() {
         try {
             return instance.getPackageManager().getPackageInfo(instance.getPackageName(), 0).versionCode;
