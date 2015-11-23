@@ -121,10 +121,10 @@ dependencies {
 
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
 
-    androidTestCompile 'com.squareup.assertj:assertj-android:1.1.0'
+    androidTestCompile 'com.squareup.assertj:assertj-android:1.1.1'
     androidTestCompile 'com.android.support:support-annotations:23.1.1'
 
-    testCompile 'com.squareup.assertj:assertj-android:1.1.0'
+    testCompile 'com.squareup.assertj:assertj-android:1.1.1'
     testCompile 'com.android.support:support-annotations:23.1.1'
     testCompile 'junit:junit:4.12'
 
