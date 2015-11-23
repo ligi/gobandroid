@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.App;
+import org.ligi.gobandroid_hd.BuildConfig;
 import org.ligi.gobandroid_hd.FileEncodeDetector;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
@@ -233,8 +234,8 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
                                             emailIntent
                                                     .putExtra(
                                                             android.content.Intent.EXTRA_SUBJECT,
-                                                            "SGF Problem"
-                                                                    + App.getVersionCode()
+                                                            "SGF Problem "
+                                                                    + BuildConfig.VERSION_NAME
                                                     );
                                             emailIntent
                                                     .putExtra(

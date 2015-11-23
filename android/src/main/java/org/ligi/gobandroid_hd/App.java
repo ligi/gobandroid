@@ -1,7 +1,6 @@
 package org.ligi.gobandroid_hd;
 
 import android.app.Application;
-import android.content.pm.PackageManager.NameNotFoundException;
 
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GobandroidTracker;
@@ -26,15 +25,6 @@ public class App extends Application {
 
     // the InteractionScope holds things like mode/act game between activities
     private static InteractionScope interaction_scope;
-
-    public static int getVersionCode() {
-        try {
-            return instance.getPackageManager().getPackageInfo(instance.getPackageName(), 0).versionCode;
-        } catch (NameNotFoundException e) {
-            Log.w("cannot determine app version - that's strange but not critical");
-            return 0;
-        }
-    }
 
     @Override
     public void onCreate() {

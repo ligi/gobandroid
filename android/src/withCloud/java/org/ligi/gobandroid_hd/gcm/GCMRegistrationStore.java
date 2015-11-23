@@ -3,7 +3,7 @@ package org.ligi.gobandroid_hd.gcm;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import org.ligi.gobandroid_hd.App;
+import org.ligi.gobandroid_hd.BuildConfig;
 import org.ligi.tracedroid.logging.Log;
 
 public class GCMRegistrationStore {
@@ -20,12 +20,12 @@ public class GCMRegistrationStore {
 
     public void storeRegistrationId(String regId) {
         final SharedPreferences prefs = getGCMPreferences(context);
-        int appVersion = App.getVersionCode();
+        final int appVersion = BuildConfig.VERSION_CODE;
         Log.i(TAG, "Saving regId on app version " + appVersion);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PROPERTY_REG_ID, regId);
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
-        editor.commit();
+        editor.apply();
     }
 
     private SharedPreferences getGCMPreferences(Context context) {
@@ -44,7 +44,7 @@ public class GCMRegistrationStore {
         // since the existing regID is not guaranteed to work with the new
         // app version.
         int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
-        int currentVersion = App.getVersionCode();
+        int currentVersion = BuildConfig.VERSION_CODE;
         if (registeredVersion != currentVersion) {
             Log.i(TAG, "App version changed.");
             return "";
