@@ -1,12 +1,12 @@
 package org.ligi.gobandroid_hd.ui.sgf_listing;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
@@ -17,12 +17,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.davekoelle.alphanum.AlphanumComparator;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.ActivityFinishingOnCancelListener;
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
@@ -42,6 +39,13 @@ import org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder.ReviewViewHolder;
 import org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder.TsumegoViewHolder;
 import org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder.ViewHolderInterface;
 import org.ligi.tracedroid.logging.Log;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static android.text.TextUtils.isEmpty;
 
 public class SGFListFragment extends Fragment implements Refreshable {

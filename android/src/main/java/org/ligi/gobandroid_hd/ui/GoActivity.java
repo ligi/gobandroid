@@ -19,13 +19,13 @@
 package org.ligi.gobandroid_hd.ui;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,12 +35,7 @@ import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.Toast;
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
@@ -61,6 +56,14 @@ import org.ligi.snackengage.SnackEngage;
 import org.ligi.snackengage.snacks.DefaultRateSnack;
 import org.ligi.tracedroid.logging.Log;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Activity for a Go Game

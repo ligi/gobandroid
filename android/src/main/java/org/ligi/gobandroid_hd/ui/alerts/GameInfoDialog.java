@@ -18,16 +18,13 @@
 
 package org.ligi.gobandroid_hd.ui.alerts;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.OnTextChanged;
+
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
@@ -35,6 +32,11 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 /**
  * Class to show an Alert with the Game Info ( who plays / rank / game name .. )

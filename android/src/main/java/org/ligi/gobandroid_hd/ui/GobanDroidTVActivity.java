@@ -1,17 +1,19 @@
 package org.ligi.gobandroid_hd.ui;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import android.support.v7.app.AlertDialog;
+
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Activity to replay GO Games in TV / Lean back style
