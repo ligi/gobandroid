@@ -8,6 +8,7 @@ public class PlusAwareProfileActivity extends GobandroidFragmentActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
 //        private EditText username_et;
