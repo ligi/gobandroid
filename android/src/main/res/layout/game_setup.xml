@@ -6,7 +6,7 @@
     <org.ligi.gobandroid_hd.ui.GoBoardViewHD
         android:id="@+id/go_board"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"></org.ligi.gobandroid_hd.ui.GoBoardViewHD>
+        android:layout_height="wrap_content" />
 
     <include layout="@layout/horizontal_divider" />
 
