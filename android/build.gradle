@@ -60,8 +60,10 @@ android {
 
 
     lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
+        warning 'MissingTranslation'
+
+        // for OKIO
+        warning 'InvalidPackage'
     }
 
     packagingOptions {
