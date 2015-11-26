@@ -206,8 +206,8 @@
     <string name="new_move">nueva jugada</string>
     <string name="in_an_online_game_you_participate">en una de tus partidas en línea</string>
     <string name="choose_invite_method">elige método de invitación</string>
-    <string name="you_are_invited_to_a_go_game">Te han invitado a una partida de GO (tamaño: %1$ s,
-        color: %2$ s)
+    <string name="you_are_invited_to_a_go_game">Te han invitado a una partida de GO (tamaño: %1$s,
+        color: %2$s)
     </string>
     <string name="go_game_invitation">Invitación a una partida</string>
     <string name="uploading_game">cargar una partida</string>

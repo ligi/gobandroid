@@ -210,8 +210,8 @@
     <string name="new_move">Nova jugada</string>
     <string name="in_an_online_game_you_participate">en una de les teves partides en línia</string>
     <string name="choose_invite_method">Tria el mètode d\'invitar</string>
-    <string name="you_are_invited_to_a_go_game">T\'han invitat a una partida (mida: %1$ s, color:
-        %2$ s)
+    <string name="you_are_invited_to_a_go_game">T\'han invitat a una partida (mida: %1$s, color:
+        %2$s)
     </string>
     <string name="go_game_invitation">Invitació a jugar</string>
     <string name="uploading_game">Carregant partida</string>
