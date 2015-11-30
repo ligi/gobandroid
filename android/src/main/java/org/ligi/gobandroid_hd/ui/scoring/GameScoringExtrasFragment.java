@@ -5,13 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameScorer;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidGameAwareFragment;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class GameScoringExtrasFragment extends GobandroidGameAwareFragment {
 
@@ -84,19 +86,21 @@ public class GameScoringExtrasFragment extends GobandroidGameAwareFragment {
         captures_black.setText(getCapturesString(game.getCapturesBlack(), scorer.dead_white));
         captures_white.setText(getCapturesString(game.getCapturesWhite(), scorer.dead_black));
 
-        komi.setText(String.format("%f", game.getKomi()));
+        komi.setText(String.format("%.1f", game.getKomi()));
 
-        final_black.setText(String.format("%f", scorer.getPointsBlack()));
-        final_white.setText(String.format("%f", scorer.getPointsWhite()));
+        final_black.setText(String.format("%.1f", scorer.getPointsBlack()));
+        final_white.setText(String.format("%.1f", scorer.getPointsWhite()));
     }
 
     private String getFinTXT(final GoGameScorer scorer) {
         if (scorer.getPointsBlack() > scorer.getPointsWhite()) {
-            return (getString(R.string.black_won_with) + (scorer.getPointsBlack() - scorer.getPointsWhite()) + getString(R.string._points_));
+            final float finalPoints = scorer.getPointsBlack() - scorer.getPointsWhite();
+            return (getString(R.string.black_won_with) + String.format("%.1f", finalPoints) + getString(R.string._points_));
         }
 
         if (scorer.getPointsWhite() > scorer.getPointsBlack()) {
-            return (getString(R.string.white_won_with_) + (scorer.getPointsWhite() - scorer.getPointsBlack()) + getString(R.string._points_));
+            final float finalPoints = scorer.getPointsBlack() - scorer.getPointsWhite();
+            return (getString(R.string.white_won_with_) + String.format("%.1f", finalPoints) + getString(R.string._points_));
         }
         return getResources().getString(R.string.game_ended_in_draw);
     }

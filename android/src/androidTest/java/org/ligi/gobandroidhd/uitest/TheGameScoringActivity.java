@@ -1,13 +1,16 @@
 package org.ligi.gobandroidhd.uitest;
 
 import android.test.suitebuilder.annotation.MediumTest;
+
 import com.squareup.spoon.Spoon;
+
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
 import org.ligi.gobandroidhd.base.BaseIntegration;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -41,8 +44,8 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
         onView(withId(R.id.go_board)).perform(tapStone(new Cell(0, 0)));
 
         onView(withId(R.id.final_black)).perform(scrollTo());
-        onView(withId(R.id.final_black)).check(matches(withText(containsString("80.0"))));
-        onView(withId(R.id.captures_black)).check(matches(withText(containsString("0"))));
+        onView(withId(R.id.final_black)).check(matches(withText("80.0")));
+        onView(withId(R.id.captures_black)).check(matches(withText("0")));
         onView(withId(R.id.result_txt)).check(matches(withText(containsString("Black"))));
 
         Spoon.screenshot(activity, "one_stone_count");
@@ -60,8 +63,8 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
         onView(withId(R.id.go_board)).perform(tapStone(new Cell(0, 0)));
 
         onView(withId(R.id.final_black)).perform(scrollTo());
-        onView(withId(R.id.final_black)).check(matches(withText(containsString("81.0"))));
-        onView(withId(R.id.captures_black)).check(matches(withText(containsString("1"))));
+        onView(withId(R.id.final_black)).check(matches(withText("81.0")));
+        onView(withId(R.id.captures_black)).check(matches(withText("0 + 1")));
         onView(withId(R.id.result_txt)).check(matches(withText(containsString("Black"))));
 
         Spoon.screenshot(activity, "count_mark_one");
@@ -78,9 +81,9 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
         onView(withId(R.id.go_board)).perform(tapStone(new Cell(0, 1)));
 
         onView(withId(R.id.final_white)).perform(scrollTo());
-        onView(withId(R.id.final_white)).check(matches(withText(containsString("87.5"))));
-        onView(withId(R.id.captures_black)).check(matches(withText(containsString("0"))));
-        onView(withId(R.id.captures_white)).check(matches(withText(containsString("1"))));
+        onView(withId(R.id.final_white)).check(matches(withText("87.5")));
+        onView(withId(R.id.captures_black)).check(matches(withText("0")));
+        onView(withId(R.id.captures_white)).check(matches(withText("0 + 1")));
         onView(withId(R.id.result_txt)).check(matches(withText(containsString("White"))));
 
         Spoon.screenshot(activity, "count_white_wins");
@@ -99,7 +102,7 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
         onView(withId(R.id.go_board)).perform(tapStone(new Cell(2, 2)));
 
         onView(withId(R.id.final_white)).perform(scrollTo());
-        onView(withId(R.id.final_white)).check(matches(withText(containsString("16.5"))));
+        onView(withId(R.id.final_white)).check(matches(withText("16.5")));
 
         Spoon.screenshot(activity, "count_scoring_territory_in_dead_stones");
     }
@@ -114,7 +117,7 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
 
         onView(withId(R.id.go_board)).perform(tapStone(new Cell(0, 1)));
 
-        onView(withId(R.id.final_white)).check(matches(withText(containsString("88.5"))));
+        onView(withId(R.id.final_white)).check(matches(withText("88.5")));
 
         Spoon.screenshot(activity, "count_mark_group");
     }
