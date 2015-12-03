@@ -11,7 +11,7 @@ public class DownloadProblemsDialog {
     public static AsyncTask<TsumegoSource[], String, Integer> getAndRunTask(GobandroidFragmentActivity activity, Refreshable refreshable) {
         App.getTracker().trackEvent("ui_action", "tsumego", "refresh", null);
         final AsyncTask<TsumegoSource[], String, Integer> res = new DownloadProblemsDialogTask(activity, refreshable);
-        res.execute(TsumegoDownloadHelper.getDefaultList(activity.getApp()));
+        res.execute(TsumegoDownloadHelper.getDefaultList(App.component().settings()));
         return res;
     }
 }

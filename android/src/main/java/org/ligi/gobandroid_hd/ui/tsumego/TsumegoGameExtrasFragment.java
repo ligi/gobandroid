@@ -9,14 +9,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.fragments.CommentHelper;
 
+import javax.inject.Inject;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class TsumegoGameExtrasFragment extends Fragment {
+
+    @Inject
+    GameProvider gameProvider;
 
     @Bind(R.id.tsumego_correct_view)
     TextView correctView;
@@ -34,7 +42,7 @@ public class TsumegoGameExtrasFragment extends Fragment {
             return; // will come back later
         }
 
-        final GoGame game = App.getGame();
+        final GoGame game = gameProvider.get();
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -85,6 +93,8 @@ public class TsumegoGameExtrasFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        App.component().inject(this);
+
         final View res = inflater.inflate(R.layout.game_extra_tsumego, container, false);
 
         ButterKnife.bind(this, res);

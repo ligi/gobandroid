@@ -83,7 +83,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     private Toast info_toast = null;
     private Fragment actFragment;
-    private InteractionScope interaction_scope;
     private int last_processed_move_change_num = 0;
 
     public Fragment getGameExtraFragment() {
@@ -108,12 +107,11 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             }
         }
 
-        interaction_scope = App.getInteractionScope();
         getSupportActionBar().setHomeButtonEnabled(true);
 
         AXT.at(this).disableRotation();
 
-        if (getSettings().isConstantLightWanted()) {
+        if (settings.isConstantLightWanted()) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
@@ -124,7 +122,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         }
 
         if (sound_man == null) {
-            sound_man = new GoSoundManager(this);
+            sound_man = new GoSoundManager(this, settings);
         }
 
         final View customNav = new CustomActionBar(this);
@@ -184,9 +182,9 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             return;
         }
 
-        go_board.do_legend = getSettings().isLegendEnabled();
-        go_board.legend_sgf_mode = getSettings().isSGFLegendEnabled();
-        go_board.setGridEmboss(getSettings().isGridEmbossEnabled());
+        go_board.do_legend = settings.isLegendEnabled();
+        go_board.legend_sgf_mode = settings.isSGFLegendEnabled();
+        go_board.setGridEmboss(settings.isGridEmbossEnabled());
     }
 
     public boolean isBoardFocusWanted() {
@@ -216,7 +214,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     @Override
     public boolean doFullScreen() {
-        return getSettings().isFullscreenEnabled() | getResources().getBoolean(R.bool.force_fullscreen);
+        return settings.isFullscreenEnabled() | getResources().getBoolean(R.bool.force_fullscreen);
     }
 
     @Override
@@ -266,7 +264,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     public void switchToCounting() {
 
-        App.getInteractionScope().setMode(InteractionScope.MODE_COUNT);
+        interactionScope.setMode(InteractionScope.MODE_COUNT);
         startActivity(new Intent(this, GameScoringActivity.class));
         finish();
 
@@ -369,7 +367,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     }
 
     protected void eventForZoomBoard(MotionEvent event) {
-        App.getInteractionScope().setTouchPosition(getBoard().pixel2cell(event.getX(), event.getY()));
+        interactionScope.setTouchPosition(getBoard().pixel2cell(event.getX(), event.getY()));
 
         if (event.getAction() == MotionEvent.ACTION_UP) {
             gameExtrasContainer.setVisibility(View.VISIBLE);
@@ -424,7 +422,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         if (doAutoSave()) {
             try {
-                File f = new File(getSettings().getSGFSavePath() + "/autosave.sgf");
+                final File f = new File(settings.getSGFSavePath() + "/autosave.sgf");
                 f.createNewFile();
 
                 FileWriter sgf_writer = new FileWriter(f);
@@ -453,11 +451,11 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-                interaction_scope.setTouchPosition(getBoard().pixel2cell(event.getX(), event.getY()));
+                interactionScope.setTouchPosition(getBoard().pixel2cell(event.getX(), event.getY()));
                 break;
 
             case MotionEvent.ACTION_OUTSIDE:
-                interaction_scope.setTouchPosition(null);
+                interactionScope.setTouchPosition(null);
                 break;
 
             case MotionEvent.ACTION_UP:
@@ -465,19 +463,19 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                 if (go_board.move_stone_mode) {
                     // TODO check if this is an illegal move ( e.g. in variants )
 
-                    if (interaction_scope.getTouchCell() != null && getGame().getVisualBoard().isCellFree(interaction_scope.getTouchCell())) {
-                        getGame().getActMove().setCell(interaction_scope.getTouchCell());
+                    if (interactionScope.getTouchCell() != null && getGame().getVisualBoard().isCellFree(interactionScope.getTouchCell())) {
+                        getGame().getActMove().setCell(interactionScope.getTouchCell());
                         getGame().getActMove().setDidCaptures(true); // TODO check if we harm sth with that
                         getGame().refreshBoards();
                     }
                     go_board.move_stone_mode = false; // moving of stone done
-                } else if ((getGame().getActMove().isOnCell(interaction_scope.getTouchCell()))) {
+                } else if ((getGame().getActMove().isOnCell(interactionScope.getTouchCell()))) {
                     initializeStoneMove();
                 } else {
-                    doMoveWithUIFeedback(interaction_scope.getTouchCell());
+                    doMoveWithUIFeedback(interactionScope.getTouchCell());
                 }
 
-                interaction_scope.setTouchPosition(null);
+                interactionScope.setTouchPosition(null);
                 break;
         }
 
@@ -508,19 +506,19 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     }
 
     public boolean doAskToKeepVariant() {
-        return GoPrefs.isAskVariantEnabled() && App.getInteractionScope().ask_variant_session;
+        return GoPrefs.isAskVariantEnabled() && interactionScope.ask_variant_session;
     }
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            final Cell ensuredTouchPosition = interaction_scope.getEnsuredTouchPosition();
+            final Cell ensuredTouchPosition = interactionScope.getEnsuredTouchPosition();
             final BoardCell boardCell = getGame().getCalcBoard().getCell(ensuredTouchPosition);
 
             switch (keyCode) {
                 case KeyEvent.KEYCODE_DPAD_UP:
                     if (boardCell.up != null) {
-                        interaction_scope.touch_position = boardCell.up;
+                        interactionScope.touch_position = boardCell.up;
                     } else {
                         return false;
                     }
@@ -528,7 +526,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
                 case KeyEvent.KEYCODE_DPAD_LEFT:
                     if (boardCell.left != null) {
-                        interaction_scope.touch_position = boardCell.left;
+                        interactionScope.touch_position = boardCell.left;
                     } else {
                         return false;
                     }
@@ -536,7 +534,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
                 case KeyEvent.KEYCODE_DPAD_DOWN:
                     if (boardCell.down != null) {
-                        interaction_scope.touch_position = boardCell.down;
+                        interactionScope.touch_position = boardCell.down;
                     } else {
                         return false;
                     }
@@ -544,7 +542,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
                     if (boardCell.right != null) {
-                        interaction_scope.touch_position = boardCell.right;
+                        interactionScope.touch_position = boardCell.right;
                     } else {
                         return false;
                     }

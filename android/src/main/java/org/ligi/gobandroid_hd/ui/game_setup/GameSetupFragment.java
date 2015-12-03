@@ -2,25 +2,26 @@ package org.ligi.gobandroid_hd.ui.game_setup;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import org.ligi.gobandroid_hd.App;
+
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
+import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 
-public class GameSetupFragment extends Fragment implements OnSeekBarChangeListener {
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class GameSetupFragment extends GobandroidFragment implements OnSeekBarChangeListener {
 
     public int act_size = 9;
     private int wanted_size;
@@ -135,14 +136,15 @@ public class GameSetupFragment extends Fragment implements OnSeekBarChangeListen
 
         if (act_handicap != handicap_seek.getProgress()) handicap_seek.setProgress(act_handicap);
 
-        if (App.getInteractionScope().getMode() == InteractionScope.MODE_GNUGO) size_seek.setMax(19 - size_offset);
+        if (interactionScope.getMode() == InteractionScope.MODE_GNUGO)
+            size_seek.setMax(19 - size_offset);
 
 
         GoPrefs.setLastBoardSize(act_size);
         GoPrefs.setLastHandicap(act_handicap);
 
-        if (App.getGame().getSize() != act_size || App.getGame().getHandicap() != act_handicap) {
-            App.setGame(new GoGame(act_size, act_handicap));
+        if (gameProvider.get().getSize() != act_size || gameProvider.get().getHandicap() != act_handicap) {
+            gameProvider.set(new GoGame(act_size, act_handicap));
         }
 
         if (getActivity() instanceof GoActivity) {

@@ -182,7 +182,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
         if (intent_uri.toString().startsWith("tsumego")) {
             intent_uri = Uri.parse(intent_uri.toString().replaceFirst("tsumego", "file"));
-            App.getInteractionScope().setMode(InteractionScope.MODE_TSUMEGO);
+            interactionScope.setMode(InteractionScope.MODE_TSUMEGO);
         }
 
         GoGame game = null;
@@ -193,7 +193,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
             // if it is a tsumego and we need a transformation to right corner
             // -> do so
-            if (App.getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
+            if (interactionScope.getMode() == InteractionScope.MODE_TSUMEGO) {
                 final int transform = TsumegoHelper.calcTransform(game);
 
                 if (transform != SGFReader.DEFAULT_SGF_TRANSFORM) {
@@ -276,11 +276,11 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
                 game.jump(game.getActMove().getnextMove(0));
             }
         }
-        App.setGame(game);
+        gameProvider.set(game);
 
         game.getMetaData().setFileName(Uri.decode(intent_uri.toString()));
 
-        App.getGame().notifyGameChange();
+        gameProvider.get().notifyGameChange();
 
         runOnUiThread(new Runnable() {
             @Override

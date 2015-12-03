@@ -20,17 +20,26 @@ import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.gnugo.GnuGoHelper;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.tracedroid.logging.Log;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CustomActionBar extends LinearLayout implements GoGame.GoGameChangeListener {
+
+    @Inject
+    GameProvider gameProvider;
+
+    @Inject
+    InteractionScope interactionScope;
 
     @Bind(R.id.white_captures_tv)
     TextView white_captures_tv;
@@ -72,18 +81,19 @@ public class CustomActionBar extends LinearLayout implements GoGame.GoGameChange
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        App.getGame().addGoGameChangeListener(this);
+        gameProvider.get().addGoGameChangeListener(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        App.getGame().removeGoGameChangeListener(this);
+        gameProvider.get().removeGoGameChangeListener(this);
     }
 
     public CustomActionBar(Activity activity) {
         super(activity);
 
+        App.component().inject(this);
         this.activity = activity;
         app = (App) activity.getApplicationContext();
 
@@ -115,7 +125,7 @@ public class CustomActionBar extends LinearLayout implements GoGame.GoGameChange
     }
 
     private void addModeItem(LinearLayout container, final byte mode, int string_res, int icon_res) {
-        if (mode == app.getInteractionScope().getMode()) {
+        if (mode == interactionScope.getMode()) {
             return; // already in this mode - no need to present the user with this option
         }
 
@@ -141,7 +151,7 @@ public class CustomActionBar extends LinearLayout implements GoGame.GoGameChange
                         }
                         activity.finish();
                         Log.i("set mode" + mode);
-                        App.getInteractionScope().setMode(mode);
+                        interactionScope.setMode(mode);
                         final Intent i = SwitchModeHelper.getIntentByMode(app, mode);
                         activity.startActivity(i);
                     }
@@ -162,7 +172,7 @@ public class CustomActionBar extends LinearLayout implements GoGame.GoGameChange
 
         addModeItem(contentView, InteractionScope.MODE_EDIT, R.string.edit, R.drawable.dashboard_record);
 
-        if (App.getGame().getActMove().getMovePos() > 0) { // these modes only make sense if there is minimum one
+        if (gameProvider.get().getActMove().getMovePos() > 0) { // these modes only make sense if there is minimum one
             addModeItem(contentView, InteractionScope.MODE_COUNT, R.string.count, R.drawable.dashboard_score);
             addModeItem(contentView, InteractionScope.MODE_REVIEW, R.string.review, R.drawable.dashboard_review);
             addModeItem(contentView, InteractionScope.MODE_TELEVIZE, R.string.televize, R.drawable.gobandroid_tv);
@@ -191,21 +201,24 @@ public class CustomActionBar extends LinearLayout implements GoGame.GoGameChange
 
             @Override
             public void run() {
-                final byte actMode = App.getInteractionScope().getMode();
+                final byte actMode = interactionScope.getMode();
+
                 mode_tv.setText(InteractionScope.getModeStringRes(actMode));
 
-                white_captures_tv.setText("" + App.getGame().getCapturesWhite());
-                black_captures_tv.setText("" + App.getGame().getCapturesBlack());
+                final GoGame game = gameProvider.get();
 
-                final boolean isWhitesMove = App.getGame().isBlackToMove() && (!App.getGame().isFinished());
+                white_captures_tv.setText("" + game.getCapturesWhite());
+                black_captures_tv.setText("" + game.getCapturesBlack());
+
+                final boolean isWhitesMove = game.isBlackToMove() && (!game.isFinished());
                 white_info_container.setBackgroundColor(isWhitesMove ? transparent : highlight_color);
                 white_captures_tv.setBackgroundColor(isWhitesMove ? transparent : highlight_color);
 
-                final boolean isBlacksMove = App.getGame().isBlackToMove() || App.getGame().isFinished();
+                final boolean isBlacksMove = game.isBlackToMove() || game.isFinished();
                 black_info_container.setBackgroundColor(isBlacksMove ? highlight_color : transparent);
                 black_captures_tv.setBackgroundColor(isBlacksMove ? highlight_color : transparent);
 
-                move_tv.setText(app.getResources().getString(R.string.move) + App.getGame().getActMove().getMovePos());
+                move_tv.setText(app.getResources().getString(R.string.move) + game.getActMove().getMovePos());
             }
         });
     }

@@ -19,7 +19,13 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
+import org.ligi.gobandroid_hd.App;
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.model.GameProvider;
+import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
+
+import javax.inject.Inject;
 
 /**
  * A styled Dialog fit in the gobandroid style
@@ -32,9 +38,19 @@ public class GobandroidDialog extends Dialog {
     private Button positive_btn;
     private Button negative_btn;
 
+    @Inject
+    protected GobandroidSettings settings;
+
+    @Inject
+    protected GameProvider gameProvider;
+
+    @Inject
+    protected InteractionScope interactionScope;
+
     public GobandroidDialog(Context context) {
         super(context, R.style.dialog_theme);
 
+        App.component().inject(this);
         inflater = LayoutInflater.from(context);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.setContentView(R.layout.dialog_gobandroid);

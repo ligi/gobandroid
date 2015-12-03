@@ -3,7 +3,6 @@ package org.ligi.gobandroid_hd.ui.ingame_common;
 import android.content.Context;
 import android.content.Intent;
 
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.editing.EditGameActivity;
@@ -54,12 +53,12 @@ public class SwitchModeHelper {
      * @param mode     - new mode
      */
     public static void startGame(GobandroidFragmentActivity activity, byte mode) {
-        App.getInteractionScope().setMode(mode);
+        activity.interactionScope.setMode(mode);
         activity.startActivity(getIntentByMode(activity, mode));
     }
 
     public static void startGameWithCorrectMode(GobandroidFragmentActivity activity) {
-        startGame(activity, App.getInteractionScope().getMode());
+        startGame(activity, activity.interactionScope.getMode());
     }
 
 }

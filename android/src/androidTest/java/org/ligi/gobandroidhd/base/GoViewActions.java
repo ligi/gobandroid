@@ -1,23 +1,22 @@
 package org.ligi.gobandroidhd.base;
 
 import android.support.test.espresso.UiController;
-import android.support.test.espresso.matcher.ViewMatchers;
-import android.view.View;
-
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.action.CoordinatesProvider;
 import android.support.test.espresso.action.GeneralClickAction;
 import android.support.test.espresso.action.Press;
 import android.support.test.espresso.action.Tap;
+import android.support.test.espresso.matcher.ViewMatchers;
+import android.view.View;
 import android.widget.SeekBar;
 
 import org.hamcrest.Matcher;
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.logic.Cell;
+import org.ligi.gobandroid_hd.logic.GoGame;
 
 public class GoViewActions {
 
-    public static ViewAction placeStone(final Cell cell) {
+    public static ViewAction placeStone(final Cell cell, final GoGame game) {
         return new GeneralClickAction(
                 Tap.SINGLE,
                 new CoordinatesProvider() {
@@ -26,7 +25,7 @@ public class GoViewActions {
 
                         final int[] screenPos = new int[2];
                         view.getLocationOnScreen(screenPos);
-                        final int gameSize = App.getGame().getSize();
+                        final int gameSize = game.getSize();
 
                         final float screenX = screenPos[0] + (0.5f + cell.x) * (view.getWidth() / gameSize);
                         final float screenY = screenPos[1] + (0.5f + cell.y) * (view.getHeight() / gameSize);
@@ -37,8 +36,8 @@ public class GoViewActions {
                 Press.FINGER);
     }
 
-    public static ViewAction tapStone(Cell cell) {
-        return placeStone(cell);
+    public static ViewAction tapStone(final Cell cell, final GoGame game) {
+        return placeStone(cell, game);
     }
 
     public static ViewAction setProgress(final int progress) {
@@ -48,10 +47,12 @@ public class GoViewActions {
                 SeekBar seekBar = (SeekBar) view;
                 seekBar.setProgress(progress);
             }
+
             @Override
             public String getDescription() {
                 return "Set a progress on a SeekBar";
             }
+
             @Override
             public Matcher<View> getConstraints() {
                 return ViewMatchers.isAssignableFrom(SeekBar.class);

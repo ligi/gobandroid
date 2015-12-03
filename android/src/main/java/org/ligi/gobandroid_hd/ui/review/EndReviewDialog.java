@@ -23,7 +23,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
@@ -45,16 +44,10 @@ public class EndReviewDialog extends GobandroidDialog {
     private RatingBar rating_bar;
     private SGFMetaData meta;
 
-    public void saveSGFMeta() {
-
-        meta.setRating((int) (rating_bar.getRating() * 2));
-        meta.persist();
-    }
-
     public EndReviewDialog(final GobandroidFragmentActivity context) {
         super(context);
 
-        meta = new SGFMetaData();
+        meta = new SGFMetaData(gameProvider.get());
         setContentView(R.layout.end_review_dialog);
 
         setTitle(R.string.end_review);
@@ -65,7 +58,7 @@ public class EndReviewDialog extends GobandroidDialog {
 
         bookmark_notification = (CheckBox) findViewById(R.id.bookmark_notification_cb);
         bookmark_name = (EditText) findViewById(R.id.bookmark_name_et);
-        bookmark_name.setText(BookmarkDialog.getCleanEnsuredFilename());
+        bookmark_name.setText(BookmarkDialog.getCleanEnsuredFilename(settings, gameProvider.get()));
 
         rating_bar = (RatingBar) findViewById(R.id.game_rating);
 
@@ -88,11 +81,11 @@ public class EndReviewDialog extends GobandroidDialog {
             public void onClick(DialogInterface dialog, int which) {
 
                 if (save_bookmark_cp.isChecked()) {
-                    GoLink.saveGameToGoLink(App.getGame(), context.getSettings().getBookmarkPath(), bookmark_name.getText().toString() + ".golink");
+                    GoLink.saveGameToGoLink(gameProvider.get(), settings.getBookmarkPath(), bookmark_name.getText().toString() + ".golink");
                 }
 
                 if (bookmark_notification.isChecked()) {
-                    new GobandroidNotifications(context).addGoLinkNotification(context.getSettings().getBookmarkPath() + "/" + bookmark_name.getText().toString() + ".golink");
+                    new GobandroidNotifications(context).addGoLinkNotification(settings.getBookmarkPath() + "/" + bookmark_name.getText().toString() + ".golink");
                 }
 
                 saveSGFMeta();
@@ -113,4 +106,8 @@ public class EndReviewDialog extends GobandroidDialog {
         setNegativeButton(R.string.end_review_stay_button, new NegativeOnClickListener());
     }
 
+    public void saveSGFMeta() {
+        meta.setRating((int) (rating_bar.getRating() * 2));
+        meta.persist();
+    }
 }

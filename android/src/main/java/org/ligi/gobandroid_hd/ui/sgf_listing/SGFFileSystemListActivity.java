@@ -22,14 +22,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import java.io.File;
-import org.ligi.gobandroid_hd.App;
+
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsDialog;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.TsumegoSource;
+
+import java.io.File;
 
 /**
  * Activity to load SGF's from SD card
@@ -52,12 +53,12 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
 
         final String sgfPath = getSGFPath();
 
-        if (sgfPath.substring(sgfPath.indexOf('/')).startsWith(getSettings().getTsumegoPath().substring(sgfPath.indexOf('/')))) {
-            App.getInteractionScope().setMode(InteractionScope.MODE_TSUMEGO);
+        if (sgfPath.substring(sgfPath.indexOf('/')).startsWith(settings.getTsumegoPath().substring(sgfPath.indexOf('/')))) {
+            interactionScope.setMode(InteractionScope.MODE_TSUMEGO);
         }
 
-        if (sgfPath.substring(sgfPath.indexOf('/')).startsWith(getSettings().getReviewPath().substring(sgfPath.indexOf('/')))) {
-            App.getInteractionScope().setMode(InteractionScope.MODE_REVIEW);
+        if (sgfPath.substring(sgfPath.indexOf('/')).startsWith(settings.getReviewPath().substring(sgfPath.indexOf('/')))) {
+            interactionScope.setMode(InteractionScope.MODE_REVIEW);
         }
 
         final File dir = new File(sgfPath);
@@ -73,18 +74,18 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
             return getIntent().getData().getPath();
         }
 
-        return getSettings().getSGFBasePath();
+        return settings.getSGFBasePath();
     }
 
     private void setActionbarProperties(final File dir) {
-        switch (App.getInteractionScope().getMode()) {
+        switch (interactionScope.getMode()) {
             case InteractionScope.MODE_TSUMEGO:
                 setTitle(R.string.load_tsumego);
                 break;
             default:
                 // we can only show stuff for tsumego and review - if in doubt -
                 // trade as review
-                App.getInteractionScope().setMode(InteractionScope.MODE_REVIEW);
+                interactionScope.setMode(InteractionScope.MODE_REVIEW);
                 // fall wanted
 
             case InteractionScope.MODE_REVIEW:
@@ -109,11 +110,11 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (App.getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
+        if (interactionScope.getMode() == InteractionScope.MODE_TSUMEGO) {
             getMenuInflater().inflate(R.menu.refresh_tsumego, menu);
         }
 
-        if (App.getInteractionScope().getMode() == InteractionScope.MODE_REVIEW) {
+        if (interactionScope.getMode() == InteractionScope.MODE_REVIEW) {
             getMenuInflater().inflate(R.menu.review_menu, menu);
         }
 

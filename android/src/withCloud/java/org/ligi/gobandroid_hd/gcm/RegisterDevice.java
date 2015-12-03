@@ -15,7 +15,6 @@ import java.net.URL;
 
 import static org.ligi.gobandroid_hd.backend.GobandroidBackend.getURLParamSnippet;
 
-// TODO doesnt need to be a async task any more - no more UI interaction
 public class RegisterDevice implements Runnable {
 
     private final App app;
@@ -46,7 +45,7 @@ public class RegisterDevice implements Runnable {
                     + "&" + getURLParamSnippet("push_key", push_id)
                     + "&" + getURLParamSnippet("app_version", BuildConfig.VERSION_NAME);
 
-            if (app.getSettings().isTsumegoPushEnabled()) {
+            if (App.component().settings().isTsumegoPushEnabled()) {
                 url_str += "&" + getURLParamSnippet("want_tsumego", "t");
             }
 

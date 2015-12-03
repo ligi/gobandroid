@@ -2,10 +2,11 @@ package org.ligi.gobandroid_hd;
 
 import android.app.Application;
 
-import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.etc.AppComponent;
+import org.ligi.gobandroid_hd.etc.AppModule;
+import org.ligi.gobandroid_hd.etc.DaggerAppComponent;
 import org.ligi.gobandroid_hd.ui.GobandroidTracker;
 import org.ligi.gobandroid_hd.ui.GobandroidTrackerResolver;
-import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.tracedroid.TraceDroid;
 import org.ligi.tracedroid.logging.Log;
 
@@ -14,62 +15,33 @@ import org.ligi.tracedroid.logging.Log;
  */
 public class App extends Application {
 
-    private static App instance;
-    private static GoGame game;
+    private static AppComponent component;
 
     public static boolean isTesting = false;
-
-    public static GobandroidSettings getGobandroidSettings() {
-        return new GobandroidSettings(instance);
-    }
-
-    // the InteractionScope holds things like mode/act game between activities
-    private static InteractionScope interaction_scope;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        instance = this;
+        component = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
 
         getTracker().init(this);
 
         TraceDroid.init(this);
         Log.setTAG("gobandroid");
 
-        interaction_scope = new InteractionScope();
-
         CloudHooks.onApplicationCreation(this);
-
     }
-
-    public static InteractionScope getInteractionScope() {
-        return interaction_scope;
-    }
-
-    public static GoGame getGame() {
-        if (game == null) {
-            game = new GoGame((byte) 9);
-        }
-        return game;
-    }
-
-    public static void setGame(GoGame p_game) {
-        getInteractionScope().ask_variant_session = true;
-
-        if (game == null) {
-            game = p_game;
-        } else { // keep listeners and stuff
-            game.setGame(p_game);
-        }
-    }
-
-    public GobandroidSettings getSettings() {
-        return new GobandroidSettings(this);
-    }
-
 
     public static GobandroidTracker getTracker() {
         return GobandroidTrackerResolver.getTracker();
+    }
+
+    public static AppComponent component() {
+        return component;
+    }
+
+    public static void setComponent(AppComponent newComponent) {
+        component = newComponent;
     }
 }

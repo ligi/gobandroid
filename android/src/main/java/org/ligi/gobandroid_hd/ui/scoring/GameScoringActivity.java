@@ -5,10 +5,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.WindowManager;
-import java.util.HashSet;
-import java.util.Set;
+
 import org.ligi.axt.AXT;
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.BoardCell;
 import org.ligi.gobandroid_hd.logic.Cell;
@@ -19,6 +17,9 @@ import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.gnugo.PlayAgainstGnuGoActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Activity to score a Game
@@ -86,13 +87,13 @@ public class GameScoringActivity extends GoActivity {
 
         eventForZoomBoard(event);
         final Cell touchCell = getBoard().pixel2cell(event.getX(), event.getY());
-        App.getInteractionScope().setTouchPosition(touchCell);
+        interactionScope.setTouchPosition(touchCell);
 
         // calculate position on the field by position on the touchscreen
 
         if (event.getAction() == MotionEvent.ACTION_UP && touchCell != null) {
             doMoveWithUIFeedback(touchCell);
-            App.getInteractionScope().setTouchPosition(null);
+            interactionScope.setTouchPosition(null);
         }
 
     }
@@ -109,7 +110,7 @@ public class GameScoringActivity extends GoActivity {
         switch (item.getItemId()) {
             case R.id.menu_game_again:
                 final GoGameMetadata metaData = getGame().getMetaData();
-                App.setGame(new GoGame(getGame().getSize()));
+                gameProvider.set(new GoGame(getGame().getSize()));
                 if (metaData.getBlackName().toLowerCase().equals("gnugo") || metaData.getWhiteName().toLowerCase().equals("gnugo")) {
                     AXT.at(this).startCommonIntent().activityFromClass(PlayAgainstGnuGoActivity.class);
                 } else {

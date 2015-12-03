@@ -20,12 +20,10 @@
 package org.ligi.gobandroid_hd.ui.game_setup;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -73,7 +71,7 @@ public class GoSetupActivity extends GoActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_clear_board:
-                App.setGame(new GoGame(setup_fragment.act_size, setup_fragment.act_handicap));
+                gameProvider.set(new GoGame(setup_fragment.act_size, setup_fragment.act_handicap));
                 clear_board_menu_item.setVisible(false);
                 getGame().notifyGameChange();
                 break;

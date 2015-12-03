@@ -6,12 +6,15 @@ import com.squareup.spoon.Spoon;
 
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.etc.AppModule;
 import org.ligi.gobandroid_hd.logic.GoGameMetadata;
+import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.review.GameReviewActivity;
 import org.ligi.gobandroidhd.base.BaseIntegration;
 
+import javax.inject.Inject;
+
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -26,6 +29,9 @@ import static org.hamcrest.Matchers.not;
 
 public class TheGameInfoDialog extends BaseIntegration<GameReviewActivity> {
 
+    @Inject
+    GameProvider gameProvider;
+
     public static final String CUSTOM_BLACK_RANK = "custom black rank";
     public static final String CUSTOM_BLACK_NAME = "custom black name";
     public static final String CUSTOM_GAME_NAME = "custom game name";
@@ -36,6 +42,16 @@ public class TheGameInfoDialog extends BaseIntegration<GameReviewActivity> {
     public TheGameInfoDialog() {
         super(GameReviewActivity.class);
     }
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+
+        final TestComponent testComponent = DaggerTestComponent.builder().appModule(new AppModule((App) getInstrumentation().getTargetContext().getApplicationContext())).build();
+        App.setComponent(testComponent);
+        testComponent.inject(this);
+    }
+
 
     @MediumTest
     public void testThatTheDialogShows() {
@@ -71,21 +87,21 @@ public class TheGameInfoDialog extends BaseIntegration<GameReviewActivity> {
 
         onView(withText(android.R.string.ok)).perform(scrollTo(),click());
 
-        final GoGameMetadata metaData = App.getGame().getMetaData();
+        final GoGameMetadata metaData = gameProvider.get().getMetaData();
 
         assertThat(metaData.getName()).isEqualTo(CUSTOM_GAME_NAME);
         assertThat(metaData.getWhiteName()).isEqualTo(CUSTOM_WHITE_NAME);
         assertThat(metaData.getWhiteRank()).isEqualTo(CUSTOM_WHITE_RANK);
         assertThat(metaData.getBlackName()).isEqualTo(CUSTOM_BLACK_NAME);
         assertThat(metaData.getBlackRank()).isEqualTo(CUSTOM_BLACK_RANK);
-        assertThat(App.getGame().getKomi()).isEqualTo(Float.valueOf(CUSTOM_KOMI));
+        assertThat(gameProvider.get().getKomi()).isEqualTo(Float.valueOf(CUSTOM_KOMI));
 
         Spoon.screenshot(activity, "game_info_dialog");
     }
 
     @MediumTest
     public void testThatBadKomiIsRejected() {
-        App.getGame().setKomi(Float.valueOf(CUSTOM_KOMI));
+        gameProvider.get().setKomi(Float.valueOf(CUSTOM_KOMI));
         final GameReviewActivity activity = getActivity();
         onView(withId(R.id.menu_game_info)).perform(click());
         onView(withId(R.id.komi_et)).perform(scrollTo(),clearText() ,typeText("a"),closeSoftKeyboard());
@@ -96,7 +112,7 @@ public class TheGameInfoDialog extends BaseIntegration<GameReviewActivity> {
 
         onView(withText(R.string.komi_must_be_a_number)).check(matches(isDisplayed()));
 
-        assertThat(App.getGame().getKomi()).isEqualTo(Float.valueOf(CUSTOM_KOMI));
+        assertThat(gameProvider.get().getKomi()).isEqualTo(Float.valueOf(CUSTOM_KOMI));
         Spoon.screenshot(activity, "game_info_reject_komi");
     }
 

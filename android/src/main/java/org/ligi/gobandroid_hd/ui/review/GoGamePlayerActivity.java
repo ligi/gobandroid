@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
@@ -109,7 +108,7 @@ public class GoGamePlayerActivity extends GoActivity {
             }
             Log.i("gobandroid", "automove asleep");
 
-            if (!App.getInteractionScope().is_in_noif_mode()) {
+            if (!interactionScope.is_in_noif_mode()) {
                 Intent next_intent = new Intent(GoGamePlayerActivity.this, GobanDroidTVActivity.class);
 
                 if (autoplay_active) {
@@ -184,7 +183,7 @@ public class GoGamePlayerActivity extends GoActivity {
 
     public int countWords(String sentence) {
         int words = 0;
-        if (!App.getInteractionScope().is_in_noif_mode())
+        if (!interactionScope.is_in_noif_mode())
             for (int i = 0; i < sentence.length(); i++)
                 if (sentence.charAt(i) == ' ')
                     words++;

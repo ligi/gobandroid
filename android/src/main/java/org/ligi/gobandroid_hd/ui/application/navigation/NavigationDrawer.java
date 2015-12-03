@@ -15,38 +15,51 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
 import org.ligi.gobandroid_hd.ui.GoPrefsActivity;
 import org.ligi.gobandroid_hd.ui.HelpDialog;
 import org.ligi.gobandroid_hd.ui.UnzipSGFsDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.gobandroid_hd.ui.links.LinksActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
 public class NavigationDrawer implements OnItemClickListener {
 
-    private GobandroidFragmentActivity ctx;
-    private ListView mListView;
+    private final GobandroidFragmentActivity ctx;
+    private final ListView listView;
+
+    @Inject
+    GobandroidSettings settings;
+
+    @Inject
+    GameProvider gameProvider;
 
     public NavigationDrawer(GobandroidFragmentActivity ctx) {
+        App.component().inject(this);
         this.ctx = ctx;
 
-        mListView = (ListView) ctx.findViewById(R.id.left_drawer);// new ListView(ctx);
-        mListView.setOnItemClickListener(this);
+        listView = (ListView) ctx.findViewById(R.id.left_drawer);
+        listView.setOnItemClickListener(this);
 
         refresh();
     }
 
     public void refresh() {
-        mListView.setAdapter(getAdapter());
+        listView.setAdapter(getAdapter());
     }
 
     public ListAdapter getAdapter() {
@@ -81,10 +94,10 @@ public class NavigationDrawer implements OnItemClickListener {
 
                 return true;
             case R.id.empty:
-                final GoGame act_game = App.getGame();
+                final GoGame act_game = gameProvider.get();
 
-                App.setGame(new GoGame((byte) act_game.getSize(), (byte) act_game.getHandicap()));
-                App.getGame().notifyGameChange();
+                gameProvider.set(new GoGame((byte) act_game.getSize(), (byte) act_game.getHandicap()));
+                gameProvider.get().notifyGameChange();
 
                 ctx.startActivity(new Intent(ctx, GameRecordActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 return true;
@@ -105,7 +118,7 @@ public class NavigationDrawer implements OnItemClickListener {
                 return true;
 
             case R.id.tsumego:
-                Intent next = startSGFListForPath(getApp().getSettings().getTsumegoPath());
+                Intent next = startSGFListForPath(settings.getTsumegoPath());
 
                 if (!unzipSGFifNeeded(next)) {
                     ctx.startActivity(next);
@@ -114,7 +127,7 @@ public class NavigationDrawer implements OnItemClickListener {
                 return true;
 
             case R.id.review:
-                Intent next2 = startSGFListForPath(getApp().getSettings().getReviewPath());
+                Intent next2 = startSGFListForPath(settings.getReviewPath());
 
                 if (!unzipSGFifNeeded(next2)) {
                     ctx.startActivity(next2);
@@ -123,7 +136,7 @@ public class NavigationDrawer implements OnItemClickListener {
                 return true;
 
             case R.id.bookmark:
-                ctx.startActivity(startSGFListForPath(getApp().getSettings().getBookmarkPath()));
+                ctx.startActivity(startSGFListForPath(settings.getBookmarkPath()));
 
                 return true;
 
@@ -259,7 +272,7 @@ public class NavigationDrawer implements OnItemClickListener {
     public boolean unzipSGFifNeeded(Intent intent_after) {
         // we check for the tsumego path as the base path could already be there but  no valid tsumego
 
-        final String tsumegoPath = getApp().getSettings().getTsumegoPath();
+        final String tsumegoPath = settings.getTsumegoPath();
         if (!(new File(tsumegoPath)).isDirectory()) {
             UnzipSGFsDialog.show(ctx, intent_after);
             return true;

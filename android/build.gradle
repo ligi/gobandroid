@@ -95,7 +95,15 @@ spoon {
     debug = true
 }
 
+final DAGGER_VERSION = '2.0.2'
+
 dependencies {
+    apt "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
+
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+
+    compile "com.google.dagger:dagger:${DAGGER_VERSION}"
+
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
@@ -120,6 +128,8 @@ dependencies {
     withCloudCompile 'com.google.android.gms:play-services-appstate:7.8.0'
     withCloudCompile 'com.google.android.gms:play-services-gcm:7.8.0'
     withCloudCompile 'com.google.android.gms:play-services-plus:7.8.0'
+
+    androidTestApt "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
 
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
 

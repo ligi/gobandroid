@@ -11,78 +11,40 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import java.lang.reflect.Field;
+
 import org.ligi.gobandroid_hd.App;
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.PlayServicesIntegration;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.application.navigation.NavigationDrawer;
 
+import java.lang.reflect.Field;
+
+import javax.inject.Inject;
+
 public class GobandroidFragmentActivity extends AppCompatActivity {
+
+    @Inject
+    protected GobandroidSettings settings;
+
+    @Inject
+    public InteractionScope interactionScope;
+
+    @Inject
+    protected GameProvider gameProvider;
 
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout drawerLayout;
 
     private PlayServicesIntegration playServicesIntegration;
 
-    public void closeDrawers() {
-        drawerLayout.closeDrawers();
-    }
-
-    @Override
-    public void setContentView(int layoutResId) {
-        super.setContentView(R.layout.navigation_drawer_container);
-        final View v = getLayoutInflater().inflate(layoutResId, (ViewGroup) findViewById(R.id.drawer_layout), false);
-        final ViewGroup vg = (ViewGroup) findViewById(R.id.content_frame);
-        vg.addView(v);
-        new NavigationDrawer(this);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        mDrawerToggle = new ActionBarDrawerToggle(this,                  /* host Activity */
-                                                  drawerLayout,         /* DrawerLayout object */
-                                                  R.string.drawer_open,  /* "open drawer" description */
-                                                  R.string.drawer_close  /* "close drawer" description */) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                App.getInteractionScope().setTouchPosition(null);
-                App.getGame().notifyGameChange();
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                App.getInteractionScope().setTouchPosition(null);
-                App.getGame().notifyGameChange();
-                super.onDrawerClosed(drawerView);
-            }
-
-        };
-
-        drawerLayout.setDrawerListener(mDrawerToggle);
-    }
-
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        if (mDrawerToggle != null) {
-            mDrawerToggle.syncState();
-        }
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggles
-        if (mDrawerToggle != null) {
-            mDrawerToggle.onConfigurationChanged(newConfig);
-        }
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        App.component().inject(this);
 
         if (getSupportActionBar() != null) {// yes this happens - e.g.
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -114,6 +76,62 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
 
     }
 
+    public void closeDrawers() {
+        drawerLayout.closeDrawers();
+    }
+
+    @Override
+    public void setContentView(int layoutResId) {
+        super.setContentView(R.layout.navigation_drawer_container);
+        final View v = getLayoutInflater().inflate(layoutResId, (ViewGroup) findViewById(R.id.drawer_layout), false);
+        final ViewGroup vg = (ViewGroup) findViewById(R.id.content_frame);
+        vg.addView(v);
+        new NavigationDrawer(this);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        mDrawerToggle = new ActionBarDrawerToggle(this,                  /* host Activity */
+                drawerLayout,         /* DrawerLayout object */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                interactionScope.setTouchPosition(null);
+                getGame().notifyGameChange();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                interactionScope.setTouchPosition(null);
+                getGame().notifyGameChange();
+                super.onDrawerClosed(drawerView);
+            }
+
+        };
+
+        drawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        if (mDrawerToggle != null) {
+            mDrawerToggle.syncState();
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        if (mDrawerToggle != null) {
+            mDrawerToggle.onConfigurationChanged(newConfig);
+        }
+    }
+
+
     public boolean doFullScreen() {
         return false;
     }
@@ -136,11 +154,7 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
     }
 
     public GoGame getGame() {
-        return App.getGame();
-    }
-
-    public GobandroidSettings getSettings() {
-        return getApp().getSettings();
+        return gameProvider.get();
     }
 
     @Override

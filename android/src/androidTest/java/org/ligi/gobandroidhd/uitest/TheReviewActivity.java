@@ -6,8 +6,12 @@ import com.squareup.spoon.Spoon;
 
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.etc.AppModule;
+import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.review.GameReviewActivity;
 import org.ligi.gobandroidhd.base.BaseIntegration;
+
+import javax.inject.Inject;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -18,12 +22,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TheReviewActivity extends BaseIntegration<GameReviewActivity> {
 
+    @Inject
+    GameProvider gameProvider;
+    
     public TheReviewActivity() {
         super(GameReviewActivity.class);
     }
 
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+
+        final TestComponent testComponent = DaggerTestComponent.builder().appModule(new AppModule((App) getInstrumentation().getTargetContext().getApplicationContext())).build();
+        App.setComponent(testComponent);
+        testComponent.inject(this);
+    }
+
+
+
     @MediumTest
     public void testThatGoBoardIsThere() {
+        gameProvider.set(readGame("small_19x19"));
+
         final GameReviewActivity activity = getActivity();
 
         Spoon.screenshot(activity, "review");
@@ -33,42 +53,60 @@ public class TheReviewActivity extends BaseIntegration<GameReviewActivity> {
 
 
     @MediumTest
-    public void testThatControlsAreThere() {
+    public void testThatNextAndLastControlsAreThereOnBeginning() {
+        gameProvider.set(readGame("small_19x19"));
+
         getActivity();
 
         onView(withId(R.id.btn_next)).check(matches(isDisplayed()));
-        onView(withId(R.id.btn_prev)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_last)).check(matches(isDisplayed()));
-        onView(withId(R.id.btn_first)).check(matches(isDisplayed()));
     }
 
+
     @MediumTest
-    public void testThatNextWorks() {
-        App.setGame(readGame("small_19x19"));
+    public void testThatAllControlsAreThereInTheMiddleOfTheGame() {
+        gameProvider.set(readGame("small_19x19"));
+
         getActivity();
 
         onView(withId(R.id.btn_next)).perform(click());
 
-        assertThat(App.getGame().getActMove().getMovePos()).isEqualTo(1);
+        onView(withId(R.id.btn_next)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_last)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.btn_prev)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_first)).check(matches(isDisplayed()));
+
+    }
+
+
+    @MediumTest
+    public void testThatNextWorks() {
+        gameProvider.set(readGame("small_19x19"));
+        getActivity();
+
         onView(withId(R.id.btn_next)).perform(click());
 
-        assertThat(App.getGame().getActMove().getMovePos()).isEqualTo(2);
+        assertThat(gameProvider.get().getActMove().getMovePos()).isEqualTo(1);
+        onView(withId(R.id.btn_next)).perform(click());
+
+        assertThat(gameProvider.get().getActMove().getMovePos()).isEqualTo(2);
 
     }
 
 
     @MediumTest
     public void testThatLastAndFirstWorks() {
-        App.setGame(readGame("small_19x19"));
+        gameProvider.set(readGame("small_19x19"));
         getActivity();
 
         onView(withId(R.id.btn_last)).perform(click());
 
-        assertThat(App.getGame().getActMove().getNextMoveVariationCount()).isLessThan(1);
+        assertThat(gameProvider.get().getActMove().getNextMoveVariationCount()).isLessThan(1);
 
         onView(withId(R.id.btn_first)).perform(click());
 
-        assertThat(App.getGame().getActMove().getParent()).isEqualTo(null);
+        assertThat(gameProvider.get().getActMove().getParent()).isEqualTo(null);
 
     }
 

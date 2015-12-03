@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -24,7 +23,6 @@ import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.ActivityFinishingOnCancelListener;
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.helper.SGFFileNameFilter;
@@ -33,6 +31,7 @@ import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import org.ligi.gobandroid_hd.ui.GoLinkLoadActivity;
 import org.ligi.gobandroid_hd.ui.Refreshable;
 import org.ligi.gobandroid_hd.ui.SGFLoadActivity;
+import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder.PathViewHolder;
 import org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder.ReviewViewHolder;
@@ -48,7 +47,7 @@ import java.util.List;
 
 import static android.text.TextUtils.isEmpty;
 
-public class SGFListFragment extends Fragment implements Refreshable {
+public class SGFListFragment extends GobandroidFragment implements Refreshable {
 
     public static final String EXTRA_DIR = "dir";
     public static final String EXTRA_MENU_ITEMS = "menu_items";
@@ -93,6 +92,7 @@ public class SGFListFragment extends Fragment implements Refreshable {
         }
     }
 
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View inflate = View.inflate(container.getContext(), R.layout.recycler_view, null);
@@ -156,7 +156,7 @@ public class SGFListFragment extends Fragment implements Refreshable {
         }
 
 
-        if (App.getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
+        if (interactionScope.getMode() == InteractionScope.MODE_TSUMEGO) {
 
             if (fileNames.size() > 1000) {
                 try {
@@ -266,7 +266,7 @@ public class SGFListFragment extends Fragment implements Refreshable {
                 return TYPE_GOLINK;
             }
 
-            if (App.getInteractionScope().getMode() == InteractionScope.MODE_TSUMEGO) {
+            if (interactionScope.getMode() == InteractionScope.MODE_TSUMEGO) {
                 return TYPE_TSUMEGO;
             }
 

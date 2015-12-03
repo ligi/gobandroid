@@ -22,8 +22,6 @@ package org.ligi.gobandroid_hd.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.ligi.gobandroid_hd.App;
-import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
 import static org.ligi.gobandroid_hd.InteractionScope.MODE_REVIEW;
@@ -42,7 +40,7 @@ public class SGFLoadFromExternalActivity extends GobandroidFragmentActivity {
         super.onCreate(savedInstanceState);
 
         // that's the main reason why we build this fwd activity
-        App.getInteractionScope().setMode(MODE_REVIEW);
+        interactionScope.setMode(MODE_REVIEW);
 
         // take the original intent and change the class - the rest stays
         final Intent fwd_intent = getIntent();

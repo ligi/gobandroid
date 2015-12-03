@@ -9,19 +9,20 @@ import okio.BufferedSink;
 import okio.Okio;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.backend.GobandroidBackend;
+import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 
 public class TsumegoDownloadHelper {
 
     private final static String BASE_URL = "http://gogameguru.com/i/go-problems/";
 
-    public static TsumegoSource[] getDefaultList(App app) {
-        return new TsumegoSource[]{new TsumegoSource(app.getSettings().getTsumegoPath() + "1.easy/", BASE_URL, "ggg-easy-%02d.sgf"),
-                                   new TsumegoSource(app.getSettings().getTsumegoPath() + "2.intermediate/", BASE_URL, "ggg-intermediate-%02d.sgf"),
-                                   new TsumegoSource(app.getSettings().getTsumegoPath() + "3.hard/", BASE_URL, "ggg-hard-%02d.sgf")};
+    public static TsumegoSource[] getDefaultList(GobandroidSettings settings) {
+        return new TsumegoSource[]{new TsumegoSource(settings.getTsumegoPath() + "1.easy/", BASE_URL, "ggg-easy-%02d.sgf"),
+                                   new TsumegoSource(settings.getTsumegoPath() + "2.intermediate/", BASE_URL, "ggg-intermediate-%02d.sgf"),
+                                   new TsumegoSource(settings.getTsumegoPath() + "3.hard/", BASE_URL, "ggg-hard-%02d.sgf")};
     }
 
     public static int doDownloadDefault(App app) {
-        return doDownload(app, getDefaultList(app));
+        return doDownload(app, getDefaultList(App.component().settings()));
     }
 
     public static int doDownload(Context ctx, TsumegoSource[] params) {

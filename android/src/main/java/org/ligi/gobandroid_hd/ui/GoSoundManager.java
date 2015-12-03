@@ -6,6 +6,7 @@ import android.media.SoundPool;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.tracedroid.logging.Log;
 
 import java.util.HashMap;
@@ -19,10 +20,13 @@ import java.util.HashMap;
  */
 public class GoSoundManager {
 
+    private final GobandroidFragmentActivity context;
+    private final GobandroidSettings settings;
+
     private SoundPool mSoundPool;
     private HashMap<Integer, Integer> mSoundPoolMap;
     private AudioManager mAudioManager;
-    private GobandroidFragmentActivity mContext;
+
 
     public final static int SOUND_START = 1;
     public final static int SOUND_END = 2;
@@ -31,12 +35,13 @@ public class GoSoundManager {
     public final static int SOUND_PICKUP1 = 5;
     public final static int SOUND_PICKUP2 = 6;
 
-    public GoSoundManager(GobandroidFragmentActivity theContext) {
+    public GoSoundManager(GobandroidFragmentActivity context, GobandroidSettings settings) {
+        this.settings = settings;
         Log.i("sound_man init");
-        mContext = theContext;
+        this.context = context;
         mSoundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 0);
         mSoundPoolMap = new HashMap<>();
-        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
         addSound(SOUND_START, R.raw.go_start);
         addSound(SOUND_END, R.raw.go_clearboard);
@@ -47,11 +52,11 @@ public class GoSoundManager {
     }
 
     public void addSound(int index, int SoundID) {
-        mSoundPoolMap.put(index, mSoundPool.load(mContext, SoundID, 1));
+        mSoundPoolMap.put(index, mSoundPool.load(context, SoundID, 1));
     }
 
     public void playSound(int index) {
-        if (!mContext.getSettings().isSoundEnabled())
+        if (!settings.isSoundEnabled())
             return; // user does not want sound
 
         float streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);

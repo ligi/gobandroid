@@ -14,6 +14,8 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.tracedroid.logging.Log;
 
+import javax.inject.Inject;
+
 public class UnzipSGFsDialog {
 
     public static class Decompress {
@@ -72,30 +74,34 @@ public class UnzipSGFsDialog {
 
         final ProgressDialog dialog = ProgressDialog.show(activity, "", activity.getString(R.string.copy_sgf_dialog_message), true);
 
-        class AlertDialogUpdater implements Runnable {
-
-            private ProgressDialog myProgress;
-            private Activity activity;
-            private Intent intent_after_finish;
-
-            public AlertDialogUpdater(Activity activity, ProgressDialog progress, Intent intent_after_finish) {
-                this.activity = activity;
-                this.intent_after_finish = intent_after_finish;
-                myProgress = progress;
-            }
-
-            public void run() {
-                Resources resources = activity.getResources();
-
-                InputStream is = resources.openRawResource(R.raw.sgf_pack);
-                GobandroidSettings settings = ((App) activity.getApplicationContext()).getSettings();
-                new Decompress(is, settings.getSGFBasePath()).unzip();
-
-                myProgress.dismiss();
-                activity.startActivity(intent_after_finish);
-            }
-        }
         new Thread(new AlertDialogUpdater(activity, dialog, intent_after_finish)).start();
 
+    }
+
+
+    public static class AlertDialogUpdater implements Runnable {
+
+        private ProgressDialog myProgress;
+        private Activity activity;
+        private Intent intent_after_finish;
+
+        @Inject
+        GobandroidSettings settings;
+
+        public AlertDialogUpdater(Activity activity, ProgressDialog progress, Intent intent_after_finish) {
+            App.component().inject(this);
+            this.activity = activity;
+            this.intent_after_finish = intent_after_finish;
+            myProgress = progress;
+        }
+
+        public void run() {
+            final Resources resources = activity.getResources();
+            final InputStream is = resources.openRawResource(R.raw.sgf_pack);
+            new Decompress(is, settings.getSGFBasePath()).unzip();
+
+            myProgress.dismiss();
+            activity.startActivity(intent_after_finish);
+        }
     }
 }

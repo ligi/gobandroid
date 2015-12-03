@@ -1,17 +1,15 @@
 /**
- *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as 
- * published by the Free Software Foundation; 
- *
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation;
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details. 
- *
+ * GNU General Public License for more details.
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  **/
 
 package org.ligi.gobandroid_hd.ui.review;
@@ -21,17 +19,18 @@ import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import butterknife.Bind;
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -55,21 +54,21 @@ public class BookmarkDialog extends GobandroidDialog {
      *
      * @return the ensured Filename
      */
-    private static String getEnsuredFilename() {
+    private static String getEnsuredFilename(GobandroidSettings settings, GoGame game) {
 
-        String fname = App.getGame().getMetaData().getFileName();
+        String fname = game.getMetaData().getFileName();
         if (TextUtils.isEmpty(fname)) {
             // was not saved before - do it now ( needed for a bookmark )
 
             fname = getDefaultFilename();
-            SGFWriter.saveSGF(App.getGame(), App.getGobandroidSettings().getSGFSavePath() + "/autosave/" + fname);
+            SGFWriter.saveSGF(game, settings.getSGFSavePath() + "/autosave/" + fname);
         }
 
         return fname;
     }
 
-    public static String getCleanEnsuredFilename() {
-        final String[] path_components = getEnsuredFilename().split("/");
+    public static String getCleanEnsuredFilename(GobandroidSettings settings, GoGame goGame) {
+        final String[] path_components = getEnsuredFilename(settings, goGame).split("/");
         return path_components[path_components.length - 1].replace(".sgf", "");
     }
 
@@ -86,16 +85,16 @@ public class BookmarkDialog extends GobandroidDialog {
         setContentView(R.layout.save_bookmark);
 
         ButterKnife.bind(this);
-        final String innerFileName = getCleanEnsuredFilename();
+        final String innerFileName = getCleanEnsuredFilename(settings, gameProvider.get());
 
-        message.setText(context.getResources().getString(R.string.bookmark_to_write_into) + " " + context.getSettings().getBookmarkPath());
+        message.setText(context.getResources().getString(R.string.bookmark_to_write_into) + " " + settings.getBookmarkPath());
         fileNameEdit.setText(innerFileName);
 
         class SaveBookmarkOnClickListener implements OnClickListener {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                GoLink.saveGameToGoLink(App.getGame(), context.getSettings().getBookmarkPath(), fileNameEdit.getText().toString() + ".golink");
+                GoLink.saveGameToGoLink(gameProvider.get(), settings.getBookmarkPath(), fileNameEdit.getText().toString() + ".golink");
                 dialog.dismiss();
             }
 

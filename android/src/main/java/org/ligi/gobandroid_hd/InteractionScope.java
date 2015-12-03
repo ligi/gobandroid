@@ -1,7 +1,9 @@
 package org.ligi.gobandroid_hd;
 
 import android.support.annotation.Nullable;
+
 import org.ligi.gobandroid_hd.logic.Cell;
+import org.ligi.gobandroid_hd.logic.GoGame;
 
 public class InteractionScope {
 
@@ -29,8 +31,8 @@ public class InteractionScope {
         return touch_position;
     }
 
-    public boolean hasValidTouchCoord() {
-        return touch_position!=null && App.getGame().getCalcBoard().getCell(touch_position)!=null;
+    public boolean hasValidTouchCoord(GoGame game) {
+        return touch_position != null && game.getCalcBoard().getCell(touch_position) != null;
     }
 
     public byte getMode() {

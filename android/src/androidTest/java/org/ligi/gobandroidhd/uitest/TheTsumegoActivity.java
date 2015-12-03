@@ -6,9 +6,13 @@ import com.squareup.spoon.Spoon;
 
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.etc.AppModule;
 import org.ligi.gobandroid_hd.logic.Cell;
+import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity;
 import org.ligi.gobandroidhd.base.BaseIntegration;
+
+import javax.inject.Inject;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -20,13 +24,26 @@ import static org.ligi.gobandroidhd.base.GoViewActions.placeStone;
 
 public class TheTsumegoActivity extends BaseIntegration<TsumegoActivity> {
 
+    @Inject
+    GameProvider gameProvider;
+
     public TheTsumegoActivity() {
         super(TsumegoActivity.class);
     }
 
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+
+        final TestComponent testComponent = DaggerTestComponent.builder().appModule(new AppModule((App) getInstrumentation().getTargetContext().getApplicationContext())).build();
+        App.setComponent(testComponent);
+        testComponent.inject(this);
+    }
+
+
     @MediumTest
     public void testThatNoTsumegoWarningComes() {
-        App.setGame(readGame("default_marker"));
+        gameProvider.set(readGame("default_marker"));
         final TsumegoActivity activity = getActivity();
 
         onView(withText(R.string.tsumego_sgf_no_solution)).check(matches(isDisplayed()));
@@ -35,7 +52,7 @@ public class TheTsumegoActivity extends BaseIntegration<TsumegoActivity> {
 
     @MediumTest
     public void testThatOffPathMessageIsNotThereInBeginning() {
-        App.setGame(readGame("tsumego"));
+        gameProvider.set(readGame("tsumego"));
         final TsumegoActivity activity = getActivity();
 
         onView(withId(R.id.tsumego_off_path_view)).check(matches(not(isDisplayed())));
@@ -44,10 +61,10 @@ public class TheTsumegoActivity extends BaseIntegration<TsumegoActivity> {
 
     @MediumTest
     public void testThatOffPathMessageComes() {
-        App.setGame(readGame("tsumego"));
+        gameProvider.set(readGame("tsumego"));
         final TsumegoActivity activity = getActivity();
 
-        onView(withId(R.id.go_board)).perform(placeStone(new Cell(1, 1)));
+        onView(withId(R.id.go_board)).perform(placeStone(new Cell(1, 1), gameProvider.get()));
 
         onView(withId(R.id.tsumego_off_path_view)).check(matches(isDisplayed()));
         Spoon.screenshot(activity, "tsumego_off_path");
@@ -55,12 +72,12 @@ public class TheTsumegoActivity extends BaseIntegration<TsumegoActivity> {
 
     @MediumTest
     public void testThatCommentComesAndGoes() {
-        App.setGame(readGame("tsumego"));
+        gameProvider.set(readGame("tsumego"));
         final TsumegoActivity activity = getActivity();
         onView(withId(R.id.game_comment)).check(matches(withText("testing comment")));
 
         Spoon.screenshot(activity, "tsumego_comment");
-        onView(withId(R.id.go_board)).perform(placeStone(new Cell(1, 1)));
+        onView(withId(R.id.go_board)).perform(placeStone(new Cell(1, 1), gameProvider.get()));
 
         onView(withId(R.id.game_comment)).check(matches(not(isDisplayed())));
         Spoon.screenshot(activity, "tsumego_comment_gone");

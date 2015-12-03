@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.CheckBox;
 
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 
 public class UndoWithVariationDialog extends GobandroidDialog {
@@ -21,9 +20,9 @@ public class UndoWithVariationDialog extends GobandroidDialog {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                App.getGame().undo(true);
+                gameProvider.get().undo(true);
                 if (prevent_cb.isChecked()) {
-                    App.getInteractionScope().ask_variant_session = false;
+                    interactionScope.ask_variant_session = false;
                 }
 
                 dialog.dismiss();
@@ -35,9 +34,9 @@ public class UndoWithVariationDialog extends GobandroidDialog {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                App.getGame().undo(false);
+                gameProvider.get().undo(false);
                 if (prevent_cb.isChecked()) {
-                    App.getInteractionScope().ask_variant_session = false;
+                    interactionScope.ask_variant_session = false;
                 }
 
                 dialog.dismiss();

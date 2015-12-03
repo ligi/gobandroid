@@ -3,7 +3,7 @@ package org.ligi.gobandroid_hd.ui.review;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.ligi.axt.AXT;
-import org.ligi.gobandroid_hd.App;
+import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.tracedroid.logging.Log;
 
 import java.io.BufferedWriter;
@@ -75,8 +75,8 @@ public class SGFMetaData {
         }
     }
 
-    public SGFMetaData() {
-        this(App.getGame().getMetaData().getFileName() + FNAME_ENDING);
+    public SGFMetaData(GoGame game) {
+        this(game.getMetaData().getFileName() + FNAME_ENDING);
     }
 
     public void setRating(Integer rating) {

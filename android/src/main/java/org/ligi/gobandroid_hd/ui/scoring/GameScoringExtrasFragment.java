@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameScorer;
@@ -71,7 +70,7 @@ public class GameScoringExtrasFragment extends GobandroidGameAwareFragment {
     }
 
     public void refresh() {
-        final GoGame game = App.getGame();
+        final GoGame game = gameProvider.get();
         final GoGameScorer scorer = game.getScorer();
 
         if (scorer == null) {

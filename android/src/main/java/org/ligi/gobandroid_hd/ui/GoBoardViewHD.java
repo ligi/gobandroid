@@ -29,9 +29,9 @@ import android.graphics.PointF;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
-import java.io.File;
-import java.io.FileOutputStream;
+
 import org.ligi.gobandroid_hd.App;
+import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.BoardCell;
 import org.ligi.gobandroid_hd.logic.Cell;
@@ -39,12 +39,24 @@ import org.ligi.gobandroid_hd.logic.GoBoard;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
+import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.tracedroid.logging.Log;
+
+import java.io.File;
+import java.io.FileOutputStream;
+
+import javax.inject.Inject;
 
 /**
  * Class to visually represent a Go Board in Android
  */
 public class GoBoardViewHD extends View {
+
+    @Inject
+    GameProvider gameProvider;
+
+    @Inject
+    InteractionScope interactionScope;
 
     private final static float SMALL_STONE_SCALE_FACTOR = 0.6f;
     private Cell zoom_poi = null;
@@ -78,6 +90,7 @@ public class GoBoardViewHD extends View {
 
     public GoBoardViewHD(Context context, AttributeSet attrs) {
         super(context, attrs);
+        App.component().inject(this);
         init();
     }
 
@@ -142,7 +155,7 @@ public class GoBoardViewHD extends View {
     }
 
     public GoGame getGame() {
-        return App.getGame();
+        return gameProvider.get();
     }
 
     /**
@@ -173,8 +186,8 @@ public class GoBoardViewHD extends View {
     private Cell calcActZoomPOI() {
         if (zoom_poi != null) {
             return zoom_poi;
-        } else if (App.getInteractionScope().getTouchCell() != null) {
-            return App.getInteractionScope().getTouchCell();
+        } else if (interactionScope.getTouchCell() != null) {
+            return interactionScope.getTouchCell();
         }
 
         Log.w("zoom requested but no POI to center around");
@@ -231,12 +244,12 @@ public class GoBoardViewHD extends View {
         boolean actpos_highlight_condition = false;
 
         if (!(do_actpos_highlight_ony_if_active && (!isFocused()))) {
-            actpos_highlight_condition = do_actpos_highlight && App.getInteractionScope().hasValidTouchCoord();
+            actpos_highlight_condition = do_actpos_highlight && interactionScope.hasValidTouchCoord(getGame());
         }
 
         // draw semi transparent stone on current touch pos as a shadow
         if ((!move_stone_mode) && actpos_highlight_condition) {
-            final Cell touch_cell = App.getInteractionScope().getTouchCell();
+            final Cell touch_cell = interactionScope.getTouchCell();
             final Bitmap bitmap = (getGame().isBlackToMove()) ? black_stone_bitmap : white_stone_bitmap;
             canvas.drawBitmap(bitmap, touch_cell.x * stone_size, touch_cell.y * stone_size, placeStonePaint);
         }
@@ -248,7 +261,7 @@ public class GoBoardViewHD extends View {
                             stone_size / 2.0f,
                             stone_size / 2.0f + x * stone_size,
                             stone_size * (float) (board.getSize() - 1) + stone_size / 2.0f,
-                            (actpos_highlight_condition && (App.getInteractionScope().getTouchCell().x == x)) ? gridPaint_h : gridPaint);
+                    (actpos_highlight_condition && (interactionScope.getTouchCell().x == x)) ? gridPaint_h : gridPaint);
 
         // draw the horizontal lines and the legend
         for (byte x = 0; x < board.getSize(); x++) {
@@ -256,7 +269,7 @@ public class GoBoardViewHD extends View {
                             stone_size / 2.0f + x * stone_size,
                             stone_size * (float) (board.getSize() - 1) + stone_size / 2.0f,
                             stone_size / 2.0f + x * stone_size,
-                            (actpos_highlight_condition && (App.getInteractionScope().getTouchCell().x == x)) ? gridPaint_h : gridPaint);
+                    (actpos_highlight_condition && (interactionScope.getTouchCell().x == x)) ? gridPaint_h : gridPaint);
             if (do_legend) {
                 canvas.drawText("" + (getGameSize() - x), legendPaint.getTextSize() / 2f + stone_size * (float) (getGameSize() - 1) + stone_size / 2.0f,
                                 stone_size / 2.0f + x * stone_size + gridPaint.getTextSize() / 3,

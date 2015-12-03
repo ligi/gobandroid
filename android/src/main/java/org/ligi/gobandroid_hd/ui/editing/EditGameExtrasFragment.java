@@ -13,12 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
 import org.ligi.axt.simplifications.SimpleTextWatcher;
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidGameAwareFragment;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 public class EditGameExtrasFragment extends GobandroidGameAwareFragment {
@@ -64,9 +65,9 @@ public class EditGameExtrasFragment extends GobandroidGameAwareFragment {
 
         ButterKnife.bind(this, view);
 
-        App.getGame().addGoGameChangeListener(this);
+        gameProvider.get().addGoGameChangeListener(this);
 
-        editText.setText(App.getGame().getActMove().getComment());
+        editText.setText(gameProvider.get().getActMove().getComment());
         editText.setHint(R.string.enter_your_comments_here);
         editText.setGravity(Gravity.TOP);
         editText.setTextColor(getResources().getColor(R.color.text_color_on_board_bg));
@@ -74,7 +75,7 @@ public class EditGameExtrasFragment extends GobandroidGameAwareFragment {
         editText.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                App.getGame().getActMove().setComment(s.toString());
+                gameProvider.get().getActMove().setComment(s.toString());
             }
         });
 
@@ -90,7 +91,7 @@ public class EditGameExtrasFragment extends GobandroidGameAwareFragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                editText.setText(App.getGame().getActMove().getComment());
+                editText.setText(gameProvider.get().getActMove().getComment());
             }
         });
     }

@@ -27,7 +27,6 @@ import android.widget.EditText;
 
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
@@ -79,8 +78,8 @@ public class GameInfoDialog extends GobandroidDialog {
     @OnClick(R.id.user_is_black_btn)
     void onBlack() {
         if (checkUserNamePresent()) {
-            blackNameEdit.setText(App.getGobandroidSettings().getUsername());
-            black_rank_et.setText(App.getGobandroidSettings().getRank());
+            blackNameEdit.setText(settings.getUsername());
+            black_rank_et.setText(settings.getRank());
         }
     }
 
@@ -90,7 +89,7 @@ public class GameInfoDialog extends GobandroidDialog {
     }
 
     private boolean checkUserNamePresent() {
-        if (App.getGobandroidSettings().getUsername().isEmpty()) {
+        if (settings.getUsername().isEmpty()) {
 
             AXT.at(getContext()).startCommonIntent().activityFromClass(BaseProfileActivity.class);
             return false;
@@ -101,8 +100,8 @@ public class GameInfoDialog extends GobandroidDialog {
     @OnClick(R.id.user_is_white_btn)
     void onWhite() {
         if (checkUserNamePresent()) {
-            white_name_et.setText(App.getGobandroidSettings().getUsername());
-            white_rank_et.setText(App.getGobandroidSettings().getRank());
+            white_name_et.setText(settings.getUsername());
+            white_rank_et.setText(settings.getRank());
         }
     }
 

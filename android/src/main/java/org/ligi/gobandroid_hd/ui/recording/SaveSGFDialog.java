@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGameMetadata;
 import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
@@ -48,14 +47,14 @@ public class SaveSGFDialog extends GobandroidDialog {
 
         override_checkbox = (CheckBox) findViewById(R.id.override_checkbox);
 
-        intro_text.setText(String.format(context.getResources().getString(R.string.save_sgf_question), context.getSettings().getSGFSavePath()));
+        intro_text.setText(String.format(context.getResources().getString(R.string.save_sgf_question), settings.getSGFSavePath()));
 
         fname_et = (EditText) findViewById(R.id.sgf_name_edittext);
 
         class SaveSGFOnClickListener implements DialogInterface.OnClickListener {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String fname = getCompleteFileName();
-                boolean res = SGFWriter.saveSGF(App.getGame(), fname);
+                boolean res = SGFWriter.saveSGF(gameProvider.get(), fname);
 
                 if (res)
                     Toast.makeText(context, String.format(context.getString(R.string.file_saved), fname), Toast.LENGTH_SHORT).show();
@@ -97,16 +96,16 @@ public class SaveSGFDialog extends GobandroidDialog {
         });
 
         // get the old filename from the metadata
-        String old_fname = App.getGame().getMetaData().getFileName();
+        String old_fname = gameProvider.get().getMetaData().getFileName();
 
         if ((old_fname != null) && (!old_fname.equals(""))) {
             String suggested_name = old_fname.replace(".sgf", "");
-            if (suggested_name.startsWith(context.getSettings().getSGFSavePath()))
-                suggested_name = suggested_name.substring(context.getSettings().getSGFSavePath().length());
+            if (suggested_name.startsWith(settings.getSGFSavePath()))
+                suggested_name = suggested_name.substring(settings.getSGFSavePath().length());
             fname_et.setText(suggested_name);
         }
 
-        final GoGameMetadata game_meta = App.getGame().getMetaData();
+        final GoGameMetadata game_meta = gameProvider.get().getMetaData();
 
         /**
          * this is a OnClickListener to add Stuff to the FileName like
@@ -203,7 +202,7 @@ public class SaveSGFDialog extends GobandroidDialog {
         if (fname.startsWith("/"))
             return fname;
         else
-            return context.getSettings().getSGFSavePath() + fname;
+            return settings.getSGFSavePath() + fname;
     }
 
 }
