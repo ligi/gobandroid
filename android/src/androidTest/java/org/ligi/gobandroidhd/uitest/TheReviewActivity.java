@@ -19,6 +19,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.not;
 
 public class TheReviewActivity extends BaseIntegration<GameReviewActivity> {
 
@@ -53,13 +54,16 @@ public class TheReviewActivity extends BaseIntegration<GameReviewActivity> {
 
 
     @MediumTest
-    public void testThatNextAndLastControlsAreThereOnBeginning() {
+    public void testThatNextAndLastButNotPrevAndFirstControlsAreThereOnBeginning() {
         gameProvider.set(readGame("small_19x19"));
 
         getActivity();
 
         onView(withId(R.id.btn_next)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_last)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.btn_prev)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.btn_first)).check(matches(not(isDisplayed())));
     }
 
 
@@ -73,6 +77,22 @@ public class TheReviewActivity extends BaseIntegration<GameReviewActivity> {
 
         onView(withId(R.id.btn_next)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_last)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.btn_prev)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_first)).check(matches(isDisplayed()));
+
+    }
+
+    @MediumTest
+    public void testThatNextAndLastButtonsButNotPrevAndFirstAreThereOnEndOfGame() {
+        gameProvider.set(readGame("small_19x19"));
+
+        getActivity();
+
+        onView(withId(R.id.btn_last)).perform(click());
+
+        onView(withId(R.id.btn_next)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.btn_last)).check(matches(not(isDisplayed())));
 
         onView(withId(R.id.btn_prev)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_first)).check(matches(isDisplayed()));
