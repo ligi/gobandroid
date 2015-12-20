@@ -19,6 +19,8 @@
 package org.ligi.gobandroid_hd.logic;
 
 import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -69,6 +71,7 @@ public class GoDefinitions {
      * @param board_size - return handicap array for which board_size
      * @return handicap array
      */
+    @Nullable
     public static byte[][] getHandicapArray(int board_size) {
         switch (board_size) {
             case 9:
