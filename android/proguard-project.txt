@@ -12,6 +12,11 @@
 
 # Add any project specific keep options here:
 
+#http://stackoverflow.com/questions/19274974/android-badparcelableexception-only-with-signed-apk
+-keep class * implements android.os.Parcelable {
+   public static final android.os.Parcelable$Creator *;
+}
+
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface
 # class:
