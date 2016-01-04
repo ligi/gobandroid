@@ -118,7 +118,7 @@ dependencies {
 
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'net.sourceforge.jchardet:jchardet:1.0'
-    compile 'com.squareup.okhttp:okhttp:2.7.0'
+    compile 'com.squareup.okhttp:okhttp:2.7.1'
     compile 'com.n3twork.druid:alphanum:1.0.3'
 
     withAnalyticsCompile 'com.google.android.gms:play-services-analytics:7.8.0'
