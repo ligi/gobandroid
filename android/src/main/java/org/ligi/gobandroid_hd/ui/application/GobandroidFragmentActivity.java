@@ -35,7 +35,7 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
     @Inject
     protected GameProvider gameProvider;
 
-    private ActionBarDrawerToggle mDrawerToggle;
+    private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
 
     private PlayServicesIntegration playServicesIntegration;
@@ -89,7 +89,7 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
         new NavigationDrawer(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        mDrawerToggle = new ActionBarDrawerToggle(this,                  /* host Activity */
+        drawerToggle = new ActionBarDrawerToggle(this,                  /* host Activity */
                 drawerLayout,         /* DrawerLayout object */
                 R.string.drawer_open,  /* "open drawer" description */
                 R.string.drawer_close  /* "close drawer" description */) {
@@ -109,16 +109,25 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
 
         };
 
-        drawerLayout.setDrawerListener(mDrawerToggle);
+        drawerLayout.setDrawerListener(drawerToggle);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return false;
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        if (mDrawerToggle != null) {
-            mDrawerToggle.syncState();
+        if (drawerToggle != null) {
+            drawerToggle.syncState();
         }
     }
 
@@ -126,8 +135,8 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggles
-        if (mDrawerToggle != null) {
-            mDrawerToggle.onConfigurationChanged(newConfig);
+        if (drawerToggle != null) {
+            drawerToggle.onConfigurationChanged(newConfig);
         }
     }
 
@@ -157,18 +166,6 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
         return gameProvider.get();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == android.R.id.home) {
-            android.view.MenuItem homeMenuItem = new HomeMenuItemForNavigationDrawer();
-            mDrawerToggle.onOptionsItemSelected(homeMenuItem);
-            return true;
-        }
-
-        return false;
-
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

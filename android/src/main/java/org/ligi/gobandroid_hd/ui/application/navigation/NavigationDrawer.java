@@ -64,7 +64,7 @@ public class NavigationDrawer implements OnItemClickListener {
 
     public ListAdapter getAdapter() {
 
-        List<Object> items = new ArrayList<Object>();
+        List<Object> items = new ArrayList<>();
         items.add(new Category(R.string.load));
         items.add(new Item(R.id.empty, R.string.empty_board, R.drawable.play));
         items.add(new Item(R.id.tsumego, R.string.tsumego, R.drawable.dashboard_tsumego));
@@ -153,10 +153,6 @@ public class NavigationDrawer implements OnItemClickListener {
         final Intent i = new Intent(ctx, SGFFileSystemListActivity.class);
         i.setData(Uri.parse("file://" + path));
         return i;
-    }
-
-    private App getApp() {
-        return (App) ctx.getApplicationContext();
     }
 
     private class Item {
