@@ -16,9 +16,12 @@ package org.ligi.gobandroid_hd.logic;
 
 import android.support.annotation.NonNull;
 import android.util.SparseArray;
+
+import org.ligi.gobandroid_hd.logic.GoDefinitions.CellStatus;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.ligi.gobandroid_hd.logic.GoDefinitions.CellStatus;
+
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.getStringFromCellStatus;
 
 /**
@@ -122,11 +125,15 @@ public class GoBoard {
      * print a visual representation of the board via Log.d
      */
     public String toString() {
+        return toString(false);
+    }
+
+    public String toString(final boolean unicode) {
         final StringBuilder b = new StringBuilder(size * size + size);
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
                 @CellStatus final byte cellStatus = board[x][y];
-                b.append(getStringFromCellStatus(cellStatus));
+                b.append(getStringFromCellStatus(cellStatus, unicode));
             }
             b.append('\n');
         }

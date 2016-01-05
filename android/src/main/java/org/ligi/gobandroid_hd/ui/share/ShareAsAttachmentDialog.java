@@ -20,7 +20,9 @@ public class ShareAsAttachmentDialog extends GobandroidDialog {
     public ShareAsAttachmentDialog(Context context) {
         super(context);
 
+        setContentView(R.layout.share_options);
         final String fileName = settings.getSGFSavePath() + "/game_to_share_via_action.sgf";
+
         if (SGFWriter.saveSGF(gameProvider.get(), fileName)) { // if we could save
             // the file add extra
             init(context, fileName);

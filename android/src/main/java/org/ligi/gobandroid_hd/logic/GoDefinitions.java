@@ -85,20 +85,20 @@ public class GoDefinitions {
     }
 
 
-    public static char getStringFromCellStatus(@CellStatus int cellStatus) {
+    public static char getStringFromCellStatus(@CellStatus int cellStatus, boolean unicode) {
         switch (cellStatus) {
             case GoDefinitions.STONE_BLACK:
-                return 'B';
+                return unicode ? '⚫' : 'B';
             case GoDefinitions.STONE_WHITE:
-                return 'W';
+                return unicode ? '⚪' : 'W';
             case -GoDefinitions.STONE_BLACK:
-                return 'b';
+                return unicode ? '➕' : 'b';
             case -GoDefinitions.STONE_WHITE:
-                return 'w';
+                return unicode ? '➕' : 'w';
 
             case -GoDefinitions.STONE_NONE:
             default:
-                return '.';
+                return unicode ? '➕' : '.';
         }
     }
 
