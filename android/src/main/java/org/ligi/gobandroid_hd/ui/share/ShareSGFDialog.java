@@ -44,6 +44,7 @@ public class ShareSGFDialog extends GobandroidDialog {
                     case R.id.radioButtonAsUnicode:
                         final Intent intent = new Intent(Intent.ACTION_SEND);
                         intent.putExtra(Intent.EXTRA_TEXT, gameProvider.get().getVisualBoard().toString(true));
+                        intent.setType("application/text");
                         getContext().startActivity(Intent.createChooser(intent, getContext().getString(R.string.choose_how_to_send_sgf)));
                         break;
 
