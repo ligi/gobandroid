@@ -315,7 +315,7 @@ public class SGFReader {
                 break;
 
             case "SO": // Source
-                metadata.setResult(act_param);
+                metadata.setSource(act_param);
                 break;
 
             case "KM":
