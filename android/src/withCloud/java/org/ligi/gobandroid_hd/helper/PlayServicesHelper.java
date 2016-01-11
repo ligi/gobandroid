@@ -26,7 +26,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
-import com.google.android.gms.appstate.AppStateManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
@@ -79,7 +78,6 @@ public class PlayServicesHelper {
 
     // Client objects we manage. If a given client is not enabled, it is null.
     Games mGamesClient = null;
-    AppStateManager mAppStateClient = null;
 
     // What clients we manage (OR-able values, can be combined as flags)
     public final static int CLIENT_NONE = 0x00;
@@ -245,17 +243,6 @@ public class PlayServicesHelper {
             throw new IllegalStateException("No GamesClient. Did you request it at setup?");
         }
         return mGamesClient;
-    }
-
-    /**
-     * Returns the AppStateClient object. In order to call this method, you must have
-     * called @link{#setup} with a set of clients that includes CLIENT_APPSTATE.
-     */
-    public AppStateManager getAppStateClient() {
-        if (mAppStateClient == null) {
-            throw new IllegalStateException("No AppStateClient. Did you request it at setup?");
-        }
-        return mAppStateClient;
     }
 
     /**
@@ -546,14 +533,14 @@ public class PlayServicesHelper {
         } /*else if (mPlusClient != null && (0 != (pendingClients & CLIENT_PLUS))) {
             debugLog("Connecting PlusClient.");
             mClientCurrentlyConnecting = CLIENT_PLUS;
-        } */else if (mAppStateClient != null && (0 != (pendingClients & CLIENT_APPSTATE))) {
+        } else if (mAppStateClient != null && (0 != (pendingClients & CLIENT_APPSTATE))) {
             debugLog("Connecting AppStateClient.");
             mClientCurrentlyConnecting = CLIENT_APPSTATE;
         } else {
-         /*   throw new AssertionError("Not all clients connected, yet no one is next. R="
+            throw new AssertionError("Not all clients connected, yet no one is next. R="
                     + mRequestedClients + ", C=" + mConnectedClients);
-                    */
-        }
+
+        }                    */
 
         connectCurrentClient();
     }

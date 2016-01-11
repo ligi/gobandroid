@@ -125,13 +125,13 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.7.2'
     compile 'com.n3twork.druid:alphanum:1.0.3'
 
-    withAnalyticsCompile 'com.google.android.gms:play-services-analytics:7.8.0'
+    withAnalyticsCompile 'com.google.android.gms:play-services-analytics:8.4.0'
 
-    withCloudCompile 'com.google.android.gms:play-services-games:7.8.0'
-    withCloudCompile 'com.google.android.gms:play-services-plus:7.8.0'
-    withCloudCompile 'com.google.android.gms:play-services-appstate:7.8.0'
-    withCloudCompile 'com.google.android.gms:play-services-gcm:7.8.0'
-    withCloudCompile 'com.google.android.gms:play-services-plus:7.8.0'
+    withCloudCompile 'com.google.android.gms:play-services-games:8.4.0'
+    withCloudCompile 'com.google.android.gms:play-services-plus:8.4.0'
+    withCloudCompile 'com.google.android.gms:play-services-appstate:8.4.0'
+    withCloudCompile 'com.google.android.gms:play-services-gcm:8.4.0'
+    withCloudCompile 'com.google.android.gms:play-services-plus:8.4.0'
 
     androidTestApt "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
 
