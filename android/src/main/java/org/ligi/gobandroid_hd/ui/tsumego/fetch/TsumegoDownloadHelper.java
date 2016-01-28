@@ -1,15 +1,18 @@
 package org.ligi.gobandroid_hd.ui.tsumego.fetch;
 
 import android.content.Context;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-import java.io.File;
-import okio.BufferedSink;
-import okio.Okio;
+
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.backend.GobandroidBackend;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
+
+import java.io.File;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okio.BufferedSink;
+import okio.Okio;
 
 public class TsumegoDownloadHelper {
 
