@@ -19,8 +19,6 @@
 
 package org.ligi.gobandroid_hd.logic.sgf;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -31,6 +29,9 @@ import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
 import org.ligi.tracedroid.logging.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * class for load games in SGF File-Format
@@ -109,13 +110,13 @@ public class SGFReader {
                         case ';':
                         case '\t':
                         case ' ':
-                            if (!act_cmd.equals(""))
+                            if (!act_cmd.isEmpty())
                                 last_cmd = act_cmd;
                             act_cmd = "";
                             break;
 
                         case '[':
-                            if (act_cmd.equals(""))
+                            if (act_cmd.isEmpty())
                                 act_cmd = last_cmd;
 
                             // for files without SZ - e.g. ggg-intermediate-11.sgf
@@ -134,7 +135,7 @@ public class SGFReader {
                                 if ((opener == 1) && (game == null)) {
                                     size = 19;
                                     game = new GoGame((byte) 19);
-                                    variationList.add(game.getActMove());
+                                    variationList.add(getOrCreateGame().getActMove());
                                 }
 
                                 opener++;
@@ -147,7 +148,7 @@ public class SGFReader {
                                 Log.i("   !!! opening variation" + game);
                                 if (game != null) {
 
-                                    variationList.add(game.getActMove());
+                                    variationList.add(getOrCreateGame().getActMove());
                                 }
 
                                 last_cmd = "";
@@ -157,7 +158,7 @@ public class SGFReader {
                         case ')':
                             if (variationList.size() > 0) {
                                 GoMove lastMove = variationList.get(variationList.size() - 1);
-                                game.jump(lastMove);
+                                getOrCreateGame().jump(lastMove);
                                 variationList.remove(lastMove);
                                 Log.w("popping variaton from stack");
                             } else {
@@ -181,7 +182,7 @@ public class SGFReader {
                             // command
                             // now
                             if ((game != null) && (callback != null))
-                                callback.progress(p, sgf.length(), game.getActMove().getMovePos());
+                                callback.progress(p, sgf.length(), getOrCreateGame().getActMove().getMovePos());
                             if (!escape) {
                                 consuming_param = false;
                                 processCommand();
@@ -221,6 +222,7 @@ public class SGFReader {
 
         } catch (Exception e) { // some weird sgf - we want to catch to not FC
             // and have the chance to send the sgf to analysis
+            e.printStackTrace();
             Log.w("Problem parsing SGF " + e);
         }
 
@@ -247,7 +249,7 @@ public class SGFReader {
 
         final Cell cell = new Cell(param_x, param_y);
         // if command is empty -> use the last command
-        if (act_cmd.length() == 0)
+        if (act_cmd.isEmpty())
             act_cmd = last_cmd;
 
         // marker section - info here http://www.red-bean.com/sgf/properties.html
@@ -256,30 +258,30 @@ public class SGFReader {
                 final String[] inner = act_param.split(":");
                 final String txt = (inner.length > 1) ? inner[1] : "X";
 
-                game.getActMove().addMarker(new TextMarker(cell, txt));
+                getOrCreateGame().getActMove().addMarker(new TextMarker(cell, txt));
                 break;
 
             // mark with x
             case "Mark":
             case "MA":
-                game.getActMove().addMarker(new TextMarker(cell, "X"));
+                getOrCreateGame().getActMove().addMarker(new TextMarker(cell, "X"));
                 break;
 
             case "SL":
-                game.getActMove().addMarker(new TextMarker(cell, "+"));
+                getOrCreateGame().getActMove().addMarker(new TextMarker(cell, "+"));
                 break;
 
             // mark with triangle
             case "TR":
-                game.getActMove().addMarker(new TriangleMarker(cell));
+                getOrCreateGame().getActMove().addMarker(new TriangleMarker(cell));
                 break;
 
             case "SQ": // mark with square
-                game.getActMove().addMarker(new SquareMarker(cell));
+                getOrCreateGame().getActMove().addMarker(new SquareMarker(cell));
                 break;
 
             case "CR": // mark with circle
-                game.getActMove().addMarker(new CircleMarker(cell));
+                getOrCreateGame().getActMove().addMarker(new CircleMarker(cell));
                 break;
 
             case "GN": // Game Name
@@ -319,7 +321,7 @@ public class SGFReader {
                 break;
 
             case "KM":
-                game.setKomi(Float.parseFloat(act_param));
+                getOrCreateGame().setKomi(Float.parseFloat(act_param));
                 break;
         }
 
@@ -345,9 +347,7 @@ public class SGFReader {
         // move command
         if (act_cmd.equals("Black") || act_cmd.equals("B") || act_cmd.equals("W") || act_cmd.equals("White")) {
 
-            // if still no game open -> open one with
-            // default
-            // size
+            // if still no game open -> open one with default size
             if (game == null) {
                 game = new GoGame((byte) 19);
                 variationList.add(game.getActMove());
@@ -410,4 +410,11 @@ public class SGFReader {
         act_param = "";
     }
 
+    private GoGame getOrCreateGame() {
+        if (game == null) {
+            size = 19;
+            game = new GoGame(size);
+        }
+        return game;
+    }
 }
