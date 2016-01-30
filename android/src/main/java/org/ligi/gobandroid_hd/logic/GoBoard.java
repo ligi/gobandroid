@@ -40,7 +40,7 @@ public class GoBoard {
     public final byte[][] board;
 
     private SparseArray<BoardCell> cells = new SparseArray<>();
-    private List<BoardCell> allCells = new ArrayList<>(); // as we cannot iterate ofter
+    private List<BoardCell> allCells = new ArrayList<>(); // as we cannot iterate over
 
     public GoBoard(int size) {
         this.size = size;
