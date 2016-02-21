@@ -1,7 +1,6 @@
 package org.ligi.gobandroidhd;
 
 import org.junit.Test;
-import org.ligi.gobandroid_hd.logic.BoardCell;
 import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
 import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
 import org.ligi.gobandroid_hd.logic.StatelessGoBoard;
@@ -18,7 +17,7 @@ public class TheLooseConnectedCellGatherer extends MarkerTestBase {
 
         final StatelessBoardCell cell = board.getStatelessGoBoard().getCell(0, 0);
 
-        final LooseConnectedCellGatherer boardCells = new LooseConnectedCellGatherer(board,cell);
+        final LooseConnectedCellGatherer boardCells = new LooseConnectedCellGatherer(board, cell);
 
         assertThat(boardCells).hasSize(board.getSize() * board.getSize());
     }

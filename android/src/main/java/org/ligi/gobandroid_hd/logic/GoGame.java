@@ -208,7 +208,7 @@ public class GoGame {
      * set the handicap stones on the calc board
      */
     public void apply_handicap() {
-        calc_board.applyBoardState(handicap_board.board);
+        calc_board.applyBoardState(handicap_board.getBoard());
     }
 
     public void reset() {
@@ -274,13 +274,13 @@ public class GoGame {
         // move is a KO -> Invalid
         if (calc_board.equals(pre_last_board)) {
             Log.i("illegal move -> KO");
-            calc_board.applyBoardState(bak_board.board);
+            calc_board.applyBoardState(bak_board.getBoard());
             return MOVE_INVALID_IS_KO;
         }
 
         if (!hasGroupLiberties(cell)) {
             Log.i("illegal move -> NO LIBERTIES");
-            calc_board.applyBoardState(bak_board.board);
+            calc_board.applyBoardState(bak_board.getBoard());
             return MOVE_INVALID_CELL_NO_LIBERTIES;
         }
 

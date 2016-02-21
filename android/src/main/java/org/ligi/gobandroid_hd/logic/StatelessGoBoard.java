@@ -21,10 +21,10 @@ import java.util.List;
 
 /**
  * Class to represent a Go Board
- 
+
  */
 
-public class StatelessGoBoard {
+public class StatelessGoBoard implements GoBoard {
 
     private final int size;
 
