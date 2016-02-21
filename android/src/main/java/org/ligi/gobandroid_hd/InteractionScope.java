@@ -32,7 +32,7 @@ public class InteractionScope {
     }
 
     public boolean hasValidTouchCoord(GoGame game) {
-        return touch_position != null && game.getCalcBoard().getCell(touch_position) != null;
+        return touch_position != null && game.getCalcBoard().getStatelessGoBoard().getCell(touch_position) != null;
     }
 
     public byte getMode() {

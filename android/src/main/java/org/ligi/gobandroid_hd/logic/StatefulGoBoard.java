@@ -15,12 +15,8 @@
 package org.ligi.gobandroid_hd.logic;
 
 import android.support.annotation.NonNull;
-import android.util.SparseArray;
 
 import org.ligi.gobandroid_hd.logic.GoDefinitions.CellStatus;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.getStringFromCellStatus;
 
@@ -40,39 +36,11 @@ public class StatefulGoBoard {
     @CellStatus
     public final byte[][] board;
 
-    private SparseArray<BoardCell> cells = new SparseArray<>();
-    private List<BoardCell> allCells = new ArrayList<>(); // as we cannot iterate over
-
     public StatefulGoBoard(final StatelessGoBoard statelessGoBoard) {
         this.statelessGoBoard = statelessGoBoard;
         this.size = statelessGoBoard.getSize();
 
         board = new byte[size][size];
-        for (int x = 0; x < size; x++) {
-            for (int y = 0; y < size; y++) {
-                final BoardCell boardCell = new BoardCell(x, y, this);
-                allCells.add(boardCell);
-                cells.put(getKey(x, y), boardCell);
-            }
-
-        }
-
-        for (BoardCell allCell : allCells) {
-            allCell.assignNeighbours();
-        }
-
-    }
-
-    public BoardCell getCell(Cell cell) {
-        return getCell(cell.x, cell.y);
-    }
-
-    public int getKey(final int x, final int y) {
-        return y * size + x;
-    }
-
-    public BoardCell getCell(final int x, final int y) {
-        return cells.get(getKey(x, y));
     }
 
     /**
@@ -86,16 +54,18 @@ public class StatefulGoBoard {
 
     public StatefulGoBoard(StatelessGoBoard statelessGoBoard, byte[][] predefined_board) {
         this(statelessGoBoard);
+        applyBoardState(predefined_board);
 
+
+    }
+
+    public void applyBoardState(byte[][] predefined_board) {
         // copy the board
         for (int x = 0; x < size; x++) {
             System.arraycopy(predefined_board[x], 0, board[x], 0, size);
         }
     }
 
-    public List<BoardCell> getAllCells() {
-        return allCells;
-    }
 
     /**
      * clone this board
@@ -118,7 +88,7 @@ public class StatefulGoBoard {
         if (size != other.size) return false;
 
         // check if all stones are placed equally
-        for (Cell cell : getAllCells()) {
+        for (Cell cell : statelessGoBoard.getAllCells()) {
             if (board[cell.x][cell.y] != other.board[cell.x][cell.y]) return false;
         }
 
@@ -195,4 +165,7 @@ public class StatefulGoBoard {
         return (board[cell.x][cell.y] < 0);
     }
 
+    public StatelessGoBoard getStatelessGoBoard() {
+        return statelessGoBoard;
+    }
 }

@@ -1,10 +1,7 @@
 package org.ligi.gobandroid_hd.logic.sgf;
 
 import android.support.annotation.NonNull;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
@@ -14,6 +11,11 @@ import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
 import org.ligi.tracedroid.logging.Log;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * logic to save SGF files ( serialize )
@@ -48,7 +50,7 @@ public class SGFWriter {
         res.append(getSGFSnippet("SO", escapeSGF(game.getMetaData().getSource())));
         res.append("\n");
 
-        for (Cell cell : game.getCalcBoard().getAllCells()) {
+        for (Cell cell : game.getCalcBoard().getStatelessGoBoard().getAllCells()) {
             if (game.getHandicapBoard().isCellWhite(cell)) {
                 res.append("AW").append(SGFWriter.coords2SGFFragment(cell)).append("\n");
             } else if (game.getHandicapBoard().isCellBlack(cell)) {

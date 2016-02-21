@@ -19,6 +19,10 @@
 package org.ligi.gobandroid_hd.logic;
 
 import android.support.annotation.Nullable;
+
+import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer;
+import org.ligi.tracedroid.logging.Log;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,8 +31,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer;
-import org.ligi.tracedroid.logging.Log;
+
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.STONE_BLACK;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.STONE_NONE;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.STONE_WHITE;
@@ -61,10 +64,11 @@ public class GoGame {
         }
     }
 
-    private StatelessGoBoard statelessGoBoard;
+    private final StatelessGoBoard statelessGoBoard;
+    private final StatefulGoBoard calc_board; // the board calculations are done in
 
     private StatefulGoBoard visual_board; // the board to show to the user
-    private StatefulGoBoard calc_board; // the board calculations are done in
+
     private StatefulGoBoard last_board; // board to detect KO situations
     private StatefulGoBoard pre_last_board; // board to detect KO situations
     private StatefulGoBoard handicap_board;
@@ -93,6 +97,18 @@ public class GoGame {
 
     private int local_captures = 0;
 
+
+    public GoGame(int size) {
+        this(size, 0);
+    }
+
+    public GoGame(int size, int handicap) {
+        statelessGoBoard = new StatelessGoBoard(size);
+        calc_board = new StatefulGoBoard(statelessGoBoard);
+        init(size, handicap);
+    }
+
+
     @Nullable
     private GoGameScorer scorer;
 
@@ -110,6 +126,7 @@ public class GoGame {
         scorer.calculateScore();
     }
 
+    /*
 
     public void setGame(GoGame game) {
         metadata = game.getMetaData();
@@ -128,18 +145,10 @@ public class GoGame {
 
         change_listeners.addAll(game.change_listeners);
     }
+    */
 
-    public GoGame(int size) {
-        this(size, 0);
-    }
+    private void init(int size, int handicap) {
 
-    public GoGame(int size, int handicap) {
-        init(size, handicap);
-    }
-
-    public void init(int size, int handicap) {
-
-        statelessGoBoard = new StatelessGoBoard(size);
         this.handicap = handicap;
 
         // create the boards
@@ -149,7 +158,6 @@ public class GoGame {
         final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
         metadata.setDate(format.format(new Date()));
-        calc_board = new StatefulGoBoard(statelessGoBoard);
 
         handicap_board = calc_board.clone();
 
@@ -200,7 +208,7 @@ public class GoGame {
      * set the handicap stones on the calc board
      */
     public void apply_handicap() {
-        calc_board = handicap_board.clone();
+        calc_board.applyBoardState(handicap_board.board);
     }
 
     public void reset() {
@@ -266,13 +274,13 @@ public class GoGame {
         // move is a KO -> Invalid
         if (calc_board.equals(pre_last_board)) {
             Log.i("illegal move -> KO");
-            calc_board = bak_board.clone();
+            calc_board.applyBoardState(bak_board.board);
             return MOVE_INVALID_IS_KO;
         }
 
         if (!hasGroupLiberties(cell)) {
             Log.i("illegal move -> NO LIBERTIES");
-            calc_board = bak_board.clone();
+            calc_board.applyBoardState(bak_board.board);
             return MOVE_INVALID_CELL_NO_LIBERTIES;
         }
 
@@ -420,9 +428,9 @@ public class GoGame {
         visual_board = calc_board.clone();
     }
 
-    public boolean cell_has_neighbour(BoardCell boardCell, byte kind) {
-        for (BoardCell cell : boardCell.getNeighbors())
-            if (cell.is(kind)) return true;
+    public boolean cell_has_neighbour(StatefulGoBoard board, StatelessBoardCell boardCell, byte kind) {
+        for (StatelessBoardCell cell : boardCell.getNeighbors())
+            if (board.isCellKind(cell, kind)) return true;
 
         return false;
     }
@@ -434,21 +442,21 @@ public class GoGame {
      */
     public boolean hasGroupLiberties(Cell cell) {
 
-        final BoardCell startCell = calc_board.getCell(cell);
+        final StatelessBoardCell startCell = calc_board.getStatelessGoBoard().getCell(cell);
 
         final AtomicBoolean found = new AtomicBoolean();
 
-        new MustBeConnectedCellGatherer(startCell) {
+        new MustBeConnectedCellGatherer(calc_board, startCell) {
             @Override
-            public boolean add(BoardCell object) {
-                if (cell_has_neighbour(object, STONE_NONE)) {
+            public boolean add(StatelessBoardCell object) {
+                if (cell_has_neighbour(calc_board, object, STONE_NONE)) {
                     found.set(true);
                 }
                 return super.add(object);
             }
 
             @Override
-            protected void pushWithCheck(BoardCell cell) {
+            protected void pushWithCheck(StatelessBoardCell cell) {
                 if (!found.get()) { // no need to process any more cells
                     super.pushWithCheck(cell);
                 }
@@ -475,10 +483,10 @@ public class GoGame {
             for (int y = 0; y < calc_board.getSize(); y++)
                 groups[x][y] = -1;
 
-        for (BoardCell boardCell : calc_board.getAllCells()) {
-            if (groups[boardCell.x][boardCell.y] == -1 && !boardCell.is(GoDefinitions.STONE_NONE)) {
+        for (StatelessBoardCell boardCell : calc_board.getStatelessGoBoard().getAllCells()) {
+            if (groups[boardCell.x][boardCell.y] == -1 && !calc_board.isCellKind(boardCell, STONE_NONE)) {
 
-                for (BoardCell groupCell : new MustBeConnectedCellGatherer(boardCell)) {
+                for (StatelessBoardCell groupCell : new MustBeConnectedCellGatherer(calc_board, boardCell)) {
                     groups[groupCell.x][groupCell.y] = group_count;
                 }
 
@@ -494,9 +502,9 @@ public class GoGame {
     private void remove_dead(Cell where) {
         local_captures = 0;
 
-        BoardCell boardWhere = calc_board.getCell(where);
+        final StatelessBoardCell boardWhere = calc_board.getStatelessGoBoard().getCell(where);
 
-        for (BoardCell boardCell : boardWhere.getNeighbors())
+        for (Cell boardCell : boardWhere.getNeighbors())
             if ((!hasGroupLiberties(boardCell)) && (!calc_board.areCellsEqual(boardWhere, boardCell))) remove_group(boardCell);
     }
 
@@ -505,9 +513,9 @@ public class GoGame {
         if (calc_board.isCellFree(where)) // this is no "group" in the sense we want
             return;
 
-        final MustBeConnectedCellGatherer cellGathering = new MustBeConnectedCellGatherer(calc_board.getCell(where));
+        final MustBeConnectedCellGatherer cellGathering = new MustBeConnectedCellGatherer(calc_board, calc_board.getStatelessGoBoard().getCell(where));
 
-        for (BoardCell cell : cellGathering) {
+        for (StatelessBoardCell cell : cellGathering) {
             local_captures++;
             calc_board.setCell(cell, STONE_NONE);
         }

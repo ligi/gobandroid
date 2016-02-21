@@ -15,30 +15,6 @@ public class BoardCell extends Cell {
         this.board = board;
     }
 
-    public void assignNeighbours() {
-        if (x > 0) {
-            left = board.getCell(x - 1, y);
-            neighbours.add(left);
-        }
-
-        if (y > 0) {
-            up = board.getCell(x, y - 1);
-            neighbours.add(up);
-        }
-
-        if (y < board.getSize() - 1) {
-            down = board.getCell(x, y + 1);
-            neighbours.add(down);
-        }
-
-
-        if (x < board.getSize() - 1) {
-            right = board.getCell(x + 1, y);
-            neighbours.add(right);
-        }
-    }
-
-
     public boolean is(byte kind) {
         return board.isCellKind(this, kind);
     }

@@ -1,18 +1,20 @@
 package org.ligi.gobandroid_hd.logic.cell_gatherer;
 
-import org.ligi.gobandroid_hd.logic.BoardCell;
+import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
+import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
 
 public class MustBeConnectedCellGatherer extends CellGatherer {
 
-    public MustBeConnectedCellGatherer(BoardCell root) {
-        super(root);
+
+    public MustBeConnectedCellGatherer(StatefulGoBoard board, StatelessBoardCell root) {
+        super(board, root);
     }
 
     @Override
-    protected void pushWithCheck(BoardCell cell) {
+    protected void pushWithCheck(StatelessBoardCell cell) {
         final boolean unProcessed = processed.add(cell);
 
-        if (cell.isInHomogeneousGroupWith(root)) {
+        if (board.areCellsEqual(cell, root)) {
             add(cell);
             if (unProcessed) {
                 pushSurroundingWithCheck(cell);

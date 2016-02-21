@@ -1,30 +1,34 @@
 package org.ligi.gobandroid_hd.logic.cell_gatherer;
 
+import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
+import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
+
 import java.util.HashSet;
 import java.util.Set;
-import org.ligi.gobandroid_hd.logic.BoardCell;
 
-public abstract class CellGatherer extends HashSet<BoardCell> {
+public abstract class CellGatherer extends HashSet<StatelessBoardCell> {
 
-    protected final Set<BoardCell> processed;
-    protected final BoardCell root;
+    protected final Set<StatelessBoardCell> processed;
+    protected final StatelessBoardCell root;
+    protected final StatefulGoBoard board;
 
-    public CellGatherer(BoardCell root) {
+    public CellGatherer(final StatefulGoBoard board, final StatelessBoardCell root) {
+        this.board = board;
         this.root = root;
         processed = new HashSet<>();
         pushWithCheck(root);
     }
 
 
-    abstract protected void pushWithCheck(BoardCell cell);
+    abstract protected void pushWithCheck(StatelessBoardCell cell);
 
-    protected void pushSurroundingWithCheck(BoardCell cell) {
-        for (BoardCell boardCell : cell.getNeighbors()) {
+    protected void pushSurroundingWithCheck(StatelessBoardCell cell) {
+        for (StatelessBoardCell boardCell : cell.getNeighbors()) {
             pushWithCheck(boardCell);
         }
     }
 
-    public Set<BoardCell> getProcessed() {
+    public Set<StatelessBoardCell> getProcessed() {
         return processed;
     }
 
