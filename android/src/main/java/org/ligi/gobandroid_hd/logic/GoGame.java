@@ -61,11 +61,13 @@ public class GoGame {
         }
     }
 
-    private GoBoard visual_board; // the board to show to the user
-    private GoBoard calc_board; // the board calculations are done in
-    private GoBoard last_board; // board to detect KO situations
-    private GoBoard pre_last_board; // board to detect KO situations
-    private GoBoard handicap_board;
+    private StatelessGoBoard statelessGoBoard;
+
+    private StatefulGoBoard visual_board; // the board to show to the user
+    private StatefulGoBoard calc_board; // the board calculations are done in
+    private StatefulGoBoard last_board; // board to detect KO situations
+    private StatefulGoBoard pre_last_board; // board to detect KO situations
+    private StatefulGoBoard handicap_board;
 
     private int[][] groups; // array to build groups
 
@@ -137,6 +139,7 @@ public class GoGame {
 
     public void init(int size, int handicap) {
 
+        statelessGoBoard = new StatelessGoBoard(size);
         this.handicap = handicap;
 
         // create the boards
@@ -146,7 +149,7 @@ public class GoGame {
         final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
         metadata.setDate(format.format(new Date()));
-        calc_board = new GoBoard(size);
+        calc_board = new StatefulGoBoard(statelessGoBoard);
 
         handicap_board = calc_board.clone();
 
@@ -254,7 +257,7 @@ public class GoGame {
             return MOVE_VALID;
         }
 
-        final GoBoard bak_board = calc_board.clone();
+        final StatefulGoBoard bak_board = calc_board.clone();
 
         calc_board.setCell(cell, isBlackToMove() ? STONE_BLACK : STONE_WHITE);
 
@@ -521,11 +524,11 @@ public class GoGame {
         return all_handicap_positions[cell.x][cell.y];
     }
 
-    public GoBoard getVisualBoard() {
+    public StatefulGoBoard getVisualBoard() {
         return visual_board;
     }
 
-    public GoBoard getCalcBoard() {
+    public StatefulGoBoard getCalcBoard() {
         return calc_board;
     }
 
@@ -563,7 +566,7 @@ public class GoGame {
         return handicap;
     }
 
-    public GoBoard getHandicapBoard() {
+    public StatefulGoBoard getHandicapBoard() {
         return handicap_board;
     }
 
@@ -622,5 +625,8 @@ public class GoGame {
         return true;
     }
 
+    public StatelessGoBoard getStatelessGoBoard() {
+        return statelessGoBoard;
+    }
 
 }

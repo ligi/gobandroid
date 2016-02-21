@@ -32,8 +32,9 @@ import static org.ligi.gobandroid_hd.logic.GoDefinitions.getStringFromCellStatus
  *         This software is licenced with GPLv3
  */
 
-public class GoBoard {
+public class StatefulGoBoard {
 
+    private final StatelessGoBoard statelessGoBoard;
     private final int size;
 
     @CellStatus
@@ -42,8 +43,10 @@ public class GoBoard {
     private SparseArray<BoardCell> cells = new SparseArray<>();
     private List<BoardCell> allCells = new ArrayList<>(); // as we cannot iterate over
 
-    public GoBoard(int size) {
-        this.size = size;
+    public StatefulGoBoard(final StatelessGoBoard statelessGoBoard) {
+        this.statelessGoBoard = statelessGoBoard;
+        this.size = statelessGoBoard.getSize();
+
         board = new byte[size][size];
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
@@ -57,6 +60,7 @@ public class GoBoard {
         for (BoardCell allCell : allCells) {
             allCell.assignNeighbours();
         }
+
     }
 
     public BoardCell getCell(Cell cell) {
@@ -80,8 +84,8 @@ public class GoBoard {
     }
 
 
-    public GoBoard(int size, byte[][] predefined_board) {
-        this(size);
+    public StatefulGoBoard(StatelessGoBoard statelessGoBoard, byte[][] predefined_board) {
+        this(statelessGoBoard);
 
         // copy the board
         for (int x = 0; x < size; x++) {
@@ -98,14 +102,14 @@ public class GoBoard {
      *
      * @return a copy of this board
      */
-    public GoBoard clone() {
-        return new GoBoard(size, board);
+    public StatefulGoBoard clone() {
+        return new StatefulGoBoard(statelessGoBoard, board);
     }
 
     /**
      * check if two boards are equal
      */
-    public boolean equals(GoBoard other) {
+    public boolean equals(StatefulGoBoard other) {
 
         // cannot be the same if board is null
         if (other == null) return false;

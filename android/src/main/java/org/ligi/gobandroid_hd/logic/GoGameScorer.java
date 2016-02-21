@@ -48,7 +48,7 @@ public class GoGameScorer {
     public void calculateScore() {
 
         // reset groups
-        final GoBoard calc_board = game.getCalcBoard();
+        final StatefulGoBoard calc_board = game.getCalcBoard();
         for (Cell cell : calc_board.getAllCells()) {
             area_assign[cell.x][cell.y] = 0;
         }

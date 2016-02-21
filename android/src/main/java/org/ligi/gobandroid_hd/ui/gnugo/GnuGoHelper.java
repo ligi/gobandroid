@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.logic.Cell;
-import org.ligi.gobandroid_hd.logic.GoBoard;
+import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
 import org.ligi.gobandroid_hd.logic.GoGame;
 
 public class GnuGoHelper {
@@ -17,7 +17,7 @@ public class GnuGoHelper {
 
 
     public static boolean checkGnuGoSync(final String board_str, final GoGame game) {
-        final GoBoard b = new GoBoard((byte) game.getBoardSize());
+        final StatefulGoBoard b = new StatefulGoBoard(game.getStatelessGoBoard());
         final String[] split_board = board_str.split("\n");
 
         for (int gnugo_y = 2; gnugo_y <= b.getSize() + 1; gnugo_y++) {

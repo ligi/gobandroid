@@ -35,7 +35,7 @@ import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.BoardCell;
 import org.ligi.gobandroid_hd.logic.Cell;
-import org.ligi.gobandroid_hd.logic.GoBoard;
+import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
@@ -255,7 +255,7 @@ public class GoBoardViewHD extends View {
         }
 
         // draw the vertical lines for the grid
-        final GoBoard board = getGame().getVisualBoard();
+        final StatefulGoBoard board = getGame().getVisualBoard();
         for (byte x = 0; x < getGameSize(); x++)
             canvas.drawLine(stone_size / 2.0f + x * stone_size,
                             stone_size / 2.0f,
