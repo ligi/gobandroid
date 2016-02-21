@@ -1,8 +1,6 @@
 package org.ligi.gobandroidhd;
 
 import org.junit.Test;
-import org.ligi.gobandroid_hd.logic.BoardCell;
-import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
 import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
 import org.ligi.gobandroid_hd.logic.StatelessGoBoard;
 
@@ -24,7 +22,6 @@ public class TheBoardCell extends MarkerTestBase {
     public void testCellx0y1HasCorrectNeighbours() {
 
         final StatelessBoardCell tested = board.getCell(0, 1);
-
         assertThat(tested.getNeighbors()).containsExactly(board.getCell(0, 0), board.getCell(0, 2), board.getCell(1, 1));
     }
 
