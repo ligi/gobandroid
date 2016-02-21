@@ -38,6 +38,7 @@
         <activity android:name="org.ligi.gobandroid_hd.ui.game_setup.GoSetupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
             </intent-filter>
@@ -53,6 +54,7 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="tv.ouya.intent.category.GAME" />
             </intent-filter>
@@ -143,7 +145,53 @@
 
                 <data
                     android:host="*"
-                    android:pathPattern=".*\\.sgf"
+                    android:mimeType="*/*"
+                    android:pathPattern="/.*\\.sgf"
+                    android:scheme="file" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern="/.*\\..*\\.sgf"
+                    android:scheme="file" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern="/.*\\..*\\..*\\.sgf"
+                    android:scheme="file" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern="/.*\\..*\\..*\\..*\\.sgf"
+                    android:scheme="file" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern="/.*\\..*\\..*\\..*\\..*\\.sgf"
+                    android:scheme="file" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\.sgf"
+                    android:scheme="file" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\..*\\.sgf"
+                    android:scheme="file" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\.sgf"
+                    android:scheme="file" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\.sgf"
+                    android:scheme="file" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\.sgf"
                     android:scheme="file" />
             </intent-filter>
             <intent-filter>
