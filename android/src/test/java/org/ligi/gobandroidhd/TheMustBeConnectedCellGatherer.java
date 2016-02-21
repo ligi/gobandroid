@@ -1,11 +1,12 @@
 package org.ligi.gobandroidhd;
 
 import org.junit.Test;
-import org.ligi.gobandroid_hd.logic.BoardCell;
-import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
+import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
+import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
 import org.ligi.gobandroid_hd.logic.StatelessGoBoard;
 import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TheMustBeConnectedCellGatherer extends MarkerTestBase {
@@ -15,9 +16,9 @@ public class TheMustBeConnectedCellGatherer extends MarkerTestBase {
     @Test
     public void testEmptyBoardIsOneGroup() {
 
-        final BoardCell cell = board.getCell(0, 0);
+        final StatelessBoardCell cell = board.getStatelessGoBoard().getCell(0, 0);
 
-        final MustBeConnectedCellGatherer boardCells = new MustBeConnectedCellGatherer(cell);
+        final MustBeConnectedCellGatherer boardCells = new MustBeConnectedCellGatherer(board,cell);
 
         assertThat(boardCells).hasSize(board.getSize() * board.getSize());
     }
@@ -25,10 +26,10 @@ public class TheMustBeConnectedCellGatherer extends MarkerTestBase {
     @Test
     public void testSingleCellIsSingle() {
 
-        final BoardCell cell = board.getCell(0, 0);
+        final StatelessBoardCell cell = board.getStatelessGoBoard().getCell(0, 0);
         board.setCell(cell, GoDefinitions.STONE_BLACK);
 
-        final MustBeConnectedCellGatherer boardCells = new MustBeConnectedCellGatherer(cell);
+        final MustBeConnectedCellGatherer boardCells = new MustBeConnectedCellGatherer(board,cell);
 
         assertThat(boardCells).contains(cell);
     }
@@ -36,13 +37,13 @@ public class TheMustBeConnectedCellGatherer extends MarkerTestBase {
     @Test
     public void testDiagonalDoesNotCount() {
 
-        final BoardCell cell = board.getCell(0, 0);
+        final StatelessBoardCell cell = board.getStatelessGoBoard().getCell(0, 0);
         board.setCell(cell, GoDefinitions.STONE_BLACK);
 
-        final BoardCell cell2 = board.getCell(1, 1);
+        final StatelessBoardCell cell2 = board.getStatelessGoBoard().getCell(1, 1);
         board.setCell(cell2, GoDefinitions.STONE_BLACK);
 
-        final MustBeConnectedCellGatherer boardCells = new MustBeConnectedCellGatherer(cell);
+        final MustBeConnectedCellGatherer boardCells = new MustBeConnectedCellGatherer(board,cell);
 
         assertThat(boardCells).contains(cell);
     }
@@ -51,13 +52,13 @@ public class TheMustBeConnectedCellGatherer extends MarkerTestBase {
     @Test
     public void testSmallGroup() {
 
-        final BoardCell cell = board.getCell(0, 0);
+        final StatelessBoardCell cell = board.getStatelessGoBoard().getCell(0, 0);
         board.setCell(cell, GoDefinitions.STONE_BLACK);
 
-        final BoardCell cell2 = board.getCell(0, 1);
+        final StatelessBoardCell cell2 = board.getStatelessGoBoard().getCell(0, 1);
         board.setCell(cell2, GoDefinitions.STONE_BLACK);
 
-        final MustBeConnectedCellGatherer boardCells = new MustBeConnectedCellGatherer(cell);
+        final MustBeConnectedCellGatherer boardCells = new MustBeConnectedCellGatherer(board, cell);
 
         assertThat(boardCells).contains(cell, cell2);
     }
