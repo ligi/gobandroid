@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 
 public class NavigationFragment extends GobandroidGameAwareFragment {
 
@@ -34,13 +36,9 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
 
     @OnClick(R.id.btn_prev)
     public void gameNavPrev() {
-        if (!game.canUndo()) return;
-
-        // don't do it if the mover has to move at the moment
-        game.undo();
-
-        // undo twice if there is a mover
-        if (game.canUndo()) game.undo();
+        if (game.canUndo()) {
+            game.undo();
+        }
     }
 
     private Handler gameChangeHandler = new Handler();
