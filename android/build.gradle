@@ -1,24 +1,8 @@
-buildscript {
-    repositories {
-        jcenter()
-        maven { url 'https://jitpack.io' }
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-beta5'
-        classpath 'de.felixschulze.gradle:gradle-spoon-plugin:2.6.1'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'de.mobilej.unmock:UnMockPlugin:0.3.6'
-
-        // http://stackoverflow.com/a/33889117/322642
-        classpath 'com.github.JakeWharton:sdk-manager-plugin:220bf7a88a7072df3ed16dc8466fb144f2817070'
-
-    }
-}
-
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 apply plugin: 'de.felixschulze.gradle.spoon'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'de.mobilej.unmock'
 apply plugin: 'com.github.ben-manes.versions'
@@ -99,14 +83,12 @@ spoon {
     debug = true
 }
 
-final DAGGER_VERSION = '2.0.2'
-
 dependencies {
-    apt "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
+    apt "com.google.dagger:dagger-compiler:$dagger_version"
 
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
-    compile "com.google.dagger:dagger:${DAGGER_VERSION}"
+    compile "com.google.dagger:dagger:$dagger_version"
 
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.android.support:appcompat-v7:23.1.1'
@@ -125,6 +107,9 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.1.2'
     compile 'com.n3twork.druid:alphanum:1.0.3'
 
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
+
     withAnalyticsCompile 'com.google.android.gms:play-services-analytics:8.4.0'
 
     withCloudCompile 'com.google.android.gms:play-services-games:8.4.0'
@@ -133,7 +118,7 @@ dependencies {
     withCloudCompile 'com.google.android.gms:play-services-gcm:8.4.0'
     withCloudCompile 'com.google.android.gms:play-services-plus:8.4.0'
 
-    androidTestApt "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
+    androidTestApt "com.google.dagger:dagger-compiler:$dagger_version"
 
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
 

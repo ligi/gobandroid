@@ -41,9 +41,9 @@ import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.BoardCell;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
 import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -282,15 +282,15 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             finish();
         } else {
             new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
-                                         .setMessage(R.string.quit_confirm)
-                                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                             public void onClick(DialogInterface dialog, int whichButton) {
-                                                 finish();
-                                             }
-                                         })
-                                         .setCancelable(true)
-                                         .setNegativeButton(R.string.no, new DialogDiscardingOnClickListener())
-                                         .show();
+                    .setMessage(R.string.quit_confirm)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            finish();
+                        }
+                    })
+                    .setCancelable(true)
+                    .setNegativeButton(R.string.no, new DialogDiscardingOnClickListener())
+                    .show();
         }
     }
 
@@ -405,7 +405,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         }
 
         doTouch(event);
-        
+
         return true;
     }
 
@@ -496,12 +496,12 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
             new AlertDialog.Builder(this).setMessage(R.string.hint_stone_move).setPositiveButton(R.string.ok,
 
-                                                                                                 new DialogInterface.OnClickListener() {
-                                                                                                     public void onClick(DialogInterface dialog,
-                                                                                                                         int whichButton) {
-                                                                                                         GoPrefs.setAnnounceMoveActive(false);
-                                                                                                     }
-                                                                                                 }).show();
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,
+                                            int whichButton) {
+                            GoPrefs.setAnnounceMoveActive(false);
+                        }
+                    }).show();
         }
     }
 
@@ -513,7 +513,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             final Cell ensuredTouchPosition = interactionScope.getEnsuredTouchPosition();
-            final BoardCell boardCell = getGame().getCalcBoard().getCell(ensuredTouchPosition);
+            final StatelessBoardCell boardCell = getGame().getCalcBoard().getStatelessGoBoard().getCell(ensuredTouchPosition);
 
             switch (keyCode) {
                 case KeyEvent.KEYCODE_DPAD_UP:

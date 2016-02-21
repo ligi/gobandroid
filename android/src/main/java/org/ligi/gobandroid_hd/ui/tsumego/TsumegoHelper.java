@@ -36,7 +36,7 @@ public class TsumegoHelper {
      */
     public static int calcSpan(GoGame game, boolean with_moves) {
         Max max = new Max(0);
-        for (Cell cell : game.getCalcBoard().getAllCells()) {
+        for (Cell cell : game.getCalcBoard().getStatelessGoBoard().getAllCells()) {
             if (!game.getHandicapBoard().isCellFree(cell)) {
                 max.update(cell.x).update(cell.y);
             }
@@ -53,7 +53,7 @@ public class TsumegoHelper {
         Max maxX=new Max(0);
         Max maxY=new Max(0);
 
-        for (Cell cell : game.getCalcBoard().getAllCells()) {
+        for (Cell cell : game.getCalcBoard().getStatelessGoBoard().getAllCells()) {
             if (!game.getHandicapBoard().isCellFree(cell)) {
                 maxX.update(cell.x);
                 maxY.update(cell.y);
@@ -110,7 +110,7 @@ public class TsumegoHelper {
         int[] count_h = new int[2];
         int[] count_v = new int[2];
 
-        for (Cell cell : game.getCalcBoard().getAllCells()) {
+        for (Cell cell : game.getCalcBoard().getStatelessGoBoard().getAllCells()) {
             if (!game.getVisualBoard().isCellFree(cell)) {
                 count_h[(cell.x > (game.getSize() / 2)) ? 1 : 0]++;
                 count_v[(cell.y > (game.getSize() / 2)) ? 1 : 0]++;

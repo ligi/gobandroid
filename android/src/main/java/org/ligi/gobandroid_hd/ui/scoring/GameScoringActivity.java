@@ -8,10 +8,11 @@ import android.view.WindowManager;
 
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.BoardCell;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameMetadata;
+import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
+import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
 import org.ligi.gobandroid_hd.logic.cell_gatherer.LooseConnectedCellGatherer;
 import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer;
 import org.ligi.gobandroid_hd.ui.GoActivity;
@@ -35,11 +36,11 @@ public class GameScoringActivity extends GoActivity {
         // getBoard().requestFocus(); - but that was not working ..
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        for (Set<BoardCell> boardCells : getInclusiveGroups()) {
+        for (Set<StatelessBoardCell> boardCells : getInclusiveGroups()) {
             // TODO find a nicer approach to detect dead stones - this does only cover the common cases
             if (boardCells.size() <= 4) {
-                for (BoardCell boardCell : boardCells) {
-                    boardCell.board.toggleCellDead(boardCell);
+                for (StatelessBoardCell boardCell : boardCells) {
+                    getGame().getCalcBoard().toggleCellDead(boardCell);
                 }
             }
         }
@@ -63,12 +64,12 @@ public class GameScoringActivity extends GoActivity {
     }
 
 
-    private Set<Set<BoardCell>> getInclusiveGroups() {
+    private Set<Set<StatelessBoardCell>> getInclusiveGroups() {
         final Set<Cell> allProcessed = new HashSet<>();
-        final Set<Set<BoardCell>> allGroups = new HashSet<>();
+        final Set<Set<StatelessBoardCell>> allGroups = new HashSet<>();
 
-        for (Cell cell : getGame().getCalcBoard().getAllCells()) {
-            final Set<BoardCell> inGroup = new LooseConnectedCellGatherer(getGame().getCalcBoard().getCell(cell));
+        for (Cell cell : getGame().getCalcBoard().getStatelessGoBoard().getAllCells()) {
+            final Set<StatelessBoardCell> inGroup = new LooseConnectedCellGatherer(getGame().getCalcBoard(), getGame().getCalcBoard().getStatelessGoBoard().getCell(cell));
             allProcessed.addAll(inGroup);
             if (!getGame().getCalcBoard().isCellFree(cell)) {
                 allGroups.add(inGroup);
@@ -129,7 +130,7 @@ public class GameScoringActivity extends GoActivity {
     public void onPause() {
         super.onPause();
         // if we go back to other modes we want to have them alive again ( Zombies ?)
-        for (Cell cell : getGame().getCalcBoard().getAllCells()) {
+        for (Cell cell : getGame().getCalcBoard().getStatelessGoBoard().getAllCells()) {
             if (getGame().getCalcBoard().isCellDead(cell)) {
                 getGame().getCalcBoard().toggleCellDead(cell);
             }
@@ -150,10 +151,11 @@ public class GameScoringActivity extends GoActivity {
 
     public void do_score_touch(Cell cell) {
 
-        if ((!getGame().getCalcBoard().isCellFree(cell)) || getGame().getCalcBoard().isCellDead(cell)) { // if there is a stone/cellGathering
-            final MustBeConnectedCellGatherer cellGathering = new MustBeConnectedCellGatherer(getGame().getCalcBoard().getCell(cell));
+        final StatefulGoBoard calcBoard = getGame().getCalcBoard();
+        if ((!calcBoard.isCellFree(cell)) || calcBoard.isCellDead(cell)) { // if there is a stone/cellGathering
+            final MustBeConnectedCellGatherer cellGathering = new MustBeConnectedCellGatherer(calcBoard, calcBoard.getStatelessGoBoard().getCell(cell));
             for (Cell groupCell : cellGathering) {
-                getGame().getCalcBoard().toggleCellDead(groupCell);
+                calcBoard.toggleCellDead(groupCell);
             }
         }
 

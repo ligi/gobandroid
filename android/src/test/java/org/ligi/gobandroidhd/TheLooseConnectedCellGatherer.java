@@ -1,21 +1,23 @@
 package org.ligi.gobandroidhd;
 
 import org.junit.Test;
-import org.ligi.gobandroid_hd.logic.BoardCell;
-import org.ligi.gobandroid_hd.logic.GoBoard;
+import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
+import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
+import org.ligi.gobandroid_hd.logic.StatelessGoBoard;
 import org.ligi.gobandroid_hd.logic.cell_gatherer.LooseConnectedCellGatherer;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TheLooseConnectedCellGatherer extends MarkerTestBase {
 
-    private GoBoard board = new GoBoard(9);
+    private StatefulGoBoard board = new StatefulGoBoard(new StatelessGoBoard(9));
 
     @Test
     public void testEmptyBoardIsOneGroup() {
 
-        final BoardCell cell = board.getCell(0, 0);
+        final StatelessBoardCell cell = board.getStatelessGoBoard().getCell(0, 0);
 
-        final LooseConnectedCellGatherer boardCells = new LooseConnectedCellGatherer(cell);
+        final LooseConnectedCellGatherer boardCells = new LooseConnectedCellGatherer(board, cell);
 
         assertThat(boardCells).hasSize(board.getSize() * board.getSize());
     }

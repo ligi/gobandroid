@@ -1,25 +1,26 @@
 package org.ligi.gobandroid_hd.logic.cell_gatherer;
 
-import org.ligi.gobandroid_hd.logic.BoardCell;
+import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
+import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
 
 public class AreaCellGatherer extends CellGatherer {
 
-    public AreaCellGatherer(BoardCell root) {
-        super(root);
+    public AreaCellGatherer(StatefulGoBoard board, StatelessBoardCell root) {
+        super(board, root);
     }
 
     @Override
-    protected void pushWithCheck(BoardCell cell) {
+    protected void pushWithCheck(StatelessBoardCell cell) {
         final boolean unProcessed = processed.add(cell);
 
-        if (cell.isInAreaGroupWith(root)) {
+        if (board.areCellsTogetherInArea(root, cell)) {
             add(cell);
             if (unProcessed) {
                 pushSurroundingWithCheck(cell);
             }
         }
 
-        if (cell.board.isCellFree(cell) && unProcessed) {
+        if (board.isCellFree(cell) && unProcessed) {
             pushSurroundingWithCheck(cell);
         }
     }

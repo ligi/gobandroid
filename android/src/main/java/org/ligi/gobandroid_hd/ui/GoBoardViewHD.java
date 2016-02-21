@@ -33,11 +33,11 @@ import android.view.View;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.BoardCell;
 import org.ligi.gobandroid_hd.logic.Cell;
-import org.ligi.gobandroid_hd.logic.GoBoard;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
+import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.tracedroid.logging.Log;
@@ -180,7 +180,7 @@ public class GoBoardViewHD extends View {
         }
 
         return new PointF(-stone_size * (act_zoom_point.x - getGame().getSize() / 2.0f / zoom),
-                          -stone_size * (act_zoom_point.y - getGame().getSize() / 2.0f / zoom));
+                -stone_size * (act_zoom_point.y - getGame().getSize() / 2.0f / zoom));
     }
 
     private Cell calcActZoomPOI() {
@@ -255,34 +255,34 @@ public class GoBoardViewHD extends View {
         }
 
         // draw the vertical lines for the grid
-        final GoBoard board = getGame().getVisualBoard();
+        final StatefulGoBoard board = getGame().getVisualBoard();
         for (byte x = 0; x < getGameSize(); x++)
             canvas.drawLine(stone_size / 2.0f + x * stone_size,
-                            stone_size / 2.0f,
-                            stone_size / 2.0f + x * stone_size,
-                            stone_size * (float) (board.getSize() - 1) + stone_size / 2.0f,
+                    stone_size / 2.0f,
+                    stone_size / 2.0f + x * stone_size,
+                    stone_size * (float) (board.getSize() - 1) + stone_size / 2.0f,
                     (actpos_highlight_condition && (interactionScope.getTouchCell().x == x)) ? gridPaint_h : gridPaint);
 
         // draw the horizontal lines and the legend
         for (byte x = 0; x < board.getSize(); x++) {
             canvas.drawLine(stone_size / 2.0f,
-                            stone_size / 2.0f + x * stone_size,
-                            stone_size * (float) (board.getSize() - 1) + stone_size / 2.0f,
-                            stone_size / 2.0f + x * stone_size,
+                    stone_size / 2.0f + x * stone_size,
+                    stone_size * (float) (board.getSize() - 1) + stone_size / 2.0f,
+                    stone_size / 2.0f + x * stone_size,
                     (actpos_highlight_condition && (interactionScope.getTouchCell().x == x)) ? gridPaint_h : gridPaint);
             if (do_legend) {
                 canvas.drawText("" + (getGameSize() - x), legendPaint.getTextSize() / 2f + stone_size * (float) (getGameSize() - 1) + stone_size / 2.0f,
-                                stone_size / 2.0f + x * stone_size + gridPaint.getTextSize() / 3,
-                                legendPaint);
+                        stone_size / 2.0f + x * stone_size + gridPaint.getTextSize() / 3,
+                        legendPaint);
 
                 canvas.drawText(getLegendLetter(x),
-                                stone_size / 2.0f + x * stone_size,
-                                stone_size * (float) (getGameSize() - 1) + stone_size / 2.0f + 1 + legendPaint.getTextSize(),
-                                legendPaint);
+                        stone_size / 2.0f + x * stone_size,
+                        stone_size * (float) (getGameSize() - 1) + stone_size / 2.0f + 1 + legendPaint.getTextSize(),
+                        legendPaint);
             }
         }
 
-        for (BoardCell cell : board.getAllCells()) {
+        for (StatelessBoardCell cell : board.getStatelessGoBoard().getAllCells()) {
             if (getGame().isCellHoschi(cell)) {
                 drawBoardCircle(canvas, cell.x, cell.y, 2f + stone_size / 10, hoshi_paint);
             }
@@ -299,14 +299,14 @@ public class GoBoardViewHD extends View {
 
             if (board.isCellDeadWhite(cell)) {
                 canvas.drawBitmap(white_stone_bitmap_small,
-                                  cell.x * stone_size + (stone_size - white_stone_bitmap_small.getWidth()) / 2,
-                                  cell.y * stone_size + (stone_size - white_stone_bitmap_small.getHeight()) / 2,
-                                  bitmapPaint);
+                        cell.x * stone_size + (stone_size - white_stone_bitmap_small.getWidth()) / 2,
+                        cell.y * stone_size + (stone_size - white_stone_bitmap_small.getHeight()) / 2,
+                        bitmapPaint);
             } else if (board.isCellDeadBlack(cell)) {
                 canvas.drawBitmap(black_stone_bitmap_small,
-                                  cell.x * stone_size + (stone_size - black_stone_bitmap_small.getWidth()) / 2,
-                                  cell.y * stone_size + (stone_size - black_stone_bitmap_small.getHeight()) / 2,
-                                  bitmapPaint);
+                        cell.x * stone_size + (stone_size - black_stone_bitmap_small.getWidth()) / 2,
+                        cell.y * stone_size + (stone_size - black_stone_bitmap_small.getHeight()) / 2,
+                        bitmapPaint);
             } else if (board.isCellWhite(cell)) {
                 canvas.drawBitmap(white_stone_bitmap, cell.x * stone_size, cell.y * stone_size, getStonePaintForCell(cell));
             } else if (board.isCellBlack(cell)) {

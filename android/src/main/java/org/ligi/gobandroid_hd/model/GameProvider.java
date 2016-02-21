@@ -23,11 +23,7 @@ public class GameProvider {
     public void set(GoGame p_game) {
         interactionScope.ask_variant_session = true;
 
-        if (game == null) {
-            game = p_game;
-        } else { // keep listeners and stuff
-            game.setGame(p_game);
-        }
+        game = p_game;
     }
 
 }

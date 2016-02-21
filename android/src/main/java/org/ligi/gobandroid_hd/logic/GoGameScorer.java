@@ -18,9 +18,11 @@
 
 package org.ligi.gobandroid_hd.logic;
 
+import org.ligi.gobandroid_hd.logic.cell_gatherer.AreaCellGatherer;
+
 import java.util.HashSet;
 import java.util.Set;
-import org.ligi.gobandroid_hd.logic.cell_gatherer.AreaCellGatherer;
+
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_BLACK;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_NONE;
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.PLAYER_WHITE;
@@ -48,8 +50,8 @@ public class GoGameScorer {
     public void calculateScore() {
 
         // reset groups
-        final GoBoard calc_board = game.getCalcBoard();
-        for (Cell cell : calc_board.getAllCells()) {
+        final StatefulGoBoard calc_board = game.getCalcBoard();
+        for (Cell cell : calc_board.getStatelessGoBoard().getAllCells()) {
             area_assign[cell.x][cell.y] = 0;
         }
 
@@ -58,28 +60,29 @@ public class GoGameScorer {
 
         Set<Cell> processed = new HashSet<>();
 
-        for (Cell cell : calc_board.getAllCells()) {
+        for (Cell cell : calc_board.getStatelessGoBoard().getAllCells()) {
             boolean unprocessed = processed.add(cell);
 
             if (unprocessed) {
-                final BoardCell boardCell = calc_board.getCell(cell);
-                final AreaCellGatherer areaCellGatherer = new AreaCellGatherer(boardCell);
+                final StatelessBoardCell boardCell = calc_board.getStatelessGoBoard().getCell(cell);
+                final AreaCellGatherer areaCellGatherer = new AreaCellGatherer(calc_board, boardCell);
 
-                if (boardCell.isFree()) {
+                if (calc_board.isCellFree(boardCell)) {
 
                     final byte assign;
 
-                    if (containsOneOfButNotTheOther(areaCellGatherer.getProcessed(), PLAYER_BLACK)) {
+                    if (containsOneOfButNotTheOther(calc_board, areaCellGatherer.getProcessed(), PLAYER_BLACK)) {
                         assign = PLAYER_BLACK;
                         territory_black += areaCellGatherer.size();
-                    } else if (containsOneOfButNotTheOther(areaCellGatherer.getProcessed(), PLAYER_WHITE)) {
+                    } else if (containsOneOfButNotTheOther(calc_board, areaCellGatherer.getProcessed(), PLAYER_WHITE)) {
                         assign = PLAYER_WHITE;
                         territory_white += areaCellGatherer.size();
                     } else {
                         assign = PLAYER_NONE;
                     }
 
-                    if (assign > 0) for (final BoardCell areaBoardCell : areaCellGatherer) {
+                    if (assign > 0)
+                        for (final StatelessBoardCell areaBoardCell : areaCellGatherer) {
                         area_assign[areaBoardCell.x][areaBoardCell.y] = assign;
                     }
                     processed.addAll(areaCellGatherer.getProcessed());
@@ -93,13 +96,13 @@ public class GoGameScorer {
     }
 
 
-    private static boolean containsOneOfButNotTheOther(Set<BoardCell> set, byte kind) {
+    private static boolean containsOneOfButNotTheOther(final StatefulGoBoard board, Set<StatelessBoardCell> set, byte kind) {
         boolean res = false;
-        for (final BoardCell boardCell : set) {
-            if (boardCell.is(GoDefinitions.theOtherKind(kind))) {
+        for (final StatelessBoardCell boardCell : set) {
+            if (board.isCellKind(boardCell, GoDefinitions.theOtherKind(kind))) {
                 return false;
             }
-            res |= boardCell.is(kind);
+            res |= board.isCellKind(boardCell, kind);
         }
 
         return res;
@@ -109,7 +112,7 @@ public class GoGameScorer {
         dead_white = 0;
         dead_black = 0;
 
-        for (Cell cell : game.getCalcBoard().getAllCells()) {
+        for (Cell cell : game.getCalcBoard().getStatelessGoBoard().getAllCells()) {
             if (game.getCalcBoard().isCellDead(cell)) {
                 if (game.getCalcBoard().isCellDeadBlack(cell)) {
                     dead_black++;
