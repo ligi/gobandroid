@@ -108,3 +108,10 @@
 -keep public class com.google.android.gms.**
 -dontwarn com.google.android.gms.**
 
+
+# Kotlin
+-dontwarn kotlin.**
+
+-assumenosideeffects class kotlin.jvm.internal.Intrinsics {
+    static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
+}
