@@ -15,8 +15,6 @@
 
 ### Status
 
-[![Dependency Status](https://www.versioneye.com/user/projects/5418af7c918598dd27000028/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5418af7c918598dd27000028)
-
 [![Build Status](https://snap-ci.com/ligi/gobandroid/branch/master/build_image)](https://snap-ci.com/ligi/gobandroid/branch/master)
 
 
