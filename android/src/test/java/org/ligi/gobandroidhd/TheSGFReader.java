@@ -5,6 +5,7 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TheSGFReader extends AssetAwareTest {
@@ -53,8 +54,8 @@ public class TheSGFReader extends AssetAwareTest {
         GoGame game = SGFReader.sgf2game(readAsset("test_sgfs/default_marker.sgf"), null);
 
         final GoMarker createdMarker = game.getLastMove().getMarkers().get(0);
-        assertThat(createdMarker.x).isEqualTo(1);
-        assertThat(createdMarker.y).isEqualTo(2);
+        assertThat(createdMarker.getX()).isEqualTo(1);
+        assertThat(createdMarker.getY()).isEqualTo(2);
         assertThat(((TextMarker) createdMarker).getText()).isEqualTo("X");
     }
 
@@ -63,8 +64,8 @@ public class TheSGFReader extends AssetAwareTest {
         GoGame game = SGFReader.sgf2game(readAsset("test_sgfs/named_marker.sgf"), null);
 
         final GoMarker createdMarker = game.getLastMove().getMarkers().get(0);
-        assertThat(createdMarker.x).isEqualTo(1);
-        assertThat(createdMarker.y).isEqualTo(2);
+        assertThat(createdMarker.getX()).isEqualTo(1);
+        assertThat(createdMarker.getY()).isEqualTo(2);
         assertThat(((TextMarker) createdMarker).getText()).isEqualTo("L");
     }
 

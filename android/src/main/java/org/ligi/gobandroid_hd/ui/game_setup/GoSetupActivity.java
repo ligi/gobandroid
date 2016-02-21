@@ -1,20 +1,19 @@
 /**
- * gobandroid 
- * by Marcus -Ligi- Bueschleb 
+ * gobandroid
+ * by Marcus -Ligi- Bueschleb
  * http://ligi.de
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as 
- * published by the Free Software Foundation; 
- *
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation;
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details. 
- *
+ * GNU General Public License for more details.
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  **/
 
 package org.ligi.gobandroid_hd.ui.game_setup;
@@ -27,8 +26,11 @@ import android.view.MenuItem;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity;
+
+import static org.ligi.gobandroid_hd.logic.GoGame.MoveStatus.VALID;
 
 /**
  * Activity for setting up a game ( board size / handicap / .. )
@@ -55,11 +57,11 @@ public class GoSetupActivity extends GoActivity {
     }
 
     @Override
-    public byte doMoveWithUIFeedback(Cell cell) {
-        byte res = super.doMoveWithUIFeedback(cell);
-        if (res == GoGame.MOVE_VALID)
-            if (getGame().getActMove().hasNextMove())
-                getGame().jump(getGame().getActMove().getnextMove(0));
+    public MoveStatus doMoveWithUIFeedback(Cell cell) {
+        final MoveStatus res = super.doMoveWithUIFeedback(cell);
+        if (res == VALID && getGame().getActMove().hasNextMove()) {
+            getGame().jump(getGame().getActMove().getnextMove(0));
+        }
 
         getGame().notifyGameChange();
         startActivity(new Intent(this, GameRecordActivity.class));

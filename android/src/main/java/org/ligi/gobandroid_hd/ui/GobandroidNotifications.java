@@ -17,6 +17,8 @@ import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity;
 
 import javax.inject.Inject;
 
+import static org.ligi.gobandroid_hd.InteractionScope.Mode.TSUMEGO;
+
 /**
  * Class to care about notifications used in gobandroid
  *
@@ -75,7 +77,7 @@ public class GobandroidNotifications {
         notificationIntent = new Intent(app, SGFFileSystemListActivity.class);
         notificationIntent.setData((Uri.parse("file://" + App.component().settings().getTsumegoPath())));
         notificationIntent.putExtra(BOOL_FROM_NOTIFICATION_EXTRA_KEY, true);
-        interactionScope.setMode(InteractionScope.MODE_TSUMEGO);
+        interactionScope.setMode(TSUMEGO);
 
         notificationBuilder.setContentTitle(app.getString(R.string.new_tsumegos_available));
         notificationBuilder.setContentText("" + count + " new tsumegos");

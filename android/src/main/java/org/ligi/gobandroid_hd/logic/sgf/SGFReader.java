@@ -19,7 +19,7 @@
 
 package org.ligi.gobandroid_hd.logic.sgf;
 
-import org.ligi.gobandroid_hd.logic.Cell;
+import org.ligi.gobandroid_hd.logic.CellImpl;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameMetadata;
@@ -32,6 +32,8 @@ import org.ligi.tracedroid.logging.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.ligi.gobandroid_hd.logic.GoGame.MoveStatus.VALID;
 
 /**
  * class for load games in SGF File-Format
@@ -247,7 +249,7 @@ public class SGFReader {
             }
         }
 
-        final Cell cell = new Cell(param_x, param_y);
+        final CellImpl cell = new CellImpl(param_x, param_y);
         // if command is empty -> use the last command
         if (act_cmd.isEmpty())
             act_cmd = last_cmd;
@@ -368,8 +370,8 @@ public class SGFReader {
                 /* if (game.getActMove().isFirstMove()) {
                     game.getActMove().setIsBlackToMove();
                 } */
-                final byte b = game.do_move(cell);
-                if (b != GoGame.MOVE_VALID) {
+                final GoGame.MoveStatus moveStatus = game.do_move(cell);
+                if (moveStatus != VALID) {
                     Log.w("There was a problem in this game");
                 }
             }

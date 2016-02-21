@@ -8,10 +8,9 @@ import android.view.WindowManager;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
-import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
+import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus;
 import org.ligi.gobandroid_hd.ui.GoActivity;
-
 
 /**
  * Activity to record a Game - or play on one device
@@ -21,17 +20,17 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        interactionScope.setMode(InteractionScope.MODE_RECORD);
+        interactionScope.setMode(InteractionScope.Mode.RECORD);
         // TODO the next line works but needs investigation - i thought more of
         // getBoard().requestFocus(); - but that was not working ..
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override
-    public byte doMoveWithUIFeedback(Cell cell) {
+    public MoveStatus doMoveWithUIFeedback(Cell cell) {
 
-        byte res = super.doMoveWithUIFeedback(cell);
-        if (res == GoGame.MOVE_VALID) {
+        MoveStatus res = super.doMoveWithUIFeedback(cell);
+        if (res == MoveStatus.VALID) {
             if (getGame().getActMove().hasNextMove()) {
                 getGame().jump(getGame().getActMove().getnextMove(0));
             }

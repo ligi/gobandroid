@@ -7,7 +7,7 @@ import com.squareup.spoon.Spoon;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.etc.AppModule;
-import org.ligi.gobandroid_hd.logic.Cell;
+import org.ligi.gobandroid_hd.logic.CellImpl;
 import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity;
 import org.ligi.gobandroidhd.base.BaseIntegration;
@@ -64,7 +64,7 @@ public class TheTsumegoActivity extends BaseIntegration<TsumegoActivity> {
         gameProvider.set(readGame("tsumego"));
         final TsumegoActivity activity = getActivity();
 
-        onView(withId(R.id.go_board)).perform(placeStone(new Cell(1, 1), gameProvider.get()));
+        onView(withId(R.id.go_board)).perform(placeStone(new CellImpl(1, 1), gameProvider.get()));
 
         onView(withId(R.id.tsumego_off_path_view)).check(matches(isDisplayed()));
         Spoon.screenshot(activity, "tsumego_off_path");
@@ -77,7 +77,7 @@ public class TheTsumegoActivity extends BaseIntegration<TsumegoActivity> {
         onView(withId(R.id.game_comment)).check(matches(withText("testing comment")));
 
         Spoon.screenshot(activity, "tsumego_comment");
-        onView(withId(R.id.go_board)).perform(placeStone(new Cell(1, 1), gameProvider.get()));
+        onView(withId(R.id.go_board)).perform(placeStone(new CellImpl(1, 1), gameProvider.get()));
 
         onView(withId(R.id.game_comment)).check(matches(not(isDisplayed())));
         Spoon.screenshot(activity, "tsumego_comment_gone");

@@ -9,6 +9,7 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.etc.AppModule;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.CellFactory;
+import org.ligi.gobandroid_hd.logic.CellImpl;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
@@ -85,7 +86,7 @@ public class TheEditGameActivity extends BaseIntegration<EditGameActivity> {
         tap9x3Field();
 
         for (Cell cell : CellFactory.getAllCellsForRect(9, 3)) {
-            assertThat(gameProvider.get().getActMove().getMarkers()).contains(new TextMarker(cell, "" + (9 * cell.y + cell.x + 1)));
+            assertThat(gameProvider.get().getActMove().getMarkers()).contains(new TextMarker(cell, "" + (9 * cell.getY() + cell.getX() + 1)));
         }
 
         Spoon.screenshot(activity, "numbers");
@@ -100,7 +101,7 @@ public class TheEditGameActivity extends BaseIntegration<EditGameActivity> {
 
         onView(withContentDescription(getString(R.string.square))).perform(click());
 
-        final Cell cell = new Cell(1, 2);
+        final CellImpl cell = new CellImpl(1, 2);
         onView(withId(R.id.go_board)).perform(tapStone(cell, gameProvider.get()));
 
         assertThat(gameProvider.get().getActMove().getMarkers()).contains(new SquareMarker(cell));
@@ -117,9 +118,9 @@ public class TheEditGameActivity extends BaseIntegration<EditGameActivity> {
 
         onView(withContentDescription(getString(R.string.triangle))).perform(click());
 
-        onView(withId(R.id.go_board)).perform(tapStone(new Cell(1, 2), gameProvider.get()));
+        onView(withId(R.id.go_board)).perform(tapStone(new CellImpl(1, 2), gameProvider.get()));
 
-        assertThat(gameProvider.get().getActMove().getMarkers()).contains(new TriangleMarker(new Cell(1, 2)));
+        assertThat(gameProvider.get().getActMove().getMarkers()).contains(new TriangleMarker(new CellImpl(1, 2)));
 
         Spoon.screenshot(activity, "triangle");
     }

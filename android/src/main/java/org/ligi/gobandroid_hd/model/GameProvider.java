@@ -21,7 +21,7 @@ public class GameProvider {
     }
 
     public void set(GoGame p_game) {
-        interactionScope.ask_variant_session = true;
+        interactionScope.setAsk_variant_session(true);
 
         game = p_game;
     }

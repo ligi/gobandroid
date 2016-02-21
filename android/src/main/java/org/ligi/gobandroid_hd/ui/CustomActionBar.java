@@ -33,6 +33,15 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static org.ligi.gobandroid_hd.InteractionScope.Mode.COUNT;
+import static org.ligi.gobandroid_hd.InteractionScope.Mode.EDIT;
+import static org.ligi.gobandroid_hd.InteractionScope.Mode.GNUGO;
+import static org.ligi.gobandroid_hd.InteractionScope.Mode.RECORD;
+import static org.ligi.gobandroid_hd.InteractionScope.Mode.REVIEW;
+import static org.ligi.gobandroid_hd.InteractionScope.Mode.SETUP;
+import static org.ligi.gobandroid_hd.InteractionScope.Mode.TELEVIZE;
+import static org.ligi.gobandroid_hd.InteractionScope.Mode.TSUMEGO;
+
 public class CustomActionBar extends LinearLayout implements GoGame.GoGameChangeListener {
 
     @Inject
@@ -124,7 +133,7 @@ public class CustomActionBar extends LinearLayout implements GoGame.GoGameChange
         container.addView(v);
     }
 
-    private void addModeItem(LinearLayout container, final byte mode, int string_res, int icon_res) {
+    private void addModeItem(LinearLayout container, final InteractionScope.Mode mode, int string_res, int icon_res) {
         if (mode == interactionScope.getMode()) {
             return; // already in this mode - no need to present the user with this option
         }
@@ -134,7 +143,7 @@ public class CustomActionBar extends LinearLayout implements GoGame.GoGameChange
                     @Override
                     public void run() {
 
-                        if (mode == InteractionScope.MODE_GNUGO && !(GnuGoHelper.isGnuGoAvail(activity))) {
+                        if (mode == InteractionScope.Mode.GNUGO && !(GnuGoHelper.isGnuGoAvail(activity))) {
                             new AlertDialog.Builder(activity).setTitle(R.string.install_gnugo)
                                                              .setMessage(R.string.gnugo_not_installed)
                                                              .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -166,21 +175,21 @@ public class CustomActionBar extends LinearLayout implements GoGame.GoGameChange
         final BitmapDrawableNoMinimumSize background = new BitmapDrawableNoMinimumSize(ctx.getResources(), R.drawable.wood_bg);
         contentView.setBackgroundDrawable(background);
 
-        addModeItem(contentView, InteractionScope.MODE_SETUP, R.string.setup, R.drawable.preferences);
+        addModeItem(contentView, SETUP, R.string.setup, R.drawable.preferences);
 
-        addModeItem(contentView, InteractionScope.MODE_RECORD, R.string.play, R.drawable.play);
+        addModeItem(contentView, RECORD, R.string.play, R.drawable.play);
 
-        addModeItem(contentView, InteractionScope.MODE_EDIT, R.string.edit, R.drawable.dashboard_record);
+        addModeItem(contentView, EDIT, R.string.edit, R.drawable.dashboard_record);
 
         if (gameProvider.get().getActMove().getMovePos() > 0) { // these modes only make sense if there is minimum one
-            addModeItem(contentView, InteractionScope.MODE_COUNT, R.string.count, R.drawable.dashboard_score);
-            addModeItem(contentView, InteractionScope.MODE_REVIEW, R.string.review, R.drawable.dashboard_review);
-            addModeItem(contentView, InteractionScope.MODE_TELEVIZE, R.string.televize, R.drawable.gobandroid_tv);
-            addModeItem(contentView, InteractionScope.MODE_TSUMEGO, R.string.tsumego, R.drawable.dashboard_tsumego);
+            addModeItem(contentView, COUNT, R.string.count, R.drawable.dashboard_score);
+            addModeItem(contentView, REVIEW, R.string.review, R.drawable.dashboard_review);
+            addModeItem(contentView, TELEVIZE, R.string.televize, R.drawable.gobandroid_tv);
+            addModeItem(contentView, TSUMEGO, R.string.tsumego, R.drawable.dashboard_tsumego);
         }
 
         if (isPlayStoreInstalled() || GnuGoHelper.isGnuGoAvail(activity)) {
-            addModeItem(contentView, InteractionScope.MODE_GNUGO, R.string.gnugo, R.drawable.server);
+            addModeItem(contentView, GNUGO, R.string.gnugo, R.drawable.server);
         }
 
         final BetterPopupWindow pop = new BetterPopupWindow(mode_tv);
@@ -201,9 +210,9 @@ public class CustomActionBar extends LinearLayout implements GoGame.GoGameChange
 
             @Override
             public void run() {
-                final byte actMode = interactionScope.getMode();
+                final InteractionScope.Mode actMode = interactionScope.getMode();
 
-                mode_tv.setText(InteractionScope.getModeStringRes(actMode));
+                mode_tv.setText(actMode.getStringRes());
 
                 final GoGame game = gameProvider.get();
 

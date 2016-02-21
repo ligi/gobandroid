@@ -2,10 +2,11 @@ package org.ligi.gobandroid_hd.ui.gnugo;
 
 import android.content.Context;
 import android.content.Intent;
+
 import org.ligi.axt.AXT;
-import org.ligi.gobandroid_hd.logic.Cell;
-import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
+import org.ligi.gobandroid_hd.logic.CellImpl;
 import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
 
 public class GnuGoHelper {
 
@@ -23,7 +24,7 @@ public class GnuGoHelper {
         for (int gnugo_y = 2; gnugo_y <= b.getSize() + 1; gnugo_y++) {
             final String act_line = split_board[gnugo_y].replace(" ", "").replace("" + (game.getBoardSize() - (gnugo_y - 2)), "");
             for (int gnugo_x = 0; gnugo_x < b.getSize(); gnugo_x++) {
-                final Cell cell = new Cell(gnugo_x, gnugo_y - 2);
+                final CellImpl cell = new CellImpl(gnugo_x, gnugo_y - 2);
                 if (act_line.charAt(gnugo_x) == '.' && !game.getVisualBoard().isCellFree(cell)) {
                     return false;
                 }

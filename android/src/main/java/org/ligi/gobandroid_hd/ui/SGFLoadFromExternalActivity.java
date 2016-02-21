@@ -24,7 +24,7 @@ import android.os.Bundle;
 
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
-import static org.ligi.gobandroid_hd.InteractionScope.MODE_REVIEW;
+import static org.ligi.gobandroid_hd.InteractionScope.Mode.REVIEW;
 
 /**
  * Activity to load a SGF with a ProgressDialog showing the Progress
@@ -40,7 +40,7 @@ public class SGFLoadFromExternalActivity extends GobandroidFragmentActivity {
         super.onCreate(savedInstanceState);
 
         // that's the main reason why we build this fwd activity
-        interactionScope.setMode(MODE_REVIEW);
+        interactionScope.setMode(REVIEW);
 
         // take the original intent and change the class - the rest stays
         final Intent fwd_intent = getIntent();

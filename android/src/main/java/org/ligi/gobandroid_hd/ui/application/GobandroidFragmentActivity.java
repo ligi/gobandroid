@@ -96,13 +96,13 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                interactionScope.setTouchPosition(null);
+                interactionScope.setTouchCell(null);
                 getGame().notifyGameChange();
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
-                interactionScope.setTouchPosition(null);
+                interactionScope.setTouchCell(null);
                 getGame().notifyGameChange();
                 super.onDrawerClosed(drawerView);
             }

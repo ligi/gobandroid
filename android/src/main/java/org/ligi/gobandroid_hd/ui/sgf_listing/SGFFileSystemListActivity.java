@@ -32,6 +32,9 @@ import org.ligi.gobandroid_hd.ui.tsumego.fetch.TsumegoSource;
 
 import java.io.File;
 
+import static org.ligi.gobandroid_hd.InteractionScope.Mode.REVIEW;
+import static org.ligi.gobandroid_hd.InteractionScope.Mode.TSUMEGO;
+
 /**
  * Activity to load SGF's from SD card
  */
@@ -54,11 +57,11 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
         final String sgfPath = getSGFPath();
 
         if (sgfPath.substring(sgfPath.indexOf('/')).startsWith(settings.getTsumegoPath().substring(sgfPath.indexOf('/')))) {
-            interactionScope.setMode(InteractionScope.MODE_TSUMEGO);
+            interactionScope.setMode(InteractionScope.Mode.TSUMEGO);
         }
 
         if (sgfPath.substring(sgfPath.indexOf('/')).startsWith(settings.getReviewPath().substring(sgfPath.indexOf('/')))) {
-            interactionScope.setMode(InteractionScope.MODE_REVIEW);
+            interactionScope.setMode(REVIEW);
         }
 
         final File dir = new File(sgfPath);
@@ -79,16 +82,16 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
 
     private void setActionbarProperties(final File dir) {
         switch (interactionScope.getMode()) {
-            case InteractionScope.MODE_TSUMEGO:
+            case TSUMEGO:
                 setTitle(R.string.load_tsumego);
                 break;
             default:
                 // we can only show stuff for tsumego and review - if in doubt -
                 // trade as review
-                interactionScope.setMode(InteractionScope.MODE_REVIEW);
+                interactionScope.setMode(REVIEW);
                 // fall wanted
 
-            case InteractionScope.MODE_REVIEW:
+            case REVIEW:
                 setTitle(R.string.load_game);
                 break;
         }
@@ -110,11 +113,11 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (interactionScope.getMode() == InteractionScope.MODE_TSUMEGO) {
+        if (interactionScope.getMode() == TSUMEGO) {
             getMenuInflater().inflate(R.menu.refresh_tsumego, menu);
         }
 
-        if (interactionScope.getMode() == InteractionScope.MODE_REVIEW) {
+        if (interactionScope.getMode() == REVIEW) {
             getMenuInflater().inflate(R.menu.review_menu, menu);
         }
 

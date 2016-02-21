@@ -35,7 +35,7 @@ public class GobanDroidTVActivity extends GobandroidFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        interactionScope.setMode(InteractionScope.MODE_TELEVIZE);
+        interactionScope.setMode(InteractionScope.Mode.TELEVIZE);
 
         getSupportActionBar().setLogo(R.drawable.gobandroid_tv);
         path_to_play_from = new File(settings.getReviewPath() + "/commented_games/");

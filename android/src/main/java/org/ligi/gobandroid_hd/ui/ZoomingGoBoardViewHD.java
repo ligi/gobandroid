@@ -35,6 +35,6 @@ public class ZoomingGoBoardViewHD extends GoBoardViewHD {
     public ZoomingGoBoardViewHD(Context context, AttributeSet attrs) {
         super(context, attrs);
         setZoom(3f);
-        do_actpos_highlight_ony_if_active = false;
+        setDo_actpos_highlight_ony_if_active(false);
     }
 }

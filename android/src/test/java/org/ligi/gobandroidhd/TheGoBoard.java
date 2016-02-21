@@ -1,10 +1,11 @@
 package org.ligi.gobandroidhd;
 
 import org.junit.Test;
-import org.ligi.gobandroid_hd.logic.Cell;
+import org.ligi.gobandroid_hd.logic.CellImpl;
 import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
 import org.ligi.gobandroid_hd.logic.StatelessGoBoard;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TheGoBoard extends AssetAwareTest {
@@ -28,7 +29,7 @@ public class TheGoBoard extends AssetAwareTest {
     public void toThatIsCellOnBoardWorksForOutside() throws Exception {
         final StatelessGoBoard board = new StatelessGoBoard(9);
 
-        assertThat(board.isCellOnBoard(new Cell(10, 1))).isFalse();
+        assertThat(board.isCellOnBoard(new CellImpl(10, 1))).isFalse();
     }
 
 
@@ -36,6 +37,6 @@ public class TheGoBoard extends AssetAwareTest {
     public void toThatIsCellOnBoardWorksForInside() throws Exception {
         final StatelessGoBoard board = new StatelessGoBoard(9);
 
-        assertThat(board.isCellOnBoard(new Cell(4, 4))).isTrue();
+        assertThat(board.isCellOnBoard(new CellImpl(4, 4))).isTrue();
     }
 }

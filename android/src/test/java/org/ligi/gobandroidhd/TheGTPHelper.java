@@ -1,8 +1,9 @@
 package org.ligi.gobandroidhd;
 
 import org.junit.Test;
-import org.ligi.gobandroid_hd.logic.Cell;
+import org.ligi.gobandroid_hd.logic.CellImpl;
 import org.ligi.gobandroid_hd.logic.GTPHelper;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TheGTPHelper {
@@ -25,7 +26,7 @@ public class TheGTPHelper {
     @Test
     public void testThatTopLeftGTPCoordinateIsValid() throws Exception {
 
-        final String tested = GTPHelper.coordinates2gtpstr(new Cell(0, 0), 19);
+        final String tested = GTPHelper.coordinates2gtpstr(new CellImpl(0, 0), 19);
 
         assertThat(tested).isEqualTo("A19");
     }
@@ -34,7 +35,7 @@ public class TheGTPHelper {
     @Test
     public void testThatTopLeftGTPCoordinateIsValidInAnotherBoardSize() throws Exception {
 
-        final String tested = GTPHelper.coordinates2gtpstr(new Cell(0, 0), 9);
+        final String tested = GTPHelper.coordinates2gtpstr(new CellImpl(0, 0), 9);
 
         assertThat(tested).isEqualTo("A9");
     }
@@ -42,7 +43,7 @@ public class TheGTPHelper {
     @Test
     public void testThatBottomRightGTPCoordinateIsValidInAnotherBoardSize() throws Exception {
 
-        final String tested = GTPHelper.coordinates2gtpstr(new Cell(8, 8), 9);
+        final String tested = GTPHelper.coordinates2gtpstr(new CellImpl(8, 8), 9);
 
         assertThat(tested).isEqualTo("J1");
     }

@@ -22,7 +22,7 @@ public class UndoWithVariationDialog extends GobandroidDialog {
             public void onClick(DialogInterface dialog, int which) {
                 gameProvider.get().undo(true);
                 if (prevent_cb.isChecked()) {
-                    interactionScope.ask_variant_session = false;
+                    interactionScope.setAsk_variant_session(false);
                 }
 
                 dialog.dismiss();
@@ -36,7 +36,7 @@ public class UndoWithVariationDialog extends GobandroidDialog {
             public void onClick(DialogInterface dialog, int which) {
                 gameProvider.get().undo(false);
                 if (prevent_cb.isChecked()) {
-                    interactionScope.ask_variant_session = false;
+                    interactionScope.setAsk_variant_session(false);
                 }
 
                 dialog.dismiss();

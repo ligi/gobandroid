@@ -13,7 +13,7 @@ public class CellFactory {
 
         for (int y = 0; y < sizeY; y++) {
             for (int x = 0; x < sizeX; x++) {
-                created.add(new Cell(x, y));
+                created.add(new CellImpl(x, y));
             }
         }
         return created;

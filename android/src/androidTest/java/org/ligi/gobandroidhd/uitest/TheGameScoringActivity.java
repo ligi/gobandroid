@@ -8,6 +8,7 @@ import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.etc.AppModule;
 import org.ligi.gobandroid_hd.logic.Cell;
+import org.ligi.gobandroid_hd.logic.CellImpl;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
@@ -52,11 +53,11 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
     @MediumTest
     public void testThatOneStoneOn9x9are80pt() {
         gameProvider.set(new GoGame((byte) 9));
-        gameProvider.get().do_move(new Cell(0, 0));
+        gameProvider.get().do_move(new CellImpl(0, 0));
 
         final GameScoringActivity activity = getActivity();
 
-        onView(withId(R.id.go_board)).perform(tapStone(new Cell(0, 0), gameProvider.get()));
+        onView(withId(R.id.go_board)).perform(tapStone(new CellImpl(0, 0), gameProvider.get()));
 
         onView(withId(R.id.final_black)).perform(scrollTo());
         onView(withId(R.id.final_black)).check(matches(withText("80.0")));
@@ -70,12 +71,12 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
     @MediumTest
     public void testThatTapToMarkWorks() {
         gameProvider.set(new GoGame((byte) 9));
-        gameProvider.get().do_move(new Cell(0, 0));
-        gameProvider.get().do_move(new Cell(0, 1));
+        gameProvider.get().do_move(new CellImpl(0, 0));
+        gameProvider.get().do_move(new CellImpl(0, 1));
 
         final GameScoringActivity activity = getActivity();
 
-        onView(withId(R.id.go_board)).perform(tapStone(new Cell(0, 0), gameProvider.get()));
+        onView(withId(R.id.go_board)).perform(tapStone(new CellImpl(0, 0), gameProvider.get()));
 
         onView(withId(R.id.final_black)).perform(scrollTo());
         onView(withId(R.id.final_black)).check(matches(withText("81.0")));
@@ -88,12 +89,12 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
     @MediumTest
     public void testThatWhiteCanWin() {
         gameProvider.set(new GoGame((byte) 9));
-        gameProvider.get().do_move(new Cell(0, 0));
-        gameProvider.get().do_move(new Cell(0, 1));
+        gameProvider.get().do_move(new CellImpl(0, 0));
+        gameProvider.get().do_move(new CellImpl(0, 1));
 
         final GameScoringActivity activity = getActivity();
 
-        onView(withId(R.id.go_board)).perform(tapStone(new Cell(0, 1), gameProvider.get()));
+        onView(withId(R.id.go_board)).perform(tapStone(new CellImpl(0, 1), gameProvider.get()));
 
         onView(withId(R.id.final_white)).perform(scrollTo());
         onView(withId(R.id.final_white)).check(matches(withText("87.5")));
@@ -108,13 +109,13 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
     // https://github.com/ligi/gobandroid/issues/143
     public void testThatScoringWorksWhenTerritoryIsInsideDeadStones() {
         gameProvider.set(new GoGame((byte) 3));
-        gameProvider.get().do_move(new Cell(0, 1));
-        gameProvider.get().do_move(new Cell(2, 2));
-        gameProvider.get().do_move(new Cell(1, 0));
+        gameProvider.get().do_move(new CellImpl(0, 1));
+        gameProvider.get().do_move(new CellImpl(2, 2));
+        gameProvider.get().do_move(new CellImpl(1, 0));
 
         final GameScoringActivity activity = getActivity();
 
-        onView(withId(R.id.go_board)).perform(tapStone(new Cell(2, 2), gameProvider.get()));
+        onView(withId(R.id.go_board)).perform(tapStone(new CellImpl(2, 2), gameProvider.get()));
 
         onView(withId(R.id.final_white)).perform(scrollTo());
         onView(withId(R.id.final_white)).check(matches(withText("16.5")));
@@ -125,12 +126,12 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
     @MediumTest
     public void testThatGroupMarkingWorks() {
         gameProvider.set(new GameBuilder(new GoGame(9))
-                .move(new Cell(0, 0), new Cell(0, 1), new Cell(1, 0))
+                .move(new CellImpl(0, 0), new CellImpl(0, 1), new CellImpl(1, 0))
                 .getGame());
 
         final GameScoringActivity activity = getActivity();
 
-        onView(withId(R.id.go_board)).perform(tapStone(new Cell(0, 1), gameProvider.get()));
+        onView(withId(R.id.go_board)).perform(tapStone(new CellImpl(0, 1), gameProvider.get()));
 
         onView(withId(R.id.final_white)).check(matches(withText("88.5")));
 

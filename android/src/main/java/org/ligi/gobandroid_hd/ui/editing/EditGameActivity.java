@@ -7,8 +7,8 @@ import android.view.WindowManager;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
-import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
+import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus;
 import org.ligi.gobandroid_hd.logic.markers.CircleMarker;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
@@ -43,7 +43,7 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
     }
 
     @Override
-    public byte doMoveWithUIFeedback(Cell cell) {
+    public MoveStatus doMoveWithUIFeedback(Cell cell) {
         switch (getMode()) {
             case BLACK:
                 if (getGame().getHandicapBoard().isCellKind(cell, STONE_BLACK)) {
@@ -52,16 +52,16 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
                     getGame().getHandicapBoard().setCell(cell, STONE_BLACK);
                 }
                 getGame().jump(getGame().getActMove()); // we need to totally refresh the board
-                return GoGame.MOVE_VALID;
+                return MoveStatus.VALID;
 
             case WHITE:
                 if (getGame().getHandicapBoard().isCellKind(cell, STONE_WHITE)) {
                     getGame().getHandicapBoard().setCell(cell, GoDefinitions.STONE_NONE);
                 } else {
-                    getGame().getHandicapBoard().setCell(cell,STONE_WHITE);
+                    getGame().getHandicapBoard().setCell(cell, STONE_WHITE);
                 }
                 getGame().jump(getGame().getActMove()); // we need to totally refresh the board
-                return GoGame.MOVE_VALID;
+                return MoveStatus.VALID;
 
             case TRIANGLE:
             case SQUARE:
@@ -74,7 +74,7 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
                 for (GoMarker marker : markers) {
                     if (marker.isInCell(cell)) {
                         markers.remove(marker);
-                        return GoGame.MOVE_VALID;
+                        return MoveStatus.VALID;
                     }
                 }
 
@@ -82,7 +82,7 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
 
         }
         getGame().notifyGameChange();
-        return GoGame.MOVE_VALID;
+        return MoveStatus.VALID;
     }
 
     private GoMarker removeOldAndGetNewMarker(Cell cell, List<GoMarker> markers) {
@@ -92,7 +92,7 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
             case SQUARE:
                 return new SquareMarker(cell);
             case CIRCLE:
-                return new  CircleMarker(cell);
+                return new CircleMarker(cell);
             case NUMBER:
                 final int firstFreeNumber = MarkerUtil.findFirstFreeNumber(markers);
                 return new TextMarker(cell, String.valueOf(firstFreeNumber));

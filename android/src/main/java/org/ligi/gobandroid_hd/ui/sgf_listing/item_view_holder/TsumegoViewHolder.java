@@ -4,10 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import java.io.File;
-import java.io.IOException;
+
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.FileEncodeDetector;
 import org.ligi.gobandroid_hd.R;
@@ -17,6 +14,12 @@ import org.ligi.gobandroid_hd.ui.PreviewView;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
+
+import java.io.File;
+import java.io.IOException;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class TsumegoViewHolder extends RecyclerView.ViewHolder implements ViewHolderInterface {
 
@@ -63,7 +66,7 @@ public class TsumegoViewHolder extends RecyclerView.ViewHolder implements ViewHo
 
             hints_tv.setText(String.format(hints_used_fmt, meta.getHintsUsed()));
 
-            final int transform = TsumegoHelper.calcTransform(game);
+            final int transform = TsumegoHelper.INSTANCE.calcTransform(game);
 
             if (transform != SGFReader.DEFAULT_SGF_TRANSFORM) {
                 game = SGFReader.sgf2game(sgf_str, null, SGFReader.BREAKON_FIRSTMOVE, transform);

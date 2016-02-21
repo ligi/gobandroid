@@ -1,20 +1,19 @@
 /**
  * gobandroid
- * by Marcus -Ligi- Bueschleb 
+ * by Marcus -Ligi- Bueschleb
  * http://ligi.de
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as 
- * published by the Free Software Foundation; 
- *
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation;
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details. 
- *
+ * GNU General Public License for more details.
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  **/
 
 package org.ligi.gobandroid_hd.ui;
@@ -31,7 +30,6 @@ import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.BuildConfig;
 import org.ligi.gobandroid_hd.FileEncodeDetector;
-import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
@@ -52,6 +50,8 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+
+import static org.ligi.gobandroid_hd.InteractionScope.Mode.TSUMEGO;
 
 /**
  * Activity to load a SGF with a ProgressDialog showing the Progress
@@ -182,7 +182,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
         if (intent_uri.toString().startsWith("tsumego")) {
             intent_uri = Uri.parse(intent_uri.toString().replaceFirst("tsumego", "file"));
-            interactionScope.setMode(InteractionScope.MODE_TSUMEGO);
+            interactionScope.setMode(TSUMEGO);
         }
 
         GoGame game = null;
@@ -193,8 +193,8 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
             // if it is a tsumego and we need a transformation to right corner
             // -> do so
-            if (interactionScope.getMode() == InteractionScope.MODE_TSUMEGO) {
-                final int transform = TsumegoHelper.calcTransform(game);
+            if (interactionScope.getMode() == TSUMEGO) {
+                final int transform = TsumegoHelper.INSTANCE.calcTransform(game);
 
                 if (transform != SGFReader.DEFAULT_SGF_TRANSFORM) {
                     game = SGFReader.sgf2game(sgf, null, SGFReader.BREAKON_NOTHING, transform);

@@ -11,7 +11,7 @@ import android.view.View;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
-import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GobanDroidTVActivity;
@@ -19,6 +19,8 @@ import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.gobandroid_hd.ui.fragments.CommentAndNowPlayingFragment;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.tracedroid.logging.Log;
+
+import static org.ligi.gobandroid_hd.logic.GoGame.MoveStatus.VALID;
 
 public class GoGamePlayerActivity extends GoActivity {
 
@@ -34,7 +36,7 @@ public class GoGamePlayerActivity extends GoActivity {
         super.onCreate(savedInstanceState);
 
         getBoard().setOnKeyListener(this);
-        getBoard().do_actpos_highlight = false;
+        getBoard().setDo_actpos_highlight(false);
 
     }
 
@@ -141,9 +143,9 @@ public class GoGamePlayerActivity extends GoActivity {
     }
 
     @Override
-    public byte doMoveWithUIFeedback(Cell cell) {
+    public MoveStatus doMoveWithUIFeedback(Cell cell) {
         // we want the user not to be able to edit in review mode
-        return GoGame.MOVE_VALID;
+        return VALID;
     }
 
     @Override
@@ -152,7 +154,7 @@ public class GoGamePlayerActivity extends GoActivity {
         if (event.getAction() == KeyEvent.ACTION_DOWN)
             switch (keyCode) {
                 case KeyEvent.KEYCODE_MEDIA_PAUSE:
-                    SwitchModeHelper.startGame(this, InteractionScope.MODE_REVIEW);
+                    SwitchModeHelper.startGame(this, InteractionScope.Mode.REVIEW);
                     return true;
 
                 case KeyEvent.KEYCODE_MEDIA_PREVIOUS:

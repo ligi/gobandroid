@@ -16,12 +16,14 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.Toast;
+
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GTPHelper;
+import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
@@ -185,11 +187,11 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
     }
 
     @Override
-    public byte doMoveWithUIFeedback(Cell cell) {
+    public GoGame.MoveStatus doMoveWithUIFeedback(Cell cell) {
         if (gnuGoGame != null) {
             if (gnuGoGame.aiIsThinking) {
                 Toast.makeText(this, R.string.ai_is_thinking, Toast.LENGTH_LONG).show();
-                return 0;
+                return GoGame.MoveStatus.VALID;
             }
 
             if ((getGame().isBlackToMove() && (!gnuGoGame.playingBlack))) {

@@ -65,6 +65,8 @@ import java.io.IOException;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+import static org.ligi.gobandroid_hd.logic.GoGame.MoveStatus.INVALID_NOT_ON_BOARD;
+
 /**
  * Activity for a Go Game
  */
@@ -155,7 +157,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     private void setupBoard() {
         go_board.setOnTouchListener(this);
         go_board.setOnKeyListener(this);
-        go_board.move_stone_mode = false;
+        go_board.setMove_stone_mode(false);
     }
 
     @Override
@@ -182,8 +184,8 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             return;
         }
 
-        go_board.do_legend = settings.isLegendEnabled();
-        go_board.legend_sgf_mode = settings.isSGFLegendEnabled();
+        go_board.setDo_legend(settings.isLegendEnabled());
+        go_board.setLegend_sgf_mode(settings.isSGFLegendEnabled());
         go_board.setGridEmboss(settings.isGridEmbossEnabled());
     }
 
@@ -264,7 +266,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     public void switchToCounting() {
 
-        interactionScope.setMode(InteractionScope.MODE_COUNT);
+        interactionScope.setMode(InteractionScope.Mode.COUNT);
         startActivity(new Intent(this, GameScoringActivity.class));
         finish();
 
@@ -313,28 +315,28 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         info_toast.show();
     }
 
-    protected byte doMoveWithUIFeedback(Cell cell) {
+    protected GoGame.MoveStatus doMoveWithUIFeedback(Cell cell) {
         if (cell == null) {
-            return GoGame.MOVE_INVALID_NOT_ON_BOARD;
+            return INVALID_NOT_ON_BOARD;
         }
 
-        final byte res = getGame().do_move(cell);
+        final GoGame.MoveStatus res = getGame().do_move(cell);
 
         switch (res) {
-            case GoGame.MOVE_INVALID_IS_KO:
-            case GoGame.MOVE_INVALID_CELL_NO_LIBERTIES:
+            case INVALID_IS_KO:
+            case INVALID_CELL_NO_LIBERTIES:
                 showInfoToast(getToastForResult(res));
         }
 
         return res;
     }
 
-    private int getToastForResult(byte res) {
+    private int getToastForResult(GoGame.MoveStatus res) {
         switch (res) {
-            case GoGame.MOVE_INVALID_IS_KO:
+            case INVALID_IS_KO:
                 return R.string.invalid_move_ko;
 
-            case GoGame.MOVE_INVALID_CELL_NO_LIBERTIES:
+            case INVALID_CELL_NO_LIBERTIES:
                 return R.string.invalid_move_no_liberties;
         }
 
@@ -367,7 +369,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     }
 
     protected void eventForZoomBoard(MotionEvent event) {
-        interactionScope.setTouchPosition(getBoard().pixel2cell(event.getX(), event.getY()));
+        interactionScope.setTouchCell(getBoard().pixel2cell(event.getX(), event.getY()));
 
         if (event.getAction() == MotionEvent.ACTION_UP) {
             gameExtrasContainer.setVisibility(View.VISIBLE);
@@ -412,7 +414,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     @Override
     public void onPause() {
 
-        go_board.move_stone_mode = false;
+        go_board.setMove_stone_mode(false);
 
         if (getGame() == null) {
             Log.w("we do not have a game (anymore) in onStop of a GoGame activity - that's crazy!");
@@ -429,7 +431,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
                 BufferedWriter out = new BufferedWriter(sgf_writer);
 
-                out.write(SGFWriter.game2sgf(getGame()));
+                out.write(SGFWriter.INSTANCE.game2sgf(getGame()));
                 out.close();
                 sgf_writer.close();
 
@@ -451,16 +453,16 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-                interactionScope.setTouchPosition(getBoard().pixel2cell(event.getX(), event.getY()));
+                interactionScope.setTouchCell(getBoard().pixel2cell(event.getX(), event.getY()));
                 break;
 
             case MotionEvent.ACTION_OUTSIDE:
-                interactionScope.setTouchPosition(null);
+                interactionScope.setTouchCell(null);
                 break;
 
             case MotionEvent.ACTION_UP:
 
-                if (go_board.move_stone_mode) {
+                if (go_board.getMove_stone_mode()) {
                     // TODO check if this is an illegal move ( e.g. in variants )
 
                     if (interactionScope.getTouchCell() != null && getGame().getVisualBoard().isCellFree(interactionScope.getTouchCell())) {
@@ -468,14 +470,14 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                         getGame().getActMove().setDidCaptures(true); // TODO check if we harm sth with that
                         getGame().refreshBoards();
                     }
-                    go_board.move_stone_mode = false; // moving of stone done
+                    go_board.setMove_stone_mode(false); // moving of stone done
                 } else if ((getGame().getActMove().isOnCell(interactionScope.getTouchCell()))) {
                     initializeStoneMove();
                 } else {
                     doMoveWithUIFeedback(interactionScope.getTouchCell());
                 }
 
-                interactionScope.setTouchPosition(null);
+                interactionScope.setTouchCell(null);
                 break;
         }
 
@@ -485,11 +487,11 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     public void initializeStoneMove() {
 
-        if (go_board.move_stone_mode) { // already in the mode
+        if (go_board.getMove_stone_mode()) { // already in the mode
             return; // -> do nothing
         }
 
-        go_board.move_stone_mode = true;
+        go_board.setMove_stone_mode(true);
 
         // TODO check if we only want this in certain modes
         if (GoPrefs.isAnnounceMoveActive()) {
@@ -506,43 +508,49 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     }
 
     public boolean doAskToKeepVariant() {
-        return GoPrefs.isAskVariantEnabled() && interactionScope.ask_variant_session;
+        return GoPrefs.isAskVariantEnabled() && interactionScope.getAsk_variant_session();
     }
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            final Cell ensuredTouchPosition = interactionScope.getEnsuredTouchPosition();
+
+            final Cell ensuredTouchPosition;
+            if (interactionScope.getTouchCell() == null) {
+                ensuredTouchPosition = getGame().getStatelessGoBoard().getCell(0, 0);
+            } else {
+                ensuredTouchPosition = interactionScope.getTouchCell();
+            }
             final StatelessBoardCell boardCell = getGame().getCalcBoard().getStatelessGoBoard().getCell(ensuredTouchPosition);
 
             switch (keyCode) {
                 case KeyEvent.KEYCODE_DPAD_UP:
-                    if (boardCell.up != null) {
-                        interactionScope.touch_position = boardCell.up;
+                    if (boardCell.getUp() != null) {
+                        interactionScope.setTouchCell(boardCell.getUp());
                     } else {
                         return false;
                     }
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_LEFT:
-                    if (boardCell.left != null) {
-                        interactionScope.touch_position = boardCell.left;
+                    if (boardCell.getLeft() != null) {
+                        interactionScope.setTouchCell(boardCell.getLeft());
                     } else {
                         return false;
                     }
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_DOWN:
-                    if (boardCell.down != null) {
-                        interactionScope.touch_position = boardCell.down;
+                    if (boardCell.getDown() != null) {
+                        interactionScope.setTouchCell(boardCell.getDown());
                     } else {
                         return false;
                     }
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
-                    if (boardCell.right != null) {
-                        interactionScope.touch_position = boardCell.right;
+                    if (boardCell.getRight() != null) {
+                        interactionScope.setTouchCell(boardCell.getRight());
                     } else {
                         return false;
                     }
@@ -578,7 +586,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     public void requestUndo() {
 
-        go_board.move_stone_mode = false;
+        go_board.setMove_stone_mode(false);
         if (doAskToKeepVariant()) {
             new UndoWithVariationDialog(this).show();
         } else {

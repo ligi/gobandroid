@@ -2,7 +2,6 @@ apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 apply plugin: 'de.felixschulze.gradle.spoon'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'de.mobilej.unmock'
 apply plugin: 'com.github.ben-manes.versions'
@@ -83,8 +82,13 @@ spoon {
     debug = true
 }
 
+kapt {
+    generateStubs = true
+}
+
 dependencies {
-    apt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt 'com.jakewharton:butterknife:7.0.1'
 
     provided 'org.glassfish:javax.annotation:10.0-b28'
 

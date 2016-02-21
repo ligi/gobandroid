@@ -6,16 +6,17 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
 
-import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
-import org.ligi.gobandroid_hd.logic.GoGame;
+import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.gobandroid_hd.ui.fragments.NavigationAndCommentFragment;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.tracedroid.logging.Log;
+
+import static org.ligi.gobandroid_hd.logic.GoGame.MoveStatus.VALID;
 
 public class GameReviewActivity extends GoActivity {
 
@@ -24,16 +25,16 @@ public class GameReviewActivity extends GoActivity {
     }
 
     @Override
-    public byte doMoveWithUIFeedback(Cell cell) {
+    public MoveStatus doMoveWithUIFeedback(Cell cell) {
         // we want the user not to be able to edit in review mode
-        return GoGame.MOVE_VALID;
+        return VALID;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //getBoard().setOnKeyListener(this);
-        getBoard().do_actpos_highlight = false;
+        getBoard().setDo_actpos_highlight(false);
     }
 
     @Override
@@ -58,7 +59,7 @@ public class GameReviewActivity extends GoActivity {
                     return true;
 
                 case KeyEvent.KEYCODE_MEDIA_PLAY:
-                    SwitchModeHelper.startGame(this, InteractionScope.MODE_TELEVIZE);
+                    SwitchModeHelper.startGame(this, InteractionScope.Mode.TELEVIZE);
                     return true;
 
 
@@ -139,23 +140,6 @@ public class GameReviewActivity extends GoActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.ingame_review, menu);
         return super.onCreateOptionsMenu(menu);
-    }
-
-    private String lastMomentFname;
-
-    @Override
-    public void onGoGameChange() {
-        super.onGoGameChange();
-
-        if (!getGame().getActMove().hasNextMove()) {
-
-            if (lastMomentFname == null || !lastMomentFname.equals(getGame().getMetaData().getFileName())) {
-                // TODO make sure it is not just the end of a variation
-                CloudHooks.uploadGameAndShareMoment(this, getGame(), "reviewed_game");
-                lastMomentFname = getGame().getMetaData().getFileName();
-            }
-
-        }
     }
 
 }

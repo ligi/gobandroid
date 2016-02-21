@@ -3,7 +3,7 @@ package org.ligi.gobandroid_hd.ui.ingame_common;
 import android.content.Context;
 import android.content.Intent;
 
-import org.ligi.gobandroid_hd.InteractionScope;
+import org.ligi.gobandroid_hd.InteractionScope.Mode;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.editing.EditGameActivity;
 import org.ligi.gobandroid_hd.ui.game_setup.GoSetupActivity;
@@ -16,31 +16,31 @@ import org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity;
 
 public class SwitchModeHelper {
 
-    public static Intent getIntentByMode(Context ctx, int mode) {
+    public static Intent getIntentByMode(Context ctx, Mode mode) {
         switch (mode) {
 
-            case InteractionScope.MODE_EDIT:
+            case EDIT:
                 return new Intent(ctx, EditGameActivity.class);
 
-            case InteractionScope.MODE_RECORD:
+            case RECORD:
                 return new Intent(ctx, GameRecordActivity.class);
 
-            case InteractionScope.MODE_REVIEW:
+            case REVIEW:
                 return new Intent(ctx, GameReviewActivity.class);
 
-            case InteractionScope.MODE_TSUMEGO:
+            case TSUMEGO:
                 return new Intent(ctx, TsumegoActivity.class);
 
-            case InteractionScope.MODE_TELEVIZE:
+            case TELEVIZE:
                 return new Intent(ctx, GoGamePlayerActivity.class);
 
-            case InteractionScope.MODE_COUNT:
+            case COUNT:
                 return new Intent(ctx, GameScoringActivity.class);
 
-            case InteractionScope.MODE_GNUGO:
+            case GNUGO:
                 return new Intent(ctx, PlayAgainstGnuGoActivity.class);
 
-            case InteractionScope.MODE_SETUP:
+            case SETUP:
                 return new Intent(ctx, GoSetupActivity.class);
 
             default:
@@ -52,7 +52,7 @@ public class SwitchModeHelper {
      * @param activity - context
      * @param mode     - new mode
      */
-    public static void startGame(GobandroidFragmentActivity activity, byte mode) {
+    public static void startGame(GobandroidFragmentActivity activity, Mode mode) {
         activity.interactionScope.setMode(mode);
         activity.startActivity(getIntentByMode(activity, mode));
     }

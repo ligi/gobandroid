@@ -77,12 +77,12 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
     }
 
     @Override
-    public byte doMoveWithUIFeedback(Cell cell) {
+    public GoGame.MoveStatus doMoveWithUIFeedback(Cell cell) {
 
-        byte res = super.doMoveWithUIFeedback(cell);
+        final GoGame.MoveStatus res = super.doMoveWithUIFeedback(cell);
 
         // if the move was valid and we have a counter move -> we will play it
-        if (res == GoGame.MOVE_VALID) {
+        if (res == GoGame.MoveStatus.VALID) {
             if (getGame().getActMove().hasNextMove()) {
                 getGame().jump(getGame().getActMove().getnextMove(0));
             }
@@ -144,7 +144,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
     @Override
     public void requestUndo() {
-        getBoard().move_stone_mode = false;
+        getBoard().setMove_stone_mode(false);
         // we do not want to keep user-variations in tsumego mode- but we want
         // to keep tsumego variation
         getGame().undo(isOnPath());
@@ -192,10 +192,10 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
 
         getGame().addGoGameChangeListener(this);
 
-        float myZoom = TsumegoHelper.calcZoom(getGame(), true);
+        float myZoom = TsumegoHelper.INSTANCE.calcZoom(getGame(), true);
 
         getBoard().setZoom(myZoom);
-        getBoard().setZoomPOI(TsumegoHelper.calcPOI(getGame(), true));
+        getBoard().setZoomPOI(TsumegoHelper.INSTANCE.calcPOI(getGame(), true));
         onGoGameChange();
 
         //NaDraChg getSlidingMenu().showContent();

@@ -27,8 +27,8 @@ public class GoViewActions {
                         view.getLocationOnScreen(screenPos);
                         final int gameSize = game.getSize();
 
-                        final float screenX = screenPos[0] + (0.5f + cell.x) * (view.getWidth() / gameSize);
-                        final float screenY = screenPos[1] + (0.5f + cell.y) * (view.getHeight() / gameSize);
+                        final float screenX = screenPos[0] + (0.5f + cell.getX()) * (view.getWidth() / gameSize);
+                        final float screenY = screenPos[1] + (0.5f + cell.getY()) * (view.getHeight() / gameSize);
 
                         return new float[]{screenX, screenY};
                     }

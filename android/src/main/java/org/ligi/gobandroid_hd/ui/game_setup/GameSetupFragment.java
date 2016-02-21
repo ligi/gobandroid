@@ -136,7 +136,7 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
 
         if (act_handicap != handicap_seek.getProgress()) handicap_seek.setProgress(act_handicap);
 
-        if (interactionScope.getMode() == InteractionScope.MODE_GNUGO)
+        if (interactionScope.getMode() == InteractionScope.Mode.GNUGO)
             size_seek.setMax(19 - size_offset);
 
 

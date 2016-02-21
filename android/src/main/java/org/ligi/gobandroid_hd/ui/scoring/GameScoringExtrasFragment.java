@@ -79,11 +79,11 @@ public class GameScoringExtrasFragment extends GobandroidGameAwareFragment {
 
         result_txt.setText(getFinTXT(scorer));
 
-        territory_black.setText(String.format("%d", scorer.territory_black));
-        territory_white.setText(String.format("%d", scorer.territory_white));
+        territory_black.setText(String.format("%d", scorer.getTerritory_black()));
+        territory_white.setText(String.format("%d", scorer.getTerritory_white()));
 
-        captures_black.setText(getCapturesString(game.getCapturesBlack(), scorer.dead_white));
-        captures_white.setText(getCapturesString(game.getCapturesWhite(), scorer.dead_black));
+        captures_black.setText(getCapturesString(game.getCapturesBlack(), scorer.getDead_white()));
+        captures_white.setText(getCapturesString(game.getCapturesWhite(), scorer.getDead_black()));
 
         komi.setText(String.format("%.1f", game.getKomi()));
 

@@ -23,7 +23,6 @@ import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.ActivityFinishingOnCancelListener;
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
-import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.helper.SGFFileNameFilter;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -46,6 +45,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static android.text.TextUtils.isEmpty;
+import static org.ligi.gobandroid_hd.InteractionScope.Mode.TSUMEGO;
 
 public class SGFListFragment extends GobandroidFragment implements Refreshable {
 
@@ -156,7 +156,7 @@ public class SGFListFragment extends GobandroidFragment implements Refreshable {
         }
 
 
-        if (interactionScope.getMode() == InteractionScope.MODE_TSUMEGO) {
+        if (interactionScope.getMode() == TSUMEGO) {
 
             if (fileNames.size() > 1000) {
                 try {
@@ -165,16 +165,16 @@ public class SGFListFragment extends GobandroidFragment implements Refreshable {
                     final GoGame game2 = SGFReader.sgf2game(AXT.at(new File(dir_file, list[12])).readToString(), null, SGFReader.BREAKON_FIRSTMOVE);
                     if (!isEmpty(game1.getMetaData().getDifficulty()) && !isEmpty(game2.getMetaData().getDifficulty())) {
                         new AlertDialog.Builder(getActivity()).setMessage("This looks like the gogameguru offline selection - sort by difficulty")
-                                                              .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                                                  @Override
-                                                                  public void onClick(DialogInterface dialog, int which) {
-                                                                      new GoProblemsRenaming(getActivity(), dir_file).execute();
-                                                                      dialog.dismiss();
-                                                                  }
-                                                              })
-                                                              .setNegativeButton(R.string.cancel, null)
+                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        new GoProblemsRenaming(getActivity(), dir_file).execute();
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setNegativeButton(R.string.cancel, null)
 
-                                                              .show();
+                                .show();
                     }
                 } catch (IOException e) {
                     Log.w("problem in gogameguru rename offer " + e);
@@ -266,7 +266,7 @@ public class SGFListFragment extends GobandroidFragment implements Refreshable {
                 return TYPE_GOLINK;
             }
 
-            if (interactionScope.getMode() == InteractionScope.MODE_TSUMEGO) {
+            if (interactionScope.getMode() == TSUMEGO) {
                 return TYPE_TSUMEGO;
             }
 

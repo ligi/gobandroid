@@ -61,7 +61,7 @@ public class BookmarkDialog extends GobandroidDialog {
             // was not saved before - do it now ( needed for a bookmark )
 
             fname = getDefaultFilename();
-            SGFWriter.saveSGF(game, settings.getSGFSavePath() + "/autosave/" + fname);
+            SGFWriter.INSTANCE.saveSGF(game, settings.getSGFSavePath() + "/autosave/" + fname);
         }
 
         return fname;

@@ -21,11 +21,6 @@ import org.ligi.gobandroid_hd.logic.GoDefinitions.getStringFromCellStatus
 /**
  * Class to represent a Go Board
 
- * @author [Marcus -Ligi- Bueschleb](http://ligi.de)
- * *
- *
- *
- * *         This software is licenced with GPLv3
  */
 
 class StatefulGoBoard(val statelessGoBoard: StatelessGoBoard) : GoBoard by statelessGoBoard {
@@ -78,12 +73,9 @@ class StatefulGoBoard(val statelessGoBoard: StatelessGoBoard) : GoBoard by state
         // if the size is not matching the boards can't be equal
         if (size != other.size) return false
 
-        // check if all stones are placed equally
-        for (cell in statelessGoBoard.allCells) {
-            if (board[cell.x][cell.y] != other.board[cell.x][cell.y]) return false
-        }
+        val differingBoardCell = statelessGoBoard.findCellWithCondition { board[it.x][it.y] != other.board[it.x][it.y] }
 
-        return true
+        return differingBoardCell == null
     }
 
     /**
