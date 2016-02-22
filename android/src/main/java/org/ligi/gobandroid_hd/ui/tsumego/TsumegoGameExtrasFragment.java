@@ -14,7 +14,7 @@ import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.model.GameProvider;
-import org.ligi.gobandroid_hd.ui.fragments.CommentHelper;
+import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity;
 
 import javax.inject.Inject;
 
@@ -81,7 +81,7 @@ public class TsumegoGameExtrasFragment extends Fragment {
                     commentView.setVisibility(View.VISIBLE);
                     commentView.setText(game.getActMove().getComment());
                     if (!TextUtils.isEmpty(game.getActMove().getComment())) {
-                        CommentHelper.linkifyCommentTextView(commentView);
+                        GoTerminologyViewActivity.Companion.linkifyTextView(commentView);
                     }
                 } else {
                     commentView.setVisibility(View.GONE);

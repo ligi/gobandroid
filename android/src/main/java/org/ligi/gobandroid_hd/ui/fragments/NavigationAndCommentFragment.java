@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity;
 
 public class NavigationAndCommentFragment extends GobandroidGameAwareFragment {
 
@@ -38,8 +39,7 @@ public class NavigationAndCommentFragment extends GobandroidGameAwareFragment {
             public void run() {
                 if (myTextView != null) {
                     myTextView.setText(game.getActMove().getComment());
-                    CommentHelper.linkifyCommentTextView(myTextView);
-
+                    GoTerminologyViewActivity.Companion.linkifyTextView(myTextView);
                 }
             }
 

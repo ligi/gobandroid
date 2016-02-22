@@ -2,38 +2,34 @@ package org.ligi.gobandroid_hd.logic
 
 import java.util.*
 
-class StatelessBoardCell(cell: CellImpl, val board: StatelessGoBoard) : Cell by cell {
+class StatelessBoardCell(val cell: CellImpl, val board: StatelessGoBoard) : Cell by cell {
 
-    private val neighbours = ArrayList<StatelessBoardCell>()
     lateinit var left: StatelessBoardCell
     lateinit var right: StatelessBoardCell
     lateinit var up: StatelessBoardCell
     lateinit var down: StatelessBoardCell
 
+    val neighbors = HashSet<StatelessBoardCell>()
+
     fun assignNeighbours() {
         if (x > 0) {
             left = board.getCell(x - 1, y)
-            neighbours.add(left)
+            neighbors.add(left)
         }
 
         if (y > 0) {
             up = board.getCell(x, y - 1)
-            neighbours.add(up)
+            neighbors.add(up)
         }
 
         if (y < board.size - 1) {
             down = board.getCell(x, y + 1)
-            neighbours.add(down)
+            neighbors.add(down)
         }
-
 
         if (x < board.size - 1) {
             right = board.getCell(x + 1, y)
-            neighbours.add(right)
+            neighbors.add(right)
         }
     }
-
-
-    val neighbors: List<StatelessBoardCell>
-        get() = neighbours
 }

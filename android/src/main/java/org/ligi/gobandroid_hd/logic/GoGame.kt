@@ -297,7 +297,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
 
     @JvmOverloads fun undo(keep_move: Boolean = true) {
         val mLastMove = actMove
-        jump(mLastMove.getParent())
+        jump(mLastMove.parent)
         if (!keep_move) mLastMove.destroy()
     }
 
@@ -356,7 +356,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         var tmp_move: GoMove
         while (true) {
 
-            tmp_move = replay_moves[replay_moves.size - 1]
+            tmp_move = replay_moves.last()
 
             if (tmp_move.isFirstMove || tmp_move.parent == null) break
 
@@ -396,20 +396,35 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         val found = AtomicBoolean()
 
         object : MustBeConnectedCellGatherer(calcBoard, startCell) {
-            override fun add(`object`: StatelessBoardCell): Boolean {
-                if (cell_has_neighbour(calcBoard, `object`, STONE_NONE)) {
-                    found.set(true)
+
+            override fun process(cell: StatelessBoardCell) {
+                if (!found.get()) {
+                    super.process(cell)
+
+                    if (cell_has_neighbour(calcBoard, cell, STONE_NONE)) {
+                        found.set(true)
+                    }
                 }
-                return super.add(`object`)
             }
 
-            override fun pushWithCheck(cell: StatelessBoardCell) {
-                if (!found.get()) {
-                    // no need to process any more cells
-                    super.pushWithCheck(cell)
-                }
-            }
         }
+
+
+
+        /*override fun add(element: StatelessBoardCell): Boolean {
+            if (cell_has_neighbour(calcBoard, element, STONE_NONE)) {
+                found.set(true)
+            }
+            return super.add(element)
+        }
+
+        override fun pushWithCheck(cell: StatelessBoardCell) {
+            if (!found.get()) {
+                // no need to process any more cells
+                super.pushWithCheck(cell)
+            }
+        }*/
+
 
         return found.get()
     }
@@ -428,14 +443,14 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         val group_count = AtomicInteger(0)
 
         // reset groups
-        for (x in 0..calcBoard.size - 1)
-            for (y in 0..calcBoard.size - 1)
-                groups!![x][y] = -1
+        calcBoard.statelessGoBoard.withAllCells {
+            groups!![it.x][it.y] = -1
+        }
 
         calcBoard.statelessGoBoard.withAllCells { statelessBoardCell ->
             if (groups!![statelessBoardCell.x][statelessBoardCell.y] == -1 && !calcBoard.isCellKind(statelessBoardCell, STONE_NONE)) {
 
-                for (groupCell in MustBeConnectedCellGatherer(calcBoard, statelessBoardCell)) {
+                for (groupCell in MustBeConnectedCellGatherer(calcBoard, statelessBoardCell).gatheredCells) {
                     groups!![groupCell.x][groupCell.y] = group_count.get()
                 }
 
@@ -463,7 +478,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         // this is no "group" in the sense we want
             return
 
-        val cellGathering = MustBeConnectedCellGatherer(calcBoard, calcBoard.statelessGoBoard.getCell(where))
+        val cellGathering = MustBeConnectedCellGatherer(calcBoard, calcBoard.statelessGoBoard.getCell(where)).gatheredCells
 
         for (cell in cellGathering) {
             local_captures++
@@ -477,8 +492,6 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
      *
      * TODO: check rename ( general marker )
      *
-     *
-     * *
      */
     fun isCellHoschi(cell: Cell): Boolean {
         return all_handicap_positions!![cell.x][cell.y]
@@ -510,7 +523,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     }
 
     val size: Int
-        get() = visualBoard.getSize()
+        get() = visualBoard.size
 
     /**
      * just content as state is not checked ( position in game )

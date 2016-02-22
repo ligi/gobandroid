@@ -1,6 +1,8 @@
 package org.ligi.gobandroid_hd.ui.scoring
 
+import android.app.Activity
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
@@ -9,6 +11,7 @@ import org.ligi.axt.AXT
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.logic.Cell
 import org.ligi.gobandroid_hd.logic.GoGame
+import org.ligi.gobandroid_hd.logic.GoGameMetadata
 import org.ligi.gobandroid_hd.logic.StatelessBoardCell
 import org.ligi.gobandroid_hd.logic.cell_gatherer.LooseConnectedCellGatherer
 import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer
@@ -16,13 +19,20 @@ import org.ligi.gobandroid_hd.ui.GoActivity
 import org.ligi.gobandroid_hd.ui.gnugo.PlayAgainstGnuGoActivity
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity
 import java.util.*
+import kotlin.reflect.KClass
 
 /**
  * Activity to score a Game
  */
 class GameScoringActivity : GoActivity() {
 
-    private var gameScoringExtrasFragment: GameScoringExtrasFragment? = null
+    private val gameExtraFragment: GameScoringExtrasFragment by lazy {
+        GameScoringExtrasFragment()
+    }
+
+    override fun getGameExtraFragment(): Fragment? {
+        return gameExtraFragment
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +54,7 @@ class GameScoringActivity : GoActivity() {
     override fun onResume() {
         super.onResume()
         game.initScorer()
-        if (gameScoringExtrasFragment != null) {
-            gameScoringExtrasFragment!!.refresh()
-        }
+        gameExtraFragment.refresh()
     }
 
 
@@ -63,7 +71,7 @@ class GameScoringActivity : GoActivity() {
 
             game.calcBoard.statelessGoBoard.withAllCells {
                 val cell = game.calcBoard.statelessGoBoard.getCell(it)
-                val inGroup = LooseConnectedCellGatherer(game.calcBoard, cell)
+                val inGroup = LooseConnectedCellGatherer(game.calcBoard, cell).gatheredCells
                 allProcessed.addAll(inGroup)
                 if (!game.calcBoard.isCellFree(it)) {
                     allGroups.add(inGroup)
@@ -100,17 +108,18 @@ class GameScoringActivity : GoActivity() {
             R.id.menu_game_again -> {
                 val metaData = game.metaData
                 gameProvider.set(GoGame(game.size))
-                if (metaData.blackName.toLowerCase() == "gnugo" || metaData.whiteName.toLowerCase() == "gnugo") {
-                    AXT.at(this).startCommonIntent().activityFromClass(PlayAgainstGnuGoActivity::class.java)
-                } else {
-
-                    AXT.at(this).startCommonIntent().activityFromClass(GameRecordActivity::class.java)
-                }
+                AXT.at(this).startCommonIntent().activityFromClass(getClassForRestart(metaData).java)
 
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun getClassForRestart(metaData: GoGameMetadata): KClass<out Activity> {
+        val wasGnugoGame = metaData.blackName.equals("gnugo", ignoreCase = true)
+                || metaData.whiteName.equals("gnugo", ignoreCase = true)
+        return if (wasGnugoGame) PlayAgainstGnuGoActivity::class else GameRecordActivity::class
     }
 
     override fun onPause() {
@@ -126,27 +135,19 @@ class GameScoringActivity : GoActivity() {
         game.removeScorer()
     }
 
-    override fun getGameExtraFragment(): GameScoringExtrasFragment? {
-        if (gameScoringExtrasFragment == null) {
-            gameScoringExtrasFragment = GameScoringExtrasFragment()
-        }
-        return gameScoringExtrasFragment
-    }
-
 
     fun do_score_touch(cell: Cell) {
 
         val calcBoard = game.calcBoard
         if (!calcBoard.isCellFree(cell) || calcBoard.isCellDead(cell)) {
             // if there is a stone/cellGathering
-            val cellGathering = MustBeConnectedCellGatherer(calcBoard, calcBoard.statelessGoBoard.getCell(cell))
+            val cellGathering = MustBeConnectedCellGatherer(calcBoard, calcBoard.statelessGoBoard.getCell(cell)).gatheredCells
             for (groupCell in cellGathering) {
                 calcBoard.toggleCellDead(groupCell)
             }
         }
 
-        if (game.scorer != null) {
-            game.scorer!!.calculateScore()
-        }
+        game.scorer?.calculateScore()
+
     }
 }

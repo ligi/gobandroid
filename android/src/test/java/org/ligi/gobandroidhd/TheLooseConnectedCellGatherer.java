@@ -19,7 +19,7 @@ public class TheLooseConnectedCellGatherer extends MarkerTestBase {
 
         final LooseConnectedCellGatherer boardCells = new LooseConnectedCellGatherer(board, cell);
 
-        assertThat(boardCells).hasSize(board.getSize() * board.getSize());
+        assertThat(boardCells.getGatheredCells()).hasSize(board.getSize() * board.getSize());
     }
 
 }

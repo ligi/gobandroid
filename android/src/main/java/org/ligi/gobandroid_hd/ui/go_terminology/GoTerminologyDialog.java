@@ -3,10 +3,12 @@ package org.ligi.gobandroid_hd.ui.go_terminology;
 import android.app.Activity;
 import android.text.util.Linkify;
 import android.widget.TextView;
-import java.util.Map;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.tracedroid.logging.Log;
+
+import java.util.Map;
 
 public class GoTerminologyDialog extends GobandroidDialog {
 
@@ -20,7 +22,7 @@ public class GoTerminologyDialog extends GobandroidDialog {
 
         final TextView tv = (TextView) this.findViewById(R.id.go_terms_text);
 
-        final Map<String, Integer> termMap = GoTerminologyViewActivity.Term2resMap;
+        final Map<String, Integer> termMap = GoTerminologyViewActivity.Companion.getTerm2resMap();
         if (termMap.containsKey(term)) {
             tv.setText(termMap.get(term));
         } else {

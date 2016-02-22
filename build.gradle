@@ -9,8 +9,9 @@ buildscript {
         jcenter()
         maven { url 'https://jitpack.io' }
     }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.android.tools.build:gradle:2.0.0-beta5'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'de.mobilej.unmock:UnMockPlugin:0.3.6'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'

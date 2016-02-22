@@ -20,7 +20,7 @@ public class TheMustBeConnectedCellGatherer extends MarkerTestBase {
 
         final MustBeConnectedCellGatherer boardCells = new MustBeConnectedCellGatherer(board,cell);
 
-        assertThat(boardCells).hasSize(board.getSize() * board.getSize());
+        assertThat(boardCells.getGatheredCells()).hasSize(board.getSize() * board.getSize());
     }
 
     @Test
@@ -31,7 +31,7 @@ public class TheMustBeConnectedCellGatherer extends MarkerTestBase {
 
         final MustBeConnectedCellGatherer boardCells = new MustBeConnectedCellGatherer(board,cell);
 
-        assertThat(boardCells).contains(cell);
+        assertThat(boardCells.getGatheredCells()).contains(cell);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class TheMustBeConnectedCellGatherer extends MarkerTestBase {
 
         final MustBeConnectedCellGatherer boardCells = new MustBeConnectedCellGatherer(board,cell);
 
-        assertThat(boardCells).contains(cell);
+        assertThat(boardCells.getGatheredCells()).contains(cell);
     }
 
 
@@ -60,7 +60,7 @@ public class TheMustBeConnectedCellGatherer extends MarkerTestBase {
 
         final MustBeConnectedCellGatherer boardCells = new MustBeConnectedCellGatherer(board, cell);
 
-        assertThat(boardCells).contains(cell, cell2);
+        assertThat(boardCells.getGatheredCells()).contains(cell, cell2);
     }
 
 }

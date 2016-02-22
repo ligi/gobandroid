@@ -7,9 +7,7 @@ import android.view.WindowManager;
 
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
-import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 
 /**
@@ -27,20 +25,6 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
     }
 
     @Override
-    public MoveStatus doMoveWithUIFeedback(Cell cell) {
-
-        MoveStatus res = super.doMoveWithUIFeedback(cell);
-        if (res == MoveStatus.VALID) {
-            if (getGame().getActMove().hasNextMove()) {
-                getGame().jump(getGame().getActMove().getnextMove(0));
-            }
-        }
-
-        getGame().notifyGameChange();
-        return res;
-    }
-
-    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
@@ -53,7 +37,7 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
 
             menu.findItem(R.id.menu_game_undo).setVisible(undo_avail);
 
-        } catch (NullPointerException e) {
+        } catch (NullPointerException ignored) {
         } // we do not care when they do not exist
 
         return true;
@@ -79,16 +63,14 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
             public void run() {
                 supportInvalidateOptionsMenu();
 
-                boolean switch_to_count = getGame().isFinished();
+                final boolean switch_to_count = getGame().isFinished();
 
                 if (switch_to_count) {
                     switchToCounting();
                 }
-
             }
 
         });
-
     }
 
     @Override

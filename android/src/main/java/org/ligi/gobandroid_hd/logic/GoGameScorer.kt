@@ -68,16 +68,16 @@ class GoGameScorer(private val game: GoGame) {
 
                     if (containsOneOfButNotTheOther(calc_board, areaCellGatherer.processed, PLAYER_BLACK)) {
                         assign = PLAYER_BLACK
-                        territory_black += areaCellGatherer.size
+                        territory_black += areaCellGatherer.gatheredCells.size
                     } else if (containsOneOfButNotTheOther(calc_board, areaCellGatherer.processed, PLAYER_WHITE)) {
                         assign = PLAYER_WHITE
-                        territory_white += areaCellGatherer.size
+                        territory_white += areaCellGatherer.gatheredCells.size
                     } else {
                         assign = PLAYER_NONE
                     }
 
                     if (assign > 0)
-                        for (areaBoardCell in areaCellGatherer) {
+                        for (areaBoardCell in areaCellGatherer.gatheredCells) {
                             area_assign[areaBoardCell.x][areaBoardCell.y] = assign
                         }
                     processed.addAll(areaCellGatherer.processed)

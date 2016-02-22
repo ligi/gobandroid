@@ -15,14 +15,14 @@ public class TheBoardCell extends MarkerTestBase {
 
         final StatelessBoardCell tested = board.getCell(0, 0);
 
-        assertThat(tested.getNeighbors()).containsExactly(board.getCell(0, 1), board.getCell(1, 0));
+        assertThat(tested.getNeighbors()).containsOnly(board.getCell(0, 1), board.getCell(1, 0));
     }
 
     @Test
     public void testCellx0y1HasCorrectNeighbours() {
 
         final StatelessBoardCell tested = board.getCell(0, 1);
-        assertThat(tested.getNeighbors()).containsExactly(board.getCell(0, 0), board.getCell(0, 2), board.getCell(1, 1));
+        assertThat(tested.getNeighbors()).containsOnly(board.getCell(0, 0), board.getCell(0, 2), board.getCell(1, 1));
     }
 
 

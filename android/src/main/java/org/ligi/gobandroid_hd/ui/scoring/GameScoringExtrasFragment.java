@@ -70,6 +70,9 @@ public class GameScoringExtrasFragment extends GobandroidGameAwareFragment {
     }
 
     public void refresh() {
+        if (getActivity()==null) {
+            return;
+        }
         final GoGame game = gameProvider.get();
         final GoGameScorer scorer = game.getScorer();
 
