@@ -108,7 +108,7 @@ open class GoBoardViewHD(context: Context, attrs: AttributeSet) : View(context, 
 
         // these paint init's should be exposed to a designer ^^
 
-        // paint to make the stones transparent in game-result mode ( terretory
+        // paint to make the stones transparent in game-result mode ( territory
         // stones ) - also used for stone move and shadow stone
         opaque_paint = Paint()
         opaque_paint.alpha = 0x77
