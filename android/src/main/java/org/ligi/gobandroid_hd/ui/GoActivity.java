@@ -66,6 +66,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 import static org.ligi.gobandroid_hd.logic.GoGame.MoveStatus.INVALID_NOT_ON_BOARD;
+import static org.ligi.gobandroid_hd.ui.GoSoundManager.Sound.PICKUP1;
+import static org.ligi.gobandroid_hd.ui.GoSoundManager.Sound.PICKUP2;
+import static org.ligi.gobandroid_hd.ui.GoSoundManager.Sound.PLACE1;
+import static org.ligi.gobandroid_hd.ui.GoSoundManager.Sound.PLACE2;
 
 /**
  * Activity for a Go Game
@@ -165,9 +169,9 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         Log.i("onGoGameChange in GoActivity");
         if (getGame().getActMove().getMovePos() > last_processed_move_change_num) {
             if (getGame().isBlackToMove()) {
-                sound_man.playSound(GoSoundManager.SOUND_PLACE1);
+                sound_man.playSound(PLACE1);
             } else {
-                sound_man.playSound(GoSoundManager.SOUND_PLACE2);
+                sound_man.playSound(PLACE2);
             }
         }
         last_processed_move_change_num = getGame().getActMove().getMovePos();
@@ -400,9 +404,9 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             }
 
             if (getGame().isBlackToMove()) {
-                sound_man.playSound(GoSoundManager.SOUND_PICKUP1);
+                sound_man.playSound(PICKUP1);
             } else {
-                sound_man.playSound(GoSoundManager.SOUND_PICKUP2);
+                sound_man.playSound(PICKUP2);
             }
         }
 
