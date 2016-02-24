@@ -26,7 +26,6 @@ import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer
 import org.ligi.tracedroid.logging.Log
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
@@ -378,10 +377,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     }
 
     fun cell_has_neighbour(board: StatefulGoBoard, boardCell: StatelessBoardCell, kind: Byte): Boolean {
-        for (cell in boardCell.neighbors)
-            if (board.isCellKind(cell, kind)) return true
-
-        return false
+        return boardCell.neighbors.any { board.isCellKind(it, kind) }
     }
 
     /**
@@ -393,40 +389,9 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
 
         val startCell = calcBoard.statelessGoBoard.getCell(cell)
 
-        val found = AtomicBoolean()
-
-        object : MustBeConnectedCellGatherer(calcBoard, startCell) {
-
-            override fun process(cell: StatelessBoardCell) {
-                if (!found.get()) {
-                    super.process(cell)
-
-                    if (cell_has_neighbour(calcBoard, cell, STONE_NONE)) {
-                        found.set(true)
-                    }
-                }
-            }
-
+        return MustBeConnectedCellGatherer(calcBoard, startCell).gatheredCells.any() {
+            cell_has_neighbour(calcBoard, it, STONE_NONE)
         }
-
-
-
-        /*override fun add(element: StatelessBoardCell): Boolean {
-            if (cell_has_neighbour(calcBoard, element, STONE_NONE)) {
-                found.set(true)
-            }
-            return super.add(element)
-        }
-
-        override fun pushWithCheck(cell: StatelessBoardCell) {
-            if (!found.get()) {
-                // no need to process any more cells
-                super.pushWithCheck(cell)
-            }
-        }*/
-
-
-        return found.get()
     }
 
     fun clear_calc_board() {
@@ -480,9 +445,9 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
 
         val cellGathering = MustBeConnectedCellGatherer(calcBoard, calcBoard.statelessGoBoard.getCell(where)).gatheredCells
 
-        for (cell in cellGathering) {
+        cellGathering.forEach {
             local_captures++
-            calcBoard.setCell(cell, STONE_NONE)
+            calcBoard.setCell(it, STONE_NONE)
         }
     }
 

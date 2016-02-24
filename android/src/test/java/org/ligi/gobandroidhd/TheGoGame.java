@@ -34,4 +34,14 @@ public class TheGoGame extends AssetAwareTest {
         assertThat(goGame.do_move(new CellImpl(9, 9))).isEqualTo(GoGame.MoveStatus.INVALID_NOT_ON_BOARD);
     }
 
+    @Test
+    public void testCapture() {
+        final GoGame goGame = new GoGame(9);
+
+        goGame.do_move(new CellImpl(0, 1));
+        goGame.do_move(new CellImpl(0, 0));
+        goGame.do_move(new CellImpl(1, 0));
+
+        assertThat(goGame.getCapturesBlack()).isEqualTo(1);
+    }
 }
