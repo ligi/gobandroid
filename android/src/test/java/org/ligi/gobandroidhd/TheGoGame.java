@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TheGoGame extends AssetAwareTest {
 
     @Test
-    public void testReplayingMoves() throws Exception {
+    public void testReplayingMoves() {
         final GoGame goGame = new GoGame(9);
 
         goGame.do_move(new CellImpl(0, 0));
@@ -28,7 +28,7 @@ public class TheGoGame extends AssetAwareTest {
 
 
     @Test
-    public void testOffBoardRejection() throws Exception {
+    public void testOffBoardRejection() {
         final GoGame goGame = new GoGame(9);
 
         assertThat(goGame.do_move(new CellImpl(9, 9))).isEqualTo(GoGame.MoveStatus.INVALID_NOT_ON_BOARD);
