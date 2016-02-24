@@ -301,9 +301,9 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     }
 
 
-    fun redo(`var`: Int) {
-        Log.i("redoing " + actMove.getnextMove(`var`).toString())
-        jump(actMove.getnextMove(`var`))
+    fun redo(pos: Int) {
+        Log.i("redoing " + actMove.getnextMove(pos).toString())
+        jump(actMove.getnextMove(pos))
     }
 
     /**
