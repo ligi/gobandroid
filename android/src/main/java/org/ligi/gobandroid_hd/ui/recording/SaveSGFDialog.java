@@ -42,7 +42,7 @@ public class SaveSGFDialog extends GobandroidDialog {
 
         setContentView(R.layout.dialog_save_sgf);
 
-        setIconResource(R.drawable.save);
+        setIconResource(R.drawable.ic_content_save);
         TextView intro_text = (TextView) findViewById(R.id.intro_txt);
 
         override_checkbox = (CheckBox) findViewById(R.id.override_checkbox);

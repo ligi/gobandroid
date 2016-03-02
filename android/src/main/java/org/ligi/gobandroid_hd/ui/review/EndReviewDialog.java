@@ -51,7 +51,7 @@ public class EndReviewDialog extends GobandroidDialog {
         setContentView(R.layout.end_review_dialog);
 
         setTitle(R.string.end_review);
-        setIconResource(R.drawable.help);
+        setIconResource(R.drawable.ic_action_help_outline);
 
         save_bookmark_cp = (CheckBox) findViewById(R.id.save_bookmark_cp);
         save_bookmark_cp.setChecked(true);

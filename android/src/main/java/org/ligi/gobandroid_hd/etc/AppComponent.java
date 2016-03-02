@@ -7,7 +7,7 @@ import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.UnzipSGFsDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
-import org.ligi.gobandroid_hd.ui.application.navigation.NavigationDrawer;
+import org.ligi.gobandroid_hd.ui.application.navigation.NavigationDrawerHandler;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidGameAwareFragment;
 import org.ligi.gobandroid_hd.ui.gnugo.GnuGoGame;
@@ -30,7 +30,7 @@ public interface AppComponent {
 
     void inject(GnuGoGame gnuGoGame);
 
-    void inject(NavigationDrawer navigationDrawer);
+    void inject(NavigationDrawerHandler navigationDrawer);
 
     void inject(TsumegoGameExtrasFragment tsumegoGameExtrasFragment);
 

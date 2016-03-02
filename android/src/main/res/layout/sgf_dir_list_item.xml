@@ -3,7 +3,7 @@
     xmlns:android.support.v7.cardview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android.support.v7.cardview:cardBackgroundColor="@android:color/transparent"
     android.support.v7.cardview:cardMaxElevation="4dp"
     android.support.v7.cardview:cardUseCompatPadding="true">
@@ -11,8 +11,8 @@
     <TextView
         android:id="@+id/pathName"
         style="@style/item_relative_style"
-        android:drawableLeft="@drawable/folder"
-        android:drawableStart="@drawable/folder"
+        android:drawableLeft="@drawable/ic_file_folder"
+        android:drawableStart="@drawable/ic_file_folder"
         android:fontFamily="sans-serif"
         android:textColor="@android:color/black"
         android:textSize="@dimen/text_size_large"

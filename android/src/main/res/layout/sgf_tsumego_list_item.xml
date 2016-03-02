@@ -3,7 +3,7 @@
     xmlns:android.support.v7.cardview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android.support.v7.cardview:cardBackgroundColor="@android:color/transparent"
     android.support.v7.cardview:cardMaxElevation="4dp"
     android:layout_margin="4dp"
@@ -17,7 +17,7 @@
             android:id="@+id/solve_status_image"
             android:layout_width="42dp"
             android:layout_height="42dp"
-            tools:src="@drawable/dashboard_tsumego" />
+            tools:src="@drawable/ic_action_extension" />
 
         <TextView
             android:id="@+id/filename"

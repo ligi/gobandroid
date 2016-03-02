@@ -19,7 +19,7 @@ public class HelpDialog extends GobandroidDialog {
 
     public HelpDialog(final Context context) {
         super(context);
-        setIconResource(R.drawable.help);
+        setIconResource(R.drawable.ic_action_help_outline);
         setTitle(R.string.help);
 
         final Resources res=context.getResources();

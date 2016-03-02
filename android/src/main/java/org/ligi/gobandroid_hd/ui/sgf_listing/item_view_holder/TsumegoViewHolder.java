@@ -81,7 +81,7 @@ public class TsumegoViewHolder extends RecyclerView.ViewHolder implements ViewHo
         if (new SGFMetaData(file.getAbsolutePath()).getIsSolved()) {
             solvedStatusImage.setImageResource(R.drawable.solved);
         } else {
-            solvedStatusImage.setImageResource(R.drawable.dashboard_tsumego);
+            solvedStatusImage.setImageResource(R.drawable.ic_action_extension);
         }
     }
 }

@@ -6,10 +6,12 @@ import android.preference.PreferenceManager;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class GnuGoSetupDialog extends GobandroidDialog {
 
@@ -42,7 +44,7 @@ public class GnuGoSetupDialog extends GobandroidDialog {
         shared_prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         setTitle(R.string.gnugo);
-        setIconResource(R.drawable.preferences);
+        setIconResource(R.drawable.ic_action_settings);
 
         setContentView(R.layout.setup_gnugo);
 

@@ -175,21 +175,21 @@ public class CustomActionBar extends LinearLayout implements GoGame.GoGameChange
         final BitmapDrawableNoMinimumSize background = new BitmapDrawableNoMinimumSize(ctx.getResources(), R.drawable.wood_bg);
         contentView.setBackgroundDrawable(background);
 
-        addModeItem(contentView, SETUP, R.string.setup, R.drawable.preferences);
+        addModeItem(contentView, SETUP, R.string.setup, R.drawable.ic_action_settings_overscan);
 
-        addModeItem(contentView, RECORD, R.string.play, R.drawable.play);
+        addModeItem(contentView, RECORD, R.string.play, R.drawable.ic_social_people);
 
-        addModeItem(contentView, EDIT, R.string.edit, R.drawable.dashboard_record);
+        addModeItem(contentView, EDIT, R.string.edit, R.drawable.ic_editor_mode_edit);
 
         if (gameProvider.get().getActMove().getMovePos() > 0) { // these modes only make sense if there is minimum one
-            addModeItem(contentView, COUNT, R.string.count, R.drawable.dashboard_score);
-            addModeItem(contentView, REVIEW, R.string.review, R.drawable.dashboard_review);
-            addModeItem(contentView, TELEVIZE, R.string.televize, R.drawable.gobandroid_tv);
-            addModeItem(contentView, TSUMEGO, R.string.tsumego, R.drawable.dashboard_tsumego);
+            addModeItem(contentView, COUNT, R.string.count, R.drawable.ic_editor_pie_chart);
+            addModeItem(contentView, REVIEW, R.string.review, R.drawable.ic_maps_local_movies);
+            addModeItem(contentView, TELEVIZE, R.string.televize, R.drawable.ic_notification_live_tv);
+            addModeItem(contentView, TSUMEGO, R.string.tsumego, R.drawable.ic_action_extension);
         }
 
         if (isPlayStoreInstalled() || GnuGoHelper.isGnuGoAvail(activity)) {
-            addModeItem(contentView, GNUGO, R.string.gnugo, R.drawable.server);
+            addModeItem(contentView, GNUGO, R.string.gnugo, R.drawable.ic_hardware_computer);
         }
 
         final BetterPopupWindow pop = new BetterPopupWindow(mode_tv);

@@ -109,7 +109,7 @@ public class GameInfoDialog extends GobandroidDialog {
     public GameInfoDialog(final Context context, final GoGame game) {
         super(context);
         setTitle(R.string.game_info);
-        setIconResource(R.drawable.info);
+        setIconResource(R.drawable.ic_action_info_outline);
         setContentView(R.layout.game_info);
 
         ButterKnife.bind(this);

@@ -18,7 +18,7 @@ import org.ligi.gobandroid_hd.PlayServicesIntegration;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.model.GameProvider;
-import org.ligi.gobandroid_hd.ui.application.navigation.NavigationDrawer;
+import org.ligi.gobandroid_hd.ui.application.navigation.NavigationDrawerHandler;
 
 import java.lang.reflect.Field;
 
@@ -86,7 +86,8 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
         final View v = getLayoutInflater().inflate(layoutResId, (ViewGroup) findViewById(R.id.drawer_layout), false);
         final ViewGroup vg = (ViewGroup) findViewById(R.id.content_frame);
         vg.addView(v);
-        new NavigationDrawer(this);
+        new NavigationDrawerHandler(this).handle();
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         drawerToggle = new ActionBarDrawerToggle(this,                  /* host Activity */

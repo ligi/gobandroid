@@ -11,7 +11,7 @@ public class UndoWithVariationDialog extends GobandroidDialog {
     public UndoWithVariationDialog(Context context) {
         super(context);
         setTitle(R.string.keep_variant_);
-        setIconResource(R.drawable.help);
+        setIconResource(R.drawable.ic_action_help_outline);
         setContentView(R.layout.dialog_keep_variant);
 
         final CheckBox prevent_cb = (CheckBox) findViewById(R.id.keep_variant_session_cb);

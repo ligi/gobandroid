@@ -5,7 +5,7 @@
         yourapp:showAsAction="ifRoom|withText"
         android:id="@+id/menu_refresh"
         android:title="@string/refresh"
-        android:icon="@drawable/refresh" />
+        android:icon="@drawable/ic_navigation_refresh" />
 
     <item
         yourapp:showAsAction="never"

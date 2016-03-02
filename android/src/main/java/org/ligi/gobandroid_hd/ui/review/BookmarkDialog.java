@@ -81,7 +81,7 @@ public class BookmarkDialog extends GobandroidDialog {
         super(context);
 
         setTitle(R.string.bookmark);
-        setIconResource(R.drawable.bookmark);
+        setIconResource(R.drawable.ic_toggle_star_border);
         setContentView(R.layout.save_bookmark);
 
         ButterKnife.bind(this);

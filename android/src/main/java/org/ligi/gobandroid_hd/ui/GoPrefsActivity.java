@@ -20,6 +20,7 @@ package org.ligi.gobandroid_hd.ui;
 
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceFragmentCompat;
+
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
@@ -36,6 +37,7 @@ public class GoPrefsActivity extends GobandroidFragmentActivity {
 
         @Override
         public void onCreatePreferences(final Bundle bundle, final String rootKey) {
+
             setPreferencesFromResource(R.xml.preferences, rootKey);
 
             // fullscreen setting is not useful when fullscreen is forced for small devices

@@ -4,12 +4,12 @@
     <item
         android:title="@string/undo"
         android:id="@+id/menu_game_undo"
-        android:icon="@drawable/undo"
+        android:icon="@drawable/ic_content_undo"
         yourapp:showAsAction="ifRoom|withText"/>
     <item
         android:title="@string/save_as_sgf"
         android:id="@+id/menu_write_sgf"
-        android:icon="@drawable/save"
+        android:icon="@drawable/ic_content_save"
         yourapp:showAsAction="ifRoom|withText"/>
     <item
         android:title="@string/game_pass"

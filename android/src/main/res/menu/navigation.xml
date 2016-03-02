@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="LOAD">
+
+        <menu>
+            <item
+                android:icon="@drawable/ic_image_crop_free"
+                android:title="Empty board"
+                android:id="@+id/menu_drawer_empty" />
+            <item
+                android:icon="@drawable/ic_action_extension"
+                android:title="Tsumego"
+                android:id="@+id/menu_drawer_tsumego" />
+            <item
+                android:icon="@drawable/ic_maps_local_movies"
+                android:title="Review"
+                android:id="@+id/menu_drawer_review" />
+            <item
+                android:icon="@drawable/ic_toggle_star_border"
+                android:title="Bookmark"
+                android:id="@+id/menu_drawer_bookmark" />
+        </menu>
+    </item>
+
+
+    <item android:title="MORE">
+
+        <menu>
+            <item
+                android:icon="@drawable/ic_action_perm_identity"
+                android:title="@string/profile"
+                android:id="@+id/menu_drawer_profile" />
+            <item
+                android:icon="@drawable/ic_content_link"
+                android:title="Links"
+                android:id="@+id/menu_drawer_links" />
+            <item
+                android:icon="@drawable/ic_action_settings"
+                android:title="Settings"
+                android:id="@+id/menu_drawer_settings" />
+            <item
+                android:icon="@drawable/ic_action_help_outline"
+                android:title="Help"
+                android:id="@+id/menu_drawer_help" />
+        </menu>
+    </item>
+
+
+</menu>

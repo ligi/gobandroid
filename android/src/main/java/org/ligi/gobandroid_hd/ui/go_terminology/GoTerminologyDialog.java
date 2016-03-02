@@ -17,7 +17,7 @@ public class GoTerminologyDialog extends GobandroidDialog {
         super(context);
 
         setTitle(term);
-        setIconResource(R.drawable.info);
+        setIconResource(R.drawable.ic_action_info_outline);
         setContentView(R.layout.go_terms_view);
 
         final TextView tv = (TextView) this.findViewById(R.id.go_terms_text);

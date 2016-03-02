@@ -5,10 +5,10 @@
         yourapp:showAsAction="ifRoom"
         android:id="@+id/menu_start"
         android:title="@string/start"
-        android:icon="@drawable/next"/>
+        android:icon="@drawable/ic_navigation_check" />
     <item
         yourapp:showAsAction="ifRoom"
         android:id="@+id/menu_clear_board"
         android:title="@string/clear_board"
-        android:icon="@drawable/dialog_cancel"/>
+        android:icon="@drawable/ic_action_delete" />
 </menu>

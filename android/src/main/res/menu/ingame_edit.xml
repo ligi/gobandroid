@@ -9,6 +9,6 @@
     <item
         android:title="@string/save_as_sgf"
         android:id="@+id/menu_write_sgf"
-        android:icon="@drawable/save"
+        android:icon="@drawable/ic_content_save"
         yourapp:showAsAction="ifRoom|withText"/>
 </menu>
