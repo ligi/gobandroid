@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 
 import butterknife.Bind;
@@ -70,7 +71,8 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     }
 
     @Override
-    public void onGoGameChange() {
+    public void onGoGameChanged(GameChangedEvent gameChangedEvent) {
+        super.onGoGameChanged(gameChangedEvent);
         gameChangeHandler.post(new Runnable() {
 
             @Override

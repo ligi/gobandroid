@@ -7,13 +7,13 @@ import android.view.WindowManager;
 
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
+import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 
 /**
  * Activity to record a Game - or play on one device
  */
-public class GameRecordActivity extends GoActivity implements GoGameChangeListener {
+public class GameRecordActivity extends GoActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,8 +55,8 @@ public class GameRecordActivity extends GoActivity implements GoGameChangeListen
     }
 
     @Override
-    public void onGoGameChange() {
-        super.onGoGameChange();
+    public void onGameChanged(GameChangedEvent gameChangedEvent) {
+        super.onGameChanged(gameChangedEvent);
         runOnUiThread(new Runnable() {
 
             @Override

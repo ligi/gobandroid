@@ -63,7 +63,7 @@ public class GoSetupActivity extends GoActivity {
             getGame().jump(getGame().getActMove().getnextMove(0));
         }
 
-        getGame().notifyGameChange();
+        notifyGoGameChange();
         startActivity(new Intent(this, GameRecordActivity.class));
         finish();
         return res;
@@ -75,7 +75,7 @@ public class GoSetupActivity extends GoActivity {
             case R.id.menu_clear_board:
                 gameProvider.set(new GoGame(setup_fragment.act_size, setup_fragment.act_handicap));
                 clear_board_menu_item.setVisible(false);
-                getGame().notifyGameChange();
+                notifyGoGameChange();
                 break;
             case R.id.menu_start:
                 startActivity(new Intent(this, GameRecordActivity.class));

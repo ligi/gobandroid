@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameScorer;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidGameAwareFragment;
@@ -49,7 +50,8 @@ public class GameScoringExtrasFragment extends GobandroidGameAwareFragment {
     }
 
     @Override
-    public void onGoGameChange() {
+    public void onGoGameChanged(GameChangedEvent gameChangedEvent) {
+        super.onGoGameChanged(gameChangedEvent);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

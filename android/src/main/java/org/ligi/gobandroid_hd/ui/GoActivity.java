@@ -36,11 +36,14 @@ import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
@@ -74,7 +77,7 @@ import static org.ligi.gobandroid_hd.ui.GoSoundManager.Sound.PLACE2;
 /**
  * Activity for a Go Game
  */
-public class GoActivity extends GobandroidFragmentActivity implements OnTouchListener, OnKeyListener, GoGame.GoGameChangeListener {
+public class GoActivity extends GobandroidFragmentActivity implements OnTouchListener, OnKeyListener {
 
     public GoSoundManager sound_man;
 
@@ -164,20 +167,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         go_board.setMove_stone_mode(false);
     }
 
-    @Override
-    public void onGoGameChange() {
-        Log.i("onGoGameChange in GoActivity");
-        if (getGame().getActMove().getMovePos() > last_processed_move_change_num) {
-            if (getGame().isBlackToMove()) {
-                sound_man.playSound(PLACE1);
-            } else {
-                sound_man.playSound(PLACE2);
-            }
-        }
-        last_processed_move_change_num = getGame().getActMove().getMovePos();
-
-        game2ui();
-    }
 
     /**
      * set some preferences on the go board - intended to be called in onResume
@@ -211,11 +200,8 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         }
         setBoardPreferences();
 
-        if (getGame() == null) {
-            Log.w("we do not have a game in onStart of a GoGame activity - thats crazy!");
-        } else {
-            getGame().addGoGameChangeListener(this);
-        }
+
+        getBus().register(this);
     }
 
     @Override
@@ -247,7 +233,8 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
             case R.id.menu_game_pass:
                 getGame().pass();
-                getGame().notifyGameChange();
+
+                getBus().post(GameChangedEvent.INSTANCE);
 
                 return true;
 
@@ -420,12 +407,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         go_board.setMove_stone_mode(false);
 
-        if (getGame() == null) {
-            Log.w("we do not have a game (anymore) in onStop of a GoGame activity - that's crazy!");
-        } else {
-            getGame().removeGoGameChangeListener(this);
-        }
-
         if (doAutoSave()) {
             try {
                 final File f = new File(settings.getSGFSavePath() + "/autosave.sgf");
@@ -443,6 +424,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                 Log.i("" + e);
             }
         }
+        getBus().unregister(this);
         super.onPause();
     }
 
@@ -485,7 +467,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
                 break;
         }
 
-        getGame().notifyGameChange();
+        getBus().post(GameChangedEvent.INSTANCE);
     }
 
 
@@ -598,4 +580,26 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         }
     }
 
+    protected EventBus getBus() {
+        return EventBus.getDefault();
+    }
+
+    @Subscribe
+    public void onGameChanged(GameChangedEvent gameChangedEvent) {
+        Log.i("onGoGameChange in GoActivity");
+        if (getGame().getActMove().getMovePos() > last_processed_move_change_num) {
+            if (getGame().isBlackToMove()) {
+                sound_man.playSound(PLACE1);
+            } else {
+                sound_man.playSound(PLACE2);
+            }
+        }
+        last_processed_move_change_num = getGame().getActMove().getMovePos();
+
+        game2ui();
+    }
+
+    protected void notifyGoGameChange() {
+        EventBus.getDefault().post(GameChangedEvent.INSTANCE);
+    }
 }

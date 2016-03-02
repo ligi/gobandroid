@@ -11,9 +11,9 @@ import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
@@ -22,7 +22,7 @@ import org.ligi.tracedroid.logging.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TsumegoActivity extends GoActivity implements GoGameChangeListener {
+public class TsumegoActivity extends GoActivity {
 
     private GoMove finishing_move;
     private TsumegoGameExtrasFragment myTsumegoExtrasFragment;
@@ -58,14 +58,6 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (getGame() != null) { // TODO investigate when game can be null here
-            getGame().removeGoGameChangeListener(this);
-        }
-    }
-
     private boolean isOnPath() {
         if (on_path_moves == null) {
             Log.i("isOnPath null");
@@ -88,7 +80,7 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
             }
         }
 
-        getGame().notifyGameChange();
+        getBus().post(GameChangedEvent.INSTANCE);
         return res;
     }
 
@@ -190,13 +182,11 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
             new AlertDialog.Builder(this).setMessage(R.string.tsumego_sgf_no_solution).setNegativeButton(R.string.ok, new DialogDiscardingOnClickListener()).setPositiveButton(R.string.go_back, new ActivityFinishingOnClickListener(this)).show();
         }
 
-        getGame().addGoGameChangeListener(this);
-
         float myZoom = TsumegoHelper.INSTANCE.calcZoom(getGame(), true);
 
         getBoard().setZoom(myZoom);
         getBoard().setZoomPOI(TsumegoHelper.INSTANCE.calcPOI(getGame(), true));
-        onGoGameChange();
+        onGameChanged(null);
 
         //NaDraChg getSlidingMenu().showContent();
     }
@@ -204,8 +194,8 @@ public class TsumegoActivity extends GoActivity implements GoGameChangeListener 
     private GoMove last_move;
 
     @Override
-    public void onGoGameChange() {
-        super.onGoGameChange();
+    public void onGameChanged(GameChangedEvent gameChangedEvent) {
+        super.onGameChanged(gameChangedEvent);
         if (getGame().getActMove().equals(last_move)) {
             // TODO find the real cause why we got here to often for the same move
             // mainly a problem for writing the moments - otherwise too many moments where written for the same

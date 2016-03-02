@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+
 import org.ligi.axt.simplifications.SimpleTextWatcher;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidGameAwareFragment;
 
 public class RecordingGameExtrasFragment extends GobandroidGameAwareFragment {
@@ -42,7 +44,8 @@ public class RecordingGameExtrasFragment extends GobandroidGameAwareFragment {
     }
 
     @Override
-    public void onGoGameChange() {
+    public void onGoGameChanged(GameChangedEvent gameChangedEvent) {
+        super.onGoGameChanged(gameChangedEvent);
         handler.post(new Runnable() {
             @Override
             public void run() {

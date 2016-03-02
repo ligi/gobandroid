@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity;
 
 public class CommentAndNowPlayingFragment extends GobandroidGameAwareFragment {
@@ -17,12 +18,13 @@ public class CommentAndNowPlayingFragment extends GobandroidGameAwareFragment {
     public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View res = inflater.inflate(R.layout.game_extra_review, container, false);
         myTextView = (TextView) res.findViewById(R.id.comments_textview);
-        onGoGameChange();
+        onGoGameChanged(null);
         return res;
     }
 
     @Override
-    public void onGoGameChange() {
+    public void onGoGameChanged(GameChangedEvent gameChangedEvent) {
+        super.onGoGameChanged(gameChangedEvent);
         getActivity().runOnUiThread(new Runnable() {
 
             @Override

@@ -5,10 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.ligi.gobandroid_hd.App;
+import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.logic.GoGame;
 
-public abstract class GobandroidGameAwareFragment extends GobandroidFragment implements GoGame.GoGameChangeListener {
+public abstract class GobandroidGameAwareFragment extends GobandroidFragment {
 
     protected GoGame game;
 
@@ -16,7 +19,7 @@ public abstract class GobandroidGameAwareFragment extends GobandroidFragment imp
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         App.component().inject(this);
         game = gameProvider.get();
-        game.addGoGameChangeListener(this);
+        EventBus.getDefault().register(this);
         return createView(inflater, container, savedInstanceState);
     }
 
@@ -24,8 +27,13 @@ public abstract class GobandroidGameAwareFragment extends GobandroidFragment imp
 
     @Override
     public void onDestroyView() {
-        game.removeGoGameChangeListener(this);
+        EventBus.getDefault().unregister(this);
         super.onDestroyView();
+    }
+
+    @Subscribe
+    public void onGoGameChanged(GameChangedEvent gameChangedEvent) {
+
     }
 
 }
