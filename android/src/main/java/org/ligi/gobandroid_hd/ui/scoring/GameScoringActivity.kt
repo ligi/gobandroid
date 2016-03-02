@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.view.WindowManager
 import org.ligi.axt.AXT
 import org.ligi.gobandroid_hd.R
+import org.ligi.gobandroid_hd.events.GameChangedEvent
 import org.ligi.gobandroid_hd.logic.Cell
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.logic.GoGameMetadata
@@ -99,7 +100,7 @@ class GameScoringActivity : GoActivity() {
 
     override fun doMoveWithUIFeedback(cell: Cell): GoGame.MoveStatus {
         do_score_touch(cell)
-        game.notifyGameChange()
+        bus.post(GameChangedEvent.INSTANCE)
         return GoGame.MoveStatus.VALID
     }
 

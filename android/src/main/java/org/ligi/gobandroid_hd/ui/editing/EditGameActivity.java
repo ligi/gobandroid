@@ -7,7 +7,6 @@ import android.view.WindowManager;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
-import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus;
 import org.ligi.gobandroid_hd.logic.markers.CircleMarker;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
@@ -25,7 +24,7 @@ import static org.ligi.gobandroid_hd.logic.GoDefinitions.STONE_WHITE;
 /**
  * Activity to edit a Game
  */
-public class EditGameActivity extends GoActivity implements GoGameChangeListener {
+public class EditGameActivity extends GoActivity {
 
     private StatefulEditModeItems statefulEditModeItems = new StatefulEditModeItems();
 
@@ -81,7 +80,6 @@ public class EditGameActivity extends GoActivity implements GoGameChangeListener
                 markers.add(removeOldAndGetNewMarker(cell, markers));
 
         }
-        getGame().notifyGameChange();
         return MoveStatus.VALID;
     }
 

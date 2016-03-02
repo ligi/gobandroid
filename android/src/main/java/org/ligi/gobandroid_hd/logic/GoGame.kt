@@ -21,6 +21,8 @@
 
 package org.ligi.gobandroid_hd.logic
 
+import org.greenrobot.eventbus.EventBus
+import org.ligi.gobandroid_hd.events.GameChangedEvent
 import org.ligi.gobandroid_hd.logic.GoDefinitions.*
 import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer
 import org.ligi.tracedroid.logging.Log
@@ -40,26 +42,6 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         INVALID_CELL_NOT_FREE,
         INVALID_CELL_NO_LIBERTIES,
         INVALID_IS_KO
-    }
-
-    interface GoGameChangeListener {
-        fun onGoGameChange()
-    }
-
-    private val change_listeners = HashSet<GoGameChangeListener>()
-
-    fun addGoGameChangeListener(new_l: GoGameChangeListener) {
-        change_listeners.add(new_l)
-    }
-
-    fun removeGoGameChangeListener(l: GoGameChangeListener) {
-        change_listeners.remove(l)
-    }
-
-    fun notifyGameChange() {
-        for (l in change_listeners) {
-            l.onGoGameChange()
-        }
     }
 
     val statelessGoBoard: StatelessGoBoard
@@ -183,7 +165,8 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
             actMove = GoMove(actMove)
             actMove.setToPassMove()
         }
-        notifyGameChange()
+
+        EventBus.getDefault().post(GameChangedEvent.INSTANCE)
     }
 
     /**
@@ -252,7 +235,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
             capturesWhite += local_captures
 
         actMove.setDidCaptures(local_captures > 0)
-        notifyGameChange()
+        EventBus.getDefault().post(GameChangedEvent.INSTANCE)
 
         // if we reached this point this move must be valid
         return MoveStatus.VALID
@@ -369,7 +352,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
             do_internal_move(replay_moves[step])
 
         copyVisualBoard()
-        notifyGameChange()
+        EventBus.getDefault().post(GameChangedEvent.INSTANCE)
     }
 
     fun copyVisualBoard() {

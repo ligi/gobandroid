@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 import org.ligi.axt.simplifications.SimpleTextWatcher;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidGameAwareFragment;
 
 import butterknife.Bind;
@@ -65,8 +66,6 @@ public class EditGameExtrasFragment extends GobandroidGameAwareFragment {
 
         ButterKnife.bind(this, view);
 
-        gameProvider.get().addGoGameChangeListener(this);
-
         editText.setText(gameProvider.get().getActMove().getComment());
         editText.setHint(R.string.enter_your_comments_here);
         editText.setGravity(Gravity.TOP);
@@ -83,7 +82,9 @@ public class EditGameExtrasFragment extends GobandroidGameAwareFragment {
     }
 
     @Override
-    public void onGoGameChange() {
+    public void onGoGameChanged(GameChangedEvent gameChangedEvent) {
+        super.onGoGameChanged(gameChangedEvent);
+
         if (getActivity() == null) {
             return; // no user facing action
         }

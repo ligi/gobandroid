@@ -21,10 +21,10 @@ import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GTPHelper;
 import org.ligi.gobandroid_hd.logic.GoGame;
-import org.ligi.gobandroid_hd.logic.GoGame.GoGameChangeListener;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
@@ -36,7 +36,7 @@ import org.ligi.tracedroid.logging.Log;
 /**
  * Activity to play vs GnoGo
  */
-public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChangeListener, Runnable {
+public class PlayAgainstGnuGoActivity extends GoActivity implements Runnable {
 
     private IGnuGoService service;
     private ServiceConnection connection;
@@ -174,12 +174,13 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements GoGameChange
     }
 
     @Override
-    public void onGoGameChange() {
-        super.onGoGameChange();
+    public void onGameChanged(GameChangedEvent gameChangedEvent) {
+        super.onGameChanged(gameChangedEvent);
 
         if (getGame().isFinished()) {
             switchToCounting();
         }
+
     }
 
     public Fragment getGameExtraFragment() {

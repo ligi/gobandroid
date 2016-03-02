@@ -26,11 +26,13 @@ import android.os.Looper;
 import android.support.v7.app.AlertDialog;
 import android.widget.LinearLayout;
 
+import org.greenrobot.eventbus.EventBus;
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.BuildConfig;
 import org.ligi.gobandroid_hd.FileEncodeDetector;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import org.ligi.gobandroid_hd.ui.alerts.GameLoadingDialog;
@@ -280,7 +282,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
         game.getMetaData().setFileName(Uri.decode(intent_uri.toString()));
 
-        gameProvider.get().notifyGameChange();
+        EventBus.getDefault().post(GameChangedEvent.INSTANCE);
 
         runOnUiThread(new Runnable() {
             @Override

@@ -5,8 +5,10 @@ import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
 
+import org.greenrobot.eventbus.EventBus;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
@@ -57,7 +59,8 @@ public class NavigationDrawerHandler {
                         final GoGame act_game = gameProvider.get();
 
                         gameProvider.set(new GoGame((byte) act_game.getSize(), (byte) act_game.getHandicap()));
-                        gameProvider.get().notifyGameChange();
+
+                        EventBus.getDefault().post(GameChangedEvent.INSTANCE);
 
                         ctx.startActivity(new Intent(ctx, GameRecordActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                         return true;

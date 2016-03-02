@@ -3,7 +3,9 @@ package org.ligi.gobandroid_hd.ui.tsumego;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
+import org.greenrobot.eventbus.EventBus;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
@@ -70,7 +72,7 @@ public class TsumegoHintAlert {
             myActMove = myActMove.getParent();
         }
 
-        game.notifyGameChange();
+        EventBus.getDefault().post(GameChangedEvent.INSTANCE);
     }
 
 }

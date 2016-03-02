@@ -14,11 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
+import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.gnugo.GnuGoHelper;
@@ -42,7 +45,7 @@ import static org.ligi.gobandroid_hd.InteractionScope.Mode.SETUP;
 import static org.ligi.gobandroid_hd.InteractionScope.Mode.TELEVIZE;
 import static org.ligi.gobandroid_hd.InteractionScope.Mode.TSUMEGO;
 
-public class CustomActionBar extends LinearLayout implements GoGame.GoGameChangeListener {
+public class CustomActionBar extends LinearLayout {
 
     @Inject
     GameProvider gameProvider;
@@ -90,13 +93,13 @@ public class CustomActionBar extends LinearLayout implements GoGame.GoGameChange
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        gameProvider.get().addGoGameChangeListener(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        gameProvider.get().removeGoGameChangeListener(this);
+        EventBus.getDefault().unregister(this);
     }
 
     public CustomActionBar(Activity activity) {
@@ -200,8 +203,8 @@ public class CustomActionBar extends LinearLayout implements GoGame.GoGameChange
         pop.showLikePopDownMenu();
     }
 
-    @Override
-    public void onGoGameChange() {
+    @Subscribe
+    public void onGoGameChaged(GameChangedEvent event) {
         refresh();
     }
 
