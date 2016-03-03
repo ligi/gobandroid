@@ -43,6 +43,12 @@
                 android:icon="@drawable/ic_action_help_outline"
                 android:title="@string/help"
                 android:id="@+id/menu_drawer_help" />
+
+            <item
+                android:icon="@drawable/ic_action_bug_report"
+                android:title="@string/betatest_opt_in_out"
+                android:id="@+id/menu_drawer_beta" />
+
         </menu>
     </item>
 

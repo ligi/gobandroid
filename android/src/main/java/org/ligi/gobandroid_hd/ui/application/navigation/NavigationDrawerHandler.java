@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
 
 import org.greenrobot.eventbus.EventBus;
+import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.events.GameChangedEvent;
@@ -108,6 +109,11 @@ public class NavigationDrawerHandler {
                     case R.id.menu_drawer_profile:
                         ctx.startActivity(new Intent(ctx, BaseProfileActivity.class));
 
+                        return true;
+
+
+                    case R.id.menu_drawer_beta:
+                        AXT.at(ctx).startCommonIntent().openUrl("https://play.google.com/apps/testing/org.ligi.gobandroid_hd");
                         return true;
 
                 }
