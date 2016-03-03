@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -31,7 +32,7 @@ public abstract class GobandroidGameAwareFragment extends GobandroidFragment {
         super.onDestroyView();
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGoGameChanged(GameChangedEvent gameChangedEvent) {
 
     }

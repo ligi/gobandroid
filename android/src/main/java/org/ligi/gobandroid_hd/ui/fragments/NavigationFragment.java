@@ -1,7 +1,6 @@
 package org.ligi.gobandroid_hd.ui.fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,8 +41,6 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
         }
     }
 
-    private Handler gameChangeHandler = new Handler();
-
     @Override
     public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.nav_button_container, container, false);
@@ -73,15 +70,7 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     @Override
     public void onGoGameChanged(GameChangedEvent gameChangedEvent) {
         super.onGoGameChanged(gameChangedEvent);
-        gameChangeHandler.post(new Runnable() {
-
-            @Override
-            public void run() {
-                updateButtonStates();
-            }
-
-        });
-
+        updateButtonStates();
     }
 
     private void updateButtonStates() {
