@@ -43,6 +43,7 @@ android {
         applicationId "org.ligi.gobandroid_hd"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         archivesBaseName = "Gobandroid-$versionName"
+        vectorDrawables.useSupportLibrary = true
     }
 
 
