@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="LOAD">
+    <item android:title="@string/load">
 
         <menu>
             <item
                 android:icon="@drawable/ic_image_crop_free"
-                android:title="Empty board"
+                android:title="@string/empty_board"
                 android:id="@+id/menu_drawer_empty" />
             <item
                 android:icon="@drawable/ic_action_extension"
-                android:title="Tsumego"
+                android:title="@string/tsumego"
                 android:id="@+id/menu_drawer_tsumego" />
             <item
                 android:icon="@drawable/ic_maps_local_movies"
-                android:title="Review"
+                android:title="@string/review"
                 android:id="@+id/menu_drawer_review" />
             <item
                 android:icon="@drawable/ic_toggle_star_border"
-                android:title="Bookmark"
+                android:title="@string/bookmark"
                 android:id="@+id/menu_drawer_bookmark" />
         </menu>
     </item>
 
 
-    <item android:title="MORE">
+    <item android:title="@string/more">
 
         <menu>
             <item
@@ -33,15 +33,15 @@
                 android:id="@+id/menu_drawer_profile" />
             <item
                 android:icon="@drawable/ic_content_link"
-                android:title="Links"
+                android:title="@string/links"
                 android:id="@+id/menu_drawer_links" />
             <item
                 android:icon="@drawable/ic_action_settings"
-                android:title="Settings"
+                android:title="@string/settings"
                 android:id="@+id/menu_drawer_settings" />
             <item
                 android:icon="@drawable/ic_action_help_outline"
-                android:title="Help"
+                android:title="@string/help"
                 android:id="@+id/menu_drawer_help" />
         </menu>
     </item>
