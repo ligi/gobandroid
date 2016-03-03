@@ -29,7 +29,7 @@
             android:background="@drawable/shinkaya"
             android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"
-            android:dividerHeight="0dp"></android.support.design.widget.NavigationView>
+            android:dividerHeight="0dp" />
 
     </android.support.v4.widget.DrawerLayout>
 </FrameLayout>
