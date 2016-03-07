@@ -1,7 +1,7 @@
 package org.ligi.gobandroid_hd.ui.go_terminology
 
-import android.app.Activity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.text.util.Linkify
 import android.widget.TextView
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener
@@ -9,7 +9,7 @@ import org.ligi.gobandroid_hd.R
 import java.util.*
 import java.util.regex.Pattern
 
-class GoTerminologyViewActivity : Activity() {
+class GoTerminologyViewActivity : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
