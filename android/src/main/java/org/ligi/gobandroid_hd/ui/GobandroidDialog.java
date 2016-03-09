@@ -1,11 +1,11 @@
 package org.ligi.gobandroid_hd.ui;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
-import android.support.v7.app.AppCompatDialog;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,7 +30,7 @@ import javax.inject.Inject;
 /**
  * A styled Dialog fit in the gobandroid style
  */
-public class GobandroidDialog extends AppCompatDialog {
+public class GobandroidDialog extends Dialog {
 
     private final LayoutInflater inflater;
     private final LinearLayout button_container;
