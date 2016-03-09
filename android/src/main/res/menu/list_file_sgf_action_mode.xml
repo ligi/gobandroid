@@ -2,11 +2,11 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:icon="@android:drawable/ic_menu_share"
+        android:icon="@drawable/ic_social_share"
         android:title="@string/share"
         android:id="@+id/menu_share" />
     <item
-        android:icon="@android:drawable/ic_menu_delete"
+        android:icon="@drawable/ic_action_delete"
         android:title="@string/delete"
         android:id="@+id/menu_delete" />
 </menu>
