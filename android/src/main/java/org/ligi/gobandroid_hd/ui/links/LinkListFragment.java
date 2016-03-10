@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import org.ligi.gobandroid_hd.R;
 
 public abstract class LinkListFragment extends Fragment {
@@ -21,5 +22,5 @@ public abstract class LinkListFragment extends Fragment {
         return recyclerView;
     }
 
-    abstract TwoLinedWithLink[] getData();
+    abstract LinkWithDescription[] getData();
 }

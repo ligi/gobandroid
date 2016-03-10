@@ -39,10 +39,6 @@
                 android:icon="@drawable/ic_action_settings"
                 android:title="@string/settings"
                 android:id="@+id/menu_drawer_settings" />
-            <item
-                android:icon="@drawable/ic_action_help_outline"
-                android:title="@string/help"
-                android:id="@+id/menu_drawer_help" />
 
             <item
                 android:icon="@drawable/ic_action_bug_report"

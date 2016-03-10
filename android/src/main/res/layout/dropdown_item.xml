@@ -21,10 +21,7 @@
                 android:id="@+id/image"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:paddingBottom="3dp"
-                android:paddingRight="7dp"
-                android:paddingTop="3dp"
-                android:src="@drawable/wp_ico" />
+                android:padding="@dimen/small_padding" />
 
             <TextView
                 android:id="@+id/text"

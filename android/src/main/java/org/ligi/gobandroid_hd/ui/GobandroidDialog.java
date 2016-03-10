@@ -7,13 +7,10 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
@@ -71,33 +68,6 @@ public class GobandroidDialog extends Dialog {
         container.addView(inflater.inflate(content, container, false));
     }
 
-    public void addItem(@DrawableRes int image, @StringRes int text, final OnClickListener listener) {
-        final LinearLayout container = (LinearLayout) this.findViewById(R.id.dialog_items);
-        final View v = inflater.inflate(R.layout.dialog_item, container, false);
-        ((TextView) v.findViewById(R.id.text)).setText(text);
-        ((ImageView) v.findViewById(R.id.image)).setImageResource(image);
-
-        v.setOnTouchListener(new OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        v.setBackgroundResource(R.drawable.holo_transparent_bg);
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        v.setBackgroundDrawable(null);
-                        listener.onClick(GobandroidDialog.this, 0);
-                        return true;
-                }
-                return false;
-            }
-
-        });
-
-        container.addView(v);
-
-    }
 
     @Override
     public void setTitle(CharSequence title) {

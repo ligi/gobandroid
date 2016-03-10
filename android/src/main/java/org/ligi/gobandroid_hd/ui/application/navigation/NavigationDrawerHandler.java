@@ -14,7 +14,6 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
 import org.ligi.gobandroid_hd.ui.GoPrefsActivity;
-import org.ligi.gobandroid_hd.ui.HelpDialog;
 import org.ligi.gobandroid_hd.ui.UnzipSGFsDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
@@ -50,12 +49,6 @@ public class NavigationDrawerHandler {
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
 
-                    case R.id.menu_drawer_help:
-
-                        new HelpDialog(ctx).show();
-                        App.getTracker().trackEvent("ui_action", "dashboard", "help", null);
-
-                        return true;
                     case R.id.menu_drawer_empty:
                         final GoGame act_game = gameProvider.get();
 

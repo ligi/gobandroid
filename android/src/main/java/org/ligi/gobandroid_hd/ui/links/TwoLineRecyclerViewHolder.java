@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -21,7 +22,7 @@ public class TwoLineRecyclerViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void bind(final TwoLinedWithLink twoLinedWithLink) {
+    public void bind(final LinkWithDescription twoLinedWithLink) {
         text1.setText(twoLinedWithLink.getLine1());
         text2.setText(twoLinedWithLink.getLine2());
         itemView.setOnClickListener(new View.OnClickListener() {
