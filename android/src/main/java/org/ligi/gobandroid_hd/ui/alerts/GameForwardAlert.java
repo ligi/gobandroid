@@ -23,13 +23,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import butterknife.Bind;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -42,8 +42,6 @@ import butterknife.ButterKnife;
  */
 public class GameForwardAlert extends GobandroidDialog {
 
-    final GoGame game;
-
     @Bind(R.id.message)
     TextView message;
 
@@ -52,7 +50,6 @@ public class GameForwardAlert extends GobandroidDialog {
 
     public GameForwardAlert(final Context context, final GoGame game) {
         super(context);
-        this.game = game;
 
         setContentView(R.layout.dialog_game_forward);
         ButterKnife.bind(this);
