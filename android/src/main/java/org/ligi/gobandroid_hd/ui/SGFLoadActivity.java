@@ -305,9 +305,9 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
             @Override
             public void run() {
-                dlg.progress.setProgress(act_progress);
-                dlg.progress.setMax(max_progress);
-                dlg.message.setText(act_message);
+                dlg.getProgress().setProgress(act_progress);
+                dlg.getProgress().setMax(max_progress);
+                dlg.getMessage().setText(act_message);
             }
         });
     }

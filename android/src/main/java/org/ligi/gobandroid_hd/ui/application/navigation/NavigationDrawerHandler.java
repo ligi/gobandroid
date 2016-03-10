@@ -131,7 +131,7 @@ public class NavigationDrawerHandler {
 
         final File tsumegoPath = settings.getTsumegoPath();
         if (!tsumegoPath.isDirectory() || settings.isVersionSeen(1)) {
-            UnzipSGFsDialog.INSTANCE.show(ctx, intent_after, settings);
+            new UnzipSGFsDialog(ctx, intent_after, settings).show();
             return true;
         }
         return false;
