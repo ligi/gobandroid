@@ -4,7 +4,6 @@ import org.ligi.gobandroid_hd.ui.CustomActionBar;
 import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
-import org.ligi.gobandroid_hd.ui.UnzipSGFsDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.gobandroid_hd.ui.application.navigation.NavigationDrawerHandler;
@@ -25,8 +24,6 @@ public interface AppComponent {
     void inject(GobandroidDialog gobandroidDialog);
 
     void inject(GobandroidFragmentActivity gobandroidFragmentActivity);
-
-    void inject(UnzipSGFsDialog.AlertDialogUpdater alertDialogUpdater);
 
     void inject(GnuGoGame gnuGoGame);
 

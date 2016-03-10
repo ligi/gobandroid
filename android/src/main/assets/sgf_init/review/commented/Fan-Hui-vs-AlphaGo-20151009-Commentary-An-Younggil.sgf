@@ -1,0 +1,595 @@
+(;GM[1]FF[4]CA[UTF-8]AP[CGoban:3]ST[2]
+RU[Chinese]SZ[19]KM[7.50]TM[3600]OT[3x30 byo-yomi]
+PW[AlphaGo]PB[Fan Hui]BR[2p]DT[2015-10-09]EV[AlphaGo vs Fan Hui five game match]RO[Game 5]PC[London, England]WT[Computer]BT[Human]SO[https://gogameguru.com/]AN[An Younggil 8p]C[This is a commentary of the final game of the five game match between Fan Hui 2p and Google DeepMind's AlphaGo.
+
+News of AlphaGo's 5-0 victory over Fan shocked the Go community and made mainstream news headlines around the world.
+
+The game was played on October 9, 2015, but the startling performance of AlphaGo wasn't revealed until a paper detailing the feat was published in the science journal Nature, on January 27, 2016. This means we have only recently heard about the games and had a chance to analyze them.
+
+## Why Go?
+
+Go has long been a significant challenge to artificial intelligence (AI) researchers, because the large number of possible Go games make it infeasible for computers to perform well using brute force alone. This has meant that the best human players have until now remained out of reach of the best computer players, despite decades of research into AI and advances in computing power.
+
+## Fan Hui
+
+Fan Hui is a professional with the Chinese Go Association and has been living in France, where he has taught and promoted Go since the early 2000s. He was born in 1981 and became a pro in 1996.
+
+Google DeepMind contacted Fan to arrange the match and he played against AlphaGo in London, under the supervision of Toby Manning from the British Go Association. Ten games were played in total; five official games and five unofficial games. Fan chose a time limit of 1 hour main time and 3 x 30 seconds byo-yomi each for the official games. He won two unofficial games against AlphaGo (30 seconds per move), but lost all the official games.
+
+The first game of the match was quite leisurely and territorial. After Fan lost that game by 2.5 points, he thought that perhaps AlphaGo didn't like to fight, so he played more aggressively in the games that followed. Unfortunately for Fan this game plan didn't pay off.
+
+## Alpha Go
+
+AlphaGo is a Go AI developed by DeepMind -- a British AI research company which was acquired by Google in 2014. They are undertaking a self-described "Apollo Program for AI," in a project involving more than 100 scientists.
+
+### Neural Networks
+
+The backbone AlphaGo's strength lies in its successful application of neural networks to Go. In this context a 'neural network' is a technology for processing information and forming connections in a way that is modeled on the neural connections in the human brain.
+
+The goal of this technology is to enable computers to learn in a way that is more general and human like. DeepMind aims to develop a general learning algorithm which can be applied to many problems instead of a pre-programmed AI which is only capable of doing one thing (e.g. playing Go or chess). The chess computer Deep Blue, which defeated chess grandmaster Garry Kasparov in 1997, is an example of the latter (pre-programmed) AI.
+
+It appears that AlphaGo, being a stepping stone along this path, is currently a little bit of a hybrid of the two approaches. The more general purpose neural network has been 'trained' by giving it access to a huge number of Go games between skilled humans. The 'knowledge' it has acquired throughout this process has been reinforced by allowing it to play an enormous number of games against itself and evaluate them using some serious hardware.
+
+### Monte Carlo
+
+However, its strength is further boosted by the use of Monte Carlo Tree Search (MCTS) -- a technology which has already been applied to Go for about a decade and has led to computer Go programs making great strides against amateur level players.
+
+MCTS applies a statistical approach to finding good moves. It is a search algorithm where the computer simulates many possible games and, after seeing the result of each random game, aggregates all the results to calculate a probability of success for a selection of next moves. If this sounds counter-intuitive, that's because it is!
+
+MCTS does not require a great deal of domain specific knowledge (knowledge of Go provided by a human creator) to perform well, but a programmer still has to configure and tune this approach for the game in question. One of the problems AI researchers have faced with Go is that it's difficult to evaluate whether a position is good or bad.
+
+For example, you can't assign scores to pieces like you can with chess, because the pieces all look the same. MCTS has, until now, evaluated positions by simulating all the way to the end of the game, counting the score, and then aggregating the results of many simulations.
+
+### Putting It All Together
+
+AlphaGo changes the way MCTS is applied by using a neural network to evaluate whether a position is good or bad. DeepMind has actually trained two neural networks as part of AlphaGo. The first, called the 'policy network', chooses promising looking moves for deeper analysis -- similar to what humans do when they rely on instinct.
+
+The second, called the 'value network', specializes in positional judgment. The value network allows AlphaGo to evaluate a position without playing each simulation all the way to the end of the game. This makes MCTS work more efficiently than it did in the previous generation of Go AIs.
+
+## Further Reading
+
+The above is a relatively basic explanation of how AlphaGo works and may contain errors (though they will be happily corrected). For more detailed information about computer Go, please see:
+
+DeepMind's paper explaining how AlphaGo works: https://storage.googleapis.com/deepmind-data/assets/papers/deepmind-mastering-go.pdf
+
+An interview with computer Go expert Martin Müller, discussing MCTS: https://gogameguru.com/computer-go-demystified-interview-martin-mueller/
+
+The computer Go mailing list: http://computer-go.org/mailman/listinfo/computer-go]RE[W+Resign]
+;B[pd]C[Fan Hui plays Black.]
+;W[dd]
+;B[qp]
+;W[dp]
+;B[fq]
+;W[cn]
+;B[kq]
+;W[qj]
+;B[qk]LB[dd:2][pd:1][qf:A][qg:B][qh:D][qj:8][pk:C][qk:9][pl:E][ql:F][cn:6][dp:4][qp:3][fq:5][kq:7]C[Black started the game with the Mini-Chinese Opening (Black 1, 3, 5 and 7), and splitting the right side at White 8 was normal.
+
+Attaching at Black 9 was one of many possible options. For Black 9, A to F are all possible in this opening.]
+;W[pk]
+;B[ql]
+;W[pj]
+;B[pl]
+;W[qf]
+(;B[ok]LB[qf:14][pj:12][ok:15][pk:10][pl:13][ql:11]C[White 10 to 14 was the right continuation, and the moves up to Black 15 form a joseki.]
+;W[nc]
+;B[oe]
+;W[qc]LB[nc:16][qc:18][oe:17][ph:A]C[The double approach at White 16 followed the natural flow after Black declined to defend his corner. White 18 was also expected.
+
+Reinforcing the right side with A instead of 18 is also possible, but White 18 is more active.]
+;B[qh]
+;W[ph]
+(;B[qd]LB[qd:21][ph:20][qh:19][qi:A]C[Fan played A instead of Black 21 in game 3 of this match, but he altered his tactics in this game.]
+;W[pc]
+;B[pg]
+;W[qg]
+;B[oh]
+;W[pi]
+;B[rh]
+;W[ri]
+;B[pf]
+;W[rg]
+;B[md]
+;W[mc]
+;B[ld]
+;W[kc]
+(;B[dr]LB[kc:34][lc:B][mc:32][pc:22][rc:E][ld:33][md:31][re:C][pf:29][pg:23][qg:24][rg:30][oh:25][qh:A][rh:27][pi:26][ri:28][rk:D][dr:35]C[Black 23 to 27 comprised a clever sacrifice tactic -- sacrificing Black A and Black 27. The result up to White 34 was well balanced.
+
+White 34 was necessary, because blocking at B is practically sente. That's because (after Black B) Black C makes miai of D and E.
+
+Black 35 was big, but it wasn't the best choice in this opening.]
+;W[cq]
+;B[hp]
+;W[oq]
+;B[pq]
+(;W[pr]
+(;B[op]LB[hp:37][op:41][cq:36][oq:38][pq:39][dr:35][pr:40]C[Black built an ideal formation with Black 35 and 37, but the scale was small and limited, and White approached at 38 without any trouble.
+
+Black 39 was the right way to attack, but White 40 was a flexible move.]
+;W[qq]
+;B[pp]
+;W[rr]
+;B[or]
+;W[nq]
+;B[nr]
+;W[rp]
+;B[ps]
+;W[qr]
+;B[ro]
+;W[sq]
+;B[oi]
+;W[rk]
+(;B[rl]LB[oi:53][rk:54][rl:55][ro:51][pp:43][rp:48][nq:46][qq:42][sq:52][nr:47][or:45][qr:50][rr:44][ps:49]C[Living in the corner with White 42 to 44 was a good decision, and Black 45 was necessary.
+
+The result up to White 52 was slightly better for White, because Black's area at the bottom was left with some bad aji.
+
+Strengthening the center with Black 53 felt good, but Black 55 was questionable.]
+;W[np]
+(;B[mr]LB[np:56][mr:57]C[White 56 was a probe, and Black 57 was a small mistake.]
+(;W[kp]LB[kp:58][mr:57]C[White's tesuji at 58 rapped Black over the knuckles and turned Black 57 into a bad move.]
+;B[jp]
+;W[lq]
+(;B[lr]LB[jp:59][lq:60][lr:61]C[The hane at White 60 was a good continuation, and the flow of the game was clearly better for White at this point.]
+;W[jq]
+;B[kr]
+;W[gp]
+(;B[jo]LB[jo:65][gp:64][gq:A][jq:62][kr:63]TR[hp][fq]C[White 62 to 64 formed a sharp combination, and Black 65 was another mistake.
+
+Black shouldn't make it too easy for White to break through his shape at the bottom with A, because it leaves both the marked stones badly damaged.]
+;W[gq]
+;B[go]
+;W[fp]
+;B[hr]
+;W[hq]
+;B[iq]
+;W[ho]
+;B[sk]
+(;W[re]LB[re:74][nj:B][oj:A][sj:C][sk:73][rl:D][go:67][ho:72][fp:68][gq:66][hq:70][iq:71][hr:69]C[White was happy to be able to play 66, but White 70 was a mistake.
+
+White should have reinforced the right side with A to C instead, as we saw earlier.
+
+Black 73 was what he had been aiming for since playing Black 55 (D), and White 74 was also questionable.]
+(;B[hn]LB[hn:75]TR[ph][pi][ri][pj][qj][pk][rk]C[Black 75 felt good, but it missed an opportunity to capture White's marked stones first. This was a crucial error.]
+;W[ip]
+;B[jr]
+;W[oj]
+;B[nj]
+(;W[nk]LB[nj:79][oj:78][nk:80][ip:76][jr:77]C[Cutting at White 80 was an overplay.]
+;B[rj]
+;W[ol]
+;B[si]
+;W[mj]
+;B[ni]
+;W[on]
+;B[no]
+;W[mi]
+;B[qi]
+;W[ok]
+(;B[ng]LB[rd:B][ng:91][mi:88][ni:85][qi:89][si:83][mj:84][rj:81][mk:A][ok:90][ol:82][on:86][no:87]C[Fighting back with Black 81 and 83 was a good choice, and suddenly White's group was separated.
+
+Black 91 made miai of A and B, so Black caught up a little.]
+;W[ll]
+(;B[jk]LB[jk:93][ll:92]C[Black played 93 to attack White's center group, but it was premature.]
+;W[rd]
+;B[kj]
+;W[nn]
+;B[mo]
+;W[lh]
+(;B[jh]LB[rd:94][jh:99][lh:98][kj:95][nn:96][mo:97]TR[ld][md][pd][qd][oe][pf][ng][pg][oh][ni][oi][nj]C[White 94 was very big. While saving White's stones, it simultaneously made Black's marked group weak.
+
+This indirectly helped White's center group and she established a clear lead at this stage.]
+;W[kg]
+;B[je]
+;W[jg]
+;B[ig]
+;W[if]
+;B[jf]
+;W[ih]
+;B[hg]
+;W[ji]
+;B[hh]
+(;W[ii]LB[je:1][if:4][jf:5][hg:7][ig:3][jg:2][kg:100][hh:9][ih:6][ii:10][ji:8]C[White 100 to 108 was the correct sequence, and it was becoming more difficult for Black to catch up in terms of territory.]
+;B[ki]
+;W[kh]
+;B[hi]
+;W[ij]
+(;B[gk]LB[kh:12][hi:13][ki:11][ij:14][gk:15]C[Black 111 to 115 was the natural way to attack, but White's center group was more flexible than it appeared to be.]
+;W[il]
+(;B[jl]LB[il:16][jl:17]C[White 116 was a brilliant haengma, and Black's hopes of capturing White's group evaporated.]
+;W[hj]
+;B[gj]
+;W[hl]LB[gj:19][hj:18][hl:20][gm:B][jm:A]C[White's sabaki through to 120 was excellent. 
+
+White's weak group was practically settled at this stage because A and B were miai.]
+;B[io]
+;W[gm]
+;B[he]
+;W[cg]
+;B[fo]
+;W[eo]
+(;B[hp]LB[he:23][if:A][cg:24][gm:22][jm:B][eo:26][fo:25][io:21][hp:27]C[Black 123 was necessary, to capture White A, and White consolidated her lead up to 124.
+
+Black 127 looked slack, but there were no special moves for Black because of White's aji at B.]
+;W[nd]
+;B[lf]
+;W[ne]
+;B[mf]
+;W[em]LB[nd:28][ne:30][lf:29][mf:31][em:32]C[White 128 was a sharp probe, and Black 129 and 131 were inevitable.
+
+White 132 connected White's center group to the corner, and the game became simple and easy for White.]
+;B[gr]
+;W[ep]
+(;B[cc]LB[cc:35][ep:34][gr:33]C[Black 135 was a proper move, because Black had to restore the balance of territory.]
+;W[cd]
+;B[dc]
+;W[ec]
+;B[eb]
+;W[fb]
+(;B[bd]LB[eb:39][fb:40][dc:37][ec:38][bd:41][cd:36]C[White 140 was the right choice, and Black played 141 to make the game more complicated.]
+;W[be]
+;B[ed]
+;W[fc]
+;B[bb]
+;W[ad]
+;B[ac]
+;W[bc]
+;B[mh]
+;W[li]
+;B[bd]
+;W[db]
+(;B[cb]LB[bb:45][cb:53][db:52][ac:47][bc:48][fc:44][ad:46][bd:51][ed:43][be:42][mh:49][li:50]C[Forming a ko with Black 45 and 47 was a tough minded way of playing, which complicated the game. This was appropriate given that Black was behind.
+
+White 52 was a clever ko threat and, though it might seem frustrating, answering at Black 53 was the best response.]
+;W[bc]
+;B[fl]
+;W[fm]
+;B[bd]
+;W[gf]
+;B[hf]
+;W[bc]
+;B[mk]
+;W[lk]
+;B[bd]
+;W[qo]
+(;B[ae]LB[bc:60][bd:63][ae:65][gf:58][hf:59][lk:62][mk:61][fl:55][fm:56][qo:64]C[Black eliminated the ko with 165. This was unavoidable, because he was short of ko threats.]
+;W[oo]
+;B[ee]
+(;W[dj]LB[ee:67][dj:68][oo:66]C[White 168 was the right direction of play, and the game still favored White.]
+;B[hb]
+;W[df]
+;B[bf]
+;W[ef]
+;B[ge]
+;W[fi]
+;B[gi]
+;W[jb]LB[hb:69][jb:76][ge:73][bf:71][df:70][ef:72][fi:74][gi:75]TR[db][fb][ec][fc]C[Black 169 was the vital point for attacking the marked stones, but White simply sacrificed them and maintained her lead.]
+(;B[ci]LB[ci:77]C[Black 177 was a sharp invasion, but Black still had a long way to go in order to catch up.]
+;W[di]
+;B[cj]
+;W[ck]
+;B[bh]
+;W[bk]
+;B[ib]
+;W[ic]
+;B[hc]
+;W[id]
+;B[hd]
+;W[bg]
+;B[ag]
+;W[ch]
+(;B[de]LB[ib:83][hc:85][ic:84][hd:87][id:86][de:91][ag:89][bg:88][bh:81][ch:90][di:78][cj:79][bk:82][ck:80]C[White 178 to 182 was the safest way of playing, and Black 183 was necessary.
+
+White's endgame was flawless.]
+;W[bi]
+;B[cr]
+;W[br]
+;B[bs]
+;W[bq]
+;B[eq]
+;W[lc]LB[lc:98][bi:92][bq:96][eq:97][br:94][cr:93][bs:95]C[White 198 was a big reverse endgame move, and the game was practically over.]
+;B[mq]
+;W[po]
+;B[ln]
+;W[ml]
+;B[rn]
+;W[km]
+;B[jm]
+;W[kn]
+;B[ko]
+;W[od]
+;B[pe]
+;W[nf]
+;B[kd]
+;W[jc]
+;B[ie]
+;W[fe]LB[jc:12][kd:11][od:8][rd:J][fe:14][ie:13][pe:9][re:F][nf:10][jk:I][nk:H][ml:2][jm:5][km:4][hn:G][kn:6][ln:1][rn:3][jo:D][ko:7][po:200][hq:E][mq:99][sq:B][dr:A][mr:C]C[Black resigned at move 214.
+
+White was winning by about 10 points on the board, and Black couldn't find a way to catch up.
+
+Unbelievably, AlphaGo defeated Fan Hui 2p again, and won the official five game match with a flawless 5-0 score.
+
+The opening up to White 34 was even, but Black 35 (A) was questionable and White was slightly ahead up to 52 (B).
+
+Black 57 and 65 (C and D) were mistakes, and White took the lead.
+
+White 70 and 74 (E and F) were wrong, but Black 75 (G) missed a great chance to take advantage of them.
+
+White 80 (H) was an overplay, but Black 93 (I) was premature and can be regarded as the losing move.
+
+White established a clear lead with 94 (J), and didn't give Black any chances to catch up afterwards.
+
+White's play in the second half of the game was excellent, and I couldn't find any serious mistakes from White.
+
+AlphaGo's style seems to be slightly territorial, but well balanced. It's good at haengma and tesuji, but its play is not yet perfect. 
+
+As we can see, it made several questionable moves and mistakes, but its play in the second half of the game was much more accurate and refined than the in the first.
+
+AlphaGo's games throughout this match were very impressive, and I never expected that a computer Go program could play such strong and smooth moves.
+
+It's so surprising and shocking, and I look forward to watching the match between Lee Sedol 9p and AlphaGo in March 2016.
+
+When AlphaGo faces Lee, we will be able to see more clearly just how strong it is, and how much it has improved since October 2015 (when this game was played).
+
+If you want to follow the match between AlphaGo and Lee Sedol, you can visit this page for all the latest updates and match details: https://gogameguru.com/tag/deepmind-alphago-lee-sedol/ or subscribe to our weekly newsletter here: https://gogameguru.com/newsletter/
+
+I hope you'll be able understand and enjoy reviewing this historical game more with the help of this commentary. If you have any questions or opinions, please feel free to leave a comment.
+
+Thanks,
+
+Commented by An Younggil 8p
+
+https://gogameguru.com/])
+(;B[bi]
+;W[cf]
+;B[ce]
+;W[de]
+;B[ff]
+;W[be]
+;B[af]
+;W[cr]LB[be:6][ce:3][de:4][af:7][cf:2][ff:5][bi:1][cr:8]TR[ci][cj]C[If Black saves the marked stones with 1, White will play 2 to 8 and the result is even better for White than the actual game.]))
+(;B[ib]
+;W[bg]LB[ib:1][bg:2]C[If Black just responds at 1, White will block at 2 and complete a large territory on the left side.]))
+(;W[ic]
+;B[ci]LB[ic:1][ci:2]TR[cd][dd][be][cg]C[If White takes care of her stones at the top with 1, Black will attack the marked stones with 2.]))
+(;B[oo]
+;W[bc]
+;B[om]
+;W[ab]
+;B[nl]
+;W[fi]
+;B[gi]
+;W[dj]LB[ab:4][bc:2][fi:6][gi:7][dj:8][jj:B][lj:A][kk:C][nl:5][jm:D][om:3][rn:E][oo:1][qo:F]C[If Black answers at 1, White will ignore Black's ko threat at 3 and finish the ko with 4.
+
+Cutting at A doesn't work, because White can counter with B to D. In addition, White can play at E later because of the earlier exchange of White F for Black 1.
+
+White has a comfortable lead.]))
+(;B[ae]
+;W[cb]
+;B[ce]
+;W[bc]
+;B[bf]
+;W[dj]LB[cb:2][bc:4][ae:1][ce:3][bf:5][dj:6]C[If Black ends the ko with 1, White will atari at 2.
+
+It will be very hard for Black to catch up after this.]))
+(;B[fc]
+;W[ed]
+;B[gb]
+;W[db]
+;B[fa]
+;W[cb]LB[fa:5][cb:6][db:4][gb:3][fc:1][ed:2]C[Black 1 to 3 follows joseki, but that's what White wants. Black is far behind in this variation too.]))
+(;B[dc]
+;W[cc]
+;B[ec]
+;W[cb]
+;B[ed]
+;W[de]LB[cb:4][cc:2][dc:1][ec:3][ed:5][de:6]C[If Black attaches at 1 instead, White will respond calmly with 2 to 6.
+
+Black is far behind in this variation, because White keeps the corner territory and Black's gains at the top are small.]))
+(;B[fm]
+;W[jm]
+;B[km]
+;W[fn]
+(;B[hp]
+;W[gn]LB[fm:1][jm:2][km:3][fn:4][gn:6][hp:5]C[If Black attaches at 1, White will connect with 2 to 6.])
+(;B[gn]
+;W[in]
+;B[en]
+;W[kl]LB[kl:8][fm:1][jm:2][km:3][en:7][fn:4][gn:5][in:6]TR[ki][kj][jk][jl]C[If Black cuts at 5, White parries effortlessly with 6 and 8. Black's marked stones are captured.])))
+(;B[ik]
+;W[hj]
+;B[gj]
+;W[hk]
+;B[hl]
+;W[jl]LB[gj:3][hj:2][hk:4][ik:1][hl:5][jl:6]TR[ki][kj][jk]C[Cutting with Black 1 to 5 is clumsy. White will capture Black's marked stones with 6.]))
+(;B[hl]
+;W[jl]
+(;B[ik]
+;W[hj]
+;B[gj]
+;W[hk]LB[gj:5][hj:4][gk:A][hk:6][ik:3][hl:1][il:B][jl:2]C[If Black plays at 1, White will attach at 2 and move out in good rhythm with 4 and 6.
+
+White 6 makes miai of A and B.])
+(;B[il]
+;W[kk]
+;B[ik]
+;W[hj]
+;B[gj]
+;W[jj]LB[gj:7][hj:6][jj:8][ik:5][kk:4][hl:1][il:3][jl:2]TR[ki][kj]C[If Black hanes at 3, pinching 4 leaves Black with two cutting points and White will capture the marked stones up to 8.])))
+(;W[ki]
+;B[ii]
+;W[jj]
+;B[lk]
+;W[mk]
+;B[ij]
+;W[lf]
+;B[kd]
+;W[mg]
+;B[nd]
+;W[jc]LB[jc:11][kd:8][nd:10][lf:7][mg:9][ii:2][ki:1][ij:6][jj:3][lk:4][mk:5]C[White could also think about living on the inside with 1 to 11.
+
+It seems like AlphaGo was uncertain about whether it could make life or not, so it chose to follow the simpler path shown in the actual game.]))
+(;B[kg]
+;W[ji]
+;B[ki]
+;W[kh]
+;B[jh]
+;W[jg]
+;B[ih]
+;W[kf]
+;B[lg]
+;W[mg]
+;B[lf]
+;W[mf]
+;B[le]
+;W[nd]LB[nd:14][le:13][kf:8][lf:11][mf:12][jg:6][kg:1][lg:9][mg:10][ih:7][jh:5][kh:4][mh:A][ji:2][ki:3]TR[pd][qd][oe][pf][ng][pg][oh][ni][nj]C[Enclosing White with Black 1 looks nice, but it doesn't work.
+
+White 2 is a smooth haengma, and White 8 starts a powerful driving tesuji to counter Black's cut.
+
+Black will be in deep trouble up to White 14, because his marked stones are isolated. Black can start a ko with A, but White will calmly ignore any ko threat he cares to make.]))
+(;B[rd]
+;W[jj]
+;B[cf]LB[rd:1][cf:3][jj:2]TR[re][qf][qg][rg]C[Black should have captured the marked stones first.
+
+If White looks after his center group with 2, Black can approach at 3. Even though White is still slightly ahead, it will become a long game.]))
+(;B[mk]
+;W[og]
+;B[nh]
+;W[of]
+;B[pe]
+;W[mg]LB[pe:5][of:4][mg:6][og:2][nh:3][mk:1]TR[oh][ni][oi][nj]C[Cutting at Black 1 is tempting, but White will counter with 2 to 6 and capture Black's marked stones in a net.]))
+(;W[sh]
+;B[nk]
+;W[kd]LB[kd:3][sh:1][nk:2]C[White should have defended patiently with 1. Next, Black 2 is necessary, so White can push up at 3 to limit Black's center influence.
+
+The game would still be good for White.]))
+(;B[si]
+;W[rd]
+;B[hn]LB[rd:2][si:1][hn:3]TR[op][pp][qp][pq]C[Black 1 was essential. If White connects with 2, Black can still come back and play 3.
+
+White 2 is worth more than 20 points, so Black 1 was must.
+
+Compared to the earlier variation, where White captured Black's marked stones in a ko, this result isn't good for White. That's why White 74 was questionable.]))
+(;W[sj]
+;B[rj]
+;W[qo]
+;B[si]
+;W[oo]LB[si:4][rj:2][sj:1][oo:5][qo:3]TR[qf][qg][rg][ph][pi][ri][pj][qj][pk]SQ[kp][np][lq][nq][oq]C[White should have fought the ko with 1.
+
+White 3 is a nice ko threat and Black 4 is unavoidable, because White will have several ko threats here if Black answers.
+
+Locally speaking, the trade up to White 5 is even. The triangled stones die, but the squared stones are revived. This allows White to maintain her lead.])
+(;W[sh]
+;B[re]LB[re:2][sh:1][sj:A]C[If White ataris at 1, Black 2 hits the vital point and the position becomes a ko anyway.
+
+White should create a ko at A next, but the exchange of White 1 for Black 2 is bad for White.
+
+This is why White should have considered reinforcing the right side when he played both White 58 and 70.]))
+(;B[gq]
+;W[ip]
+;B[jo]
+;W[ho]
+;B[hq]
+;W[io]
+;B[iq]
+;W[jn]
+;B[ko]
+;W[im]LB[im:10][jn:8][kn:A][ln:B][ho:4][io:6][jo:3][ko:9][ip:2][gq:1][hq:5][iq:7]C[Passively defending at Black 1 is what White wants.
+
+This lets White reduce Black's influence in style, from 2 to 10.
+
+Black's thickness over the center is neutralized and, furthermore, White has good followups at A or B next.])
+(;B[go]
+(;W[fp]
+;B[gq]
+;W[ip]
+;B[jo]
+;W[ho]
+;B[hq]
+;W[io]
+;B[jn]
+(;W[iq]
+;B[ep]
+;W[fo]
+;B[eo]
+;W[fn]
+;B[en]LB[en:15][fn:14][jn:9][eo:13][fo:12][go:1][ho:6][io:8][jo:5][ep:11][fp:2][ip:4][gq:3][hq:7][iq:10]TR[kp][np][lq][nq][oq]SQ[gp][jq]C[Black should have haned at 1 instead of playing Black 65 (at Black 5) in the game.
+
+If White continues with 2 to 10, Black can break through into the center with 11 to 15.
+
+White's triangled stones are already paralyzed and her squared group is heavy.])
+(;W[eq]
+;B[fo]
+;W[ep]
+;B[hn]LB[hn:13][jn:9][fo:11][go:1][ho:6][io:8][jo:5][ep:12][fp:2][ip:4][eq:10][gq:3][hq:7]C[White 10 prevents Black's atari at 12 (as in the previous variation), but allows Black to play 11 to 13, to capture White's key stones.
+
+This variation is a success for Black.]))
+(;W[ip]
+;B[jo]
+;W[io]
+;B[ho]LB[in:B][go:1][ho:5][io:4][jo:3][ip:2][hq:C][iq:A]C[White 4 is tricky, but Black 5 defends tightly. A and B are miai for Black next.
+
+Instead of Black 5, A is also possible because Black can answer White's double atari at C with Black 5. However, Black 5 in this variation is clearer, and is good enough to foil White's plans.])))
+(;B[kr]
+;W[jo]
+;B[ip]
+;W[ko]LB[jo:2][ko:4][ip:3][kr:1]C[If Black extends at 1 instead, White 2 will become a good followup.
+
+It won't be easy for Black to attack this White group, because Black's center isn't strong enough to attack White severely.]))
+(;W[oj]
+;B[nj]
+;W[sj]LB[ni:C][nj:2][oj:1][sj:3][nk:A][ol:B]C[White could also consider reinforcing the right side with 1 to 3, while leaving cutting points (A to C) in Black's wall.]))
+(;B[lr]LB[lr:1]C[Black should have responded at 1. This would have tidied up Black's bad aji at the bottom.]))
+(;B[oj]LB[oj:1][rl:A]C[Black should have connected at 1, creating a very powerful wall with influence over the center.]))
+(;B[qr]
+;W[pp]
+;B[qq]
+;W[lp]
+;B[lq]
+;W[np]
+;B[mq]
+;W[pn]LB[pn:8][oo:B][po:A][lp:4][np:6][pp:2][lq:5][mq:7][qq:3][qr:1]C[Black can also consider of blocking at 1, but then White will reduce Black's area lightly with 2 to 8.
+
+If Black ataris at A next, White will respond with B, establishing a light and flexible shape,]))
+(;W[op]
+;B[mq]
+;W[qo]
+;B[ro]LB[qo:3][ro:4][op:1][mq:2]C[Extending at White 1 is heavy. Black will attack with 2, and White will have to play many moves to settle her group. Meanwhile, Black will be taking profit while harassing White.]))
+(;B[fo]
+(;W[dr]
+;B[ko]LB[fo:1][ko:3][cq:A][dr:2]C[Black should have jumped at 1 to develop the bottom.
+
+If White secures the corner territory with 2, Black can jump at 3 and the bottom right area will become large and promising.
+
+If White doesn't defend the corner after Black 1 (e.g. with White 2), invading at A is quite severe later.])
+(;W[eq]
+;B[fr]
+;W[dl]
+;B[ko]LB[dl:4][fo:1][ko:5][eq:2][fr:3]C[If White plays 2 to 4 instead, Black can still develop the bottom right with 5.])))
+(;B[qi]
+;W[rj]
+;B[pi]
+;W[oj]
+;B[pg]
+;W[nk]
+;B[ol]
+;W[nh]
+;B[oh]
+;W[ng]
+;B[pf]
+;W[pc]LB[pc:12][pf:11][ng:10][pg:5][nh:8][oh:9][pi:3][qi:1][oj:4][rj:2][nk:6][ol:7]C[In game 3 of the match, Fan Hui played Black 1, and the moves to White 12 followed.
+
+It appears that Fan thought that this result was better for White, so he played differently in game 5.]))
+(;B[nc]
+;W[qd]
+;B[qc]
+;W[rc]
+;B[qe]
+;W[rd]
+;B[pe]
+;W[re]
+;B[pf]
+;W[pg]
+;B[og]
+;W[ph]LB[nc:1][qc:3][rc:4][qd:2][rd:6][pe:7][qe:5][re:8][pf:9][og:11][pg:10][ph:12]C[Responding at Black 1 looks alright, but it lets White settle easily on the right side from 2 to 12.
+
+This is another game, but it's slightly favorable for White.]))

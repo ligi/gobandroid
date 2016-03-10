@@ -74,20 +74,19 @@ public class GoLink {
         return fname;
     }
 
-    public static void saveGameToGoLink(GoGame game, String golink_path, String golink_fname) {
+    public static void saveGameToGoLink(GoGame game, File golink_path, String golink_fname) {
 
         int move_pos = game.getActMove().getMovePos();
 
-        File f = new File(golink_path);
 
-        if (!f.isDirectory())
-            f.mkdirs();
+        if (!golink_path.isDirectory())
+            golink_path.mkdirs();
 
         try {
-            f.createNewFile();
-            f = new File(golink_path + "/" + golink_fname);
+            golink_path.createNewFile();
+            golink_path = new File(golink_path + "/" + golink_fname);
 
-            FileWriter sgf_writer = new FileWriter(f);
+            FileWriter sgf_writer = new FileWriter(golink_path);
 
             BufferedWriter out = new BufferedWriter(sgf_writer);
 

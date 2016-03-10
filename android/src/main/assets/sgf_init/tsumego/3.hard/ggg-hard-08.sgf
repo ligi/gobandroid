@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]AP[CGoban:3]ST[2]RU[Japanese]SZ[19]KM[0.00]PW[White]PB[Black]SO[http://gogameguru.com/]AB[mp][mq][mr][ms][no][oo][po][qo][rn][sn][so][sp][sq][qq][pq][pr]AW[ns][nr][nq][op][pp][qp][rp][ro][rq][qr][qs]
+(;B[rr];W[sr]
+(;B[oq];W[np];B[ss];W[ps];B[or];W[os]
+;B[pq]C[Correct])
+(;B[rs];W[ss];B[rr];W[rs];B[ps];W[rr];B[np];W[oq])
+(;B[ss];W[ps];B[np];W[oq];B[or];W[os])
+(;B[np];W[oq];B[ss];W[ps]))
+(;B[sr];W[rr];B[oq];W[or])
+(;B[oq];W[or]))

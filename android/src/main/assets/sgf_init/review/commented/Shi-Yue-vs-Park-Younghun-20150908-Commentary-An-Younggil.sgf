@@ -1,0 +1,587 @@
+(;GM[1]FF[4]CA[UTF-8]AP[CGoban:3]ST[2]
+RU[Japanese]SZ[19]KM[6.50]TM[1800]OT[5x60 byo-yomi]
+GN[Shi-Yue-vs-Park-Younghun-20150908]PW[Park Younghun]PB[Shi Yue]WR[9p]BR[9p]DT[2015-09-08]EV[2015 Samsung Cup]RO[Round of 32, Group stage, Game 1]PC[Beijing, China]SO[https://gogameguru.com/]RE[W+Resign]
+;B[qd]LB[qd:1]C[Shi Yue plays Black.]
+;W[dd]
+;B[pq]
+(;W[oc]LB[oc:4][dd:2][pq:3]C[White chose to approach at White 4 first.
+
+That's quite rare for Park to approach here, because he prefers general openings, but it looks as if he researched the opening with this approach.
+
+]
+;B[dp]
+;W[po]
+(;B[qo]LB[po:6][qo:7][dp:5]C[Taking the empty corner at Black 5 was natural, and White 6 and Black 7 were also common in this opening. ]
+;W[qn]
+;B[qp]
+;W[pn]
+;B[nq]
+(;W[qh]LB[qh:12][pn:10][qn:8][qp:9][nq:11]C[White 8 to Black 11 is normal, and White 12 was a new style of extension.]
+;B[pe]
+;W[ne]
+(;B[pc]LB[pc:15][ne:14][pe:13][qh:12]C[White 14 was a good followup to 12, and Black 15 was territorial move.]
+;W[oh]
+(;B[ob]LB[ob:17][oh:16]C[White 16 was a nice jump, and it looks as if Park researched about this opening before this game.
+
+The hane at Black 17 looks slow, but that's bigger than it looks.]
+(;W[cn]LB[ob:17][cn:18]TR[qo][qp][nq][pq]C[White didn't answer to Black 17, but approached the bottom left corner with 18.
+
+That was the right direction, because Black's bottom right corner is already safe and solid.]
+;B[dk]
+(;W[cq]LB[dk:19][cq:20]C[Black chose to pincer at 19, and White entered the corner with 20.
+
+Park likes simple and plain opening, because he's very strong at the endgame. Meanwhile, Shi seems to like tough and fighting oriented opening.]
+;B[cp]
+;W[dq]
+;B[ep]
+;W[bp]
+;B[bo]
+;W[bq]
+;B[co]
+;W[fq]
+;B[cf]
+;W[fc]
+(;B[pl]LB[fc:30][cf:29][pl:31][bo:25][co:27][bp:24][cp:21][ep:23][bq:26][dq:22][fq:28]C[After the joseki up to White 28, Black 29 was the right direction to develop the left side.
+
+Black 31 was active and severe, and that was Shi's typical style of move.]
+(;W[mn]LB[mn:32]C[White 32 was the right choice, because his position on the right isn't that weak.]
+;B[rl]
+;W[rm]
+;B[nl]
+;W[mp]
+(;B[mq]LB[nl:35][rl:33][rm:34][mp:36][mq:37]C[Black 33 to 35 were nice haengma, and White 36 was to strengthen his group.
+
+Black 37 looks necessary, but that was questionable.]
+(;W[ll]LB[ll:38]TR[nl][pl][rl]C[White 38 was a nice cap, and Black's marked stones are under attack.]
+;B[mj]
+;W[ok]
+(;B[nk]LB[mj:39][nk:41][ok:40]C[Peeping at White 40 was sharp, and Black 41 was unavoidable.]
+(;W[oj]LB[oj:42][ol:A]C[Pushing at A is tempting, but that doesn't work well, so Park chose to pull back at 42.]
+;B[ol]
+;W[rk]
+(;B[kj]LB[kj:45][oj:42][rk:44][ol:43]C[White 44 was a good followup to 42, and Black 45 was necessary to escape towards the center.]
+;W[ql]
+(;B[bd]LB[bd:47][ql:46]C[White 46 wasn't necessary, but that's thick and solid. 
+
+That was worthwhile for a move, and Park might have satisfied with the opening up to here.
+
+Black 47 looks fine, but it seems to be questionable as a result.]
+;W[cc]
+;B[dh]
+;W[bn]
+(;B[dn]LB[cc:48][dh:49][bn:50][cn:A][dn:51]C[Black's let side looks ideal with 49, but actually, there's bad aji, so that's not as good as it looks.
+
+White 50 was well timed, because Black just enclosed the area with 49. If White plays elsewhere instead, Black will play one more move to enlarge the left side, and it'd be hard for White to move A out.]
+;W[dm]
+(;B[cm]LB[cm:53][dm:52]C[White 52 was a nice followup, and Black 53 was also the right sequence.]
+;W[en]
+;B[bm]
+(;W[an]LB[bm:55][an:56][en:54]C[White 54 to 56 were right, and that's a kind of middle game joseki.]
+;B[do]
+;W[dl]
+(;B[ck]LB[ck:59][dl:58][do:57]C[Those moves are all correct.]
+;W[ao]
+;B[fp]
+;W[eq]
+;B[gp]
+;W[fl]
+;B[fk]
+;W[gk]
+;B[ek]
+(;W[gm]LB[ek:67][fk:65][gk:66][fl:64][gm:68][ao:60][fp:61][gp:63][eq:62]C[White 60 to 64 were expected, and Black 65 was more active way of play compared to extending at 67.
+
+White 68 was the right shape for White.]
+;B[ip]
+;W[jk]
+(;B[kp]LB[jk:70][ip:69][kp:71]TR[gk][dl][fl][dm][gm][en]C[Black 69 to 71 were nice way to link his left side group, and White 70 was also good place to support his marked stones.]
+;W[jj]
+;B[lh]
+;W[hq]
+(;B[gq]LB[lh:73][jj:72][gq:75][hq:74]C[White 72 was solid, and Black 73 was a nice haengma to take care of his center group.
+
+White 74 was sharp to take some points in sente, and Black 75 was the correct response.
+
+The game up to here was still quite peaceful, and that's Park's pace because he's good at counting and endgame.
+
+Shi is relatevely stronger at close combat and complicated battles, but there's nowhere for him to show his strength yet.]
+;W[gr]
+;B[iq]
+;W[hr]
+;B[hp]
+;W[nb]
+;B[nc]
+;W[mc]
+;B[od]
+;W[nd]
+;B[ji]
+;W[kk]
+(;B[ke]LB[nb:80][mc:82][nc:81][nd:84][od:83][ke:87][ji:85][kk:86][hp:79][iq:77][gr:76][hr:78]C[White came back to 80, and that was the biggest place on the board.
+
+White 86 was very solid, and there's no weakness for White on the board.
+
+Black 87 was nice haengma, and the game was still well balanced, although White was in the good mood.]
+;W[lj]
+;B[mi]
+(;W[oc]LB[oc:90][mi:89][lj:88]C[White 90 wasn't urgent, but that was a well timed probe.]
+;B[jc]
+(;W[jg]LB[pb:A][jc:91][jg:92]C[Black 91 was another nice multi purpose move. 
+
+That support his center group and reduces White's potential at the top. That also make White hesitate to start the ko at A, because the ko witll become more risky for White after Black 91.]
+;B[kg]
+;W[pb]
+;B[nc]
+;W[je]
+(;B[oc]LB[pb:94][nc:95][oc:97][je:96][kg:93]C[Black 93 was necessary, and White started the ko with 94.
+
+White 96 was what Park was prepaired for the ko threat, and Black didn't answer, but eliminated the ko with 97.
+
+However, that was Shi's wrong decision, and suddenly the game becomes favorable for White.]
+;W[kd]
+(;B[ig]LB[jc:A][kd:98][ig:99]C[White 98 was good enough compensation, and Black 99 was a nice move not to damage Black A while he takes care of his center group.]
+;W[jf]
+;B[jh]
+;W[jd]
+;B[gj]
+;W[hj]
+(;B[gi]LB[jd:2][jf:100][jh:1][gi:5][gj:3][hj:4]C[White 102 was safe and solid. It looks like Park was sure that the game was alright for him, and he was confident of the endgame from now on.
+
+Black 103 to 105 were necessary to connect his center group.]
+;W[ki]
+;B[li]
+(;W[mb]LB[mb:8][jc:A][ki:6][li:7]C[White 108 was big reverse endgame, and all bad aji from Black A was removed at the same time.]
+;B[hk]
+;W[ii]
+(;B[ih]LB[ih:11][ii:10][hk:9]C[Black 109 was to clear the center line, and White 110 was the right sequence.]
+;W[gl]
+;B[gd]
+;W[gc]
+;B[he]
+(;W[hd]LB[gc:14][gd:13][hd:16][he:15][gl:12]C[Black 113 and 115 were a good combination to enclose the center area, and White 116 was accurate.]
+;B[id]
+;W[hc]
+;B[ie]
+;W[ic]
+;B[hi]
+;W[ij]
+(;B[ro]LB[hc:18][ic:20][id:17][ee:A][ie:19][hi:21][ij:22][ro:23]C[Black 123 was a seven points reverse endgame move, but that wasn't the biggest.
+
+A was the biggest, but Shi already knew that he was behind, so he chose 123, which was the reverse endgame.]
+;W[re]
+(;B[rd]LB[rd:25][re:24]C[White 124 was nice endgame, and Black 125 was necessary.]
+;W[df]
+(;B[ce]LB[ce:27][df:26]C[White 126 was nice, and Black 127 was the right response.]
+;W[ff]
+;B[ir]
+;W[dg]
+;B[cg]
+;W[eh]
+(;B[gg]LB[ff:28][cg:31][dg:30][gg:33][eh:32][ir:29]C[Black 129 was another big reverse endgame, but White 130 to 132 were good followups.
+
+Black 133 was the vital point of the shape.]
+;W[de]
+(;B[ei]LB[de:34][eg:A][ei:35]C[White 134 was necessary to prevent Black from cutting at A, and Black 135 was a mistake.]
+;W[bc]
+;B[im]
+;W[il]
+;B[km]
+;W[lm]
+;B[rg]
+;W[ch]
+;B[di]
+;W[bh]
+;B[bg]
+;W[ad]
+;B[ae]
+;W[ac]
+(;B[bi]LB[ac:48][bc:36][ad:46][ae:47][bg:45][rg:41][bh:44][ch:42][bi:49][di:43][il:38][im:37][km:39][lm:40]C[White 136 was very big, and Black 141 was the next biggest move.
+
+However, there was bad aji from White 142, and Black lost another few points up to 149.]
+;W[oa]
+;B[qb]
+;W[rh]
+;B[pk]
+;W[lp]
+;B[lq]
+;W[kf]
+;B[lf]
+;W[le]
+;B[qg]
+;W[pg]
+;B[qf]
+;W[qj]LB[oa:50][qb:51][le:58][kf:56][lf:57][qf:61][pg:60][qg:59][rh:52][qj:62][pk:53][lp:54][lq:55]C[White came back to 152, and the game was practically decided. There're no places to catch up for Black, because the game is relatively simple.]
+;B[lo]
+;W[fn]
+(;B[be]LB[be:65][fn:64][lo:63]C[a]
+;W[sg]
+;B[sf]
+;W[sh]
+;B[eg]
+;W[fg]
+;B[fh]
+;W[ge]
+;B[gf]
+;W[fe]LB[kd:A][fe:74][ge:72][gf:73][sf:67][eg:69][fg:70][sg:66][fh:71][sh:68]C[Black resigned at the move of White 174.
+
+When Black resigned, White was winning around 4.5 points. 
+
+Park Younghun won the first game from the round of 32, group stage from the 2015 Samsung Cup.
+
+That was a very impressive game by Park Younghun. He leaded the game with his pace from the opening, and he maintained his lead until the end.
+
+I couldn't find any mistakes from him in this game, and his play was perfect after he took the lead with A (98).
+
+
+
+
+
+https://gogameguru.com/])
+(;B[mo]
+;W[np]
+;B[no]
+;W[op]LB[fn:A][mo:1][no:3][np:2][op:4]TR[lp][mp]C[If Black ataris at 1, White can save the marked stones with 2 to 4.
+
+White's center group is already alive due to White A, so White didn't have to worry about that.])
+(;B[sh]
+;W[si]
+;B[sg]
+;W[be]
+;B[bf]
+;W[cd]LB[cd:6][be:4][af:B][bf:5][sg:3][sh:1][ci:A][si:2]C[The hane at Black 1 is three points reverse endgame, but White 4 to 6 are also big. 
+
+White will take 4 next, and Black should respond at A, and White can take B in sente as well, and that would be seven points endgame worth.]))
+(;B[be]
+;W[cl]
+;B[bl]
+;W[bj]
+;B[bk]
+;W[bi]
+;B[ah]
+;W[af]LB[be:1][af:8][ah:7][bi:6][bj:4][bk:5][bl:3][cl:2]C[Black 1 doesn't work, because White 4 is sente to extend his liberties.
+
+White can capture Black's left side stones up to White 8.]))
+(;B[di]
+;W[oa]
+;B[qb]
+;W[qf]
+;B[bc]LB[oa:2][qb:3][bc:5][qf:4][di:1]C[Black should have extended at 1. If White plays 2 to 4 next, Black will play 5, and the game would be closer. 
+
+White is still in the lead, but by very small margin.]))
+(;B[di]
+;W[gg]
+;B[hg]
+;W[oa]
+;B[qb]
+;W[bc]LB[oa:4][qb:5][bc:6][gg:2][hg:3][di:1]C[If Black just responds at 1, White will play 2 in sente. White 6 is still very big, and White will be winning anyway.
+
+However, that way would be closer for Black compared to the actual game.]))
+(;B[dg]
+;W[ce]
+;B[be]
+;W[bf]
+;B[cg]
+;W[bc]LB[bc:6][be:3][ce:2][bf:4][cg:5][dg:1]C[If Black responds at 1, White 2 to 6 are good endgame sequence to save more points.
+
+That's why shi didn't play 1 in the actual game.]))
+(;B[ee]
+;W[qb]LB[oa:A][qb:2][rd:B][ee:1]C[Black 1 is big, but then the corner will be in trouble after White 2. A and B are miai next for White.]))
+(;B[ee]
+;W[op]
+;B[oq]
+;W[ir]
+;B[jr]
+;W[re]
+;B[rd]
+;W[oa]
+;B[qb]
+;W[ro]
+;B[rp]
+;W[sp]
+;B[sq]
+;W[so]
+;B[rq]
+;W[de]
+;B[df]
+;W[bc]LB[oa:8][qb:9][bc:18][rd:7][de:16][ee:1][re:6][df:17][ro:10][so:14][op:2][rp:11][sp:12][oq:3][rq:15][sq:13][ir:4][jr:5]C[Black 1 is bigger, but the game would still be slightly better for White. 
+
+White 2 to Black 15 were the correct sequence of the endgame, and White 18 will be the last big endgame to maintain his lead.]))
+(;W[hc]
+;B[ee]LB[hc:1][hd:A][ee:2]C[Extending at White 1 is slack. Black will play 2 to enclose the center, and we can see that White 1 isn't as good as at A.]))
+(;B[gl]
+;W[ih]LB[ih:2][gl:1]C[Black 1 still doesn't work, because his center group will be captured.]))
+(;W[gf]
+;B[hk]
+;W[ii]
+;B[ih]
+;W[gl]
+;B[mb]
+;W[lb]
+;B[na]
+;W[lc]
+;B[bc]LB[na:8][lb:7][mb:6][bc:10][lc:9][gf:1][ih:4][ii:3][hk:2][gl:5]C[White 1 looks nice, but that's not good. Black 6 is big sente endgame, and Black 10 is also big. The game will become quite close in this variation.]))
+(;B[hk]
+;W[ii]
+;B[ih]
+;W[ki]
+;B[li]
+;W[hh]
+;B[hg]
+;W[gi]
+;B[gl]
+;W[gg]
+;B[gf]
+;W[hf]LB[gf:11][hf:12][gg:10][hg:7][hh:6][ih:3][gi:8][ii:2][ki:4][li:5][hk:1][gl:9]C[Cutting at Black 1 is risky. White 2 to 4 are a good move order, and Black's center group will be captured up to White 12.]))
+(;B[le]
+;W[jd]
+;B[md]
+;W[mb]
+;B[nf]
+;W[df]
+;B[dg]
+;W[ef]LB[mb:4][jd:2][md:3][le:1][df:6][ef:8][nf:5][dg:7]TR[nd][ne]C[Black can also think about capturing White's marked stones up to 5, but White will enlarge the upper side territory with 6 and 8. 
+
+White is leading clearly, so Shi didn't choose this variation.])
+(;B[jd]
+;W[kf]
+;B[le]
+;W[lf]LB[jd:1][le:3][kf:2][lf:4]C[Cutting at Black 1 is an overplay, and Black's center group will be in danger.])
+(;B[jf]
+;W[if]
+;B[kf]
+;W[jd]
+;B[ig]
+;W[hg]
+;B[ih]
+;W[hf]LB[jd:4][hf:8][if:2][jf:1][kf:3][hg:6][ig:5][ih:7]C[Black 1 looks fine, but that helps White to develop the upper side. White will be happy to build big territory up to 8.]))
+(;B[kd]
+;W[oc]
+;B[ec]
+;W[ed]
+;B[nc]
+;W[lp]
+;B[lq]
+;W[oc]
+;B[gc]
+(;W[oa]
+;B[fb]
+;W[fd]
+;B[db]
+;W[gd]
+;B[hc]
+;W[ii]
+;B[qb]LB[oa:9][db:12][fb:10][qb:16][ec:3][gc:8][hc:14][nc:5][oc:2][ed:4][fd:11][gd:13][kd:1][ii:15][lp:6][lq:7]C[Black should have answered at 1. Black 8 is another nice ko threat, and White wouldn't answer, but eliminate the ko with 9.
+
+This is one of possible variations up to Black 16, and the game is slightly favorable for White.
+
+However, that's still better for Black compared to the actual game.])
+(;W[fb]
+;B[nc]LB[fb:9][ec:3][gc:8][nc:10][oc:2][ed:4][kd:1][lp:6][lq:7]C[If White respond at 9, that'd be hard for White to find a nice ko threat after Black 10.])))
+(;W[pb]
+;B[nc]
+;W[lp]
+;B[lq]
+;W[oc]
+;B[ec]
+(;W[ed]
+;B[nc]LB[pb:1][ec:6][nc:2][oc:5][ed:7][lp:3][lq:4]C[Starting a ko with 1 is premature. Black 6 is a nice ko threat, and that's hard for White to find a nice ko threat next.])
+(;W[oa]
+;B[ed]LB[oa:7][pb:1][ec:6][nc:2][oc:5][ed:8][lp:3][lq:4]C[If White eliminates the ko with 7, Black will play 8 to dominate the area.])))
+(;W[jd]
+;B[je]
+;W[id]
+;B[ie]
+;W[hd]
+;B[gj]
+;W[hk]
+;B[ii]LB[mb:B][lc:A][hd:5][id:3][jd:1][ie:4][je:2][ii:8][gj:6][hk:7]C[White 1 is also conceivable, but that's not a good idea, because that'll be easy for Balck to take care of his center group up to 8, and there're still bad aji at the top at A and B.]))
+(;B[lj]
+;W[ii]
+;B[jh]
+;W[je]
+;B[ih]
+;W[hi]LB[je:4][ih:5][jh:3][hi:6][ii:2][lj:1]C[Responding at Black 1 is too slow, and White will develop the top with 4. 
+
+Since Black's center group isn't yet alive, that'll be hard for Black to invade the top. That's why Black 1 isn't proper in that situation.]))
+(;B[hp]
+;W[iq]
+;B[jq]
+;W[jr]
+;B[kr]
+;W[jo]
+;B[jp]LB[jo:6][hp:1][jp:7][iq:2][jq:3][jr:4][kr:5]C[If Black just connects, White will play 2 to 7 to reduce Black's lower side.]))
+(;B[jj]
+;W[ik]
+;B[lg]
+;W[kp]LB[lg:3][jj:1][ik:2][kp:4]TR[dn][bo][co][do][cp][dp][ep][fp][gp][ip]C[If Black looks after his center group with 1 to 3, White 4 will be severe, and that won't be easy for Black to take care of the marked group.]))
+(;W[gl]
+;B[gn]LB[el:A][gl:1][em:B][fm:C][gn:2]TR[dl][dm]C[The solid connection with White 1 is wrong. Black will hit the vital point at 2, and White's shape will become bad.
+
+Black can push through and cut with A to C to capture the marked stones later.]))
+(;B[ao]
+;W[cl]LB[cl:2][ao:1]C[If Black captures White's three stones with 1, White will destroy Black's left side with 2. That's a big loss, so Black shouldn't play 1.]))
+(;W[do]
+;B[an]LB[an:2][do:1]C[Taking a single stone at White 1 is wrong. Black will be happy to connect with 2, and the White's stones won't be useful.]))
+(;B[em]
+;W[en]
+;B[fn]
+;W[do]
+;B[eo]
+;W[dn]
+;B[el]
+;W[ao]LB[bk:B][el:7][em:1][dn:6][en:2][fn:3][ao:8][do:4][eo:5][fo:A]C[The double hane at Black 1 is also conceivable, but White will be happy to connect underneath with 8.
+
+Black should worry about the cutting point at A, and White will get sente as well. Black's left side is open at B, so Black shouldn't choose this variation.]))
+(;B[an]
+;W[bl]
+(;B[cj]
+;W[en]
+;B[fp]
+;W[gq]
+;B[gp]
+;W[gn]LB[cj:3][bl:2][an:1][en:4][gn:8][fp:5][gp:7][gq:6]C[If Black hanes at 1, White will jump at 2, and the result up to White 8 is active and lively for White. ])
+(;B[dn]
+;W[cj]
+;B[dj]
+;W[ci]
+;B[ch]
+;W[dm]LB[ch:7][ci:6][cj:4][dj:5][bl:2][dm:8][an:1][dn:3]C[Blocking at Black 3 is a better idea, but White can still live on the left side easily up to White 8.])))
+(;B[cd]
+;W[cc]
+;B[bc]
+(;W[dc]
+;B[be]
+;W[bn]
+;B[an]
+;W[bl]
+;B[dn]LB[bc:3][cc:2][dc:4][cd:1][be:5][bl:8][an:7][bn:6][cn:A][dn:9]C[Attaching at Black 1 is also conceivable.
+
+If White still moves A with 6, Black will play 7 to 9, and the game would be more wide and active compared to the actual game.])
+(;W[ce]
+;B[bd]
+;W[de]
+;B[be]
+;W[cb]
+;B[df]LB[cb:8][bc:3][cc:2][bd:5][cd:1][be:7][ce:4][de:6][df:9]C[White can also atari at 4, but Black's position on the left is still better than in the game.])))
+(;B[sl]
+;W[ql]
+;B[qk]
+;W[qm]LB[rj:A][pk:B][qk:3][ql:2][sl:1][qm:4]C[Black 1 is too greedy. White will wedge at 2 to cut, and A and B are miai for White next.]))
+(;W[ol]
+;B[om]
+(;W[pk]
+;B[nn]
+;W[pm]
+;B[no]LB[pk:3][ol:1][om:2][pm:5][nn:4][no:6]TR[ll][pl][rl][mn][mp]C[If White tries to cut Black's marked stones with 1 to 3, Black 4 to 6 are flexible responses, and the result will be favorable for Black.
+
+White's marked stones are floating and wasted in this variation.])
+(;W[pm]
+;B[oj]
+;W[pk]
+;B[pj]
+;W[qk]
+;B[qj]LB[oj:4][pj:6][qj:8][pk:5][qk:7][ol:1][om:2][pm:3]TR[pl]C[Cutting at White 3 isn't a good alternative. Black will sacrifice the marked stone to build a great wall up to Black 8.
+
+This is a failure for White.])))
+(;B[ol]
+;W[nk]
+;B[mk]
+;W[ml]
+(;B[pi]
+;W[oi]
+;B[pk]
+;W[pj]
+;B[qj]
+;W[oj]LB[oi:6][pi:5][oj:10][pj:8][qj:9][mk:3][nk:2][pk:7][ml:4][ol:1]C[Connecting at Black 1 isn't a good idea. White will cut Black off directly with 2 to 4, and that'll be difficult for Black to manage the situation.])
+(;B[oi]
+;W[pi]
+;B[oj]
+;W[pk]
+;B[pj]
+;W[qk]
+;B[qj]
+;W[rk]LB[oi:5][pi:6][oj:7][pj:9][qj:11][rj:A][mk:3][nk:2][pk:8][qk:10][rk:12][ml:4][ol:1]C[Attaching at Black 5 looks nice tesuji, but that doesn't make it nice either.
+
+White will capture Black's five stones up to White 12, and blocking at A isn't sente for Black next.])))
+(;W[lp]
+;B[ll]LB[ll:2][lp:1]C[Extending at White 1 is slack, and Black will be happy to jump out at 2.]))
+(;B[ll]
+;W[mq]
+;B[np]
+;W[no]
+;B[lo]
+;W[mo]
+;B[go]LB[nf:A][ll:1][go:7][lo:5][mo:6][no:4][np:3][mq:2]TR[ne][oh][qh]C[Black should have jumped at 1. If White blocks at 2, Black will play 3 to 7, and the game is still well balanced.
+
+White's marked stones from the right side are weak, so Black can attach at A to fight soon as well.]))
+(;W[rl]
+;B[rm]
+(;W[rn]
+;B[rk]LB[rk:4][rl:1][rm:2][rn:3]C[White 1 is weak and passive. Black can even attach at 2 to separate White groups.])
+(;W[ql]
+;B[rn]
+;W[qm]
+;B[ef]LB[ef:6][ql:3][rl:1][qm:5][rm:2][rn:4]C[If White responds at 3, Black will connect with 4 in sente to reduce the scale of White's right side. That's satisfactory for Black.])))
+(;B[ef]
+;W[bd]LB[bd:2][ef:1]C[Jumping at Black 1 is nice to enlarge his left side, but White 2 is also nice to save the corner. Shi didn't play 1 partly because that's what Park would like.])
+(;B[pk]
+;W[nk]
+;B[pi]
+;W[oi]
+;B[oj]
+;W[nj]
+;B[ph]
+;W[pg]
+;B[qg]
+;W[qf]
+;B[rg]
+;W[qi]
+;B[pj]
+;W[rf]LB[qf:10][rf:14][pg:8][qg:9][rg:11][ph:7][oi:4][pi:3][qi:12][nj:6][oj:5][pj:13][nk:2][pk:1]C[Invading at Black 1 isn't proper. Capping at White 2 is nice, and Black's cutting from 5 to 9 doesn't work very well.]))
+(;W[ci]
+;B[dn]
+;W[dm]
+;B[en]
+;W[co]
+;B[cp]
+;W[em]
+;B[cl]
+;W[cm]
+;B[fp]LB[ci:1][cl:8][cm:9][dm:3][em:7][dn:2][en:4][co:5][cp:6][fp:10]C[The reverse pincer at White 1 is also conceivable. Black 2 to 10 is one of main variations from White 1, and that's still playable for both.
+
+However, Park doesn't like that sort of fighting style of opening, so he simply entered the corner in the actual game.]))
+(;W[nb]
+;B[nc]
+;W[mc]
+;B[od]
+;W[nd]
+;B[cf]LB[nb:1][mc:3][nc:2][nd:5][od:4][cf:6]C[Reponding at White 1 is slow. Black will approach at 6 with sente, and the exchange from Black 1 to White 5 is benefitial for Black.]))
+(;B[cf]
+;W[ob]
+;B[pb]
+;W[fd]
+;B[dj]
+;W[jd]LB[ob:2][pb:3][fd:4][jd:6][cf:1][dj:5]C[Approaching to the top left corner with Black 1 is also possible.
+
+White will develop the top up to 6, and that's still well balanced between Black's territory and White's influence.]))
+(;B[og]
+;W[pj]
+;B[pc]LB[pc:3][og:1][pj:2]C[Black 1 looks strange, but that's also conceivable. White 2 is necessary, and Black can come back to 3.
+
+This is another game.]))
+(;W[qg]
+;B[pe]
+;W[ne]LB[ne:3][pe:2][qg:1][qj:A]C[Pincering at White 1 is normal, and White 3 is recently researched move.
+
+Extending at A for White 3 is also possible.]))
+(;B[kd]
+;W[qq]
+;B[pc]
+;W[pr]LB[pc:3][kd:1][qq:2][pr:4]C[Pincering at around Black 1 is also possible, and that'll be another game.]))
+(;W[dp]
+;B[nc]
+;W[qn]
+;B[qp]
+;W[pj]
+;B[qh]
+;W[op]LB[nc:2][qh:6][pj:5][qn:3][dp:1][op:7][qp:4]C[White 1 is normal, and Black 2 is very popular lately.
+
+The shoulder hit at White 7 is cutting edge as well.]))

@@ -54,27 +54,27 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
             new GobandroidNotifications(this).cancelNewTsumegosNotification();
         }
 
-        final String sgfPath = getSGFPath();
+        final File sgfPath = getSGFPath();
+        final String sgfPathString = sgfPath.getAbsolutePath();
 
-        if (sgfPath.substring(sgfPath.indexOf('/')).startsWith(settings.getTsumegoPath().substring(sgfPath.indexOf('/')))) {
+        if (sgfPathString.substring(sgfPathString.indexOf('/')).startsWith(settings.getTsumegoPath().getAbsolutePath().substring(sgfPathString.indexOf('/')))) {
             interactionScope.setMode(InteractionScope.Mode.TSUMEGO);
         }
 
-        if (sgfPath.substring(sgfPath.indexOf('/')).startsWith(settings.getReviewPath().substring(sgfPath.indexOf('/')))) {
+        if (sgfPathString.substring(sgfPathString.indexOf('/')).startsWith(settings.getReviewPath().getAbsolutePath().substring(sgfPathString.indexOf('/')))) {
             interactionScope.setMode(REVIEW);
         }
 
-        final File dir = new File(sgfPath);
 
-        setActionbarProperties(dir);
+        setActionbarProperties(sgfPath);
 
-        list_fragment = SGFListFragment.newInstance(dir);
+        list_fragment = SGFListFragment.newInstance(sgfPath);
         getSupportFragmentManager().beginTransaction().replace(R.id.list_fragment, list_fragment).commit();
     }
 
-    private String getSGFPath() {
+    private File getSGFPath() {
         if (getIntent().getData() != null) {
-            return getIntent().getData().getPath();
+            return new File(getIntent().getData().getPath());
         }
 
         return settings.getSGFBasePath();

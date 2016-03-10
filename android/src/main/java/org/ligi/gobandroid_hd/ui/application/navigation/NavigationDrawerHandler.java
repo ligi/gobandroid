@@ -122,9 +122,9 @@ public class NavigationDrawerHandler {
         });
     }
 
-    private Intent startSGFListForPath(String path) {
+    private Intent startSGFListForPath(File path) {
         final Intent i = new Intent(ctx, SGFFileSystemListActivity.class);
-        i.setData(Uri.parse("file://" + path));
+        i.setData(Uri.parse("file://" + path.getAbsolutePath()));
         return i;
     }
 
@@ -136,9 +136,9 @@ public class NavigationDrawerHandler {
     public boolean unzipSGFifNeeded(Intent intent_after) {
         // we check for the tsumego path as the base path could already be there but  no valid tsumego
 
-        final String tsumegoPath = settings.getTsumegoPath();
-        if (!(new File(tsumegoPath)).isDirectory()) {
-            UnzipSGFsDialog.show(ctx, intent_after);
+        final File tsumegoPath = settings.getTsumegoPath();
+        if (!tsumegoPath.isDirectory() || settings.isVersionSeen(1)) {
+            UnzipSGFsDialog.INSTANCE.show(ctx, intent_after, settings);
             return true;
         }
         return false;

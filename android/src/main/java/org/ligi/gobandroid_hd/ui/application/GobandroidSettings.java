@@ -5,8 +5,10 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.StringRes;
-import java.io.File;
+
 import org.ligi.gobandroid_hd.R;
+
+import java.io.File;
 
 public class GobandroidSettings {
 
@@ -24,34 +26,34 @@ public class GobandroidSettings {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
     }
 
-    public String getSGFBasePath() {
+    public File getSGFBasePath() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            return Environment.getExternalStorageDirectory() + "/gobandroid/sgf/";
+            return new File(Environment.getExternalStorageDirectory(), "/gobandroid/sgf/");
         }
 
         // workaround for Samsung tablet with internal and external SD-card
         final File probe = new File("/sdcard/Android");
         if (probe.exists() && probe.isDirectory()) {
-            return "/sdcard/gobandroid/sgf/";
+            return new File("/sdcard/gobandroid/sgf/");
         }
 
-        return ctx.getFilesDir() + "/sgf/";
+        return new File(ctx.getFilesDir(), "/sgf/");
     }
 
-    public String getTsumegoPath() {
-        return getSGFBasePath() + "tsumego/";
+    public File getTsumegoPath() {
+        return new File(getSGFBasePath(), "tsumego");
     }
 
-    public String getBookmarkPath() {
-        return getReviewPath() + "bookmarks/";
+    public File getBookmarkPath() {
+        return new File(getReviewPath(), "bookmarks");
     }
 
-    public String getReviewPath() {
-        return getSGFBasePath() + "review/";
+    public File getReviewPath() {
+        return new File(getSGFBasePath(), "review");
     }
 
-    public String getSGFSavePath() {
-        return getSGFBasePath() + "review/saved/";
+    public File getSGFSavePath() {
+        return new File(getSGFBasePath(), "review/saved");
     }
 
     public boolean isFullscreenEnabled() {
@@ -100,5 +102,16 @@ public class GobandroidSettings {
 
     private boolean getBoolForKey(@StringRes int stringRes, boolean defaultValue) {
         return getPreferences().getBoolean(ctx.getString(stringRes), defaultValue);
+    }
+
+    public boolean isVersionSeen(int newVersion) {
+        final int oldVersion = getPreferences().getInt("VERSION", 0);
+
+        if (newVersion > oldVersion) {
+            getPreferences().edit().putInt("VERSION", newVersion).apply();
+            return true;
+        }
+
+        return false;
     }
 }

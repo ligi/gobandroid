@@ -96,12 +96,14 @@ public class SaveSGFDialog extends GobandroidDialog {
         });
 
         // get the old filename from the metadata
-        String old_fname = gameProvider.get().getMetaData().getFileName();
+        final String oldFileName = gameProvider.get().getMetaData().getFileName();
 
-        if ((old_fname != null) && (!old_fname.equals(""))) {
-            String suggested_name = old_fname.replace(".sgf", "");
-            if (suggested_name.startsWith(settings.getSGFSavePath()))
-                suggested_name = suggested_name.substring(settings.getSGFSavePath().length());
+        if (!oldFileName.equals("")) {
+            String suggested_name = oldFileName.replace(".sgf", "");
+            final String absolutePath = settings.getSGFSavePath().getAbsolutePath();
+            if (suggested_name.startsWith(absolutePath)) {
+                suggested_name = suggested_name.substring(absolutePath.length());
+            }
             fname_et.setText(suggested_name);
         }
 

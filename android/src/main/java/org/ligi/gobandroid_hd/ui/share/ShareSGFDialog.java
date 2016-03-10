@@ -31,7 +31,7 @@ public class ShareSGFDialog extends GobandroidDialog {
         ButterKnife.bind(this, this);
 
         setTitle(R.string.share);
-        setIconResource(android.R.drawable.ic_menu_share);
+        setIconResource(R.drawable.ic_social_share);
 
         setNegativeButton(R.string.cancel, new DialogDiscardingOnClickListener());
         setPositiveButton(R.string.ok, new OnClickListener() {

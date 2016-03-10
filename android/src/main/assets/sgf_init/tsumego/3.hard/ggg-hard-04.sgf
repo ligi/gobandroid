@@ -1,0 +1,13 @@
+(;GM[1]FF[4]CA[UTF-8]AP[CGoban:3]ST[2]RU[Japanese]SZ[19]KM[0.00]PW[White]PB[Black]SO[http://gogameguru.com/]AB[qq][qp][pp][op][np][nq][mq][lq][lr]AW[jr][jq][kp][mo][on][qn][ro][rp][rq][qr][pq][oq][mr]
+(;B[rr]
+(;W[or]
+(;B[qs];W[ps]
+;B[pr]C[Correct])
+(;B[ps];W[rs];B[pr];W[os]))
+(;W[pr];B[rs]
+(;W[nr];B[os];W[or]
+;B[ms]C[Correct, white should fight the ko in the main variation.])
+(;W[sr];B[or];W[nr]
+;B[os]C[Correct, white should fight the ko in the main variation.])))
+(;B[nr];W[pr])
+(;B[or];W[pr];B[rr];W[rs];B[sr];W[sq];B[ps];W[ss]))

@@ -1,0 +1,531 @@
+﻿(;GM[1]FF[4]CA[UTF-8]AP[CGoban:3]ST[2]
+RU[Japanese]SZ[19]KM[6.50]TM[1800]OT[5x40 byo-yomi]
+GN[Zen19S-vs-fj-20151003]PW[Franz-Josef Dickhut]PB[Zen19S]WR[6d]DT[2015-10-03]EV[2nd Codecentric Go Challenge]RO[Game 1]PC[KGS Go Server]WT[Human]BT[Computer]SO[https://gogameguru.com/]AN[An Younggil 8p]C[The 2nd Codecentric Go Challenge began on October 3, 2015, with the computer Go program Zen challenging 11 time German Go champion Franz-Josef Dickhut (aka FJ) in the first game of a best of five match.
+
+The Codecentric Go Challenge is an annual best of five match between a top computer Go program and a top amateur Go player.
+
+The first iteration of the tournament was held in 2014 and the event is sponsored by Codecentric - an IT consulting company based in Germany.
+
+In 2014, Dickhut defeated CrazyStone (another top Go AI) with a 3-1 score, after losing the first game. This year, he's facing CrazyStone's rival, Zen.
+
+Zen is the brainchild of two people - Yoji Ojima and Hideki Kato - who together form Team DeepZen, based in Japan.
+
+For this match, Zen is using a parallelized implementation of its code, developed by Hideki. This means that it can efficiently carry out many calculations simultaneously (in parallel) when it has access to a computer cluster (multiple computers at once). This version of Zen is stronger than the commercial version when clustered.
+
+Zen is running on a four PC cluster consisting of:
+
+A dual 12-core Xeon E5-2690 v3 at 2.6 GHz, with 32 GB RAM,
+a dual 10-core Xeon E5-2690 v2 at 3 GHz, with 32 GB RAM,
+a dual 6-core Xeon X5680 at 3.5 GHz, with 8 GB RAM, and
+an 8-core Core i7 5960X at 3 GHz, with 16 GB RAM.
+
+And Dickhut is running on a human brain ;)
+
+For more information about the match and to read an interview with both teams, please visit the Codecentric website: https://blog.codecentric.de/en/2015/10/codecentric-go-challenge-2015/
+
+The next game will be played this weekend, on Saturday October 17, at 2:00 PM German time. That's Saturday, 17 October at:
+
+5:00 AM US Pacific Daylight Time
+8:00 AM US Eastern Daylight Time
+12:00 PM UTC
+2:00 PM Central European Summer Time
+9:00 PM Japanese Standard Time, and
+11:00 PM Australian Eastern Daylight Time.
+
+You can watch the game on the KGS Go Server at: http://www.gokgs.com/ (look for the game between fj and Zen19S)
+
+More information about the match schedule is available here: https://go.codecentric.de/
+
+Let's have a look at the game!]RE[B+1.50]
+;B[pd]LB[pd:1]C[Zen19S plays Black, and Dickhut plays White.]
+;W[dd]
+;B[pp]
+;W[eq]
+;B[do]
+;W[cp]
+;B[co]
+;W[dp]
+(;B[fo]LB[dd:2][co:7][do:5][fo:9][cp:6][dp:8][pp:3][eq:4]C[Approaching at Black 5 leads relatively easy followups. Black 9 is unusual, but still playable.]
+;W[gp]
+;B[fp]
+;W[fq]
+;B[go]
+;W[hp]
+;B[ho]
+;W[ip]
+;B[di]
+;W[cg]
+(;B[ch]LB[cg:18][eg:A][ch:19][di:17][go:13][ho:15][fp:11][gp:10][hp:14][ip:16][fq:12]C[Black 11 wasn't necessary. Black 17 was the right extension, and White 18 was also nice.
+
+Black 19 is generally helping White. Capping at A is more common instead.]
+;W[dg]
+(;B[jd]LB[jd:21][dg:20][fi:A]C[Black 21 was big, but not urgent. A was more important and urgent for Black.]
+;W[qj]
+;B[qh]
+(;W[pn]LB[qh:23][qj:22][pn:24]C[White 22 was a nice split, and Black 23 was the right direction, because the upper side is more promising for Black than the bottom.
+
+White 24 was more concerned about the center.]
+;B[qn]
+;W[qm]
+;B[qo]
+;W[pm]
+(;B[np]LB[pm:28][qm:26][qn:25][qo:27][np:29]C[Black 25 was practical, and Black built a decent territory in the bottom right corner.]
+(;W[fi]LB[fi:30][dk:A]C[Capping at White 30 was gentle way of play. Invading at A directly would be also possible though.]
+;B[eh]
+(;W[dk]LB[eh:31][fi:30][dk:32]C[Black 31 was a bit too much, and that should be at 32.
+
+White 32 was a good combination with 30, and that's hard for Black to respond.]
+;B[ej]
+;W[fl]
+;B[fk]
+;W[dm]
+;B[gl]
+;W[fm]
+(;B[hl]LB[ej:33][fk:35][gk:A][fl:34][gl:37][hl:39][dm:36][fm:38]C[White 34 and 36 were nice haengma, and White took the early lead of the game in this close combat.
+
+Black 39 looks weird, but that was an efficient reinforcement to prevent cutting at A.]
+;W[eo]
+;B[bk]
+;W[io]
+;B[in]
+;W[bm]
+;B[oi]
+;W[nk]
+;B[ok]
+(;W[ol]LB[oi:45][bk:41][nk:46][ok:47][ol:48][bm:44][in:43][eo:40][io:42]C[The result up to White 40 was satisfactory for White.
+
+Black 45 was nice to develop the center from the top right side, and White 46 was nice haengma.
+
+However, there was a better alternative for White 48.
+
+]
+;B[pk]
+;W[mn]
+;B[nj]
+;W[mk]
+;B[cl]
+(;W[or]LB[nj:51][mk:52][pk:49][cl:53][mn:50][or:54]C[Black 53 was a probe, but White didn't answer.
+
+White 54 was an excellent move locally,but that wasn't very urgent.]
+(;B[qr]LB[qr:55]C[Black 55 looks slack, but that was the correct response.]
+;W[mq]
+;B[cm]
+;W[rm]
+;B[qk]
+;W[rk]
+;B[gd]
+;W[ec]
+;B[ep]
+(;W[bo]LB[ec:62][gd:61][qk:59][rk:60][cm:57][rm:58][bo:64][ep:63][mq:56]C[Black 57 was very big, and Black 63 was also big followup.]
+;B[bn]
+;W[bp]
+(;B[li]LB[li:67][bn:65][bo:64][bp:66]C[White 64 to 66 were relatively small, and the flow of the game was changed here.]
+;W[pc]
+;B[oc]
+;W[ob]
+;B[qc]
+;W[pb]
+;B[nc]
+;W[qd]
+;B[qb]
+(;W[rd]LB[ob:70][pb:72][qb:75][nc:73][oc:69][pc:68][qc:71][qd:74][rd:76]C[White 68 was a nice place to invade, but Black 71 to 73 were greedy. 
+
+White 74 was the correct move to punish, but White had a better option for 76.]
+;B[nb]
+;W[pe]
+;B[od]
+;W[rb]
+;B[oa]
+;W[rc]
+;B[pa]
+;W[qf]
+;B[of]
+;W[gb]
+;B[qg]
+;W[rf]
+;B[mp]
+;W[lq]
+(;B[kn]LB[oa:81][pa:83][gb:86][nb:77][rb:80][rc:82][od:79][pe:78][of:85][qf:84][rf:88][qg:87][kn:91][mp:89][lq:90]C[White 78 to 84 were the right sequence, and White was still not too bad with playing at 86.
+
+Black 91 looks weird, but that was an interesting move.]
+;W[jn]
+;B[jm]
+;W[en]
+(;B[nm]LB[jm:93][nm:95][en:94][jn:92]C[White 92 and 94 were a good move order, and Black 95 was the vital point of White's shape.]
+;W[oo]
+(;B[nn]LB[nn:97][oo:96]C[White 96 was a correct response, and Black 97 was fighting spirit (probably not, because Zen wouldn't yet play by fighting spirit).]
+;W[no]
+;B[mm]
+;W[op]
+;B[mo]
+;W[pq]
+;B[qq]
+;W[rp]LB[mm:99][mo:1][no:98][op:100][rp:4][pq:2][qq:3]C[White 98 to 100 were the right sequence, and White 102 to 104 were a sharp counter.]
+;B[nq]
+;W[nr]
+;B[qp]
+;W[ro]
+;B[oq]
+;W[pr]
+;B[rn]
+;W[sn]
+;B[pl]
+(;W[rq]LB[pl:13][rn:11][sn:12][ro:8][qp:7][nq:5][oq:9][rq:14][nr:6][pr:10]TR[mk][nk]C[Black 113 was good to cut the marked stones off, but the loss in the corner was greater, and White started to be ahead.
+
+Zen chose to sacrifice his corner group for the center, but that wasn't a good idea, because the corner was more valuable in that situation.
+
+There was a better move for White 114.]
+;B[rr]
+;W[sr]
+;B[ee]
+(;W[jo]LB[de:A][ee:17][jo:18][rr:15][sr:16]C[White 118 was big, but he should have just responded at A.]
+;B[de]
+;W[ce]
+;B[fc]
+;W[fb]
+;B[cf]
+(;W[be]LB[fb:22][fc:21][be:24][ce:20][de:19][cf:23]C[Black 119 to 123 were a nice move order, and White's territory was shrunk.]
+;B[bf]
+;W[im]
+(;B[jl]LB[bf:25][jl:27][im:26][hn:A]C[White 126 wasn't necessary, and Black could connect at A for 127.]
+;W[ed]
+;B[bg]
+;W[hd]
+;B[he]
+(;W[id]LB[ed:28][hd:30][id:32][fe:A][he:31][bg:29]C[White 128 was good, and White 130 was the correct followup. White 132 could be haned at A first though.]
+;B[ie]
+;W[jc]
+;B[kc]
+;W[ib]
+;B[jb]
+;W[ic]
+;B[rj]
+(;W[rl]LB[ib:36][jb:37][ic:38][jc:34][kc:35][ie:33][rj:39][rl:40]C[White 134 to 138 were right moves, and cutting at Black 139 was very sharp.]
+;B[hn]
+;W[cn]
+;B[cd]
+(;W[bd]LB[bd:44][cd:43][cn:42][hn:41]C[Black 143 was a good tesuji to tidy up, and White 144 was what Black wants.]
+;B[cc]
+;W[bc]
+;B[fd]
+;W[cb]
+;B[kb]
+(;W[ek]LB[cb:48][kb:49][bc:46][cc:45][fd:47][ek:50]C[Black 147 and 149 were big, and the center territory was nicely completed.
+
+Black took the solid lead at this stage, and there weren't many places left to catch up.]
+;B[sj]
+;W[lo]
+;B[ln]
+;W[lp]
+;B[mn]
+(;W[po]LB[sj:51][ln:53][mn:55][lo:52][po:56][lp:54]C[Black 151 was a big sente endgame move, and White 156 was necessary.]
+;B[dl]
+;W[el]
+;B[bl]
+(;W[fj]LB[cj:A][fj:60][bl:59][dl:57][el:58]C[Black 159 should be at A to make things clear.]
+;B[gk]
+;W[pf]
+(;B[am]LB[pf:62][pg:A][gk:61][am:63]C[Black 163 was big, but answering at A would be bigger.]
+;W[oe]
+;B[ne]
+;W[og]
+;B[nf]
+;W[pg]
+;B[ng]
+;W[om]
+;B[nl]
+;W[fn]
+;B[gn]
+;W[bi]
+(;B[bh]LB[ne:65][oe:64][nf:67][ng:69][og:66][pg:68][bh:75][bi:74][nl:71][om:70][fn:72][gn:73]C[White 174 was a sharp endgame move, and Black 175 was the correct response.]
+;W[cj]
+;B[dj]
+;W[ck]
+;B[bj]
+;W[ci]
+;B[dh]
+;W[oh]
+;B[nh]
+;W[rh]
+;B[rg]
+;W[sg]
+;B[sh]
+;W[si]
+;B[ri]
+;W[pi]
+;B[sh]
+;W[ph]
+(;B[gc]LB[gc:93][rg:85][sg:86][dh:81][nh:83][oh:82][ph:92][rh:84][sh:87][ci:80][pi:90][ri:89][si:88][bj:79][cj:76][dj:77][ck:78]C[White 184 was a nice endgame tesuji, but Black's responses were accurate.]
+;W[fe]
+;B[ge]
+;W[sf]
+;B[qi]
+;W[pj]
+;B[oj]
+;W[ff]
+;B[ef]
+;W[ia]
+;B[ko]
+;W[gm]
+;B[hm]
+;W[kp]
+;B[ai]
+;W[ao]
+;B[ja]
+;W[hb]
+;B[sk]
+;W[an]
+;B[sl]
+;W[qs]
+;B[sm]
+;W[rs]
+;B[bm]
+;W[af]
+;B[ag]
+;W[ae]
+;B[ra]
+;W[je]
+;B[kd]
+;W[hc]
+;B[jf]
+;W[sb]LB[ia:2][ja:9][ra:21][hb:10][sb:26][hc:24][kd:23][ae:20][fe:94][ge:95][je:22][af:18][ef:1][ff:200][jf:25][sf:96][ag:19][ai:7][qi:97][oj:99][pj:98][sk:11][sl:13][bm:17][gm:4][hm:5][sm:15][an:12][ao:8][ko:3][kp:6][qs:14][rs:16]C[The game was about to finish.]
+;B[on]
+;W[sa]
+;B[qa]
+;W[ql]
+;B[ii]LB[qa:29][sa:28][ii:31][ql:30][on:27]C[Black won by 1.5 points at move 231.
+
+Black 231 wasn't necessary, but Zen was sure about his winning, so he reinforced one more move in the middle of his territory.
+
+The game was high quality, and I could find lots of nice moves and tesuji in this game from both sides.
+
+I can see Zen's improvement since I watched his games against Takemiya Masaki 9p played in March 2012. https://gogameguru.com/zen-computer-go-program-beats-takemiya-masaki-4-stones/
+
+Zen seems to be particularly very good at playing in the center area and sacrificing his stones. Zen used to be relatively weak at ko fight, but there weren't any chances to see his development from this game.
+
+Meanwhile, Dickhut also played quite well, and he showed beautiful haengma from White 30 to 40. He maintained his lead up to the early endgame stage smoothly, but he didn't manage the close combat very well in the top left corner area, and Zen managed to reverse the game with completing a huge territory in the center.
+
+I hope you to enjoy watching this interesting and impressive game between human and machine with this commentary, and if you have any questions or opinions, please feel free to leave a comment.
+
+Thanks,
+
+Commented by An Younggil 8p.
+
+https://gogameguru.com/])
+(;B[sf]
+;W[se]
+;B[gc]LB[gc:3][se:2][sf:1]C[Black 1 was sente for Black.]))
+(;B[cj]
+;W[df]
+;B[ef]
+;W[bh]
+;B[eg]
+;W[af]
+;B[dh]
+;W[ag]LB[af:6][df:2][ef:3][ag:8][eg:5][bh:4][dh:7][cj:1]C[If Black plays 1, White will connect underneath with 2 to 8.]))
+(;B[pg]LB[pg:1]C[Black 1 would be the easiest way for Black.]))
+(;W[an]
+;B[cj]
+;W[pf]
+;B[pg]LB[pf:3][pg:4][cj:2][an:1]C[If White takes at 1, Black will play 2, and Black will be winning comfortably.]))
+(;W[cj]
+;B[sm]
+;W[sl]
+;B[so]
+;W[sp]
+;B[ss]
+;W[rs]
+;B[qs]
+;W[po]
+;B[ss]
+;W[sm]
+;B[sq]
+;W[so]
+;B[om]LB[cj:1][sl:3][om:14][sm:2][po:9][so:4][sp:5][sq:12][qs:8][rs:7][ss:6]C[If White plays elsewhere like 1, Black will make it a ko from 2 to 14.]))
+(;W[ri]
+;B[qi]
+;W[sj]
+;B[dl]
+;W[el]
+;B[ek]LB[qi:2][ri:1][sj:3][dk:A][ek:6][dl:4][el:5]C[White 1 is big, but Black 4 is also big to capture White A.]))
+(;W[kd]
+;B[je]
+;W[lc]LB[lc:3][kd:1][je:2]C[White 1 to 3 would be bigger than White 144.]))
+(;W[ri]
+;B[rl]
+;W[sj]
+;B[sl]
+;W[ql]
+;B[on]LB[ri:1][sj:3][ql:5][rl:2][sl:4][sm:A][on:6]TR[no][oo][op]C[Capturing at White 1 is risky. Black will play 2 to 6 to capture the marked stones.
+
+If White connects at A for White 5, Black will connect at 5, and that's still troublesome for White.]))
+(;W[fe]
+;B[ff]
+;W[id]
+;B[ie]
+;W[jc]
+;B[kc]
+;W[ib]
+;B[jb]
+;W[ic]LB[ib:7][jb:8][ic:9][jc:5][kc:6][id:3][fe:1][ie:4][ff:2]C[The hane at White 1 would have been beneficial. If Black and White play the same as the actual game, the exchange of White 1 for Black 2 is still useful for White.]))
+(;B[hn]
+;W[km]
+;B[jl]
+;W[ln]
+;B[kl]LB[cd:B][jl:3][kl:5][km:2][cn:A][hn:1][ln:4]TR[mo][mp][np][nq][oq]C[Black could connect at 1. White would play 2 to 4 to capture the marked stones, but White has to come back at A pretty soon. 
+
+Cutting at B will be quite big for Black afterwards, and in overall, the result would be for Black.]))
+(;W[bf]
+;B[cd]
+;W[be]
+;B[dc]LB[dc:4][cd:2][dd:B][be:3][bf:1][df:A]C[If White ataris at 1 or at A, Black will cut at 2 to capture White B. That's a disaster for White.])
+(;W[cd]
+(;B[bf]
+;W[df]
+;B[bg]
+;W[fe]
+;B[fd]
+;W[ed]
+;B[ef]
+;W[hd]
+;B[ge]
+;W[ff]
+;B[eg]
+;W[he]
+;B[gf]
+;W[hf]LB[cd:1][ed:7][fd:6][hd:9][fe:5][ge:10][he:13][bf:2][df:3][ef:8][ff:11][gf:14][hf:15][bg:4][eg:12]C[The solid connection at White 1 would be better. If Black tries to cut with 2 to 4, White 5 will be sharp tesuji to break through the center. If Black responds at 6, attaching at White 9 is another following tesuji to erase the center territory.])
+(;B[df]
+;W[bf]
+;B[eg]
+;W[bh]LB[cd:1][bf:3][df:2][eg:4][bh:5]C[If Black plays 2 to 4, White will be happy up to 5.])))
+(;W[de]
+;B[jo]
+;W[cn]
+(;B[eg]
+;W[hc]
+;B[hd]
+;W[jc]
+;B[kc]
+;W[ic]
+;B[kd]
+;W[jp]LB[hc:5][ic:9][jc:7][kc:8][hd:6][kd:10][de:1][eg:4][cn:3][jo:2][jp:11]C[White should have answered at 1. If Black completely enclosed the center with 4, White will play 5 to 11, and the game will still be marginally better for White.])
+(;B[hc]
+;W[hb]
+;B[ib]
+;W[ff]LB[hb:5][ib:6][hc:4][de:1][ff:7][cn:3][jo:2]C[If Black plays 4 to 6 instead, White will jump at 7 to reduce the center area.])))
+(;W[rr]
+;B[rq]
+;W[sq]
+;B[sr]
+;W[ss]
+;B[qs]
+;W[po]LB[po:7][rq:2][sq:3][rr:1][sr:4][qs:6][ss:5]C[Attaching at White 1 would be accurate. In that case, White can capture Black's corner clearly without any bad aji.]))
+(;B[nq]
+;W[nr]
+;B[mm]
+;W[op]
+;B[oq]
+;W[pq]
+;B[pr]
+;W[lp]LB[mm:3][lp:8][op:4][nq:1][oq:5][pq:6][nr:2][pr:7]C[Even if Black exchanges 1 for White 2, White can still connect the right side group without any problem from 4 to 8.]))
+(;B[cn]
+;W[hn]
+;B[jo]
+;W[gn]LB[cn:1][gn:4][hn:2][jo:3]TR[fo][go][ho][ep][fp]C[If Black connects at 1, White will cut at 2 to capture the marked stones.])
+(;B[jo]
+;W[cn]
+;B[kq]LB[cn:2][jo:1][kq:3]C[Black 1 is sente, and White 2 will be necessary. Black will reduce White's territory with 3 next, and that would be superior for Black than in the actual game.]))
+(;B[ff]
+;W[kk]
+;B[jj]
+;W[jn]
+;B[im]
+;W[hc]LB[hc:6][ff:1][jj:3][kk:2][im:5][jn:4]C[Black 1 is also tempting, to enclose the center area, and the game would be very close up to White 6.]))
+(;W[nb]
+;B[qe]
+;W[rd]
+;B[re]
+;W[od]
+;B[pe]
+;W[mc]
+;B[nd]
+;W[md]
+;B[ne]
+;W[jb]LB[jb:11][nb:1][mc:7][md:9][nd:8][od:5][qd:A][rd:3][ne:10][pe:6][qe:2][re:4]C[Pushing at White 1 would be slightly better. Black will capture White A with 2 next, but White will destroy Black's upper side up to White 11.]))
+(;B[pc]LB[oc:A][pc:1]C[Black 1 or at A is also nice to secure the territory in this area. It will be hard for White to invade deeply after Black 1.]))
+(;W[pc]
+(;B[qc]
+;W[oc]
+;B[qb]
+;W[od]
+;B[pe]
+;W[lc]LB[qb:4][lc:7][oc:3][pc:1][qc:2][od:5][pe:6]C[Invading the top right area would be more urgent in that situation.
+
+Attaching at White 1 is normal, and the result up to White 7 is expected.])
+(;B[oc]
+;W[ob]
+;B[od]
+;W[pb]
+;B[nb]
+;W[qd]
+;B[qe]
+;W[rd]LB[mb:A][nb:6][ob:3][pb:5][oc:2][pc:1][od:4][qd:7][rd:9][qe:8]C[If Black blocks from the outside, White can live in the corner up to 9. There'll be still bad aji for Black at A later.])))
+(;B[mq]
+;W[qq]LB[mq:1][qq:2]C[If Black plays 1, White will enter the corner, and it will be impossible for Black to capture them.])
+(;B[pr]
+;W[oq]
+;B[pq]
+;W[mq]LB[op:A][mq:4][oq:2][pq:3][pr:1]C[Black 1 is also conceivable, but then cutting point at A will be left after White 4.]))
+(;W[cm]LB[cm:1]C[White should have just responded at 1, and the game would still be favorable for White.]))
+(;W[oj]
+;B[pj]
+;W[pk]
+;B[nj]
+;W[ol]
+(;B[oj]
+;W[qi]
+;B[ph]
+;W[lc]LB[lc:9][ph:8][qi:7][nj:4][oj:6][pj:2][pk:3][qk:A][rk:B][ol:5]C[White 1 to 5 would be more active to make living shape on the right side.
+
+If Black connects at 6, White can even take sente to invade the upper side at 9.
+
+If Black ataris at A later, White can sacrifice one stone with B.])
+(;B[qk]
+;W[oj]
+;B[en]
+;W[pi]
+;B[bo]
+;W[ep]LB[pi:9][nj:4][oj:7][pj:2][pk:3][qk:6][ol:5][dn:B][en:8][fn:A][bo:10][ep:11]C[White doesn't have to worry about the ko from Black 6. That's because Black 8 doesn't work as a ko threat, because A and B are miai for White after White 11.])))
+(;B[gm]
+;W[eo]LB[gk:A][gm:1][eo:2]TR[co][do]C[If Black blocks at 1, White will still wedge at 2 to cut the marked stones off.
+
+Cutting at A would be annoying for Black later.]))
+(;W[dh]
+;B[ei]
+;W[ci]
+;B[cj]
+;W[bh]
+;B[bi]LB[bh:5][dh:1][bi:6][ci:3][ei:2][fi:A][cj:4]C[White 1 to 3 will help Black, and White A will get damaged as well.]))
+(;W[ei]
+;B[ej]
+;W[fi]
+;B[dh]
+;W[eg]
+;B[dj]LB[eg:5][fg:C][dh:4][eh:A][fh:B][ei:1][fi:3][dj:6][ej:2]C[Attaching the top at White 1 might help Black. Black will be happy to secure his left side territory up to Black 6.
+
+White will worry about the cutting point from Black A to C.]))
+(;B[nq]LB[nq:1]C[The knight's enclosure at Black 1 would be more appropriate in this situation, because White's lower side was already strong and solid.]))
+(;W[qn]
+;B[np]
+;W[oj]LB[oj:3][qn:1][np:2]C[Approaching at White 1 is usual, and that's another game up to White 3.]))
+(;B[fi]LB[fi:1]C[Black should have jumped at 1 to maintain and develop his formation from left side.]))
+(;B[eg]
+;W[ce]
+;B[ch]
+;W[dg]
+;B[dh]LB[ce:2][dg:4][eg:1][ch:3][dh:5][eh:A]C[Black 1 to 5 is slightly better to reinforce to develop the left side.
+
+Extending at A is also possible for Black 5.]))
+(;B[eo]
+;W[fp]
+;B[ck]LB[ck:3][eo:1][fp:2]C[That's a normal joseki with 1 to 3.]))
