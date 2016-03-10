@@ -42,7 +42,7 @@
         <ImageView
             android:id="@+id/ImageView01"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher"
+            android:src="@mipmap/ic_launcher"
             android:contentDescription="@string/icon"
             android:layout_width="wrap_content"></ImageView>
     </RelativeLayout>

@@ -44,10 +44,10 @@ public class GobandroidNotifications {
 
     public GobandroidNotifications(Context context) {
         App.component().inject(this);
-        notificationBuilder = new NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_launcher);
+        notificationBuilder = new NotificationCompat.Builder(context).setSmallIcon(R.mipmap.ic_launcher);
         notificationManager = (NotificationManager) context.getSystemService(Activity.NOTIFICATION_SERVICE);
         notificationBuilder.setSound(Uri.parse("android.resource://" + BuildConfig.APPLICATION_ID + "/" + R.raw.go_place1));
-        notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+        notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
 
         // notificationBuilder.setVibrate(new long[] { 1000, 100, 1000, 100 });
         // needs permission vibrate - not yet sure if wanted yet
