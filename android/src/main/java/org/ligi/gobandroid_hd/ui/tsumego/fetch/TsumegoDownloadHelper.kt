@@ -10,8 +10,7 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidSettings
 import java.io.File
 
 object TsumegoDownloadHelper {
-
-    private val BASE_URL = "http://gogameguru.com/i/go-problems/"
+    private val BASE_URL = "https://raw.githubusercontent.com/gogameguru/go-problems/master/weekly-go-problems/"
 
     class TsumegoSource(var local_path: String, var remote_path: String, var fname: String) {
 
@@ -21,9 +20,11 @@ object TsumegoDownloadHelper {
     }
 
     fun getDefaultList(settings: GobandroidSettings): Array<TsumegoSource> {
-        return arrayOf(TsumegoSource("${settings.tsumegoPath}/1.easy/", BASE_URL, "ggg-easy-%02d.sgf"),
-                TsumegoSource("${settings.tsumegoPath}/2.intermediate/", BASE_URL, "ggg-intermediate-%02d.sgf"),
-                TsumegoSource("${settings.tsumegoPath}/3.hard/", BASE_URL, "ggg-hard-%02d.sgf"))
+        return arrayOf(
+                TsumegoSource("${settings.tsumegoPath}/1.easy/", BASE_URL + "/easy/", "/ggg-easy-%02d.sgf"),
+                TsumegoSource("${settings.tsumegoPath}/2.intermediate/", BASE_URL + "/intermediate/", "/ggg-intermediate-%02d.sgf"),
+                TsumegoSource("${settings.tsumegoPath}/3.hard/", BASE_URL + "/hard/", "/ggg-hard-%02d.sgf")
+        )
     }
 
     fun doDownloadDefault(app: App): Int {
