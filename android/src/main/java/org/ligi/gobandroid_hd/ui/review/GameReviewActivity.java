@@ -59,7 +59,7 @@ public class GameReviewActivity extends GoActivity {
                     return true;
 
                 case KeyEvent.KEYCODE_MEDIA_PLAY:
-                    SwitchModeHelper.startGame(this, InteractionScope.Mode.TELEVIZE);
+                    SwitchModeHelper.INSTANCE.startGame(this, InteractionScope.Mode.TELEVIZE);
                     return true;
 
 

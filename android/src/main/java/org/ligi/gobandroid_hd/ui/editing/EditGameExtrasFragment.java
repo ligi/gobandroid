@@ -44,8 +44,8 @@ public class EditGameExtrasFragment extends GobandroidGameAwareFragment {
             public View getView(int position, View convertView, ViewGroup parent) {
 
                 final ImageView view = (ImageView) inflater.inflate(R.layout.edit_mode_item, parent, false);
-                view.setImageResource(getItem(position).iconResId);
-                view.setContentDescription(getString(getItem(position).contentDescriptionResId));
+                view.setImageResource(getItem(position).getIconResId());
+                view.setContentDescription(getString(getItem(position).getContentDescriptionResId()));
                 if (editModePool.getActivatedItem() == position) {
                     view.setBackgroundColor(ctx.getResources().getColor(R.color.dividing_color));
                 }

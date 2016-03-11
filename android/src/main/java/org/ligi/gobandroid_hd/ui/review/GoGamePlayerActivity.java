@@ -154,7 +154,7 @@ public class GoGamePlayerActivity extends GoActivity {
         if (event.getAction() == KeyEvent.ACTION_DOWN)
             switch (keyCode) {
                 case KeyEvent.KEYCODE_MEDIA_PAUSE:
-                    SwitchModeHelper.startGame(this, InteractionScope.Mode.REVIEW);
+                    SwitchModeHelper.INSTANCE.startGame(this, InteractionScope.Mode.REVIEW);
                     return true;
 
                 case KeyEvent.KEYCODE_MEDIA_PREVIOUS:

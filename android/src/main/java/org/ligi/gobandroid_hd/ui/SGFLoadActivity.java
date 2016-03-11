@@ -291,7 +291,7 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
                 finish();
             }
         });
-        SwitchModeHelper.startGameWithCorrectMode(this);
+        SwitchModeHelper.INSTANCE.startGameWithCorrectMode(this);
 
     }
 
