@@ -3,6 +3,7 @@ package org.ligi.gobandroid_hd.ui
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,9 @@ import org.ligi.tracedroid.logging.Log
 import javax.inject.Inject
 
 class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
+
+    private val GooglePlayStorePackageNameOld = "com.google.market"
+    private val GooglePlayStorePackageNameNew = "com.android.vending"
 
     @Inject
     lateinit internal var gameProvider: GameProvider
@@ -87,8 +91,9 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
         App.component().inject(this)
         app = activity.applicationContext as App
 
-        highlight_color = resources.getColor(R.color.dividing_color)
-        transparent = resources.getColor(android.R.color.transparent)
+
+        highlight_color = ResourcesCompat.getColor(resources, R.color.dividing_color, null)
+        transparent = ResourcesCompat.getColor(resources, android.R.color.transparent, null)
 
         inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -198,11 +203,4 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
             }
             return false
         }
-
-    companion object {
-
-        private val GooglePlayStorePackageNameOld = "com.google.market"
-        private val GooglePlayStorePackageNameNew = "com.android.vending"
-    }
-
 }
