@@ -111,12 +111,7 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        return false;
+        return (drawerToggle.onOptionsItemSelected(item)) ;
     }
 
     @Override
