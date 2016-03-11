@@ -22,8 +22,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import butterknife.Bind
-import butterknife.ButterKnife
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.logic.markers.TextMarker
@@ -41,16 +39,12 @@ import org.ligi.gobandroid_hd.ui.GobandroidDialog
  */
 class GameForwardAlert(context: Context, game: GoGame) : GobandroidDialog(context) {
 
-    @Bind(R.id.message)
-    lateinit var message: TextView
-
-    @Bind(R.id.buttonContainer)
-    lateinit var buttonContainer: ViewGroup
-
     init {
 
         setContentView(R.layout.dialog_game_forward)
-        ButterKnife.bind(this)
+
+        val message = findViewById(R.id.message) as TextView
+        val buttonContainer = findViewById(R.id.buttonContainer) as ViewGroup
 
         // show the comment when there is one - useful for SGF game problems
         val variationCount = game.possibleVariationCount + 1
@@ -60,15 +54,12 @@ class GameForwardAlert(context: Context, game: GoGame) : GobandroidDialog(contex
             message.text = "$variationCount  Variations found for this move - which should we take?"
         }
 
-        val var_select_listener = View.OnClickListener { view ->
+        val var_select_listener = View.OnClickListener {
             dismiss()
-
-            if (view.isEnabled) {
-                view.isEnabled = false // prevent multi-click
-
-                game.redo(view.tag as Int)
+            if (it.isEnabled) {
+                it.isEnabled = false // prevent multi-click
+                game.redo(it.tag as Int)
             }
-
         }
 
 
