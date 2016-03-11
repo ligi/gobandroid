@@ -1,5 +1,6 @@
 package org.ligi.gobandroid_hd.ui.application.navigation
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.support.design.widget.NavigationView
@@ -32,80 +33,73 @@ class NavigationDrawerHandler(private val ctx: GobandroidFragmentActivity) {
 
     init {
         App.component().inject(this)
-
         navigationView = ctx.findViewById(R.id.left_drawer) as NavigationView
+    }
 
+    val actionMap by lazy {
+        mapOf(
+                R.id.menu_drawer_empty to {
+                    val act_game = gameProvider.get()
+                    gameProvider.set(GoGame(act_game.size.toByte().toInt(), act_game.handicap.toByte().toInt()))
+                    EventBus.getDefault().post(GameChangedEvent.INSTANCE)
+                    startForClass(GameRecordActivity::class.java)
+                },
+
+                R.id.menu_drawer_links to {
+                    startForClass(LinksActivity::class.java)
+                },
+
+                R.id.menu_drawer_settings to {
+                    startForClass(GoPrefsActivity::class.java)
+                },
+
+                R.id.menu_drawer_tsumego to {
+                    startForPath(settings.tsumegoPath)
+                },
+
+                R.id.menu_drawer_review to {
+                    val path = settings.reviewPath
+                    startForPath(path)
+
+                },
+
+                R.id.menu_drawer_bookmark to {
+                    ctx.startActivity(startSGFListForPath(settings.bookmarkPath))
+                },
+
+
+                R.id.menu_drawer_profile to {
+                    ctx.startActivity(Intent(ctx, BaseProfileActivity::class.java))
+                },
+
+
+                R.id.menu_drawer_beta to {
+                    AXT.at(ctx).startCommonIntent().openUrl("https://play.google.com/apps/testing/org.ligi.gobandroid_hd")
+                }
+        )
+    }
+
+    private fun startForClass(java: Class<out Activity>) {
+        ctx.startActivity(Intent(ctx, java).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
+    }
+
+    private fun startForPath(path: File) {
+        val next = startSGFListForPath(path)
+
+        if (!unzipSGFifNeeded(next)) {
+            ctx.startActivity(next)
+        }
     }
 
     fun handle() {
         navigationView.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-
-                R.id.menu_drawer_empty -> {
-                    val act_game = gameProvider.get()
-
-                    gameProvider.set(GoGame(act_game.size.toByte().toInt(), act_game.handicap.toByte().toInt()))
-
-                    EventBus.getDefault().post(GameChangedEvent.INSTANCE)
-
-                    ctx.closeDrawers()
-                    ctx.startActivity(Intent(ctx, GameRecordActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
-                    return@OnNavigationItemSelectedListener true
-                }
-
-                R.id.menu_drawer_links -> {
-                    ctx.closeDrawers()
-                    ctx.startActivity(Intent(ctx, LinksActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
-                    return@OnNavigationItemSelectedListener true
-                }
-
-                R.id.menu_drawer_settings -> {
-                    ctx.closeDrawers()
-                    ctx.startActivity(Intent(ctx, GoPrefsActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
-                    return@OnNavigationItemSelectedListener true
-                }
-
-                R.id.menu_drawer_tsumego -> {
-                    val next = startSGFListForPath(settings.tsumegoPath)
-
-                    if (!unzipSGFifNeeded(next)) {
-                        ctx.startActivity(next)
-                    }
-
-                    return@OnNavigationItemSelectedListener true
-                }
-
-                R.id.menu_drawer_review -> {
-                    val next2 = startSGFListForPath(settings.reviewPath)
-
-                    if (!unzipSGFifNeeded(next2)) {
-                        ctx.startActivity(next2)
-                    }
-
-                    return@OnNavigationItemSelectedListener true
-                }
-
-                R.id.menu_drawer_bookmark -> {
-                    ctx.startActivity(startSGFListForPath(settings.bookmarkPath))
-
-                    return@OnNavigationItemSelectedListener true
-                }
-
-
-                R.id.menu_drawer_profile -> {
-                    ctx.startActivity(Intent(ctx, BaseProfileActivity::class.java))
-                    return@OnNavigationItemSelectedListener true
-                }
-
-
-                R.id.menu_drawer_beta -> {
-                    AXT.at(ctx).startCommonIntent().openUrl("https://play.google.com/apps/testing/org.ligi.gobandroid_hd")
-                    return@OnNavigationItemSelectedListener true
-                }
-
-                else -> return@OnNavigationItemSelectedListener false
+            val function = actionMap[item.itemId]
+            if (function != null) {
+                ctx.closeDrawers()
+                function.invoke()
+                return@OnNavigationItemSelectedListener true
             }
-
+            return@OnNavigationItemSelectedListener false
         })
     }
 
