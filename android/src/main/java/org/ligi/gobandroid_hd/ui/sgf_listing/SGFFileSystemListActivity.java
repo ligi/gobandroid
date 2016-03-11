@@ -18,7 +18,6 @@
 
 package org.ligi.gobandroid_hd.ui.sgf_listing;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +27,6 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsDialog;
-import org.ligi.gobandroid_hd.ui.tsumego.fetch.TsumegoSource;
 
 import java.io.File;
 
@@ -42,7 +40,6 @@ import static org.ligi.gobandroid_hd.InteractionScope.Mode.TSUMEGO;
 public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
 
     private SGFListFragment list_fragment;
-    private AsyncTask<TsumegoSource[], String, Integer> downloadProblemsTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,14 +101,6 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
     }
 
     @Override
-    protected void onStop() {
-        if (downloadProblemsTask != null) {
-            downloadProblemsTask.cancel(true);
-        }
-        super.onStop();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (interactionScope.getMode() == TSUMEGO) {
             getMenuInflater().inflate(R.menu.refresh_tsumego, menu);
@@ -128,7 +117,8 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_refresh:
-                downloadProblemsTask = DownloadProblemsDialog.getAndRunTask(this, list_fragment);
+                new DownloadProblemsDialog(this, list_fragment).show();
+
                 return true;
             case R.id.menu_del_sgfmeta:
                 list_fragment.delete_sgfmeta();

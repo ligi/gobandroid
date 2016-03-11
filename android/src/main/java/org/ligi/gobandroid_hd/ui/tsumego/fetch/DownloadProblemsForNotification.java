@@ -12,7 +12,7 @@ public class DownloadProblemsForNotification {
 
         App.getTracker().trackEvent("ui_action", "tsumego", "refresh_notification", null);
 
-        final int res = TsumegoDownloadHelper.doDownloadDefault(app);
+        final int res = TsumegoDownloadHelper.INSTANCE.doDownloadDefault(app);
         if (res > 0) {
             new GobandroidNotifications(ctx).addNewTsumegosNotification(res);
         }

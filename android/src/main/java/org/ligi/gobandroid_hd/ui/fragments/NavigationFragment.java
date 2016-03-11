@@ -31,7 +31,7 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
 
     @OnClick(R.id.btn_next)
     public void gameNavNext() {
-        GameForwardAlert.showIfNeeded(getActivity(), game);
+        GameForwardAlert.Companion.showIfNeeded(getActivity(), game);
     }
 
     @OnClick(R.id.btn_prev)

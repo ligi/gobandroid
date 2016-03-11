@@ -167,7 +167,7 @@ public class GoGamePlayerActivity extends GoActivity {
 
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
                 case KeyEvent.KEYCODE_MEDIA_NEXT:
-                    GameForwardAlert.showIfNeeded(this, getGame());
+                    GameForwardAlert.Companion.showIfNeeded(this, getGame());
                     return true;
 
                 case KeyEvent.KEYCODE_DPAD_UP:
