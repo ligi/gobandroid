@@ -144,12 +144,18 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
 
         addModeItem(contentView, EDIT, R.string.edit, R.drawable.ic_editor_mode_edit)
 
-        if (gameProvider.get().actMove.movePos > 0) {
+        val actMove = gameProvider.get().actMove
+        if (actMove.hasNextMove() || actMove.parent != null)
+            addModeItem(contentView, REVIEW, R.string.review, R.drawable.ic_maps_local_movies)
+
+        if (actMove.movePos > 0) {
             // these modes only make sense if there is minimum one
             addModeItem(contentView, COUNT, R.string.count, R.drawable.ic_editor_pie_chart)
-            addModeItem(contentView, REVIEW, R.string.review, R.drawable.ic_maps_local_movies)
-            addModeItem(contentView, TELEVIZE, R.string.televize, R.drawable.ic_notification_live_tv)
+        }
+
+        if (actMove.hasNextMove()) {
             addModeItem(contentView, TSUMEGO, R.string.tsumego, R.drawable.ic_action_extension)
+            addModeItem(contentView, TELEVIZE, R.string.televize, R.drawable.ic_notification_live_tv)
         }
 
         if (isPlayStoreInstalled || GnuGoHelper.isGnuGoAvail(activity)) {
