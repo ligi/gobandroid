@@ -6,6 +6,7 @@ class CreditsListFragment : LinkListFragment() {
         return arrayOf(
                 LinkWithDescription("http://ligi.de", "idea / concept / code ", "Ligi"),
 
+                LinkWithDescription("https://www.transifex.com/ligi/gobandroid/", "Transifex for managing translations", "Please join here to help localize"),
                 LinkWithDescription("http://gogameguru.com/", "source of default Tsumego and commented game SGF's", "gogameguru.com"),
                 LinkWithDescription("http://jakewharton.github.io/butterknife/", "Jake Wharton", "ButterKnife"),
                 LinkWithDescription("https://developers.google.com/", "Google", "Android, Dagger, .."),
