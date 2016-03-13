@@ -47,6 +47,7 @@
         <activity
             android:name="org.ligi.gobandroid_hd.ui.GobanDroidTVActivity"
             android:icon="@drawable/gobandroid_tv"
+            android:launchMode="singleTask"
             android:label="Gobandroid TV">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
