@@ -323,6 +323,10 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements Runnable {
             return "";
         }
 
+        if (cell == null) {
+            Log.w("coordinates2gtpstr cell with game==null");
+            return "";
+        }
         return GTPHelper.coordinates2gtpstr(cell, getGame().getSize());
     }
 
