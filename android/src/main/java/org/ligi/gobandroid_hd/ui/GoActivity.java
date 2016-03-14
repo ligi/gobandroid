@@ -56,7 +56,11 @@ import org.ligi.gobandroid_hd.ui.review.BookmarkDialog;
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
 import org.ligi.gobandroid_hd.ui.share.ShareSGFDialog;
 import org.ligi.snackengage.SnackEngage;
-import org.ligi.snackengage.snacks.DefaultRateSnack;
+import org.ligi.snackengage.conditions.AfterNumberOfOpportunities;
+import org.ligi.snackengage.conditions.NeverAgainWhenClickedOnce;
+import org.ligi.snackengage.conditions.locale.IsOneOfTheseLocales;
+import org.ligi.snackengage.snacks.RateSnack;
+import org.ligi.snackengage.snacks.TranslateSnack;
 import org.ligi.tracedroid.logging.Log;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 
@@ -64,6 +68,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -112,7 +117,13 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         if (!App.isTesting) {
             // if there where stacktraces collected -> give the user the option to send them
             if (!TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this)) {
-                SnackEngage.from(go_board).withSnack(new DefaultRateSnack()).build().engageWhenAppropriate();
+                SnackEngage.from(go_board)
+                        .withSnack(new RateSnack()
+                                .withConditions(new NeverAgainWhenClickedOnce(), new AfterNumberOfOpportunities(42)))
+                        .withSnack(new TranslateSnack("https://www.transifex.com/ligi/gobandroid/")
+                                .withConditions(new AfterNumberOfOpportunities(4), new IsOneOfTheseLocales(Locale.KOREA, Locale.KOREAN), new NeverAgainWhenClickedOnce()))
+                        .build()
+                        .engageWhenAppropriate();
             }
         }
 
