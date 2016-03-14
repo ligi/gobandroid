@@ -75,6 +75,21 @@ public class GameInfoDialog extends GobandroidDialog {
     @Bind(R.id.game_date_et)
     EditText game_date_et;
 
+    @OnClick(R.id.button_komi_seven)
+    void onKomi7() {
+        game_komi_et.setText("7.5");
+    }
+
+    @OnClick(R.id.button_komi_six)
+    void onKomi6() {
+        game_komi_et.setText("6.5");
+    }
+
+    @OnClick(R.id.button_komi_five)
+    void onKomi5() {
+        game_komi_et.setText("5.5");
+    }
+
     @OnClick(R.id.user_is_black_btn)
     void onBlack() {
         if (checkUserNamePresent()) {
