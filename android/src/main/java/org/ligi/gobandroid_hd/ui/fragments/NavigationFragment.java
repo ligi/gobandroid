@@ -29,9 +29,15 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     @Bind(R.id.btn_last)
     ImageView last_btn;
 
+    @Bind(R.id.btn_last_var)
+    ImageView last_var_btn;
+
+    @Bind(R.id.btn_next_var)
+    ImageView next_var_btn;
+
     @OnClick(R.id.btn_next)
     public void gameNavNext() {
-        GameForwardAlert.Companion.showIfNeeded(getActivity(), game);
+        game.redo(0);
     }
 
     @OnClick(R.id.btn_prev)
@@ -39,6 +45,16 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
         if (game.canUndo()) {
             game.undo();
         }
+    }
+
+    @OnClick(R.id.btn_last_var)
+    public void gameVarLast() {
+        game.jump(game.lastVarMove());
+    }
+
+    @OnClick(R.id.btn_next_var)
+    public void gameVarNext() {
+        game.jump(game.nextVarMove());
     }
 
     @Override
@@ -60,7 +76,6 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
             public void onClick(View v) {
                 game.jumpLast();
             }
-
         });
 
         updateButtonStates();
@@ -80,9 +95,11 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
 
         first_btn.setVisibility(game.canUndo() ? View.VISIBLE : View.INVISIBLE);
         prev_btn.setVisibility(game.canUndo() ? View.VISIBLE : View.INVISIBLE);
-
         next_btn.setVisibility(game.canRedo() ? View.VISIBLE : View.INVISIBLE);
         last_btn.setVisibility(game.canRedo() ? View.VISIBLE : View.INVISIBLE);
+        last_var_btn.setVisibility(game.lastVarMove() != null ?  View.VISIBLE : View.INVISIBLE);
+        next_var_btn.setVisibility(game.nextVarMove() != null ?  View.VISIBLE : View.INVISIBLE);
+
     }
 
 
