@@ -47,5 +47,25 @@
         android:layout_height="@dimen/nav_buttons_size"
         android:background="@drawable/clickable_bg" />
 
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_weight="1"
+        android:focusable="true"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_navigation_first_page"
+        android:id="@+id/btn_last_var"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/nav_buttons_size"
+        android:background="@drawable/clickable_bg" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_weight="1"
+        android:focusable="true"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_navigation_last_page"
+        android:id="@+id/btn_next_var"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/nav_buttons_size"
+        android:background="@drawable/clickable_bg" />
+
 </LinearLayout>
 
