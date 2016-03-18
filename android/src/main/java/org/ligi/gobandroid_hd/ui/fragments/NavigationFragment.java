@@ -93,13 +93,46 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
             return;
         }
 
-        first_btn.setVisibility(game.canUndo() ? View.VISIBLE : View.INVISIBLE);
-        prev_btn.setVisibility(game.canUndo() ? View.VISIBLE : View.INVISIBLE);
-        next_btn.setVisibility(game.canRedo() ? View.VISIBLE : View.INVISIBLE);
-        last_btn.setVisibility(game.canRedo() ? View.VISIBLE : View.INVISIBLE);
-        last_var_btn.setVisibility(game.lastVarMove() != null ?  View.VISIBLE : View.INVISIBLE);
-        next_var_btn.setVisibility(game.nextVarMove() != null ?  View.VISIBLE : View.INVISIBLE);
-
+        if(game.canUndo())
+        {
+            first_btn.setEnabled(true);
+            first_btn.setAlpha(255);
+            prev_btn.setEnabled(true);
+            prev_btn.setAlpha(255);
+        }else{
+            first_btn.setEnabled(false);
+            first_btn.setAlpha(100);
+            prev_btn.setEnabled(false);
+            prev_btn.setAlpha(100);
+        }
+        if(game.canRedo())
+        {
+            next_btn.setEnabled(true);
+            next_btn.setAlpha(255);
+            last_btn.setEnabled(true);
+            last_btn.setAlpha(255);
+        }else{
+            next_btn.setEnabled(false);
+            next_btn.setAlpha(100);
+            last_btn.setEnabled(false);
+            last_btn.setAlpha(100);
+        }
+        if(game.lastVarMove() != null)
+        {
+            last_var_btn.setEnabled(true);
+            last_var_btn.setAlpha(255);
+        }else{
+            last_var_btn.setEnabled(false);
+            last_var_btn.setAlpha(100);
+        }
+        if(game.nextVarMove() != null)
+        {
+            next_var_btn.setEnabled(true);
+            next_var_btn.setAlpha(255);
+        }else{
+            next_var_btn.setEnabled(false);
+            next_var_btn.setAlpha(100);
+        }
     }
 
 
