@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.events.GameChangedEvent;
+import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 
 import butterknife.Bind;
@@ -37,7 +38,11 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
 
     @OnClick(R.id.btn_next)
     public void gameNavNext() {
-        game.redo(0);
+        if(GoPrefs.getShowForwardAlert() == GoPrefs.SHOW_ALERT) {
+            GameForwardAlert.Companion.showIfNeeded(getActivity(), game);
+        }else{
+            game.redo(0);
+        }
     }
 
     @OnClick(R.id.btn_prev)
