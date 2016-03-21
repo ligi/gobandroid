@@ -51,8 +51,8 @@
         android:layout_weight="1"
         android:focusable="true"
         android:clickable="true"
-        app:srcCompat="@drawable/ic_navigation_last_var"
-        android:id="@+id/btn_last_var"
+        app:srcCompat="@drawable/ic_navigation_previous_var"
+        android:id="@+id/btn_previous_var"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/nav_buttons_size"
         android:background="@drawable/clickable_bg" />

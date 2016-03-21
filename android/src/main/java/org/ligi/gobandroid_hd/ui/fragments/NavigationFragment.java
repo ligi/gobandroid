@@ -30,7 +30,7 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     @Bind(R.id.btn_last)
     ImageView last_btn;
 
-    @Bind(R.id.btn_last_var)
+    @Bind(R.id.btn_previous_var)
     ImageView last_var_btn;
 
     @Bind(R.id.btn_next_var)
@@ -52,9 +52,9 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
         }
     }
 
-    @OnClick(R.id.btn_last_var)
+    @OnClick(R.id.btn_previous_var)
     public void gameVarLast() {
-        game.jump(game.lastVarMove());
+        game.jump(game.previousVarMove());
     }
 
     @OnClick(R.id.btn_next_var)
@@ -122,7 +122,7 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
             last_btn.setEnabled(false);
             last_btn.setAlpha(100);
         }
-        if(game.lastVarMove() != null)
+        if(game.previousVarMove() != null)
         {
             last_var_btn.setEnabled(true);
             last_var_btn.setAlpha(255);

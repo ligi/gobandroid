@@ -303,23 +303,22 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         }
 
     /**
-     * @return the last variations move
+     * @return the previous variations move
      */
-    fun lastVarMove(): GoMove?
+    fun previousVarMove(): GoMove?
         {
             var move = actMove
             if (move.isFirstMove) return null
             move = move.parent
 
-            var lastmove:GoMove?  = null
-            var found:Boolean = false
+            var previousmove:GoMove?  = null
             for (next_move_variation in move.nextMoveVariations) {
                 if (next_move_variation == actMove) {
-                    return lastmove
+                    return previousmove
                 }
-                lastmove = next_move_variation
+                previousmove = next_move_variation
             }
-            return lastmove
+            return previousmove
         }
     /**
      * @return the next variations move
