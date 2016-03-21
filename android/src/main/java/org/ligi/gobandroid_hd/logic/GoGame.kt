@@ -318,7 +318,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
                 }
                 previousmove = next_move_variation
             }
-            return previousmove
+            return null
         }
     /**
      * @return the next variations move
