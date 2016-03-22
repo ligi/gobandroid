@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.events.GameChangedEvent;
+import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 
 import butterknife.Bind;
@@ -29,9 +30,19 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     @Bind(R.id.btn_last)
     ImageView last_btn;
 
+    @Bind(R.id.btn_previous_var)
+    ImageView last_var_btn;
+
+    @Bind(R.id.btn_next_var)
+    ImageView next_var_btn;
+
     @OnClick(R.id.btn_next)
     public void gameNavNext() {
-        GameForwardAlert.Companion.showIfNeeded(getActivity(), game);
+        if(GoPrefs.getShowForwardAlert() == GoPrefs.SHOW_ALERT) {
+            GameForwardAlert.Companion.showIfNeeded(getActivity(), game);
+        }else{
+            game.redo(0);
+        }
     }
 
     @OnClick(R.id.btn_prev)
@@ -39,6 +50,16 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
         if (game.canUndo()) {
             game.undo();
         }
+    }
+
+    @OnClick(R.id.btn_previous_var)
+    public void gameVarLast() {
+        game.jump(game.previousVarMove());
+    }
+
+    @OnClick(R.id.btn_next_var)
+    public void gameVarNext() {
+        game.jump(game.nextVarMove());
     }
 
     @Override
@@ -60,7 +81,6 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
             public void onClick(View v) {
                 game.jumpLast();
             }
-
         });
 
         updateButtonStates();
@@ -78,11 +98,46 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
             return;
         }
 
-        first_btn.setVisibility(game.canUndo() ? View.VISIBLE : View.INVISIBLE);
-        prev_btn.setVisibility(game.canUndo() ? View.VISIBLE : View.INVISIBLE);
-
-        next_btn.setVisibility(game.canRedo() ? View.VISIBLE : View.INVISIBLE);
-        last_btn.setVisibility(game.canRedo() ? View.VISIBLE : View.INVISIBLE);
+        if(game.canUndo())
+        {
+            first_btn.setEnabled(true);
+            first_btn.setAlpha(255);
+            prev_btn.setEnabled(true);
+            prev_btn.setAlpha(255);
+        }else{
+            first_btn.setEnabled(false);
+            first_btn.setAlpha(100);
+            prev_btn.setEnabled(false);
+            prev_btn.setAlpha(100);
+        }
+        if(game.canRedo())
+        {
+            next_btn.setEnabled(true);
+            next_btn.setAlpha(255);
+            last_btn.setEnabled(true);
+            last_btn.setAlpha(255);
+        }else{
+            next_btn.setEnabled(false);
+            next_btn.setAlpha(100);
+            last_btn.setEnabled(false);
+            last_btn.setAlpha(100);
+        }
+        if(game.previousVarMove() != null)
+        {
+            last_var_btn.setEnabled(true);
+            last_var_btn.setAlpha(255);
+        }else{
+            last_var_btn.setEnabled(false);
+            last_var_btn.setAlpha(100);
+        }
+        if(game.nextVarMove() != null)
+        {
+            next_var_btn.setEnabled(true);
+            next_var_btn.setAlpha(255);
+        }else{
+            next_var_btn.setEnabled(false);
+            next_var_btn.setAlpha(100);
+        }
     }
 
 

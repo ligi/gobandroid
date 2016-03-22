@@ -302,6 +302,46 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
             }
         }
 
+    /**
+     * @return the previous variations move
+     */
+    fun previousVarMove(): GoMove?
+        {
+            var move = actMove
+            if (move.isFirstMove) return null
+            move = move.parent
+
+            var previousmove:GoMove?  = null
+            for (next_move_variation in move.nextMoveVariations) {
+                if (next_move_variation == actMove) {
+                    return previousmove
+                }
+                previousmove = next_move_variation
+            }
+            return null
+        }
+    /**
+     * @return the next variations move
+     */
+    fun nextVarMove(): GoMove?
+        {
+            var move = actMove
+            if (move.isFirstMove) return null
+            move = move.parent
+
+            var found:Boolean = false
+            for (next_move_variation in move.nextMoveVariations) {
+                if(found)
+                {
+                    return next_move_variation;
+                }
+                if (next_move_variation == actMove) {
+                    found = true ;
+                }
+            }
+            return null;
+        }
+
     fun refreshBoards() {
         jump(actMove)
     }

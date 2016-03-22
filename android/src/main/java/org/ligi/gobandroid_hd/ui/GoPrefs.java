@@ -50,6 +50,10 @@ public class GoPrefs {
     public final static int DEFAULT_LAST_BOARD_SIZE = 9;
     public final static int DEFAULT_LAST_HANDICAP = 0;
 
+    public final static String SHOW_ALERT_WIN = "show_var_alert_win";
+    public final static boolean SHOW_ALERT = false;
+    public final static boolean NOT_SHOW_ALERT = true;
+
     public static void init(Context context) {
         shared_prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
@@ -90,5 +94,11 @@ public class GoPrefs {
         return shared_prefs.getString(KEY_SGF_PATH, DEFAULT_SGF_PATH);
     }
 
+    public static boolean getShowForwardAlert() {
+        return shared_prefs.getBoolean(SHOW_ALERT_WIN, SHOW_ALERT);
+    }
+    public static void setShowForwardAlert(boolean show) {
+        shared_prefs.edit().putBoolean(SHOW_ALERT_WIN, show).apply();
+    }
 
 }

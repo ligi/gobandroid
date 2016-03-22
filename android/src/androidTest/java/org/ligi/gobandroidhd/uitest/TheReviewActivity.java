@@ -17,6 +17,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.not;
@@ -59,11 +60,11 @@ public class TheReviewActivity extends BaseIntegration<GameReviewActivity> {
 
         getActivity();
 
-        onView(withId(R.id.btn_next)).check(matches(isDisplayed()));
-        onView(withId(R.id.btn_last)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_next)).check(matches(isEnabled()));
+        onView(withId(R.id.btn_last)).check(matches(isEnabled()));
 
-        onView(withId(R.id.btn_prev)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.btn_first)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.btn_prev)).check(matches(not(isEnabled())));
+        onView(withId(R.id.btn_first)).check(matches(not(isEnabled())));
     }
 
 
@@ -75,11 +76,11 @@ public class TheReviewActivity extends BaseIntegration<GameReviewActivity> {
 
         onView(withId(R.id.btn_next)).perform(click());
 
-        onView(withId(R.id.btn_next)).check(matches(isDisplayed()));
-        onView(withId(R.id.btn_last)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_next)).check(matches(isEnabled()));
+        onView(withId(R.id.btn_last)).check(matches(isEnabled()));
 
-        onView(withId(R.id.btn_prev)).check(matches(isDisplayed()));
-        onView(withId(R.id.btn_first)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_prev)).check(matches(isEnabled()));
+        onView(withId(R.id.btn_first)).check(matches(isEnabled()));
 
     }
 
@@ -91,11 +92,11 @@ public class TheReviewActivity extends BaseIntegration<GameReviewActivity> {
 
         onView(withId(R.id.btn_last)).perform(click());
 
-        onView(withId(R.id.btn_next)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.btn_last)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.btn_next)).check(matches(not(isEnabled())));
+        onView(withId(R.id.btn_last)).check(matches(not(isEnabled())));
 
-        onView(withId(R.id.btn_prev)).check(matches(isDisplayed()));
-        onView(withId(R.id.btn_first)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_prev)).check(matches(isEnabled()));
+        onView(withId(R.id.btn_first)).check(matches(isEnabled()));
 
     }
 
