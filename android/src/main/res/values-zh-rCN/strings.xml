@@ -233,10 +233,6 @@
   <string name="select_variation_prompt">下次直接用上或下按钮切换分支,不再提示分支选择窗口</string>
   <string name="legend">图例</string>
   <string name="link_tab_videos">视频</string>
-  <string name="switch_variation_style">浏览分支方式</string>
-  <string name="variation_from_alert_win">通过分支窗口选择分支</string>
-  <string name="variation_from_updown_btn"></string>
-  <string name="variation_from_up_down_btn">通过上下键切换分支</string>
   <string name="variations_found"> 个分支变化,选择哪个?</string>
   <string name="betatest_opt_in_out">参与/退出BETA测试</string>
   <string name="downloading_tsumegos_please_wait">查找下载中,请稍候</string>

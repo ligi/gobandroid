@@ -47,9 +47,8 @@
         <CheckBoxPreference
             android:title="@string/switch_variation_style"
             android:key="show_var_alert_win"
-            android:defaultValue="0"
-            android:summaryOn="@string/variation_from_up_down_btn"
-            android:summaryOff="@string/variation_from_alert_win"
+            android:defaultValue="1"
+            android:summary="@string/variation_from_alert"
             />
 
     </PreferenceCategory>

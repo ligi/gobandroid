@@ -264,9 +264,8 @@
     <string name="no_definition_found">no Definition found</string>
     <string name="copy_sgf_dialog_message">Copying SGF\'s. Please wait...</string>
     <string name="betatest_opt_in_out">Betatest opt-in/out</string>
-    <string name="switch_variation_style">Switch variation style</string>
-    <string name="variation_from_alert_win">Select variation from popup windows</string>
-    <string name="variation_from_up_down_btn">Select variation from up/down button</string>
-    <string name="select_variation_prompt">Select variations from up/down button, do not show chosen window </string>
+    <string name="switch_variation_style">Show variation dialog</string>
+    <string name="variation_from_alert">additional to up/down buttons</string>
+    <string name="select_variation_prompt">Do not show this window again - only select variation via up/down</string>
     <string name="variations_found"> Variations found for this move - which should we take?</string>
 </resources>
