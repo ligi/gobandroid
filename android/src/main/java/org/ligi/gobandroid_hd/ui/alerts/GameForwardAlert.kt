@@ -20,11 +20,13 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.logic.markers.TextMarker
+import org.ligi.gobandroid_hd.ui.GoPrefs
 import org.ligi.gobandroid_hd.ui.GobandroidDialog
 
 /**
@@ -45,13 +47,14 @@ class GameForwardAlert(context: Context, game: GoGame) : GobandroidDialog(contex
 
         val message = findViewById(R.id.message) as TextView
         val buttonContainer = findViewById(R.id.buttonContainer) as ViewGroup
+        val showvariationwin = findViewById(R.id.variant_promote_tips) as CheckBox
 
         // show the comment when there is one - useful for SGF game problems
         val variationCount = game.possibleVariationCount + 1
         if (game.actMove.hasComment()) {
             message.text = game.actMove.comment
         } else {
-            message.text = "$variationCount  Variations found for this move - which should we take?"
+            message.text = "$variationCount " + context.getString(R.string.variations_found)
         }
 
         val var_select_listener = View.OnClickListener {
@@ -60,8 +63,12 @@ class GameForwardAlert(context: Context, game: GoGame) : GobandroidDialog(contex
                 it.isEnabled = false // prevent multi-click
                 game.redo(it.tag as Int)
             }
-        }
 
+            if(showvariationwin.isChecked)
+            {
+                GoPrefs.setShowForwardAlert(GoPrefs.NOT_SHOW_ALERT)
+            }
+        }
 
         for (i in 0..variationCount - 1) {
             val var_btn = Button(context)

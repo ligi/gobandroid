@@ -18,6 +18,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -66,22 +67,22 @@ public class TheGameInfoDialog extends BaseIntegration<GameReviewActivity> {
         final GameReviewActivity activity = getActivity();
         onView(withId(R.id.menu_game_info)).perform(click());
 
-        onView(withId(R.id.game_name_et)).perform(typeText(CUSTOM_GAME_NAME));
+        onView(withId(R.id.game_name_et)).perform(replaceText(CUSTOM_GAME_NAME));
 
-        onView(withId(R.id.black_rank_et)).perform(typeText(CUSTOM_BLACK_RANK));
+        onView(withId(R.id.black_rank_et)).perform(replaceText(CUSTOM_BLACK_RANK));
 
         onView(withId(R.id.user_is_black_btn)).check(matches(isDisplayed()));
-        onView(withId(R.id.black_name_et)).perform(typeText(CUSTOM_BLACK_NAME));
+        onView(withId(R.id.black_name_et)).perform(replaceText(CUSTOM_BLACK_NAME));
         onView(withId(R.id.user_is_black_btn)).check(matches(not(isDisplayed())));
 
         onView(withId(R.id.white_rank_et)).perform(scrollTo());
-        onView(withId(R.id.white_rank_et)).perform(typeText(CUSTOM_WHITE_RANK));
-        onView(withId(R.id.white_name_et)).perform(typeText(CUSTOM_WHITE_NAME));
+        onView(withId(R.id.white_rank_et)).perform(replaceText(CUSTOM_WHITE_RANK));
+        onView(withId(R.id.white_name_et)).perform(replaceText(CUSTOM_WHITE_NAME));
 
 
-        onView(withId(R.id.komi_et)).perform(scrollTo(),clearText() ,typeText(CUSTOM_KOMI));
+        onView(withId(R.id.komi_et)).perform(scrollTo(),clearText() ,replaceText(CUSTOM_KOMI));
 
-        onView(withId(R.id.game_result_et)).perform(scrollTo(),clearText() ,typeText(CUSTOM_KOMI),closeSoftKeyboard());
+        onView(withId(R.id.game_result_et)).perform(scrollTo(),clearText() ,replaceText(CUSTOM_KOMI),closeSoftKeyboard());
 
         sleep(100);
 
