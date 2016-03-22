@@ -26,6 +26,7 @@ class CreditsListFragment : LinkListFragment() {
                 LinkWithDescription("http://plus.google.com/104678898719261371574", "Spanish and Catalan", "Toni Garcia-Die"),
                 LinkWithDescription("http://plus.google.com/105766576009856509183", "Italian Translation", "Livio Lo Verso"),
                 LinkWithDescription("http://plus.google.com/116001545198026111276", "feedback & patches", "Oren Laskin on Google+"),
+                LinkWithDescription("https://plus.google.com/u/0/114810044949660525922", "PullRequests", "徐鸿 ( aka icehong )"),
                 LinkWithDescription("http://plus.google.com/105303388887291066710", "wooden background", "Ruth -lironah- Hinckley on Google+"),
                 LinkWithDescription("http://www.sente.ch", "FreegGoban stones", "sente.ch"))
     }
