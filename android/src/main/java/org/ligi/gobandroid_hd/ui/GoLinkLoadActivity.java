@@ -1,9 +1,9 @@
 package org.ligi.gobandroid_hd.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink;
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity;
@@ -16,7 +16,7 @@ import org.ligi.tracedroid.logging.Log;
  *         <p/>
  *         This software is licenced with GPLv3
  */
-public class GoLinkLoadActivity extends Activity {
+public class GoLinkLoadActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

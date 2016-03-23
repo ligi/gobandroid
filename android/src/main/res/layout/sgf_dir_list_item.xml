@@ -14,7 +14,7 @@
         android:drawableLeft="@drawable/ic_file_folder_wrapped"
         android:drawableStart="@drawable/ic_file_folder_wrapped"
         android:fontFamily="sans-serif"
-        android:textColor="@android:color/black"
+        android:textColor="?attr/colorControlNormal"
         android:textSize="@dimen/text_size_large"
         android:background="@drawable/clickable_bg"
         tools:text="Folder Name" />

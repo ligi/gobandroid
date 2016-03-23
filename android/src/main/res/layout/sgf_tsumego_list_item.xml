@@ -27,7 +27,7 @@
             android:layout_toRightOf="@id/solve_status_image"
             android:fontFamily="sans-serif"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/black"
+            android:textColor="?attr/colorControlNormal"
             tools:text="Large Text" />
 
         <TextView

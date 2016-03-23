@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.StringRes;
+import android.support.v7.app.AppCompatDelegate;
 
 import org.ligi.gobandroid_hd.R;
 
@@ -114,4 +115,25 @@ public class GobandroidSettings {
 
         return false;
     }
+
+    public int getTheme() {
+        final String dayNightMode = getPreferences().getString(ctx.getString(R.string.prefs_daynight), "auto");
+
+        switch (dayNightMode) {
+            case "day":
+
+                return AppCompatDelegate.MODE_NIGHT_NO;
+
+            case "night":
+
+                return AppCompatDelegate.MODE_NIGHT_YES;
+
+            default:
+            case "auto":
+
+                return AppCompatDelegate.MODE_NIGHT_AUTO;
+
+        }
+    }
+
 }

@@ -6,10 +6,10 @@
         <item name="displayOptions"/>
     </style>
 
-    <style name="dialog_theme" parent="Base.Theme.AppCompat.Light.Dialog">
+    <style name="dialog_theme" parent="Theme.AppCompat.DayNight.Dialog">
     </style>
 
-    <style name="TransparentTheme" parent="@style/Theme.AppCompat">
+    <style name="TransparentTheme" parent="@style/Theme.AppCompat.DayNight">
 
         <item name="android:background">@android:color/transparent</item>
         <item name="background">@android:color/transparent</item>
@@ -25,7 +25,7 @@
         <item name="android:background">@drawable/shinkaya</item>
     </style>
 
-    <style name="base_theme" parent="Theme.AppCompat.Light">
+    <style name="base_theme" parent="Theme.AppCompat.DayNight">
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="android:windowAnimationStyle">@null</item>
 
@@ -108,7 +108,7 @@
     <style name="review_list_text">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">#000000</item>
+        <item name="android:textColor">?attr/colorControlNormal</item>
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
     </style>

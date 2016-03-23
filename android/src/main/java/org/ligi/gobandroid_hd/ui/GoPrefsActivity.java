@@ -18,11 +18,19 @@
 
 package org.ligi.gobandroid_hd.ui;
 
+import android.annotation.TargetApi;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
+import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
+import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
+
+import javax.inject.Inject;
 
 /**
  * Activity to edit the gobandroid game preferences
@@ -33,11 +41,15 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
  */
 public class GoPrefsActivity extends GobandroidFragmentActivity {
 
-    public static class GoPrefsFragment extends PreferenceFragmentCompat {
+    public static class GoPrefsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+        @Inject
+        GobandroidSettings settings;
 
         @Override
         public void onCreatePreferences(final Bundle bundle, final String rootKey) {
 
+            App.component().inject(this);
             setPreferencesFromResource(R.xml.preferences, rootKey);
 
             // fullscreen setting is not useful when fullscreen is forced for small devices
@@ -46,6 +58,36 @@ public class GoPrefsActivity extends GobandroidFragmentActivity {
             findPreference(getString(R.string.prefs_push_tsumego)).setVisible(false); // TODO bring back
 
             findPreference(getString(R.string.prefs_sgf_legend)).setDependency(getString(R.string.prefs_do_legend));
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+
+            getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+
+        }
+
+        @Override
+        public void onPause() {
+            super.onPause();
+
+            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key.equals(getString(R.string.prefs_daynight))) {
+                AppCompatDelegate.setDefaultNightMode(settings.getTheme());
+                recreateActivity();
+            }
+        }
+
+        @TargetApi(11)
+        public void recreateActivity() {
+            if (Build.VERSION.SDK_INT >= 11) {
+                getActivity().recreate();
+            }
         }
     }
 

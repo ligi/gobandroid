@@ -268,4 +268,9 @@
     <string name="variation_from_alert">additional to up/down buttons</string>
     <string name="select_variation_prompt">Do not show this window again - only select variation via up/down</string>
     <string name="variations_found"> Variations found for this move - which should we take?</string>
+    <array name="day_night">
+        <item>Day</item>
+        <item>Night</item>
+        <item>Auto</item>
+    </array>
 </resources>

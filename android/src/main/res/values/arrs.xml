@@ -18,4 +18,10 @@
         <item>@string/share</item>
     </string-array>
 
+    <array name="day_night_keys">
+        <item>day</item>
+        <item>night</item>
+        <item>auto</item>
+    </array>
+
 </resources>

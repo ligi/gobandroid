@@ -2,6 +2,7 @@ package org.ligi.gobandroid_hd.etc;
 
 import org.ligi.gobandroid_hd.ui.CustomActionBar;
 import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
+import org.ligi.gobandroid_hd.ui.GoPrefsActivity;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
@@ -40,4 +41,6 @@ public interface AppComponent {
     void inject(GobandroidFragment gobandroidFragment);
 
     void inject(GobandroidNotifications gobandroidNotifications);
+
+    void inject(GoPrefsActivity.GoPrefsFragment goPrefsFragment);
 }

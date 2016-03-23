@@ -8,5 +8,6 @@
     <string name="prefs_fullscreen">fullscreen</string>
     <string name="prefs_constant_light">constant_light</string>
     <string name="prefs_push_tsumego">push_tsumego</string>
+    <string name="prefs_daynight">daynight</string>
 
 </resources>

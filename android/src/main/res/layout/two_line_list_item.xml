@@ -22,7 +22,7 @@
                 android:layout_width="fill_parent"
                 android:fontFamily="sans-serif"
                 android:layout_height="wrap_content"
-                android:textColor="#000000"/>
+            android:textColor="?attr/colorControlNormal" />
 
         <TextView
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -30,6 +30,6 @@
                 android:layout_height="wrap_content"
                 android:id="@android:id/text2"
                 android:fontFamily="sans-serif-light"
-                android:textColor="#000000"/>
+            android:textColor="?attr/colorControlNormal" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

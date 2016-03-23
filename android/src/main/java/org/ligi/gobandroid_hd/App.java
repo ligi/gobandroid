@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd;
 
 import android.app.Application;
+import android.support.v7.app.AppCompatDelegate;
 
 import org.ligi.gobandroid_hd.etc.AppComponent;
 import org.ligi.gobandroid_hd.etc.AppModule;
@@ -14,6 +15,7 @@ import org.ligi.tracedroid.logging.Log;
  * the central Application-Context
  */
 public class App extends Application {
+
 
     private static AppComponent component;
 
@@ -31,6 +33,10 @@ public class App extends Application {
         Log.setTAG("gobandroid");
 
         CloudHooks.onApplicationCreation(this);
+
+
+        AppCompatDelegate.setDefaultNightMode(component.settings().getTheme());
+
     }
 
     public static GobandroidTracker getTracker() {
