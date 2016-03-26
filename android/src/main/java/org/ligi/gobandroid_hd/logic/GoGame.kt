@@ -537,15 +537,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
             return false
         }
 
-        if (move1.hasNextMove()) {
-            for (next_move in move1.nextMoveVariations) {
-                if (!hasNextMove(move1, next_move)) {
-                    return false
-                }
-            }
-        }
-
-        return true
+        return !move1.nextMoveVariations.any { !hasNextMove(move1, it) }
     }
 
 
