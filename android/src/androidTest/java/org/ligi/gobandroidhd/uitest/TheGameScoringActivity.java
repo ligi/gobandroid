@@ -59,6 +59,8 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
 
         onView(withId(R.id.go_board)).perform(tapStone(new CellImpl(0, 0), gameProvider.get()));
 
+        sleep();
+
         onView(withId(R.id.final_black)).perform(scrollTo());
         onView(withId(R.id.final_black)).check(matches(withText("80.0")));
         onView(withId(R.id.captures_black)).check(matches(withText("0")));
@@ -78,12 +80,22 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
 
         onView(withId(R.id.go_board)).perform(tapStone(new CellImpl(0, 0), gameProvider.get()));
 
+        sleep();
+
         onView(withId(R.id.final_black)).perform(scrollTo());
         onView(withId(R.id.final_black)).check(matches(withText("81.0")));
         onView(withId(R.id.captures_black)).check(matches(withText("0 + 1")));
         onView(withId(R.id.result_txt)).check(matches(withText(containsString("Black"))));
 
         Spoon.screenshot(activity, "count_mark_one");
+    }
+
+    public void sleep() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @MediumTest
@@ -95,6 +107,8 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
         final GameScoringActivity activity = getActivity();
 
         onView(withId(R.id.go_board)).perform(tapStone(new CellImpl(0, 1), gameProvider.get()));
+
+        sleep();
 
         onView(withId(R.id.final_white)).perform(scrollTo());
         onView(withId(R.id.final_white)).check(matches(withText("87.5")));
@@ -133,6 +147,8 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
 
         onView(withId(R.id.go_board)).perform(tapStone(new CellImpl(0, 1), gameProvider.get()));
 
+        sleep();
+
         onView(withId(R.id.final_white)).check(matches(withText("88.5")));
 
         Spoon.screenshot(activity, "count_mark_group");
@@ -144,11 +160,6 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
 
         private GameBuilder(GoGame game) {
             this.game = game;
-        }
-
-        public GameBuilder move(Cell cell) {
-            game.do_move(cell);
-            return this;
         }
 
         public GameBuilder move(Cell... cells) {
