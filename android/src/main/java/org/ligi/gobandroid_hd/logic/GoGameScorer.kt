@@ -64,16 +64,14 @@ class GoGameScorer(private val game: GoGame) {
 
                 if (calc_board.isCellFree(boardCell)) {
 
-                    val assign: Byte
-
-                    if (containsOneOfButNotTheOther(calc_board, areaCellGatherer.processed, PLAYER_BLACK)) {
-                        assign = PLAYER_BLACK
+                    val assign = if (containsOneOfButNotTheOther(calc_board, areaCellGatherer.processed, PLAYER_BLACK)) {
                         territory_black += areaCellGatherer.gatheredCells.size
+                        PLAYER_BLACK
                     } else if (containsOneOfButNotTheOther(calc_board, areaCellGatherer.processed, PLAYER_WHITE)) {
-                        assign = PLAYER_WHITE
                         territory_white += areaCellGatherer.gatheredCells.size
+                        PLAYER_WHITE
                     } else {
-                        assign = PLAYER_NONE
+                        PLAYER_NONE
                     }
 
                     if (assign > 0)
@@ -102,7 +100,7 @@ class GoGameScorer(private val game: GoGame) {
         return res
     }
 
-    fun calculateDead() {
+    private fun calculateDead() {
         dead_white = 0
         dead_black = 0
 
@@ -119,9 +117,9 @@ class GoGameScorer(private val game: GoGame) {
     }
 
     val pointsWhite: Float
-        get() = game.komi + game.capturesWhite.toFloat() + territory_white.toFloat() + dead_black.toFloat()
+        get() = game.komi + game.capturesWhite + territory_white + dead_black
 
     val pointsBlack: Float
-        get() = game.capturesBlack + territory_black + dead_white.toFloat()
+        get() = (game.capturesBlack + territory_black + dead_white).toFloat()
 
 }
