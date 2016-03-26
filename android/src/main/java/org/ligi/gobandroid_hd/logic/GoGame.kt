@@ -305,42 +305,40 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     /**
      * @return the previous variations move
      */
-    fun previousVarMove(): GoMove?
-        {
-            var move = actMove
-            if (move.isFirstMove) return null
-            move = move.parent
+    fun previousVarMove(): GoMove? {
+        var move = actMove
+        if (move.isFirstMove) return null
+        move = move.parent
 
-            var previousmove:GoMove?  = null
-            for (next_move_variation in move.nextMoveVariations) {
-                if (next_move_variation == actMove) {
-                    return previousmove
-                }
-                previousmove = next_move_variation
+        var previousmove: GoMove? = null
+        for (next_move_variation in move.nextMoveVariations) {
+            if (next_move_variation == actMove) {
+                return previousmove
             }
-            return null
+            previousmove = next_move_variation
         }
+        return null
+    }
+
     /**
      * @return the next variations move
      */
-    fun nextVarMove(): GoMove?
-        {
-            var move = actMove
-            if (move.isFirstMove) return null
-            move = move.parent
+    fun nextVarMove(): GoMove? {
+        var move = actMove
+        if (move.isFirstMove) return null
+        move = move.parent
 
-            var found:Boolean = false
-            for (next_move_variation in move.nextMoveVariations) {
-                if(found)
-                {
-                    return next_move_variation;
-                }
-                if (next_move_variation == actMove) {
-                    found = true ;
-                }
+        var found: Boolean = false
+        for (next_move_variation in move.nextMoveVariations) {
+            if (found) {
+                return next_move_variation;
             }
-            return null;
+            if (next_move_variation == actMove) {
+                found = true ;
+            }
         }
+        return null;
+    }
 
     fun refreshBoards() {
         jump(actMove)
@@ -524,7 +522,6 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
      */
     fun isContentEqualTo(other: GoGame): Boolean {
         return other.boardSize == boardSize && compareMovesRecursive(firstMove, other.firstMove)
-
     }
 
     fun hasNextMove(move1: GoMove, expected: GoMove): Boolean {
