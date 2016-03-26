@@ -527,14 +527,8 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
 
     }
 
-    fun hasNextMove(move1: GoMove, move2: GoMove): Boolean {
-
-        for (next_move in move1.nextMoveVariations) {
-            if (next_move.isContentEqual(move2)) {
-                return true
-            }
-        }
-        return false
+    fun hasNextMove(move1: GoMove, expected: GoMove): Boolean {
+        return move1.nextMoveVariations.any { it.isContentEqual(expected) }
     }
 
     private fun compareMovesRecursive(move1: GoMove, move2: GoMove): Boolean {
