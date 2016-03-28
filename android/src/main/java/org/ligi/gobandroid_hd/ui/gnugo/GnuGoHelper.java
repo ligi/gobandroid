@@ -25,6 +25,11 @@ public class GnuGoHelper {
             final String act_line = split_board[gnugo_y].replace(" ", "").replace("" + (game.getBoardSize() - (gnugo_y - 2)), "");
             for (int gnugo_x = 0; gnugo_x < b.getSize(); gnugo_x++) {
                 final CellImpl cell = new CellImpl(gnugo_x, gnugo_y - 2);
+
+                if (act_line.length() < (gnugo_x + 1)) {
+                    return false;
+                }
+
                 if (act_line.charAt(gnugo_x) == '.' && !game.getVisualBoard().isCellFree(cell)) {
                     return false;
                 }
