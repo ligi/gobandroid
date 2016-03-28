@@ -103,7 +103,7 @@ dependencies {
     compile "com.android.support:support-annotations:$support_version"
     compile "com.android.support:preference-v7:$support_version"
 
-    compile 'org.ligi:AXT:0.35'
+    compile 'org.ligi:AXT:0.36'
     compile 'org.ligi:tracedroid:1.4'
     compile 'org.ligi:snackengage:0.4'
 
