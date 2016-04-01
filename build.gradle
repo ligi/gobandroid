@@ -1,8 +1,8 @@
 buildscript {
     ext {
-        kotlin_version = '1.0.1-1'
+        kotlin_version = '1.0.1-2'
         support_version = '23.2.1'
-        dagger_version = '2.1'
+        dagger_version = '2.2'
     }
 
     repositories {
@@ -11,7 +11,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-beta7'
+        classpath 'com.android.tools.build:gradle:2.0.0-rc1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'de.mobilej.unmock:UnMockPlugin:0.3.6'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
