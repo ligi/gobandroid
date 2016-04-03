@@ -7,8 +7,8 @@
             android:entries="@array/day_night"
             android:entryValues="@array/day_night_keys"
             android:key="@string/prefs_daynight"
-            android:summary="Show a light or a dark board"
-            android:title="Day or Night" />
+            android:summary="@string/day_or_night_summary"
+            android:title="@string/day_or_night" />
 
         <CheckBoxPreference
             android:key="@string/prefs_fullscreen"
