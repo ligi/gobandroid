@@ -14,7 +14,13 @@ class StatefulEditModeItems {
             EditModeItem(R.drawable.stone_letter, EditGameMode.LETTER, R.string.letter)
     )
 
-    var activatedItem = 0
-    fun getActMode() = list[activatedItem].mode
+    var mode = EditGameMode.BLACK
 
+    fun isPositionMode(position: Int): Boolean {
+        return list[position].mode == mode
+    }
+
+    fun setModeByPosition(position: Int) {
+        mode = list[position].mode
+    }
 }

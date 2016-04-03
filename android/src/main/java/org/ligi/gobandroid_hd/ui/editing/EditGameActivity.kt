@@ -31,6 +31,9 @@ class EditGameActivity : GoActivity() {
 
     public override fun doMoveWithUIFeedback(cell: Cell): MoveStatus {
         when (mode) {
+            EditGameMode.PLAY ->
+                super.doMoveWithUIFeedback(cell)
+
             EditGameMode.BLACK ->
                 setOrRemoveStone(cell, STONE_BLACK)
 
@@ -78,7 +81,7 @@ class EditGameActivity : GoActivity() {
 
 
     private val mode: EditGameMode
-        get() = statefulEditModeItems.getActMode()
+        get() = statefulEditModeItems.mode
 
     override fun getGameExtraFragment(): EditGameExtrasFragment {
         return EditGameExtrasFragment()
