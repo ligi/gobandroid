@@ -3,12 +3,12 @@
     <PreferenceCategory android:title="@string/screen">
 
         <ListPreference
-            android:defaultValue="Night"
-            android:entries="@array/day_night"
-            android:entryValues="@array/day_night_keys"
-            android:key="@string/prefs_daynight"
-            android:summary="@string/day_or_night_summary"
-            android:title="@string/day_or_night" />
+                android:defaultValue="@string/default_day_night"
+                android:entries="@array/day_night"
+                android:entryValues="@array/day_night_keys"
+                android:key="@string/prefs_daynight"
+                android:summary="@string/day_or_night_summary"
+                android:title="@string/day_or_night" />
 
         <CheckBoxPreference
             android:key="@string/prefs_fullscreen"

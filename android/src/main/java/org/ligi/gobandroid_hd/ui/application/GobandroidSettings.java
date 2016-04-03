@@ -6,10 +6,8 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatDelegate;
-
-import org.ligi.gobandroid_hd.R;
-
 import java.io.File;
+import org.ligi.gobandroid_hd.R;
 
 public class GobandroidSettings {
 
@@ -117,7 +115,7 @@ public class GobandroidSettings {
     }
 
     public int getTheme() {
-        final String dayNightMode = getPreferences().getString(ctx.getString(R.string.prefs_daynight), "auto");
+        final String dayNightMode = getPreferences().getString(ctx.getString(R.string.prefs_daynight), ctx.getString(R.string.default_day_night));
 
         switch (dayNightMode) {
             case "day":
