@@ -6,15 +6,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class NavigationFragment extends GobandroidGameAwareFragment {
 
@@ -31,7 +29,7 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     ImageView last_btn;
 
     @Bind(R.id.btn_previous_var)
-    ImageView last_var_btn;
+    ImageView prev_var_btn;
 
     @Bind(R.id.btn_next_var)
     ImageView next_var_btn;
@@ -40,7 +38,7 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     public void gameNavNext() {
         if (GoPrefs.isShowForwardAlertWanted()) {
             GameForwardAlert.Companion.showIfNeeded(getActivity(), game);
-        }else{
+        } else {
             game.redo(0);
         }
     }
@@ -94,52 +92,18 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     }
 
     private void updateButtonStates() {
-        if (first_btn == null) {
-            return;
-        }
-
-        if(game.canUndo())
-        {
-            first_btn.setEnabled(true);
-            first_btn.setAlpha(255);
-            prev_btn.setEnabled(true);
-            prev_btn.setAlpha(255);
-        }else{
-            first_btn.setEnabled(false);
-            first_btn.setAlpha(100);
-            prev_btn.setEnabled(false);
-            prev_btn.setAlpha(100);
-        }
-        if(game.canRedo())
-        {
-            next_btn.setEnabled(true);
-            next_btn.setAlpha(255);
-            last_btn.setEnabled(true);
-            last_btn.setAlpha(255);
-        }else{
-            next_btn.setEnabled(false);
-            next_btn.setAlpha(100);
-            last_btn.setEnabled(false);
-            last_btn.setAlpha(100);
-        }
-        if(game.previousVarMove() != null)
-        {
-            last_var_btn.setEnabled(true);
-            last_var_btn.setAlpha(255);
-        }else{
-            last_var_btn.setEnabled(false);
-            last_var_btn.setAlpha(100);
-        }
-        if(game.nextVarMove() != null)
-        {
-            next_var_btn.setEnabled(true);
-            next_var_btn.setAlpha(255);
-        }else{
-            next_var_btn.setEnabled(false);
-            next_var_btn.setAlpha(100);
-        }
+        setImageViewState(first_btn, game.canUndo());
+        setImageViewState(prev_btn, game.canUndo());
+        setImageViewState(next_btn, game.canRedo());
+        setImageViewState(last_btn, game.canRedo());
+        setImageViewState(prev_var_btn, game.previousVarMove() != null);
+        setImageViewState(next_var_btn, game.nextVarMove() != null);
     }
 
-
-
+    private void setImageViewState(ImageView view, boolean state) {
+        if (view != null) {
+            view.setEnabled(state);
+            view.setAlpha(state ? 255 : 100);
+        }
+    }
 }
