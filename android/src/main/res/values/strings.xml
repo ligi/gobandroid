@@ -273,4 +273,6 @@
         <item>Night</item>
         <item>Auto</item>
     </array>
+    <string name="day_or_night">Day or Night</string>
+    <string name="day_or_night_summary">Show a light or a dark board</string>
 </resources>

@@ -226,7 +226,7 @@
   <string name="triangle">三角形</string>
   <string name="number">数字</string>
   <string name="letter">字母</string>
-  <string name="handicap_only_for">9x9 / 13x13 / 19x19 时让子（授子）</string>
+  <string name="handicap_only_for">9x9 / 13x13 / 19x19 时让子</string>
   <string name="new_game">新对局</string>
   <string name="no_definition_found">没有找到定义</string>
   <string name="copy_sgf_dialog_message">拷贝棋谱...  请稍等</string>
@@ -236,4 +236,13 @@
   <string name="variations_found"> 个分支变化,选择哪个?</string>
   <string name="betatest_opt_in_out">参与/退出BETA测试</string>
   <string name="downloading_tsumegos_please_wait">查找下载中,请稍候</string>
+  <string name="switch_variation_style">显示分支窗口</string>
+  <string name="variation_from_alert">不使用上下按钮切换分支</string>
+  <array name="day_night">
+    <item>白天模式</item>
+    <item>夜间模式</item>
+    <item>自动</item>
+  </array>
+  <string name="day_or_night">白天夜间模式</string>
+  <string name="day_or_night_summary">选择白天或者间风格</string>
 </resources>
