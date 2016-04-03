@@ -27,9 +27,17 @@
     <EditText
             android:id="@+id/comment_et"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dip"
+            android:minHeight="42dp"
+            android:layout_weight="1"
             android:ems="10">
 
         <requestFocus/>
     </EditText>
+
+    <fragment
+            android:tag="nav_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="org.ligi.gobandroid_hd.ui.fragments.NavigationFragment"/>
 </LinearLayout>
