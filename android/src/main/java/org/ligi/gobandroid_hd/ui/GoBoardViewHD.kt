@@ -191,11 +191,14 @@ open class GoBoardViewHD(context: Context, attrs: AttributeSet) : View(context, 
         }
     }
 
-    fun screenshot(sshot_name: String) {
+    /**
+     * redraw board when draw_board is ture
+     */
+    fun screenshot(sshot_name: String, draw_board: Boolean) {
         var sshot_name = sshot_name
         val bmp = Bitmap.createBitmap(width, height, Config.ARGB_8888)
         val c = Canvas(bmp)
-        draw2canvas(c)
+        draw2canvas(c, draw_board)
 
         try {
             if (sshot_name.indexOf("://") > 0) {
@@ -213,7 +216,7 @@ open class GoBoardViewHD(context: Context, attrs: AttributeSet) : View(context, 
     }
 
     override fun onDraw(canvas: Canvas) {
-        draw2canvas(canvas)
+        draw2canvas(canvas, false)
     }
 
     private val gameSize: Int
@@ -226,12 +229,17 @@ open class GoBoardViewHD(context: Context, attrs: AttributeSet) : View(context, 
         canvas.drawCircle(stone_size / 2.0f + x * stone_size, stone_size / 2.0f + y * stone_size, size, paint)
     }
 
-    protected fun draw2canvas(canvas: Canvas) {
+    protected fun draw2canvas(canvas: Canvas, draw_board: Boolean) {
         canvas.save()
 
         // when we have zoomed in - center translate the canvas around the POI
         if (zoom > 1.0f) {
             canvas.translate(zoomTranslate.x, zoomTranslate.y)
+        }
+
+        if(draw_board) {
+            val bmp = getScaledRes( width.toFloat(), R.drawable.shinkaya)
+            canvas.drawBitmap(bmp, 0f, 0f, bitmapPaint)
         }
 
         if (regenerate_stones_flag) {
