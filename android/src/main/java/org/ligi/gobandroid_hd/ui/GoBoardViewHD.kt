@@ -23,7 +23,6 @@ package org.ligi.gobandroid_hd.ui
 
 import android.content.Context
 import android.graphics.*
-import android.graphics.Bitmap.Config
 import android.util.AttributeSet
 import android.view.View
 import org.ligi.gobandroid_hd.App
@@ -42,7 +41,11 @@ import javax.inject.Inject
 /**
  * Class to visually represent a Go Board in Android
  */
-open class GoBoardViewHD(context: Context, attrs: AttributeSet) : View(context, attrs) {
+open class GoBoardViewHD : View {
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+
+    constructor(context: Context) : super(context)
 
     private val SMALL_STONE_SCALE_FACTOR = 0.6f
 
@@ -194,20 +197,14 @@ open class GoBoardViewHD(context: Context, attrs: AttributeSet) : View(context, 
     /**
      * redraw board when draw_board is ture
      */
-    fun screenshot(sshot_name: String, draw_board: Boolean) {
-        var sshot_name = sshot_name
-        val bmp = Bitmap.createBitmap(width, height, Config.ARGB_8888)
-        val c = Canvas(bmp)
-        draw2canvas(c, draw_board)
+    fun screenshot(file: File, bitmap: Bitmap) {
+
+        draw2canvas(Canvas(bitmap))
 
         try {
-            if (sshot_name.indexOf("://") > 0) {
-                sshot_name = sshot_name.substring(sshot_name.indexOf("://") + 3)
-            }
-            File(sshot_name.substring(0, sshot_name.lastIndexOf("/"))).mkdirs()
-            File(sshot_name).createNewFile()
-            val out = FileOutputStream(sshot_name)
-            bmp.compress(Bitmap.CompressFormat.PNG, 90, out)
+            file.createNewFile()
+            val out = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out)
             out.close()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -216,7 +213,7 @@ open class GoBoardViewHD(context: Context, attrs: AttributeSet) : View(context, 
     }
 
     override fun onDraw(canvas: Canvas) {
-        draw2canvas(canvas, false)
+        draw2canvas(canvas)
     }
 
     private val gameSize: Int
@@ -229,17 +226,12 @@ open class GoBoardViewHD(context: Context, attrs: AttributeSet) : View(context, 
         canvas.drawCircle(stone_size / 2.0f + x * stone_size, stone_size / 2.0f + y * stone_size, size, paint)
     }
 
-    protected fun draw2canvas(canvas: Canvas, draw_board: Boolean) {
+    protected fun draw2canvas(canvas: Canvas) {
         canvas.save()
 
         // when we have zoomed in - center translate the canvas around the POI
         if (zoom > 1.0f) {
             canvas.translate(zoomTranslate.x, zoomTranslate.y)
-        }
-
-        if(draw_board) {
-            val bmp = getScaledRes( width.toFloat(), R.drawable.shinkaya)
-            canvas.drawBitmap(bmp, 0f, 0f, bitmapPaint)
         }
 
         if (regenerate_stones_flag) {
