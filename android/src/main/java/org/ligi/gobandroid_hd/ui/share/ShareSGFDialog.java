@@ -53,7 +53,7 @@ public class ShareSGFDialog extends GobandroidDialog {
                         break;
 
                     case R.id.radioButtonAsImage:
-                        final File file = new File(settings.getSGFBasePath(), "/game_to_share_via_action.png");
+                        final File file = new File(settings.getSGFBasePath(), "game_to_share_via_action.png");
 
                         final GoBoardViewHD goBoardViewHD = new GoBoardViewHD(getContext());
                         final Bitmap mutableImage = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.shinkaya)
