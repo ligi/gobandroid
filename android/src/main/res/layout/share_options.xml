@@ -21,6 +21,12 @@
             android:layout_height="wrap_content"
             android:text="As unicode-text"
             android:id="@+id/radioButtonAsUnicode" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="As Image"
+            android:id="@+id/radioButtonAsImage" />
     </RadioGroup>
 
 </LinearLayout>
