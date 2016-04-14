@@ -2,7 +2,9 @@ package org.ligi.gobandroid_hd.ui
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
@@ -16,7 +18,6 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import org.ligi.axt.AXT
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.InteractionScope
@@ -120,7 +121,15 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
 
         addItem(container, icon_res, string_res, Runnable {
             if (mode === InteractionScope.Mode.GNUGO && !GnuGoHelper.isGnuGoAvail(activity)) {
-                AlertDialog.Builder(activity).setTitle(R.string.install_gnugo).setMessage(R.string.gnugo_not_installed).setPositiveButton(android.R.string.ok) { dialog, which -> AXT.at(activity).startCommonIntent().openUrl("market://details?id=org.ligi.gobandroidhd.ai.gnugo") }.setNegativeButton(android.R.string.cancel, DialogDiscardingOnClickListener()).show()
+                AlertDialog.Builder(activity).setTitle(R.string.install_gnugo)
+                        .setMessage(R.string.gnugo_not_installed)
+                        .setPositiveButton(android.R.string.ok) { dialog, which ->
+                            val intent = Intent(Intent.ACTION_VIEW);
+                            intent.data = Uri.parse("market://details?id=org.ligi.gobandroidhd.ai.gnugo");
+                            val chooser = Intent.createChooser(intent, null)
+                            activity.startActivity(chooser)
+                        }
+                        .setNegativeButton(android.R.string.cancel, DialogDiscardingOnClickListener()).show()
                 return@Runnable
             }
             activity.finish()
