@@ -30,7 +30,7 @@ class GoSoundManager(private val context: GobandroidFragmentActivity, private va
 
     private val soundMap = HashMap<Sound, Int>()
 
-    private val STREAM = AudioManager.STREAM_MUSIC
+    private val STREAM = AudioManager.STREAM_NOTIFICATION
     private val mSoundPool: SoundPool by lazy { SoundPool(4, STREAM, 0) }
     private val mAudioManager: AudioManager by lazy { context.getSystemService(Context.AUDIO_SERVICE) as AudioManager }
 
