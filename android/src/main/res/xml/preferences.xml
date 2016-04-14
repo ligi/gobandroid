@@ -43,9 +43,10 @@
     <PreferenceCategory android:title="@string/more">
 
         <CheckBoxPreference
-            android:key="@string/prefs_do_sound"
-            android:summary="@string/enable_sound_summary"
-            android:title="@string/enable_sound" />
+                android:key="@string/prefs_do_sound"
+                android:defaultValue="true"
+                android:summary="@string/enable_sound_summary"
+                android:title="@string/enable_sound" />
 
         <CheckBoxPreference
             android:key="@string/prefs_push_tsumego"
