@@ -16,7 +16,8 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.Toast;
-
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
 import org.ligi.gobandroid_hd.App;
@@ -26,6 +27,7 @@ import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GTPHelper;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
+import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.recording.RecordingGameExtrasFragment;
@@ -254,6 +256,23 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements Runnable {
 
                     GoMove currentMove = getGame().getFirstMove();
 
+                    getGame().getHandicapBoard().getStatelessGoBoard().withAllCells(new Function1<StatelessBoardCell, Unit>() {
+                        @Override
+                        public Unit invoke(final StatelessBoardCell statelessBoardCell) {
+
+                            try {
+                                if (getGame().getHandicapBoard().isCellDeadWhite(statelessBoardCell)) {
+                                    service.processGTP("white " + coordinates2gtpstr(statelessBoardCell));
+                                } else if (getGame().getHandicapBoard().isCellBlack(statelessBoardCell)) {
+                                    service.processGTP("black " + coordinates2gtpstr(statelessBoardCell));
+                                }
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
+
+                            return null;
+                        }
+                    });
                     while (currentMove.hasNextMove()) {
                         currentMove = currentMove.getnextMove(0);
 
