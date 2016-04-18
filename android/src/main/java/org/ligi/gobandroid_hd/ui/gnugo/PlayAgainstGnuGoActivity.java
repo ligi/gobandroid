@@ -10,6 +10,7 @@ import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
@@ -228,11 +229,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements Runnable {
     public void run() {
         Log.i("GnuGoDebug startthread " + connection);
         while (connection != null) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            SystemClock.sleep(100);
 
             // blocker for the following steps
             if (service == null || gnuGoGame == null || getGame().isFinished() || connection == null) {

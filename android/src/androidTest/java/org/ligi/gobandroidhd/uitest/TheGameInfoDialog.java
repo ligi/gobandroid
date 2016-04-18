@@ -1,9 +1,9 @@
 package org.ligi.gobandroidhd.uitest;
 
+import android.os.SystemClock;
 import android.test.suitebuilder.annotation.MediumTest;
-
 import com.squareup.spoon.Spoon;
-
+import javax.inject.Inject;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.etc.AppModule;
@@ -11,9 +11,6 @@ import org.ligi.gobandroid_hd.logic.GoGameMetadata;
 import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.review.GameReviewActivity;
 import org.ligi.gobandroidhd.base.BaseIntegration;
-
-import javax.inject.Inject;
-
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -84,7 +81,7 @@ public class TheGameInfoDialog extends BaseIntegration<GameReviewActivity> {
 
         onView(withId(R.id.game_result_et)).perform(scrollTo(),clearText() ,replaceText(CUSTOM_KOMI),closeSoftKeyboard());
 
-        sleep(100);
+        SystemClock.sleep(100);
 
         onView(withText(android.R.string.ok)).perform(scrollTo(),click());
 
@@ -107,7 +104,7 @@ public class TheGameInfoDialog extends BaseIntegration<GameReviewActivity> {
         onView(withId(R.id.menu_game_info)).perform(click());
         onView(withId(R.id.komi_et)).perform(scrollTo(),clearText() ,typeText("a"),closeSoftKeyboard());
 
-        sleep(100);
+        SystemClock.sleep(100);
 
         onView(withText(android.R.string.ok)).perform(scrollTo(),click());
 

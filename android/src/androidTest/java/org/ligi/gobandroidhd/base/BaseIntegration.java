@@ -4,13 +4,10 @@ import android.app.Activity;
 import android.support.annotation.StringRes;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.WindowManager;
-
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
-
 import reporting.SpooningFailureHandler;
-
 import static android.support.test.espresso.Espresso.setFailureHandler;
 
 public abstract class BaseIntegration<T extends Activity> extends ActivityInstrumentationTestCase2<T> {
@@ -52,11 +49,4 @@ public abstract class BaseIntegration<T extends Activity> extends ActivityInstru
         return getInstrumentation().getTargetContext().getString(resId);
     }
 
-    protected void sleep(int ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 }

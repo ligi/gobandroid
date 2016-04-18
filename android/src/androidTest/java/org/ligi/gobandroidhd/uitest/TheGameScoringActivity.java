@@ -1,9 +1,9 @@
 package org.ligi.gobandroidhd.uitest;
 
+import android.os.SystemClock;
 import android.test.suitebuilder.annotation.MediumTest;
-
 import com.squareup.spoon.Spoon;
-
+import javax.inject.Inject;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.etc.AppModule;
@@ -13,9 +13,6 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity;
 import org.ligi.gobandroidhd.base.BaseIntegration;
-
-import javax.inject.Inject;
-
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -91,11 +88,7 @@ public class TheGameScoringActivity extends BaseIntegration<GameScoringActivity>
     }
 
     public void sleep() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        SystemClock.sleep(1000);
     }
 
     @MediumTest

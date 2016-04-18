@@ -2,12 +2,12 @@ package org.ligi.gobandroid_hd.ui.review;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
-
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.Cell;
@@ -19,7 +19,6 @@ import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 import org.ligi.gobandroid_hd.ui.fragments.CommentAndNowPlayingFragment;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.tracedroid.logging.Log;
-
 import static org.ligi.gobandroid_hd.logic.GoGame.MoveStatus.VALID;
 
 public class GoGamePlayerActivity extends GoActivity {
@@ -65,17 +64,12 @@ public class GoGamePlayerActivity extends GoActivity {
      * @param time
      */
     private void sleepWithProgress(int time) {
-        try {
-            long start_time = System.currentTimeMillis();
+        final long start_time = System.currentTimeMillis();
 
-            while (System.currentTimeMillis() < start_time + time) {
-                Thread.sleep(100);
-                progress_to_display = 1f - ((float) (System.currentTimeMillis() - start_time + 1) / time);
-                runOnUiThread(mTimerProgressRunnable);
-            }
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        while (System.currentTimeMillis() < start_time + time) {
+            SystemClock.sleep(100);
+            progress_to_display = 1f - ((float) (System.currentTimeMillis() - start_time + 1) / time);
+            runOnUiThread(mTimerProgressRunnable);
         }
     }
 
@@ -103,11 +97,7 @@ public class GoGamePlayerActivity extends GoActivity {
 
             }
             Log.i("gobandroid", "automove finish " + autoplay_active);
-            try {
-                Thread.sleep(PAUSE_FOR_LAST_MOVE);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            SystemClock.sleep(PAUSE_FOR_LAST_MOVE);
             Log.i("gobandroid", "automove asleep");
 
             if (!interactionScope.is_in_noif_mode()) {
@@ -151,30 +141,29 @@ public class GoGamePlayerActivity extends GoActivity {
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-        if (event.getAction() == KeyEvent.ACTION_DOWN)
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_MEDIA_PAUSE:
-                    SwitchModeHelper.INSTANCE.startGame(this, InteractionScope.Mode.REVIEW);
-                    return true;
+        if (event.getAction() == KeyEvent.ACTION_DOWN) switch (keyCode) {
+            case KeyEvent.KEYCODE_MEDIA_PAUSE:
+                SwitchModeHelper.INSTANCE.startGame(this, InteractionScope.Mode.REVIEW);
+                return true;
 
-                case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
-                case KeyEvent.KEYCODE_DPAD_LEFT:
-                    if (getGame().canUndo()) {
-                        getGame().undo();
-                    }
+            case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                if (getGame().canUndo()) {
+                    getGame().undo();
+                }
 
-                    return true;
+                return true;
 
-                case KeyEvent.KEYCODE_DPAD_RIGHT:
-                case KeyEvent.KEYCODE_MEDIA_NEXT:
-                    GameForwardAlert.Companion.showIfNeeded(this, getGame());
-                    return true;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+            case KeyEvent.KEYCODE_MEDIA_NEXT:
+                GameForwardAlert.Companion.showIfNeeded(this, getGame());
+                return true;
 
-                case KeyEvent.KEYCODE_DPAD_UP:
-                case KeyEvent.KEYCODE_DPAD_DOWN:
-                    return false;
+            case KeyEvent.KEYCODE_DPAD_UP:
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                return false;
 
-            }
+        }
         return super.onKey(v, keyCode, event);
     }
 
@@ -185,18 +174,15 @@ public class GoGamePlayerActivity extends GoActivity {
 
     public int countWords(String sentence) {
         int words = 0;
-        if (!interactionScope.is_in_noif_mode())
-            for (int i = 0; i < sentence.length(); i++)
-                if (sentence.charAt(i) == ' ')
-                    words++;
+        if (!interactionScope.is_in_noif_mode()) for (int i = 0; i < sentence.length(); i++)
+            if (sentence.charAt(i) == ' ') words++;
 
         return words;
     }
 
     private int calcTime() {
         int res = PAUSE_BETWEEN_MOVES;
-        if (getGame().getActMove().hasComment())
-            res += PAUSE_BETWEN_MOVES_EXTRA_PER_WORD * countWords(getGame().getActMove().getComment());
+        if (getGame().getActMove().hasComment()) res += PAUSE_BETWEN_MOVES_EXTRA_PER_WORD * countWords(getGame().getActMove().getComment());
         return res;
     }
 
