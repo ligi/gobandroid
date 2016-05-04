@@ -35,7 +35,13 @@ import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Locale;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.ligi.axt.AXT;
@@ -63,16 +69,6 @@ import org.ligi.snackengage.snacks.RateSnack;
 import org.ligi.snackengage.snacks.TranslateSnack;
 import org.ligi.tracedroid.logging.Log;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Locale;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 import static org.ligi.gobandroid_hd.logic.GoGame.MoveStatus.INVALID_NOT_ON_BOARD;
 import static org.ligi.gobandroid_hd.ui.GoSoundManager.Sound.PICKUP1;
 import static org.ligi.gobandroid_hd.ui.GoSoundManager.Sound.PICKUP2;
@@ -86,13 +82,13 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     public GoSoundManager sound_man;
 
-    @Bind(R.id.go_board)
+    @BindView(R.id.go_board)
     GoBoardViewHD go_board;
 
-    @Bind(R.id.zoom_board)
+    @BindView(R.id.zoom_board)
     GoBoardViewHD zoom_board;
 
-    @Bind(R.id.game_extra_container)
+    @BindView(R.id.game_extra_container)
     View gameExtrasContainer;
 
     private Toast info_toast = null;

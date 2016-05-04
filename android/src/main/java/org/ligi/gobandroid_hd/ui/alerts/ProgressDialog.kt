@@ -19,17 +19,17 @@ package org.ligi.gobandroid_hd.ui.alerts
 import android.content.Context
 import android.widget.ProgressBar
 import android.widget.TextView
-import butterknife.Bind
+import butterknife.BindView
 import butterknife.ButterKnife
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.ui.GobandroidDialog
 
 open class ProgressDialog(context: Context) : GobandroidDialog(context) {
 
-    @Bind(R.id.message)
+    @BindView(R.id.message)
     lateinit var message: TextView
 
-    @Bind(R.id.progressBar)
+    @BindView(R.id.progressBar)
     lateinit var progress: ProgressBar
 
     init {

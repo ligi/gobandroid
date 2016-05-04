@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import java.io.File;
 import java.io.IOException;
@@ -20,28 +20,28 @@ import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink;
 
 public class ReviewViewHolder extends RecyclerView.ViewHolder implements ViewHolderInterface {
 
-    @Bind(R.id.game_link_extra_infos)
+    @BindView(R.id.game_link_extra_infos)
     TextView game_link_extra_info;
 
-    @Bind(R.id.filename)
+    @BindView(R.id.filename)
     TextView title;
 
-    @Bind(R.id.game_extra_infos)
+    @BindView(R.id.game_extra_infos)
     TextView game_extra_info;
 
-    @Bind(R.id.player_white)
+    @BindView(R.id.player_white)
     TextView player_white;
 
-    @Bind(R.id.player_black)
+    @BindView(R.id.player_black)
     TextView player_black;
 
-    @Bind(R.id.player_white_stone_img)
+    @BindView(R.id.player_white_stone_img)
     ImageView player_white_stone_img;
 
-    @Bind(R.id.player_black_stone_img)
+    @BindView(R.id.player_black_stone_img)
     ImageView player_black_stone_img;
 
-    @Bind(R.id.game_rating)
+    @BindView(R.id.game_rating)
     RatingBar game_rating;
 
     public ReviewViewHolder(View itemView) {

@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import org.ligi.gobandroid_hd.R;
@@ -16,22 +16,22 @@ import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 
 public class NavigationFragment extends GobandroidGameAwareFragment {
 
-    @Bind(R.id.btn_next)
+    @BindView(R.id.btn_next)
     ImageView next_btn;
 
-    @Bind(R.id.btn_prev)
+    @BindView(R.id.btn_prev)
     ImageView prev_btn;
 
-    @Bind(R.id.btn_first)
+    @BindView(R.id.btn_first)
     ImageView first_btn;
 
-    @Bind(R.id.btn_last)
+    @BindView(R.id.btn_last)
     ImageView last_btn;
 
-    @Bind(R.id.btn_previous_var)
+    @BindView(R.id.btn_previous_var)
     ImageView prev_var_btn;
 
-    @Bind(R.id.btn_next_var)
+    @BindView(R.id.btn_next_var)
     ImageView next_var_btn;
 
     @OnClick(R.id.btn_next)

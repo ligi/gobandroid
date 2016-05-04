@@ -2,19 +2,17 @@ package org.ligi.gobandroid_hd.ui;
 
 import android.os.Bundle;
 import android.widget.EditText;
-
-import butterknife.Bind;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 
-import butterknife.ButterKnife;
-
 public class BaseProfileActivity extends GobandroidFragmentActivity {
 
-    @Bind(R.id.username_edit)
+    @BindView(R.id.username_edit)
     EditText username_et;
 
-    @Bind(R.id.rank_edit)
+    @BindView(R.id.rank_edit)
     EditText rank_et;
 
     @Override

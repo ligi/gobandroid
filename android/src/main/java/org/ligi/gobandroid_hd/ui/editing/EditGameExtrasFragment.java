@@ -15,7 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import org.ligi.axt.simplifications.SimpleTextWatcher;
 import org.ligi.gobandroid_hd.R;
@@ -25,10 +25,10 @@ import org.ligi.gobandroid_hd.ui.fragments.GobandroidGameAwareFragment;
 
 public class EditGameExtrasFragment extends GobandroidGameAwareFragment {
 
-    @Bind(R.id.comment_et)
+    @BindView(R.id.comment_et)
     EditText editText;
 
-    @Bind(R.id.editSwitch)
+    @BindView(R.id.editSwitch)
     SwitchCompat editSwitch;
 
     @Override

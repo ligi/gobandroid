@@ -5,40 +5,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameScorer;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidGameAwareFragment;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 public class GameScoringExtrasFragment extends GobandroidGameAwareFragment {
 
-    @Bind(R.id.territory_black)
+    @BindView(R.id.territory_black)
     TextView territory_black;
 
-    @Bind(R.id.territory_white)
+    @BindView(R.id.territory_white)
     TextView territory_white;
 
-    @Bind(R.id.captures_black)
+    @BindView(R.id.captures_black)
     TextView captures_black;
 
-    @Bind(R.id.captures_white)
+    @BindView(R.id.captures_white)
     TextView captures_white;
 
-    @Bind(R.id.final_black)
+    @BindView(R.id.final_black)
     TextView final_black;
 
-    @Bind(R.id.final_white)
+    @BindView(R.id.final_white)
     TextView final_white;
 
-    @Bind(R.id.komi)
+    @BindView(R.id.komi)
     TextView komi;
 
-    @Bind(R.id.result_txt)
+    @BindView(R.id.result_txt)
     TextView result_txt;
 
     @Override

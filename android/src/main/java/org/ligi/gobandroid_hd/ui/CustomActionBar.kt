@@ -13,7 +13,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
-import butterknife.Bind
+import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import org.greenrobot.eventbus.EventBus
@@ -41,22 +41,22 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
     @Inject
     lateinit internal var interactionScope: InteractionScope
 
-    @Bind(R.id.white_captures_tv)
+    @BindView(R.id.white_captures_tv)
     lateinit internal var white_captures_tv: TextView
 
-    @Bind(R.id.black_captures_tv)
+    @BindView(R.id.black_captures_tv)
     lateinit internal var black_captures_tv: TextView
 
-    @Bind(R.id.move_tv)
+    @BindView(R.id.move_tv)
     lateinit internal var move_tv: TextView
 
-    @Bind(R.id.mode_tv)
+    @BindView(R.id.mode_tv)
     lateinit internal var mode_tv: TextView
 
-    @Bind(R.id.blackStoneImageView)
+    @BindView(R.id.blackStoneImageView)
     lateinit internal var black_info_container: View
 
-    @Bind(R.id.whiteStoneImageview)
+    @BindView(R.id.whiteStoneImageview)
     lateinit internal var white_info_container: View
 
 

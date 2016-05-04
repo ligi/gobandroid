@@ -27,7 +27,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
-import butterknife.Bind
+import butterknife.BindView
 import butterknife.ButterKnife
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
@@ -41,10 +41,10 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity
 
 class LinksActivity : GobandroidFragmentActivity() {
 
-    @Bind(R.id.view_pager)
+    @BindView(R.id.view_pager)
     internal lateinit var viewPager: ViewPager
 
-    @Bind(R.id.sliding_tabs)
+    @BindView(R.id.sliding_tabs)
     internal lateinit var titlePageIndicator: TabLayout
 
     class LinkFragmentItem(val title: String, val tag: String, val fragmentGetter: () -> Fragment)

@@ -7,7 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.widget.RadioGroup;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import java.io.File;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
@@ -24,7 +24,7 @@ import org.ligi.gobandroid_hd.ui.GobandroidDialog;
  */
 public class ShareSGFDialog extends GobandroidDialog {
 
-    @Bind(R.id.shareTypeRadioGroup)
+    @BindView(R.id.shareTypeRadioGroup)
     RadioGroup typeSpinner;
 
     public ShareSGFDialog(Context context) {

@@ -5,16 +5,15 @@ import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TwoLineRecyclerViewHolder extends RecyclerView.ViewHolder {
 
-    @Bind(android.R.id.text1)
+    @BindView(android.R.id.text1)
     TextView text1;
 
-    @Bind(android.R.id.text2)
+    @BindView(android.R.id.text2)
     TextView text2;
 
     public TwoLineRecyclerViewHolder(final View itemView) {

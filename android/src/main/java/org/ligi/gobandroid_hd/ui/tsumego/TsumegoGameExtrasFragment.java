@@ -9,30 +9,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import javax.inject.Inject;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity;
 
-import javax.inject.Inject;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 public class TsumegoGameExtrasFragment extends Fragment {
 
     @Inject
     GameProvider gameProvider;
 
-    @Bind(R.id.tsumego_correct_view)
+    @BindView(R.id.tsumego_correct_view)
     TextView correctView;
 
-    @Bind(R.id.tsumego_off_path_view)
+    @BindView(R.id.tsumego_off_path_view)
     View OffPathView;
 
-    @Bind(R.id.game_comment)
+    @BindView(R.id.game_comment)
     TextView commentView;
 
     private boolean off_path_visible = false, correct_visible = false;

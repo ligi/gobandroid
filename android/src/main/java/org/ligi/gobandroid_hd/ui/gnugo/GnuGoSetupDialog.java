@@ -6,12 +6,10 @@ import android.preference.PreferenceManager;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class GnuGoSetupDialog extends GobandroidDialog {
 
@@ -23,19 +21,19 @@ public class GnuGoSetupDialog extends GobandroidDialog {
 
     private SharedPreferences shared_prefs;
 
-    @Bind(R.id.gnugo_plays_white_radio)
+    @BindView(R.id.gnugo_plays_white_radio)
     RadioButton gnugo_plays_white_radio;
 
-    @Bind(R.id.gnugo_plays_black_radio)
+    @BindView(R.id.gnugo_plays_black_radio)
     RadioButton gnugo_plays_black_radio;
 
-    @Bind(R.id.gnugo_plays_both_radio)
+    @BindView(R.id.gnugo_plays_both_radio)
     RadioButton gnugo_plays_both_radio;
 
-    @Bind(R.id.gnugo_strength)
+    @BindView(R.id.gnugo_strength)
     TextView gnugo_strength_text;
 
-    @Bind(R.id.gnugo_strength_seek)
+    @BindView(R.id.gnugo_strength_seek)
     SeekBar strengthSeek;
 
     public GnuGoSetupDialog(Context context) {

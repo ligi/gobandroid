@@ -4,7 +4,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import java.io.File;
+import java.io.IOException;
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.FileEncodeDetector;
 import org.ligi.gobandroid_hd.R;
@@ -15,24 +18,18 @@ import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 
-import java.io.File;
-import java.io.IOException;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 public class TsumegoViewHolder extends RecyclerView.ViewHolder implements ViewHolderInterface {
 
-    @Bind(R.id.previewView)
+    @BindView(R.id.previewView)
     PreviewView previewView;
 
-    @Bind(R.id.solve_status_image)
+    @BindView(R.id.solve_status_image)
     ImageView solvedStatusImage;
 
-    @Bind(R.id.filename)
+    @BindView(R.id.filename)
     TextView title;
 
-    @Bind(R.id.hints_tv)
+    @BindView(R.id.hints_tv)
     TextView hints_tv;
 
 

@@ -24,7 +24,10 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.R;
@@ -32,47 +35,42 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.BaseProfileActivity;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.OnTextChanged;
-
 /**
  * Class to show an Alert with the Game Info ( who plays / rank / game name .. )
  */
 public class GameInfoDialog extends GobandroidDialog {
 
-    @Bind(R.id.game_name_et)
+    @BindView(R.id.game_name_et)
     EditText nameEdit;
 
-    @Bind(R.id.black_name_et)
+    @BindView(R.id.black_name_et)
     EditText blackNameEdit;
 
-    @Bind(R.id.user_is_white_btn)
+    @BindView(R.id.user_is_white_btn)
     Button user_is_white_btn;
 
-    @Bind(R.id.user_is_black_btn)
+    @BindView(R.id.user_is_black_btn)
     Button user_is_black_btn;
 
-    @Bind(R.id.white_name_et)
+    @BindView(R.id.white_name_et)
     EditText white_name_et;
 
-    @Bind(R.id.white_rank_et)
+    @BindView(R.id.white_rank_et)
     EditText white_rank_et;
 
-    @Bind(R.id.komi_et)
+    @BindView(R.id.komi_et)
     EditText game_komi_et;
 
-    @Bind(R.id.game_result_et)
+    @BindView(R.id.game_result_et)
     EditText game_result_et;
 
-    @Bind(R.id.game_difficulty_et)
+    @BindView(R.id.game_difficulty_et)
     EditText game_difficulty_et;
 
-    @Bind(R.id.black_rank_et)
+    @BindView(R.id.black_rank_et)
     EditText black_rank_et;
 
-    @Bind(R.id.game_date_et)
+    @BindView(R.id.game_date_et)
     EditText game_date_et;
 
     @OnClick(R.id.button_komi_seven)

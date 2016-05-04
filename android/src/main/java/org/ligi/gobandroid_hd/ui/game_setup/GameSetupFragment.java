@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -16,10 +18,6 @@ import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class GameSetupFragment extends GobandroidFragment implements OnSeekBarChangeListener {
 
@@ -30,16 +28,16 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
 
     private final static int size_offset = 2;
 
-    @Bind(R.id.size_seek)
+    @BindView(R.id.size_seek)
     SeekBar size_seek;
 
-    @Bind(R.id.handicap_seek)
+    @BindView(R.id.handicap_seek)
     SeekBar handicap_seek;
 
-    @Bind(R.id.game_size_label)
+    @BindView(R.id.game_size_label)
     TextView size_text;
 
-    @Bind(R.id.handicap_label)
+    @BindView(R.id.handicap_label)
     TextView handicap_text;
 
     @OnClick(R.id.size_button9x9)
