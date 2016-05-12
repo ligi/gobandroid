@@ -2,7 +2,6 @@ package org.ligi.gobandroid_hd.ui.gnugo;
 
 import android.content.Context;
 import android.content.Intent;
-
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.logic.CellImpl;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -26,21 +25,13 @@ public class GnuGoHelper {
             for (int gnugo_x = 0; gnugo_x < b.getSize(); gnugo_x++) {
                 final CellImpl cell = new CellImpl(gnugo_x, gnugo_y - 2);
 
-                if (act_line.length() < (gnugo_x + 1)) {
+                if (act_line.length() < (gnugo_x + 1) ||
+                    (act_line.charAt(gnugo_x) == '.' && !game.getVisualBoard().isCellFree(cell)) ||
+                    (act_line.charAt(gnugo_x) == 'X' && !game.getVisualBoard().isCellBlack(cell)) ||
+                    (act_line.charAt(gnugo_x) == 'O' && !game.getVisualBoard().isCellWhite(cell))) {
                     return false;
                 }
 
-                if (act_line.charAt(gnugo_x) == '.' && !game.getVisualBoard().isCellFree(cell)) {
-                    return false;
-                }
-
-                if (act_line.charAt(gnugo_x) == 'X' && !game.getVisualBoard().isCellBlack(cell)) {
-                    return false;
-                }
-
-                if (act_line.charAt(gnugo_x) == 'O' && !game.getVisualBoard().isCellWhite(cell)) {
-                    return false;
-                }
             }
 
         }
