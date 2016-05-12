@@ -2,7 +2,6 @@ package org.ligi.gobandroid_hd
 
 import android.support.annotation.StringRes
 import org.ligi.gobandroid_hd.logic.Cell
-import org.ligi.gobandroid_hd.logic.GoGame
 
 class InteractionScope {
 
@@ -40,7 +39,7 @@ class InteractionScope {
 
     var ask_variant_session = true
 
-    fun hasValidTouchCoord(game: GoGame): Boolean {
-        return touchCell != null && game.calcBoard.statelessGoBoard.getCell(touchCell!!) != null
+    fun hasTouchCell(): Boolean {
+        return touchCell != null
     }
 }

@@ -241,7 +241,7 @@ open class GoBoardViewHD : View {
         var actpos_highlight_condition = false
 
         if (!(do_actpos_highlight_ony_if_active && !isFocused)) {
-            actpos_highlight_condition = do_actpos_highlight && interactionScope.hasValidTouchCoord(game)
+            actpos_highlight_condition = do_actpos_highlight && interactionScope.hasTouchCell()
         }
 
         // draw semi transparent stone on current touch pos as a shadow
