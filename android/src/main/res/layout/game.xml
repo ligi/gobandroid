@@ -4,9 +4,10 @@
     android:orientation="vertical">
 
     <org.ligi.gobandroid_hd.ui.GoBoardViewHD
-        android:id="@+id/go_board"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+            android:id="@+id/go_board"
+            android:layout_margin="1dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
 
     <FrameLayout
         android:layout_width="fill_parent"
