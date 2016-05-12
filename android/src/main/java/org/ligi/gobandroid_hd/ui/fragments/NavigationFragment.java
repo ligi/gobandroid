@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui.fragments;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -92,18 +93,15 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     }
 
     private void updateButtonStates() {
-        setImageViewState(first_btn, game.canUndo());
-        setImageViewState(prev_btn, game.canUndo());
-        setImageViewState(next_btn, game.canRedo());
-        setImageViewState(last_btn, game.canRedo());
-        setImageViewState(prev_var_btn, game.previousVarMove() != null);
-        setImageViewState(next_var_btn, game.nextVarMove() != null);
+        setImageViewState(game.canUndo(), first_btn, prev_btn, next_btn, last_btn);
+        setImageViewState(game.previousVarMove() != null, prev_var_btn);
+        setImageViewState(game.nextVarMove() != null, next_var_btn);
     }
 
-    private void setImageViewState(ImageView view, boolean state) {
-        if (view != null) {
+    private void setImageViewState(boolean state, ImageView... views) {
+        for (final ImageView view : views) {
             view.setEnabled(state);
-            view.setAlpha(state ? 255 : 100);
+            ViewCompat.setAlpha(view, state ? 1f : 0.4f);
         }
     }
 }
