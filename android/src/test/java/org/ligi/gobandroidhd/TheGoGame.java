@@ -3,7 +3,7 @@ package org.ligi.gobandroidhd;
 import org.junit.Test;
 import org.ligi.gobandroid_hd.logic.CellImpl;
 import org.ligi.gobandroid_hd.logic.GoGame;
-
+import org.ligi.gobandroid_hd.logic.GoMove;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TheGoGame extends AssetAwareTest {
@@ -43,5 +43,41 @@ public class TheGoGame extends AssetAwareTest {
         goGame.do_move(new CellImpl(1, 0));
 
         assertThat(goGame.getCapturesBlack()).isEqualTo(1);
+    }
+
+    @Test
+    public void testPreviousVarMoveWorks() {
+        final GoGame goGame = new GoGame(9);
+
+        goGame.do_move(new CellImpl(0, 1));
+        goGame.undo();
+
+        final GoMove previousVarMove = goGame.actMove.getNextMoveOnCell(new CellImpl(0, 1));
+
+        goGame.do_move(new CellImpl(0, 0));
+        goGame.undo();
+        goGame.do_move(new CellImpl(1, 0));
+        goGame.undo();
+        goGame.do_move(new CellImpl(0, 0));
+
+        assertThat(goGame.nextVariationWithOffset(-1)).isEqualTo(previousVarMove);
+    }
+
+    @Test
+    public void tesNextVarMoveWorks() {
+        final GoGame goGame = new GoGame(9);
+
+        goGame.do_move(new CellImpl(0, 1));
+        goGame.undo();
+
+        goGame.do_move(new CellImpl(0, 0));
+        goGame.undo();
+        goGame.do_move(new CellImpl(1, 0));
+        goGame.undo();
+        final GoMove nextVarMove = goGame.actMove.getNextMoveOnCell(new CellImpl(1, 0));
+        goGame.do_move(new CellImpl(0, 0));
+
+
+        assertThat(goGame.nextVariationWithOffset(1)).isEqualTo(nextVarMove);
     }
 }
