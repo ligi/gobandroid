@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity;
@@ -27,7 +26,6 @@ public class NavigationAndCommentFragment extends GobandroidGameAwareFragment {
 
         res.findViewById(R.id.scrollview).setFocusable(false);
 
-        getFragmentManager().beginTransaction().replace(R.id.container_for_nav, new NavigationFragment()).commit();
         onGoGameChanged(null);
         return res;
     }

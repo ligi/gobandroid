@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:id="@+id/linearLayout1"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:weightSum="11">
+                android:layout_width="fill_parent"
+                android:id="@+id/linearLayout1"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:weightSum="11">
 
 
-    <FrameLayout
-        android:layout_width="fill_parent"
-        android:id="@+id/container_for_nav"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+    <fragment
+            android:name="org.ligi.gobandroid_hd.ui.fragments.NavigationFragment"
+            android:layout_width="fill_parent"
+            android:id="@+id/container_for_nav"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"/>
 
     <!--  sometimes we have big comments -->
     <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:padding="5dip"
-        android:focusable="false"
-        android:id="@+id/scrollview"
-        android:layout_above="@id/container_for_nav">
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:padding="5dip"
+            android:focusable="false"
+            android:id="@+id/scrollview"
+            android:layout_above="@id/container_for_nav">
 
-        <include layout="@layout/comment_textview" />
+        <include layout="@layout/comment_textview"/>
     </ScrollView>
 </RelativeLayout>
