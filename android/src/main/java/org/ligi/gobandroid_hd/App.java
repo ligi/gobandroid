@@ -2,7 +2,6 @@ package org.ligi.gobandroid_hd;
 
 import android.app.Application;
 import android.support.v7.app.AppCompatDelegate;
-
 import org.ligi.gobandroid_hd.etc.AppComponent;
 import org.ligi.gobandroid_hd.etc.AppModule;
 import org.ligi.gobandroid_hd.etc.DaggerAppComponent;
@@ -35,6 +34,7 @@ public class App extends Application {
         CloudHooks.onApplicationCreation(this);
 
 
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         AppCompatDelegate.setDefaultNightMode(component.settings().getTheme());
 
     }

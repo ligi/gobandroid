@@ -110,7 +110,7 @@ dependencies {
     compile 'net.sourceforge.jchardet:jchardet:1.0'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.n3twork.druid:alphanum:1.0.3'
-    compile "com.android.support:support-annotations:23.3.0"
+    compile "com.android.support:support-annotations:$support_version"
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
@@ -126,11 +126,11 @@ dependencies {
     androidTestApt "com.google.dagger:dagger-compiler:$dagger_version"
 
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-    androidTestCompile "com.android.support:support-annotations:23.3.0"
+    androidTestCompile "com.android.support:support-annotations:$support_version"
     androidTestCompile 'com.squareup.assertj:assertj-android:1.1.1'
 
     testCompile 'com.squareup.assertj:assertj-android:1.1.1'
-    testCompile "com.android.support:support-annotations:23.3.0"
+    testCompile "com.android.support:support-annotations:$support_version"
     testCompile 'junit:junit:4.12'
 
     androidTestCompile 'com.squareup.spoon:spoon-client:1.5.3'
