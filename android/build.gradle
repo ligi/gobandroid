@@ -104,7 +104,7 @@ dependencies {
 
     compile 'org.ligi:AXT:0.37'
     compile 'org.ligi:tracedroid:1.4'
-    compile 'org.ligi:snackengage:0.4'
+    compile 'org.ligi:snackengage:0.5'
 
     compile "com.jakewharton:butterknife:$butterknife_version"
     compile 'net.sourceforge.jchardet:jchardet:1.0'
