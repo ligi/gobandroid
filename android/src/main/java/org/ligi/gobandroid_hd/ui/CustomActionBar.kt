@@ -211,11 +211,6 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
         get() {
             val packageManager = app.packageManager
             val packages = packageManager.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES)
-            for (packageInfo in packages) {
-                if (packageInfo.packageName == GooglePlayStorePackageNameOld || packageInfo.packageName == GooglePlayStorePackageNameNew) {
-                    return true
-                }
-            }
-            return false
+            return packages.any() { it.packageName == GooglePlayStorePackageNameOld || it.packageName == GooglePlayStorePackageNameNew }
         }
 }
