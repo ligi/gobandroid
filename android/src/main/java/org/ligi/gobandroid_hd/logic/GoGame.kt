@@ -301,10 +301,6 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         jump(actMove)
     }
 
-    fun jumpFirst() {
-        jump(findFirstMove())
-    }
-
     fun findFollowingMove(f: (GoMove) -> Boolean): GoMove {
         return findMove({ it.getnextMove(0) }, f)
     }
@@ -329,8 +325,12 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         return findFollowingMove { !it.hasNextMove() }
     }
 
-    fun jumpLast() {
-        jump(findLastMove())
+    fun findNextJunction(): GoMove {
+        return findFollowingMove { !it.hasNextMove() || it.hasNextMoveVariations() }
+    }
+
+    fun findPrevJunction(): GoMove {
+        return findPreviousMove { it.isFirstMove || (it.hasNextMoveVariations() && !it.isContentEqual(actMove.parent) && !it.isContentEqual(actMove)) }
     }
 
     fun jump(move: GoMove?) {

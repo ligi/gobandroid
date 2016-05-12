@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.events.GameChangedEvent;
 import org.ligi.gobandroid_hd.logic.GoMove;
@@ -53,12 +54,35 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
 
     @OnClick(R.id.btn_first)
     void onFirstClick() {
-        game.jumpFirst();
+        final GoMove nextJunction = game.findPrevJunction();
+        if (nextJunction.isFirstMove()) {
+            game.jump(nextJunction);
+        } else {
+            game.jump(nextJunction.getNextMoveVariations().get(0));
+        }
+    }
+
+    @OnLongClick(R.id.btn_first)
+    boolean onFirstLongClick() {
+        game.jump(game.findFirstMove());
+        return true;
     }
 
     @OnClick(R.id.btn_last)
     void onLastClick() {
-        game.jumpLast();
+        final GoMove nextJunction = game.findNextJunction();
+        if (nextJunction.hasNextMove()) {
+            game.jump(nextJunction.getNextMoveVariations().get(0));
+        } else {
+            game.jump(nextJunction);
+        }
+
+    }
+
+    @OnLongClick(R.id.btn_last)
+    boolean onLastLongClick() {
+        game.jump(game.findLastMove());
+        return true;
     }
 
     @Override
@@ -78,7 +102,8 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     }
 
     private void updateButtonStates() {
-        setImageViewState(game.canUndo(), first_btn, prev_btn, next_btn, last_btn);
+        setImageViewState(game.canUndo(), first_btn, prev_btn);
+        setImageViewState(game.canRedo(), next_btn, last_btn);
         bindButtonToMove(game.nextVariationWithOffset(-1), prev_var_btn);
         bindButtonToMove(game.nextVariationWithOffset(1), next_var_btn);
     }

@@ -167,7 +167,7 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
             addModeItem(contentView, TELEVIZE, R.string.televize, R.drawable.ic_notification_live_tv)
         }
 
-        if (isPlayStoreInstalled || GnuGoHelper.isGnuGoAvail(activity)) {
+        if (isPlayStoreInstalled() || GnuGoHelper.isGnuGoAvail(activity)) {
             addModeItem(contentView, GNUGO, R.string.gnugo, R.drawable.ic_hardware_computer)
         }
 
@@ -207,10 +207,9 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
         }
     }
 
-    private val isPlayStoreInstalled: Boolean
-        get() {
-            val packageManager = app.packageManager
-            val packages = packageManager.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES)
-            return packages.any() { it.packageName == GooglePlayStorePackageNameOld || it.packageName == GooglePlayStorePackageNameNew }
-        }
+    private fun isPlayStoreInstalled(): Boolean {
+        val packageManager = app.packageManager
+        val packages = packageManager.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES)
+        return packages.any() { it.packageName == GooglePlayStorePackageNameOld || it.packageName == GooglePlayStorePackageNameNew }
+    }
 }
