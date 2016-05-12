@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import butterknife.BindView;
@@ -61,26 +60,21 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
         game.jump(game.nextVarMove());
     }
 
+    @OnClick(R.id.btn_first)
+    void onFirstClick() {
+        game.jumpFirst();
+    }
+
+    @OnClick(R.id.btn_last)
+    void onLastClick() {
+        game.jumpLast();
+    }
+
     @Override
     public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.nav_button_container, container, false);
 
         ButterKnife.bind(this, view);
-        first_btn.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                game.jumpFirst();
-            }
-
-        });
-        last_btn.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                game.jumpLast();
-            }
-        });
 
         updateButtonStates();
         return view;
