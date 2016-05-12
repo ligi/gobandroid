@@ -53,7 +53,7 @@ object SGFWriter {
             }
         }
 
-        res.append(SGFWriter.moves2string(game.firstMove)).append(")")
+        res.append(SGFWriter.moves2string(game.findFirstMove())).append(")")
 
         return res.toString()
     }

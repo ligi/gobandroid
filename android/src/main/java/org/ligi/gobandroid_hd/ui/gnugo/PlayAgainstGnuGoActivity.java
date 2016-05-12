@@ -251,7 +251,7 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements Runnable {
                     // set the size
                     service.processGTP("boardsize " + getGame().getBoardSize());
 
-                    GoMove currentMove = getGame().getFirstMove();
+                    GoMove currentMove = getGame().findFirstMove();
 
                     getGame().getHandicapBoard().getStatelessGoBoard().withAllCells(new Function1<StatelessBoardCell, Unit>() {
                         @Override

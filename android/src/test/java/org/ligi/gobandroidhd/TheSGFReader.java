@@ -5,7 +5,6 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TheSGFReader extends AssetAwareTest {
@@ -46,14 +45,14 @@ public class TheSGFReader extends AssetAwareTest {
     public void testReadSGFWithFirstMoveWhiteAndCapture() throws Exception {
         GoGame game = SGFReader.sgf2game(readAsset("test_sgfs/first_move_capture_and_white.sgf"), null);
 
-        assertThat(game.getLastMove().getMovePos()).isEqualTo(2);
+        assertThat(game.findLastMove().getMovePos()).isEqualTo(2);
     }
 
     @Test
     public void testThatDefaultLabelWorks() throws Exception {
         GoGame game = SGFReader.sgf2game(readAsset("test_sgfs/default_marker.sgf"), null);
 
-        final GoMarker createdMarker = game.getLastMove().getMarkers().get(0);
+        final GoMarker createdMarker = game.findLastMove().getMarkers().get(0);
         assertThat(createdMarker.getX()).isEqualTo(1);
         assertThat(createdMarker.getY()).isEqualTo(2);
         assertThat(((TextMarker) createdMarker).getText()).isEqualTo("X");
@@ -63,7 +62,7 @@ public class TheSGFReader extends AssetAwareTest {
     public void testThatNamedLabelWorks() throws Exception {
         GoGame game = SGFReader.sgf2game(readAsset("test_sgfs/named_marker.sgf"), null);
 
-        final GoMarker createdMarker = game.getLastMove().getMarkers().get(0);
+        final GoMarker createdMarker = game.findLastMove().getMarkers().get(0);
         assertThat(createdMarker.getX()).isEqualTo(1);
         assertThat(createdMarker.getY()).isEqualTo(2);
         assertThat(((TextMarker) createdMarker).getText()).isEqualTo("L");

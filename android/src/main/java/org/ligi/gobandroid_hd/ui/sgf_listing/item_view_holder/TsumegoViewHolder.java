@@ -69,7 +69,7 @@ public class TsumegoViewHolder extends RecyclerView.ViewHolder implements ViewHo
                 game = SGFReader.sgf2game(sgf_str, null, SGFReader.BREAKON_FIRSTMOVE, transform);
             }
 
-            game.jump(game.getFirstMove());
+            game.jump(game.findFirstMove());
             if (previewView != null) {
                 previewView.setGame(game);
             }

@@ -180,7 +180,7 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
     }
 
     @Subscribe
-    fun onGoGameChaged(event: GameChangedEvent) {
+    fun onGoGameChaged(@Suppress("UNUSED_PARAMETER") event: GameChangedEvent) {
         refresh()
     }
 

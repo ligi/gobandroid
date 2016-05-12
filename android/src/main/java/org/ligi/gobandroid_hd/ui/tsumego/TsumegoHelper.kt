@@ -42,7 +42,7 @@ object TsumegoHelper {
         }
 
         if (with_moves) {
-            max.update(calcMaxMove(game.firstMove, max).value)
+            max.update(calcMaxMove(game.findFirstMove(), max).value)
         }
 
         return max.value

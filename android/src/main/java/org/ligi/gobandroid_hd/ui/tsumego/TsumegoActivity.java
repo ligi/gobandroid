@@ -5,7 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
@@ -18,9 +19,6 @@ import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoActivity;
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData;
 import org.ligi.tracedroid.logging.Log;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TsumegoActivity extends GoActivity {
 
@@ -37,7 +35,7 @@ public class TsumegoActivity extends GoActivity {
 
     private GoMove getFinishingMove() {
         if (finishing_move == null) {
-            finishing_move = getCorrectMove(getGame().getFirstMove());
+            finishing_move = getCorrectMove(getGame().findFirstMove());
         }
 
         return finishing_move;
@@ -62,7 +60,7 @@ public class TsumegoActivity extends GoActivity {
         if (on_path_moves == null) {
             Log.i("isOnPath null");
             // build a on path List to do a fast isOnPath() later
-            recursive_add_on_path_moves(getGame().getFirstMove());
+            recursive_add_on_path_moves(getGame().findFirstMove());
         }
         Log.i("isOnPath null" + on_path_moves.contains(getGame().getActMove()) + " " + on_path_moves.size());
         return on_path_moves.contains(getGame().getActMove());
@@ -175,7 +173,7 @@ public class TsumegoActivity extends GoActivity {
             return;
         }
 
-        recursive_add_on_path_moves(getGame().getFirstMove());
+        recursive_add_on_path_moves(getGame().findFirstMove());
 
         // try to find the correct solution
         if (!isFinishingMoveKnown()) {

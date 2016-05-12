@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.events.GameChangedEvent;
+import org.ligi.gobandroid_hd.logic.GoMove;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert;
 
@@ -50,16 +51,6 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
         }
     }
 
-    @OnClick(R.id.btn_previous_var)
-    public void gameVarLast() {
-        game.jump(game.previousVarMove());
-    }
-
-    @OnClick(R.id.btn_next_var)
-    public void gameVarNext() {
-        game.jump(game.nextVarMove());
-    }
-
     @OnClick(R.id.btn_first)
     void onFirstClick() {
         game.jumpFirst();
@@ -88,8 +79,18 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
 
     private void updateButtonStates() {
         setImageViewState(game.canUndo(), first_btn, prev_btn, next_btn, last_btn);
-        setImageViewState(game.previousVarMove() != null, prev_var_btn);
-        setImageViewState(game.nextVarMove() != null, next_var_btn);
+        bindButtonToMove(game.nextVariationWithOffset(-1), prev_var_btn);
+        bindButtonToMove(game.nextVariationWithOffset(1), next_var_btn);
+    }
+
+    private void bindButtonToMove(final GoMove move, ImageView button) {
+        setImageViewState(move != null, button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                game.jump(move);
+            }
+        });
     }
 
     private void setImageViewState(boolean state, ImageView... views) {

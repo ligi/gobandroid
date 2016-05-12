@@ -289,18 +289,6 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         jump(actMove.getnextMove(pos))
     }
 
-    /**
-     * @return the first move of the game
-     */
-    val firstMove: GoMove
-        get() {
-            var move = actMove
-
-            while (true) {
-                if (move.isFirstMove) return move
-                move = move.parent
-            }
-        }
 
     fun nextVariationWithOffset(offset: Int): GoMove? {
         if (actMove.isFirstMove) return null
@@ -314,20 +302,35 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     }
 
     fun jumpFirst() {
-        jump(firstMove)
+        jump(findFirstMove())
     }
 
-    val lastMove: GoMove
-        get() {
-            var move = actMove
-            while (true) {
-                if (!move.hasNextMove()) return move
-                move = move.getnextMove(0)
-            }
+    fun findFollowingMove(f: (GoMove) -> Boolean): GoMove {
+        return findMove({ it.getnextMove(0) }, f)
+    }
+
+    fun findPreviousMove(condition: (GoMove) -> Boolean): GoMove {
+        return findMove({ it.parent }, condition)
+    }
+
+    fun findMove(nextMove: (GoMove) -> GoMove, condition: (GoMove) -> Boolean): GoMove {
+        var move = actMove
+        while (true) {
+            if (condition(move)) return move
+            move = nextMove(move)
         }
+    }
+
+    fun findFirstMove(): GoMove {
+        return findPreviousMove { it.isFirstMove }
+    }
+
+    fun findLastMove(): GoMove {
+        return findFollowingMove { !it.hasNextMove() }
+    }
 
     fun jumpLast() {
-        jump(lastMove)
+        jump(findLastMove())
     }
 
     fun jump(move: GoMove?) {
@@ -353,7 +356,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         }
 
         reset()
-        actMove = firstMove
+        actMove = findFirstMove()
 
         for (step in replay_moves.indices.reversed())
             do_internal_move(replay_moves[step])
@@ -490,7 +493,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
      * - metadata ( TODO )
      */
     fun isContentEqualTo(other: GoGame): Boolean {
-        return other.boardSize == boardSize && compareMovesRecursive(firstMove, other.firstMove)
+        return other.boardSize == boardSize && compareMovesRecursive(findFirstMove(), other.findFirstMove())
     }
 
     fun hasNextMove(move1: GoMove, expected: GoMove): Boolean {
