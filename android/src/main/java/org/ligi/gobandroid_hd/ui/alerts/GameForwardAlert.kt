@@ -65,7 +65,7 @@ class GameForwardAlert(context: Context, game: GoGame) : GobandroidDialog(contex
             }
 
             if (showvariationwin.isChecked) {
-                GoPrefs.setShowForwardAlert(false)
+                GoPrefs.isShowForwardAlertWanted = false
             }
         }
 

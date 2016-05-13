@@ -3,16 +3,13 @@ package org.ligi.gobandroid_hd.gcm;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.design.BuildConfig;
-
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-
+import java.net.URL;
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
+import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.tracedroid.logging.Log;
-
-import java.net.URL;
-
 import static org.ligi.gobandroid_hd.backend.GobandroidBackend.getURLParamSnippet;
 
 public class RegisterDevice implements Runnable {
@@ -45,7 +42,7 @@ public class RegisterDevice implements Runnable {
                     + "&" + getURLParamSnippet("push_key", push_id)
                     + "&" + getURLParamSnippet("app_version", BuildConfig.VERSION_NAME);
 
-            if (App.component().settings().isTsumegoPushEnabled()) {
+            if (GoPrefs.INSTANCE.isTsumegoPushEnabled()) {
                 url_str += "&" + getURLParamSnippet("want_tsumego", "t");
             }
 

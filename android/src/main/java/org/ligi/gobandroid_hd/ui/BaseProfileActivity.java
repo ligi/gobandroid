@@ -25,15 +25,15 @@ public class BaseProfileActivity extends GobandroidFragmentActivity {
 
         ButterKnife.bind(this);
 
-        rank_et.setText(settings.getRank());
-        username_et.setText(settings.getUsername());
+        rank_et.setText(GoPrefs.INSTANCE.getRank());
+        username_et.setText(GoPrefs.INSTANCE.getUsername());
     }
 
 
     @Override
     protected void onPause() {
-        settings.setRank(rank_et.getText().toString());
-        settings.setUsername(username_et.getText().toString());
+        GoPrefs.INSTANCE.setRank(rank_et.getText().toString());
+        GoPrefs.INSTANCE.setUsername(username_et.getText().toString());
         super.onPause();
     }
 

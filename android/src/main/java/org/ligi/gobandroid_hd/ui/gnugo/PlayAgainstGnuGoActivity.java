@@ -350,11 +350,11 @@ public class PlayAgainstGnuGoActivity extends GoActivity implements Runnable {
     public void requestUndo() {
 
         if (getGame().canUndo()) {
-            getGame().undo(GoPrefs.isKeepVariantEnabled());
+            getGame().undo(GoPrefs.INSTANCE.isKeepVariantWanted());
         }
 
         if (getGame().canUndo()) {
-            getGame().undo(GoPrefs.isKeepVariantEnabled());
+            getGame().undo(GoPrefs.INSTANCE.isKeepVariantWanted());
         }
 
         try {

@@ -80,7 +80,6 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         uiHandler = new Handler();
-        GoPrefs.init(getActivity()); // TODO remove legacy
 
         final View view = inflater.inflate(R.layout.game_setup_inner, container, false);
 
@@ -90,8 +89,8 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
         handicap_seek.setOnSeekBarChangeListener(this);
 
         // set defaults
-        act_size = GoPrefs.getLastBoardSize();
-        act_handicap = GoPrefs.getLastHandicap();
+        act_size = GoPrefs.INSTANCE.getLastBoardSize();
+        act_handicap = GoPrefs.INSTANCE.getLastHandicap();
 
         refresh_ui();
         return view;
@@ -138,8 +137,8 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
             size_seek.setMax(19 - size_offset);
 
 
-        GoPrefs.setLastBoardSize(act_size);
-        GoPrefs.setLastHandicap(act_handicap);
+        GoPrefs.INSTANCE.setLastBoardSize(act_size);
+        GoPrefs.INSTANCE.setLastHandicap(act_handicap);
 
         if (gameProvider.get().getSize() != act_size || gameProvider.get().getHandicap() != act_handicap) {
             gameProvider.set(new GoGame(act_size, act_handicap));

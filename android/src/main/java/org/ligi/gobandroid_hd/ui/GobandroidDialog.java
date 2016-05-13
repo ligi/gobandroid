@@ -14,15 +14,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
-
+import javax.inject.Inject;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.model.GameProvider;
-import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
-
-import javax.inject.Inject;
+import org.ligi.gobandroid_hd.ui.application.GoAndroidEnvironment;
 
 /**
  * A styled Dialog fit in the gobandroid style
@@ -36,7 +34,7 @@ public class GobandroidDialog extends Dialog {
     private Button negative_btn;
 
     @Inject
-    protected GobandroidSettings settings;
+    protected GoAndroidEnvironment settings;
 
     @Inject
     protected GameProvider gameProvider;

@@ -6,7 +6,7 @@ import okhttp3.Request
 import okio.Okio
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.backend.GobandroidBackend
-import org.ligi.gobandroid_hd.ui.application.GobandroidSettings
+import org.ligi.gobandroid_hd.ui.application.GoAndroidEnvironment
 import java.io.File
 
 object TsumegoDownloadHelper {
@@ -19,7 +19,7 @@ object TsumegoDownloadHelper {
         }
     }
 
-    fun getDefaultList(settings: GobandroidSettings): Array<TsumegoSource> {
+    fun getDefaultList(settings: GoAndroidEnvironment): Array<TsumegoSource> {
         return arrayOf(
                 TsumegoSource("${settings.tsumegoPath}/1.easy/", BASE_URL + "/easy/", "/ggg-easy-%02d.sgf"),
                 TsumegoSource("${settings.tsumegoPath}/2.intermediate/", BASE_URL + "/intermediate/", "/ggg-intermediate-%02d.sgf"),

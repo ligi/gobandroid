@@ -12,10 +12,11 @@ import org.ligi.gobandroid_hd.events.GameChangedEvent
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.model.GameProvider
 import org.ligi.gobandroid_hd.ui.BaseProfileActivity
+import org.ligi.gobandroid_hd.ui.GoPrefs
 import org.ligi.gobandroid_hd.ui.GoPrefsActivity
 import org.ligi.gobandroid_hd.ui.UnzipSGFsDialog
+import org.ligi.gobandroid_hd.ui.application.GoAndroidEnvironment
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity
-import org.ligi.gobandroid_hd.ui.application.GobandroidSettings
 import org.ligi.gobandroid_hd.ui.links.LinksActivity
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity
@@ -26,7 +27,7 @@ class NavigationDrawerHandler(private val ctx: GobandroidFragmentActivity) {
     private val navigationView: NavigationView
 
     @Inject
-    lateinit internal var settings: GobandroidSettings
+    lateinit internal var env: GoAndroidEnvironment
 
     @Inject
     lateinit internal var gameProvider: GameProvider
@@ -54,17 +55,17 @@ class NavigationDrawerHandler(private val ctx: GobandroidFragmentActivity) {
                 },
 
                 R.id.menu_drawer_tsumego to {
-                    startForPath(settings.tsumegoPath)
+                    startForPath(env.tsumegoPath)
                 },
 
                 R.id.menu_drawer_review to {
-                    val path = settings.reviewPath
+                    val path = env.reviewPath
                     startForPath(path)
 
                 },
 
                 R.id.menu_drawer_bookmark to {
-                    ctx.startActivity(startSGFListForPath(settings.bookmarkPath))
+                    ctx.startActivity(startSGFListForPath(env.bookmarkPath))
                 },
 
 
@@ -118,9 +119,9 @@ class NavigationDrawerHandler(private val ctx: GobandroidFragmentActivity) {
     fun unzipSGFifNeeded(intent_after: Intent): Boolean {
         // we check for the tsumego path as the base path could already be there but  no valid tsumego
 
-        val tsumegoPath = settings.tsumegoPath
-        if (!tsumegoPath.isDirectory || settings.isVersionSeen(1)) {
-            UnzipSGFsDialog(ctx, intent_after, settings).show()
+        val tsumegoPath = env.tsumegoPath
+        if (!tsumegoPath.isDirectory || GoPrefs.isVersionSeen(1)) {
+            UnzipSGFsDialog(ctx, intent_after, env).show()
             return true
         }
         return false

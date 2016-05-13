@@ -16,7 +16,7 @@ import java.io.File
  */
 open class GobanDroidTVActivity : GobandroidFragmentActivity() {
 
-    private val path_to_play_from: File by lazy { File(settings.reviewPath, "commented") }
+    private val path_to_play_from: File by lazy { File(env.reviewPath, "commented") }
 
     open val intent2start: Intent
         get() = Intent(this, GobanDroidTVActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
@@ -32,7 +32,7 @@ open class GobanDroidTVActivity : GobandroidFragmentActivity() {
         if (path_to_play_from.listFiles() == null) {
             setContentView(R.layout.empty)
             App.getTracker().trackEvent("intern", "unzip", "gtv", null)
-            UnzipSGFsDialog(this, intent2start, settings).show()
+            UnzipSGFsDialog(this, intent2start, env).show()
         } else {
             startTV()
         }

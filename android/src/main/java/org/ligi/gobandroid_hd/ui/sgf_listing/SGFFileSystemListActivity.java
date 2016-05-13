@@ -21,15 +21,12 @@ package org.ligi.gobandroid_hd.ui.sgf_listing;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import java.io.File;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsDialog;
-
-import java.io.File;
-
 import static org.ligi.gobandroid_hd.InteractionScope.Mode.REVIEW;
 import static org.ligi.gobandroid_hd.InteractionScope.Mode.TSUMEGO;
 
@@ -54,11 +51,11 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
         final File sgfPath = getSGFPath();
         final String sgfPathString = sgfPath.getAbsolutePath();
 
-        if (sgfPathString.substring(sgfPathString.indexOf('/')).startsWith(settings.getTsumegoPath().getAbsolutePath().substring(sgfPathString.indexOf('/')))) {
+        if (sgfPathString.substring(sgfPathString.indexOf('/')).startsWith(env.getTsumegoPath().getAbsolutePath().substring(sgfPathString.indexOf('/')))) {
             interactionScope.setMode(InteractionScope.Mode.TSUMEGO);
         }
 
-        if (sgfPathString.substring(sgfPathString.indexOf('/')).startsWith(settings.getReviewPath().getAbsolutePath().substring(sgfPathString.indexOf('/')))) {
+        if (sgfPathString.substring(sgfPathString.indexOf('/')).startsWith(env.getReviewPath().getAbsolutePath().substring(sgfPathString.indexOf('/')))) {
             interactionScope.setMode(REVIEW);
         }
 
@@ -74,7 +71,7 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
             return new File(getIntent().getData().getPath());
         }
 
-        return settings.getSGFBasePath();
+        return env.getSGFBasePath();
     }
 
     private void setActionbarProperties(final File dir) {

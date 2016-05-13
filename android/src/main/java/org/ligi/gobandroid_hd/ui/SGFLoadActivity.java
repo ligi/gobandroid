@@ -25,7 +25,17 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.support.v7.app.AlertDialog;
 import android.widget.LinearLayout;
-
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
 import org.greenrobot.eventbus.EventBus;
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.App;
@@ -40,19 +50,6 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper;
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper;
 import org.ligi.tracedroid.logging.Log;
-
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.Charset;
-
 import static org.ligi.gobandroid_hd.InteractionScope.Mode.TSUMEGO;
 
 /**
@@ -80,8 +77,6 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(new LinearLayout(this));
-
-        GoPrefs.init(this);
 
         dlg = new GameLoadingDialog(this);
         dlg.show();
@@ -129,8 +124,8 @@ public class SGFLoadActivity extends GobandroidFragmentActivity implements
 
         // if it comes from network
         if (intent_uri.toString().startsWith("http")) { // https catched also
-            new File(GoPrefs.getSGFPath() + "/downloads").mkdirs();
-            final File f = new File(GoPrefs.getSGFPath() + "/downloads/" + intent_uri.getLastPathSegment());
+            new File(env.getSGFBasePath(), "downloads").mkdirs();
+            final File f = new File(env.getSGFBasePath(), "downloads/" + intent_uri.getLastPathSegment());
             f.createNewFile();
             file_writer = new FileOutputStream(f);
         }

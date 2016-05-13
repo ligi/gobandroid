@@ -1,14 +1,12 @@
 package org.ligi.gobandroid_hd.etc;
 
+import dagger.Module;
+import dagger.Provides;
+import javax.inject.Singleton;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.model.GameProvider;
-import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
-
-import javax.inject.Singleton;
-
-import dagger.Module;
-import dagger.Provides;
+import org.ligi.gobandroid_hd.ui.application.GoAndroidEnvironment;
 
 @Module
 public class AppModule {
@@ -21,8 +19,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public GobandroidSettings provideSettings() {
-        return new GobandroidSettings(app);
+    public GoAndroidEnvironment provideSettings() {
+        return new GoAndroidEnvironment(app);
     }
 
     @Provides

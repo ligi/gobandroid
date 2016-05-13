@@ -26,8 +26,8 @@ import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
+import org.ligi.gobandroid_hd.ui.application.GoAndroidEnvironment;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
-import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
 import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink;
 
 /**
@@ -51,7 +51,7 @@ public class BookmarkDialog extends GobandroidDialog {
      *
      * @return the ensured Filename
      */
-    private static String getEnsuredFilename(GobandroidSettings settings, GoGame game) {
+    private static String getEnsuredFilename(GoAndroidEnvironment settings, GoGame game) {
 
         String fname = game.getMetaData().getFileName();
         if (TextUtils.isEmpty(fname)) {
@@ -64,7 +64,7 @@ public class BookmarkDialog extends GobandroidDialog {
         return fname;
     }
 
-    public static String getCleanEnsuredFilename(GobandroidSettings settings, GoGame goGame) {
+    public static String getCleanEnsuredFilename(GoAndroidEnvironment settings, GoGame goGame) {
         final String[] path_components = getEnsuredFilename(settings, goGame).split("/");
         return path_components[path_components.length - 1].replace(".sgf", "");
     }

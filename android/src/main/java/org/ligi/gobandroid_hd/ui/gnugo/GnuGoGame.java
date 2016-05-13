@@ -4,9 +4,7 @@ import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoGameMetadata;
-import org.ligi.gobandroid_hd.ui.application.GobandroidSettings;
-
-import javax.inject.Inject;
+import org.ligi.gobandroid_hd.ui.GoPrefs;
 
 public class GnuGoGame {
 
@@ -16,9 +14,6 @@ public class GnuGoGame {
     private final GoGame game;
 
     public boolean aiIsThinking = false;
-
-    @Inject
-    GobandroidSettings settings;
 
     GnuGoGame(final boolean playingBlack, final boolean playingWhite, final byte level, final GoGame game) {
         App.component().inject(this);
@@ -42,16 +37,16 @@ public class GnuGoGame {
             metaData.setBlackName(app.getString(R.string.gnugo));
             metaData.setBlackRank("");
         } else {
-            metaData.setBlackName(settings.getUsername());
-            metaData.setBlackRank(settings.getRank());
+            metaData.setBlackName(GoPrefs.INSTANCE.getUsername());
+            metaData.setBlackRank(GoPrefs.INSTANCE.getRank());
         }
 
         if (playingWhite) {
             metaData.setWhiteName(app.getString(R.string.gnugo));
             metaData.setWhiteRank("");
         } else {
-            metaData.setWhiteName(settings.getUsername());
-            metaData.setWhiteRank(settings.getRank());
+            metaData.setWhiteName(GoPrefs.INSTANCE.getUsername());
+            metaData.setWhiteRank(GoPrefs.INSTANCE.getRank());
         }
 
     }

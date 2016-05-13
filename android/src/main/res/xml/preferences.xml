@@ -54,10 +54,10 @@
             android:title="@string/push_tsumego" />
 
         <CheckBoxPreference
-            android:defaultValue="1"
-            android:key="show_var_alert_win"
-            android:summary="@string/variation_from_alert"
-            android:title="@string/switch_variation_style" />
+                android:defaultValue="true"
+                android:key="show_var_alert_win"
+                android:summary="@string/variation_from_alert"
+                android:title="@string/switch_variation_style" />
 
     </PreferenceCategory>
 </PreferenceScreen>

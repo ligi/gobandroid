@@ -4,11 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.AssetManager
 import org.ligi.gobandroid_hd.ui.alerts.ProgressDialog
-import org.ligi.gobandroid_hd.ui.application.GobandroidSettings
+import org.ligi.gobandroid_hd.ui.application.GoAndroidEnvironment
 import java.io.File
 import java.io.FileWriter
 
-class UnzipSGFsDialog(val activity: Activity, val intent_after_finish: Intent, settings: GobandroidSettings) : ProgressDialog(activity) {
+class UnzipSGFsDialog(val activity: Activity, val intent_after_finish: Intent, settings: GoAndroidEnvironment) : ProgressDialog(activity) {
 
 
     init {
@@ -17,7 +17,7 @@ class UnzipSGFsDialog(val activity: Activity, val intent_after_finish: Intent, s
 
         Thread({
             val callback: (String) -> Unit = { activity.runOnUiThread { message.text = it } }
-            decompress(activity.assets, arrayOf("sgf_init"), settings.sgfBasePath, callback)
+            decompress(activity.assets, arrayOf("sgf_init"), settings.SGFBasePath, callback)
 
             activity.runOnUiThread {
                 dismiss()

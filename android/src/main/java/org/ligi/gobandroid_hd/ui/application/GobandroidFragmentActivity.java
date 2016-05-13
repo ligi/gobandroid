@@ -11,7 +11,8 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-
+import java.lang.reflect.Field;
+import javax.inject.Inject;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.PlayServicesIntegration;
@@ -20,14 +21,10 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.model.GameProvider;
 import org.ligi.gobandroid_hd.ui.application.navigation.NavigationDrawerHandler;
 
-import java.lang.reflect.Field;
-
-import javax.inject.Inject;
-
 public class GobandroidFragmentActivity extends AppCompatActivity {
 
     @Inject
-    protected GobandroidSettings settings;
+    protected GoAndroidEnvironment env;
 
     @Inject
     public InteractionScope interactionScope;

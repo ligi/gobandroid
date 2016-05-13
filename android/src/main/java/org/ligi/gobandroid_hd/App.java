@@ -2,9 +2,11 @@ package org.ligi.gobandroid_hd;
 
 import android.app.Application;
 import android.support.v7.app.AppCompatDelegate;
+import com.chibatching.kotpref.Kotpref;
 import org.ligi.gobandroid_hd.etc.AppComponent;
 import org.ligi.gobandroid_hd.etc.AppModule;
 import org.ligi.gobandroid_hd.etc.DaggerAppComponent;
+import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.GobandroidTracker;
 import org.ligi.gobandroid_hd.ui.GobandroidTrackerResolver;
 import org.ligi.tracedroid.TraceDroid;
@@ -33,9 +35,10 @@ public class App extends Application {
 
         CloudHooks.onApplicationCreation(this);
 
+        Kotpref.INSTANCE.init(this);
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-        AppCompatDelegate.setDefaultNightMode(component.settings().getTheme());
+        AppCompatDelegate.setDefaultNightMode(GoPrefs.INSTANCE.getThemeInt());
 
     }
 

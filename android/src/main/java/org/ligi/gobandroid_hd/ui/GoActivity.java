@@ -104,8 +104,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        GoPrefs.init(this); // TODO remove legacy
-
         setContentView(R.layout.game);
 
         ButterKnife.bind(this);
@@ -127,7 +125,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         AXT.at(this).disableRotation();
 
-        if (settings.isConstantLightWanted()) {
+        if (GoPrefs.INSTANCE.isConstantLightWanted()) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
@@ -138,7 +136,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         }
 
         if (sound_man == null) {
-            sound_man = new GoSoundManager(this, settings);
+            sound_man = new GoSoundManager(this, env);
         }
 
         final View customNav = new CustomActionBar(this);
@@ -184,9 +182,9 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             return;
         }
 
-        go_board.setDo_legend(settings.isLegendEnabled());
-        go_board.setLegend_sgf_mode(settings.isSGFLegendEnabled());
-        go_board.setGridEmboss(settings.isGridEmbossEnabled());
+        go_board.setDo_legend(GoPrefs.INSTANCE.isLegendEnabled());
+        go_board.setLegend_sgf_mode(GoPrefs.INSTANCE.isSGFLegendEnabled());
+        go_board.setGridEmboss(GoPrefs.INSTANCE.isGridEmbossEnabled());
     }
 
     public boolean isBoardFocusWanted() {
@@ -213,7 +211,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
     @Override
     public boolean doFullScreen() {
-        return settings.isFullscreenEnabled() | getResources().getBoolean(R.bool.force_fullscreen);
+        return GoPrefs.INSTANCE.isFullscreenEnabled() | getResources().getBoolean(R.bool.force_fullscreen);
     }
 
     @Override
@@ -416,7 +414,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         if (doAutoSave()) {
             try {
-                final File f = new File(settings.getSGFSavePath() + "/autosave.sgf");
+                final File f = new File(env.getSGFSavePath() + "/autosave.sgf");
                 f.createNewFile();
 
                 FileWriter sgf_writer = new FileWriter(f);
@@ -487,21 +485,21 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         go_board.setMove_stone_mode(true);
 
         // TODO check if we only want this in certain modes
-        if (GoPrefs.isAnnounceMoveActive()) {
+        if (GoPrefs.INSTANCE.isAnnounceMoveActive()) {
 
             new AlertDialog.Builder(this).setMessage(R.string.hint_stone_move).setPositiveButton(R.string.ok,
 
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,
                                             int whichButton) {
-                            GoPrefs.setAnnounceMoveActive(false);
+                            GoPrefs.INSTANCE.setAnnounceMoveActive(false);
                         }
                     }).show();
         }
     }
 
     public boolean doAskToKeepVariant() {
-        return GoPrefs.isAskVariantEnabled() && interactionScope.getAsk_variant_session();
+        return GoPrefs.INSTANCE.isAskVariantWanted() && interactionScope.getAsk_variant_session();
     }
 
     @Override
@@ -583,7 +581,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         if (doAskToKeepVariant()) {
             new UndoWithVariationDialog(this).show();
         } else {
-            getGame().undo(GoPrefs.isKeepVariantEnabled());
+            getGame().undo(GoPrefs.INSTANCE.isKeepVariantWanted());
         }
     }
 

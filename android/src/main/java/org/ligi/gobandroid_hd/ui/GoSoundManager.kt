@@ -4,8 +4,8 @@ import android.content.Context
 import android.media.AudioManager
 import android.media.SoundPool
 import org.ligi.gobandroid_hd.R
+import org.ligi.gobandroid_hd.ui.application.GoAndroidEnvironment
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity
-import org.ligi.gobandroid_hd.ui.application.GobandroidSettings
 import java.util.*
 
 /**
@@ -17,7 +17,7 @@ import java.util.*
  *
  * *         This software is licenced with GPLv3
  */
-class GoSoundManager(private val context: GobandroidFragmentActivity, private val settings: GobandroidSettings) {
+class GoSoundManager(private val context: GobandroidFragmentActivity, private val settings: GoAndroidEnvironment) {
 
     enum class Sound(val resID: Int) {
         START(R.raw.go_start),
@@ -35,7 +35,7 @@ class GoSoundManager(private val context: GobandroidFragmentActivity, private va
     private val mAudioManager: AudioManager by lazy { context.getSystemService(Context.AUDIO_SERVICE) as AudioManager }
 
     fun playSound(sound: Sound) {
-        if (settings.isSoundEnabled) {
+        if (GoPrefs.isSoundWanted) {
             if (soundMap[sound] == null) {
                 soundMap[sound] = mSoundPool.load(context, sound.resID, 1)
             }
