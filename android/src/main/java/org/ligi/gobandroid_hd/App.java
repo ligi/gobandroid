@@ -9,6 +9,7 @@ import org.ligi.gobandroid_hd.etc.DaggerAppComponent;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.GobandroidTracker;
 import org.ligi.gobandroid_hd.ui.GobandroidTrackerResolver;
+import org.ligi.gobandroid_hd.ui.application.GobandroidSettingsTransition;
 import org.ligi.tracedroid.TraceDroid;
 import org.ligi.tracedroid.logging.Log;
 
@@ -27,6 +28,8 @@ public class App extends Application {
         super.onCreate();
 
         component = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+        Kotpref.INSTANCE.init(this);
+        new GobandroidSettingsTransition(this).transition();
 
         getTracker().init(this);
 
@@ -35,11 +38,8 @@ public class App extends Application {
 
         CloudHooks.onApplicationCreation(this);
 
-        Kotpref.INSTANCE.init(this);
-
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         AppCompatDelegate.setDefaultNightMode(GoPrefs.INSTANCE.getThemeInt());
-
     }
 
     public static GobandroidTracker getTracker() {

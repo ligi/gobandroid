@@ -42,7 +42,7 @@ object GoPrefs : KotprefModel() {
 
     var isAnnounceMoveActive: Boolean by booleanPrefVar()
     var isShowForwardAlertWanted: Boolean by booleanPrefVar(default = true, key = "show_var_alert_win")
-    val isSoundWanted: Boolean by booleanPrefVar(default = true, key = R.string.prefs_do_sound)
+    var isSoundWanted: Boolean by booleanPrefVar(default = true, key = R.string.prefs_do_sound)
 
     var isAskVariantWanted: Boolean by booleanPrefVar(default = true)
     var isKeepVariantWanted: Boolean by booleanPrefVar(default = true)
@@ -53,12 +53,12 @@ object GoPrefs : KotprefModel() {
     var username: String by stringPrefVar()
     var rank: String by stringPrefVar()
 
-    val isFullscreenEnabled: Boolean by booleanPrefVar(key = R.string.prefs_fullscreen)
-    val isLegendEnabled: Boolean by booleanPrefVar(key = R.string.prefs_do_legend)
-    val isSGFLegendEnabled: Boolean by booleanPrefVar(key = R.string.prefs_sgf_legend)
-    val isConstantLightWanted: Boolean by booleanPrefVar(key = R.string.prefs_constant_light)
-    val isGridEmbossEnabled: Boolean by booleanPrefVar(key = R.string.prefs_grid_emboss)
-    val isTsumegoPushEnabled: Boolean by booleanPrefVar(key = R.string.prefs_push_tsumego)
+    var isFullscreenEnabled: Boolean by booleanPrefVar(key = R.string.prefs_fullscreen)
+    var isLegendEnabled: Boolean by booleanPrefVar(key = R.string.prefs_do_legend, default = true)
+    var isSGFLegendEnabled: Boolean by booleanPrefVar(key = R.string.prefs_sgf_legend, default = true)
+    var isConstantLightWanted: Boolean by booleanPrefVar(key = R.string.prefs_constant_light, default = true)
+    var isGridEmbossEnabled: Boolean by booleanPrefVar(key = R.string.prefs_grid_emboss, default = true)
+    var isTsumegoPushEnabled: Boolean by booleanPrefVar(key = R.string.prefs_push_tsumego, default = true)
 
     private val dayNightModeString: String by stringPrefVar(key = R.string.prefs_daynight)
     private var lastSeenSGFPackInt: Int by intPrefVar()
