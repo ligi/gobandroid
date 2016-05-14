@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +57,7 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     void onFirstClick() {
         final GoMove nextJunction = game.findPrevJunction();
         if (nextJunction.isFirstMove()) {
+            showJunctionInfoSnack(R.string.found_junction_snack_for_first);
             game.jump(nextJunction);
         } else {
             game.jump(nextJunction.getNextMoveVariations().get(0));
@@ -72,11 +74,23 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     void onLastClick() {
         final GoMove nextJunction = game.findNextJunction();
         if (nextJunction.hasNextMove()) {
+            showJunctionInfoSnack(R.string.found_junction_snack_for_last);
             game.jump(nextJunction.getNextMoveVariations().get(0));
         } else {
             game.jump(nextJunction);
         }
 
+    }
+
+    private void showJunctionInfoSnack(final int found_junction_snack_for_last) {
+        if (!GoPrefs.INSTANCE.getHasAcknowledgedJunctionInfo()) {
+            Snackbar.make(last_btn, found_junction_snack_for_last, Snackbar.LENGTH_LONG).setAction(android.R.string.ok, new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    GoPrefs.INSTANCE.setHasAcknowledgedJunctionInfo(true);
+                }
+            }).show();
+        }
     }
 
     @OnLongClick(R.id.btn_last)

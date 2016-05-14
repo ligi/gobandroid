@@ -275,4 +275,6 @@
     </array>
     <string name="day_or_night">Day or Night</string>
     <string name="day_or_night_summary">Show a light or a dark board</string>
+    <string name="found_junction_snack_for_last">Found junction - long-press for last move</string>
+    <string name="found_junction_snack_for_first">Found junction - long-press for first move</string>
 </resources>

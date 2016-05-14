@@ -47,6 +47,8 @@ object GoPrefs : KotprefModel() {
     var isAskVariantWanted: Boolean by booleanPrefVar(default = true)
     var isKeepVariantWanted: Boolean by booleanPrefVar(default = true)
 
+    var hasAcknowledgedJunctionInfo: Boolean by booleanPrefVar(default = false)
+
     var lastBoardSize: Int by intPrefVar(default = 9)
     var lastHandicap: Int by intPrefVar(default = 0)
 
