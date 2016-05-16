@@ -5,6 +5,8 @@ node {
  stage "build"
  sh "./gradlew clean build"
 
- stage "test"
- sh "./gradlew spoonWithAnalyticsWithCloudDebugAndroidTest"
+ stage "spoon"
+ lock('adb') {
+  sh "./gradlew spoonWithAnalyticsWithCloudDebugAndroidTest"
+ }
 }
