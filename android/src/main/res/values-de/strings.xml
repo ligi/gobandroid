@@ -13,7 +13,7 @@
   <string name="yes">Ja</string>
   <string name="end_game_quesstion_title">Spiel beenden?</string>
   <string name="comments">Kommentare</string>
-  <string name="ok">Ok</string>
+  <string name="ok">OK</string>
   <string name="wait_gnugo">Warten Sie, bis GnuGo bereit ist.</string>
   <string name="not_your_turn">Sie sind nicht am Zug!</string>
   <string name="undo">Rückgängig</string>
@@ -28,100 +28,91 @@
   <string name="problem_listing_sgf">Problem beim Auflisten der SGFs</string>
   <string name="there_are_no_files_in">Keine Dateien in</string>
   <string name="sgf_path_invalid">Der SGF-Pfad ist ungültig.</string>
-  <string name="android_market_problem">Kein Zugang zum Android Market - führen Sie die
-        Installation manuell durch.
-    </string>
+  <string name="android_market_problem">Kein Zugang zum Android Markt - führen Sie die
+Installation manuell durch.</string>
   <string name="problem">Problem</string>
-  <string name="gameplay">Spielen</string>
+  <string name="gameplay">Gameplay</string>
   <string name="game_results">Ergebnis</string>
   <string name="game_pass">Passen</string>
-  <string name="show_review_controls">Steuerung für Besprechung anzeigen</string>
-  <string name="hide_review_controls">Steuerung für Besprechung ausblenden</string>
+  <string name="show_review_controls">Steuerung für den Rückblick anzeigen</string>
+  <string name="hide_review_controls">Steuerung für Rückblick ausblenden</string>
   <string name="game_ended_in_draw">Das Spiel ging unentschieden aus.</string>
   <string name="variations">Variationen</string>
   <string name="territory">Gebiet</string>
-  <string name="captures">Gefangene</string>
+  <string name="captures">Beute</string>
   <string name="komi">Komi</string>
-  <string name="final_points">Punkte</string>
+  <string name="final_points">finale Punkte</string>
   <string name="save_sgf">SGF speichern</string>
   <string name="invalid_move_ko">KO!</string>
   <string name="invalid_move_no_liberties">Keine Freiheiten!</string>
-  <string name="hint_stone_move">Sie haben auf den letzten Stein getippt. Dies erlaubt das
-        Verschieben, was durch
-        einen halbtransparenten Stein gekennzeichnet ist.
+  <string name="hint_stone_move">Sie haben auf den aktuellen Stein getippt. Damit beginnt das
+Verschieben, was durch einen halb transparenten Stein dargestellt wird.
     </string>
   <string name="mark_last_stone">Letzten Stein markieren</string>
-  <string name="mark_last_stone_summary">Ein kleiner Kreis kennzeichnet den letzten Stein.
-    </string>
-  <string name="first_tap_zooms">Erstes Tippen für Zoom</string>
+  <string name="mark_last_stone_summary">Ein kleiner Kreis kennzeichnet den letzten Stein</string>
+  <string name="first_tap_zooms">erstes Tippen zoomt</string>
   <string name="first_tap_zooms_summary">aka Dicke-Finger-Modus</string>
   <string name="viewable_stone">Stein sichtbar setzen</string>
   <string name="viewable_stone_sum">Der Stein wird über dem Finger angezeigt.</string>
-  <string name="grid_emboss_summary">Das Raster wird erhaben oder nur schwarz dargestellt.
-    </string>
-  <string name="grid_emboss">Erhabenes Raster</string>
+  <string name="grid_emboss_summary">Raster wird angedeutet oder als reines schwarz dargestellt.</string>
+  <string name="grid_emboss">angedeutetes Raster</string>
+  <string name="legend">Legende </string>
   <string name="show_legend">Legende anzeigen</string>
-  <string name="show_legend_summary">Die Legende erlaubt das schnellere Auffinden der Position.
-    </string>
+  <string name="show_legend_summary">zeige Legende um schnellen Auffinden der Position</string>
   <string name="variant_mode">Umgang mit Varianten</string>
-  <string name="variant_mode_summary">Wie werden Varianten beim Rückgängigmachen behandelt?
-    </string>
+  <string name="variant_mode_summary">Wie werden Varianten beim Rückgängig machen behandelt?</string>
   <string name="path">Pfad</string>
   <string name="sgf_path">SGF-Pfad</string>
-  <string name="enter_sgf_path_request">Geben Sie den Speicherpfad für SGF-Dateien an.</string>
+  <string name="enter_sgf_path_request">Geben Sie den Pfad an, an dem SGF-Dateien gespeichert
+werden sollen:</string>
   <string name="set_ai_strength">KI-Stärke festlegen</string>
   <string name="ai_strength">KI-Stärke</string>
-  <string name="ai_preferences">KI-Einstellungen</string>
-  <string name="set_skin">Skin festlegen</string>
-  <string name="board_skin">Brett-Skin</string>
+  <string name="ai_preferences">KI Einstellungen</string>
+  <string name="set_skin">Design festlegen</string>
+  <string name="board_skin">Brett Design</string>
   <string name="fullscreen_board">Vollbildmodus</string>
-  <string name="fullscreen_board_summary">Zeigt etwas mehr Brett</string>
+  <string name="fullscreen_board_summary">Zeige etwas mehr Brett</string>
   <string name="constant_light">Konstante Helligkeit</string>
-  <string name="drain_your_battery_while_playing">Verbraucht mehr Strom beim Spielen</string>
-  <string name="stone_skin">Stein-Skin</string>
+  <string name="drain_your_battery_while_playing">Leere deine Batterie beim Spielen</string>
+  <string name="stone_skin">Stein Design</string>
   <string name="screen">Anzeige</string>
-  <string name="sgf_legend">SGF-Legende</string>
+  <string name="sgf_legend">SGF Legende</string>
   <string name="sgf_legend_summary">GHJKL statt GHIJKL</string>
-  <string name="sgf_preferences">SGF-Einstellungen</string>
+  <string name="sgf_preferences">SGF Einstellungen</string>
   <string name="filename">Dateiname</string>
-  <string name="sgf_filename">SGF-Dateiname</string>
+  <string name="sgf_filename">SGFDateiname</string>
   <string name="game_info">Spielinfos</string>
-  <string name="add_to_sgf">An Dateinamen anfügen:</string>
-  <string name="save_sgf_question">Geben Sie den Namen für die unter %s zu speichernde Datei an:
-    </string>
+  <string name="add_to_sgf">An Dateinamen anhängen:</string>
+  <string name="save_sgf_question">Geben Sie den Namen für die unter %s zu speichernde Datei an:</string>
   <string name="share_question">Nach dem Speichern teilen?</string>
   <string name="gamename">Spielname</string>
   <string name="date">Datum</string>
   <string name="players">Spieler</string>
   <string name="time">Zeit</string>
   <string name="enter_default_filename_for_sgf_request">Geben Sie den Standarddateinamen für
-        SGF-Dateien an.
-    </string>
-  <string name="review_game">Besprechen</string>
+SGF-Dateien an</string>
+  <string name="review_game">Rückblick</string>
   <string name="record_game">Aufzeichnen</string>
   <string name="dashboard_problems">Tsumego</string>
   <string name="hint">Hinweis</string>
   <string name="link_title">Links</string>
   <string name="link_tab_about">Über</string>
-  <string name="link_tab_credits">Beteiligte</string>
+  <string name="link_tab_credits">Credits</string>
   <string name="help">Hilfe</string>
   <string name="link_tab_sgf">SGFs</string>
+  <string name="link_tab_videos">Videos</string>
   <string name="game_mode">Modus</string>
   <string name="switch_game_mode">Modus wechseln</string>
   <string name="bookmark">Lesezeichen</string>
   <string name="menu_autoplay">Autoplay</string>
-  <string name="tsumego_off_path">Unbekannte Variation - bedeutet i. d. R., dass dies leider nicht
-        der beste Zug ist
-        :-(
-    </string>
+  <string name="tsumego_off_path">Unbekannte Variation - bedeutet meistens, dass der Zug suboptimal ist :-(</string>
   <string name="tsumego_correct">Richtig! :-)</string>
   <string name="refresh">synchronisieren</string>
-  <string name="tsumego_sgf_no_solution">Sie versuchen, eine SGF-Datei als Tsumego zu laden - es
-        ist jedoch keine
-        Lösung angegeben - Sie können fortfahren, aber es gibt keinen Applaus, wenn Sie richtig
-        liegen :-(
+  <string name="tsumego_sgf_no_solution">Du versuchst eine SGF-Datei als Tsumego zu öffnen -
+es ist aber keine Lösung vorhanden. Du kannst fortfahren,
+aber es gibt keinen Applaus wenn du richtig liegst :-(
     </string>
-  <string name="working">Wird bearbeitet</string>
+  <string name="working">Arbeite...</string>
   <string name="please_stay_patient">Bitte warten Sie.</string>
   <string name="creating_thumbnails">Miniaturansichten werden erstellt - bitte warten Sie.
     </string>
@@ -187,6 +178,7 @@
     </string>
   <string name="go_back">Zurück</string>
   <string name="download_status">Downloadstatus</string>
+  <string name="downloading_tsumegos_please_wait">Suche/Downloade neue Tsumegos...</string>
   <string name="no_new_tsumegos_found">Keine neuen Tsumegos gefunden :-(</string>
   <string name="downloaded_n_tsumego">Es wurden %d neue Tsumegos heruntergeladen :-)</string>
   <string name="overwrite_existing_file">Bestehende Datei überschreiben</string>
@@ -223,4 +215,54 @@
   <string name="rank">Rang</string>
   <string name="empty_board">Leeres Brett</string>
   <string name="more">MEHR</string>
+  <string name="hints_used">%d hinweise angefragt</string>
+  <string name="it_is_me">Ich bins</string>
+  <string name="next_tsumego">nächstes tsumego</string>
+  <string name="online">ONLINE</string>
+  <string name="online_play">Online-Go</string>
+  <string name="online_view_game">Beobachten</string>
+  <string name="online_join_game">Beitreten</string>
+  <string name="online_create_game">Erstellen</string>
+  <string name="online_your_games">Deine Spiele</string>
+  <string name="enter_username">Bitte gieb einen Benutzernamen ein</string>
+  <string name="who_are_you">Wer bist du?</string>
+  <string name="delete">Löschen</string>
+  <string name="unknown">unbekannt</string>
+  <string name="cannot_create_game_server_problem">Spiel kann nicht erstellt werden - bitte
+später versuchen</string>
+  <string name="server_problem">Serverproblem</string>
+  <string name="file_saved">%s gespeichert</string>
+  <string name="file_not_saved">Problem beim speichern von %s</string>
+  <string name="game_created">Spiel erstellt</string>
+  <string name="game_created_msg">Spiel erstellt - genieße das Spiel!\nTipp: Du kannst auch was anderes tuen während gobdroid im Hintergrund auf den Gegner wartet.</string>
+  <string name="choose_how_to_send_sgf">Wähle aus wie das SGF gesendet werden soll</string>
+  <string name="recorded_game">Aufgenommenes Spiel</string>
+  <string name="commented_game">Kommentiertes Spiel</string>
+  <string name="situation">Situation</string>
+  <string name="other">Anderes</string>
+  <string name="drawer_open">Zeichentool öffnen</string>
+  <string name="drawer_close">Zeichentool schließen</string>
+  <string name="end_review_ok_button">Rückblick beenden</string>
+  <string name="end_review_stay_button">bleibe</string>
+  <string name="correct_but_no_more_tsumegos">Korrekt!-) Aber leider keine weiteren Tsumegos in diesem Ordner vorhanden</string>
+  <string name="del_sgfmeta">Verlauf löschen</string>
+  <string name="del_sgfmeta_prompt">Bist du sicher das alle Verlaufsdaten in diesem Ordner gelöscht werden sollen?</string>
+  <string name="game_difficulty">Schwierigkeitsgrad</string>
+  <string name="ai_is_thinking">GnuGo Al denkt nach</string>
+  <string name="circle">Kreis</string>
+  <string name="square">Rechteck</string>
+  <string name="triangle">Dreieck</string>
+  <string name="number">Nummer</string>
+  <string name="letter">Brief</string>
+  <string name="handicap_only_for">Handicap nur für 9x9 / 13x13 / 19x19</string>
+  <string name="new_game">Neues Spiel</string>
+  <string name="no_definition_found">keine Definition gefunden</string>
+  <string name="copy_sgf_dialog_message">Kopiere SGFs. Bitte warten...</string>
+  <string name="betatest_opt_in_out">Betatest opt-in/out</string>
+  <string name="switch_variation_style">Zeige Variations Dialog</string>
+  <string name="variation_from_alert">zusätzlich zu den hoch/runter Buttons</string>
+  <string name="select_variation_prompt">Zeige diese Fenster nicht erneut - zeige Variation nur mit Hoch/Runter</string>
+  <string name="variations_found"> Variationen für diesen Zug gefunden - welche soll gewählt werden?</string>
+  <string name="day_or_night">Tag oder Nacht</string>
+  <string name="day_or_night_summary">Zeige ein helles oder dunkles Board</string>
 </resources>
