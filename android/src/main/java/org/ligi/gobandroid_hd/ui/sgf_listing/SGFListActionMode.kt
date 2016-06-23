@@ -30,7 +30,7 @@ open class SGFListActionMode(internal val context: Context, internal val fileNam
         mode.finish()
         when (item.itemId) {
             R.id.menu_share -> {
-                ShareAsAttachmentDialog(context, fileName).show()
+                ShareAsAttachmentDialog(context, File(fileName)).show()
                 return true
             }
 

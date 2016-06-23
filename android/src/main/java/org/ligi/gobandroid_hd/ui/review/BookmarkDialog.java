@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.ligi.gobandroid_hd.R;
@@ -58,7 +59,7 @@ public class BookmarkDialog extends GobandroidDialog {
             // was not saved before - do it now ( needed for a bookmark )
 
             fname = getDefaultFilename();
-            SGFWriter.INSTANCE.saveSGF(game, settings.getSGFSavePath() + "/autosave/" + fname);
+            SGFWriter.INSTANCE.saveSGF(game, new File(settings.getSGFSavePath(), "autosave/" + fname));
         }
 
         return fname;
