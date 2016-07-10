@@ -133,7 +133,7 @@ dependencies {
     testCompile "com.android.support:support-annotations:$support_version"
     testCompile 'junit:junit:4.12'
 
-    androidTestCompile 'com.squareup.spoon:spoon-client:1.5.3'
+    androidTestCompile 'com.squareup.spoon:spoon-client:1.5.7'
 
     compile 'org.greenrobot:eventbus:3.0.0'
 }
