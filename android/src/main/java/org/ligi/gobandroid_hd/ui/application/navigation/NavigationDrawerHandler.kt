@@ -120,7 +120,7 @@ class NavigationDrawerHandler(private val ctx: GobandroidFragmentActivity) {
         // we check for the tsumego path as the base path could already be there but  no valid tsumego
 
         val tsumegoPath = env.tsumegoPath
-        if (!tsumegoPath.isDirectory || GoPrefs.isVersionSeen(1)) {
+        if (!tsumegoPath.isDirectory || GoPrefs.isVersionSeen(2)) {
             UnzipSGFsDialog(ctx, intent_after, env).show()
             return true
         }
