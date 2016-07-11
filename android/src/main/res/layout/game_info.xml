@@ -99,9 +99,9 @@
         android:orientation="horizontal">
 
         <android.support.design.widget.TextInputLayout
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
 
             <EditText
                 android:id="@+id/komi_et"
@@ -112,22 +112,25 @@
 
 
         <Button
-            android:id="@+id/button_komi_five"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5.5" />
+                android:id="@+id/button_komi_five"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="5.5" />
 
         <Button
-            android:id="@+id/button_komi_six"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="6.5" />
+                android:id="@+id/button_komi_six"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="6.5" />
 
         <Button
-            android:id="@+id/button_komi_seven"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="7.5" />
+                android:id="@+id/button_komi_seven"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="7.5" />
     </LinearLayout>
 
     <android.support.design.widget.TextInputLayout
