@@ -1,12 +1,29 @@
 node {
- stage "checkout"
+ def flavorCombination='WithAnalyticsWithCloud'
+
+ stage 'checkout'
  checkout scm
 
- stage "build"
- sh "./gradlew clean build"
+ stage 'assemble'
+ sh "./gradlew clean assemble${flavorCombination}Release"
+ archive 'android/build/outputs/apk/*'
 
- stage "spoon"
+ stage 'lint'
+ sh "./gradlew clean lint${flavorCombination}Release"
+publishHTML(target:[allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'android/build/outputs/', reportFiles: "lint-results-*Release.html", reportName: 'Lint'])
+
+ stage 'test'
+ sh "./gradlew clean test${flavorCombination}DebugUnitTest"
+ publishHTML(target:[allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'android/build/reports/tests/', reportFiles: "*/index.html", reportName: 'UnitTest'])
+
+ stage 'UITest'
  lock('adb') {
-  sh "./gradlew clean spoonWithAnalyticsWithCloudDebugAndroidTest"
+   try {
+    sh "./gradlew clean spoon${flavorCombination}"
+   } catch(err) {
+    currentBuild.result = FAILURE
+   } finally {
+     publishHTML(target:[allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: "android/build/spoon-output/${flavorCombination}DebugAndroidTest", reportFiles: 'index.html', reportName: 'Spoon'])
+   }
  }
 }
