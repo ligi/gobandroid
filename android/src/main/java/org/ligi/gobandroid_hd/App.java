@@ -20,10 +20,6 @@ public class App extends Application {
 
     private static AppComponent component;
 
-    public boolean isTesting() {
-        return false;
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();

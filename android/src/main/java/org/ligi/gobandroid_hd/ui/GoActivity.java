@@ -23,6 +23,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
+import android.support.v4.BuildConfig;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -107,7 +108,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         ButterKnife.bind(this);
 
-        if (!getApp().isTesting()) {
+        if (!BuildConfig.DEBUG) {
             // if there where stacktraces collected -> give the user the option to send them
             if (!TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this)) {
                 SnackEngage.from(go_board)
