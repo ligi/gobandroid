@@ -46,10 +46,11 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
-import org.ligi.gobandroid_hd.App;
+import org.ligi.gobandroid_hd.BuildConfig;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.events.GameChangedEvent;
+import org.ligi.gobandroid_hd.events.OptionsItemClickedEvent;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
@@ -96,7 +97,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     private int last_processed_move_change_num = 0;
 
     public Fragment getGameExtraFragment() {
-
         return new DefaultGameExtrasFragment();
     }
 
@@ -108,7 +108,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         ButterKnife.bind(this);
 
-        if (!App.isTesting) {
+        if (!BuildConfig.DEBUG) {
             // if there where stacktraces collected -> give the user the option to send them
             if (!TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this)) {
                 SnackEngage.from(go_board)
@@ -221,7 +221,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        getBus().post(new OptionsItemClickedEvent(item.getItemId()));
         switch (item.getItemId()) {
 
             case R.id.menu_game_info:
@@ -327,6 +327,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         return res;
     }
 
+    @StringRes
     private int getToastForResult(GoGame.MoveStatus res) {
         switch (res) {
             case INVALID_IS_KO:
@@ -367,12 +368,14 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     protected void eventForZoomBoard(MotionEvent event) {
         interactionScope.setTouchCell(getBoard().pixel2cell(event.getX(), event.getY()));
 
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            gameExtrasContainer.setVisibility(View.VISIBLE);
-            zoom_board.setVisibility(View.GONE);
-        } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            gameExtrasContainer.setVisibility(View.GONE);
-            zoom_board.setVisibility(View.VISIBLE);
+        if (!getApp().isTesting()) {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                gameExtrasContainer.setVisibility(View.VISIBLE);
+                zoom_board.setVisibility(View.GONE);
+            } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                gameExtrasContainer.setVisibility(View.GONE);
+                zoom_board.setVisibility(View.VISIBLE);
+            }
         }
         refreshZoomFragment();
     }
@@ -569,9 +572,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     }
 
     public GoBoardViewHD getBoard() {
-        if (go_board == null) {
-            setupBoard();
-        }
         return go_board;
     }
 

@@ -166,7 +166,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
             actMove.setToPassMove()
         }
 
-        EventBus.getDefault().post(GameChangedEvent.INSTANCE)
+        EventBus.getDefault().post(GameChangedEvent)
     }
 
     /**
@@ -235,7 +235,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
             capturesWhite += local_captures
 
         actMove.setDidCaptures(local_captures > 0)
-        EventBus.getDefault().post(GameChangedEvent.INSTANCE)
+        EventBus.getDefault().post(GameChangedEvent)
 
         // if we reached this point this move must be valid
         return MoveStatus.VALID
@@ -362,7 +362,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
             do_internal_move(replay_moves[step])
 
         copyVisualBoard()
-        EventBus.getDefault().post(GameChangedEvent.INSTANCE)
+        EventBus.getDefault().post(GameChangedEvent)
     }
 
     fun copyVisualBoard() {

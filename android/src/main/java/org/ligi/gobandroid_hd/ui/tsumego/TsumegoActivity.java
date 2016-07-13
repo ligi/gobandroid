@@ -10,9 +10,9 @@ import java.util.List;
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.App;
-import org.ligi.gobandroid_hd.CloudHooks;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.events.GameChangedEvent;
+import org.ligi.gobandroid_hd.events.TsumegoSolved;
 import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
@@ -212,7 +212,7 @@ public class TsumegoActivity extends GoActivity {
             meta.setIsSolved(true);
             meta.persist();
 
-            CloudHooks.onSolvedTsumego(this, getGame());
+            getBus().post(new TsumegoSolved(getGame()));
         }
         this.runOnUiThread(new Runnable() {
             @Override

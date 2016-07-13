@@ -2,9 +2,9 @@ apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 apply plugin: 'spoon'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'de.mobilej.unmock'
 apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'com.getkeepsafe.dexcount'
 
 repositories {
     jcenter()
@@ -41,7 +41,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 22
         applicationId "org.ligi.gobandroid_hd"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "org.ligi.gobandroid_hd.AppReplacingRunner"
         archivesBaseName = "Gobandroid-$versionName"
         vectorDrawables.useSupportLibrary = true
     }
@@ -75,6 +75,15 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
         }
+
+        debug {
+            // to avoid MultiDex http://stackoverflow.com/questions/38329248/dexindexoverflowexception-when-running-androidtests
+            minifyEnabled true
+            useProguard false
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-project.txt'
+        }
     }
 
 } // android
@@ -91,6 +100,7 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
 
+    compile 'com.google.code.findbugs:jsr305:3.0.1'
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
     compile "com.google.dagger:dagger:$dagger_version"
@@ -123,7 +133,9 @@ dependencies {
     withCloudCompile "com.google.android.gms:play-services-gcm:$play_version"
     withCloudCompile "com.google.android.gms:play-services-plus:$play_version"
 
-    androidTestApt "com.google.dagger:dagger-compiler:$dagger_version"
+    withCloudCompile 'com.google.apis:google-api-services-games:v1-rev199-1.22.0'
+
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
 
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestCompile "com.android.support:support-annotations:$support_version"
@@ -134,8 +146,10 @@ dependencies {
     testCompile 'com.squareup.assertj:assertj-android:1.1.1'
     testCompile "com.android.support:support-annotations:$support_version"
     testCompile 'junit:junit:4.12'
+    testCompile 'com.google.code.findbugs:jsr305:3.0.1'
 
-    androidTestCompile 'com.squareup.spoon:spoon-client:1.5.7'
+    androidTestCompile 'com.squareup.spoon:spoon-client:1.6.1'
+    androidTestCompile 'com.google.code.findbugs:jsr305:3.0.1'
 
     compile 'org.greenrobot:eventbus:3.0.0'
 }

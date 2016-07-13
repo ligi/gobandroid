@@ -42,7 +42,7 @@ class NavigationDrawerHandler(private val ctx: GobandroidFragmentActivity) {
                 R.id.menu_drawer_empty to {
                     val act_game = gameProvider.get()
                     gameProvider.set(GoGame(act_game.size.toByte().toInt(), act_game.handicap.toByte().toInt()))
-                    EventBus.getDefault().post(GameChangedEvent.INSTANCE)
+                    EventBus.getDefault().post(GameChangedEvent)
                     startForClass(GameRecordActivity::class.java)
                 },
 

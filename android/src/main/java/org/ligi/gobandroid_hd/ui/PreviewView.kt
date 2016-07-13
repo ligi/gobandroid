@@ -5,7 +5,6 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import org.ligi.gobandroid_hd.R
-import org.ligi.gobandroid_hd.logic.CellFactory
 import org.ligi.gobandroid_hd.logic.CellImpl
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper
@@ -94,11 +93,13 @@ class PreviewView : View {
                     black_line_paint)
         }
 
-        for (cell in CellFactory.getAllCellsForRect(span!!.x, span!!.y)) {
-            if (game!!.visualBoard.isCellBlack(cell))
-                canvas.drawBitmap(black_stone_bitmap, cell.x * stone_size, cell.y * stone_size, null)
-            if (game!!.visualBoard.isCellWhite(cell))
-                canvas.drawBitmap(white_stone_bitmap, cell.x * stone_size, cell.y * stone_size, null)
+        game!!.visualBoard.statelessGoBoard.withAllCells { cell ->
+            if (cell.x <= span!!.x && cell.y <= span!!.y) {
+                if (game!!.visualBoard.isCellBlack(cell))
+                    canvas.drawBitmap(black_stone_bitmap, cell.x * stone_size, cell.y * stone_size, null)
+                if (game!!.visualBoard.isCellWhite(cell))
+                    canvas.drawBitmap(white_stone_bitmap, cell.x * stone_size, cell.y * stone_size, null)
+            }
         }
 
     }

@@ -18,16 +18,13 @@ import org.ligi.tracedroid.logging.Log;
  */
 public class App extends Application {
 
-
     private static AppComponent component;
-
-    public static boolean isTesting = false;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        component = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+        component = createComponent();
         Kotpref.INSTANCE.init(this);
         new GobandroidSettingsTransition(this).transition();
 
@@ -36,10 +33,14 @@ public class App extends Application {
         TraceDroid.init(this);
         Log.setTAG("gobandroid");
 
-        CloudHooks.onApplicationCreation(this);
+        CloudHooks.INSTANCE.onApplicationCreation(this);
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         AppCompatDelegate.setDefaultNightMode(GoPrefs.INSTANCE.getThemeInt());
+    }
+
+    public AppComponent createComponent() {
+        return DaggerAppComponent.builder().appModule(new AppModule(this)).build();
     }
 
     public static GobandroidTracker getTracker() {
@@ -50,7 +51,7 @@ public class App extends Application {
         return component;
     }
 
-    public static void setComponent(AppComponent newComponent) {
-        component = newComponent;
+    public boolean isTesting() {
+        return false;
     }
 }

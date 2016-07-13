@@ -43,6 +43,7 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".ui.TurnBasedActivity"/>
 
         <activity android:name="org.ligi.gobandroid_hd.backend.ParseDeepLinkActivity">
             <intent-filter>

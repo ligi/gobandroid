@@ -100,7 +100,7 @@ class GameScoringActivity : GoActivity() {
 
     override fun doMoveWithUIFeedback(cell: Cell): GoGame.MoveStatus {
         do_score_touch(cell)
-        bus.post(GameChangedEvent.INSTANCE)
+        bus.post(GameChangedEvent)
         return GoGame.MoveStatus.VALID
     }
 
