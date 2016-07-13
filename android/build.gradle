@@ -41,7 +41,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 22
         applicationId "org.ligi.gobandroid_hd"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "org.ligi.gobandroid_hd.AppReplacingRunner"
         archivesBaseName = "Gobandroid-$versionName"
         vectorDrawables.useSupportLibrary = true
     }
