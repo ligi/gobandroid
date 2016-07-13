@@ -46,7 +46,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.events.GameChangedEvent;
@@ -108,7 +107,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         ButterKnife.bind(this);
 
-        if (!App.isTesting) {
+        if (!getApp().isTesting()) {
             // if there where stacktraces collected -> give the user the option to send them
             if (!TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this)) {
                 SnackEngage.from(go_board)

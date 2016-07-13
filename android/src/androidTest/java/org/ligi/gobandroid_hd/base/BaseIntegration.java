@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.support.annotation.StringRes;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.WindowManager;
-import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import reporting.SpooningFailureHandler;
@@ -20,7 +19,6 @@ public abstract class BaseIntegration<T extends Activity> extends ActivityInstru
     public void setUp() throws Exception {
         super.setUp();
         setFailureHandler(new SpooningFailureHandler(this));
-        App.isTesting = true;
     }
 
     @Override

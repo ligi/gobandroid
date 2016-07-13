@@ -20,7 +20,9 @@ public class App extends Application {
 
     private static AppComponent component;
 
-    public static boolean isTesting = false;
+    public boolean isTesting() {
+        return false;
+    }
 
     @Override
     public void onCreate() {
