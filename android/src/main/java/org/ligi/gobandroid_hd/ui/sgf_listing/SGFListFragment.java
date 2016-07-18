@@ -16,9 +16,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.davekoelle.alphanum.AlphanumComparator;
-
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.ligi.axt.AXT;
 import org.ligi.axt.listeners.ActivityFinishingOnCancelListener;
 import org.ligi.axt.listeners.ActivityFinishingOnClickListener;
@@ -37,13 +40,6 @@ import org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder.ReviewViewHolder;
 import org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder.TsumegoViewHolder;
 import org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder.ViewHolderInterface;
 import org.ligi.tracedroid.logging.Log;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static android.text.TextUtils.isEmpty;
 import static org.ligi.gobandroid_hd.InteractionScope.Mode.TSUMEGO;
 
@@ -298,7 +294,7 @@ public class SGFListFragment extends GobandroidFragment implements Refreshable {
         }
 
         @Override
-        public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
             ((ViewHolderInterface) holder).apply(getFile(position));
 
 
@@ -329,7 +325,7 @@ public class SGFListFragment extends GobandroidFragment implements Refreshable {
                 @Override
                 public void onClick(View v) {
                     final Intent intent2start = new Intent(getActivity(), SGFLoadActivity.class);
-                    final String fileName = dir + "/" + menu_items[position];
+                    final String fileName = dir + "/" + menu_items[holder.getAdapterPosition()];
 
                     // check if it is directory behind golink or general
                     if (GoLink.isGoLink(fileName)) {
@@ -361,7 +357,7 @@ public class SGFListFragment extends GobandroidFragment implements Refreshable {
                     v.setTag(R.id.tag_actionmode, Boolean.TRUE);
 
                     final AppCompatActivity activity = (AppCompatActivity) getActivity();
-                    actionMode = activity.startSupportActionMode(getActionMode(position));
+                    actionMode = activity.startSupportActionMode(getActionMode(holder.getAdapterPosition()));
 
                     cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_elevated_elevation));
 
