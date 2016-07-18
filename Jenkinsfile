@@ -1,5 +1,6 @@
 node {
  def flavorCombination='WithAnalyticsWithCloud'
+ def flavorCombinationLower='withAnalyticsWithCloud'
 
  stage 'checkout'
  checkout scm
@@ -23,7 +24,7 @@ publishHTML(target:[allowMissing: true, alwaysLinkToLastBuild: true, keepAll: tr
    } catch(err) {
     currentBuild.result = FAILURE
    } finally {
-     publishHTML(target:[allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: "android/build/spoon-output/${flavorCombination}DebugAndroidTest", reportFiles: 'index.html', reportName: 'Spoon'])
+     publishHTML(target:[allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: "android/build/spoon/${flavorCombinationLower}/debug", reportFiles: 'index.html', reportName: 'Spoon'])
    }
  }
 }
