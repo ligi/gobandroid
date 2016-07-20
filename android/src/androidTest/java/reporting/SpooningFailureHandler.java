@@ -7,7 +7,7 @@ import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.support.test.runner.lifecycle.Stage;
 import android.test.InstrumentationTestCase;
 import android.view.View;
-import com.squareup.spoon.Spoon;
+import com.jraska.falcon.FalconSpoon;
 import java.util.Collection;
 import org.hamcrest.Matcher;
 
@@ -24,7 +24,7 @@ public class SpooningFailureHandler implements FailureHandler {
     @Override
     public void handle(Throwable error, Matcher<View> viewMatcher) {
         try {
-            Spoon.screenshot(getCurrentActivity(), "error");
+            FalconSpoon.screenshot(getCurrentActivity(), "error");
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
