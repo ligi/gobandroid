@@ -2,21 +2,27 @@ package org.ligi.gobandroid_hd.logic.cell_gatherer
 
 import org.ligi.gobandroid_hd.logic.StatefulGoBoard
 import org.ligi.gobandroid_hd.logic.StatelessBoardCell
+import java.util.*
 
 class AreaCellGatherer(board: StatefulGoBoard, root: StatelessBoardCell) : CellGatherer(board, root) {
 
-    override fun process(cell: StatelessBoardCell) {
-        val unProcessed = processed.add(cell)
+    override fun processAndGetFollowup(toProcess: Set<StatelessBoardCell>): HashSet<StatelessBoardCell> {
+        val followUp = HashSet<StatelessBoardCell>()
+        toProcess.forEach {
+            val unProcessed = processed.add(it)
 
-        if (board.areCellsTogetherInArea(root, cell)) {
-            gatheredCells.add(cell)
-            if (unProcessed) {
-                processNeighbors(cell)
+            if (board.areCellsTogetherInArea(root, it)) {
+                gatheredCells.add(it)
+                if (unProcessed) {
+                    followUp.addAll(it.neighbors)
+                }
+            } else if (board.isCellFree(it) && unProcessed) {
+                followUp.addAll(it.neighbors)
             }
-        } else if (board.isCellFree(cell) && unProcessed) {
-            processNeighbors(cell)
-        }
-    }
 
+        }
+
+        return followUp
+    }
 
 }

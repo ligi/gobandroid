@@ -6,6 +6,7 @@ import org.ligi.gobandroid_hd.logic.StatelessBoardCell
 open class MustBeConnectedCellGatherer(board: StatefulGoBoard, root: StatelessBoardCell) : CellGatherer(board, root) {
 
 
+    /*
     override fun process(cell: StatelessBoardCell) {
         if (processed.add(cell) && board.areCellsEqual(cell, root)) {
             gatheredCells.add(cell)
@@ -16,5 +17,6 @@ open class MustBeConnectedCellGatherer(board: StatefulGoBoard, root: StatelessBo
 
         }
     }
+    */
 
 }

@@ -13,18 +13,27 @@ abstract class CellGatherer(protected val board: StatefulGoBoard, protected val 
         process(root)
     }
 
-    open protected fun process(cell: StatelessBoardCell) {
-        if (processed.add(cell) && board.areCellsEqual(cell, root)) {
-            gatheredCells.add(cell)
-            processNeighbors(cell)
+    protected fun process(cell: StatelessBoardCell) {
+
+        var toProcess = hashSetOf(cell)
+
+        while (!toProcess.isEmpty()) {
+            toProcess = processAndGetFollowup(toProcess)
         }
+
+    }
+
+    open fun processAndGetFollowup(toProcess: Set<StatelessBoardCell>): HashSet<StatelessBoardCell> {
+        val followUp = HashSet<StatelessBoardCell>()
+        toProcess.forEach {
+            if (processed.add(it) && board.areCellsEqual(it, root)) {
+                gatheredCells.add(it)
+                followUp.addAll(it.neighbors)
+            }
+        }
+        return followUp
     }
 
 
-    open protected fun processNeighbors(cell: StatelessBoardCell) {
-        cell.neighbors.forEach {
-            process(it)
-        }
-    }
 
 }
