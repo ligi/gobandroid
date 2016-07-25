@@ -22,16 +22,19 @@ public class GobandroidSettingsTransition {
     public void transition() {
         final GoPrefs prefs = GoPrefs.INSTANCE;
 
-        prefs.setFullscreenEnabled(isFullscreenEnabled());
-        prefs.setSoundWanted(isSoundEnabled());
-        prefs.setLegendEnabled(isLegendEnabled());
-        prefs.setSGFLegendEnabled(isSGFLegendEnabled());
-        prefs.setConstantLightWanted(isConstantLightWanted());
-        prefs.setGridEmbossEnabled(isGridEmbossEnabled());
-        prefs.setTsumegoPushEnabled(isTsumegoPushEnabled());
-        prefs.setUsername(getUsername());
-        prefs.setRank(getRank());
-        prefs.isVersionSeen(getPreferences().getInt("VERSION", 0));
+        if (!prefs.isTransitionDone()) {
+            prefs.setFullscreenEnabled(isFullscreenEnabled());
+            prefs.setSoundWanted(isSoundEnabled());
+            prefs.setLegendEnabled(isLegendEnabled());
+            prefs.setSGFLegendEnabled(isSGFLegendEnabled());
+            prefs.setConstantLightWanted(isConstantLightWanted());
+            prefs.setGridEmbossEnabled(isGridEmbossEnabled());
+            prefs.setTsumegoPushEnabled(isTsumegoPushEnabled());
+            prefs.setUsername(getUsername());
+            prefs.setRank(getRank());
+            prefs.isVersionSeen(getPreferences().getInt("VERSION", 0));
+            prefs.setTransitionDone(true);
+        }
     }
 
     private SharedPreferences getPreferences() {
