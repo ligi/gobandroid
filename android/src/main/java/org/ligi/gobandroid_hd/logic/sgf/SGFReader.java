@@ -19,6 +19,8 @@
 
 package org.ligi.gobandroid_hd.logic.sgf;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.ligi.gobandroid_hd.logic.CellImpl;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -29,10 +31,6 @@ import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
 import org.ligi.tracedroid.logging.Log;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.ligi.gobandroid_hd.logic.GoGame.MoveStatus.VALID;
 
 /**
@@ -323,7 +321,11 @@ public class SGFReader {
                 break;
 
             case "KM":
-                getOrCreateGame().setKomi(Float.parseFloat(act_param));
+                try {
+                    getOrCreateGame().setKomi(Float.parseFloat(act_param));
+                } catch (NumberFormatException ignored) {
+                    // catch a bad komi-statement like seen KM[] - would now even catch KM[crashme]
+                }
                 break;
         }
 
