@@ -17,6 +17,13 @@ public class TheSGFReader extends AssetAwareTest {
     }
 
     @Test
+    public void testProblem() throws Exception {
+        GoGame game = SGFReader.sgf2game(readAsset("test_sgfs/bad_komi.sgf"), null);
+
+        assertThat(game.getSize()).isEqualTo(9);
+    }
+
+    @Test
     public void testReadMinimal9x9SGF() throws Exception {
         GoGame game = SGFReader.sgf2game(readAsset("test_sgfs/minimal_9x9.sgf"), null);
 
