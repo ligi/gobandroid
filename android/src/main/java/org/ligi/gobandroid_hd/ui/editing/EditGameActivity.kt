@@ -10,6 +10,7 @@ import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus
 import org.ligi.gobandroid_hd.logic.markers.*
 import org.ligi.gobandroid_hd.logic.markers.util.MarkerUtil
 import org.ligi.gobandroid_hd.ui.GoActivity
+import org.ligi.gobandroid_hd.ui.editing.model.EditGameMode
 
 /**
  * Activity to edit a Game

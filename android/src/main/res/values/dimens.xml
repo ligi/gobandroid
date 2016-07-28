@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="actionbar_height">42dip</dimen>
+    <dimen name="edit_mode_item_size">42dp</dimen>
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_large">24sp</dimen>
     <dimen name="dialog_minwidth">230dp</dimen>

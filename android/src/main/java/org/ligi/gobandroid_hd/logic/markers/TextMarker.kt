@@ -35,7 +35,7 @@ class TextMarker(cell: Cell, val text: String) : GoMarker(cell) {
 
     override fun draw(c: Canvas, size: Float, x: Float, y: Float, paint: Paint) {
         val fm = paint.fontMetrics
-        c.drawText(text, x, y + size + (fm.ascent + fm.descent), paint)
+        c.drawText(text, x, y - (fm.ascent + fm.descent) / 2, paint)
     }
 
 }
