@@ -15,7 +15,6 @@ import java.lang.reflect.Field;
 import javax.inject.Inject;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.InteractionScope;
-import org.ligi.gobandroid_hd.PlayServicesIntegration;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.model.GameProvider;
@@ -35,8 +34,6 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
 
-    private PlayServicesIntegration playServicesIntegration;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +45,7 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
         }
         // a little hack because I strongly disagree with the style guide here
         // ;-)
-        // not having the Actionbar overfow menu also with devices with hardware
+        // not having the Actionbar overflow menu also with devices with hardware
         // key really helps discoverability
         // http://stackoverflow.com/questions/9286822/how-to-force-use-of-overflow-menu-on-devices-with-menu-button
         try {
@@ -58,19 +55,14 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
                 menuKeyField.setAccessible(true);
                 menuKeyField.setBoolean(config, false);
             }
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
             // Ignore - but at least we tried ;-)
         }
 
         // we do not want focus on custom views ( mainly for GTV )
-        /*
-         * wd if ((this.getSupportActionBar()!=null) &&
-		 * (this.getSupportActionBar().getCustomView()!=null))
-		 * this.getSupportActionBar().getCustomView().setFocusable(false);
-		 *
-		 */
-
-
+        if (getSupportActionBar() != null && getSupportActionBar().getCustomView() != null) {
+            this.getSupportActionBar().getCustomView().setFocusable(false);
+        }
     }
 
     public void closeDrawers() {
@@ -88,9 +80,9 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         drawerToggle = new ActionBarDrawerToggle(this,                  /* host Activity */
-                drawerLayout,         /* DrawerLayout object */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */) {
+                                                 drawerLayout,         /* DrawerLayout object */
+                                                 R.string.drawer_open,  /* "open drawer" description */
+                                                 R.string.drawer_close  /* "close drawer" description */) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -108,7 +100,7 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return (drawerToggle.onOptionsItemSelected(item)) ;
+        return (drawerToggle.onOptionsItemSelected(item));
     }
 
     @Override
@@ -162,108 +154,6 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
             return false;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    /*
-        private void workingPostToGPlus() {
-            // Create an interactive post with the "VIEW_ITEM" label. This will
-            // create an enhanced share dialog when the post is shared on Google+.
-            // When the user clicks on the deep link, ParseDeepLinkActivity will
-            // immediately parse the deep link, and route to the appropriate resource.
-            Uri callToActionUrl = Uri.parse("https://cloud-goban.appspot.com/game/ag1zfmNsb3VkLWdvYmFucgwLEgRHYW1lGPK_JAw");
-            String callToActionDeepLinkId = "/foo/bar";
-
-
-            // Create an interactive post builder.
-            PlusShare.Builder builder = new PlusShare.Builder(this, mPlusClient);
-
-            // Set call-to-action metadata.
-            builder.addCallToAction("CREATE_ITEM", callToActionUrl, callToActionDeepLinkId);
-
-            // Set the target url (for desktop use).
-            builder.setContentUrl(Uri.parse("https://cloud-goban.appspot.com/game/ag1zfmNsb3VkLWdvYmFucgwLEgRHYW1lGPK_JAw"));
-
-            // Set the target deep-link ID (for mobile use).
-            builder.setContentDeepLinkId("/pages/",
-                    null, null, null);
-
-            // Set the pre-filled message.
-            builder.setText("foo bar");
-
-            startActivityForResult(builder.getIntent(), 0);
-        }
-    */
-    //@Override
-    public void onConnected(Bundle bundle) {
-
-        /*
-        ItemScope target = new ItemScope.Builder()
-                //.setUrl("https://cloud-goban.appspot.com/game/"+key)
-                .setUrl("https://developers.google.com/+/web/snippet/examples/thing")
-                //.setUrl("http://cloud-goban.appspot.com/game/ag1zfmNsb3VkLWdvYmFucgwLEgRHYW1lGKGnJww")
-                //.setType("http://schema.org/CreativeWork")
-                .build();
-
-        Moment moment = new Moment.Builder()
-                .setType("http://schemas.google.com/AddActivity")
-                .setTarget(target)
-                .build();
-
-        getPlusClient().writeMoment(moment);
-         */
-
-        /*
-        final int errorCode = GooglePlusUtil.checkGooglePlusApp(this);
-        if (errorCode == GooglePlusUtil.SUCCESS) {
-            PlusShare.Builder builder = new PlusShare.Builder(this, mPlusClient);
-
-            // Set call-to-action metadata.
-            builder.addCallToAction(
-                    "CREATE_ITEM",
-                    Uri.parse("http://plus.google.com/pages/create"),
-                    "/pages/create");
-            // Set the content url (for desktop use).
-            builder.setContentUrl(Uri.parse("https://plus.google.com/pages/"));
-
-            // Set the target deep-link ID (for mobile use).
-            builder.setContentDeepLinkId("/pages/", null, null, null);
-
-            // Set the share text.
-            builder.setText("Create your Google+ Page too!");
-            startActivityForResult(builder.getIntent(), 0);
-            */
-
-            /*
-               Intent shareIntent = new PlusShare.Builder(this)
-          .setType("text/plain")
-          .setText("Welcome to the Google+ platform.")
-          .setContentUrl(Uri.parse("https://developers.google.com/+/"))
-          .getIntent();
-
-             startActivityForResult(shareIntent, 0);
-               */
-
-            /*
-            Intent shareIntent = new PlusShare.Builder(this)
-                    .setText("Lemon Cheesecake recipe")
-                    .setType("text/plain")
-                    .setContentDeepLinkId("/cheesecake/lemon",
-                            "Lemon Cheesecake recipe",
-                            "A tasty recipe for making lemon cheesecake.",
-                            Uri.parse("http://example.com/static/lemon_cheesecake.png"))
-                    .getIntent();
-
-            startActivityForResult(shareIntent, 0);
-
-            //workingPostToGPlus();
-
-
-        } else {
-            // Prompt the user to install the Google+ app.
-            GooglePlusUtil.getErrorDialog(errorCode, this, 0).show();
-        }
-    */
-
     }
 
 }
