@@ -148,7 +148,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'com.google.code.findbugs:jsr305:3.0.1'
 
-    androidTestCompile 'com.squareup.spoon:spoon-client:1.6.1'
+    androidTestCompile 'com.squareup.spoon:spoon-client:1.6.2'
     androidTestCompile 'com.google.code.findbugs:jsr305:3.0.1'
 
     compile 'org.greenrobot:eventbus:3.0.0'
