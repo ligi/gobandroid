@@ -18,4 +18,11 @@
             android:id="@+id/menu_write_sgf"
             android:icon="@drawable/ic_content_save"
             yourapp:showAsAction="ifRoom|withText"/>
+
+    <item
+            android:title="@string/print"
+            android:icon="@drawable/ic_action_print"
+            android:id="@+id/menu_game_print"
+            yourapp:showAsAction="ifRoom"/>
+
 </menu>

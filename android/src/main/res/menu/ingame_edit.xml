@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:yourapp="http://schemas.android.com/apk/res-auto">
+      xmlns:yourapp="http://schemas.android.com/apk/res-auto">
     <item
-        android:title="@string/share"
-        android:id="@+id/menu_game_share"
-        yourapp:showAsAction="withText"/>
+            android:title="@string/share"
+            android:id="@+id/menu_game_share"
+            yourapp:showAsAction="withText"/>
 
     <item
-        android:title="@string/save_as_sgf"
-        android:id="@+id/menu_write_sgf"
-        android:icon="@drawable/ic_content_save"
-        yourapp:showAsAction="ifRoom|withText"/>
+            android:title="@string/print"
+            android:icon="@drawable/ic_action_print"
+            android:id="@+id/menu_game_print"
+            yourapp:showAsAction="ifRoom"/>
+
+    <item
+            android:title="@string/save_as_sgf"
+            android:id="@+id/menu_write_sgf"
+            android:icon="@drawable/ic_content_save"
+            yourapp:showAsAction="ifRoom|withText"/>
 </menu>

@@ -2,13 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:yourapp="http://schemas.android.com/apk/res-auto">
     <item
-        android:title="@string/bookmark"
-        android:id="@+id/menu_bookmark"
-        android:icon="@drawable/ic_toggle_star_border"
-        yourapp:showAsAction="ifRoom|withText"/>
-    <item
             android:title="@string/share"
             android:icon="@drawable/ic_social_share"
             android:id="@+id/menu_game_share"
+            yourapp:showAsAction="ifRoom"/>
+
+    <item
+            android:title="@string/print"
+            android:icon="@drawable/ic_action_print"
+            android:id="@+id/menu_game_print"
+            yourapp:showAsAction="ifRoom"/>
+
+    <item
+            android:title="@string/bookmark"
+            android:id="@+id/menu_bookmark"
+            android:icon="@drawable/ic_toggle_star_border"
             yourapp:showAsAction="ifRoom|withText"/>
+
 </menu>

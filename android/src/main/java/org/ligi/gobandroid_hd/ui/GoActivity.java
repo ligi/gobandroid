@@ -19,9 +19,13 @@
 package org.ligi.gobandroid_hd.ui;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.print.PrintManager;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -55,6 +59,7 @@ import org.ligi.gobandroid_hd.logic.Cell;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
 import org.ligi.gobandroid_hd.logic.sgf.SGFWriter;
+import org.ligi.gobandroid_hd.print.GoGamePrintDocumentAdapter;
 import org.ligi.gobandroid_hd.ui.alerts.GameInfoDialog;
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 import org.ligi.gobandroid_hd.ui.fragments.DefaultGameExtrasFragment;
@@ -112,12 +117,13 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             // if there where stacktraces collected -> give the user the option to send them
             if (!TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this)) {
                 SnackEngage.from(go_board)
-                        .withSnack(new RateSnack()
-                                .withConditions(new NeverAgainWhenClickedOnce(), new AfterNumberOfOpportunities(42)))
-                        .withSnack(new TranslateSnack("https://www.transifex.com/ligi/gobandroid/")
-                                .withConditions(new AfterNumberOfOpportunities(4), new IsOneOfTheseLocales(Locale.KOREA, Locale.KOREAN), new NeverAgainWhenClickedOnce()))
-                        .build()
-                        .engageWhenAppropriate();
+                           .withSnack(new RateSnack().withConditions(new NeverAgainWhenClickedOnce(), new AfterNumberOfOpportunities(42)))
+                           .withSnack(new TranslateSnack("https://www.transifex.com/ligi/gobandroid/").withConditions(new AfterNumberOfOpportunities(4),
+                                                                                                                      new IsOneOfTheseLocales(Locale.KOREA,
+                                                                                                                                              Locale.KOREAN),
+                                                                                                                      new NeverAgainWhenClickedOnce()))
+                           .build()
+                           .engageWhenAppropriate();
             }
         }
 
@@ -220,9 +226,24 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        final MenuItem item = menu.findItem(R.id.menu_game_print);
+
+        if (item != null) {
+            item.setVisible(Build.VERSION.SDK_INT >= 19);
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         getBus().post(new OptionsItemClickedEvent(item.getItemId()));
         switch (item.getItemId()) {
+
+            case R.id.menu_game_print:
+                doPrint();
+                return true;
 
             case R.id.menu_game_info:
                 new GameInfoDialog(this, getGame()).show();
@@ -260,12 +281,17 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         return super.onOptionsItemSelected(item);
     }
 
-    public void switchToCounting() {
+    @TargetApi(19)
+    public void doPrint() {
+        final PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
+        final String jobName = getString(R.string.app_name);
+        printManager.print(jobName, new GoGamePrintDocumentAdapter(this, jobName), null);
+    }
 
+    public void switchToCounting() {
         interactionScope.setMode(InteractionScope.Mode.COUNT);
         startActivity(new Intent(this, GameScoringActivity.class));
         finish();
-
     }
 
     /**
@@ -280,15 +306,15 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
             finish();
         } else {
             new AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
-                    .setMessage(R.string.quit_confirm)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            finish();
-                        }
-                    })
-                    .setCancelable(true)
-                    .setNegativeButton(R.string.no, new DialogDiscardingOnClickListener())
-                    .show();
+                                         .setMessage(R.string.quit_confirm)
+                                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                             public void onClick(DialogInterface dialog, int whichButton) {
+                                                 finish();
+                                             }
+                                         })
+                                         .setCancelable(true)
+                                         .setNegativeButton(R.string.no, new DialogDiscardingOnClickListener())
+                                         .show();
         }
     }
 
@@ -492,12 +518,12 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
             new AlertDialog.Builder(this).setMessage(R.string.hint_stone_move).setPositiveButton(R.string.ok,
 
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,
-                                            int whichButton) {
-                            GoPrefs.INSTANCE.setAnnounceMoveActive(false);
-                        }
-                    }).show();
+                                                                                                 new DialogInterface.OnClickListener() {
+                                                                                                     public void onClick(DialogInterface dialog,
+                                                                                                                         int whichButton) {
+                                                                                                         GoPrefs.INSTANCE.setAnnounceMoveActive(false);
+                                                                                                     }
+                                                                                                 }).show();
         }
     }
 
