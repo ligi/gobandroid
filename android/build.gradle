@@ -86,6 +86,10 @@ android {
         }
     }
 
+    dexOptions {
+        incremental true
+    }
+
 } // android
 
 spoon {
