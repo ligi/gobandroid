@@ -7,7 +7,8 @@
         android:icon="@drawable/ic_toggle_star_border"
         yourapp:showAsAction="ifRoom|withText"/>
     <item
-        android:title="@string/share"
-        android:id="@+id/menu_game_share"
-        yourapp:showAsAction="withText"/>
+            android:title="@string/share"
+            android:icon="@drawable/ic_social_share"
+            android:id="@+id/menu_game_share"
+            yourapp:showAsAction="ifRoom|withText"/>
 </menu>
