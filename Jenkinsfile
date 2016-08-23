@@ -1,4 +1,4 @@
-def flavorCombination='WithAnalyticsWithCloud'
+def flavorCombination='WithAnalyticsWithCloudProd'
 
 if (env.BRANCH_NAME=="fulltest") {
  flavorCombination=''

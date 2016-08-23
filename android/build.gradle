@@ -11,7 +11,7 @@ repositories {
 }
 
 android {
-    flavorDimensions "analytics", "cloud"
+    flavorDimensions "analytics", "cloud", "build"
 
     productFlavors {
         withAnalytics {
@@ -30,6 +30,14 @@ android {
             dimension "cloud"
         }
 
+        dev {
+            dimension "build"
+            minSdkVersion 21
+        }
+
+        prod {
+            dimension "build"
+        }
     }
 
     compileSdkVersion 24
