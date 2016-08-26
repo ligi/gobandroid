@@ -114,12 +114,14 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
         container.addView(v)
     }
 
-    private fun addModeItem(container: LinearLayout, mode: InteractionScope.Mode, string_res: Int, icon_res: Int) {
+    private fun addModeItem(container: LinearLayout, mode: InteractionScope.Mode, string_res: Int, icon_res: Int, pop: BetterPopupWindow) {
         if (mode === interactionScope.mode) {
             return  // already in this mode - no need to present the user with this option
         }
 
         addItem(container, icon_res, string_res, Runnable {
+            pop.dismiss()
+
             if (mode === InteractionScope.Mode.GNUGO && !GnuGoHelper.isGnuGoAvail(activity)) {
                 AlertDialog.Builder(activity).setTitle(R.string.install_gnugo)
                         .setMessage(R.string.gnugo_not_installed)
@@ -141,42 +143,46 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
     }
 
     private fun showModePopup(ctx: Context) {
+
+        val pop = BetterPopupWindow(mode_tv)
+
         val scrollView = ScrollView(ctx)
         val contentView = LinearLayout(ctx)
         contentView.orientation = LinearLayout.VERTICAL
         val background = BitmapDrawableNoMinimumSize(ctx.resources, R.drawable.wood_bg)
         contentView.setBackgroundDrawable(background)
 
-        addModeItem(contentView, SETUP, R.string.setup, R.drawable.ic_action_settings_overscan)
+        addModeItem(contentView, SETUP, R.string.setup, R.drawable.ic_action_settings_overscan, pop)
 
-        addModeItem(contentView, RECORD, R.string.play, R.drawable.ic_social_people)
+        addModeItem(contentView, RECORD, R.string.play, R.drawable.ic_social_people, pop)
 
-        addModeItem(contentView, EDIT, R.string.edit, R.drawable.ic_editor_mode_edit)
+        addModeItem(contentView, EDIT, R.string.edit, R.drawable.ic_editor_mode_edit, pop)
 
         val actMove = gameProvider.get().actMove
         if (actMove.hasNextMove() || actMove.parent != null)
-            addModeItem(contentView, REVIEW, R.string.review, R.drawable.ic_maps_local_movies)
+            addModeItem(contentView, REVIEW, R.string.review, R.drawable.ic_maps_local_movies, pop)
 
         if (actMove.movePos > 0) {
             // these modes only make sense if there is minimum one
-            addModeItem(contentView, COUNT, R.string.count, R.drawable.ic_editor_pie_chart)
+            addModeItem(contentView, COUNT, R.string.count, R.drawable.ic_editor_pie_chart, pop)
         }
 
         if (actMove.hasNextMove()) {
-            addModeItem(contentView, TSUMEGO, R.string.tsumego, R.drawable.ic_action_extension)
-            addModeItem(contentView, TELEVIZE, R.string.televize, R.drawable.ic_notification_live_tv)
+            addModeItem(contentView, TSUMEGO, R.string.tsumego, R.drawable.ic_action_extension, pop)
+            addModeItem(contentView, TELEVIZE, R.string.televize, R.drawable.ic_notification_live_tv, pop)
         }
 
         if (isPlayStoreInstalled() || GnuGoHelper.isGnuGoAvail(activity)) {
-            addModeItem(contentView, GNUGO, R.string.gnugo, R.drawable.ic_hardware_computer)
+            addModeItem(contentView, GNUGO, R.string.gnugo, R.drawable.ic_hardware_computer, pop)
         }
 
-        val pop = BetterPopupWindow(mode_tv)
+
 
         scrollView.addView(contentView)
         pop.setContentView(scrollView)
 
         pop.showLikePopDownMenu()
+
     }
 
     @Subscribe
