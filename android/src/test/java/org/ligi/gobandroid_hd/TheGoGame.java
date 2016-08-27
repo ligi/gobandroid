@@ -6,7 +6,7 @@ import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.GoMove;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TheGoGame extends AssetAwareTest {
+public class TheGoGame {
 
     @Test
     public void testReplayingMoves() {
