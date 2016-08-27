@@ -109,7 +109,7 @@ class TheReviewActivity : AssetAwareJunitTest() {
     }
 
     @Test
-    fun foo() {
+    fun TestIfWeCanUseBetterReadingOfAsset() {
         try {
             GobandroidTestBaseUtil.readAssetHowItShouldBe(InstrumentationRegistry.getInstrumentation().context, "sgf/small_19x19.sgf")
 
