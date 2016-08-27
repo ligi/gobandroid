@@ -1,12 +1,10 @@
 package org.ligi.gobandroid_hd.uitest
 
-import android.app.Activity
 import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.*
-import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.squareup.spoon.Spoon
 import org.assertj.core.api.Assertions.assertThat
@@ -17,33 +15,32 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.TestApp
-import org.ligi.gobandroid_hd.base.AssetAwareJunitTest
+import org.ligi.gobandroid_hd.base.AssetReader
+import org.ligi.gobandroid_hd.base.EnvironmentPreparingTestRule
 import org.ligi.gobandroid_hd.base.GobandroidTestBaseUtil
 import org.ligi.gobandroid_hd.model.GameProvider
 import org.ligi.gobandroid_hd.ui.review.GameReviewActivity
 import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
-class TheReviewActivity : AssetAwareJunitTest() {
+class TheReviewActivity {
 
     @get:Rule
-    val rule = ActivityTestRule(GameReviewActivity::class.java, true, false)
+    val rule = EnvironmentPreparingTestRule(GameReviewActivity::class.java, false)
 
     @Inject
     lateinit var gameProvider: GameProvider
 
-    private val activity: Activity by lazy { rule.launchActivity(null) }
-
     @Before
     fun setUp() {
         TestApp.component().inject(this)
-        gameProvider.set(readGame("small_19x19"))
-        super.setUp(activity)
+        gameProvider.set(AssetReader.readGame("small_19x19"))
+        rule.launchActivity(null)
     }
 
     @Test
     fun testThatGoBoardIsThere() {
-        Spoon.screenshot(activity, "review")
+        Spoon.screenshot(rule.activity, "review")
         onView(withId(R.id.go_board)).check(matches(isDisplayed()))
         onView(withId(R.id.btn_next)).check(matches(isDisplayed()))
     }

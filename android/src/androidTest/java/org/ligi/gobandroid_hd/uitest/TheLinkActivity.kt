@@ -3,26 +3,24 @@ package org.ligi.gobandroid_hd.uitest
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
-import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.runner.AndroidJUnit4
 import com.jraska.falcon.FalconSpoon
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.base.EnvironmentPreparingTestRule
-import org.ligi.gobandroid_hd.ui.GoActivity
+import org.ligi.gobandroid_hd.ui.links.LinksActivity
 
 @RunWith(AndroidJUnit4::class)
-class TheGoActivity {
+class TheLinkActivity {
 
     @get:Rule
-    val rule = EnvironmentPreparingTestRule(GoActivity::class.java)
+    val rule = EnvironmentPreparingTestRule(LinksActivity::class.java)
 
     @Test
-    fun testThatGoBoardIsThere() {
-        FalconSpoon.screenshot(rule.activity, "go_activity")
-        onView(withId(R.id.go_board)).check(matches(isDisplayed()))
+    fun testThatProjectPageEntryIsVisible() {
+        FalconSpoon.screenshot(rule.activity, "link_list")
+        onView(withText("Gobandroid Project Page")).check(matches(isDisplayed()))
     }
-
 }
