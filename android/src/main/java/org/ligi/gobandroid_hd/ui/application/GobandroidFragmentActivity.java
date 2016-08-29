@@ -72,9 +72,9 @@ public class GobandroidFragmentActivity extends AppCompatActivity {
     @Override
     public void setContentView(int layoutResId) {
         super.setContentView(R.layout.navigation_drawer_container);
-        final View v = getLayoutInflater().inflate(layoutResId, (ViewGroup) findViewById(R.id.drawer_layout), false);
-        final ViewGroup vg = (ViewGroup) findViewById(R.id.content_frame);
-        vg.addView(v);
+
+        getLayoutInflater().inflate(layoutResId, (ViewGroup) findViewById(R.id.content_frame));
+
         new NavigationDrawerHandler(this).handle();
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
