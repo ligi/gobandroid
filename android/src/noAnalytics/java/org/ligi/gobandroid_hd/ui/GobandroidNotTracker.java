@@ -1,6 +1,5 @@
 package org.ligi.gobandroid_hd.ui;
 
-import android.app.Activity;
 import android.content.Context;
 
 /**
@@ -26,15 +25,4 @@ public class GobandroidNotTracker implements GobandroidTracker {
     public void trackEvent(String category, String action, String label, Long val) {
         // our job is to do nothing at all - proguard grab me
     }
-
-    @Override
-    public void activityStart(Activity gobandroidFragmentActivity) {
-        // our job is to do nothing at all - proguard grab me
-    }
-
-    @Override
-    public void activityStop(Activity gobandroidFragmentActivity) {
-        // our job is to do nothing at all - proguard grab me
-    }
-
 }

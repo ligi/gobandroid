@@ -1,20 +1,15 @@
 package org.ligi.gobandroid_hd.ui;
 
-import android.app.Activity;
 import android.content.Context;
-
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.StandardExceptionParser;
 import com.google.android.gms.analytics.Tracker;
-
-import org.ligi.gobandroid_hd.R;
-
 import java.util.Map;
+import org.ligi.gobandroid_hd.R;
 
 public class AnalyticsTracker implements GobandroidTracker {
 
-    public static final String PACKAGE_REMOVE_REGEX = ".*\\.";
     private GoogleAnalytics analytics;
     private Tracker tracker;
     private Context ctx;
@@ -64,24 +59,6 @@ public class AnalyticsTracker implements GobandroidTracker {
         }
 
         tracker.send(eventMapBuilder.build());
-    }
-
-    @Override
-    public void activityStart(Activity gobandroidFragmentActivity) {
-
-        analytics.reportActivityStart(gobandroidFragmentActivity);
-
-        final String activityName = gobandroidFragmentActivity.getLocalClassName().replaceAll(PACKAGE_REMOVE_REGEX, "");
-
-        tracker.setScreenName(activityName);
-
-        tracker.send(new HitBuilders.AppViewBuilder().build());
-
-    }
-
-    @Override
-    public void activityStop(Activity activity) {
-        analytics.reportActivityStop(activity);
     }
 
 }
