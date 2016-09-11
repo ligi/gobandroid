@@ -70,7 +70,6 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
         showModePopup(activity)
     }
 
-
     private val inflater: LayoutInflater
     private val app: App
 
@@ -127,7 +126,7 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
                         .setMessage(R.string.gnugo_not_installed)
                         .setPositiveButton(android.R.string.ok) { dialog, which ->
                             val intent = Intent(Intent.ACTION_VIEW);
-                            intent.data = Uri.parse("market://details?id=org.ligi.gobandroidhd.ai.gnugo");
+                            intent.data = Uri.parse("market://details?id=org.ligi.gobandroidhd.ai.gnugo")
                             val chooser = Intent.createChooser(intent, null)
                             activity.startActivity(chooser)
                         }
@@ -176,13 +175,10 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
             addModeItem(contentView, GNUGO, R.string.gnugo, R.drawable.ic_hardware_computer, pop)
         }
 
-
-
         scrollView.addView(contentView)
         pop.setContentView(scrollView)
 
         pop.showLikePopDownMenu()
-
     }
 
     @Subscribe
@@ -198,8 +194,8 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
 
             val game = gameProvider.get()
 
-            white_captures_tv.text = "" + game.capturesWhite
-            black_captures_tv.text = "" + game.capturesBlack
+            white_captures_tv.text = game.capturesWhite.toString()
+            black_captures_tv.text = game.capturesBlack.toString()
 
             val isWhitesMove = game.isBlackToMove && !game.isFinished
             white_info_container.setBackgroundColor(if (isWhitesMove) transparent else highlight_color)
