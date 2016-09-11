@@ -33,7 +33,6 @@
         <item name="android:textColor">#ff000000</item> -->
         <item name="android:alertDialogStyle">@style/dialog_theme</item>
         <item name="android:windowBackground">@drawable/shinkaya</item>
-        <item name="android:fitsSystemWindows">false</item>
         <item name="actionBarStyle">@style/ActionBarStyle.Transparent</item>
 
         <item name="colorPrimary">@android:color/transparent</item>
@@ -55,7 +54,6 @@
     <style name="default_activity_main" parent="base_theme">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
-        <!-- <item name="android:fitsSystemWindows">true</item> -->
     </style>
 
     <style name="DashboardButton">
