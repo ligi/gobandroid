@@ -29,7 +29,7 @@ class EditGameExtrasFragment : GobandroidGameAwareFragment() {
 
         val mode_grid = view.findViewById(R.id.gridView) as GridView
         val editSwitch = view.findViewById(R.id.editSwitch) as SwitchCompat
-        val editText = view!!.findViewById(R.id.comment_et) as EditText
+        val editText = view.findViewById(R.id.comment_et) as EditText
 
         val editModeAdapter = EditModeButtonsAdapter(editModePool)
         mode_grid.adapter = editModeAdapter
