@@ -5,16 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-
+import java.io.File;
 import org.ligi.axt.AXT;
 import org.ligi.gobandroid_hd.helper.SGFFileNameFilter;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader;
 import org.ligi.tracedroid.logging.Log;
 
-import java.io.File;
-
-public class GoProblemsRenaming extends AsyncTask<Void, Integer, String> {
+public class GoProblemsRenaming extends AsyncTask<Void, Integer, Void> {
 
     private final Context context;
     private final File dir;
@@ -43,7 +41,7 @@ public class GoProblemsRenaming extends AsyncTask<Void, Integer, String> {
     }
 
     @Override
-    protected String doInBackground(Void... params) {
+    protected Void doInBackground(Void... params) {
 
         int i = 0;
 
@@ -79,11 +77,11 @@ public class GoProblemsRenaming extends AsyncTask<Void, Integer, String> {
     }
 
     @Override
-    protected void onPostExecute(String s) {
+    protected void onPostExecute(Void aVoid) {
         progressDialog.dismiss();
         final Intent intent = new Intent(context, SGFFileSystemListActivity.class);
         intent.setData(Uri.parse("file://"+dir.toString()));
         context.startActivity(intent);
-        super.onPostExecute(s);
+        super.onPostExecute(aVoid);
     }
 }
