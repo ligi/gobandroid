@@ -23,7 +23,6 @@
                 android:id="@+id/left_drawer"
                 app:menu="@menu/navigation"
                 android:layout_gravity="start"
-                android:background="@drawable/shinkaya"
                 android:choiceMode="singleChoice"
                 android:dividerHeight="0dp"/>
 
