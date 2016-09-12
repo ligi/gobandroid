@@ -19,11 +19,9 @@
 package org.ligi.gobandroid_hd.logic;
 
 import android.support.annotation.Nullable;
-
-import org.ligi.gobandroid_hd.logic.markers.GoMarker;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 
 /**
  * Class to represent a Go Move
@@ -106,7 +104,7 @@ public class GoMove {
     }
 
     public int getNextMoveVariationCount() {
-        return (next_move_variations.size() - 1);
+        return next_move_variations.size();
     }
 
     public void addNextMove(GoMove move) {

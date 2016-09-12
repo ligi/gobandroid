@@ -97,7 +97,7 @@ class TheReviewActivity {
     fun testThatLastAndFirstWorks() {
         onView(withId(R.id.btn_last)).perform(click())
 
-        assertThat(gameProvider.get().actMove.nextMoveVariationCount).isLessThan(1)
+        assertThat(gameProvider.get().actMove.nextMoveVariationCount).isEqualTo(0)
 
         onView(withId(R.id.btn_first)).perform(click())
 

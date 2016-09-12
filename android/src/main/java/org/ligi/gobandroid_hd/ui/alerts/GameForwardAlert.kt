@@ -50,7 +50,7 @@ class GameForwardAlert(context: Context, game: GoGame) : GobandroidDialog(contex
         val showvariationwin = findViewById(R.id.variant_promote_tips) as CheckBox
 
         // show the comment when there is one - useful for SGF game problems
-        val variationCount = game.possibleVariationCount + 1
+        val variationCount = game.possibleVariationCount
         if (game.actMove.hasComment()) {
             message.text = game.actMove.comment
         } else {
@@ -69,19 +69,21 @@ class GameForwardAlert(context: Context, game: GoGame) : GobandroidDialog(contex
             }
         }
 
-        for (i in 0..variationCount - 1) {
+        for (i in 1..variationCount) {
             val var_btn = Button(context)
-            var_btn.tag = i
+            val i_index = i - 1
+            var_btn.tag = i_index
             var_btn.setOnClickListener(var_select_listener)
-            if (game.actMove.getnextMove(i).isMarked) {
-                val goMarker = game.actMove.getnextMove(i).goMarker
+            val nextMove = game.actMove.getnextMove(i_index)
+            if (nextMove.isMarked) {
+                val goMarker = nextMove.goMarker
                 if (goMarker is TextMarker) {
                     var_btn.text = goMarker.text
                 } else {
-                    var_btn.text = (i + 1).toString()
+                    var_btn.text = i.toString()
                 }
             } else {
-                var_btn.text = (i + 1).toString()
+                var_btn.text = i.toString()
             }
 
             buttonContainer.addView(var_btn)
@@ -96,7 +98,7 @@ class GameForwardAlert(context: Context, game: GoGame) : GobandroidDialog(contex
     companion object {
         fun showIfNeeded(ctx: Context, game: GoGame) {
             if (game.canRedo()) {
-                if (game.possibleVariationCount > 0) {
+                if (game.possibleVariationCount > 1) {
                     GameForwardAlert(ctx, game).show()
                 } else {
                     game.redo(0)
