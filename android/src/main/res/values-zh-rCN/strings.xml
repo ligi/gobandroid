@@ -135,7 +135,7 @@
   <string name="handicap">让子（授子）</string>
   <string name="size">棋盘大小</string>
   <string name="enter_your_comments_here">请在此输入您的评注</string>
-  <string name="keep_variant_">保留分支变化图吗？</string>
+  <string name="keep_variant">保留分支变化图吗？</string>
   <string name="keep_this_move_as_variation">你希望保留这个变化吗?</string>
   <string name="numbered_end">直接显示正解图</string>
   <string name="icon">图标</string>

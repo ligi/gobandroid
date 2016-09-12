@@ -151,7 +151,7 @@
   <string name="handicap">Handicap</string>
   <string name="size">Dimensione</string>
   <string name="enter_your_comments_here">inserisci il tuo commento</string>
-  <string name="keep_variant_">Mantieni variante?</string>
+  <string name="keep_variant">Mantieni variante?</string>
   <string name="keep_this_move_as_variation">Vuoi tenere questa mossa come una variante?</string>
   <string name="numbered_end">numero percorso</string>
   <string name="icon">icona</string>

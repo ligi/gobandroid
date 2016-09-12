@@ -150,7 +150,7 @@
   <string name="handicap">Handicap</string>
   <string name="size">Tamaño</string>
   <string name="enter_your_comments_here">Escribe aquí tus comentarios</string>
-  <string name="keep_variant_">¿Mantener la variación?</string>
+  <string name="keep_variant">¿Mantener la variación?</string>
   <string name="keep_this_move_as_variation">¿Quieres guardar este movimiento como una
         variación?
     </string>

@@ -146,7 +146,7 @@
   <string name="handicap">Handicap</string>
   <string name="size">Taille</string>
   <string name="enter_your_comments_here">commentaires…</string>
-  <string name="keep_variant_">Conserver la variation ?</string>
+  <string name="keep_variant">Conserver la variation ?</string>
   <string name="keep_this_move_as_variation">Garder ce coup comme variation ?</string>
   <string name="numbered_end">afficher la solution</string>
   <string name="icon">icône</string>

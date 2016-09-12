@@ -137,7 +137,7 @@
   <string name="handicap">置石</string>
   <string name="size">サイズ</string>
   <string name="enter_your_comments_here">ここにコメントを入力して下さい</string>
-  <string name="keep_variant_">変化図保持？</string>
+  <string name="keep_variant">変化図保持？</string>
   <string name="keep_this_move_as_variation">この着手を変化図として保持しますか？</string>
   <string name="numbered_end">正解手順</string>
   <string name="icon">アイコン</string>

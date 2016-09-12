@@ -10,10 +10,4 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <CheckBox
-        android:id="@+id/keep_variant_session_cb"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/i_do_not_want_to_keep_variants_for_this_game" />
-
 </LinearLayout>

@@ -149,7 +149,7 @@
   <string name="handicap">Handikapp</string>
   <string name="size">Storlek</string>
   <string name="enter_your_comments_here">skriv kommentarer här</string>
-  <string name="keep_variant_">Behåll variant?</string>
+  <string name="keep_variant">Behåll variant?</string>
   <string name="keep_this_move_as_variation">Vill du behålla detta drag som en variant?</string>
   <string name="numbered_end">Numrera drag</string>
   <string name="icon">ikon</string>

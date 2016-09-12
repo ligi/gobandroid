@@ -527,10 +527,6 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         }
     }
 
-    public boolean doAskToKeepVariant() {
-        return GoPrefs.INSTANCE.isAskVariantWanted() && interactionScope.getAsk_variant_session();
-    }
-
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -604,11 +600,8 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     public void requestUndo() {
 
         go_board.setMove_stone_mode(false);
-        if (doAskToKeepVariant()) {
-            new UndoWithVariationDialog(this).show();
-        } else {
-            getGame().undo(GoPrefs.INSTANCE.isKeepVariantWanted());
-        }
+
+        UndoWithVariationDialog.Companion.userInvokedUndo(this,interactionScope,getGame());
     }
 
     protected EventBus getBus() {

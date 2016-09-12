@@ -148,7 +148,7 @@ aber es gibt keinen Applaus wenn du richtig liegst :-(
   <string name="handicap">Vorgabe</string>
   <string name="size">Größe</string>
   <string name="enter_your_comments_here">Geben Sie hier Ihre Kommentare ein.</string>
-  <string name="keep_variant_">Variante behalten?</string>
+  <string name="keep_variant">Variante behalten?</string>
   <string name="keep_this_move_as_variation">Möchten Sie diesen Zug als Variante behalten?
     </string>
   <string name="numbered_end">Nummerierter Pfad</string>

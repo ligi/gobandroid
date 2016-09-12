@@ -153,7 +153,7 @@
     <string name="handicap">Handicap</string>
     <string name="size">Size</string>
     <string name="enter_your_comments_here">enter your comments here</string>
-    <string name="keep_variant_">Keep Variation?</string>
+    <string name="keep_variant">Keep Variation?</string>
     <string name="keep_this_move_as_variation">Do you want to keep this move as variation?</string>
     <string name="numbered_end">number path</string>
     <string name="icon">icon</string>
@@ -278,4 +278,11 @@
     <string name="found_junction_snack_for_last">Found junction - long-press for last move</string>
     <string name="found_junction_snack_for_first">Found junction - long-press for first move</string>
     <string name="print">Print</string>
+
+    <string name="snackbar_keep_variant_action_enable">Enable</string>
+    <string name="snackbar_keep_variant_action_disable">Disable</string>
+
+    <string name="snackbar_keep_variant_message_enable">Enable variations dialog</string>
+    <string name="snackbar_keep_variant_message_disable">Disable variations dialog</string>
+
 </resources>

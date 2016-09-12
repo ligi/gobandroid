@@ -153,7 +153,7 @@
   <string name="handicap">Handicap</string>
   <string name="size">Mida</string>
   <string name="enter_your_comments_here">Introdueix els teus comentaris aquí</string>
-  <string name="keep_variant_">Mantenir la variació?</string>
+  <string name="keep_variant">Mantenir la variació?</string>
   <string name="keep_this_move_as_variation">Vols mantenir aquest moviment com a variació?
     </string>
   <string name="numbered_end">numera el camí</string>

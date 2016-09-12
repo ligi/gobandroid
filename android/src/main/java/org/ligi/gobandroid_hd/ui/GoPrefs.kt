@@ -44,7 +44,6 @@ object GoPrefs : KotprefModel() {
     var isShowForwardAlertWanted: Boolean by booleanPrefVar(default = true, key = "show_var_alert_win")
     var isSoundWanted: Boolean by booleanPrefVar(default = true, key = R.string.prefs_do_sound)
 
-    var isAskVariantWanted: Boolean by booleanPrefVar(default = true)
     var isKeepVariantWanted: Boolean by booleanPrefVar(default = true)
 
     var hasAcknowledgedJunctionInfo: Boolean by booleanPrefVar(default = false)

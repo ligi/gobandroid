@@ -139,7 +139,7 @@
     <string name="handicap">讓子（授子）</string>
     <string name="size">棋盤大小</string>
     <string name="enter_your_comments_here">請在此輸入您的評註</string>
-    <string name="keep_variant_">保留分支變化圖嗎？</string>
+    <string name="keep_variant">保留分支變化圖嗎？</string>
     <string name="keep_this_move_as_variation">您要保留這一手成為分支變化嗎？</string>
     <string name="numbered_end">直接顯示正解圖</string>
     <string name="icon">圖標</string>

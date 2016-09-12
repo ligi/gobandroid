@@ -147,7 +147,7 @@
   <string name="handicap">Handicap</string>
   <string name="size">Rozmiar</string>
   <string name="enter_your_comments_here">twój komentarz</string>
-  <string name="keep_variant_">Zachować wariant?</string>
+  <string name="keep_variant">Zachować wariant?</string>
   <string name="keep_this_move_as_variation">Czy chcesz zachować ten ruch jako wariant?</string>
   <string name="numbered_end">number path</string>
   <string name="icon">ikona</string>

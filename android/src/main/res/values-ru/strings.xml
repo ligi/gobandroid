@@ -151,7 +151,7 @@
   <string name="handicap">Фора</string>
   <string name="size">Размер</string>
   <string name="enter_your_comments_here">введите ваш комментарий</string>
-  <string name="keep_variant_">Сохранить вариант?</string>
+  <string name="keep_variant">Сохранить вариант?</string>
   <string name="keep_this_move_as_variation">Вы хотите сохранить вариант этого хода?</string>
   <string name="numbered_end">номер ветки</string>
   <string name="icon">иконка</string>

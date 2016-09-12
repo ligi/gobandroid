@@ -1,11 +1,9 @@
 package org.ligi.gobandroid_hd.uitest;
 
+import dagger.Component;
+import javax.inject.Singleton;
 import org.ligi.gobandroid_hd.etc.AppComponent;
 import org.ligi.gobandroid_hd.etc.AppModule;
-
-import javax.inject.Singleton;
-
-import dagger.Component;
 
 @Singleton
 @Component(modules = {AppModule.class})
@@ -23,4 +21,6 @@ public interface TestComponent extends AppComponent {
     void inject(TheGoGamePlayerActivity theGoGamePlayerActivity);
 
     void inject(TheEditGameActivity theEditGameActivity);
+
+    void inject(TheUndoFunctionality theUndoFunctionality);
 }
