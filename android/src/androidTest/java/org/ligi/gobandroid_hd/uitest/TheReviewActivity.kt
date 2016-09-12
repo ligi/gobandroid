@@ -8,6 +8,7 @@ import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.runner.AndroidJUnit4
 import com.squareup.spoon.Spoon
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Fail.fail
 import org.hamcrest.CoreMatchers.not
 import org.junit.Before
 import org.junit.Rule
@@ -110,7 +111,7 @@ class TheReviewActivity {
         try {
             GobandroidTestBaseUtil.readAssetHowItShouldBe(InstrumentationRegistry.getInstrumentation().context, "sgf/small_19x19.sgf")
 
-            junit.framework.Assert.fail("if this works again ( minify stripped it away) - happy failing test!")
+            fail("if this works again ( minify stripped it away) - happy failing test!")
         } catch (e: Throwable) {
 
         }
