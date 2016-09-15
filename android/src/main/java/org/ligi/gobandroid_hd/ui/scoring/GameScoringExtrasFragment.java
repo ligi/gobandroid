@@ -101,7 +101,7 @@ public class GameScoringExtrasFragment extends GobandroidGameAwareFragment {
         }
 
         if (scorer.getPointsWhite() > scorer.getPointsBlack()) {
-            final float finalPoints = scorer.getPointsBlack() - scorer.getPointsWhite();
+            final float finalPoints = scorer.getPointsWhite() - scorer.getPointsBlack();
             return (getString(R.string.white_won_with_) + String.format("%.1f", finalPoints) + getString(R.string._points_));
         }
         return getResources().getString(R.string.game_ended_in_draw);
