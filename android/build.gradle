@@ -57,6 +57,7 @@ android {
 
     lintOptions {
         warning 'MissingTranslation'
+        warning 'ResourceType'
 
         // for OKIO
         warning 'InvalidPackage'
