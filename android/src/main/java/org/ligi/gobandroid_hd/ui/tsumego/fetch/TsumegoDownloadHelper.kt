@@ -14,7 +14,7 @@ object TsumegoDownloadHelper {
 
     class TsumegoSource(var local_path: String, var remote_path: String, var fname: String) {
 
-        fun getFnameByPos(pos: Int): String {
+        fun getFileNameByPos(pos: Int): String {
             return String.format(fname, pos)
         }
     }
@@ -32,47 +32,51 @@ object TsumegoDownloadHelper {
     }
 
     fun doDownload(ctx: Context, params: Array<TsumegoSource>, callback: (current: String) -> Unit): Int {
-        var download_count = 0
 
         val limit = GobandroidBackend.getMaxTsumegos(ctx)
 
-        if (limit != -1)
-            for (src in params) {
+        if (limit == -1) {
+            return 0
+        }
 
-                var pos = 10
+        var download_count = 0
 
-                while (File(src.local_path + src.getFnameByPos(pos)).exists()) {
-                    pos++
-                }
+        for (src in params) {
 
-                val client = OkHttpClient()
+            var pos = 10
 
-                while (pos < limit) {
-
-                    try {
-                        val fnameByPos = src.getFnameByPos(pos)
-
-                        val build = Request.Builder().url(src.remote_path + fnameByPos).build()
-
-                        val response = client.newCall(build).execute()
-                        val downloadedFile = File(src.local_path, fnameByPos)
-
-                        val sink = Okio.buffer(Okio.sink(downloadedFile))
-                        sink.writeAll(response.body().source())
-                        sink.close()
-
-                        response.body().close()
-
-                        download_count++
-                        callback(fnameByPos)
-
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        return download_count
-                    }
-
-                }
+            while (File(src.local_path, src.getFileNameByPos(pos)).exists()) {
+                pos++
             }
+
+            val client = OkHttpClient()
+
+            while (pos < limit) {
+
+                try {
+                    val fileNameByPos = src.getFileNameByPos(pos)
+
+                    val build = Request.Builder().url(src.remote_path + fileNameByPos).build()
+
+                    val response = client.newCall(build).execute()
+                    val downloadedFile = File(src.local_path, fileNameByPos)
+
+                    val sink = Okio.buffer(Okio.sink(downloadedFile))
+                    sink.writeAll(response.body().source())
+                    sink.close()
+
+                    response.body().close()
+
+                    download_count++
+                    callback(fileNameByPos)
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    return download_count
+                }
+
+            }
+        }
         return download_count
     }
 }
