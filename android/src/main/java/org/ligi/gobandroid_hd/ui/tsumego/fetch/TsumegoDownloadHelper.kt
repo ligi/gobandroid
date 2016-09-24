@@ -41,13 +41,13 @@ object TsumegoDownloadHelper {
 
                 var pos = 10
 
+                while (File(src.local_path + src.getFnameByPos(pos)).exists()) {
+                    pos++
+                }
+
                 val client = OkHttpClient()
 
                 while (pos < limit) {
-
-                    while (File(src.local_path + src.getFnameByPos(pos)).exists()) {
-                        pos++
-                    }
 
                     try {
                         val fnameByPos = src.getFnameByPos(pos)
