@@ -58,14 +58,14 @@ object TsumegoDownloadHelper {
 
                     val build = Request.Builder().url(src.remote_path + fileNameByPos).build()
 
-                    val response = client.newCall(build).execute()
+                    val responseBody = client.newCall(build).execute().body()
                     val downloadedFile = File(src.local_path, fileNameByPos)
 
                     val sink = Okio.buffer(Okio.sink(downloadedFile))
-                    sink.writeAll(response.body().source())
+                    sink.writeAll(responseBody.source())
                     sink.close()
 
-                    response.body().close()
+                    responseBody.close()
 
                     download_count++
                     callback(fileNameByPos)
