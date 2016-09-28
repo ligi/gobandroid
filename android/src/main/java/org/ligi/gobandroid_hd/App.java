@@ -9,6 +9,7 @@ import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.GobandroidTracker;
 import org.ligi.gobandroid_hd.ui.GobandroidTrackerResolver;
 import org.ligi.gobandroid_hd.ui.application.GobandroidSettingsTransition;
+import org.ligi.gobandroid_hd.util.TsumegoCleaner;
 import org.ligi.tracedroid.TraceDroid;
 import org.ligi.tracedroid.logging.Log;
 
@@ -25,6 +26,8 @@ public class App extends Application {
 
         component = createComponent();
         new GobandroidSettingsTransition(this).transition();
+
+        new TsumegoCleaner(component.settings()).clean();
 
         getTracker().init(this);
 

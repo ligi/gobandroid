@@ -62,6 +62,7 @@ object GoPrefs : KotprefModel() {
     var isTsumegoPushEnabled: Boolean by booleanPrefVar(key = R.string.prefs_push_tsumego, default = true)
 
     var isTransitionDone: Boolean by booleanPrefVar(default = false)
+    var isTsumegoCleanDone: Boolean by booleanPrefVar(default = false)
 
     private val dayNightModeString: String by stringPrefVar(key = R.string.prefs_daynight)
     private var lastSeenSGFPackInt: Int by intPrefVar()
