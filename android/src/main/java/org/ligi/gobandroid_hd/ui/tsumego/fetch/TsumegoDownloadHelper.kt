@@ -67,6 +67,7 @@ object TsumegoDownloadHelper {
 
                     responseBody.close()
 
+                    pos++
                     download_count++
                     callback(fileNameByPos)
 
