@@ -39,6 +39,13 @@ public class TheSGFReader extends AssetAwareTest {
     }
 
     @Test
+    public void testEmptySZWorks() throws Exception {
+        GoGame game = SGFReader.sgf2game(readAsset("test_sgfs/empty_SZ.sgf"), null);
+
+        assertThat(game.getSize()).isEqualTo(19);
+    }
+
+    @Test
     public void testReadSmall9x9SGF() throws Exception {
         GoGame game = SGFReader.sgf2game(readAsset("test_sgfs/small_9x9.sgf"), null);
 
