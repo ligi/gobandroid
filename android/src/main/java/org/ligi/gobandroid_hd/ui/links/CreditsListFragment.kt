@@ -17,7 +17,7 @@ class CreditsListFragment : LinkListFragment() {
                 LinkWithDescription("http://jchardet.sourceforge.net/index.html", "jchardet", "jchardet is a java port of the source from mozilla's automatic charset detection algorithm"),
                 LinkWithDescription("http://plus.google.com/107941390233680026764", "Sounds", "Sebastian Blumtritt"),
                 LinkWithDescription("http://plus.google.com/107473613683165260026", "Japanese Translation", "Hiroki Ino"),
-                LinkWithDescription("http://plus.google.com/102354246669329539149", "Chinese Translation", "Noorudin Ma"),
+                LinkWithDescription("http://plus.google.com/102354246669329539149", "Chinese Translation", "Noorudin (玉錚爸), Ma"),
                 LinkWithDescription("http://transimple.de", "German Translation", "Dirk Blasejezak"),
                 LinkWithDescription("http://plus.google.com/109272815840179446675", "French Translation #1", "Sylvain Soliman"),
                 LinkWithDescription("http://github.com/Zenigata", "French Translation #2", "Zenigata"),
