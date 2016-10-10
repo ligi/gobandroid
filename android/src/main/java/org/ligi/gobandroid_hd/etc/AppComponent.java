@@ -4,7 +4,7 @@ import dagger.Component;
 import javax.inject.Singleton;
 import org.ligi.gobandroid_hd.ui.CustomActionBar;
 import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
-import org.ligi.gobandroid_hd.ui.GoPrefsActivity;
+import org.ligi.gobandroid_hd.ui.GoPrefsFragment;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
 import org.ligi.gobandroid_hd.ui.application.GoAndroidEnvironment;
@@ -40,5 +40,5 @@ public interface AppComponent {
 
     void inject(GobandroidNotifications gobandroidNotifications);
 
-    void inject(GoPrefsActivity.GoPrefsFragment goPrefsFragment);
+    void inject(GoPrefsFragment goPrefsFragment);
 }
