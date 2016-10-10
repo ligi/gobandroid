@@ -59,8 +59,14 @@ public class GnuGoSetupDialog extends GobandroidDialog {
             gnugo_plays_black_radio.setChecked(true);
         }
 
-        final int level = shared_prefs.getInt(SP_KEY_STRENGTH, 0);
+        int level = shared_prefs.getInt(SP_KEY_STRENGTH, 0);
+
+        if (level > strengthSeek.getMax()) {
+            level = strengthSeek.getMax();
+        }
+
         strengthSeek.setProgress(level);
+
         gnugo_strength_text.setText(getContext().getString(R.string.gnugo_strength) + " " + String.valueOf(level));
 
         strengthSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

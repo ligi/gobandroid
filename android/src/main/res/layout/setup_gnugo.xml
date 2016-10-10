@@ -42,9 +42,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <SeekBar
-        android:id="@+id/gnugo_strength_seek"
-        android:max="23"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+            android:id="@+id/gnugo_strength_seek"
+            android:max="10"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
 
 </LinearLayout>
