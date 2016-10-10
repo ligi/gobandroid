@@ -24,7 +24,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import javax.inject.Inject;
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.ui.application.GoAndroidEnvironment;
@@ -40,9 +39,6 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity;
 public class GoPrefsActivity extends GobandroidFragmentActivity {
 
     public static class GoPrefsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
-
-        @Inject
-        GoAndroidEnvironment env;
 
         @Override
         public void onCreatePreferences(final Bundle bundle, final String rootKey) {
