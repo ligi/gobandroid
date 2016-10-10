@@ -1,15 +1,15 @@
 package org.ligi.gobandroid_hd;
 
-import org.ligi.tracedroid.logging.Log;
-import org.mozilla.intl.chardet.nsDetector;
-import org.mozilla.intl.chardet.nsICharsetDetectionObserver;
-import org.mozilla.intl.chardet.nsPSMDetector;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.concurrent.atomic.AtomicReference;
+import org.ligi.tracedroid.logging.Log;
+import org.mozilla.intl.chardet.nsDetector;
+import org.mozilla.intl.chardet.nsICharsetDetectionObserver;
+import org.mozilla.intl.chardet.nsPSMDetector;
 
 /**
  * Created by icehong on 2014/11/9.
@@ -29,19 +29,17 @@ public class FileEncodeDetector {
     }
 
     public static Charset detect(InputStream imp) {
-        class CodeNmeHolder {
-            public String code_name="UTF-8";
-        }
 
-        final CodeNmeHolder holder = new CodeNmeHolder();
+        final AtomicReference<String> code_name = new AtomicReference<>("UTF-8");
+
         nsDetector det = new nsDetector(nsPSMDetector.ALL);
 
         det.Init(new nsICharsetDetectionObserver() {
-                     public void Notify(String charset) {
-                         holder.code_name = charset;
-                     }
-                 }
-        );
+            public void Notify(String charset) {
+                code_name.set(charset);
+            }
+        });
+
         try {
             byte[] buf = new byte[1024];
             int len;
@@ -59,6 +57,6 @@ public class FileEncodeDetector {
             Log.w("exception in detect encoding.", e);
         }
         det.Done();
-        return Charset.forName(holder.code_name);
+        return Charset.forName(code_name.get());
     }
 }
