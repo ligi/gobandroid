@@ -199,7 +199,7 @@ open class GoBoardView : View {
      */
     fun screenshot(file: File, bitmap: Bitmap) {
 
-        draw2canvas(Canvas(bitmap))
+        draw(Canvas(bitmap))
 
         try {
             file.createNewFile()
@@ -213,17 +213,6 @@ open class GoBoardView : View {
     }
 
     override fun onDraw(canvas: Canvas) {
-        draw2canvas(canvas)
-    }
-
-    /**
-     * used to make nice code around hoshi and last stone circle
-     */
-    private fun drawBoardCircle(canvas: Canvas, x: Float, y: Float, size: Float, paint: Paint) {
-        canvas.drawCircle(stone_size / 2.0f + x * stone_size, stone_size / 2.0f + y * stone_size, size, paint)
-    }
-
-    protected fun draw2canvas(canvas: Canvas) {
         canvas.save()
 
         // when we have zoomed in - center translate the canvas around the POI
@@ -328,7 +317,14 @@ open class GoBoardView : View {
         }
 
         canvas.restore()
-    } // end of onDraw
+    }
+
+    /**
+     * used to make nice code around hoshi and last stone circle
+     */
+    private fun drawBoardCircle(canvas: Canvas, x: Float, y: Float, size: Float, paint: Paint) {
+        canvas.drawCircle(stone_size / 2.0f + x * stone_size, stone_size / 2.0f + y * stone_size, size, paint)
+    }
 
     private fun getLegendLetter(x: Int): String {
         if (x > 7 && legend_sgf_mode) {
