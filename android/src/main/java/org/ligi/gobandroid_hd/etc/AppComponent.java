@@ -3,7 +3,7 @@ package org.ligi.gobandroid_hd.etc;
 import dagger.Component;
 import javax.inject.Singleton;
 import org.ligi.gobandroid_hd.ui.CustomActionBar;
-import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
+import org.ligi.gobandroid_hd.ui.GoBoardView;
 import org.ligi.gobandroid_hd.ui.GoPrefsFragment;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications;
@@ -34,7 +34,7 @@ public interface AppComponent {
 
     void inject(GobandroidGameAwareFragment gobandroidGameAwareFragment);
 
-    void inject(GoBoardViewHD goBoardViewHD);
+    void inject(GoBoardView goBoardView);
 
     void inject(GobandroidFragment gobandroidFragment);
 

@@ -11,7 +11,7 @@ import android.print.PrintAttributes
 import android.print.PrintDocumentAdapter
 import android.print.PrintDocumentInfo
 import android.print.pdf.PrintedPdfDocument
-import org.ligi.gobandroid_hd.ui.GoBoardViewHD
+import org.ligi.gobandroid_hd.ui.GoBoardView
 import java.io.FileOutputStream
 import java.io.IOException
 
@@ -46,7 +46,7 @@ class GoGamePrintDocumentAdapter(private val context: Context, private val jobNa
         val page = mPdfDocument!!.startPage(0)
         val canvas = page.canvas
 
-        val goBoardViewHD = GoBoardViewHD(context)
+        val goBoardViewHD = GoBoardView(context)
         goBoardViewHD.setSize(canvas.width, canvas.height)
         goBoardViewHD.draw(canvas)
 

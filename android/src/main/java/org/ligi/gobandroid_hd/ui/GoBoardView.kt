@@ -41,7 +41,7 @@ import javax.inject.Inject
 /**
  * Class to visually represent a Go Board in Android
  */
-open class GoBoardViewHD : View {
+open class GoBoardView : View {
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 

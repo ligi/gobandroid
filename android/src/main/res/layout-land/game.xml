@@ -3,7 +3,7 @@
     android:orientation="horizontal"
     style="@style/default_activity_main">
 
-    <org.ligi.gobandroid_hd.ui.GoBoardViewHD
+    <org.ligi.gobandroid_hd.ui.GoBoardView
         android:id="@+id/go_board"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
@@ -17,7 +17,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
 
-        <org.ligi.gobandroid_hd.ui.ZoomingGoBoardViewHD
+        <org.ligi.gobandroid_hd.ui.ZoomingGoBoardView
             android:id="@+id/zoom_board"
             android:visibility="gone"
             android:layout_width="fill_parent"

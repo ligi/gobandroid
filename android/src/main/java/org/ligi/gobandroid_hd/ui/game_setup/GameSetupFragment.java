@@ -15,7 +15,7 @@ import org.ligi.gobandroid_hd.InteractionScope;
 import org.ligi.gobandroid_hd.R;
 import org.ligi.gobandroid_hd.logic.GoGame;
 import org.ligi.gobandroid_hd.ui.GoActivity;
-import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
+import org.ligi.gobandroid_hd.ui.GoBoardView;
 import org.ligi.gobandroid_hd.ui.GoPrefs;
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidFragment;
 
@@ -145,7 +145,7 @@ public class GameSetupFragment extends GobandroidFragment implements OnSeekBarCh
         }
 
         if (getActivity() instanceof GoActivity) {
-            final GoBoardViewHD board = ((GoActivity) getActivity()).getBoard();
+            final GoBoardView board = ((GoActivity) getActivity()).getBoard();
 
             if (board != null) {
                 board.regenerateStoneImagesWithNewSize();

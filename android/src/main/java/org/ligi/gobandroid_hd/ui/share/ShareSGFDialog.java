@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 import java.io.File;
 import org.ligi.axt.listeners.DialogDiscardingOnClickListener;
 import org.ligi.gobandroid_hd.R;
-import org.ligi.gobandroid_hd.ui.GoBoardViewHD;
+import org.ligi.gobandroid_hd.ui.GoBoardView;
 import org.ligi.gobandroid_hd.ui.GobandroidDialog;
 
 /**
@@ -55,12 +55,12 @@ public class ShareSGFDialog extends GobandroidDialog {
                     case R.id.radioButtonAsImage:
                         final File file = new File(settings.getSGFBasePath(), "game_to_share_via_action.png");
 
-                        final GoBoardViewHD goBoardViewHD = new GoBoardViewHD(getContext());
+                        final GoBoardView goBoardView = new GoBoardView(getContext());
                         final Bitmap mutableImage = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.shinkaya)
                                                                  .copy(Bitmap.Config.ARGB_8888, true);
 
-                        goBoardViewHD.layout(0, 0, mutableImage.getWidth(), mutableImage.getHeight());
-                        goBoardViewHD.screenshot(file, mutableImage);
+                        goBoardView.layout(0, 0, mutableImage.getWidth(), mutableImage.getHeight());
+                        goBoardView.screenshot(file, mutableImage);
 
                         final Intent it = new Intent(Intent.ACTION_SEND);
                         it.putExtra(Intent.EXTRA_SUBJECT, "Image created with gobandroid");

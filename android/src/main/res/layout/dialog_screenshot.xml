@@ -38,7 +38,7 @@
 
     </LinearLayout>
 
-    <org.ligi.gobandroid_hd.ui.GoBoardViewHD
+    <org.ligi.gobandroid_hd.ui.GoBoardView
         android:id="@+id/board_to_shoot"
         android:layout_width="@dimen/thumbnail_size"
         android:layout_height="@dimen/thumbnail_size"/>

@@ -89,10 +89,10 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
     public GoSoundManager sound_man;
 
     @BindView(R.id.go_board)
-    GoBoardViewHD go_board;
+    GoBoardView go_board;
 
     @BindView(R.id.zoom_board)
-    GoBoardViewHD zoom_board;
+    GoBoardView zoom_board;
 
     @BindView(R.id.game_extra_container)
     View gameExtrasContainer;
@@ -593,7 +593,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
         zoom_board.postInvalidate();
     }
 
-    public GoBoardViewHD getBoard() {
+    public GoBoardView getBoard() {
         return go_board;
     }
 

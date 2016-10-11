@@ -25,14 +25,14 @@ import android.util.AttributeSet;
 /**
  * Class to visually represent a Go Board in Android
  */
-public class ZoomingGoBoardViewHD extends GoBoardViewHD {
+public class ZoomingGoBoardView extends GoBoardView {
 
     @Override
     protected boolean enforceSquare() {
         return false;
     }
 
-    public ZoomingGoBoardViewHD(Context context, AttributeSet attrs) {
+    public ZoomingGoBoardView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setZoom(3f);
         setDo_actpos_highlight_ony_if_active(false);
