@@ -32,12 +32,13 @@
             android:layout_margin="4dp">
 
             <Button
-                android:id="@+id/size_button9x9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="9x9"
-                tools:ignore="HardcodedText"/>
+                    android:id="@+id/size_button9x9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="9x9"
+                    android:layout_marginRight="32dp"
+                    tools:ignore="HardcodedText"/>
 
             <Button
                 android:id="@+id/size_button13x13"
@@ -48,15 +49,14 @@
                 tools:ignore="HardcodedText"/>
 
             <Button
-                android:id="@+id/size_button19x19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="19x19"
-                tools:ignore="HardcodedText"/>
+                    android:id="@+id/size_button19x19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="32dp"
+                    android:text="19x19"
+                    tools:ignore="HardcodedText"/>
         </LinearLayout>
-
-        <include layout="@layout/horizontal_divider" />
 
         <TextView
             android:id="@+id/handicap_label"
