@@ -65,17 +65,26 @@ open class GoBoardView : View {
 
     // we need a lot of paints, but so we have a efficient onDraw with less
     // calls and the mem does not matter compared to bitmaps
-    private lateinit var hoshi_paint: Paint
-    private lateinit var legendPaint: Paint
-    private lateinit var blackTextPaint: Paint
-    private lateinit var whiteTextPaint: Paint
-    private lateinit var gridPaint: Paint
-    private lateinit var gridPaint_h: Paint
-    private lateinit var bitmapPaint: Paint
-    private lateinit var placeStonePaint: Paint
-    private lateinit var opaque_paint: Paint
-    private lateinit var whiteLastStoneCirclePaint: Paint
-    private lateinit var blackLastStoneCirclePaint: Paint
+    private val hoshi_paint = Paint()
+    private val legendPaint = Paint()
+    private val blackTextPaint by lazy {
+        val res = Paint(whiteTextPaint)
+        res.color = Color.BLACK
+        res.setShadowLayer(2f, 1f, 1f, Color.WHITE)
+        res
+    }
+    private val whiteTextPaint = Paint()
+    private val gridPaint = Paint()
+    private val gridPaint_h = Paint()
+    private val bitmapPaint = Paint()
+    private val placeStonePaint = Paint()
+    private val opaque_paint = Paint()
+    private val whiteLastStoneCirclePaint = Paint()
+    private val blackLastStoneCirclePaint by lazy {
+        val res = Paint(whiteLastStoneCirclePaint)
+        res.color = Color.BLACK
+        res
+    }
 
     private var stone_size: Float = 0.toFloat()
 
@@ -113,53 +122,34 @@ open class GoBoardView : View {
 
         // paint to make the stones transparent in game-result mode ( territory
         // stones ) - also used for stone move and shadow stone
-        opaque_paint = Paint()
         opaque_paint.alpha = 0x77
 
         // for marking the last stone
-        whiteLastStoneCirclePaint = Paint()
         whiteLastStoneCirclePaint.color = Color.WHITE
         whiteLastStoneCirclePaint.style = Paint.Style.STROKE
         whiteLastStoneCirclePaint.strokeWidth = 2.0f
         whiteLastStoneCirclePaint.isAntiAlias = true
 
-        // make a black one
-        blackLastStoneCirclePaint = Paint(whiteLastStoneCirclePaint)
-        blackLastStoneCirclePaint.color = Color.BLACK
-
         // for the star or hoshi points
-        hoshi_paint = Paint()
         hoshi_paint.color = Color.BLACK
         hoshi_paint.style = Paint.Style.FILL
         hoshi_paint.isAntiAlias = true
 
         // for drawing on the stones
-        whiteTextPaint = Paint()
         whiteTextPaint.color = Color.WHITE
         whiteTextPaint.isAntiAlias = true
         whiteTextPaint.textAlign = Paint.Align.CENTER
         whiteTextPaint.setShadowLayer(2f, 1f, 1f, Color.BLACK)
 
-        blackTextPaint = Paint(whiteTextPaint)
-        blackTextPaint.color = Color.BLACK
-        blackTextPaint.setShadowLayer(2f, 1f, 1f, Color.WHITE)
-        blackTextPaint.textAlign = Paint.Align.CENTER
-
-        gridPaint_h = Paint()
         gridPaint_h.color = 0xFF0000FF.toInt()
-        gridPaint_h.setShadowLayer(1f, 1f, 1f, 0xFFFFFFFF.toInt())
 
-        gridPaint = Paint()
         gridPaint.color = Color.BLACK
 
-        legendPaint = Paint()
         legendPaint.color = Color.BLACK
         legendPaint.textAlign = Paint.Align.CENTER
         legendPaint.textSize = 12.0f
         legendPaint.isAntiAlias = true
 
-        bitmapPaint = Paint()
-        placeStonePaint = Paint()
         placeStonePaint.alpha = 127
 
         // defaults
