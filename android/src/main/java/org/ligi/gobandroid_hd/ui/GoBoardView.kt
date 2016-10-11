@@ -216,9 +216,6 @@ open class GoBoardView : View {
         draw2canvas(canvas)
     }
 
-    private val gameSize: Int
-        get() = game.size
-
     /**
      * used to make nice code around hoshi and last stone circle
      */
@@ -255,7 +252,7 @@ open class GoBoardView : View {
 
         // draw the vertical lines for the grid
         val board = game.visualBoard
-        for (x in 0..gameSize - 1)
+        for (x in 0..game.size - 1)
             canvas.drawLine(stone_size / 2.0f + x * stone_size,
                     stone_size / 2.0f,
                     stone_size / 2.0f + x * stone_size,
@@ -270,13 +267,13 @@ open class GoBoardView : View {
                     stone_size / 2.0f + x * stone_size,
                     if (actpos_highlight_condition && interactionScope.touchCell!!.x == x.toInt()) gridPaint_h else gridPaint)
             if (do_legend) {
-                canvas.drawText("" + (gameSize - x), legendPaint.textSize / 2f + stone_size * (gameSize - 1).toFloat() + stone_size / 2.0f,
+                canvas.drawText("" + (game.size - x), legendPaint.textSize / 2f + stone_size * (game.size - 1).toFloat() + stone_size / 2.0f,
                         stone_size / 2.0f + x * stone_size + gridPaint.textSize / 3,
                         legendPaint)
 
                 canvas.drawText(getLegendLetter(x),
                         stone_size / 2.0f + x * stone_size,
-                        stone_size * (gameSize - 1).toFloat() + stone_size / 2.0f + 1f + legendPaint.textSize,
+                        stone_size * (game.size - 1).toFloat() + stone_size / 2.0f + 1f + legendPaint.textSize,
                         legendPaint)
             }
         }
