@@ -6,6 +6,7 @@ class SGFListFragment : LinkListFragment() {
         return arrayOf(
 
                 // source pro games
+                LinkWithDescription("http://homepages.cwi.nl/~aeb/go/games/index.html", "Andries Brouwer's collection"),
                 LinkWithDescription("http://www.andromeda.com/people/ddyer/age-summer-94/companion.html", "Companion"),
                 LinkWithDescription("http://homepages.cwi.nl/~aeb/go/games/games/Judan/", "Judan"),
                 LinkWithDescription("http://gogameworld.com/gophp/pg_samplegames.php", "Commented gogameworld sample games"),
