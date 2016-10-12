@@ -190,7 +190,7 @@ public class GoActivity extends GobandroidFragmentActivity implements OnTouchLis
 
         go_board.setDo_legend(GoPrefs.INSTANCE.isLegendEnabled());
         go_board.setLegend_sgf_mode(GoPrefs.INSTANCE.isSGFLegendEnabled());
-        go_board.setGridEmboss(GoPrefs.INSTANCE.isGridEmbossEnabled());
+        go_board.setLineSize(GoPrefs.INSTANCE.getBoardLineWidth());
     }
 
     public boolean isBoardFocusWanted() {

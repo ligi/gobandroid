@@ -51,6 +51,8 @@ object GoPrefs : KotprefModel() {
     var lastBoardSize: Int by intPrefVar(default = 9)
     var lastHandicap: Int by intPrefVar(default = 0)
 
+    var boardLineWidth: Int by intPrefVar(default = 1, key = R.string.prefs_linewidth)
+
     var username: String by stringPrefVar()
     var rank: String by stringPrefVar()
 
@@ -58,7 +60,6 @@ object GoPrefs : KotprefModel() {
     var isLegendEnabled: Boolean by booleanPrefVar(key = R.string.prefs_do_legend, default = true)
     var isSGFLegendEnabled: Boolean by booleanPrefVar(key = R.string.prefs_sgf_legend, default = true)
     var isConstantLightWanted: Boolean by booleanPrefVar(key = R.string.prefs_constant_light, default = true)
-    var isGridEmbossEnabled: Boolean by booleanPrefVar(key = R.string.prefs_grid_emboss, default = true)
     var isTsumegoPushEnabled: Boolean by booleanPrefVar(key = R.string.prefs_push_tsumego, default = true)
 
     var isTransitionDone: Boolean by booleanPrefVar(default = false)

@@ -154,7 +154,6 @@ open class GoBoardView : View {
 
         // defaults
         isFocusable = true
-        setGridEmboss(true)
     }
 
     val game: GoGame
@@ -244,7 +243,7 @@ open class GoBoardView : View {
                     stone_size / 2.0f + x * stone_size,
                     stone_size * (board.size - 1).toFloat() + stone_size / 2.0f,
                     stone_size / 2.0f + x * stone_size,
-                    if (actpos_highlight_condition && interactionScope.touchCell!!.x == x.toInt()) gridPaint_h else gridPaint)
+                    if (actpos_highlight_condition && interactionScope.touchCell!!.y == x.toInt()) gridPaint_h else gridPaint)
             if (do_legend) {
                 canvas.drawText("" + (game.size - x), legendPaint.textSize / 2f + stone_size * (game.size - 1).toFloat() + stone_size / 2.0f,
                         stone_size / 2.0f + x * stone_size + gridPaint.textSize / 3,
@@ -362,8 +361,9 @@ open class GoBoardView : View {
 
     }
 
-    fun setGridEmboss(grid_emboss: Boolean) {
-        gridPaint.setShadowLayer(1f, 1f, 1f, if (grid_emboss) 0xFFFFFFFF.toInt() else 0xFF000000.toInt())
+    fun setLineSize(size: Float) {
+        gridPaint.strokeWidth = size
+        gridPaint_h.strokeWidth = size
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {

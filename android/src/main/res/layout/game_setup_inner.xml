@@ -1,35 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ScrollView01"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/ScrollView01"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
         <TextView
-            android:id="@+id/game_size_label"
-            tools:text="Size 9x9"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+                android:id="@+id/game_size_label"
+                tools:text="Size 9x9"
+                android:paddingLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         <SeekBar
-            android:id="@+id/size_seek"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:max="21"/>
+                android:id="@+id/size_seek"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:max="21"/>
 
         <LinearLayout
-            android:id="@+id/LinearLayout02"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp">
+                android:id="@+id/LinearLayout02"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp">
 
             <Button
                     android:id="@+id/size_button9x9"
@@ -41,12 +40,12 @@
                     tools:ignore="HardcodedText"/>
 
             <Button
-                android:id="@+id/size_button13x13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="13x13"
-                tools:ignore="HardcodedText"/>
+                    android:id="@+id/size_button13x13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="13x13"
+                    tools:ignore="HardcodedText"/>
 
             <Button
                     android:id="@+id/size_button19x19"
@@ -59,19 +58,32 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/handicap_label"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            tools:text="Handicap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+                android:id="@+id/handicap_label"
+                android:paddingLeft="8dp"
+                tools:text="Handicap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         <SeekBar
-            android:id="@+id/handicap_seek"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:max="9"
-            android:padding="16dp"/>
+                android:id="@+id/handicap_seek"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:max="9"
+                android:padding="16dp"/>
+
+        <TextView
+                android:id="@+id/line_width"
+                android:paddingLeft="8dp"
+                android:text="@string/line_width"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <SeekBar
+                android:id="@+id/line_width_seek"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:max="9"
+                android:padding="16dp"/>
     </LinearLayout>
 
 </ScrollView>

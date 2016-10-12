@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import butterknife.ButterKnife
+import com.chibatching.kotpref.bulk
 import kotlinx.android.synthetic.main.game_setup_inner.*
 import org.ligi.gobandroid_hd.InteractionScope
 import org.ligi.gobandroid_hd.R
@@ -20,10 +20,13 @@ class GameSetupFragment : GobandroidFragment(), OnSeekBarChangeListener {
 
     val size_offset = 2
 
-    var act_size = 9
-    var act_handicap = 0
+    var act_size = GoPrefs.lastBoardSize
+    var act_handicap = GoPrefs.lastHandicap
+    var act_lineWidth = GoPrefs.boardLineWidth
 
     private var wanted_size = act_size
+
+    private var uiHandler = Handler()
 
     private fun setSize(size: Int) {
         wanted_size = size
@@ -43,18 +46,9 @@ class GameSetupFragment : GobandroidFragment(), OnSeekBarChangeListener {
 
     }
 
-    private var uiHandler = Handler()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         val view = inflater.inflate(R.layout.game_setup_inner, container, false)
-
-        ButterKnife.bind(this, view)
-
-        // set defaults
-        act_size = GoPrefs.lastBoardSize
-        act_handicap = GoPrefs.lastHandicap
-
         return view
     }
 
@@ -62,19 +56,25 @@ class GameSetupFragment : GobandroidFragment(), OnSeekBarChangeListener {
 
         size_seek.setOnSeekBarChangeListener(this)
         handicap_seek.setOnSeekBarChangeListener(this)
+        line_width_seek.setOnSeekBarChangeListener(this)
 
         size_button9x9.setOnClickListener { setSize(9) }
         size_button13x13.setOnClickListener { setSize(13) }
         size_button19x19.setOnClickListener { setSize(19) }
+
         refresh_ui()
         super.onStart()
     }
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
 
-        if (seekBar === size_seek && act_size != (progress + size_offset).toByte().toInt())
+        if (seekBar === size_seek && act_size != (progress + size_offset)) {
             setSize(progress + size_offset)
-        else if (seekBar === handicap_seek && act_handicap != progress.toByte().toInt()) act_handicap = progress.toByte().toInt()
+        } else if (seekBar === handicap_seek) {
+            act_handicap = progress.toByte().toInt()
+        } else if (seekBar === line_width_seek) {
+            act_lineWidth = progress.toByte().toInt()
+        }
 
         refresh_ui()
     }
@@ -105,12 +105,16 @@ class GameSetupFragment : GobandroidFragment(), OnSeekBarChangeListener {
 
         if (act_handicap != handicap_seek.progress) handicap_seek.progress = act_handicap
 
+        if (act_lineWidth != line_width_seek.progress) line_width_seek.progress = act_lineWidth
+
         if (interactionScope.mode === InteractionScope.Mode.GNUGO)
             size_seek.max = 19 - size_offset
 
-
-        GoPrefs.lastBoardSize = act_size
-        GoPrefs.lastHandicap = act_handicap
+        GoPrefs.bulk {
+            lastBoardSize = act_size
+            lastHandicap = act_handicap
+            boardLineWidth = act_lineWidth
+        }
 
         if (gameProvider.get().size != act_size || gameProvider.get().handicap != act_handicap) {
             gameProvider.set(GoGame(act_size, act_handicap))
@@ -122,6 +126,8 @@ class GameSetupFragment : GobandroidFragment(), OnSeekBarChangeListener {
             if (board != null) {
                 board.regenerateStoneImagesWithNewSize()
                 board.invalidate()
+
+                board.setLineSize(line_width_seek.progress.toFloat())
             }
         }
     }

@@ -28,7 +28,6 @@ public class GobandroidSettingsTransition {
             prefs.setLegendEnabled(isLegendEnabled());
             prefs.setSGFLegendEnabled(isSGFLegendEnabled());
             prefs.setConstantLightWanted(isConstantLightWanted());
-            prefs.setGridEmbossEnabled(isGridEmbossEnabled());
             prefs.setTsumegoPushEnabled(isTsumegoPushEnabled());
             prefs.setUsername(getUsername());
             prefs.setRank(getRank());
@@ -59,10 +58,6 @@ public class GobandroidSettingsTransition {
 
     private boolean isConstantLightWanted() {
         return getBoolForKey(R.string.prefs_constant_light, true);
-    }
-
-    private boolean isGridEmbossEnabled() {
-        return getBoolForKey(R.string.prefs_grid_emboss, true);
     }
 
     private boolean isTsumegoPushEnabled() {

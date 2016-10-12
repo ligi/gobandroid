@@ -284,5 +284,6 @@
 
     <string name="snackbar_keep_variant_message_enable">Enable variations dialog</string>
     <string name="snackbar_keep_variant_message_disable">Disable variations dialog</string>
+    <string name="line_width">Line Width</string>
 
 </resources>

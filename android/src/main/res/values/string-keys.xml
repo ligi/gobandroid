@@ -3,11 +3,11 @@
     <string name="prefs_do_sound">do_sound</string>
     <string name="prefs_do_legend">do_legend</string>
     <string name="prefs_sgf_legend">sfg_legend</string>
-    <string name="prefs_grid_emboss">grid_emboss</string>
 
     <string name="prefs_fullscreen">fullscreen</string>
     <string name="prefs_constant_light">constant_light</string>
     <string name="prefs_push_tsumego">push_tsumego</string>
     <string name="prefs_daynight">daynight</string>
+    <string name="prefs_linewidth">linewidth</string>
 
 </resources>

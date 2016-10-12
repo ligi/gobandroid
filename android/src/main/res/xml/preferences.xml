@@ -16,11 +16,6 @@
             android:title="@string/fullscreen_board" />
 
         <CheckBoxPreference
-            android:key="@string/prefs_grid_emboss"
-            android:summary="@string/grid_emboss_summary"
-            android:title="@string/grid_emboss" />
-
-        <CheckBoxPreference
             android:key="@string/prefs_constant_light"
             android:summary="@string/drain_your_battery_while_playing"
             android:title="@string/constant_light" />
