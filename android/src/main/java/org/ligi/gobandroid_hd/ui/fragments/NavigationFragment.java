@@ -57,9 +57,9 @@ public class NavigationFragment extends GobandroidGameAwareFragment {
     void onFirstClick() {
         final GoMove nextJunction = game.findPrevJunction();
         if (nextJunction.isFirstMove()) {
-            showJunctionInfoSnack(R.string.found_junction_snack_for_first);
             game.jump(nextJunction);
         } else {
+            showJunctionInfoSnack(R.string.found_junction_snack_for_first);
             game.jump(nextJunction.getNextMoveVariations().get(0));
         }
     }
