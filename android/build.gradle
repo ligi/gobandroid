@@ -42,8 +42,8 @@ android {
         }
     }
 
-    compileSdkVersion 24
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25"
 
     defaultConfig {
         versionCode 248
