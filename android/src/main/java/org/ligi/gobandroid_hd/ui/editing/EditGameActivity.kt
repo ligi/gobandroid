@@ -8,7 +8,8 @@ import org.ligi.gobandroid_hd.logic.Cell
 import org.ligi.gobandroid_hd.logic.GoDefinitions.*
 import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus
 import org.ligi.gobandroid_hd.logic.markers.*
-import org.ligi.gobandroid_hd.logic.markers.util.MarkerUtil
+import org.ligi.gobandroid_hd.logic.markers.functions.findFirstFreeNumber
+import org.ligi.gobandroid_hd.logic.markers.functions.findNextLetter
 import org.ligi.gobandroid_hd.ui.GoActivity
 import org.ligi.gobandroid_hd.ui.editing.model.EditGameMode
 
@@ -52,12 +53,12 @@ class EditGameActivity : GoActivity() {
 
             EditGameMode.NUMBER ->
                 setOrRemoveMarker(cell, {
-                    TextMarker(cell, MarkerUtil.findFirstFreeNumber(game.actMove.markers).toString())
+                    TextMarker(cell, game.actMove.markers.findFirstFreeNumber().toString())
                 })
 
             EditGameMode.LETTER ->
                 setOrRemoveMarker(cell, {
-                    TextMarker(cell, MarkerUtil.findNextLetter(game.actMove.markers).toString())
+                    TextMarker(cell, game.actMove.markers.findNextLetter())
                 })
         }
         return MoveStatus.VALID
