@@ -139,7 +139,7 @@ dependencies {
     withCloudCompile "com.google.android.gms:play-services-gcm:$play_version"
     withCloudCompile "com.google.android.gms:play-services-plus:$play_version"
 
-    withCloudCompile 'com.google.apis:google-api-services-games:v1-rev207-1.22.0'
+    withCloudCompile 'com.google.apis:google-api-services-games:v1-rev214-1.22.0'
 
     kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
 
