@@ -5,10 +5,9 @@ import org.ligi.gobandroid_hd.logic.StatefulGoBoard;
 import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
 import org.ligi.gobandroid_hd.logic.StatelessGoBoard;
 import org.ligi.gobandroid_hd.logic.cell_gatherer.LooseConnectedCellGatherer;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TheLooseConnectedCellGatherer extends MarkerTestBase {
+public class TheLooseConnectedCellGatherer {
 
     private StatefulGoBoard board = new StatefulGoBoard(new StatelessGoBoard(9));
 

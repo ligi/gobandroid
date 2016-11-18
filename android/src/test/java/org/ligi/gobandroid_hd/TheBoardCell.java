@@ -3,10 +3,9 @@ package org.ligi.gobandroid_hd;
 import org.junit.Test;
 import org.ligi.gobandroid_hd.logic.StatelessBoardCell;
 import org.ligi.gobandroid_hd.logic.StatelessGoBoard;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TheBoardCell extends MarkerTestBase {
+public class TheBoardCell {
 
     private StatelessGoBoard board = new StatelessGoBoard(19);
 
