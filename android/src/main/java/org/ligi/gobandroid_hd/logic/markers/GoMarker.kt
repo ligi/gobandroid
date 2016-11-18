@@ -30,15 +30,8 @@ abstract class GoMarker(val cell: Cell) : Cell by cell {
 
     abstract fun draw(c: Canvas, size: Float, x: Float, y: Float, paint: Paint)
 
-    fun isInCell(cell: Cell): Boolean {
-        return this.cell.equals(cell)
-    }
+    fun isInCell(cell: Cell) = this.cell == cell
 
-    override fun equals(other: Any?): Boolean {
-        if (other is GoMarker ) {
-            return other.cell.equals(cell)
-        }
+    override fun equals(other: Any?) = other is GoMarker && other.cell == cell
 
-        return false
-    }
 }

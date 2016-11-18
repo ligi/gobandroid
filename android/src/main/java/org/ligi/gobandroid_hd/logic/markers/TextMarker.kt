@@ -29,9 +29,7 @@ import org.ligi.gobandroid_hd.logic.Cell
  */
 class TextMarker(cell: Cell, val text: String) : GoMarker(cell) {
 
-    override fun equals(other: Any?): Boolean {
-        return super.equals(other) && other is TextMarker && other.text.equals(text)
-    }
+    override fun equals(other: Any?) = super.equals(other) && other is TextMarker && other.text == text
 
     override fun draw(c: Canvas, size: Float, x: Float, y: Float, paint: Paint) {
         val fm = paint.fontMetrics
