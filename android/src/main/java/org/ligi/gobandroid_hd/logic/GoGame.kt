@@ -67,7 +67,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
 
     lateinit var metaData: GoGameMetadata
 
-    private var all_handicap_positions: Array<BooleanArray>? = null
+    private lateinit var all_handicap_positions: Array<BooleanArray>
 
     private var local_captures = 0
 
@@ -118,7 +118,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
                         handicapBoard.setCell(CellImpl(handicapArray[i + 1][0].toInt(), handicapArray[i + 1][1].toInt()), STONE_BLACK)
                     } else if (i == 6 || i == 8) handicapBoard.setCell(CellImpl(handicapArray[4][0].toInt(), handicapArray[4][1].toInt()), STONE_BLACK)
                 }
-                all_handicap_positions!![handicapArray[i][0].toInt()][handicapArray[i][1].toInt()] = true
+                all_handicap_positions[handicapArray[i][0].toInt()][handicapArray[i][1].toInt()] = true
             }
         }
 
@@ -451,9 +451,8 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
      * TODO: check rename ( general marker )
      *
      */
-    fun isCellHoschi(cell: Cell): Boolean {
-        return all_handicap_positions!![cell.x][cell.y]
-    }
+    fun isCellHoschi(cell: Cell) = all_handicap_positions[cell.x][cell.y]
+
 
     // need at least 2 moves to finish a game ( 2 passes )
     // w passes
