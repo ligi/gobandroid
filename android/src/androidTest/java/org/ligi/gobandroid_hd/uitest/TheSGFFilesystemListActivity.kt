@@ -13,7 +13,6 @@ import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.ligi.axt.AXT
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.base.EnvironmentPreparingTestRule
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity
@@ -29,7 +28,7 @@ class TheSGFFilesystemListActivity {
 
     @After
     fun cleanUp() {
-        AXT.at(path).deleteRecursive()
+        path.deleteRecursively()
     }
 
     @Test

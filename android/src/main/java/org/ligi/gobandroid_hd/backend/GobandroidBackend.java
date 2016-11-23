@@ -5,7 +5,9 @@ import android.provider.Settings.Secure;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
-import org.ligi.axt.AXT;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.tracedroid.logging.Log;
 
@@ -22,7 +24,13 @@ public class GobandroidBackend {
                                     GobandroidConfiguration.backend_domain +
                                     "/tsumegos/max?device_id=" +
                                     Secure.getString(ctx.getContentResolver(), Secure.ANDROID_ID));
-            final String count_str = AXT.at(url).downloadToString();
+
+            final OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder().url(url).build();
+
+            final Response response = client.newCall(request).execute();
+            final String count_str = response.body().string();
 
             final String cleanedCountStr = count_str.replace("\n", "").replace("\r", "").trim(); // clean the string
             return Integer.parseInt(cleanedCountStr);

@@ -1,10 +1,10 @@
 package org.ligi.gobandroid_hd.ui
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
-import org.ligi.axt.listeners.ActivityFinishingOnClickListener
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.InteractionScope
 import org.ligi.gobandroid_hd.R
@@ -50,7 +50,9 @@ open class GobanDroidTVActivity : GobandroidFragmentActivity() {
             AlertDialog.Builder(this)
                     .setMessage(getString(R.string.there_are_no_files_in) + " " + path_to_play_from)
                     .setTitle(R.string.problem)
-                    .setPositiveButton(R.string.ok, ActivityFinishingOnClickListener(this)).show()
+                    .setPositiveButton(R.string.ok, DialogInterface.OnClickListener { dialogInterface, i ->
+                        this@GobanDroidTVActivity.finish()
+                    }).show()
         } else {
 
             val chosen = avail_file_list[(Math.random() * avail_file_list.size).toInt()]

@@ -2,12 +2,11 @@ package org.ligi.gobandroid_hd.ui.scoring
 
 import android.app.Activity
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.WindowManager
-import org.ligi.axt.AXT
+import kotlinx.android.synthetic.main.game.*
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.events.GameChangedEvent
 import org.ligi.gobandroid_hd.logic.Cell
@@ -19,6 +18,7 @@ import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer
 import org.ligi.gobandroid_hd.ui.GoActivity
 import org.ligi.gobandroid_hd.ui.gnugo.PlayAgainstGnuGoActivity
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity
+import org.ligi.kaxt.startActivityFromClass
 import java.util.*
 import kotlin.reflect.KClass
 
@@ -27,12 +27,8 @@ import kotlin.reflect.KClass
  */
 class GameScoringActivity : GoActivity() {
 
-    private val gameExtraFragment: GameScoringExtrasFragment by lazy {
+    override val gameExtraFragment: GameScoringExtrasFragment by lazy {
         GameScoringExtrasFragment()
-    }
-
-    override fun getGameExtraFragment(): Fragment? {
-        return gameExtraFragment
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +82,7 @@ class GameScoringActivity : GoActivity() {
         //super.doTouch(event); - Do not call! Not needed and breaks marking dead stones
 
         eventForZoomBoard(event)
-        val touchCell = board.pixel2cell(event.x, event.y)
+        val touchCell = go_board.pixel2cell(event.x, event.y)
         interactionScope.touchCell = touchCell
 
         // calculate position on the field by position on the touchscreen
@@ -98,8 +94,10 @@ class GameScoringActivity : GoActivity() {
 
     }
 
-    override fun doMoveWithUIFeedback(cell: Cell): GoGame.MoveStatus {
-        do_score_touch(cell)
+    override fun doMoveWithUIFeedback(cell: Cell?): GoGame.MoveStatus {
+        if (cell != null) {
+            do_score_touch(cell)
+        }
         bus.post(GameChangedEvent)
         return GoGame.MoveStatus.VALID
     }
@@ -109,7 +107,7 @@ class GameScoringActivity : GoActivity() {
             R.id.menu_game_again -> {
                 val metaData = game.metaData
                 gameProvider.set(GoGame(game.size))
-                AXT.at(this).startCommonIntent().activityFromClass(getClassForRestart(metaData).java)
+                startActivityFromClass(getClassForRestart(metaData).java)
 
                 return true
             }

@@ -3,7 +3,6 @@ package org.ligi.gobandroid_hd.ui.editing
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.SwitchCompat
-import android.text.Editable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -12,11 +11,11 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.GridView
-import org.ligi.axt.simplifications.SimpleTextWatcher
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.events.GameChangedEvent
 import org.ligi.gobandroid_hd.ui.editing.model.EditGameMode
 import org.ligi.gobandroid_hd.ui.fragments.GobandroidGameAwareFragment
+import org.ligi.kaxt.doAfterEdit
 
 class EditGameExtrasFragment : GobandroidGameAwareFragment() {
 
@@ -51,11 +50,9 @@ class EditGameExtrasFragment : GobandroidGameAwareFragment() {
         editText.gravity = Gravity.TOP
         editText.setTextColor(ContextCompat.getColor(context, R.color.text_color_on_board_bg))
 
-        editText.addTextChangedListener(object : SimpleTextWatcher() {
-            override fun afterTextChanged(s: Editable?) {
-                gameProvider.get().actMove.comment = s!!.toString()
-            }
-        })
+        editText.doAfterEdit {
+            gameProvider.get().actMove.comment = it.toString()
+        }
 
         return view
     }

@@ -10,11 +10,11 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.games.Games
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import org.ligi.axt.AXT
 import org.ligi.gobandroid_hd.events.OptionsItemClickedEvent
 import org.ligi.gobandroid_hd.events.TsumegoSolved
 import org.ligi.gobandroid_hd.ui.BaseProfileActivity
 import org.ligi.gobandroid_hd.ui.ProfileActivityLogic
+import org.ligi.kaxt.startActivityFromClass
 import org.ligi.tracedroid.logging.Log
 
 object CloudHooks {
@@ -60,7 +60,7 @@ object CloudHooks {
                         AlertDialog.Builder(ctx).setMessage("You need to be signed in to google play games services to use this feature.")
                                 .setPositiveButton(android.R.string.ok, { dialogInterface, i ->
                                     dialogInterface.dismiss()
-                                    AXT.at(ctx).startCommonIntent().activityFromClass(BaseProfileActivity::class.java)
+                                    ctx.startActivityFromClass(BaseProfileActivity::class.java)
                                 })
                                 .show()
                         return

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import com.chibatching.kotpref.bulk
+import kotlinx.android.synthetic.main.game.*
 import kotlinx.android.synthetic.main.game_setup_inner.*
 import org.ligi.gobandroid_hd.InteractionScope
 import org.ligi.gobandroid_hd.R
@@ -121,7 +122,7 @@ class GameSetupFragment : GobandroidFragment(), OnSeekBarChangeListener {
         }
 
         if (activity is GoActivity) {
-            val board = (activity as GoActivity).board
+            val board = (activity as GoActivity).go_board
 
             if (board != null) {
                 board.regenerateStoneImagesWithNewSize()

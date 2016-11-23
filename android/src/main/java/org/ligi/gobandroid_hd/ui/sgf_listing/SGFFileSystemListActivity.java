@@ -62,7 +62,7 @@ public class SGFFileSystemListActivity extends GobandroidFragmentActivity {
 
         setActionbarProperties(sgfPath);
 
-        list_fragment = SGFListFragment.newInstance(sgfPath);
+        list_fragment = SGFListFragment.Companion.newInstance(sgfPath);
         getSupportFragmentManager().beginTransaction().replace(R.id.list_fragment, list_fragment).commit();
     }
 

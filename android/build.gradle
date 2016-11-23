@@ -10,6 +10,7 @@ apply plugin: 'com.getkeepsafe.dexcount'
 
 repositories {
     jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 android {
@@ -118,7 +119,7 @@ dependencies {
     compile "com.android.support:design:$support_version"
     compile "com.android.support:preference-v7:$support_version"
 
-    compile 'org.ligi:AXT:0.37'
+    compile 'com.github.ligi:KAXT:0.7'
     compile 'org.ligi:tracedroid:1.4'
     compile 'org.ligi:snackengage:0.5'
 

@@ -52,7 +52,7 @@
 
 
         <TextView
-                android:id="@+id/filename"
+                android:id="@+id/title"
                 style="@style/review_list_text"
                 android:layout_below="@id/player_black"
                 tools:text="filename"
@@ -63,7 +63,7 @@
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/filename"
+                android:layout_below="@id/title"
                 android:isIndicator="true"/>
 
         <TextView

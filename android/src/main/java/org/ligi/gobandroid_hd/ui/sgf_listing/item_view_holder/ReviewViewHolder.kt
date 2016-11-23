@@ -16,7 +16,7 @@ class ReviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View
     override fun apply(fileToApply: File) {
         var file = fileToApply
 
-        itemView.filename.text = file.name.replace(".sgf", "")
+        itemView.title.text = file.name.replace(".sgf", "")
 
         try {
             if (GoLink.isGoLink(file)) {
@@ -52,9 +52,9 @@ class ReviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View
 
                 if (!sgf_meta.hasData()) {
                     itemView.game_rating.visibility = View.GONE
-                } else if (sgf_meta.getRating() != null) {
+                } else if (sgf_meta.rating != null) {
                     itemView.game_rating.visibility = View.VISIBLE
-                    itemView.game_rating.rating = .5f * sgf_meta.getRating()!!
+                    itemView.game_rating.rating = .5f * sgf_meta.rating!!
                 }
             }
 

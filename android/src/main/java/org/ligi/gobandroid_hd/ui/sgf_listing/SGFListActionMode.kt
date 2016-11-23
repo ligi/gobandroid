@@ -7,8 +7,6 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
-import org.ligi.axt.AXT
-import org.ligi.axt.listeners.DialogDiscardingOnClickListener
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.ui.Refreshable
 import org.ligi.gobandroid_hd.ui.share.ShareAsAttachmentDialog
@@ -35,7 +33,7 @@ open class SGFListActionMode(internal val context: Context, internal val fileNam
             }
 
             R.id.menu_delete -> {
-                AlertDialog.Builder(context).setMessage("Really delete " + fileName).setTitle("Delete?").setNegativeButton("NO", DialogDiscardingOnClickListener()).setPositiveButton("YES", fileOrDirRemovingOnClickListener).show()
+                AlertDialog.Builder(context).setMessage("Really delete " +fileName).setTitle("Delete?").setNegativeButton("NO", null).setPositiveButton("YES", fileOrDirRemovingOnClickListener).show()
                 return true
             }
 
@@ -47,7 +45,7 @@ open class SGFListActionMode(internal val context: Context, internal val fileNam
         get() = DialogInterface.OnClickListener { dialog, which ->
             val file = File(fileName)
             if (file.isDirectory) {
-                AXT.at(file).deleteRecursive()
+                file.deleteRecursively()
             } else {
                 file.delete()
             }

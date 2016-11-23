@@ -20,7 +20,7 @@
             tools:src="@drawable/ic_action_extension" />
 
         <TextView
-            android:id="@+id/filename"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/solve_status_image"
@@ -34,7 +34,7 @@
             android:id="@+id/hints_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/filename"
+            android:layout_below="@id/title"
             android:layout_toEndOf="@id/solve_status_image"
             android:layout_toRightOf="@id/solve_status_image"
             android:fontFamily="sans-serif-light"

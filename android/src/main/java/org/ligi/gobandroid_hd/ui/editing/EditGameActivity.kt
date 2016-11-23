@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui.editing
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.Menu
 import android.view.WindowManager
 import org.ligi.gobandroid_hd.R
@@ -27,11 +28,12 @@ class EditGameActivity : GoActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
 
-    override fun doAutoSave(): Boolean {
-        return true
-    }
+    override fun doAutoSave()= true
 
-    public override fun doMoveWithUIFeedback(cell: Cell): MoveStatus {
+    override fun doMoveWithUIFeedback(cell: Cell?): MoveStatus {
+        if (cell == null) {
+            return MoveStatus.INVALID_NOT_ON_BOARD
+        }
         when (mode) {
             EditGameMode.PLAY ->
                 super.doMoveWithUIFeedback(cell)
@@ -81,13 +83,11 @@ class EditGameActivity : GoActivity() {
         game.jump(game.actMove) // we need to totally refresh the board
     }
 
-
     private val mode: EditGameMode
         get() = statefulEditModeItems.mode
 
-    override fun getGameExtraFragment(): EditGameExtrasFragment {
-        return EditGameExtrasFragment()
-    }
+    override val gameExtraFragment: Fragment
+        get() = EditGameExtrasFragment()
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.ingame_edit, menu)

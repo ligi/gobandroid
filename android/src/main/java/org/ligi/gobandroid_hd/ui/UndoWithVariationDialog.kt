@@ -30,14 +30,13 @@ class UndoWithVariationDialog private constructor(activity: Activity) : Gobandro
         setIconResource(R.drawable.ic_action_help_outline)
         setContentView(R.layout.dialog_keep_variant)
 
-        setPositiveButton(R.string.yes, { dialog, i ->
+        setPositiveButton(R.string.yes, { dialog ->
             gameProvider.get().undo(true)
             dialog.dismiss()
         })
 
-        setNegativeButton(R.string.no, { dialog, i ->
+        setNegativeButton(R.string.no, { dialog ->
             gameProvider.get().undo(false)
-
             dialog.dismiss()
 
             val snackbar = Snackbar.make(activity.window.decorView.findViewById(R.id.content_frame), R.string.snackbar_keep_variant_message_disable, Snackbar.LENGTH_LONG)
@@ -45,5 +44,6 @@ class UndoWithVariationDialog private constructor(activity: Activity) : Gobandro
             snackbar.show()
         })
     }
+
 
 }

@@ -13,8 +13,6 @@ import android.view.Menu
 import android.view.MotionEvent
 import android.view.WindowManager
 import android.widget.Toast
-import org.ligi.axt.AXT
-import org.ligi.axt.listeners.ActivityFinishingOnClickListener
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.events.GameChangedEvent
@@ -27,6 +25,7 @@ import org.ligi.gobandroid_hd.ui.GoPrefs
 import org.ligi.gobandroid_hd.ui.recording.RecordingGameExtrasFragment
 import org.ligi.gobandroid_hd.util.SimpleStopwatch
 import org.ligi.gobandroidhd.ai.gnugo.IGnuGoService
+import org.ligi.kaxt.makeExplicit
 import org.ligi.tracedroid.logging.Log
 
 /**
@@ -37,7 +36,7 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
     private var service: IGnuGoService? = null
     private var connection: ServiceConnection? = null
 
-    private var dlg: GnuGoSetupDialog? = null
+    private lateinit var dlg: GnuGoSetupDialog
 
     private var gnugoSizeSet = false
 
@@ -55,20 +54,23 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
 
         dlg = GnuGoSetupDialog(this)
 
-        dlg!!.setPositiveButton(R.string.ok) { dialog, which ->
-            gnuGoGame = GnuGoGame(dlg!!.isBlackActive or dlg!!.isBothActive,
-                    dlg!!.isWhiteActive or dlg!!.isBothActive,
-                    dlg!!.strength.toByte(),
+        dlg.setPositiveButton(R.string.ok) { dialog ->
+            gnuGoGame = GnuGoGame(dlg.isBlackActive or dlg.isBothActive,
+                    dlg.isWhiteActive or dlg.isBothActive,
+                    dlg.strength.toByte(),
                     game)
 
 
             gnuGoGame!!.setMetaDataForGame(app)
-            dlg!!.saveRecentAsDefault()
+            dlg.saveRecentAsDefault()
             dialog.dismiss()
         }
 
-        dlg!!.setNegativeButton(R.string.cancel, ActivityFinishingOnClickListener(this))
-        dlg!!.show()
+        dlg.setNegativeButton(R.string.cancel, { dialog ->
+            dialog.dismiss()
+            finish()
+        })
+        dlg.show()
 
     }
 
@@ -138,7 +140,7 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
     }
 
     private val gnuGoIntent: Intent
-        get() = AXT.at(Intent(GnuGoHelper.INTENT_ACTION_NAME)).makeExplicit(this)
+        get() = Intent(GnuGoHelper.INTENT_ACTION_NAME).makeExplicit(this)!!
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         super.onPrepareOptionsMenu(menu)
@@ -160,12 +162,12 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
 
     }
 
-    override fun getGameExtraFragment(): Fragment {
-        return RecordingGameExtrasFragment()
-    }
+    override val gameExtraFragment: Fragment
+        get() = RecordingGameExtrasFragment()
 
-    public override fun doMoveWithUIFeedback(cell: Cell): GoGame.MoveStatus {
-        if (gnuGoGame != null) {
+
+    public override fun doMoveWithUIFeedback(cell: Cell?): GoGame.MoveStatus {
+        if (gnuGoGame != null && cell != null) {
             if (gnuGoGame!!.aiIsThinking) {
                 Toast.makeText(this, R.string.ai_is_thinking, Toast.LENGTH_LONG).show()
                 return GoGame.MoveStatus.VALID

@@ -18,7 +18,6 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import org.ligi.axt.listeners.DialogDiscardingOnClickListener
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.InteractionScope
 import org.ligi.gobandroid_hd.InteractionScope.Mode.*
@@ -130,7 +129,7 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
                             val chooser = Intent.createChooser(intent, null)
                             activity.startActivity(chooser)
                         }
-                        .setNegativeButton(android.R.string.cancel, DialogDiscardingOnClickListener()).show()
+                        .setNegativeButton(android.R.string.cancel, null).show()
                 return@Runnable
             }
             activity.finish()

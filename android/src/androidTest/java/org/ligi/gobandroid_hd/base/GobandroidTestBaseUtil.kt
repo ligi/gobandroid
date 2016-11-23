@@ -13,7 +13,7 @@ object GobandroidTestBaseUtil {
             val inputStream = assets.open(fileName)
             return inputStream.reader().readText()
         } catch (e: IOException) {
-            fail("could not read test asset " + fileName + e)
+            fail("could not read test asset $fileName $e")
             return null
         }
     }
@@ -26,7 +26,7 @@ object GobandroidTestBaseUtil {
             inputStream.reader().copyTo(foo)
             return foo.toString()
         } catch (e: IOException) {
-            fail("could not read test asset " + fileName + e)
+            fail("could not read test asset $fileName $e")
             return null
         }
 
