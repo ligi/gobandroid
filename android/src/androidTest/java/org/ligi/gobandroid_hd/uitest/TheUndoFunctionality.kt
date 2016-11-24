@@ -15,20 +15,20 @@ import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.InteractionScope
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.TestApp
-import org.ligi.gobandroid_hd.base.EnvironmentPreparingTestRule
-import org.ligi.gobandroid_hd.base.GoViewActions.placeStone
-import org.ligi.gobandroid_hd.base.TestRobot
+import org.ligi.gobandroid_hd.base.placeStone
 import org.ligi.gobandroid_hd.logic.CellImpl
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.model.GameProvider
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity
+import org.ligi.trulesk.TruleskActivityRule
+import org.ligi.trulesk.invokeMenu
 import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 class TheUndoFunctionality {
 
     @get:Rule
-    val rule = EnvironmentPreparingTestRule(GameRecordActivity::class.java)
+    val rule = TruleskActivityRule(GameRecordActivity::class.java)
 
     @Inject
     lateinit var gameProvider: GameProvider
@@ -116,7 +116,7 @@ class TheUndoFunctionality {
     private fun doAndUndo() {
         onView(withId(R.id.go_board)).perform(placeStone(CellImpl(1, 1), gameProvider.get()))
 
-        TestRobot.invokeMenu(R.id.menu_game_undo, R.string.undo)
+        invokeMenu(R.id.menu_game_undo, R.string.undo)
     }
 
 }

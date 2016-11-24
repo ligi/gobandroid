@@ -7,14 +7,14 @@ import com.jraska.falcon.FalconSpoon
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.ligi.gobandroid_hd.base.EnvironmentPreparingTestRule
 import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity
+import org.ligi.trulesk.TruleskActivityRule
 
 @RunWith(AndroidJUnit4::class)
 class TheGoTerminologyActivity {
 
     @get:Rule
-    val rule = EnvironmentPreparingTestRule(GoTerminologyViewActivity::class.java, false)
+    val rule = TruleskActivityRule(GoTerminologyViewActivity::class.java, false)
 
     @Test
     fun testThatGoBoardIsThere() {

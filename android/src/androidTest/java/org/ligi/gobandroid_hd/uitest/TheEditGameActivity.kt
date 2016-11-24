@@ -13,8 +13,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.TestApp
-import org.ligi.gobandroid_hd.base.EnvironmentPreparingTestRule
-import org.ligi.gobandroid_hd.base.GoViewActions.tapStone
+import org.ligi.gobandroid_hd.base.tapStone
 import org.ligi.gobandroid_hd.logic.CellImpl
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.logic.markers.GoMarker
@@ -24,6 +23,7 @@ import org.ligi.gobandroid_hd.logic.markers.TriangleMarker
 import org.ligi.gobandroid_hd.model.GameProvider
 import org.ligi.gobandroid_hd.ui.editing.EditGameActivity
 import org.ligi.gobandroidhd.helper.CellFactory
+import org.ligi.trulesk.TruleskActivityRule
 import javax.inject.Inject
 
 
@@ -31,7 +31,7 @@ import javax.inject.Inject
 class TheEditGameActivity {
 
     @get:Rule
-    val rule = EnvironmentPreparingTestRule(EditGameActivity::class.java, false)
+    val rule = TruleskActivityRule(EditGameActivity::class.java, false)
 
     @Inject
     lateinit var gameProvider: GameProvider

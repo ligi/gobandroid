@@ -14,13 +14,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.TestApp
-import org.ligi.gobandroid_hd.base.EnvironmentPreparingTestRule
-import org.ligi.gobandroid_hd.base.GoViewActions.tapStone
+import org.ligi.gobandroid_hd.base.tapStone
 import org.ligi.gobandroid_hd.logic.Cell
 import org.ligi.gobandroid_hd.logic.CellImpl
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.model.GameProvider
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity
+import org.ligi.trulesk.TruleskActivityRule
 import javax.inject.Inject
 
 
@@ -28,7 +28,7 @@ import javax.inject.Inject
 class TheGameScoringActivity {
 
     @get:Rule
-    val rule = EnvironmentPreparingTestRule(GameScoringActivity::class.java, false)
+    val rule = TruleskActivityRule(GameScoringActivity::class.java, false)
 
     @Inject
     lateinit var gameProvider: GameProvider

@@ -11,4 +11,5 @@ public class AppReplacingRunner extends AndroidJUnitRunner {
                                       final Context context) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
         return super.newApplication(cl, TestApp.class.getName(), context);
     }
+
 }

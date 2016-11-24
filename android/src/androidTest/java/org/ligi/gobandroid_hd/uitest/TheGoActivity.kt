@@ -10,14 +10,14 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.R
-import org.ligi.gobandroid_hd.base.EnvironmentPreparingTestRule
 import org.ligi.gobandroid_hd.ui.GoActivity
+import org.ligi.trulesk.TruleskActivityRule
 
 @RunWith(AndroidJUnit4::class)
 class TheGoActivity {
 
     @get:Rule
-    val rule = EnvironmentPreparingTestRule(GoActivity::class.java)
+    val rule = TruleskActivityRule(GoActivity::class.java)
 
     @Test
     fun testThatGoBoardIsThere() {

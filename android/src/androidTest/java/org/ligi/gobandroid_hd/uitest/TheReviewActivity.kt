@@ -17,17 +17,17 @@ import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.TestApp
 import org.ligi.gobandroid_hd.base.AssetReader
-import org.ligi.gobandroid_hd.base.EnvironmentPreparingTestRule
 import org.ligi.gobandroid_hd.base.GobandroidTestBaseUtil
 import org.ligi.gobandroid_hd.model.GameProvider
 import org.ligi.gobandroid_hd.ui.review.GameReviewActivity
+import org.ligi.trulesk.TruleskActivityRule
 import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 class TheReviewActivity {
 
     @get:Rule
-    val rule = EnvironmentPreparingTestRule(GameReviewActivity::class.java, false)
+    val rule = TruleskActivityRule(GameReviewActivity::class.java, false)
 
     @Inject
     lateinit var gameProvider: GameProvider

@@ -15,17 +15,17 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.TestApp
-import org.ligi.gobandroid_hd.base.EnvironmentPreparingTestRule
-import org.ligi.gobandroid_hd.base.TestRobot
 import org.ligi.gobandroid_hd.model.GameProvider
 import org.ligi.gobandroid_hd.ui.review.GameReviewActivity
+import org.ligi.trulesk.TruleskActivityRule
+import org.ligi.trulesk.invokeMenu
 import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 class TheGameInfoDialog {
 
     @get:Rule
-    val rule = EnvironmentPreparingTestRule(GameReviewActivity::class.java, false)
+    val rule = TruleskActivityRule(GameReviewActivity::class.java, false)
 
     @Inject
     lateinit var gameProvider: GameProvider
@@ -45,7 +45,7 @@ class TheGameInfoDialog {
     fun openDialog(): GameReviewActivity {
         val activity = rule.launchActivity(null)
 
-        TestRobot.invokeMenu(R.id.menu_game_info, R.string.game_info)
+        invokeMenu(R.id.menu_game_info, R.string.game_info)
 
         return activity
     }

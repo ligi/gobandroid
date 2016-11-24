@@ -14,15 +14,15 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.R
-import org.ligi.gobandroid_hd.base.EnvironmentPreparingTestRule
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity
+import org.ligi.trulesk.TruleskActivityRule
 import java.io.File
 
 @RunWith(AndroidJUnit4::class)
 class TheSGFFilesystemListActivity {
 
     @get:Rule
-    val rule = EnvironmentPreparingTestRule(SGFFileSystemListActivity::class.java, false)
+    val rule = TruleskActivityRule(SGFFileSystemListActivity::class.java, false)
 
     val path by lazy { File(InstrumentationRegistry.getTargetContext().cacheDir, "sgf_list_test") }
 

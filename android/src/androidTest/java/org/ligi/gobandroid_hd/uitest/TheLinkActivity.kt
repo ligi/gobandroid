@@ -9,14 +9,14 @@ import com.jraska.falcon.FalconSpoon
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.ligi.gobandroid_hd.base.EnvironmentPreparingTestRule
 import org.ligi.gobandroid_hd.ui.links.LinksActivity
+import org.ligi.trulesk.TruleskActivityRule
 
 @RunWith(AndroidJUnit4::class)
 class TheLinkActivity {
 
     @get:Rule
-    val rule = EnvironmentPreparingTestRule(LinksActivity::class.java)
+    val rule = TruleskActivityRule(LinksActivity::class.java)
 
     @Test
     fun testThatProjectPageEntryIsVisible() {
