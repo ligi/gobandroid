@@ -67,8 +67,8 @@ class ProfileActivityLogic : GoogleApiClient.OnConnectionFailedListener {
     }
 
     fun refresh() {
-        signInButton!!.visibility = if (mGoogleApiClient.isConnected || mGoogleApiClient.isConnecting) View.GONE else View.VISIBLE
-        for (button in buttonsToShowWhenSignedIn!!) {
+        signInButton.visibility = if (mGoogleApiClient.isConnected || mGoogleApiClient.isConnecting) View.GONE else View.VISIBLE
+        for (button in buttonsToShowWhenSignedIn) {
             button.visibility = if (mGoogleApiClient.isConnected) View.VISIBLE else View.GONE
         }
     }
