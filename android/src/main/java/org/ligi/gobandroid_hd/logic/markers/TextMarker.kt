@@ -36,4 +36,10 @@ class TextMarker(cell: Cell, val text: String) : GoMarker(cell) {
         c.drawText(text, x, y - (fm.ascent + fm.descent) / 2, paint)
     }
 
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + text.hashCode()
+        return result
+    }
+
 }

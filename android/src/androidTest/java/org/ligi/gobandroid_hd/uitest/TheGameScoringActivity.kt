@@ -14,11 +14,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.TestApp
-import org.ligi.gobandroid_hd.base.tapStone
 import org.ligi.gobandroid_hd.logic.Cell
 import org.ligi.gobandroid_hd.logic.CellImpl
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.model.GameProvider
+import org.ligi.gobandroid_hd.test_helper_functions.tapStone
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity
 import org.ligi.trulesk.TruleskActivityRule
 import javax.inject.Inject

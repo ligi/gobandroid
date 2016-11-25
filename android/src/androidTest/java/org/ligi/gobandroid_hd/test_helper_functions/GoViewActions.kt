@@ -1,4 +1,4 @@
-package org.ligi.gobandroid_hd.base
+package org.ligi.gobandroid_hd.test_helper_functions
 
 import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction

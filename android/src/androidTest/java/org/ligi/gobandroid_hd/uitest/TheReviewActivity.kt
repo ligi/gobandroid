@@ -16,9 +16,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.TestApp
-import org.ligi.gobandroid_hd.base.AssetReader
-import org.ligi.gobandroid_hd.base.GobandroidTestBaseUtil
 import org.ligi.gobandroid_hd.model.GameProvider
+import org.ligi.gobandroid_hd.test_helper_functions.readAssetHowItShouldBe
+import org.ligi.gobandroid_hd.test_helper_functions.readGame
 import org.ligi.gobandroid_hd.ui.review.GameReviewActivity
 import org.ligi.trulesk.TruleskActivityRule
 import javax.inject.Inject
@@ -35,7 +35,7 @@ class TheReviewActivity {
     @Before
     fun setUp() {
         TestApp.component().inject(this)
-        gameProvider.set(AssetReader.readGame("small_19x19"))
+        gameProvider.set(readGame("small_19x19"))
         rule.launchActivity(null)
     }
 
@@ -109,7 +109,7 @@ class TheReviewActivity {
     @Test
     fun TestIfWeCanUseBetterReadingOfAsset() {
         try {
-            GobandroidTestBaseUtil.readAssetHowItShouldBe(InstrumentationRegistry.getInstrumentation().context, "sgf/small_19x19.sgf")
+            readAssetHowItShouldBe(InstrumentationRegistry.getInstrumentation().context, "sgf/small_19x19.sgf")
 
             fail("if this works again ( minify stripped it away) - happy failing test!")
         } catch (e: Throwable) {

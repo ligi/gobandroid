@@ -12,8 +12,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.TestApp
-import org.ligi.gobandroid_hd.base.AssetReader.readGame
 import org.ligi.gobandroid_hd.model.GameProvider
+import org.ligi.gobandroid_hd.test_helper_functions.readGame
 import org.ligi.gobandroid_hd.ui.review.GoGamePlayerActivity
 import org.ligi.trulesk.TruleskActivityRule
 import javax.inject.Inject

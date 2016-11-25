@@ -15,10 +15,10 @@ import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.InteractionScope
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.TestApp
-import org.ligi.gobandroid_hd.base.placeStone
 import org.ligi.gobandroid_hd.logic.CellImpl
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.model.GameProvider
+import org.ligi.gobandroid_hd.test_helper_functions.placeStone
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity
 import org.ligi.trulesk.TruleskActivityRule
 import org.ligi.trulesk.invokeMenu

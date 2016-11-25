@@ -33,5 +33,6 @@ abstract class GoMarker(val cell: Cell) : Cell by cell {
     fun isInCell(cell: Cell) = this.cell == cell
 
     override fun equals(other: Any?) = other is GoMarker && other.cell == cell
+    override fun hashCode() = cell.x * cell.y
 
 }

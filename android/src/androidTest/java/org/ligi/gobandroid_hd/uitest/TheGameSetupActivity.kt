@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.R
-import org.ligi.gobandroid_hd.base.setProgress
+import org.ligi.gobandroid_hd.test_helper_functions.setProgress
 import org.ligi.gobandroid_hd.ui.game_setup.GoSetupActivity
 import org.ligi.trulesk.TruleskActivityRule
 
