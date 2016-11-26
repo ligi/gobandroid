@@ -42,4 +42,6 @@ class TextMarker(cell: Cell, val text: String) : GoMarker(cell) {
         return result
     }
 
+    override fun toString() = "${cell.x}x${cell.y} $text"
+
 }
