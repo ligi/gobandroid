@@ -73,9 +73,12 @@ class NavigationDrawerHandler(private val ctx: GobandroidFragmentActivity) {
                     ctx.startActivity(Intent(ctx, BaseProfileActivity::class.java))
                 },
 
-
                 R.id.menu_drawer_beta to {
                     ctx.startActivityFromURL("https://play.google.com/apps/testing/org.ligi.gobandroid_hd")
+                },
+
+                R.id.menu_drawer_translation to {
+                    ctx.startActivityFromURL("https://www.transifex.com/ligi/gobandroid")
                 }
         )
     }

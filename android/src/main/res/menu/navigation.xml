@@ -5,21 +5,21 @@
 
         <menu>
             <item
-                android:icon="@drawable/ic_image_crop_free"
-                android:title="@string/empty_board"
-                android:id="@+id/menu_drawer_empty" />
+                    android:icon="@drawable/ic_image_crop_free"
+                    android:title="@string/empty_board"
+                    android:id="@+id/menu_drawer_empty"/>
             <item
-                android:icon="@drawable/ic_action_extension"
-                android:title="@string/tsumego"
-                android:id="@+id/menu_drawer_tsumego" />
+                    android:icon="@drawable/ic_action_extension"
+                    android:title="@string/tsumego"
+                    android:id="@+id/menu_drawer_tsumego"/>
             <item
-                android:icon="@drawable/ic_maps_local_movies"
-                android:title="@string/review"
-                android:id="@+id/menu_drawer_review" />
+                    android:icon="@drawable/ic_maps_local_movies"
+                    android:title="@string/review"
+                    android:id="@+id/menu_drawer_review"/>
             <item
-                android:icon="@drawable/ic_toggle_star_border"
-                android:title="@string/bookmark"
-                android:id="@+id/menu_drawer_bookmark" />
+                    android:icon="@drawable/ic_toggle_star_border"
+                    android:title="@string/bookmark"
+                    android:id="@+id/menu_drawer_bookmark"/>
         </menu>
     </item>
 
@@ -28,22 +28,27 @@
 
         <menu>
             <item
-                android:icon="@drawable/ic_action_perm_identity"
-                android:title="@string/profile"
-                android:id="@+id/menu_drawer_profile" />
+                    android:icon="@drawable/ic_action_perm_identity"
+                    android:title="@string/profile"
+                    android:id="@+id/menu_drawer_profile"/>
             <item
-                android:icon="@drawable/ic_content_link"
-                android:title="@string/links"
-                android:id="@+id/menu_drawer_links" />
+                    android:icon="@drawable/ic_content_link"
+                    android:title="@string/links"
+                    android:id="@+id/menu_drawer_links"/>
             <item
-                android:icon="@drawable/ic_action_settings"
-                android:title="@string/settings"
-                android:id="@+id/menu_drawer_settings" />
+                    android:icon="@drawable/ic_action_settings"
+                    android:title="@string/settings"
+                    android:id="@+id/menu_drawer_settings"/>
 
             <item
-                android:icon="@drawable/ic_action_bug_report"
-                android:title="@string/betatest_opt_in_out"
-                android:id="@+id/menu_drawer_beta" />
+                    android:icon="@drawable/ic_action_bug_report"
+                    android:title="@string/betatest_opt_in_out"
+                    android:id="@+id/menu_drawer_beta"/>
+
+            <item
+                    android:icon="@drawable/ic_action_translate"
+                    android:title="@string/improve_translation"
+                    android:id="@+id/menu_drawer_translation"/>
 
         </menu>
     </item>
