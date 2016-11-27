@@ -119,7 +119,7 @@ dependencies {
     compile "com.android.support:design:$support_version"
     compile "com.android.support:preference-v7:$support_version"
 
-    compile 'com.github.ligi:KAXT:0.7'
+    compile 'com.github.ligi:KAXT:0.9'
     compile 'com.github.ligi:tracedroid:1.4'
     compile 'com.github.ligi:snackengage:0.9'
 
