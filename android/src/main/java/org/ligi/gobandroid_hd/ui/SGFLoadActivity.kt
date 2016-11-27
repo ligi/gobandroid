@@ -57,20 +57,19 @@ import java.net.URL
  */
 
 class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLoadProgressCallback {
-    private var sgf: String? = null
+
     private var act_progress: Int = 0
     private var max_progress: Int = 0
     private var act_message: String? = null
-    private var dlg: GameLoadingDialog? = null
 
+    private val dlg by lazy { GameLoadingDialog(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(LinearLayout(this))
 
-        dlg = GameLoadingDialog(this)
-        dlg!!.show()
+        dlg.show()
 
         App.getTracker().trackEvent("ui_action", "load_gf", intent.data.toString(), null)
         Thread(this).start()
@@ -97,30 +96,12 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
             return File(intent_uri.toString()).bufferedReader(FileEncodeDetector.detect(intent_uri.toString())).readText()
         }
 
-        val inputStream: InputStream
         val uri_str = intent_uri.toString()
-        if (uri_str.startsWith("content://")) {
-            inputStream = contentResolver.openInputStream(intent_uri)
-        } /* CloudGobanRemove else if (uri_str.startsWith(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE)) {
-            new GobandroidNotifications(this).cancelCloudMoveNotification();
-            cloudgoban_parent_key = uri_str.replace(GobandroidConfiguration.CLOUD_GOBAN_URL_BASE, "").split("#")[0];
-            Cloudgoban cg = getApp().getCloudgoban();
-            //cg.games().get(cloudgoban_parent_key).execute().
-            Log.i("downloading CloudGoban game");
-            return cg.games().get(cloudgoban_parent_key).execute().getSgf().getValue();
-        } */
-        else {
-            inputStream = BufferedInputStream(URL("" + intent_uri).openStream(), 4096)
-        }
 
-        var file_writer: FileOutputStream? = null
-
-        // if it comes from network
-        if (intent_uri.toString().startsWith("http")) { // https catched also
-            File(env.SGFBasePath, "downloads").mkdirs()
-            val f = File(env.SGFBasePath, "downloads/" + intent_uri.lastPathSegment)
-            f.createNewFile()
-            file_writer = FileOutputStream(f)
+        val inputStream = if (uri_str.startsWith("content://")) {
+            contentResolver.openInputStream(intent_uri)
+        } else {
+            BufferedInputStream(URL(intent_uri.toString()).openStream(), 4096)
         }
 
         val buf = ByteArrayOutputStream()
@@ -130,8 +111,15 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
         val stream_det = ByteArrayInputStream(buf.toByteArray())
         val charset = FileEncodeDetector.detect(stream_det)
 
-        stream_det.bufferedReader(charset).readText()
-        file_writer?.let { stream_det.buffered().copyTo(it) }
+        // if it comes from network
+        if (intent_uri.toString().startsWith("http")) { // https is included
+            File(env.SGFBasePath, "downloads").mkdirs()
+            val f = File(env.SGFBasePath, "downloads/" + intent_uri.lastPathSegment)
+            f.createNewFile()
+            val file_writer = FileOutputStream(f)
+            stream_det.buffered().copyTo(file_writer)
+            stream_det.reset()
+        }
 
         return stream_det.bufferedReader(charset).readText()
     }
@@ -148,18 +136,20 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
             return
         }
 
-        if (intent_uri!!.toString().endsWith(".golink")) {
+        if (intent_uri.toString().endsWith(".golink")) {
             startActivityFromClass(GoLinkLoadActivity::class.java)
             finish()
             return
         }
 
-        if (intent_uri!!.toString().startsWith("tsumego")) {
-            intent_uri = Uri.parse(intent_uri!!.toString().replaceFirst("tsumego".toRegex(), "file"))
+        if (intent_uri.toString().startsWith("tsumego")) {
+            intent_uri = Uri.parse(intent_uri.toString().replaceFirst("tsumego".toRegex(), "file"))
             interactionScope.mode = TSUMEGO
         }
 
         var game: GoGame? = null
+        var sgf: String? = null
+
         try {
             sgf = uri2string(intent_uri)
 
@@ -178,15 +168,14 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
 
         } catch (e: Exception) {
             Log.w("exception in load", e)
-            game = null
         }
 
         if (game == null) {
             runOnUiThread {
-            /** if the sgf loading fails - give the user the option to send this SGF to me - to perhaps fix the
-             * parser to load more SGF's - TODO remove this block if all SGF's load fine ;-)  */
+                /** if the sgf loading fails - give the user the option to send this SGF to me - to perhaps fix the
+                 * parser to load more SGF's - TODO remove this block if all SGF's load fine ;-)  */
 
-                dlg!!.hide()
+                dlg.hide()
                 AlertDialog.Builder(this@SGFLoadActivity)
                         .setTitle(R.string.results)
                         .setMessage(
@@ -241,7 +230,7 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
         EventBus.getDefault().post(GameChangedEvent)
 
         runOnUiThread {
-            dlg!!.hide()
+            dlg.hide()
             finish()
         }
         SwitchModeHelper.startGameWithCorrectMode(this)
@@ -254,14 +243,13 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
         act_message = resources.getString(R.string.move) + " " + progress_val
 
         runOnUiThread {
-            dlg!!.progress.progress = act_progress
-            dlg!!.progress.max = max_progress
-            dlg!!.message.text = act_message
+            dlg.progress.progress = act_progress
+            dlg.progress.max = max_progress
+            dlg.message.text = act_message
         }
     }
 
     companion object {
-
         val INTENT_EXTRA_MOVE_NUM = "move_num"
     }
 }
