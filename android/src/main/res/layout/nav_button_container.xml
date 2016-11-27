@@ -1,71 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-
-    android:padding="1dip"
-    android:animateLayoutChanges="true">
-
-    <android.support.v7.widget.AppCompatImageView
-        android:layout_weight="1"
-        android:focusable="true"
-        android:clickable="true"
-        app:srcCompat="@drawable/ic_navigation_first_page"
-        android:id="@+id/btn_first"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/nav_buttons_size"
-        android:background="@drawable/clickable_bg" />
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:padding="1dip"
+              android:animateLayoutChanges="true">
 
     <android.support.v7.widget.AppCompatImageView
-        android:layout_weight="1"
-        android:focusable="true"
-        android:clickable="true"
-        app:srcCompat="@drawable/ic_navigation_chevron_left"
-        android:id="@+id/btn_prev"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/nav_buttons_size"
-        android:background="@drawable/clickable_bg" />
+            app:srcCompat="@drawable/ic_navigation_first_page"
+            android:id="@+id/btn_first"
+            style="@style/navButton"/>
 
     <android.support.v7.widget.AppCompatImageView
-        android:layout_weight="1"
-        android:focusable="true"
-        android:clickable="true"
-        app:srcCompat="@drawable/ic_navigation_chevron_right"
-        android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/nav_buttons_size"
-        android:background="@drawable/clickable_bg" />
+            app:srcCompat="@drawable/ic_navigation_chevron_left"
+            android:id="@+id/btn_prev"
+            style="@style/navButton"/>
 
     <android.support.v7.widget.AppCompatImageView
-        android:layout_weight="1"
-        android:focusable="true"
-        android:clickable="true"
-        app:srcCompat="@drawable/ic_navigation_last_page"
-        android:id="@+id/btn_last"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/nav_buttons_size"
-        android:background="@drawable/clickable_bg" />
+            app:srcCompat="@drawable/ic_navigation_chevron_right"
+            android:id="@+id/btn_next"
+            style="@style/navButton"/>
 
     <android.support.v7.widget.AppCompatImageView
-        android:layout_weight="1"
-        android:focusable="true"
-        android:clickable="true"
-        app:srcCompat="@drawable/ic_navigation_previous_var"
-        android:id="@+id/btn_previous_var"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/nav_buttons_size"
-        android:background="@drawable/clickable_bg" />
+            app:srcCompat="@drawable/ic_navigation_last_page"
+            android:id="@+id/btn_last"
+            style="@style/navButton"/>
 
     <android.support.v7.widget.AppCompatImageView
-        android:layout_weight="1"
-        android:focusable="true"
-        android:clickable="true"
-        app:srcCompat="@drawable/ic_navigation_next_var"
-        android:id="@+id/btn_next_var"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/nav_buttons_size"
-        android:background="@drawable/clickable_bg" />
+            app:srcCompat="@drawable/ic_navigation_previous_var"
+            android:id="@+id/btn_previous_var"
+            style="@style/navButton"/>
+
+    <android.support.v7.widget.AppCompatImageView
+            app:srcCompat="@drawable/ic_navigation_next_var"
+            android:id="@+id/btn_next_var"
+            style="@style/navButton"/>
 
 </LinearLayout>
 

@@ -117,5 +117,13 @@
         <item name="android:padding">8dp</item>
     </style>
 
+    <style name="navButton">
+        <item name="android:layout_weight">1</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/nav_buttons_size</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
 
 </resources>

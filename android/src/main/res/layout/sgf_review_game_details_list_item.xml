@@ -3,16 +3,14 @@
                                     xmlns:android.support.v7.cardview="http://schemas.android.com/apk/res-auto"
                                     xmlns:tools="http://schemas.android.com/tools"
                                     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-                                    android:background="@drawable/clickable_bg"
+                                    android:layout_height="wrap_content"
+                                    android:background="?attr/selectableItemBackground"
                                     android:orientation="vertical"
                                     android.support.v7.cardview:cardBackgroundColor="@android:color/transparent"
                                     android.support.v7.cardview:cardMaxElevation="4dp"
                                     android.support.v7.cardview:cardUseCompatPadding="true">
 
-    <RelativeLayout
-            style="@style/item_relative_style"
-            android:background="@drawable/clickable_bg">
+    <RelativeLayout style="@style/item_relative_style">
 
         <ImageView
                 android:id="@+id/player_white_stone_img"

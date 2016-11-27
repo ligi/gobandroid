@@ -11,7 +11,7 @@
 
     <RelativeLayout
             style="@style/item_relative_style"
-            android:background="@drawable/clickable_bg">
+            android:background="?attr/selectableItemBackgroundBorderless">
 
         <ImageView
             android:id="@+id/solve_status_image"

@@ -9,14 +9,14 @@
     android.support.v7.cardview:cardUseCompatPadding="true">
 
     <TextView
-        android:id="@+id/pathName"
-        style="@style/item_relative_style"
-        android:drawableLeft="@drawable/ic_file_folder_wrapped"
-        android:drawableStart="@drawable/ic_file_folder_wrapped"
-        android:fontFamily="sans-serif"
-        android:textColor="?attr/colorControlNormal"
-        android:textSize="@dimen/text_size_large"
-        android:background="@drawable/clickable_bg"
-        tools:text="Folder Name" />
+            android:id="@+id/pathName"
+            style="@style/item_relative_style"
+            android:drawableLeft="@drawable/ic_file_folder_wrapped"
+            android:drawableStart="@drawable/ic_file_folder_wrapped"
+            android:fontFamily="sans-serif"
+            android:textColor="?attr/colorControlNormal"
+            android:textSize="@dimen/text_size_large"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            tools:text="Folder Name" />
 
 </android.support.v7.widget.CardView>
