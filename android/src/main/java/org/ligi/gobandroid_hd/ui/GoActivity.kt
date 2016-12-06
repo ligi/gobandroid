@@ -78,17 +78,6 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
 
     var sound_man: GoSoundManager? = null
 
-    /*
-    @BindView(R.id.go_board)
-    var board: GoBoardView? = null
-        internal set
-
-    @BindView(R.id.zoom_board)
-    internal var zoom_board: GoBoardView? = null
-
-    @BindView(R.id.game_extra_container)
-    internal var gameExtrasContainer: View? = null
-*/
     private var info_toast: Toast? = null
     private var actFragment: Fragment? = null
     private var last_processed_move_change_num = 0
