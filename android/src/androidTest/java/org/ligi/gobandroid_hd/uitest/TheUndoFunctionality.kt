@@ -113,6 +113,17 @@ class TheUndoFunctionality {
         assertThat(interactionScope.ask_variant_session).isTrue()
     }
 
+    @Test
+    fun testWeCanUndoPass() {
+
+        interactionScope.ask_variant_session = false
+
+        gameProvider.get().pass()
+
+        invokeMenu(R.id.menu_game_undo, R.string.undo)
+        onView(withId(R.id.go_board)).perform(placeStone(CellImpl(1, 1), gameProvider.get()))
+    }
+
     private fun doAndUndo() {
         onView(withId(R.id.go_board)).perform(placeStone(CellImpl(1, 1), gameProvider.get()))
 

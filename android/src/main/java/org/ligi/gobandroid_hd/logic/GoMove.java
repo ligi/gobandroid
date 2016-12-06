@@ -92,7 +92,7 @@ public class GoMove {
 
     public GoMove getNextMoveOnCell(Cell cell) {
         for (GoMove next_move_variation : next_move_variations) {
-            if (next_move_variation.getCell().equals(cell)) {
+            if (next_move_variation.getCell() != null && next_move_variation.getCell().equals(cell)) {
                 return next_move_variation;
             }
         }
