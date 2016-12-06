@@ -119,7 +119,7 @@ dependencies {
     compile "com.android.support:design:$support_version"
     compile "com.android.support:preference-v7:$support_version"
 
-    compile 'com.github.ligi:KAXT:0.9'
+    compile 'com.github.ligi:KAXT:0.12'
     compile 'com.github.ligi:tracedroid:1.4'
     compile 'com.github.ligi:snackengage:0.9'
 
@@ -144,7 +144,7 @@ dependencies {
 
     kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
 
-    androidTestCompile('com.github.ligi:trulesk:0.7') {
+    androidTestCompile('com.github.ligi:trulesk:0.9') {
         // http://stackoverflow.com/questions/30578243/why-would-adding-espresso-contrib-cause-an-inflateexception
         exclude group: 'javax.inject'
     }
