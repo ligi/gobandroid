@@ -117,9 +117,11 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
             val f = File(env.SGFBasePath, "downloads/" + intent_uri.lastPathSegment)
             f.createNewFile()
             val file_writer = FileOutputStream(f)
-            stream_det.buffered().copyTo(file_writer)
             stream_det.reset()
+            stream_det.buffered().copyTo(file_writer)
         }
+
+        stream_det.reset()
 
         return stream_det.bufferedReader(charset).readText()
     }
