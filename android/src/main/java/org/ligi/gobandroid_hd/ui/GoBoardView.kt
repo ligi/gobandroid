@@ -81,9 +81,9 @@ open class GoBoardView : View {
     private val opaque_paint = Paint()
     private val whiteLastStoneCirclePaint = Paint()
     private val blackLastStoneCirclePaint by lazy {
-        val res = Paint(whiteLastStoneCirclePaint)
-        res.color = Color.BLACK
-        res
+        Paint(whiteLastStoneCirclePaint).apply {
+            color = Color.BLACK
+        }
     }
 
     private var stone_size: Float = 0.toFloat()
@@ -97,9 +97,7 @@ open class GoBoardView : View {
 
     private var regenerate_stones_flag = true
 
-    protected open fun enforceSquare(): Boolean {
-        return true
-    }
+    protected open fun enforceSquare() = true
 
     var zoom = 1.0f
         /**

@@ -499,12 +499,8 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
     override fun onKey(v: View, keyCode: Int, event: KeyEvent): Boolean {
         if (event.action == KeyEvent.ACTION_DOWN) {
 
-            val ensuredTouchPosition: Cell
-            if (interactionScope.touchCell == null) {
-                ensuredTouchPosition = game.statelessGoBoard.getCell(0, 0)
-            } else {
-                ensuredTouchPosition = interactionScope.touchCell as Cell
-            }
+            val ensuredTouchPosition = interactionScope.touchCell ?: game.statelessGoBoard.getCell(0, 0)
+
             val boardCell = game.calcBoard.statelessGoBoard.getCell(ensuredTouchPosition)
 
             when (keyCode) {
@@ -534,9 +530,7 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
 
                 KeyEvent.KEYCODE_DPAD_CENTER -> doMoveWithUIFeedback(boardCell)
 
-                else ->
-
-                    return false
+                else -> return false
             }
 
             go_board.postInvalidate()
