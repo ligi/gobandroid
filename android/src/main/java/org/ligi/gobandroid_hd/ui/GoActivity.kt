@@ -325,15 +325,12 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
     }
 
     @StringRes
-    private fun getToastForResult(res: GoGame.MoveStatus): Int {
-        when (res) {
-            GoGame.MoveStatus.INVALID_IS_KO -> return R.string.invalid_move_ko
-
-            GoGame.MoveStatus.INVALID_CELL_NO_LIBERTIES -> return R.string.invalid_move_no_liberties
-        }
-
-        throw RuntimeException("Illegal game result " + res)
+    private fun getToastForResult(res: GoGame.MoveStatus) = when (res) {
+        GoGame.MoveStatus.INVALID_IS_KO -> R.string.invalid_move_ko
+        GoGame.MoveStatus.INVALID_CELL_NO_LIBERTIES -> R.string.invalid_move_no_liberties
+        else -> throw RuntimeException("Illegal game result " + res)
     }
+
 
     fun game2ui() {
         go_board.postInvalidate()
