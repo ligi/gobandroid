@@ -7,7 +7,6 @@ import org.ligi.gobandroid_hd.logic.markers.SquareMarker
 import org.ligi.gobandroid_hd.logic.markers.TextMarker
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker
 import org.ligi.gobandroid_hd.ui.editing.model.EditGameMode
-import org.ligi.gobandroid_hd.ui.editing.model.EditModeItem
 import org.ligi.gobandroid_hd.ui.editing.model.IconEditModeItem
 import org.ligi.gobandroid_hd.ui.editing.model.MarkerEditModeItem
 
@@ -15,7 +14,7 @@ class StatefulEditModeItems {
 
     val cell = CellImpl(0, 0)
 
-    val list: Array<EditModeItem> = arrayOf(
+    val list = arrayOf(
             IconEditModeItem(R.drawable.stone_black, EditGameMode.BLACK, R.string.black),
             IconEditModeItem(R.drawable.stone_white, EditGameMode.WHITE, R.string.white),
             MarkerEditModeItem(CircleMarker(cell), EditGameMode.CIRCLE, R.string.circle),
