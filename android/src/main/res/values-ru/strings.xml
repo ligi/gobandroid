@@ -103,6 +103,7 @@
   <string name="link_tab_credits">Разработчики</string>
   <string name="help">Справка</string>
   <string name="link_tab_sgf">SGF</string>
+  <string name="link_tab_videos">Видео</string>
   <string name="game_mode">Режим</string>
   <string name="switch_game_mode">Переключить режим</string>
   <string name="bookmark">Закладка</string>
@@ -151,7 +152,7 @@
   <string name="handicap">Фора</string>
   <string name="size">Размер</string>
   <string name="enter_your_comments_here">введите ваш комментарий</string>
-  <string name="keep_variant">Сохранить вариант?</string>
+  <string name="keep_variant_">Сохранить вариант?</string>
   <string name="keep_this_move_as_variation">Вы хотите сохранить вариант этого хода?</string>
   <string name="numbered_end">номер ветки</string>
   <string name="icon">иконка</string>
@@ -180,6 +181,7 @@
     </string>
   <string name="go_back">назад</string>
   <string name="download_status">Состояние загрузки</string>
+  <string name="downloading_tsumegos_please_wait">Поиск/загрузка новых Тсумего</string>
   <string name="no_new_tsumegos_found">Новых тсумего не найдено :-(</string>
   <string name="downloaded_n_tsumego">Загружено %d новых тсумего ;-)</string>
   <string name="overwrite_existing_file">Перезаписать существующий файл</string>
@@ -261,4 +263,10 @@
   <string name="new_game">Новая игра</string>
   <string name="no_definition_found">не найдено Определений</string>
   <string name="copy_sgf_dialog_message">Копирую SGF. Пожалуйста подождите...</string>
+  <string name="switch_variation_style">Показывать окно выбора вариантов</string>
+  <string name="variation_from_alert">в дополнение к кнопкам вверх/вниз</string>
+  <string name="select_variation_prompt">Больше не показывать это окно. Для выбора вариантов использовать кнопки вверх/вниз</string>
+  <string name="variations_found">Для этого хода есть варианты, какой мы выберем?</string>
+  <string name="day_or_night">День или Ночь</string>
+  <string name="day_or_night_summary">Использовать светлую или темную тему для доски</string>
 </resources>
