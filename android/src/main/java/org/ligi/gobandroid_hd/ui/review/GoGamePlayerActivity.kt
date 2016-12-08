@@ -58,7 +58,7 @@ class GoGamePlayerActivity : GoActivity() {
         super.onCreate(savedInstanceState)
 
         go_board.setOnKeyListener(this)
-        go_board.do_actpos_highlight=false
+        go_board.do_actpos_highlight = false
 
     }
 
@@ -103,7 +103,7 @@ class GoGamePlayerActivity : GoActivity() {
     override val gameExtraFragment = CommentAndNowPlayingFragment()
 
     public override fun doMoveWithUIFeedback(cell: Cell?)
-        // we want the user not to be able to edit in review mode
+            // we want the user not to be able to edit in review mode
             = VALID
 
     override fun onKey(v: View, keyCode: Int, event: KeyEvent): Boolean {
@@ -135,21 +135,13 @@ class GoGamePlayerActivity : GoActivity() {
 
     override fun isAsk4QuitEnabled() = false
 
-    fun countWords(sentence: String): Int {
-        var words = 0
-        if (!interactionScope.is_in_noif_mode)
-            (0..sentence.length - 1)
-                    .filter { sentence[it] == ' ' }
-                    .forEach { words++ }
-
-        return words
+    fun countWords(sentence: String) = if (interactionScope.is_in_noif_mode) {
+        0
+    } else {
+        sentence.split(" ").size
     }
 
-    private fun calcTime(): Int {
-        var res = PAUSE_BETWEEN_MOVES
-        if (game.actMove.hasComment()) res += PAUSE_BETWEN_MOVES_EXTRA_PER_WORD * countWords(game.actMove.comment)
-        return res
-    }
+    private fun calcTime() = PAUSE_BETWEEN_MOVES + PAUSE_BETWEN_MOVES_EXTRA_PER_WORD * countWords(game.actMove.comment)
 
     override fun onTouch(v: View, event: MotionEvent) = true // this is a player - we do not want interaction
 
