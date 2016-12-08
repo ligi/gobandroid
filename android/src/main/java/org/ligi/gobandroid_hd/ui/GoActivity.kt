@@ -275,11 +275,10 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
     /**
      * @return true if we want to ask the user - different in modes
      */
-    open val isAsk4QuitEnabled: Boolean
-        get() = true
+    open fun isAsk4QuitEnabled() = true
 
     open fun quit(toHome: Boolean) {
-        if (!isAsk4QuitEnabled) {
+        if (!isAsk4QuitEnabled()) {
             finish()
         } else {
             AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)

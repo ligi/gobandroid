@@ -2,7 +2,6 @@ package org.ligi.gobandroid_hd.ui.tsumego
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
@@ -21,14 +20,12 @@ import java.util.*
 
 class TsumegoActivity : GoActivity() {
 
-    private var finishing_move: GoMove? = null
-    //private var myTsumegoExtrasFragment: TsumegoGameExtrasFragment? = null
     private var on_path_moves: MutableList<GoMove>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        this.setTitle(R.string.tsumego)
+        setTitle(R.string.tsumego)
     }
 
     private val finishingMove by lazy { getCorrectMove(game.findFirstMove()) }
@@ -126,7 +123,7 @@ class TsumegoActivity : GoActivity() {
         }
     }
 
-    override val gameExtraFragment: Fragment by lazy {
+    override val gameExtraFragment: TsumegoGameExtrasFragment by lazy {
         TsumegoGameExtrasFragment()
     }
 
@@ -137,8 +134,6 @@ class TsumegoActivity : GoActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        finishing_move = null
 
         if (game == null) { // there was no game - fallback to main menu
             App.getTracker().trackException("tsumego start getGame() returned null in onCreate", false)
@@ -181,8 +176,8 @@ class TsumegoActivity : GoActivity() {
         }
         last_move = game.actMove
 
-        (gameExtraFragment as TsumegoGameExtrasFragment).setOffPathVisibility(!isOnPath)
-        (gameExtraFragment as TsumegoGameExtrasFragment).setCorrectVisibility(isCorrectMove(game.actMove))
+        gameExtraFragment.setOffPathVisibility(!isOnPath)
+        gameExtraFragment.setCorrectVisibility(isCorrectMove(game.actMove))
 
         if (isCorrectMove(game.actMove)) {
             val meta = SGFMetaData(game.metaData.fileName)
@@ -194,7 +189,6 @@ class TsumegoActivity : GoActivity() {
         this.runOnUiThread { supportInvalidateOptionsMenu() }
     }
 
-    override val isAsk4QuitEnabled: Boolean
-        get() = false
+    override fun isAsk4QuitEnabled() = false
 
 }

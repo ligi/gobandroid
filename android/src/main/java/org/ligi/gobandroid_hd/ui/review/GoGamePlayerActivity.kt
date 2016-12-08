@@ -4,20 +4,17 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
-import android.support.v4.app.Fragment
 import android.view.*
 import kotlinx.android.synthetic.main.game.*
 import org.ligi.gobandroid_hd.InteractionScope
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.logic.Cell
-import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus
 import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus.VALID
 import org.ligi.gobandroid_hd.ui.GoActivity
 import org.ligi.gobandroid_hd.ui.GobanDroidTVActivity
 import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert
 import org.ligi.gobandroid_hd.ui.fragments.CommentAndNowPlayingFragment
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper
-import org.ligi.tracedroid.logging.Log
 
 class GoGamePlayerActivity : GoActivity() {
 
@@ -25,42 +22,32 @@ class GoGamePlayerActivity : GoActivity() {
     private val PAUSE_BETWEEN_MOVES = 2300
     private val PAUSE_BETWEN_MOVES_EXTRA_PER_WORD = 200
 
-
     private var autoplay_active = true
-
 
     inner class AutoPlayRunnable : Runnable {
 
-        // private GoGame game;
-
         override fun run() {
-            // game=;
-            Log.i("gobandroid", "automove start" + game.actMove.nextMoveVariations.size)
             while (autoplay_active && game.actMove.hasNextMove()) {
-                Log.i("gobandroid", "automove move" + game.actMove.hasNextMove())
 
                 runOnUiThread {
                     val next_mve = game.actMove.getnextMove(0)
                     game.jump(next_mve)
                 }
-                Log.i("gobandroid", "automove move" + game.actMove.hasNextMove())
                 sleepWithProgress(calcTime())
 
             }
-            Log.i("gobandroid", "automove finish " + autoplay_active)
             SystemClock.sleep(PAUSE_FOR_LAST_MOVE.toLong())
-            Log.i("gobandroid", "automove asleep")
 
             if (!interactionScope.is_in_noif_mode) {
                 val next_intent = Intent(this@GoGamePlayerActivity, GobanDroidTVActivity::class.java)
 
                 if (autoplay_active) {
-                    this@GoGamePlayerActivity.startActivity(next_intent)
-                    this@GoGamePlayerActivity.finish()
+                    startActivity(next_intent)
+                    finish()
                 }
             } else {
-                this@GoGamePlayerActivity.setResult(Activity.RESULT_OK)
-                this@GoGamePlayerActivity.finish()
+                setResult(Activity.RESULT_OK)
+                finish()
             }
         }
 
@@ -113,13 +100,11 @@ class GoGamePlayerActivity : GoActivity() {
         super.onStop()
     }
 
-    override val gameExtraFragment: Fragment
-        get() = CommentAndNowPlayingFragment()
+    override val gameExtraFragment = CommentAndNowPlayingFragment()
 
-    public override fun doMoveWithUIFeedback(cell: Cell?): MoveStatus {
+    public override fun doMoveWithUIFeedback(cell: Cell?)
         // we want the user not to be able to edit in review mode
-        return VALID
-    }
+            = VALID
 
     override fun onKey(v: View, keyCode: Int, event: KeyEvent): Boolean {
 
@@ -148,13 +133,14 @@ class GoGamePlayerActivity : GoActivity() {
         return super.onKey(v, keyCode, event)
     }
 
-    override val isAsk4QuitEnabled = false
+    override fun isAsk4QuitEnabled() = false
 
     fun countWords(sentence: String): Int {
         var words = 0
         if (!interactionScope.is_in_noif_mode)
-            for (i in 0..sentence.length - 1)
-                if (sentence[i] == ' ') words++
+            (0..sentence.length - 1)
+                    .filter { sentence[it] == ' ' }
+                    .forEach { words++ }
 
         return words
     }
@@ -165,9 +151,6 @@ class GoGamePlayerActivity : GoActivity() {
         return res
     }
 
-    override fun onTouch(v: View, event: MotionEvent): Boolean {
-        return true // this is a player - we do not want interaction
-    }
-
+    override fun onTouch(v: View, event: MotionEvent) = true // this is a player - we do not want interaction
 
 }
