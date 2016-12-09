@@ -16,43 +16,15 @@ import org.ligi.gobandroid_hd.logic.GoMove
 import org.ligi.gobandroid_hd.ui.GoActivity
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData
 import org.ligi.tracedroid.logging.Log
-import java.util.*
 
 class TsumegoActivity : GoActivity() {
 
-    private var on_path_moves: MutableList<GoMove>? = null
+    lateinit var tsumegoController: TsumegoController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setTitle(R.string.tsumego)
     }
-
-    private val finishingMove by lazy { getCorrectMove(game.findFirstMove()) }
-
-    private fun isFinishingMoveKnown() = finishingMove != null
-
-    private fun recursive_add_on_path_moves(act: GoMove) {
-        if (on_path_moves == null) {
-            on_path_moves = ArrayList<GoMove>()
-        }
-        on_path_moves!!.add(act)
-        if (act.hasNextMove()) {
-            for (child in act.nextMoveVariations)
-                recursive_add_on_path_moves(child)
-        }
-    }
-
-    private // build a on path List to do a fast isOnPath() later
-    val isOnPath: Boolean
-        get() {
-            if (on_path_moves == null) {
-                Log.i("isOnPath null")
-                recursive_add_on_path_moves(game.findFirstMove())
-            }
-            Log.i("isOnPath null" + on_path_moves!!.contains(game.actMove) + " " + on_path_moves!!.size)
-            return on_path_moves!!.contains(game.actMove)
-        }
 
     public override fun doMoveWithUIFeedback(cell: Cell?): GoGame.MoveStatus {
 
@@ -69,16 +41,6 @@ class TsumegoActivity : GoActivity() {
         return res
     }
 
-    private fun getCorrectMove(act_mve: GoMove): GoMove? {
-        if (isCorrectMove(act_mve)) {
-            return act_mve
-        }
-
-        return act_mve.nextMoveVariations
-                .map { getCorrectMove(it) }
-                .firstOrNull { it != null }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         if (game == null) { // there was no game - fallback to main menu
@@ -89,7 +51,7 @@ class TsumegoActivity : GoActivity() {
         }
 
         this.menuInflater.inflate(R.menu.ingame_tsumego, menu)
-        menu.findItem(R.id.menu_game_hint).isVisible = isFinishingMoveKnown() && isOnPath
+        menu.findItem(R.id.menu_game_hint).isVisible = tsumegoController.isFinishingMoveKnown() && tsumegoController.isOnPath()
         menu.findItem(R.id.menu_game_undo).isVisible = !game.actMove.isFirstMove
         return super.onCreateOptionsMenu(menu)
     }
@@ -98,9 +60,10 @@ class TsumegoActivity : GoActivity() {
         if (!super.onOptionsItemSelected(item)) {
             when (item.itemId) {
 
-                R.id.menu_game_hint ->
-
-                    TsumegoHintAlert.show(this, finishingMove)
+                R.id.menu_game_hint -> {
+                    Log.i("FinishingMoveDebug " + tsumegoController.finishingMove)
+                    TsumegoHintAlert.show(this, tsumegoController.finishingMove)
+                }
             }
         }
 
@@ -115,21 +78,16 @@ class TsumegoActivity : GoActivity() {
         go_board.move_stone_mode = false
         // we do not want to keep user-variations in tsumego mode- but we want
         // to keep tsumego variation
-        game.undo(isOnPath)
+        game.undo(tsumegoController.isOnPath())
 
         // remove the counter-move if any
         if (!game.isBlackToMove) {
-            game.undo(isOnPath)
+            game.undo(tsumegoController.isOnPath())
         }
     }
 
     override val gameExtraFragment: TsumegoGameExtrasFragment by lazy {
         TsumegoGameExtrasFragment()
-    }
-
-    private fun isCorrectMove(move: GoMove): Boolean {
-        return move.comment.trim { it <= ' ' }.toUpperCase().startsWith("CORRECT") || // gogameguru style
-                move.comment.toUpperCase().contains("RIGHT")
     }
 
     override fun onResume() {
@@ -142,10 +100,10 @@ class TsumegoActivity : GoActivity() {
             return
         }
 
-        recursive_add_on_path_moves(game.findFirstMove())
+        tsumegoController = TsumegoController(game)
 
         // try to find the correct solution
-        if (!isFinishingMoveKnown()) {
+        if (!tsumegoController.isFinishingMoveKnown()) {
             AlertDialog.Builder(this).setMessage(R.string.tsumego_sgf_no_solution)
                     .setNegativeButton(R.string.ok, null)
                     .setPositiveButton(R.string.go_back, { dialogInterface: DialogInterface, i: Int ->
@@ -176,10 +134,10 @@ class TsumegoActivity : GoActivity() {
         }
         last_move = game.actMove
 
-        gameExtraFragment.setOffPathVisibility(!isOnPath)
-        gameExtraFragment.setCorrectVisibility(isCorrectMove(game.actMove))
+        gameExtraFragment.setOffPathVisibility(!tsumegoController.isOnPath())
+        gameExtraFragment.setCorrectVisibility(tsumegoController.isCorrectMove(game.actMove))
 
-        if (isCorrectMove(game.actMove)) {
+        if (tsumegoController.isCorrectMove(game.actMove)) {
             val meta = SGFMetaData(game.metaData.fileName)
             meta.isSolved = true
             meta.persist()
