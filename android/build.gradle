@@ -144,7 +144,7 @@ dependencies {
 
     kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
 
-    androidTestCompile('com.github.ligi:trulesk:0.10') {
+    androidTestCompile('com.github.ligi:trulesk:0.11') {
         // http://stackoverflow.com/questions/30578243/why-would-adding-espresso-contrib-cause-an-inflateexception
         exclude group: 'javax.inject'
     }
