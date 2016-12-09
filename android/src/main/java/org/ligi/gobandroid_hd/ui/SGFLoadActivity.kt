@@ -234,9 +234,8 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
         runOnUiThread {
             dlg.hide()
             finish()
+            SwitchModeHelper.startGameWithCorrectMode(this)
         }
-        SwitchModeHelper.startGameWithCorrectMode(this)
-
     }
 
     override fun progress(act: Int, max: Int, progress_val: Int) {
