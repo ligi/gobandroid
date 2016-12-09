@@ -1,7 +1,6 @@
 package org.ligi.gobandroid_hd.ui.tsumego
 
 import android.content.DialogInterface
-import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
@@ -20,11 +19,6 @@ import org.ligi.tracedroid.logging.Log
 class TsumegoActivity : GoActivity() {
 
     lateinit var tsumegoController: TsumegoController
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setTitle(R.string.tsumego)
-    }
 
     public override fun doMoveWithUIFeedback(cell: Cell?): GoGame.MoveStatus {
 
@@ -50,24 +44,19 @@ class TsumegoActivity : GoActivity() {
             return super.onCreateOptionsMenu(menu)
         }
 
-        this.menuInflater.inflate(R.menu.ingame_tsumego, menu)
+        menuInflater.inflate(R.menu.ingame_tsumego, menu)
         menu.findItem(R.id.menu_game_hint).isVisible = tsumegoController.isFinishingMoveKnown() && tsumegoController.isOnPath()
         menu.findItem(R.id.menu_game_undo).isVisible = !game.actMove.isFirstMove
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (!super.onOptionsItemSelected(item)) {
-            when (item.itemId) {
-
-                R.id.menu_game_hint -> {
-                    Log.i("FinishingMoveDebug " + tsumegoController.finishingMove)
-                    TsumegoHintAlert.show(this, tsumegoController.finishingMove)
-                }
-            }
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.menu_game_hint -> {
+            Log.i("FinishingMoveDebug " + tsumegoController.finishingMove)
+            TsumegoHintAlert.show(this, tsumegoController.finishingMove)
+            true
         }
-
-        return false
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun initializeStoneMove() {
@@ -96,9 +85,10 @@ class TsumegoActivity : GoActivity() {
         if (game == null) { // there was no game - fallback to main menu
             App.getTracker().trackException("tsumego start getGame() returned null in onCreate", false)
             finish()
-            // startActivity(new Intent(this, gobandroid.class));
             return
         }
+
+        setTitle(R.string.tsumego)
 
         tsumegoController = TsumegoController(game)
 
@@ -118,7 +108,6 @@ class TsumegoActivity : GoActivity() {
         go_board.setZoomPOI(TsumegoHelper.calcPOI(game, true))
         onGameChanged(GameChangedEvent)
 
-        //NaDraChg getSlidingMenu().showContent();
     }
 
     private var last_move: GoMove? = null
@@ -144,7 +133,7 @@ class TsumegoActivity : GoActivity() {
 
             bus.post(TsumegoSolved(game))
         }
-        this.runOnUiThread { supportInvalidateOptionsMenu() }
+        runOnUiThread { supportInvalidateOptionsMenu() }
     }
 
     override fun isAsk4QuitEnabled() = false
