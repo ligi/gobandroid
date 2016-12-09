@@ -37,7 +37,7 @@ class TheTsumegoActivity {
     @Test
     fun testThatNoTsumegoWarningComes() {
         gameProvider.set(readGame("default_marker"))
-        val activity = rule.launchActivity(null)
+        val activity = rule.launchActivity()
 
         onView(withText(R.string.tsumego_sgf_no_solution)).check(matches(isDisplayed()))
         Spoon.screenshot(activity, "tsumego_fail")
@@ -55,7 +55,7 @@ class TheTsumegoActivity {
     @Test
     fun testThatOffPathMessageComes() {
         gameProvider.set(readGame("tsumego"))
-        val activity = rule.launchActivity(null)
+        val activity = rule.launchActivity()
 
         onView(withId(R.id.go_board)).perform(placeStone(CellImpl(1, 1), gameProvider.get()))
 
@@ -66,7 +66,7 @@ class TheTsumegoActivity {
     @Test
     fun testThatCommentComesAndGoes() {
         gameProvider.set(readGame("tsumego"))
-        val activity = rule.launchActivity(null)
+        val activity = rule.launchActivity()
         onView(withId(R.id.game_comment)).check(matches(withText("testing comment")))
 
         Spoon.screenshot(activity, "tsumego_comment")
