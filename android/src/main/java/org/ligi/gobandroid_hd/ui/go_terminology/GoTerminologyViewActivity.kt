@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.text.util.Linkify
 import android.widget.TextView
 import org.ligi.gobandroid_hd.R
-import java.util.*
 import java.util.regex.Pattern
 
 class GoTerminologyViewActivity : AppCompatActivity() {
@@ -30,15 +29,13 @@ class GoTerminologyViewActivity : AppCompatActivity() {
 
     companion object {
 
-        val Term2resMap: HashMap<String, Int> = object : HashMap<String, Int>() {
-            init {
-                put("joseki", R.string.goterm_joseki)
-                put("miai", R.string.goterm_miai)
-                put("shape", R.string.goterm_shape)
-                put("tesuji", R.string.goterm_tesuji)
+        val Term2resMap = mapOf(
+                "joseki" to R.string.goterm_joseki,
+                "miai" to R.string.goterm_miai,
+                "shape" to R.string.goterm_shape,
+                "tesuji" to R.string.goterm_tesuji
                 // TODO add missing mojo
-            }
-        }
+        )
 
         fun linkifyTextView(myTextView: TextView) {
 
