@@ -129,7 +129,9 @@ dependencies {
     compile "com.android.support:support-annotations:$support_version"
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'com.chibatching:kotpref:1.5.0'
+
+    compile("com.chibatching.kotpref:kotpref:2.0.0")
+    compile("com.chibatching.kotpref:initializer:2.0.0")
 
     withAnalyticsCompile "com.google.android.gms:play-services-analytics:$play_version"
 
