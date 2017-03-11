@@ -256,7 +256,7 @@ open class GoBoardView : View {
 
 
         board.statelessGoBoard.withAllCells { cell ->
-            if (game.isCellHoschi(cell)) {
+            if (game.isCellHoshi(cell)) {
                 drawBoardCircle(canvas, cell.x.toFloat(), cell.y.toFloat(), 2f + stone_size / 10, hoshi_paint)
             }
 
