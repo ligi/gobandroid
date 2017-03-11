@@ -369,10 +369,8 @@ open class GoBoardView : View {
     }
 
     fun setSize(w: Int, h: Int) {
-
-        stone_size = zoom * (Math.min(w, h) / game.visualBoard.size.toFloat())
+        stone_size = zoom * (Math.min(w, h) / game.size.toFloat())
         legendPaint.textSize = stone_size / 4
-
         regenerate_stones_flag = true
     }
 

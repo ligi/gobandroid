@@ -62,7 +62,7 @@ public class GTPHelper {
                 x--; // the I is missing ^^ - took me some time to find that out
             }
 
-            final Cell boardCell = game.getCalcBoard().getStatelessGoBoard().getCell(x, y);
+            final Cell boardCell = game.getCalcBoard().getCell(x, y);
 
             game.do_move(boardCell); // internal here?
             return true;
