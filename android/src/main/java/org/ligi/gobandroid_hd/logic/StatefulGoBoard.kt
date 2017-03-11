@@ -26,20 +26,7 @@ import org.ligi.gobandroid_hd.logic.GoDefinitions.getStringFromCellStatus
 class StatefulGoBoard(val statelessGoBoard: StatelessGoBoard) : GoBoard by statelessGoBoard {
 
     @CellStatus
-    val board: Array<ByteArray>
-
-    init {
-        board = Array(size) { ByteArray(size) }
-    }
-
-    /**
-     * @param cell the cell to test
-     * *
-     * @return if the cell is on board
-     */
-    fun isCellOnBoard(cell: Cell): Boolean {
-        return cell.x < size && cell.y < size && cell.x >= 0 && cell.y >= 0
-    }
+    val board: Array<ByteArray> = Array(size) { ByteArray(size) }
 
     constructor(statelessGoBoard: StatelessGoBoard, predefined_board: Array<ByteArray>) : this(statelessGoBoard) {
         applyBoardState(predefined_board)
