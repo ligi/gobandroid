@@ -447,12 +447,9 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     /**
      * return if it's a handicap stone so that the view can visualize it
      *
-     *
      * TODO: check rename ( general marker )
-     *
      */
-    fun isCellHoschi(cell: Cell) = all_handicap_positions[cell.x][cell.y]
-
+    fun isCellHoshi(cell: Cell) = all_handicap_positions[cell.x][cell.y]
 
     // need at least 2 moves to finish a game ( 2 passes )
     // w passes
