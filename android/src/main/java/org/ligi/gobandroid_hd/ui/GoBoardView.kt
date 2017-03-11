@@ -233,7 +233,7 @@ open class GoBoardView : View {
                     stone_size / 2.0f,
                     stone_size / 2.0f + x * stone_size,
                     stone_size * (board.size - 1).toFloat() + stone_size / 2.0f,
-                    if (actpos_highlight_condition && interactionScope.touchCell!!.x == x.toInt()) gridPaint_h else gridPaint)
+                    if (actpos_highlight_condition && interactionScope.touchCell!!.x == x) gridPaint_h else gridPaint)
 
         // draw the horizontal lines and the legend
         for (x in 0..board.size - 1) {
@@ -241,7 +241,7 @@ open class GoBoardView : View {
                     stone_size / 2.0f + x * stone_size,
                     stone_size * (board.size - 1).toFloat() + stone_size / 2.0f,
                     stone_size / 2.0f + x * stone_size,
-                    if (actpos_highlight_condition && interactionScope.touchCell!!.y == x.toInt()) gridPaint_h else gridPaint)
+                    if (actpos_highlight_condition && interactionScope.touchCell!!.y == x) gridPaint_h else gridPaint)
             if (do_legend) {
                 canvas.drawText("" + (game.size - x), legendPaint.textSize / 2f + stone_size * (game.size - 1).toFloat() + stone_size / 2.0f,
                         stone_size / 2.0f + x * stone_size + gridPaint.textSize / 3,
@@ -315,9 +315,9 @@ open class GoBoardView : View {
 
     private fun getLegendLetter(x: Int): String {
         if (x > 7 && legend_sgf_mode) {
-            return ('A' + (x + 1)).toChar().toString()
+            return ('A' + (x + 1)).toString()
         }
-        return ('A' + x).toChar().toString()
+        return ('A' + x).toString()
     }
 
     private fun getStonePaintForCell(cell: Cell): Paint {

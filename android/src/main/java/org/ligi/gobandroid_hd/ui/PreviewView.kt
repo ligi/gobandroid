@@ -77,8 +77,8 @@ class PreviewView : View {
 
         if (white_stone_bitmap == null) {
             stone_size = width.toFloat() / (span!!.x + 1)
-            white_stone_bitmap = getScaledRes(stone_size.toFloat(), R.drawable.stone_white)
-            black_stone_bitmap = getScaledRes(stone_size.toFloat(), R.drawable.stone_black)
+            white_stone_bitmap = getScaledRes(stone_size, R.drawable.stone_white)
+            black_stone_bitmap = getScaledRes(stone_size, R.drawable.stone_black)
         }
 
         for (x in 0..span!!.y) {

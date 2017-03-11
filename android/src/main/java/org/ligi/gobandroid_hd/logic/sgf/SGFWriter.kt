@@ -119,7 +119,7 @@ object SGFWriter {
     }
 
     private fun coords2SGFFragment(cell: Cell): String {
-        return "[" + ('a' + cell.x).toChar() + ('a' + cell.y).toChar() + "]"
+        return "[" + ('a' + cell.x) + ('a' + cell.y) + "]"
     }
 
     fun saveSGF(game: GoGame, file: File): Boolean {
