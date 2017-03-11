@@ -14,7 +14,7 @@ public class TheLooseConnectedCellGatherer {
     @Test
     public void testEmptyBoardIsOneGroup() {
 
-        final StatelessBoardCell cell = board.getStatelessGoBoard().getCell(0, 0);
+        final StatelessBoardCell cell = board.getCell(0, 0);
 
         final LooseConnectedCellGatherer boardCells = new LooseConnectedCellGatherer(board, cell);
 

@@ -136,11 +136,10 @@ class GameScoringActivity : GoActivity() {
 
 
     fun do_score_touch(cell: Cell) {
-
         val calcBoard = game.calcBoard
         if (!calcBoard.isCellFree(cell) || calcBoard.isCellDead(cell)) {
             // if there is a stone/cellGathering
-            val cellGathering = MustBeConnectedCellGatherer(calcBoard, calcBoard.statelessGoBoard.getCell(cell)).gatheredCells
+            val cellGathering = MustBeConnectedCellGatherer(calcBoard, calcBoard.getCell(cell)).gatheredCells
             for (groupCell in cellGathering) {
                 calcBoard.toggleCellDead(groupCell)
             }
