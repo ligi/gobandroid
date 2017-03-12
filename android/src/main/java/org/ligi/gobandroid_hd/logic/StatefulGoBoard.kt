@@ -17,6 +17,7 @@ package org.ligi.gobandroid_hd.logic
 import org.ligi.gobandroid_hd.logic.GoDefinitions.CellStatus
 
 import org.ligi.gobandroid_hd.logic.GoDefinitions.getStringFromCellStatus
+import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer
 
 /**
  * Class to represent a Go Board
@@ -116,6 +117,11 @@ class StatefulGoBoard(val statelessGoBoard: StatelessGoBoard) : GoBoard by state
         return Math.max(board[one.x][one.y].toInt(), 0) == Math.max(board[other.x][other.y].toInt(), 0)
     }
 
+    @CellStatus
+    fun getCellKind(cell: Cell): Byte {
+        return board[cell.x][cell.y];
+    }
+
     fun setCell(cell: Cell, @CellStatus newStatus: Byte) {
         board[cell.x][cell.y] = newStatus
     }
@@ -127,5 +133,15 @@ class StatefulGoBoard(val statelessGoBoard: StatelessGoBoard) : GoBoard by state
 
     fun isCellDead(cell: Cell): Boolean {
         return board[cell.x][cell.y] < 0
+    }
+
+    fun doesCellGroupHaveLiberty(cell: Cell): Boolean {
+        return getCellGroup(cell).any {
+            it.neighbors.any { neighbor -> isCellFree(neighbor) }
+        }
+    }
+
+    fun getCellGroup(cell: Cell): Set<StatelessBoardCell> {
+        return MustBeConnectedCellGatherer(this, getCell(cell)).gatheredCells
     }
 }

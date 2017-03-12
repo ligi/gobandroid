@@ -22,48 +22,38 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
+import java.util.Set;
+
+import static org.ligi.gobandroid_hd.logic.GoDefinitions.*;
 
 /**
  * Class to represent a Go Move
  */
-
 public class GoMove {
-
     private Cell cell;
-
     private String comment = "";
-
     private boolean did_captures = false;
-
     private GoMove parent = null;
 
-    private List<GoMove> next_move_variations;
-
-    private List<GoMarker> markers;
-
     private int move_pos = 0;
-
+    private byte player = PLAYER_BLACK;
     private boolean black_to_move = true;
-
     private boolean isPassMove = false;
     private boolean isFirstMove = false;
 
+    private final List<GoMove> next_move_variations = new ArrayList<>();
+    private final List<GoMarker> markers = new ArrayList<>();
+    private final List<Cell> captures = new ArrayList<>();
+
     public GoMove(GoMove parent) {
         this.parent = parent;
-
-        next_move_variations = new ArrayList<>();
-        markers = new ArrayList<>();
-
         if (parent != null) {
             black_to_move = !parent.isBlackToMove();
-
-            parent.addNextMove(this);
-
-            GoMove act_move = this;
-
-            while ((act_move != null) && (!act_move.isFirstMove())) {
+            player = parent.player == PLAYER_BLACK ? PLAYER_WHITE : PLAYER_BLACK;
+            GoMove move = this;
+            while (move != null && !move.isFirstMove()) {
                 move_pos++;
-                act_move = act_move.parent;
+                move = move.parent;
             }
         }
     }
@@ -72,6 +62,51 @@ public class GoMove {
         this(parent);
 
         this.cell = cell;
+    }
+
+    public GoMove(Cell cell, GoMove parent, StatefulGoBoard board) {
+        this(cell, parent);
+        //temporary
+        byte previousStatus = board.getCellKind(cell);
+        board.setCell(cell, getCellStatus());
+        buildCaptures(board);
+        board.setCell(cell, previousStatus);
+    }
+
+    public boolean isIllegalKo() {
+        return parent != null &&
+            captures.size() == 1 &&
+            parent.captures.size() == 1 &&
+            cell.isEqual(parent.captures.get(0));
+    }
+
+    public boolean isIllegalNoLiberties(StatefulGoBoard board) {
+        if(!captures.isEmpty()) {
+            return false;
+        }
+
+        //temporary
+        byte previousStatus = board.getCellKind(cell);
+        board.setCell(cell, getCellStatus());
+        boolean hasLiberties = board.doesCellGroupHaveLiberty(cell);
+        board.setCell(cell, previousStatus);
+        return !hasLiberties;
+    }
+
+    public void apply(StatefulGoBoard board) {
+        parent.addNextMove(this);
+        //board.setCell(cell, getCellStatus());
+        //board.setCellGroup(captures, STONE_NONE);
+    }
+
+    public void buildCaptures(StatefulGoBoard board) {
+        StatelessBoardCell boardCell = board.getCell(cell);
+        for(Cell neighbor : boardCell.getNeighbors()) {
+            if(!captures.contains(neighbor) && !board.isCellFree(neighbor) && !board.areCellsEqual(neighbor, cell) && !board.doesCellGroupHaveLiberty(neighbor)) {
+                Set<StatelessBoardCell> cellGroup = board.getCellGroup(neighbor);
+                captures.addAll(cellGroup);
+            }
+        }
     }
 
     public void setDidCaptures(boolean did) {
@@ -254,4 +289,8 @@ public class GoMove {
         return cell;
     }
 
+    @CellStatus
+    private byte getCellStatus() {
+        return player == PLAYER_BLACK ? STONE_BLACK : STONE_WHITE;
+    }
 }
