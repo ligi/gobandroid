@@ -19,8 +19,7 @@
 
 package org.ligi.gobandroid_hd.logic.sgf;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.text.TextUtils;
 import org.ligi.gobandroid_hd.logic.CellImpl;
 import org.ligi.gobandroid_hd.logic.GoDefinitions;
 import org.ligi.gobandroid_hd.logic.GoGame;
@@ -31,6 +30,11 @@ import org.ligi.gobandroid_hd.logic.markers.SquareMarker;
 import org.ligi.gobandroid_hd.logic.markers.TextMarker;
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker;
 import org.ligi.tracedroid.logging.Log;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.ligi.gobandroid_hd.logic.GoGame.MoveStatus.VALID;
 
 /**
@@ -108,37 +112,39 @@ public class SGFReader {
 
         for (int p = 0; ((p < sgf.length()) && (!break_pulled)); p++) {
             char act_char = sgf.charAt(p);
-            if (!consuming_param)
-                // consuming command
+            if (!consuming_param) {
+                // non-consuming command
                 switch (act_char) {
                     case '\r':
                     case '\n':
                     case ';':
                     case '\t':
                     case ' ':
-                        if (!act_cmd.isEmpty())
+                        if (!act_cmd.isEmpty()) {
                             last_cmd = act_cmd;
+                        }
                         act_cmd = "";
                         break;
 
                     case '[':
-                        if (act_cmd.isEmpty())
+                        if (act_cmd.isEmpty()) {
                             act_cmd = last_cmd;
+                        }
 
                         // for files without SZ - e.g. ggg-intermediate-11.sgf
-                        if ((game == null) && (act_cmd.equals("AB") || act_cmd.equals("AW") || act_cmd.equals("TR") || act_cmd.equals("SQ") || act_cmd.equals("LB") || act_cmd.equals("MA"))) {
+                        List<Marker> toCheck = Arrays.asList(Marker.ADD_BLACK, Marker.ADD_WHITE, Marker.MARK_X, Marker.MARK_TRIANGLE, Marker.MARK_SQUARE, Marker.MARK_POINT);
+                        if(game == null && toCheck.contains(Marker.withCode(act_cmd))) {
                             size = 19;
-                            game = new GoGame((byte) 19);
+                            game = new GoGame(size);
                         }
                         consuming_param = true;
                         act_param = "";
                         break;
 
                     case '(':
-
                         if (!consuming_param) {
                             // for files without SZ
-                            if ((opener == 1) && (game == null)) {
+                            if (opener == 1 && game == null) {
                                 size = 19;
                                 game = new GoGame((byte) 19);
                                 variationList.add(getOrCreateGame().getActMove());
@@ -147,13 +153,10 @@ public class SGFReader {
                             opener++;
 
                             // push the move we where to the stack to return
-                            // here
-                            // after the variation
-
+                            // here after the variation
                             // if (param_level!=0) break;
                             Log.i("   !!! opening variation" + game);
                             if (game != null) {
-
                                 variationList.add(getOrCreateGame().getActMove());
                             }
 
@@ -162,31 +165,28 @@ public class SGFReader {
                         }
                         break;
                     case ')':
-                        if (variationList.size() > 0) {
+                        if (variationList.isEmpty()) {
+                            Log.w("variation vector underrun!!");
+                        } else {
                             GoMove lastMove = variationList.get(variationList.size() - 1);
                             getOrCreateGame().jump(lastMove);
                             variationList.remove(lastMove);
                             Log.w("popping variaton from stack");
-                        } else {
-                            Log.w("variation vector underrun!!");
                         }
 
                         last_cmd = "";
                         act_cmd = "";
-
                         break;
-
                     default:
-                        act_cmd += sgf.charAt(p);
+                        act_cmd += Character.toString(sgf.charAt(p));
                 }
-            else {
+            } else {
                 // consuming param
                 switch (act_char) {
-                    case ']': // closing command parameter -> can process
-                        // command
-                        // now
-                        if ((game != null) && (callback != null))
+                    case ']': // closing command parameter -> can process command now
+                        if ((game != null) && (callback != null)) {
                             callback.progress(p, sgf.length(), getOrCreateGame().getActMove().getMovePos());
+                        }
                         if (!escape) {
                             consuming_param = false;
                             processCommand();
@@ -194,16 +194,15 @@ public class SGFReader {
                         break;
                     case '\\':
                         if (escape) {
-                            act_param += (char) act_char;
+                            act_param += Character.toString(act_char);
                             escape = false;
                         } else
                             escape = true;
                         break;
                     default:
-                        act_param += (char) act_char;
+                        act_param += Character.toString(act_char);
                         escape = false;
                         break;
-
                 }
 
             }
@@ -222,176 +221,145 @@ public class SGFReader {
     }
 
     private void processCommand() {
-        int param_x = 0, param_y = 0;
+        int paramX = 0;
+        int paramY = 0;
 
         // if we have a minimum of 2 chars in param - could be coords - so parse
         if (act_param.length() >= 2) {
-            param_x = act_param.charAt(((transform & 4) == 0) ? 0 : 1) - 'a';
-            param_y = act_param.charAt(((transform & 4) == 0) ? 1 : 0) - 'a';
+            paramX = act_param.charAt(((transform & 4) == 0) ? 0 : 1) - 'a';
+            paramY = act_param.charAt(((transform & 4) == 0) ? 1 : 0) - 'a';
 
             if (size>-1) {
                 if ((transform & 1) > 0)
-                    param_y = (byte) (size - 1 - param_y);
+                    paramY = (byte) (size - 1 - paramY);
 
                 if ((transform & 2) > 0)
-                    param_x = (byte) (size - 1 - param_x);
+                    paramX = (byte) (size - 1 - paramX);
             }
         }
 
-        final CellImpl cell = new CellImpl(param_x, param_y);
+        final CellImpl cell = new CellImpl(paramX, paramY);
         // if command is empty -> use the last command
-        if (act_cmd.isEmpty())
+        if (act_cmd.isEmpty()) {
             act_cmd = last_cmd;
+        }
 
         // marker section - info here http://www.red-bean.com/sgf/properties.html
-        switch (act_cmd) {
-            case "LB":
-                final String[] inner = act_param.split(":");
-                final String txt = (inner.length > 1) ? inner[1] : "X";
+        Marker marker = Marker.withCode(act_cmd);
+        switch(marker) {
+            case BLACK_MOVE:
+            case WHITE_MOVE:
+                // if still no game open -> open one with default size
+                if (game == null) {
+                    game = new GoGame((byte) 19);
+                    variationList.add(game.getActMove());
+                }
 
+                if ((breakon & BREAKON_FIRSTMOVE) > 0) {
+                    break_pulled = true;
+                }
+
+                if (act_param.length() == 0) {
+                    game.pass();
+                } else {
+                    final GoGame.MoveStatus moveStatus = game.do_move(cell);
+                    if (moveStatus != VALID) {
+                        Log.w("There was a problem in this game");
+                    }
+                }
+                break;
+            case ADD_BLACK:
+            case ADD_WHITE:
+                Log.i("Adding stone " + act_cmd + " " + act_param + " at " + cell);
+                if (game == null) { // create a game if it is not there yet
+                    game = new GoGame((byte) 19);
+                    variationList.add(game.getActMove());
+                }
+
+                if (act_param.length() != 0) {
+                    if (game.isBlackToMove() && marker == Marker.ADD_BLACK) {
+                        predef_count_b++;
+                        game.getHandicapBoard().setCell(cell, GoDefinitions.STONE_BLACK);
+                    } else if (game.isBlackToMove() && marker == Marker.ADD_WHITE) {
+                        predef_count_w++;
+                        game.getHandicapBoard().setCell(cell, GoDefinitions.STONE_WHITE);
+                    }
+                } else {
+                    Log.w("AB / AW command without param");
+                }
+                break;
+            case WRITE_TEXT:
+                final String[] inner = act_param.split(":");
+                final String txt = inner.length > 1 ? inner[1] : "X";
                 getOrCreateGame().getActMove().addMarker(new TextMarker(cell, txt));
                 break;
-
-            // mark with x
-            case "Mark":
-            case "MA":
+            case MARK_X:
                 getOrCreateGame().getActMove().addMarker(new TextMarker(cell, "X"));
                 break;
-
-            case "SL":
-                getOrCreateGame().getActMove().addMarker(new TextMarker(cell, "+"));
-                break;
-
-            // mark with triangle
-            case "TR":
+            case MARK_TRIANGLE:
                 getOrCreateGame().getActMove().addMarker(new TriangleMarker(cell));
                 break;
-
-            case "SQ": // mark with square
+            case MARK_SQUARE:
                 getOrCreateGame().getActMove().addMarker(new SquareMarker(cell));
                 break;
-
-            case "CR": // mark with circle
+            case MARK_CIRCLE:
                 getOrCreateGame().getActMove().addMarker(new CircleMarker(cell));
                 break;
-
-            case "GN": // Game Name
+            case MARK_POINT:
+                getOrCreateGame().getActMove().addMarker(new TextMarker(cell, "+"));
+                break;
+            case GAME_NAME:
                 metadata.setName(act_param);
                 break;
-
-            case "DI": // Difficulty ( found in goproblems.com files )
+            case DIFFICULTY:
                 metadata.setDifficulty(act_param);
                 break;
-
-            case "PW": // Player White Name
+            case WHITE_NAME:
                 metadata.setWhiteName(act_param);
                 break;
-
-            case "PB": // Player Black Name
+            case BLACK_NAME:
                 metadata.setBlackName(act_param);
                 break;
-
-            case "WR": // Player White Rank
+            case WHITE_RANK:
                 metadata.setWhiteRank(act_param);
                 break;
-
-            case "BR": // Player Black Rank
+            case BLACK_RANK:
                 metadata.setBlackRank(act_param);
                 break;
-
-            case "RE": // Game Result
+            case GAME_RESULT:
                 metadata.setResult(act_param);
                 break;
-
-            case "DT":
+            case DATE:
                 metadata.setDate(act_param);
                 break;
-
-            case "SO": // Source
+            case SOURCE:
                 metadata.setSource(act_param);
                 break;
-
-            case "KM":
+            case KOMI:
                 try {
                     getOrCreateGame().setKomi(Float.parseFloat(act_param));
                 } catch (NumberFormatException ignored) {
                     // catch a bad komi-statement like seen KM[] - would now even catch KM[crashme]
                 }
                 break;
-        }
-
-        // size command
-        if (act_cmd.equals("SiZe") || act_cmd.equals("SZ")) {
-            act_param = act_param.replaceAll("[^0-9]", "");
-            if (!act_param.isEmpty()) { // got a SGF with SZ[]
-                size = Byte.parseByte(act_param);
-                if ((game == null) || (game.getBoardSize() != size)) {
-                    game = new GoGame(size);
-                    variationList.add(game.getActMove());
+            case SIZE:
+                act_param = act_param.replaceAll("[^0-9]", "");
+                if (!act_param.isEmpty()) { // got a SGF with SZ[]
+                    size = Byte.parseByte(act_param);
+                    if (game == null || game.getBoardSize() != size) {
+                        game = new GoGame(size);
+                        variationList.add(game.getActMove());
+                    }
                 }
-            }
-        }
-
-        // comment command
-
-        if (act_cmd.equals("Comment") || act_cmd.equals("C")) {
-            if (game != null)
-                game.getActMove().setComment(act_param);
-        }
-
-        // move command
-        if (act_cmd.equals("Black") || act_cmd.equals("B") || act_cmd.equals("W") || act_cmd.equals("White")) {
-
-            // if still no game open -> open one with default size
-            if (game == null) {
-                game = new GoGame((byte) 19);
-                variationList.add(game.getActMove());
-            }
-
-            if ((breakon & BREAKON_FIRSTMOVE) > 0)
-                break_pulled = true;
-
-            if (act_param.length() == 0)
-                game.pass();
-            else {
-                /* if (game.getActMove().isFirstMove()) {
-                    game.getActMove().setIsBlackToMove();
-                } */
-                final GoGame.MoveStatus moveStatus = game.do_move(cell);
-                if (moveStatus != VALID) {
-                    Log.w("There was a problem in this game");
+                break;
+            case COMMENT:
+                if (game != null) {
+                    game.getActMove().setComment(act_param);
                 }
-            }
-
-
-        }
-
-        // TODO support AddEmpty
-        // handle predefined stones ( mostly handicap stones ) in SGF
-        if (act_cmd.equals("AddBlack") || act_cmd.equals("AB") || act_cmd.equals("AW") || act_cmd.equals("AddWhite")) {
-
-            Log.i("Adding stone " + act_cmd + " " + act_param + " at " + cell);
-
-            if (game == null) { // create a game if it is
-                // not
-                // there yet
-                game = new GoGame((byte) 19);
-                variationList.add(game.getActMove());
-            }
-
-            if (act_param.length() != 0) {
-                if (game.isBlackToMove() && (act_cmd.equals("AB") || act_cmd.equals("AddBlack"))) {
-                    predef_count_b++;
-                    game.getHandicapBoard().setCell(cell, GoDefinitions.STONE_BLACK);
-                }
-
-                if (game.isBlackToMove() && (act_cmd.equals("AW") || act_cmd.equals("AddWhite"))) {
-                    predef_count_w++;
-                    game.getHandicapBoard().setCell(cell, GoDefinitions.STONE_WHITE);
-                }
-            } else
-                Log.w("AB / AW command without param");
-
+                break;
+            case UNKNOWN:
+            case NONE:
+                break;
         }
 
         last_cmd = act_cmd;
@@ -405,5 +373,55 @@ public class SGFReader {
             game = new GoGame(size);
         }
         return game;
+    }
+
+    enum Marker {
+        //Move Properties
+        BLACK_MOVE("B", "Black"), WHITE_MOVE("W", "White"),
+
+        //Setup Properties
+        ADD_BLACK("AB", "AddBlack"), ADD_WHITE("AW", "AddWhite"),
+
+        //Node Annotation Properties
+        COMMENT("C", "Comment"),
+
+        //Markup Properties
+        WRITE_TEXT("LB"), MARK_X("MA", "Mark"), MARK_TRIANGLE("TR"),
+        MARK_SQUARE("SQ"), MARK_CIRCLE("CR"), MARK_POINT("SL"),
+
+        //Game Info Properties
+        GAME_NAME("GN"), DIFFICULTY("DI"), WHITE_NAME("PW"),
+        BLACK_NAME("PB"), WHITE_RANK("WR"), BLACK_RANK("BR"),
+        GAME_RESULT("RE"), DATE("DT"), SOURCE("SO"),
+        KOMI("KM"), SIZE("SZ", "SiZe"),
+
+        UNKNOWN("?"),
+        NONE("");
+
+        private String code;
+        private String alternateCode;
+
+        Marker(String code) {
+            this.code = code;
+        }
+
+        Marker(String code, String alternateCode) {
+            this.code = code;
+            this.alternateCode = alternateCode;
+        }
+
+        public static Marker withCode(String code) {
+            if(TextUtils.isEmpty(code)) {
+                return NONE;
+            }
+
+            for(Marker marker : values()) {
+                if(code.equals(marker.code) || code.equals(marker.alternateCode)) {
+                    return marker;
+                }
+            }
+
+            return UNKNOWN;
+        }
     }
 }
