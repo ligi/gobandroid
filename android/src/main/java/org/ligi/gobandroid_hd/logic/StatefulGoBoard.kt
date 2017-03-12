@@ -40,10 +40,9 @@ class StatefulGoBoard(val statelessGoBoard: StatelessGoBoard) : GoBoard by state
         }
     }
 
-
     /**
      * clone this board
-
+     *
      * @return a copy of this board
      */
     fun clone(): StatefulGoBoard {
@@ -54,7 +53,6 @@ class StatefulGoBoard(val statelessGoBoard: StatelessGoBoard) : GoBoard by state
      * check if two boards are equal
      */
     fun equals(other: StatefulGoBoard?): Boolean {
-
         // cannot be the same if board is null
         if (other == null) return false
 
@@ -126,8 +124,11 @@ class StatefulGoBoard(val statelessGoBoard: StatelessGoBoard) : GoBoard by state
         board[cell.x][cell.y] = newStatus
     }
 
-    fun toggleCellDead(cell: Cell) {
+    fun setCellGroup(cells: Collection<Cell>, @CellStatus newStatus: Byte) {
+        cells.forEach { setCell(it, newStatus) }
+    }
 
+    fun toggleCellDead(cell: Cell) {
         board[cell.x][cell.y] = board[cell.x][cell.y].times(-1).toByte()
     }
 
