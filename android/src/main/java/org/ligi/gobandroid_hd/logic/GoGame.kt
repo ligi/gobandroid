@@ -146,10 +146,8 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
 
     fun reset() {
         pre_last_board = null
-
         capturesBlack = 0
         capturesWhite = 0
-
     }
 
     fun pass() {
@@ -199,33 +197,25 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
             return MoveStatus.VALID
         }
 
-        val bak_board = calcBoard.clone()
-
-        calcBoard.setCell(cell, if (isBlackToMove) STONE_BLACK else STONE_WHITE)
-
-        remove_dead(cell)
-
-        // move is a KO -> Invalid
-        if (calcBoard.equals(pre_last_board)) {
+        val nextMove: GoMove = GoMove(cell, actMove, calcBoard)
+        if (nextMove.isIllegalKo) {
             Log.i("illegal move -> KO")
-            calcBoard.applyBoardState(bak_board.board)
             return MoveStatus.INVALID_IS_KO
-        }
-
-        if (!hasGroupLiberties(cell)) {
+        } else if (nextMove.isIllegalNoLiberties(calcBoard)) {
             Log.i("illegal move -> NO LIBERTIES")
-            calcBoard.applyBoardState(bak_board.board)
             return MoveStatus.INVALID_CELL_NO_LIBERTIES
         }
 
         // if we reach this point it is a valid move
         // -> do things needed to do after a valid move
+        calcBoard.setCell(cell, if (isBlackToMove) STONE_BLACK else STONE_WHITE)
+        remove_dead(cell)
 
         pre_last_board = last_board!!.clone()
         last_board = calcBoard.clone()
         copyVisualBoard()
-
-        actMove = GoMove(cell, actMove)
+        actMove = nextMove
+        actMove.apply(calcBoard)
 
         if (!calcBoard.isCellKind(cell, STONE_WHITE))
             capturesBlack += local_captures
@@ -332,32 +322,26 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     }
 
     fun jump(move: GoMove?) {
-
         if (move == null) {
             Log.w("move is null #shouldnothappen")
             return
         }
 
         clear_calc_board()
-
         val replay_moves = ArrayList<GoMove>()
-
         replay_moves.add(move)
         var tmp_move: GoMove
         while (true) {
-
             tmp_move = replay_moves.last()
-
             if (tmp_move.isFirstMove || tmp_move.parent == null) break
-
             replay_moves.add(tmp_move.parent)
         }
 
         reset()
         actMove = findFirstMove()
-
-        for (step in replay_moves.indices.reversed())
+        for (step in replay_moves.indices.reversed()) {
             do_internal_move(replay_moves[step])
+        }
 
         copyVisualBoard()
         EventBus.getDefault().post(GameChangedEvent)
@@ -367,20 +351,15 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         visualBoard = calcBoard.clone()
     }
 
-    fun cell_has_neighbour(board: StatefulGoBoard, boardCell: StatelessBoardCell, kind: Byte): Boolean {
-        return boardCell.neighbors.any { board.isCellKind(it, kind) }
-    }
-
     /**
      * check if a group has liberties via flood fill
 
      * @return boolean weather the group has liberty
      */
     fun hasGroupLiberties(cell: Cell): Boolean {
-
         val startCell = statelessGoBoard.getCell(cell)
-        return MustBeConnectedCellGatherer(calcBoard, startCell).gatheredCells.any() {
-            cell_has_neighbour(calcBoard, it, STONE_NONE)
+        return MustBeConnectedCellGatherer(calcBoard, startCell).gatheredCells.any {
+            it.neighbors.any { neighbor -> calcBoard.isCellFree(neighbor) }
         }
     }
 
@@ -419,14 +398,14 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
      */
     private fun remove_dead(where: Cell) {
         local_captures = 0
-
         val boardWhere = statelessGoBoard.getCell(where)
-        for (boardCell in boardWhere.neighbors)
-            if (!hasGroupLiberties(boardCell) && !calcBoard.areCellsEqual(boardWhere, boardCell)) remove_group(boardCell)
+        boardWhere.neighbors
+                .filter { !calcBoard.areCellsEqual(boardWhere, it) }
+                .filter { !hasGroupLiberties(it) }
+                .forEach { remove_group(it) }
     }
 
     private fun remove_group(where: Cell) {
-
         if (calcBoard.isCellFree(where))
         // this is no "group" in the sense we want
             return
