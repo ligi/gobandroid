@@ -48,13 +48,9 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     val calcBoard: StatefulGoBoard = StatefulGoBoard(statelessGoBoard)// the board calculations are done in
 
     lateinit var visualBoard: StatefulGoBoard
-
-    private var last_board: StatefulGoBoard? = null // board to detect KO situations
-    private var pre_last_board: StatefulGoBoard? = null // board to detect KO situations
     lateinit var handicapBoard: StatefulGoBoard
 
     private var groups: Array<IntArray>? = null // array to build groups
-
 
     var capturesWhite: Int = 0
     var capturesBlack: Int = 0
@@ -121,17 +117,14 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         }
 
         apply_handicap()
-
         copyVisualBoard()
-        last_board = calcBoard.clone()
-        pre_last_board = null
 
         // create the array for group calculations
         groups = Array(size) { IntArray(size) }
 
         actMove = GoMove(null)
         actMove.setIsFirstMove()
-        actMove.setIsBlackToMove(handicap != 0) // if handicap==null set black
+        actMove.setIsBlackToMove(handicap == 0) // if handicap==null set black
         // to move next - else set
         // white to move next
         reset()
@@ -145,7 +138,6 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     }
 
     fun reset() {
-        pre_last_board = null
         capturesBlack = 0
         capturesWhite = 0
     }
@@ -175,23 +167,18 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         if (!calcBoard.isCellOnBoard(cell)) {
             // return with INVALID if x and y are inside the board
             return MoveStatus.INVALID_NOT_ON_BOARD
-        }
-
-        if (isFinished) {
+        } else if (isFinished) {
             // game is finished - players are marking dead stones
             return MoveStatus.VALID
-        }
-
-        if (!calcBoard.isCellFree(cell)) {
+        } else if (!calcBoard.isCellFree(cell)) {
             // can never place a stone where another is
             return MoveStatus.INVALID_CELL_NOT_FREE
         }
 
         // check if the "new" move is in the variations - to not have 2 equal
         // move as different variations
-        val matching_move = actMove.getNextMoveOnCell(cell)
-
         // if there is one matching use this move and we are done
+        val matching_move = actMove.getNextMoveOnCell(cell)
         if (matching_move != null) {
             jump(matching_move)
             return MoveStatus.VALID
@@ -208,14 +195,10 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
 
         // if we reach this point it is a valid move
         // -> do things needed to do after a valid move
-        calcBoard.setCell(cell, if (isBlackToMove) STONE_BLACK else STONE_WHITE)
-        remove_dead(cell)
-
-        pre_last_board = last_board!!.clone()
-        last_board = calcBoard.clone()
-        copyVisualBoard()
         actMove = nextMove
         actMove.apply(calcBoard)
+        local_captures = actMove.captures.size
+        copyVisualBoard()
 
         if (!calcBoard.isCellKind(cell, STONE_WHITE))
             capturesBlack += local_captures
@@ -247,7 +230,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         actMove = move
         if (move.isFirstMove || move.isPassMove) return
 
-        calcBoard.setCell(move.cell, if (move.isBlackToMove) STONE_BLACK else STONE_WHITE)
+        calcBoard.setCell(move.cell, move.cellStatus)
 
         if (move.didCaptures()) {
             buildGroups()
@@ -436,9 +419,8 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     /**
      * @return who has to do the next move
      */
-    // the opposite of who was to move before
     val isBlackToMove: Boolean
-        get() = !actMove.isBlackToMove
+        get() = actMove.isBlackToMove
 
     // TODO cache?
     val boardSize: Int

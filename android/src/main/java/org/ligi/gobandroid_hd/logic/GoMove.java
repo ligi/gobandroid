@@ -95,8 +95,8 @@ public class GoMove {
 
     public void apply(StatefulGoBoard board) {
         parent.addNextMove(this);
-        //board.setCell(cell, getCellStatus());
-        //board.setCellGroup(captures, STONE_NONE);
+        board.setCell(cell, getCellStatus());
+        board.setCellGroup(captures, STONE_NONE);
     }
 
     public void buildCaptures(StatefulGoBoard board) {
@@ -135,7 +135,7 @@ public class GoMove {
     }
 
     public boolean hasNextMoveVariations() {
-        return (next_move_variations.size() > 1);
+        return next_move_variations.size() > 1;
     }
 
     public int getNextMoveVariationCount() {
@@ -143,7 +143,9 @@ public class GoMove {
     }
 
     public void addNextMove(GoMove move) {
-        next_move_variations.add(move);
+        if (!next_move_variations.contains(move)) {
+            next_move_variations.add(move);
+        }
     }
 
     public void setToPassMove() {
@@ -225,6 +227,10 @@ public class GoMove {
         markers.add(marker);
     }
 
+    public List<Cell> getCaptures() {
+        return captures;
+    }
+
     @Nullable
     public GoMarker getGoMarker() {
         if (parent != null) {
@@ -251,6 +257,7 @@ public class GoMove {
 
     public void setIsBlackToMove(boolean black_to_move) {
         this.black_to_move = black_to_move;
+        player = black_to_move ? PLAYER_WHITE : PLAYER_BLACK;
     }
 
     public boolean isContentEqual(GoMove other) {
@@ -290,7 +297,7 @@ public class GoMove {
     }
 
     @CellStatus
-    private byte getCellStatus() {
+    public byte getCellStatus() {
         return player == PLAYER_BLACK ? STONE_BLACK : STONE_WHITE;
     }
 }

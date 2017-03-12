@@ -206,13 +206,9 @@ public class SGFReader {
             }
 
             if (game != null) {
-                if (game.getActMove().isFirstMove()) {
-                    game.apply_handicap();
-                    game.copyVisualBoard();
-                    if (predef_count_w == 0 && predef_count_b > 0) {
-                        game.getActMove().setIsBlackToMove(true); // probably handicap - so  make white
-                        // to  move - very  important for cloud game and handicap
-                    }
+                if(game.getActMove().isFirstMove() && predef_count_w == 0 && predef_count_b > 0) {
+                    game.getActMove().setIsBlackToMove(true); // probably handicap - so  make white
+                    // to  move - very  important for cloud game and handicap
                 }
                 game.setMetadata(metadata);
             }
@@ -359,12 +355,6 @@ public class SGFReader {
 
             if ((breakon & BREAKON_FIRSTMOVE) > 0)
                 break_pulled = true;
-
-            if (game.getActMove().isFirstMove()) {
-                game.apply_handicap();
-            }
-
-            game.getActMove().setIsBlackToMove(!(act_cmd.equals("Black") || act_cmd.equals("B")));
 
             if (act_param.length() == 0)
                 game.pass();
