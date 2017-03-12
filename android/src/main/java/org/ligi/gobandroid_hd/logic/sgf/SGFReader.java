@@ -87,7 +87,14 @@ public class SGFReader {
      * @return
      */
     public static GoGame sgf2game(String sgf, ISGFLoadProgressCallback callback, int breakon, int transform) {
-        return new SGFReader(sgf, callback, breakon, transform).getGame();
+        try {
+            return new SGFReader(sgf, callback, breakon, transform).getGame();
+        } catch (Exception e) { // some weird sgf - we want to catch to not FC
+            // and have the chance to send the sgf to analysis
+            e.printStackTrace();
+            Log.w("Problem parsing SGF " + e);
+            return null;
+        }
     }
 
     public interface ISGFLoadProgressCallback {
@@ -95,135 +102,123 @@ public class SGFReader {
     }
 
     private GoGame getGame() {
-        try {
-            byte opener = 0;
-            boolean escape = false;
-            boolean consuming_param = false;
+        byte opener = 0;
+        boolean escape = false;
+        boolean consuming_param = false;
 
-            for (int p = 0; ((p < sgf.length()) && (!break_pulled)); p++) {
-                char act_char = sgf.charAt(p);
-                if (!consuming_param)
-                    // consuming command
-                    switch (act_char) {
-                        case '\r':
-                        case '\n':
-                        case ';':
-                        case '\t':
-                        case ' ':
-                            if (!act_cmd.isEmpty())
-                                last_cmd = act_cmd;
-                            act_cmd = "";
-                            break;
+        for (int p = 0; ((p < sgf.length()) && (!break_pulled)); p++) {
+            char act_char = sgf.charAt(p);
+            if (!consuming_param)
+                // consuming command
+                switch (act_char) {
+                    case '\r':
+                    case '\n':
+                    case ';':
+                    case '\t':
+                    case ' ':
+                        if (!act_cmd.isEmpty())
+                            last_cmd = act_cmd;
+                        act_cmd = "";
+                        break;
 
-                        case '[':
-                            if (act_cmd.isEmpty())
-                                act_cmd = last_cmd;
+                    case '[':
+                        if (act_cmd.isEmpty())
+                            act_cmd = last_cmd;
 
-                            // for files without SZ - e.g. ggg-intermediate-11.sgf
-                            if ((game == null) && (act_cmd.equals("AB") || act_cmd.equals("AW") || act_cmd.equals("TR") || act_cmd.equals("SQ") || act_cmd.equals("LB") || act_cmd.equals("MA"))) {
+                        // for files without SZ - e.g. ggg-intermediate-11.sgf
+                        if ((game == null) && (act_cmd.equals("AB") || act_cmd.equals("AW") || act_cmd.equals("TR") || act_cmd.equals("SQ") || act_cmd.equals("LB") || act_cmd.equals("MA"))) {
+                            size = 19;
+                            game = new GoGame((byte) 19);
+                        }
+                        consuming_param = true;
+                        act_param = "";
+                        break;
+
+                    case '(':
+
+                        if (!consuming_param) {
+                            // for files without SZ
+                            if ((opener == 1) && (game == null)) {
                                 size = 19;
                                 game = new GoGame((byte) 19);
+                                variationList.add(getOrCreateGame().getActMove());
                             }
-                            consuming_param = true;
-                            act_param = "";
-                            break;
 
-                        case '(':
+                            opener++;
 
-                            if (!consuming_param) {
-                                // for files without SZ
-                                if ((opener == 1) && (game == null)) {
-                                    size = 19;
-                                    game = new GoGame((byte) 19);
-                                    variationList.add(getOrCreateGame().getActMove());
-                                }
+                            // push the move we where to the stack to return
+                            // here
+                            // after the variation
 
-                                opener++;
+                            // if (param_level!=0) break;
+                            Log.i("   !!! opening variation" + game);
+                            if (game != null) {
 
-                                // push the move we where to the stack to return
-                                // here
-                                // after the variation
-
-                                // if (param_level!=0) break;
-                                Log.i("   !!! opening variation" + game);
-                                if (game != null) {
-
-                                    variationList.add(getOrCreateGame().getActMove());
-                                }
-
-                                last_cmd = "";
-                                act_cmd = "";
-                            }
-                            break;
-                        case ')':
-                            if (variationList.size() > 0) {
-                                GoMove lastMove = variationList.get(variationList.size() - 1);
-                                getOrCreateGame().jump(lastMove);
-                                variationList.remove(lastMove);
-                                Log.w("popping variaton from stack");
-                            } else {
-                                Log.w("variation vector underrun!!");
+                                variationList.add(getOrCreateGame().getActMove());
                             }
 
                             last_cmd = "";
                             act_cmd = "";
+                        }
+                        break;
+                    case ')':
+                        if (variationList.size() > 0) {
+                            GoMove lastMove = variationList.get(variationList.size() - 1);
+                            getOrCreateGame().jump(lastMove);
+                            variationList.remove(lastMove);
+                            Log.w("popping variaton from stack");
+                        } else {
+                            Log.w("variation vector underrun!!");
+                        }
 
-                            break;
+                        last_cmd = "";
+                        act_cmd = "";
 
-                        default:
-                            act_cmd += sgf.charAt(p);
+                        break;
 
-                    }
-                else {
-
-                    // consuming param
-                    switch (act_char) {
-                        case ']': // closing command parameter -> can process
-                            // command
-                            // now
-                            if ((game != null) && (callback != null))
-                                callback.progress(p, sgf.length(), getOrCreateGame().getActMove().getMovePos());
-                            if (!escape) {
-                                consuming_param = false;
-                                processCommand();
-                            }
-                            break;
-                        case '\\':
-                            if (escape) {
-                                act_param += (char) act_char;
-                                escape = false;
-                            } else
-                                escape = true;
-                            break;
-                        default:
+                    default:
+                        act_cmd += sgf.charAt(p);
+                }
+            else {
+                // consuming param
+                switch (act_char) {
+                    case ']': // closing command parameter -> can process
+                        // command
+                        // now
+                        if ((game != null) && (callback != null))
+                            callback.progress(p, sgf.length(), getOrCreateGame().getActMove().getMovePos());
+                        if (!escape) {
+                            consuming_param = false;
+                            processCommand();
+                        }
+                        break;
+                    case '\\':
+                        if (escape) {
                             act_param += (char) act_char;
                             escape = false;
-                            break;
+                        } else
+                            escape = true;
+                        break;
+                    default:
+                        act_param += (char) act_char;
+                        escape = false;
+                        break;
 
-                    }
                 }
 
             }
-
-            if (game != null) {
-                if(game.getActMove().isFirstMove() && predef_count_w == 0 && predef_count_b > 0) {
-                    game.getActMove().setPlayer(GoDefinitions.PLAYER_BLACK); // probably handicap - so  make white
-                    // to  move - very  important for cloud game and handicap
-                }
-                game.setMetadata(metadata);
-            }
-
-            //if (game.getFirstMove())
-            return game;
-
-        } catch (Exception e) { // some weird sgf - we want to catch to not FC
-            // and have the chance to send the sgf to analysis
-            e.printStackTrace();
-            Log.w("Problem parsing SGF " + e);
         }
 
-        return null;
+        if (game != null) {
+            game.setMetadata(metadata);
+            if(game.getActMove().isFirstMove() && predef_count_w == 0 && predef_count_b > 0) {
+                game.getActMove().setPlayer(GoDefinitions.PLAYER_BLACK); // probably handicap - so  make white
+                // to  move - very  important for cloud game and handicap
+            }
+        }
 
+        //if (game.getFirstMove())
+        return game;
     }
 
     private void processCommand() {
