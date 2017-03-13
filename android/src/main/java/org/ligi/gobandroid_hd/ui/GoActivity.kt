@@ -46,6 +46,7 @@ import org.ligi.gobandroid_hd.events.OptionsItemClickedEvent
 import org.ligi.gobandroid_hd.logic.Cell
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus.INVALID_NOT_ON_BOARD
+import org.ligi.gobandroid_hd.logic.GoMove
 import org.ligi.gobandroid_hd.logic.sgf.SGFWriter
 import org.ligi.gobandroid_hd.print.GoGamePrintDocumentAdapter
 import org.ligi.gobandroid_hd.ui.GoSoundManager.Sound.*
@@ -445,9 +446,8 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
                     // TODO check if this is an illegal move ( e.g. in variants )
 
                     if (interactionScope.touchCell != null && game.visualBoard.isCellFree(interactionScope.touchCell!!)) {
-                        game.actMove.cell = interactionScope.touchCell
-                        game.actMove.setDidCaptures(true) // TODO check if we harm sth with that
-                        game.refreshBoards()
+                        game.undo(false)
+                        game.do_move(interactionScope.touchCell!!)
                     }
                     go_board.move_stone_mode = false // moving of stone done
                 } else if (game.actMove.isOnCell(interactionScope.touchCell)) {

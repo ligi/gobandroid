@@ -180,7 +180,8 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         // if there is one matching use this move and we are done
         val matching_move = actMove.getNextMoveOnCell(cell)
         if (matching_move != null) {
-            jump(matching_move)
+            redo(matching_move)
+            actMove.redo(calcBoard, matching_move)
             return MoveStatus.VALID
         }
 
@@ -197,16 +198,8 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         // -> do things needed to do after a valid move
         actMove = nextMove
         actMove.apply(calcBoard)
-        local_captures = actMove.captures.size
-        copyVisualBoard()
-
-        if (!calcBoard.isCellKind(cell, STONE_WHITE))
-            capturesBlack += local_captures
-        else
-            capturesWhite += local_captures
-
-        actMove.setDidCaptures(local_captures > 0)
-        EventBus.getDefault().post(GameChangedEvent)
+        applyCaptures()
+        refreshBoards()
 
         // if we reached this point this move must be valid
         return MoveStatus.VALID
@@ -221,45 +214,47 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
             return actMove.nextMoveVariationCount
         }
 
-    /**
-     * moving without checks useful e.g. for undo / recorded games where we can
-     * be sure that the move is valid and so be faster
-     */
-    fun do_internal_move(move: GoMove) {
-
-        actMove = move
-        if (move.isFirstMove || move.isPassMove) return
-
-        calcBoard.setCell(move.cell, move.cellStatus)
-
-        if (move.didCaptures()) {
-            buildGroups()
-            remove_dead(move.cell)
-
-            if (calcBoard.isCellKind(move.cell, STONE_BLACK))
-                capturesBlack += local_captures
-            else
-                capturesWhite += local_captures
-
-        }
-    }
-
     fun canUndo(): Boolean {
         return !actMove.isFirstMove// &&(!getGoMover().isMoversMove());
     }
 
     @JvmOverloads fun undo(keep_move: Boolean = true) {
-        val mLastMove = actMove
-        jump(mLastMove.parent)
-        if (!keep_move) mLastMove.destroy()
+        undoCaptures()
+        actMove = actMove.undo(calcBoard, keep_move)
+        refreshBoards()
     }
-
 
     fun redo(pos: Int) {
-        Log.i("redoing " + actMove.getnextMove(pos).toString())
-        jump(actMove.getnextMove(pos))
+        redo(actMove.getnextMove(pos))
     }
 
+    fun redo(move: GoMove) {
+        actMove = actMove.redo(calcBoard, move)
+        applyCaptures()
+        refreshBoards()
+    }
+
+    fun applyCaptures() {
+        if(actMove.isFirstMove) {
+            return
+        }
+
+        val local_captures = actMove.captures.size
+        if (calcBoard.isCellKind(actMove.cell, STONE_WHITE)) {
+            capturesWhite += local_captures
+        } else {
+            capturesBlack += local_captures
+        }
+    }
+
+    fun undoCaptures() {
+        val local_captures = actMove.captures.size
+        if (calcBoard.isCellKind(actMove.cell, STONE_WHITE)) {
+            capturesWhite -= local_captures
+        } else {
+            capturesBlack -= local_captures
+        }
+    }
 
     fun nextVariationWithOffset(offset: Int): GoMove? {
         if (actMove.isFirstMove) return null
@@ -269,7 +264,8 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     }
 
     fun refreshBoards() {
-        jump(actMove)
+        copyVisualBoard()
+        EventBus.getDefault().post(GameChangedEvent)
     }
 
     fun findFollowingMove(f: (GoMove) -> Boolean): GoMove {
@@ -323,11 +319,11 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         reset()
         actMove = findFirstMove()
         for (step in replay_moves.indices.reversed()) {
-            do_internal_move(replay_moves[step])
+            actMove = actMove.redo(calcBoard, replay_moves[step])
+            applyCaptures()
         }
 
-        copyVisualBoard()
-        EventBus.getDefault().post(GameChangedEvent)
+        refreshBoards()
     }
 
     fun copyVisualBoard() {
