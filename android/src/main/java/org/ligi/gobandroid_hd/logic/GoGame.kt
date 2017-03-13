@@ -124,9 +124,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
 
         actMove = GoMove(null)
         actMove.setIsFirstMove()
-        actMove.setIsBlackToMove(handicap == 0) // if handicap==null set black
-        // to move next - else set
-        // white to move next
+        actMove.player = if(handicap == 0) PLAYER_WHITE else PLAYER_BLACK
         reset()
     }
 
@@ -416,7 +414,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
      * @return who has to do the next move
      */
     val isBlackToMove: Boolean
-        get() = actMove.isBlackToMove
+        get() = actMove.player == PLAYER_WHITE
 
     // TODO cache?
     val boardSize: Int

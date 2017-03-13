@@ -37,7 +37,6 @@ public class GoMove {
 
     private int move_pos = 0;
     private byte player = PLAYER_BLACK;
-    private boolean black_to_move = true;
     private boolean isPassMove = false;
     private boolean isFirstMove = false;
 
@@ -48,7 +47,6 @@ public class GoMove {
     public GoMove(GoMove parent) {
         this.parent = parent;
         if (parent != null) {
-            black_to_move = !parent.isBlackToMove();
             player = parent.player == PLAYER_BLACK ? PLAYER_WHITE : PLAYER_BLACK;
             GoMove move = this;
             while (move != null && !move.isFirstMove()) {
@@ -60,7 +58,6 @@ public class GoMove {
 
     public GoMove(Cell cell, GoMove parent) {
         this(parent);
-
         this.cell = cell;
     }
 
@@ -137,8 +134,16 @@ public class GoMove {
         return move_pos;
     }
 
+    public byte getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(byte player) {
+        this.player = player;
+    }
+
     public boolean hasNextMove() {
-        return (next_move_variations.size() > 0);
+        return !next_move_variations.isEmpty();
     }
 
     public GoMove getNextMoveOnCell(Cell cell) {
@@ -263,25 +268,8 @@ public class GoMove {
         this.getParent().getNextMoveVariations().remove(this);
     }
 
-    public boolean isBlackToMove() {
-        return black_to_move;
-    }
-
-    public void setIsBlackToMove(boolean black_to_move) {
-        this.black_to_move = black_to_move;
-        player = black_to_move ? PLAYER_WHITE : PLAYER_BLACK;
-    }
-
     public boolean isContentEqual(GoMove other) {
-        if (!other.isOnCell(cell)) {
-            return false;
-        }
-
-        if (!comment.equals(other.getComment())) {
-            return false;
-        }
-
-        if (getMarkers().size() != other.getMarkers().size()) {
+        if(!other.isOnCell(cell) || !comment.equals(other.comment) || markers.size() != other.markers.size()) {
             return false;
         }
 
@@ -291,16 +279,11 @@ public class GoMove {
             }
         }
 
-        if (isBlackToMove() != other.isBlackToMove()) {
-            return false;
-        }
-
-        if (getMovePos() != other.getMovePos()) {
+        if (player != other.player || move_pos != other.move_pos) {
             return false;
         }
 
         // TODO check if we are complete
-
         return true;
     }
 
