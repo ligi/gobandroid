@@ -45,7 +45,7 @@ object SGFWriter {
         res.append(getSGFSnippet("SO", escapeSGF(game.metaData.source)))
         res.append("\n")
 
-        game.calcBoard.statelessGoBoard.withAllCells {
+        game.statelessGoBoard.withAllCells {
             if (game.handicapBoard.isCellWhite(it)) {
                 res.append("AW").append(SGFWriter.coords2SGFFragment(it)).append("\n")
             } else if (game.handicapBoard.isCellBlack(it)) {

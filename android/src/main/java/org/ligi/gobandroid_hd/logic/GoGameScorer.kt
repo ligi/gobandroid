@@ -30,7 +30,7 @@ import java.util.*
  */
 class GoGameScorer(private val game: GoGame) {
 
-    var area_assign: Array<ByteArray> // cache to which player a area belongs in a  finished game
+    var area_assign = Array(game.size) { ByteArray(game.size) } // cache to which player a area belongs in a  finished game
 
     var territory_white: Int = 0 // counter for the captures from black
     var territory_black: Int = 0 // counter for the captures from white
@@ -38,15 +38,11 @@ class GoGameScorer(private val game: GoGame) {
     var dead_white: Int = 0
     var dead_black: Int = 0
 
-    init {
-        area_assign = Array(game.size) { ByteArray(game.size) }
-    }
-
     fun calculateScore() {
-
         // reset groups
         val calc_board = game.calcBoard
-        calc_board.statelessGoBoard.withAllCells {
+        val statelessGoBoard = game.statelessGoBoard
+        statelessGoBoard.withAllCells {
             area_assign[it.x][it.y] = 0
         }
 
@@ -55,15 +51,12 @@ class GoGameScorer(private val game: GoGame) {
 
         val processed = HashSet<Cell>()
 
-        calc_board.statelessGoBoard.withAllCells {
+        statelessGoBoard.withAllCells {
             val unprocessed = processed.add(it)
-
             if (unprocessed) {
-                val boardCell = calc_board.statelessGoBoard.getCell(it)
+                val boardCell = statelessGoBoard.getCell(it)
                 val areaCellGatherer = AreaCellGatherer(calc_board, boardCell)
-
                 if (calc_board.isCellFree(boardCell)) {
-
                     val assign = if (containsOneOfButNotTheOther(calc_board, areaCellGatherer.processed, PLAYER_BLACK)) {
                         territory_black += areaCellGatherer.gatheredCells.size
                         PLAYER_BLACK
@@ -103,15 +96,11 @@ class GoGameScorer(private val game: GoGame) {
     private fun calculateDead() {
         dead_white = 0
         dead_black = 0
-
-        game.calcBoard.statelessGoBoard.withAllCells {
-
-            if (game.calcBoard.isCellDead(it)) {
-                if (game.calcBoard.isCellDeadBlack(it)) {
-                    dead_black++
-                } else if (game.calcBoard.isCellDeadWhite(it)) {
-                    dead_white++
-                }
+        game.statelessGoBoard.withAllCells {
+            if (game.calcBoard.isCellDeadBlack(it)) {
+                dead_black++
+            } else if (game.calcBoard.isCellDeadWhite(it)) {
+                dead_white++
             }
         }
     }
