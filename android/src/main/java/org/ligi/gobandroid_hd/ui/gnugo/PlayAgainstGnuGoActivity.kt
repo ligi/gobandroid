@@ -16,10 +16,7 @@ import android.widget.Toast
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.events.GameChangedEvent
-import org.ligi.gobandroid_hd.logic.Cell
-import org.ligi.gobandroid_hd.logic.GTPHelper
-import org.ligi.gobandroid_hd.logic.GoGame
-import org.ligi.gobandroid_hd.logic.GoMove
+import org.ligi.gobandroid_hd.logic.*
 import org.ligi.gobandroid_hd.ui.GoActivity
 import org.ligi.gobandroid_hd.ui.GoPrefs
 import org.ligi.gobandroid_hd.ui.recording.RecordingGameExtrasFragment
@@ -241,7 +238,7 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
                     while (currentMove.hasNextMove()) {
                         currentMove = currentMove.getnextMove(0)
                         val gtpMove = getGtpMoveFromMove(currentMove)
-                        if (currentMove.isBlackToMove) {
+                        if (currentMove.player == GoDefinitions.PLAYER_BLACK) {
                             service!!.processGTP("play black " + gtpMove)
                         } else {
                             service!!.processGTP("play white " + gtpMove)

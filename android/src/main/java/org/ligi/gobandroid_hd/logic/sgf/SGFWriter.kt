@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.logic.sgf
 
 import org.ligi.gobandroid_hd.logic.Cell
+import org.ligi.gobandroid_hd.logic.GoDefinitions
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.logic.GoMove
 import org.ligi.gobandroid_hd.logic.markers.CircleMarker
@@ -69,14 +70,11 @@ object SGFWriter {
 
     internal fun moves2string(move: GoMove): String {
         val res = StringBuilder()
-
         var act_move: GoMove? = move
-
         while (act_move != null) {
-
             // add the move
             if (!act_move.isFirstMove) {
-                res.append(";").append(if (act_move.isBlackToMove) "B" else "W")
+                res.append(";").append(if (act_move.player == GoDefinitions.PLAYER_BLACK) "B" else "W")
                 if (act_move.isPassMove) {
                     res.append("[]")
                 } else {
