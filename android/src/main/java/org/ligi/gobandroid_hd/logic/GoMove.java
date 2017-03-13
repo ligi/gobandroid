@@ -99,6 +99,30 @@ public class GoMove {
         board.setCellGroup(captures, STONE_NONE);
     }
 
+    public GoMove undo(StatefulGoBoard board, boolean keepMove) {
+        if(parent == null) {
+            return this;
+        } else if(!keepMove) {
+            parent.next_move_variations.remove(this);
+        }
+
+        board.setCell(cell, STONE_NONE);
+        for(Cell capture : captures) {
+            board.setCell(capture, getCapturedCellStatus());
+        }
+
+        return parent;
+    }
+
+    public GoMove redo(StatefulGoBoard board, GoMove next) {
+        if(!next_move_variations.contains(next)) {
+            return this;
+        }
+
+        next.apply(board);
+        return next;
+    }
+
     public void buildCaptures(StatefulGoBoard board) {
         StatelessBoardCell boardCell = board.getCell(cell);
         for(Cell neighbor : boardCell.getNeighbors()) {
@@ -107,14 +131,6 @@ public class GoMove {
                 captures.addAll(cellGroup);
             }
         }
-    }
-
-    public void setDidCaptures(boolean did) {
-        did_captures = did;
-    }
-
-    public boolean isCapturesMove() {
-        return did_captures;
     }
 
     public int getMovePos() {
@@ -178,7 +194,7 @@ public class GoMove {
     }
 
     public GoMove getnextMove(int pos) {
-        return next_move_variations.get(pos);
+        return next_move_variations.size() > pos ? next_move_variations.get(pos) : null;
     }
 
     public String toString() {
@@ -206,10 +222,6 @@ public class GoMove {
 
     public void addComment(String newComment) {
         comment += newComment;
-    }
-
-    public boolean didCaptures() {
-        return did_captures;
     }
 
     public List<GoMove> getNextMoveVariations() {
@@ -300,4 +312,10 @@ public class GoMove {
     public byte getCellStatus() {
         return player == PLAYER_BLACK ? STONE_BLACK : STONE_WHITE;
     }
+
+    @CellStatus
+    private byte getCapturedCellStatus() {
+        return player == PLAYER_BLACK ? STONE_WHITE : STONE_BLACK;
+    }
+
 }
