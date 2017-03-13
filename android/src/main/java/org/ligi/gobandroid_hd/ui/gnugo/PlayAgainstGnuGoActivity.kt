@@ -225,10 +225,8 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
                 try {
                     // set the size
                     service!!.processGTP("boardsize " + game.boardSize)
-
                     var currentMove = game.findFirstMove()
-
-                    game.handicapBoard.statelessGoBoard.withAllCells { statelessBoardCell ->
+                    game.statelessGoBoard.withAllCells { statelessBoardCell ->
                         try {
                             if (game.handicapBoard.isCellDeadWhite(statelessBoardCell)) {
                                 service!!.processGTP("white " + coordinates2gtpstr(statelessBoardCell))
@@ -242,24 +240,19 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
                     }
                     while (currentMove.hasNextMove()) {
                         currentMove = currentMove.getnextMove(0)
-
                         val gtpMove = getGtpMoveFromMove(currentMove)
-
                         if (currentMove.isBlackToMove) {
                             service!!.processGTP("play black " + gtpMove)
                         } else {
                             service!!.processGTP("play white " + gtpMove)
                         }
-
                     }
 
                     Log.i("setting level " + service!!.processGTP("level " + gnuGoGame!!.level))
-
                     gnugoSizeSet = true
                 } catch (e: Exception) {
                     Log.w("RemoteException when configuring", e)
                 }
-
             }
 
             if (gnuGoGame!!.gnugoNowBlack()) {

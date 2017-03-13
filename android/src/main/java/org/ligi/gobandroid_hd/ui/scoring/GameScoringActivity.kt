@@ -66,8 +66,8 @@ class GameScoringActivity : GoActivity() {
             val allProcessed = HashSet<Cell>()
             val allGroups = HashSet<Set<StatelessBoardCell>>()
 
-            game.calcBoard.statelessGoBoard.withAllCells {
-                val cell = game.calcBoard.statelessGoBoard.getCell(it)
+            game.statelessGoBoard.withAllCells {
+                val cell = game.statelessGoBoard.getCell(it)
                 val inGroup = LooseConnectedCellGatherer(game.calcBoard, cell).gatheredCells
                 allProcessed.addAll(inGroup)
                 if (!game.calcBoard.isCellFree(it)) {
@@ -124,7 +124,7 @@ class GameScoringActivity : GoActivity() {
     override fun onPause() {
         super.onPause()
         // if we go back to other modes we want to have them alive again ( Zombies ?)
-        game.calcBoard.statelessGoBoard.withAllCells {
+        game.statelessGoBoard.withAllCells {
             if (game.calcBoard.isCellDead(it)) {
                 game.calcBoard.toggleCellDead(it)
             }

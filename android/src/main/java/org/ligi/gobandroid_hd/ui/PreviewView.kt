@@ -93,7 +93,7 @@ class PreviewView : View {
                     black_line_paint)
         }
 
-        game!!.visualBoard.statelessGoBoard.withAllCells { cell ->
+        game!!.statelessGoBoard.withAllCells { cell ->
             if (cell.x <= span!!.x && cell.y <= span!!.y) {
                 if (game!!.visualBoard.isCellBlack(cell))
                     canvas.drawBitmap(black_stone_bitmap, cell.x * stone_size, cell.y * stone_size, null)

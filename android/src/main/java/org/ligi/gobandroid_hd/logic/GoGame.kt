@@ -44,8 +44,8 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         INVALID_IS_KO
     }
 
-    val statelessGoBoard: StatelessGoBoard
-    val calcBoard: StatefulGoBoard // the board calculations are done in
+    val statelessGoBoard: StatelessGoBoard = StatelessGoBoard(size)
+    val calcBoard: StatefulGoBoard = StatefulGoBoard(statelessGoBoard)// the board calculations are done in
 
     lateinit var visualBoard: StatefulGoBoard
 
@@ -72,8 +72,6 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     private var local_captures = 0
 
     init {
-        statelessGoBoard = StatelessGoBoard(size)
-        calcBoard = StatefulGoBoard(statelessGoBoard)
         init(size, handicap)
     }
 
@@ -380,8 +378,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
      */
     fun hasGroupLiberties(cell: Cell): Boolean {
 
-        val startCell = calcBoard.statelessGoBoard.getCell(cell)
-
+        val startCell = statelessGoBoard.getCell(cell)
         return MustBeConnectedCellGatherer(calcBoard, startCell).gatheredCells.any() {
             cell_has_neighbour(calcBoard, it, STONE_NONE)
         }
@@ -401,13 +398,12 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         val group_count = AtomicInteger(0)
 
         // reset groups
-        calcBoard.statelessGoBoard.withAllCells {
+        statelessGoBoard.withAllCells {
             groups!![it.x][it.y] = -1
         }
 
-        calcBoard.statelessGoBoard.withAllCells { statelessBoardCell ->
+        statelessGoBoard.withAllCells { statelessBoardCell ->
             if (groups!![statelessBoardCell.x][statelessBoardCell.y] == -1 && !calcBoard.isCellKind(statelessBoardCell, STONE_NONE)) {
-
                 for (groupCell in MustBeConnectedCellGatherer(calcBoard, statelessBoardCell).gatheredCells) {
                     groups!![groupCell.x][groupCell.y] = group_count.get()
                 }
@@ -424,8 +420,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     private fun remove_dead(where: Cell) {
         local_captures = 0
 
-        val boardWhere = calcBoard.statelessGoBoard.getCell(where)
-
+        val boardWhere = statelessGoBoard.getCell(where)
         for (boardCell in boardWhere.neighbors)
             if (!hasGroupLiberties(boardCell) && !calcBoard.areCellsEqual(boardWhere, boardCell)) remove_group(boardCell)
     }
@@ -436,8 +431,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         // this is no "group" in the sense we want
             return
 
-        val cellGathering = MustBeConnectedCellGatherer(calcBoard, calcBoard.statelessGoBoard.getCell(where)).gatheredCells
-
+        val cellGathering = MustBeConnectedCellGatherer(calcBoard, calcBoard.getCell(where)).gatheredCells
         cellGathering.forEach {
             local_captures++
             calcBoard.setCell(it, STONE_NONE)
@@ -463,8 +457,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     /**
      * @return who has to do the next move
      */
-    // the opposite of wo was to move
-    // before
+    // the opposite of who was to move before
     val isBlackToMove: Boolean
         get() = !actMove.isBlackToMove
 
