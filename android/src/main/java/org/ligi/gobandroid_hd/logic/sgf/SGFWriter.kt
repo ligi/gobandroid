@@ -89,24 +89,19 @@ object SGFWriter {
 
             // add markers
             for (marker in act_move.markers) {
-                if (marker is SquareMarker) {
-                    res.append("SQ").append(coords2SGFFragment(marker))
-                } else if (marker is TriangleMarker) {
-                    res.append("TR").append(coords2SGFFragment(marker))
-                } else if (marker is CircleMarker) {
-                    res.append("CR").append(coords2SGFFragment(marker))
-                } else if (marker is TextMarker) {
-                    res.append("LB")
+                res.append(marker.getMarkerCode())
+                if(marker is TextMarker) {
                     res.append(coords2SGFFragment(marker).replace("]", ":" + marker.text + "]"))
+                } else {
+                    res.append(coords2SGFFragment(marker))
                 }
             }
 
             var next_move: GoMove? = null
-
             if (act_move.hasNextMove()) {
                 if (act_move.hasNextMoveVariations()) {
-                    for (`var` in act_move.nextMoveVariations) {
-                        res.append("(").append(moves2string(`var`)).append(")")
+                    for (variation in act_move.nextMoveVariations) {
+                        res.append("(").append(moves2string(variation)).append(")")
                     }
                 } else {
                     next_move = act_move.getnextMove(0)

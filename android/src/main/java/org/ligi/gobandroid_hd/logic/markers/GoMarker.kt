@@ -29,11 +29,11 @@ import org.ligi.gobandroid_hd.logic.Cell
 abstract class GoMarker(val cell: Cell) : Cell by cell {
 
     abstract fun draw(c: Canvas, size: Float, x: Float, y: Float, paint: Paint)
+    abstract fun getMarkerCode(): String
 
     fun isInCell(cell: Cell) = this.cell == cell
 
     override fun equals(other: Any?) = other is GoMarker && other.cell == cell
     override fun hashCode() = cell.x * cell.y
     override fun toString() = "${cell.x}x${cell.y}"
-
 }
