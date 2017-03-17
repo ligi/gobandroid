@@ -45,34 +45,31 @@ public class TsumegoHintAlert {
     }
 
     private static void show_numbered_solution(GoMove finishing_move, GoGame game) {
-
         GoMove myActMove = finishing_move;
         int p = myActMove.getMovePos();
-        while (true) {
-            if (myActMove.isFirstMove())
-                break;
-            finishing_move.addMarker(new TextMarker(myActMove.getCell(), "" + p));
+        while (!myActMove.isFirstMove()) {
+            if(myActMove.getCell() != null) {
+                finishing_move.addMarker(new TextMarker(myActMove.getCell(), Integer.toString(p)));
+            }
+
             p--;
             myActMove = myActMove.getParent();
-
         }
 
         game.jump(finishing_move);
     }
 
     private static void mark_path(GoMove finishing_move, boolean complete, GoGame game) {
-
         GoMove myActMove = finishing_move;
-        while (true) {
-            if (myActMove.isFirstMove())
-                break;
-            if (complete || (myActMove.getParent() == game.getActMove()))
+        while (!myActMove.isFirstMove()) {
+            if (complete || (myActMove.getCell() != null && myActMove.getParent() == game.getActMove())) {
                 myActMove.getParent().addMarker(new TextMarker(myActMove.getCell(), "X"));
+            }
+
             myActMove = myActMove.getParent();
         }
 
         game.jump(game.getActMove());
-
         EventBus.getDefault().post(GameChangedEvent.INSTANCE);
     }
 
