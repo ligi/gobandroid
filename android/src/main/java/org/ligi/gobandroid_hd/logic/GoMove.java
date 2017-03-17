@@ -74,7 +74,7 @@ public class GoMove {
         return parent != null &&
             captures.size() == 1 &&
             parent.captures.size() == 1 &&
-            Objects.equals(cell, parent.captures.get(0));
+            parent.captures.get(0).equals(cell);
     }
 
     public boolean isIllegalNoLiberties(StatefulGoBoard board) {
