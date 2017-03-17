@@ -19,11 +19,10 @@
 package org.ligi.gobandroid_hd.logic;
 
 import android.support.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.*;
@@ -65,7 +64,7 @@ public class GoMove {
     public GoMove(Cell cell, GoMove parent, StatefulGoBoard board) {
         this(cell, parent);
         byte previousStatus = board.getCellKind(cell);
-        board.setCell(cell, getCellStatus());
+        board.setCell(cell, (byte) getCellStatus());
         buildCaptures(board);
         board.setCell(cell, previousStatus);
     }
@@ -83,7 +82,7 @@ public class GoMove {
         }
 
         byte previousStatus = board.getCellKind(cell);
-        board.setCell(cell, getCellStatus());
+        board.setCell(cell, (byte) getCellStatus());
         boolean hasLiberties = board.doesCellGroupHaveLiberty(cell);
         board.setCell(cell, previousStatus);
         return !hasLiberties;
@@ -91,7 +90,7 @@ public class GoMove {
 
     public void apply(StatefulGoBoard board) {
         parent.addNextMove(this);
-        board.setCell(cell, getCellStatus());
+        board.setCell(cell, (byte) getCellStatus());
         board.setCellGroup(captures, STONE_NONE);
     }
 
@@ -105,7 +104,7 @@ public class GoMove {
         if(cell != null) {
             board.setCell(cell, STONE_NONE);
             for(Cell capture : captures) {
-                board.setCell(capture, getCapturedCellStatus());
+                board.setCell(capture, (byte) getCapturedCellStatus());
             }
         }
 
@@ -293,12 +292,12 @@ public class GoMove {
     }
 
     @CellStatus
-    public byte getCellStatus() {
+    private int getCellStatus() {
         return player == PLAYER_BLACK ? STONE_BLACK : STONE_WHITE;
     }
 
     @CellStatus
-    private byte getCapturedCellStatus() {
+    private int getCapturedCellStatus() {
         return player == PLAYER_BLACK ? STONE_WHITE : STONE_BLACK;
     }
 
