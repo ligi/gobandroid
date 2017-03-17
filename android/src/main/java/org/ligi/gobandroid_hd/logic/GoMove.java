@@ -22,6 +22,8 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
+
+import java.util.Objects;
 import java.util.Set;
 
 import static org.ligi.gobandroid_hd.logic.GoDefinitions.*;
@@ -32,7 +34,6 @@ import static org.ligi.gobandroid_hd.logic.GoDefinitions.*;
 public class GoMove {
     private Cell cell;
     private String comment = "";
-    private boolean did_captures = false;
     private GoMove parent = null;
 
     private int move_pos = 0;
@@ -74,7 +75,7 @@ public class GoMove {
         return parent != null &&
             captures.size() == 1 &&
             parent.captures.size() == 1 &&
-            cell.isEqual(parent.captures.get(0));
+            Objects.equals(cell, parent.captures.get(0));
     }
 
     public boolean isIllegalNoLiberties(StatefulGoBoard board) {
@@ -103,9 +104,11 @@ public class GoMove {
             parent.next_move_variations.remove(this);
         }
 
-        board.setCell(cell, STONE_NONE);
-        for(Cell capture : captures) {
-            board.setCell(capture, getCapturedCellStatus());
+        if(cell != null) {
+            board.setCell(cell, STONE_NONE);
+            for(Cell capture : captures) {
+                board.setCell(capture, getCapturedCellStatus());
+            }
         }
 
         return parent;

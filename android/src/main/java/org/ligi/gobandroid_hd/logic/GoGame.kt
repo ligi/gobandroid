@@ -65,8 +65,6 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
 
     private lateinit var all_handicap_positions: Array<BooleanArray>
 
-    private var local_captures = 0
-
     init {
         init(size, handicap)
     }
@@ -233,24 +231,24 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     }
 
     fun applyCaptures() {
-        if(actMove.isFirstMove) {
-            return
-        }
-
         val local_captures = actMove.captures.size
-        if (calcBoard.isCellKind(actMove.cell, STONE_WHITE)) {
-            capturesWhite += local_captures
-        } else {
-            capturesBlack += local_captures
+        if(local_captures > 0) {
+            if (calcBoard.isCellKind(actMove.cell, STONE_WHITE)) {
+                capturesWhite += local_captures
+            } else {
+                capturesBlack += local_captures
+            }
         }
     }
 
     fun undoCaptures() {
         val local_captures = actMove.captures.size
-        if (calcBoard.isCellKind(actMove.cell, STONE_WHITE)) {
-            capturesWhite -= local_captures
-        } else {
-            capturesBlack -= local_captures
+        if(local_captures > 0) {
+            if (calcBoard.isCellKind(actMove.cell, STONE_WHITE)) {
+                capturesWhite -= local_captures
+            } else {
+                capturesBlack -= local_captures
+            }
         }
     }
 
