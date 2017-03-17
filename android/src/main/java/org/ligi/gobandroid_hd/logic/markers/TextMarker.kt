@@ -28,9 +28,7 @@ import org.ligi.gobandroid_hd.logic.Cell
  * class to mark a pos on the board useful for go problems - e.g. from SGF
  */
 class TextMarker(cell: Cell, val text: String) : GoMarker(cell) {
-    override fun getMarkerCode(): String {
-        return "LB"
-    }
+    override fun getMarkerCode() = "LB"
 
     override fun equals(other: Any?) = super.equals(other) && other is TextMarker && other.text == text
 
