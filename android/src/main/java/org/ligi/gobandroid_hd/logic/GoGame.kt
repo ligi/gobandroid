@@ -368,31 +368,6 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     }
 
     /**
-     * remove dead groups from the board - e.g. after a move
-     * the cell with ignore_x and ignore_y is ignored - e.g. last move
-     */
-    private fun remove_dead(where: Cell) {
-        local_captures = 0
-        val boardWhere = statelessGoBoard.getCell(where)
-        boardWhere.neighbors
-                .filter { !calcBoard.areCellsEqual(boardWhere, it) }
-                .filter { !hasGroupLiberties(it) }
-                .forEach { remove_group(it) }
-    }
-
-    private fun remove_group(where: Cell) {
-        if (calcBoard.isCellFree(where))
-        // this is no "group" in the sense we want
-            return
-
-        val cellGathering = MustBeConnectedCellGatherer(calcBoard, calcBoard.getCell(where)).gatheredCells
-        cellGathering.forEach {
-            local_captures++
-            calcBoard.setCell(it, STONE_NONE)
-        }
-    }
-
-    /**
      * return if it's a handicap stone so that the view can visualize it
      *
      * TODO: check rename ( general marker )
@@ -453,6 +428,4 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
 
         return !move1.nextMoveVariations.any { !hasNextMove(move1, it) }
     }
-
-
 }

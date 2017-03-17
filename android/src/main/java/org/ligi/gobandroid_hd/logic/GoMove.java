@@ -64,7 +64,6 @@ public class GoMove {
 
     public GoMove(Cell cell, GoMove parent, StatefulGoBoard board) {
         this(cell, parent);
-        //temporary
         byte previousStatus = board.getCellKind(cell);
         board.setCell(cell, getCellStatus());
         buildCaptures(board);
@@ -83,7 +82,6 @@ public class GoMove {
             return false;
         }
 
-        //temporary
         byte previousStatus = board.getCellKind(cell);
         board.setCell(cell, getCellStatus());
         boolean hasLiberties = board.doesCellGroupHaveLiberty(cell);
@@ -189,6 +187,10 @@ public class GoMove {
         return isFirstMove;
     }
 
+    public Cell getCell() {
+        return cell;
+    }
+
     public void setCell(Cell cell) {
         this.cell = cell;
     }
@@ -288,10 +290,6 @@ public class GoMove {
 
         // TODO check if we are complete
         return true;
-    }
-
-    public Cell getCell() {
-        return cell;
     }
 
     @CellStatus
