@@ -7,6 +7,5 @@
 
 <img src="http://ligi.de/img/gobandroid_screenshots.jpg"/>
 
-[![Build Status](https://snap-ci.com/ligi/gobandroid/branch/master/build_image)](https://snap-ci.com/ligi/gobandroid/branch/master)
 
 
