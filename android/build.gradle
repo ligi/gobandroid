@@ -46,8 +46,8 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        versionCode 254
-        versionName "2.5.4"
+        versionCode 255
+        versionName "2.5.5"
         minSdkVersion 9
         targetSdkVersion 22
         applicationId "org.ligi.gobandroid_hd"
