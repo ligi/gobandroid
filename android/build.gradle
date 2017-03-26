@@ -130,8 +130,8 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    compile("com.chibatching.kotpref:kotpref:2.0.0")
-    compile("com.chibatching.kotpref:initializer:2.0.0")
+    compile("com.chibatching.kotpref:kotpref:$kotpref_version")
+    compile("com.chibatching.kotpref:initializer:$kotpref_version")
 
     withAnalyticsCompile "com.google.android.gms:play-services-analytics:$play_version"
 
@@ -144,7 +144,7 @@ dependencies {
 
     kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
 
-    androidTestCompile('com.github.ligi:trulesk:0.17') {
+    androidTestCompile('com.github.ligi:trulesk:0.18') {
         // http://stackoverflow.com/questions/30578243/why-would-adding-espresso-contrib-cause-an-inflateexception
         exclude group: 'javax.inject'
     }
