@@ -51,7 +51,7 @@ android {
         versionCode 255
         versionName "2.5.5"
         minSdkVersion 9
-        targetSdkVersion 22
+        targetSdkVersion 25
         applicationId "org.ligi.gobandroid_hd"
         testInstrumentationRunner "org.ligi.gobandroid_hd.AppReplacingRunner"
         archivesBaseName = "Gobandroid-$versionName"
