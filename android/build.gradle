@@ -34,6 +34,16 @@ android {
 
     }
 
+    android.variantFilter { variant ->
+        def analytics = variant.getFlavors().get(0).name
+        def cloud = variant.getFlavors().get(1).name
+
+        variant.setIgnore((project.hasProperty("singleFlavor") && (analytics != 'withAnalytics') && (cloud != 'withCloud')) ||
+                (analytics == 'withAnalytics' && cloud == 'noCloud') ||
+                (analytics == 'noAnalytics' && cloud == 'withCloud'))
+
+    }
+
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
 
