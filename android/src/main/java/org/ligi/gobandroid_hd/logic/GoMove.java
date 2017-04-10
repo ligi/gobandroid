@@ -48,11 +48,7 @@ public class GoMove {
         this.parent = parent;
         if (parent != null) {
             player = parent.player == PLAYER_BLACK ? PLAYER_WHITE : PLAYER_BLACK;
-            GoMove move = this;
-            while (move != null && !move.isFirstMove()) {
-                move_pos++;
-                move = move.parent;
-            }
+            move_pos = parent.move_pos + 1;
         }
     }
 
