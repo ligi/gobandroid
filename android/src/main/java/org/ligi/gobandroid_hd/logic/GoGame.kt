@@ -158,17 +158,15 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
      */
     fun do_move(cell: Cell): MoveStatus {
         Log.i("do_move " + cell)
-
-        // check hard preconditions
-        if (!calcBoard.isCellOnBoard(cell)) {
-            // return with INVALID if x and y are inside the board
-            return MoveStatus.INVALID_NOT_ON_BOARD
-        } else if (isFinished) {
+        if(actMove.isFinalMove) {
             // game is finished - players are marking dead stones
             return MoveStatus.VALID
-        } else if (!calcBoard.isCellFree(cell)) {
-            // can never place a stone where another is
-            return MoveStatus.INVALID_CELL_NOT_FREE
+        }
+
+        val nextMove: GoMove = GoMove(cell, actMove, calcBoard)
+        val errorStatus = nextMove.getErrorStatus(calcBoard)
+        if (errorStatus != null) {
+            return errorStatus
         }
 
         // check if the "new" move is in the variations - to not have 2 equal
@@ -179,15 +177,6 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
             redo(matching_move)
             actMove.redo(calcBoard, matching_move)
             return MoveStatus.VALID
-        }
-
-        val nextMove: GoMove = GoMove(cell, actMove, calcBoard)
-        if (nextMove.isIllegalKo) {
-            Log.i("illegal move -> KO")
-            return MoveStatus.INVALID_IS_KO
-        } else if (nextMove.isIllegalNoLiberties(calcBoard)) {
-            Log.i("illegal move -> NO LIBERTIES")
-            return MoveStatus.INVALID_CELL_NO_LIBERTIES
         }
 
         // if we reach this point it is a valid move
