@@ -61,10 +61,11 @@ public class GoMove {
 
     public GoMove(Cell cell, GoMove parent, StatefulGoBoard board) {
         this(cell, parent);
-        byte previousStatus = board.getCellKind(cell);
-        board.setCell(cell, (byte) getCellStatus());
+        if (!board.isCellOnBoard(cell)) {
+            return;
+        }
+
         buildCaptures(board);
-        board.setCell(cell, previousStatus);
     }
 
     public void apply(StatefulGoBoard board) {
@@ -138,6 +139,12 @@ public class GoMove {
     }
 
     private void buildCaptures(StatefulGoBoard board) {
+        captures.clear();
+
+        //temporarily apply the move in order to calculate captures
+        byte previousStatus = board.getCellKind(cell);
+        board.setCell(cell, (byte) getCellStatus());
+
         StatelessBoardCell boardCell = board.getCell(cell);
         for(Cell neighbor : boardCell.getNeighbors()) {
             if(!captures.contains(neighbor) && !board.isCellFree(neighbor) && !board.areCellsEqual(neighbor, cell) && !board.doesCellGroupHaveLiberty(neighbor)) {
@@ -145,6 +152,9 @@ public class GoMove {
                 captures.addAll(cellGroup);
             }
         }
+
+        //reset the cell to its original position
+        board.setCell(cell, previousStatus);
     }
 
     public int getMovePos() {
