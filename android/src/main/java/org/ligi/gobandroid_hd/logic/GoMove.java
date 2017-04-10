@@ -83,9 +83,7 @@ public class GoMove {
 
         if(cell != null) {
             board.setCell(cell, STONE_NONE);
-            for(Cell capture : captures) {
-                board.setCell(capture, (byte) getCapturedCellStatus());
-            }
+            board.setCellGroup(captures, (byte) getCapturedCellStatus());
         }
 
         return parent;
@@ -98,6 +96,28 @@ public class GoMove {
 
         next.apply(board);
         return next;
+    }
+
+    public MoveStatus repostition(StatefulGoBoard board, Cell cell) {
+        if(cell == null || !board.isCellOnBoard(cell)) {
+            return MoveStatus.INVALID_NOT_ON_BOARD;
+        }
+
+        undo(board, false);
+        Cell previousCell = this.cell;
+        this.cell = cell;
+        buildCaptures(board);
+        MoveStatus errorStatus = getErrorStatus(board);
+        if(errorStatus == null) {
+            apply(board);
+            return MoveStatus.VALID;
+        } else {
+            //the move is invalid, so back out the changes
+            this.cell = previousCell;
+            buildCaptures(board);
+            apply(board);
+            return errorStatus;
+        }
     }
 
     public MoveStatus getErrorStatus(StatefulGoBoard board) {

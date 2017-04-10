@@ -190,6 +190,19 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         return MoveStatus.VALID
     }
 
+    fun repositionActMove(cell: Cell): MoveStatus {
+        Log.i("repositionActMove " + cell)
+        if(cell == actMove.cell) {
+            return MoveStatus.VALID
+        }
+
+        undoCaptures()
+        val moveStatus = actMove.repostition(calcBoard, cell)
+        applyCaptures()
+        refreshBoards()
+        return moveStatus
+    }
+
     fun canRedo(): Boolean {
         return actMove.hasNextMove()
     }

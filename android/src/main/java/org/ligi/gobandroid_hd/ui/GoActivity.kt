@@ -446,8 +446,7 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
                     // TODO check if this is an illegal move ( e.g. in variants )
 
                     if (interactionScope.touchCell != null && game.visualBoard.isCellFree(interactionScope.touchCell!!)) {
-                        game.undo(false)
-                        game.do_move(interactionScope.touchCell!!)
+                        game.repositionActMove(interactionScope.touchCell!!)
                     }
                     go_board.move_stone_mode = false // moving of stone done
                 } else if (game.actMove.isOnCell(interactionScope.touchCell)) {
