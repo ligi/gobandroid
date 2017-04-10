@@ -19,7 +19,9 @@
 package org.ligi.gobandroid_hd.logic;
 
 import android.support.annotation.Nullable;
+import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus;
 import org.ligi.gobandroid_hd.logic.markers.GoMarker;
+import org.ligi.tracedroid.logging.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,25 +67,6 @@ public class GoMove {
         board.setCell(cell, previousStatus);
     }
 
-    public boolean isIllegalKo() {
-        return parent != null &&
-            captures.size() == 1 &&
-            parent.captures.size() == 1 &&
-            parent.captures.get(0).equals(cell);
-    }
-
-    public boolean isIllegalNoLiberties(StatefulGoBoard board) {
-        if(!captures.isEmpty()) {
-            return false;
-        }
-
-        byte previousStatus = board.getCellKind(cell);
-        board.setCell(cell, (byte) getCellStatus());
-        boolean hasLiberties = board.doesCellGroupHaveLiberty(cell);
-        board.setCell(cell, previousStatus);
-        return !hasLiberties;
-    }
-
     public void apply(StatefulGoBoard board) {
         parent.addNextMove(this);
         board.setCell(cell, (byte) getCellStatus());
@@ -116,7 +99,45 @@ public class GoMove {
         return next;
     }
 
-    public void buildCaptures(StatefulGoBoard board) {
+    public MoveStatus getErrorStatus(StatefulGoBoard board) {
+        // check hard preconditions
+        if (!board.isCellOnBoard(cell)) {
+            // return with INVALID if x and y are inside the board
+            return MoveStatus.INVALID_NOT_ON_BOARD;
+        } else if (!board.isCellFree(cell)) {
+            // can never place a stone where another is
+            return MoveStatus.INVALID_CELL_NOT_FREE;
+        } else if (isIllegalKo()) {
+            Log.i("illegal move -> KO");
+            return MoveStatus.INVALID_IS_KO;
+        } else if (isIllegalNoLiberties(board)) {
+            Log.i("illegal move -> NO LIBERTIES");
+            return MoveStatus.INVALID_CELL_NO_LIBERTIES;
+        }
+
+        return null;
+    }
+
+    private boolean isIllegalKo() {
+        return parent != null &&
+            captures.size() == 1 &&
+            parent.captures.size() == 1 &&
+            parent.captures.get(0).equals(cell);
+    }
+
+    private boolean isIllegalNoLiberties(StatefulGoBoard board) {
+        if(!captures.isEmpty()) {
+            return false;
+        }
+
+        byte previousStatus = board.getCellKind(cell);
+        board.setCell(cell, (byte) getCellStatus());
+        boolean hasLiberties = board.doesCellGroupHaveLiberty(cell);
+        board.setCell(cell, previousStatus);
+        return !hasLiberties;
+    }
+
+    private void buildCaptures(StatefulGoBoard board) {
         StatelessBoardCell boardCell = board.getCell(cell);
         for(Cell neighbor : boardCell.getNeighbors()) {
             if(!captures.contains(neighbor) && !board.isCellFree(neighbor) && !board.areCellsEqual(neighbor, cell) && !board.doesCellGroupHaveLiberty(neighbor)) {
@@ -285,6 +306,11 @@ public class GoMove {
 
         // TODO check if we are complete
         return true;
+    }
+
+    public boolean isFinalMove() {
+        return !isFirstMove && parent != null && isPassMove && parent.isPassMove;
+
     }
 
     @CellStatus
