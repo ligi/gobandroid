@@ -105,6 +105,18 @@ spoon {
     debug = true
 }
 
+configurations {
+
+    // http://stackoverflow.com/questions/30578243/why-would-adding-espresso-contrib-cause-an-inflateexception
+    androidTestCompile.exclude group: 'com.android.support', module: 'appcompat-v7'
+    androidTestCompile.exclude group: 'com.android.support', module: 'design'
+    androidTestCompile.exclude group: 'com.android.support', module: 'support-v4'
+    androidTestCompile.exclude group: 'com.android.support', module: 'support-annotations'
+    androidTestCompile.exclude group: 'com.android.support', module: 'preference-v7'
+    androidTestCompile.exclude module: 'recyclerview-v7'
+    androidTestCompile.exclude module: 'kotlin-stdlib'
+}
+
 dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
@@ -146,10 +158,7 @@ dependencies {
 
     kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
 
-    androidTestCompile('com.github.ligi:trulesk:0.18') {
-        // http://stackoverflow.com/questions/30578243/why-would-adding-espresso-contrib-cause-an-inflateexception
-        exclude group: 'javax.inject'
-    }
+    androidTestCompile 'com.github.ligi:trulesk:0.19'
 
     androidTestCompile "com.android.support:support-annotations:$support_version"
     androidTestCompile 'com.squareup.assertj:assertj-android:1.1.1'
