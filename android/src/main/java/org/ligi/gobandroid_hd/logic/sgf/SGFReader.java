@@ -255,6 +255,12 @@ public class SGFReader {
                     variationList.add(game.getActMove());
                 }
 
+                if(game.actMove.isFirstMove()) {
+                    byte lastPlayer = marker == Marker.WHITE_MOVE
+                        ? GoDefinitions.PLAYER_BLACK : GoDefinitions.PLAYER_WHITE;
+                    game.actMove.setPlayer(lastPlayer);
+                }
+
                 if ((breakon & BREAKON_FIRSTMOVE) > 0) {
                     break_pulled = true;
                 }

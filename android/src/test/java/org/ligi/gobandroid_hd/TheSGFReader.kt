@@ -2,6 +2,7 @@ package org.ligi.gobandroid_hd
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import org.ligi.gobandroid_hd.logic.GoDefinitions
 import org.ligi.gobandroid_hd.logic.markers.TextMarker
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader
 
@@ -58,6 +59,7 @@ class TheSGFReader {
         val game = SGFReader.sgf2game(readAsset("test_sgfs/first_move_capture_and_white.sgf"), null)
 
         assertThat(game.findLastMove().movePos).isEqualTo(2)
+        assertThat(game.findLastMove().player).isEqualTo(GoDefinitions.PLAYER_BLACK)
     }
 
     @Test
