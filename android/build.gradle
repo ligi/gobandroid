@@ -103,6 +103,7 @@ android {
 
 spoon {
     debug = true
+    skipDevices = ["3200d5cd47677000", "0019bfc975a2ae", "015d165c52500804"]
 }
 
 configurations {
