@@ -136,7 +136,7 @@ class SGFListFragment : GobandroidFragment(), Refreshable {
                     val list = dir_file.list(SGFFileNameFilter())
                     val game1 = SGFReader.sgf2game(File(dir_file, list[10]).bufferedReader().readText(), null, SGFReader.BREAKON_FIRSTMOVE)
                     val game2 = SGFReader.sgf2game(File(dir_file, list[12]).bufferedReader().readText(), null, SGFReader.BREAKON_FIRSTMOVE)
-                    if (!isEmpty(game1.metaData.difficulty) && !isEmpty(game2.metaData.difficulty)) {
+                    if (game1!=null && game2!=null && !isEmpty(game1.metaData.difficulty) && !isEmpty(game2.metaData.difficulty)) {
                         AlertDialog.Builder(activity).setMessage("This looks like the gogameguru offline selection - sort by difficulty")
                                 .setPositiveButton(R.string.ok) { dialog, which ->
                                     GoProblemsRenaming(activity, dir_file).execute()

@@ -6,14 +6,15 @@ import android.support.test.espresso.action.ViewActions.scrollTo
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.runner.AndroidJUnit4
+import com.github.salomonbrys.kodein.instance
+import com.github.salomonbrys.kodein.lazy
 import com.squareup.spoon.Spoon
 import org.hamcrest.Matchers.containsString
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
-import org.ligi.gobandroid_hd.TestApp
 import org.ligi.gobandroid_hd.logic.Cell
 import org.ligi.gobandroid_hd.logic.CellImpl
 import org.ligi.gobandroid_hd.logic.GoGame
@@ -21,7 +22,6 @@ import org.ligi.gobandroid_hd.model.GameProvider
 import org.ligi.gobandroid_hd.test_helper_functions.tapStone
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity
 import org.ligi.trulesk.TruleskActivityRule
-import javax.inject.Inject
 
 
 @RunWith(AndroidJUnit4::class)
@@ -30,13 +30,8 @@ class TheGameScoringActivity {
     @get:Rule
     val rule = TruleskActivityRule(GameScoringActivity::class.java, false)
 
-    @Inject
-    lateinit var gameProvider: GameProvider
+    val gameProvider: GameProvider  by App.kodein.lazy.instance()
 
-    @Before
-    fun setUp() {
-        TestApp.component().inject(this)
-    }
 
     @Test
     fun testThatGoBoardIsThere() {

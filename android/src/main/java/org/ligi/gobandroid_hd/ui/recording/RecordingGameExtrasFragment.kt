@@ -21,7 +21,7 @@ class RecordingGameExtrasFragment : GobandroidGameAwareFragment() {
 
     private val handler = Handler()
 
-    override fun createView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle?): View {
+    override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val lp = LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
 
         editText.setText(game.actMove.comment)
@@ -38,7 +38,7 @@ class RecordingGameExtrasFragment : GobandroidGameAwareFragment() {
         return editText
     }
 
-    override fun onGoGameChanged(gameChangedEvent: GameChangedEvent) {
+    override fun onGoGameChanged(gameChangedEvent: GameChangedEvent?) {
         super.onGoGameChanged(gameChangedEvent)
         handler.post {
             if (activity != null) {

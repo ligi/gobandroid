@@ -16,7 +16,7 @@ public class GobanDroidTVActivityNOIF extends GobanDroidTVActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        interactionScope.set_in_noif_mode(true);
+        getInteractionScope().set_in_noif_mode(true);
         super.onCreate(savedInstanceState);
 
     }

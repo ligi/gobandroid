@@ -6,6 +6,8 @@ import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.runner.AndroidJUnit4
+import com.github.salomonbrys.kodein.instance
+import com.github.salomonbrys.kodein.lazy
 import com.squareup.spoon.Spoon
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Fail.fail
@@ -14,14 +16,13 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
-import org.ligi.gobandroid_hd.TestApp
 import org.ligi.gobandroid_hd.model.GameProvider
 import org.ligi.gobandroid_hd.test_helper_functions.readAssetHowItShouldBe
 import org.ligi.gobandroid_hd.test_helper_functions.readGame
 import org.ligi.gobandroid_hd.ui.review.GameReviewActivity
 import org.ligi.trulesk.TruleskActivityRule
-import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 class TheReviewActivity {
@@ -29,13 +30,11 @@ class TheReviewActivity {
     @get:Rule
     val rule = TruleskActivityRule(GameReviewActivity::class.java, false)
 
-    @Inject
-    lateinit var gameProvider: GameProvider
+    val gameProvider: GameProvider  by App.kodein.lazy.instance()
 
     @Before
     fun setUp() {
-        TestApp.component().inject(this)
-        gameProvider.set(readGame("small_19x19"))
+        gameProvider.set(readGame("small_19x19")!!)
         rule.launchActivity(null)
     }
 

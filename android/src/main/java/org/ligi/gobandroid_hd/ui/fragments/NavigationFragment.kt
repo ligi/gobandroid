@@ -40,7 +40,7 @@ class NavigationFragment : GobandroidGameAwareFragment() {
 
         btn_first.setOnClickListener {
             val nextJunction = game.findPrevJunction()
-            if (nextJunction.isFirstMove) {
+            if (nextJunction!!.isFirstMove) {
                 game.jump(nextJunction)
             } else {
                 showJunctionInfoSnack(R.string.found_junction_snack_for_first)
@@ -55,7 +55,7 @@ class NavigationFragment : GobandroidGameAwareFragment() {
 
         btn_last.setOnClickListener {
             val nextJunction = game.findNextJunction()
-            if (nextJunction.hasNextMove()) {
+            if (nextJunction!!.hasNextMove()) {
                 showJunctionInfoSnack(R.string.found_junction_snack_for_last)
                 game.jump(nextJunction.nextMoveVariations[0])
             } else {
@@ -69,7 +69,7 @@ class NavigationFragment : GobandroidGameAwareFragment() {
         }
     }
 
-    override fun onGoGameChanged(gameChangedEvent: GameChangedEvent) {
+    override fun onGoGameChanged(gameChangedEvent: GameChangedEvent?) {
         super.onGoGameChanged(gameChangedEvent)
         updateButtonStates()
     }

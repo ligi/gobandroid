@@ -38,7 +38,7 @@ class TsumegoActivity : GoActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         if (game == null) { // there was no game - fallback to main menu
-            App.getTracker().trackException("tsumego start getGame() returned null in onCreate", false)
+            App.tracker.trackException("tsumego start getGame() returned null in onCreate", false)
             finish()
             // startActivity(new Intent(this, gobandroid.class));
             return super.onCreateOptionsMenu(menu)
@@ -83,7 +83,7 @@ class TsumegoActivity : GoActivity() {
         super.onResume()
 
         if (game == null) { // there was no game - fallback to main menu
-            App.getTracker().trackException("tsumego start getGame() returned null in onCreate", false)
+            App.tracker.trackException("tsumego start getGame() returned null in onCreate", false)
             finish()
             return
         }
