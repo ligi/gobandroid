@@ -175,7 +175,6 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         val matching_move = actMove.getNextMoveOnCell(cell)
         if (matching_move != null) {
             redo(matching_move)
-            actMove.redo(calcBoard, matching_move)
             return MoveStatus.VALID
         }
 

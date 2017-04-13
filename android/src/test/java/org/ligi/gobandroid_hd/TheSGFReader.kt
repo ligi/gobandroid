@@ -2,6 +2,8 @@ package org.ligi.gobandroid_hd
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import org.ligi.gobandroid_hd.logic.CellImpl
+import org.ligi.gobandroid_hd.logic.GoDefinitions
 import org.ligi.gobandroid_hd.logic.markers.TextMarker
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader
 
@@ -56,8 +58,19 @@ class TheSGFReader {
             // https://github.com/ligi/gobandroid/issues/106
     fun testReadSGFWithFirstMoveWhiteAndCapture() {
         val game = SGFReader.sgf2game(readAsset("test_sgfs/first_move_capture_and_white.sgf"), null)
-
         assertThat(game.findLastMove().movePos).isEqualTo(2)
+        assertThat(game.findLastMove().player).isEqualTo(GoDefinitions.PLAYER_BLACK)
+
+        val moveZero = game.actMove
+        assertThat(moveZero.hasNextMove()).isTrue()
+        val nextMoveCell = moveZero.getnextMove(0).cell
+        assertThat(nextMoveCell).isNotNull()
+        val cellToCapture = CellImpl(nextMoveCell.x -1, nextMoveCell.y)
+        assertThat(game.calcBoard.getCellKind(cellToCapture)).isEqualTo(GoDefinitions.STONE_BLACK)
+        game.redo(0)
+        assertThat(game.calcBoard.getCellKind(cellToCapture)).isEqualTo(GoDefinitions.STONE_NONE)
+        val redoMove = game.actMove
+        assertThat(redoMove.captures.size).isEqualTo(1)
     }
 
     @Test

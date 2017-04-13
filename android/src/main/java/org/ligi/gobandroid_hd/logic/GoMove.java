@@ -94,6 +94,7 @@ public class GoMove {
             return this;
         }
 
+        next.buildCaptures(board);
         next.apply(board);
         return next;
     }
@@ -160,6 +161,9 @@ public class GoMove {
 
     private void buildCaptures(StatefulGoBoard board) {
         captures.clear();
+        if(cell == null) {
+            return;
+        }
 
         //temporarily apply the move in order to calculate captures
         byte previousStatus = board.getCellKind(cell);
