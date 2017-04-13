@@ -103,7 +103,6 @@ android {
 
 spoon {
     debug = true
-    skipDevices = ["3200d5cd47677000", "0019bfc975a2ae", "015d165c52500804"]
 }
 
 configurations {
@@ -115,17 +114,13 @@ configurations {
     androidTestCompile.exclude group: 'com.android.support', module: 'support-annotations'
     androidTestCompile.exclude group: 'com.android.support', module: 'preference-v7'
     androidTestCompile.exclude module: 'recyclerview-v7'
-    androidTestCompile.exclude module: 'kotlin-stdlib'
 }
 
 dependencies {
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
+    compile 'com.github.salomonbrys.kodein:kodein:3.3.0'
 
     compile 'com.google.code.findbugs:jsr305:3.0.1'
     provided 'org.glassfish:javax.annotation:10.0-b28'
-
-    compile "com.google.dagger:dagger:$dagger_version"
 
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:recyclerview-v7:$support_version"
@@ -156,8 +151,6 @@ dependencies {
     withCloudCompile "com.google.android.gms:play-services-plus:$play_version"
 
     withCloudCompile 'com.google.apis:google-api-services-games:v1-rev214-1.22.0'
-
-    kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
 
     androidTestCompile 'com.github.ligi:trulesk:0.19'
 

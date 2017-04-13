@@ -40,7 +40,7 @@ public class SGFLoadFromExternalActivity extends GobandroidFragmentActivity {
         super.onCreate(savedInstanceState);
 
         // that's the main reason why we build this fwd activity
-        interactionScope.setMode(REVIEW);
+        getInteractionScope().setMode(REVIEW);
 
         // take the original intent and change the class - the rest stays
         final Intent fwd_intent = getIntent();

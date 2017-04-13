@@ -15,9 +15,9 @@ class TheSGFWriter {
         val test_sgf_dir = File(javaClass.classLoader.getResource("test_sgfs").toURI())
 
         for (sgf in test_sgf_dir.list(SGFFileNameFilter())) {
-            val game = SGFReader.sgf2game(File(test_sgf_dir, sgf).readText(), null)
+            val game = SGFReader.sgf2game(File(test_sgf_dir, sgf).readText(), null)!!
             val newSGF = SGFWriter.game2sgf(game)
-            val newGame = SGFReader.sgf2game(newSGF, null)
+            val newGame = SGFReader.sgf2game(newSGF, null)!!
             if (!game.isContentEqualTo(newGame)) {
                 fail("game did not survive the read->write->read RoundTrip " + sgf + " " + game.metaData.name)
             }

@@ -4,10 +4,7 @@ import org.ligi.gobandroid_hd.logic.Cell
 import org.ligi.gobandroid_hd.logic.GoDefinitions
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.logic.GoMove
-import org.ligi.gobandroid_hd.logic.markers.CircleMarker
-import org.ligi.gobandroid_hd.logic.markers.SquareMarker
 import org.ligi.gobandroid_hd.logic.markers.TextMarker
-import org.ligi.gobandroid_hd.logic.markers.TriangleMarker
 import org.ligi.tracedroid.logging.Log
 import java.io.BufferedWriter
 import java.io.File
@@ -78,7 +75,7 @@ object SGFWriter {
                 if (act_move.isPassMove) {
                     res.append("[]")
                 } else {
-                    res.append(coords2SGFFragment(act_move.cell)).append("\n")
+                    res.append(coords2SGFFragment(act_move.cell!!)).append("\n")
                 }
             }
 

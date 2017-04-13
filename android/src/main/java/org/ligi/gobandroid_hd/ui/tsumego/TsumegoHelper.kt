@@ -70,8 +70,8 @@ object TsumegoHelper {
         for (variatonMove in move.nextMoveVariations)
             act_max.update(calcMaxMove(variatonMove, act_max).value)
 
-        if (move.cell != null) {
-            act_max.update(move.cell.x).update(move.cell.y)
+        move.cell?.let {
+            act_max.update(it.x).update(it.y)
         }
 
         return act_max

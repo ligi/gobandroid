@@ -8,14 +8,13 @@ import android.net.Uri
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
+import com.github.salomonbrys.kodein.instance
+import com.github.salomonbrys.kodein.lazy
+import kotlinx.android.synthetic.main.top_nav_and_extras.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.ligi.gobandroid_hd.App
@@ -27,19 +26,16 @@ import org.ligi.gobandroid_hd.model.GameProvider
 import org.ligi.gobandroid_hd.ui.gnugo.GnuGoHelper
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper
 import org.ligi.tracedroid.logging.Log
-import javax.inject.Inject
 
 class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
 
     private val GooglePlayStorePackageNameOld = "com.google.market"
     private val GooglePlayStorePackageNameNew = "com.android.vending"
 
-    @Inject
-    lateinit internal var gameProvider: GameProvider
+    internal val gameProvider: GameProvider by App.kodein.lazy.instance()
+    internal val interactionScope: InteractionScope by App.kodein.lazy.instance()
 
-    @Inject
-    lateinit internal var interactionScope: InteractionScope
-
+    /*
     @BindView(R.id.white_captures_tv)
     lateinit internal var white_captures_tv: TextView
 
@@ -57,17 +53,8 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
 
     @BindView(R.id.whiteStoneImageview)
     lateinit internal var white_info_container: View
+*/
 
-
-    @OnClick(R.id.mode_tv)
-    internal fun onModeSpinnerClick() {
-        showModePopup(activity)
-    }
-
-    @OnClick(R.id.move_tv)
-    internal fun onMoveSpinnerClick() {
-        showModePopup(activity)
-    }
 
     private val inflater: LayoutInflater
     private val app: App
@@ -86,20 +73,26 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
     }
 
     init {
-
-        App.component().inject(this)
         app = activity.applicationContext as App
-
 
         highlight_color = ResourcesCompat.getColor(resources, R.color.dividing_color, null)
         transparent = ResourcesCompat.getColor(resources, android.R.color.transparent, null)
 
         inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-        val top_view = inflater.inflate(R.layout.top_nav_and_extras, this)
+        inflater.inflate(R.layout.top_nav_and_extras, this)
 
-        ButterKnife.bind(this, top_view)
         refresh()
+
+        mode_tv.setOnClickListener {
+            showModePopup(activity)
+        }
+
+        move_tv.setOnClickListener {
+            showModePopup(activity)
+        }
+
+
     }
 
     private fun addItem(container: LinearLayout, image_resId: Int, str_resid: Int, listener: Runnable) {
@@ -201,7 +194,7 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
             white_captures_tv.setBackgroundColor(if (isWhitesMove) highlight_color else transparent)
 
             val isBlacksMove = game.isBlackToMove || game.isFinished
-            black_info_container.setBackgroundColor(if (isBlacksMove) highlight_color else transparent)
+            blackStoneImageView.setBackgroundColor(if (isBlacksMove) highlight_color else transparent)
             black_captures_tv.setBackgroundColor(if (isBlacksMove) highlight_color else transparent)
 
             move_tv.text = app.resources.getString(R.string.move) + game.actMove.movePos

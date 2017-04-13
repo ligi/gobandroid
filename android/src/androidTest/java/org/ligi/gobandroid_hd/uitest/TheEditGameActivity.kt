@@ -4,13 +4,14 @@ import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.*
+import com.github.salomonbrys.kodein.instance
+import com.github.salomonbrys.kodein.lazy
 import com.squareup.spoon.Spoon
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
-import org.ligi.gobandroid_hd.TestApp
 import org.ligi.gobandroid_hd.logic.CellImpl
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.logic.markers.GoMarker
@@ -22,20 +23,13 @@ import org.ligi.gobandroid_hd.test_helper_functions.getAllCellsForRect
 import org.ligi.gobandroid_hd.test_helper_functions.tapStone
 import org.ligi.gobandroid_hd.ui.editing.EditGameActivity
 import org.ligi.trulesk.TruleskActivityRule
-import javax.inject.Inject
 
 class TheEditGameActivity {
 
     @get:Rule
     val rule = TruleskActivityRule(EditGameActivity::class.java, false)
 
-    @Inject
-    lateinit var gameProvider: GameProvider
-
-    @Before
-    fun setUp() {
-        TestApp.component().inject(this)
-    }
+    val gameProvider: GameProvider by App.kodein.lazy.instance()
 
     @Test
     fun testThatGoBoardIsThere() {

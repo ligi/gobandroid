@@ -47,7 +47,7 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
         // getBoard().requestFocus(); - but that was not working ..
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
-        App.getTracker().trackEvent("ui_action", "gnugo", "play", null)
+        App.tracker.trackEvent("ui_action", "gnugo", "play", null)
 
         dlg = GnuGoSetupDialog(this)
 
@@ -236,7 +236,7 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
 
                     }
                     while (currentMove.hasNextMove()) {
-                        currentMove = currentMove.getnextMove(0)
+                        currentMove = currentMove.getnextMove(0)!!
                         val gtpMove = getGtpMoveFromMove(currentMove)
                         if (currentMove.player == GoDefinitions.PLAYER_BLACK) {
                             service!!.processGTP("play black " + gtpMove)

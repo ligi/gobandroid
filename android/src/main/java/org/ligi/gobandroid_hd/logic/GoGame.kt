@@ -222,7 +222,9 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     }
 
     fun redo(pos: Int) {
-        redo(actMove.getnextMove(pos))
+        actMove.getnextMove(pos)?.let {
+            redo(it)
+        }
     }
 
     fun redo(move: GoMove) {
@@ -234,10 +236,12 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     fun applyCaptures() {
         val local_captures = actMove.captures.size
         if(local_captures > 0) {
-            if (calcBoard.isCellKind(actMove.cell, STONE_WHITE)) {
-                capturesWhite += local_captures
-            } else {
-                capturesBlack += local_captures
+            actMove.cell?.let {
+                if (calcBoard.isCellKind(it, STONE_WHITE)) {
+                    capturesWhite += local_captures
+                } else {
+                    capturesBlack += local_captures
+                }
             }
         }
     }
@@ -245,17 +249,19 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     fun undoCaptures() {
         val local_captures = actMove.captures.size
         if(local_captures > 0) {
-            if (calcBoard.isCellKind(actMove.cell, STONE_WHITE)) {
-                capturesWhite -= local_captures
-            } else {
-                capturesBlack -= local_captures
+            actMove.cell?.let {
+                if (calcBoard.isCellKind(it, STONE_WHITE)) {
+                    capturesWhite -= local_captures
+                } else {
+                    capturesBlack -= local_captures
+                }
             }
         }
     }
 
     fun nextVariationWithOffset(offset: Int): GoMove? {
         if (actMove.isFirstMove) return null
-        val variations = actMove.parent.nextMoveVariations
+        val variations = actMove.parent!!.nextMoveVariations
         val indexOf = variations.indexOf(actMove)
         return variations.elementAtOrNull(indexOf + offset)
     }
@@ -265,35 +271,36 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         EventBus.getDefault().post(GameChangedEvent)
     }
 
-    fun findFollowingMove(f: (GoMove) -> Boolean): GoMove {
+    fun findFollowingMove(f: (GoMove) -> Boolean): GoMove? {
         return findMove({ it.getnextMove(0) }, f)
     }
 
-    fun findPreviousMove(condition: (GoMove) -> Boolean): GoMove {
+    fun findPreviousMove(condition: (GoMove) -> Boolean): GoMove? {
         return findMove({ it.parent }, condition)
     }
 
-    fun findMove(nextMove: (GoMove) -> GoMove, condition: (GoMove) -> Boolean): GoMove {
-        var move = actMove
-        while (true) {
+    fun findMove(nextMove: (GoMove) -> GoMove?, condition: (GoMove) -> Boolean): GoMove? {
+        var move: GoMove? = actMove
+        while (move!=null) {
             if (condition(move)) return move
             move = nextMove(move)
         }
+        return null
     }
 
     fun findFirstMove(): GoMove {
-        return findPreviousMove { it.isFirstMove }
+        return findPreviousMove { it.isFirstMove }!!
     }
 
     fun findLastMove(): GoMove {
-        return findFollowingMove { !it.hasNextMove() }
+        return findFollowingMove { !it.hasNextMove() }!!
     }
 
-    fun findNextJunction(): GoMove {
+    fun findNextJunction(): GoMove? {
         return findFollowingMove { !it.hasNextMove() || it.hasNextMoveVariations() }
     }
 
-    fun findPrevJunction(): GoMove {
+    fun findPrevJunction(): GoMove? {
         return findPreviousMove { it.isFirstMove || (it.hasNextMoveVariations() && !it.isContentEqual(actMove.parent) && !it.isContentEqual(actMove)) }
     }
 
@@ -310,7 +317,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         while (true) {
             tmp_move = replay_moves.last()
             if (tmp_move.isFirstMove || tmp_move.parent == null) break
-            replay_moves.add(tmp_move.parent)
+            replay_moves.add(tmp_move.parent!!)
         }
 
         reset()
@@ -381,7 +388,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         get() {
             if (actMove.isFirstMove) return false
             if (actMove.parent == null) return false
-            return actMove.isPassMove && actMove.parent.isPassMove
+            return actMove.isPassMove && actMove.parent!=null && actMove.parent!!.isPassMove
         }
 
     /**

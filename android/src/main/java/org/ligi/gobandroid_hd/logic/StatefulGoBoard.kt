@@ -26,7 +26,6 @@ import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer
 
 class StatefulGoBoard(val statelessGoBoard: StatelessGoBoard) : GoBoard by statelessGoBoard {
 
-    @CellStatus
     val board: Array<ByteArray> = Array(size) { ByteArray(size) }
 
     constructor(statelessGoBoard: StatelessGoBoard, predefined_board: Array<ByteArray>) : this(statelessGoBoard) {
@@ -115,16 +114,15 @@ class StatefulGoBoard(val statelessGoBoard: StatelessGoBoard) : GoBoard by state
         return Math.max(board[one.x][one.y].toInt(), 0) == Math.max(board[other.x][other.y].toInt(), 0)
     }
 
-    @CellStatus
     fun getCellKind(cell: Cell): Byte {
         return board[cell.x][cell.y];
     }
 
-    fun setCell(cell: Cell, @CellStatus newStatus: Byte) {
+    fun setCell(cell: Cell, newStatus: Byte) {
         board[cell.x][cell.y] = newStatus
     }
 
-    fun setCellGroup(cells: Collection<Cell>, @CellStatus newStatus: Byte) {
+    fun setCellGroup(cells: Collection<Cell>, newStatus: Byte) {
         cells.forEach { setCell(it, newStatus) }
     }
 

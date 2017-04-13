@@ -25,7 +25,7 @@ public class GCMIntentService extends IntentService {
 
         Log.i("GCM incoming Message");
 
-        App.getTracker().init(getApplicationContext());
+        App.Companion.getTracker().init(getApplicationContext());
 
         final Bundle extras = intent.getExtras();
         final GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
@@ -39,7 +39,7 @@ public class GCMIntentService extends IntentService {
 
                 if (extras.getString("max_tsumego") != null) { // todo use the supplied value here
                     Log.i("GCM starting DownloadProblemsForNotification");
-                    App.getTracker().trackEvent("event", "gcm", "trigger", 0L);
+                    App.Companion.getTracker().trackEvent("event", "gcm", "trigger", 0L);
                     DownloadProblemsForNotification.show(getBaseContext());
                 }
             }
