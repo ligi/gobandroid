@@ -10,14 +10,14 @@ class TheGoBoard {
 
     @Test
     fun toStringWorksForMinimal2x2() {
-        val board = SGFReader.sgf2game(readAsset("test_sgfs/minimal_2x2.sgf"), null).calcBoard
+        val board = SGFReader.sgf2game(readAsset("test_sgfs/minimal_2x2.sgf"), null)!!.calcBoard
 
         assertThat(board.toString()).isEqualTo("..\n..\n")
     }
 
     @Test
     fun toStringWorksFor2x2WithMoveTopLeft() {
-        val board = SGFReader.sgf2game(readAsset("test_sgfs/2x2_move_topleft.sgf"), null).calcBoard
+        val board = SGFReader.sgf2game(readAsset("test_sgfs/2x2_move_topleft.sgf"), null)!!.calcBoard
 
         assertThat(board.toString()).isEqualTo("W.\n..\n")
     }

@@ -17,15 +17,12 @@ fun readAssetHowItShouldBe(context: Context, fileName: String): String? {
 }
 
 fun readAsset(context: Context, fileName: String): String? {
-    try {
+
         val assets = context.assets
         val inputStream = assets.open(fileName)
         val foo = StringWriter()
         inputStream.reader().copyTo(foo)
         return foo.toString()
-    } catch (e: IOException) {
-        fail("could not read test asset $fileName $e")
-        return null
-    }
+
 
 }

@@ -10,7 +10,7 @@ import org.ligi.gobandroid_hd.ui.alerts.ProgressDialog
 class DownloadProblemsDialog(context: Activity, refreshable: Refreshable?) : ProgressDialog(context) {
 
     init {
-        App.getTracker().trackEvent("ui_action", "tsumego", "refresh", null);
+        App.tracker.trackEvent("ui_action", "tsumego", "refresh", null);
 
         setIconResource(R.drawable.ic_navigation_refresh)
         setTitle(R.string.please_stay_patient)
@@ -18,7 +18,7 @@ class DownloadProblemsDialog(context: Activity, refreshable: Refreshable?) : Pro
         message.setText(R.string.downloading_tsumegos_please_wait)
 
         Thread(Runnable {
-            val initList = TsumegoDownloadHelper.getDefaultList(App.component().settings())
+            val initList = TsumegoDownloadHelper.getDefaultList(App.env)
             val result = TsumegoDownloadHelper.doDownload(context, initList, {
                 context.runOnUiThread {
                     message.text = it

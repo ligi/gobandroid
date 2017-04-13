@@ -6,15 +6,17 @@ import android.support.test.espresso.assertion.ViewAssertions.doesNotExist
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.runner.AndroidJUnit4
+import com.github.salomonbrys.kodein.instance
+import com.github.salomonbrys.kodein.lazy
 import com.jraska.falcon.FalconSpoon
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.InteractionScope
 import org.ligi.gobandroid_hd.R
-import org.ligi.gobandroid_hd.TestApp
 import org.ligi.gobandroid_hd.logic.CellImpl
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.model.GameProvider
@@ -22,7 +24,6 @@ import org.ligi.gobandroid_hd.test_helper_functions.placeStone
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity
 import org.ligi.trulesk.TruleskActivityRule
 import org.ligi.trulesk.invokeMenu
-import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 class TheUndoFunctionality {
@@ -30,15 +31,12 @@ class TheUndoFunctionality {
     @get:Rule
     val rule = TruleskActivityRule(GameRecordActivity::class.java)
 
-    @Inject
-    lateinit var gameProvider: GameProvider
+    val gameProvider: GameProvider  by App.kodein.lazy.instance()
 
-    @Inject
-    lateinit var interactionScope: InteractionScope
+    val interactionScope: InteractionScope  by App.kodein.lazy.instance()
 
     @Before
     fun setUp() {
-        TestApp.component().inject(this)
         gameProvider.set(GoGame(9))
     }
 

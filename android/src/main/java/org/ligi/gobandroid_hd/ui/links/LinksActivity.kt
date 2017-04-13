@@ -29,6 +29,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
+import kotlinx.android.synthetic.main.links_view_pager.*
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity
@@ -41,11 +42,6 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity
 
 class LinksActivity : GobandroidFragmentActivity() {
 
-    @BindView(R.id.view_pager)
-    internal lateinit var viewPager: ViewPager
-
-    @BindView(R.id.sliding_tabs)
-    internal lateinit var titlePageIndicator: TabLayout
 
     class LinkFragmentItem(val title: String, val tag: String, val fragmentGetter: () -> Fragment)
 
@@ -56,7 +52,7 @@ class LinksActivity : GobandroidFragmentActivity() {
         }
 
         override fun getItem(i: Int): Fragment {
-            App.getTracker().trackEvent("ui_action", "links", items[i].tag, null)
+            App.tracker.trackEvent("ui_action", "links", items[i].tag, null)
             return items[i].fragmentGetter()
         }
 
@@ -84,8 +80,8 @@ class LinksActivity : GobandroidFragmentActivity() {
                 LinkFragmentItem(getString(R.string.link_tab_credits), "credits", { CreditsListFragment() }))
 
 
-        viewPager.adapter = LinkListFragmentPager(supportFragmentManager, items)
-        titlePageIndicator.setupWithViewPager(viewPager)
+        view_pager.adapter = LinkListFragmentPager(supportFragmentManager, items)
+        sliding_tabs.setupWithViewPager(view_pager)
 
     }
 

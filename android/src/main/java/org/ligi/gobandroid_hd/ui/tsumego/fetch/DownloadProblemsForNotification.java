@@ -10,7 +10,7 @@ public class DownloadProblemsForNotification {
     public static void show(Context ctx) {
         final App app = (App) ctx.getApplicationContext();
 
-        App.getTracker().trackEvent("ui_action", "tsumego", "refresh_notification", null);
+        App.Companion.getTracker().trackEvent("ui_action", "tsumego", "refresh_notification", null);
 
         final int res = TsumegoDownloadHelper.INSTANCE.doDownloadDefault(app);
         if (res > 0) {

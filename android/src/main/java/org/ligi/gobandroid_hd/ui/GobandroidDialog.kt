@@ -13,12 +13,13 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.LinearLayout.LayoutParams
 import android.widget.TextView
+import com.github.salomonbrys.kodein.instance
+import com.github.salomonbrys.kodein.lazy
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.InteractionScope
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.model.GameProvider
 import org.ligi.gobandroid_hd.ui.application.GoAndroidEnvironment
-import javax.inject.Inject
 
 /**
  * A styled Dialog fit in the gobandroid style
@@ -42,18 +43,11 @@ open class GobandroidDialog(context: Context) : Dialog(context, R.style.dialog_t
         }
     }
 
-    @Inject
-    lateinit var settings: GoAndroidEnvironment
-
-    @Inject
-    lateinit var gameProvider: GameProvider
-
-    @Inject
-    lateinit var interactionScope: InteractionScope
+    val settings: GoAndroidEnvironment by App.kodein.lazy.instance()
+    val gameProvider: GameProvider by App.kodein.lazy.instance()
+    val interactionScope: InteractionScope by App.kodein.lazy.instance()
 
     init {
-
-        App.component().inject(this)
         inflater = LayoutInflater.from(context)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.setContentView(R.layout.dialog_gobandroid)

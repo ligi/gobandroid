@@ -25,6 +25,8 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import com.github.salomonbrys.kodein.instance
+import com.github.salomonbrys.kodein.lazy
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.InteractionScope
 import org.ligi.gobandroid_hd.R
@@ -36,7 +38,6 @@ import org.ligi.gobandroid_hd.model.GameProvider
 import org.ligi.tracedroid.logging.Log
 import java.io.File
 import java.io.FileOutputStream
-import javax.inject.Inject
 
 /**
  * Class to visually represent a Go Board in Android
@@ -49,11 +50,8 @@ open class GoBoardView : View {
 
     private val SMALL_STONE_SCALE_FACTOR = 0.6f
 
-    @Inject
-    lateinit var gameProvider: GameProvider
-
-    @Inject
-    lateinit var interactionScope: InteractionScope
+    val gameProvider: GameProvider  by App.kodein.lazy.instance()
+    val interactionScope: InteractionScope by App.kodein.lazy.instance()
 
     private var zoom_poi: Cell? = null
 
@@ -110,7 +108,6 @@ open class GoBoardView : View {
 
 
     init {
-        App.component().inject(this)
         init()
     }
 

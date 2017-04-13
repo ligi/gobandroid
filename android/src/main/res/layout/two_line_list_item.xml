@@ -18,7 +18,7 @@
 
         <TextView
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@android:id/text1"
+                android:id="@+id/text1"
                 android:layout_width="fill_parent"
                 android:fontFamily="sans-serif"
                 android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@android:id/text2"
+                android:id="@+id/text2"
                 android:fontFamily="sans-serif-light"
             android:textColor="?attr/colorControlNormal" />
     </LinearLayout>

@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.support.design.widget.NavigationView
+import com.github.salomonbrys.kodein.instance
+import com.github.salomonbrys.kodein.lazy
 import org.greenrobot.eventbus.EventBus
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
@@ -21,19 +23,14 @@ import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity
 import org.ligi.kaxt.startActivityFromURL
 import java.io.File
-import javax.inject.Inject
 
 class NavigationDrawerHandler(private val ctx: GobandroidFragmentActivity) {
     private val navigationView: NavigationView
 
-    @Inject
-    lateinit internal var env: GoAndroidEnvironment
-
-    @Inject
-    lateinit internal var gameProvider: GameProvider
+    internal val env: GoAndroidEnvironment by App.kodein.lazy.instance()
+    internal val gameProvider: GameProvider by App.kodein.lazy.instance()
 
     init {
-        App.component().inject(this)
         navigationView = ctx.findViewById(R.id.left_drawer) as NavigationView
     }
 

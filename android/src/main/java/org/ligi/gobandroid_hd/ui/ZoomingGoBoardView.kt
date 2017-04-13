@@ -1,4 +1,7 @@
 /**
+ * gobandroid
+ * by Marcus -Ligi- Bueschleb
+ * http://ligi.de
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -10,25 +13,24 @@
  * GNU General Public License for more details.
 
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see //www.gnu.org/licenses/>.
+ * along with this program. If not, see <http:></http:>//www.gnu.org/licenses/>.
 
  */
 
-package org.ligi.gobandroid_hd.ui.alerts
+package org.ligi.gobandroid_hd.ui
 
 import android.content.Context
-import kotlinx.android.synthetic.main.dialog_game_load.view.*
-import org.ligi.gobandroid_hd.R
-import org.ligi.gobandroid_hd.ui.GobandroidDialog
+import android.util.AttributeSet
 
-open class ProgressDialog(context: Context) : GobandroidDialog(context) {
+/**
+ * Class to visually represent a Go Board in Android
+ */
+class ZoomingGoBoardView(context: Context, attrs: AttributeSet) : GoBoardView(context, attrs) {
 
-    val message by lazy { container.message}
-    val progress by lazy { container.progressBar}
+    override fun enforceSquare() = false
 
     init {
-        setContentView(R.layout.dialog_game_load)
-        setCancelable(false)
+        zoom = 3f
+        do_actpos_highlight_ony_if_active = false
     }
-
 }

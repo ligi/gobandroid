@@ -28,7 +28,7 @@ object TsumegoDownloadHelper {
     }
 
     fun doDownloadDefault(app: App): Int {
-        return doDownload(app, getDefaultList(App.component().settings()), {})
+        return doDownload(app, getDefaultList(App.env), {})
     }
 
     fun doDownload(ctx: Context, params: Array<TsumegoSource>, callback: (current: String) -> Unit): Int {

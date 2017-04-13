@@ -71,7 +71,7 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
 
         dlg.show()
 
-        App.getTracker().trackEvent("ui_action", "load_gf", intent.data.toString(), null)
+        App.tracker.trackEvent("ui_action", "load_gf", intent.data.toString(), null)
         Thread(this).start()
     }
 
