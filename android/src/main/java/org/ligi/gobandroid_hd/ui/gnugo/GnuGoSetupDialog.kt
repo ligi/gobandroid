@@ -2,10 +2,10 @@ package org.ligi.gobandroid_hd.ui.gnugo
 
 import android.content.Context
 import android.preference.PreferenceManager
-import android.widget.SeekBar
 import kotlinx.android.synthetic.main.setup_gnugo.view.*
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.ui.GobandroidDialog
+import org.ligi.kaxt.doOnProgressChanged
 
 class GnuGoSetupDialog(context: Context) : GobandroidDialog(context) {
 
@@ -39,17 +39,11 @@ class GnuGoSetupDialog(context: Context) : GobandroidDialog(context) {
 
         container.gnugo_strength.text = getContext().getString(R.string.gnugo_strength) + " " + level.toString()
 
-        container.gnugo_strength_seek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onStopTrackingTouch(seekBar: SeekBar) {}
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                if (fromUser) {
-                    container.gnugo_strength.text = getContext().getString(R.string.gnugo_strength) + progress.toString()
-                }
+        container.gnugo_strength_seek.doOnProgressChanged { progress, fromUser ->
+            if (fromUser) {
+                container.gnugo_strength.text = getContext().getString(R.string.gnugo_strength) + progress.toString()
             }
-        })
+        }
     }
 
     val isWhiteActive: Boolean
