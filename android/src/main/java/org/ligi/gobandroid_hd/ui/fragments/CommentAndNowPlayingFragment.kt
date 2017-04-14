@@ -4,19 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-
+import kotlinx.android.synthetic.main.comment_textview.*
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.events.GameChangedEvent
 import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity
 
 class CommentAndNowPlayingFragment : GobandroidGameAwareFragment() {
 
-    private var myTextView: TextView? = null
-
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val res = inflater.inflate(R.layout.game_extra_review, container, false)
-        myTextView = res.findViewById(R.id.comments_textview) as TextView
         onGoGameChanged(null)
         return res
     }
@@ -24,9 +20,9 @@ class CommentAndNowPlayingFragment : GobandroidGameAwareFragment() {
     override fun onGoGameChanged(gameChangedEvent: GameChangedEvent?) {
         super.onGoGameChanged(gameChangedEvent)
         activity.runOnUiThread {
-            if (myTextView != null) {
-                myTextView!!.text = game.actMove.comment
-                GoTerminologyViewActivity.linkifyTextView(myTextView!!)
+            comments_textview?.let {
+                it.text = game.actMove.comment
+                GoTerminologyViewActivity.linkifyTextView(it)
             }
         }
     }

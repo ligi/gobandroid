@@ -8,12 +8,11 @@ import android.net.Uri
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
-import android.widget.TextView
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.lazy
+import kotlinx.android.synthetic.main.dropdown_item.view.*
 import kotlinx.android.synthetic.main.top_nav_and_extras.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -34,27 +33,6 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
 
     internal val gameProvider: GameProvider by App.kodein.lazy.instance()
     internal val interactionScope: InteractionScope by App.kodein.lazy.instance()
-
-    /*
-    @BindView(R.id.white_captures_tv)
-    lateinit internal var white_captures_tv: TextView
-
-    @BindView(R.id.black_captures_tv)
-    lateinit internal var black_captures_tv: TextView
-
-    @BindView(R.id.move_tv)
-    lateinit internal var move_tv: TextView
-
-    @BindView(R.id.mode_tv)
-    lateinit internal var mode_tv: TextView
-
-    @BindView(R.id.blackStoneImageView)
-    lateinit internal var black_info_container: View
-
-    @BindView(R.id.whiteStoneImageview)
-    lateinit internal var white_info_container: View
-*/
-
 
     private val inflater: LayoutInflater
     private val app: App
@@ -98,10 +76,9 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
     private fun addItem(container: LinearLayout, image_resId: Int, str_resid: Int, listener: Runnable) {
 
         val v = inflater.inflate(R.layout.dropdown_item, container, false)
-        (v.findViewById(R.id.text) as TextView).setText(str_resid)
-        (v.findViewById(R.id.image) as ImageView).setImageResource(image_resId)
-
-        v.findViewById(R.id.click_container).setOnClickListener { listener.run() }
+        v.text.setText(str_resid)
+        v.image.setImageResource(image_resId)
+        v.click_container.setOnClickListener { listener.run() }
         container.addView(v)
     }
 
@@ -116,7 +93,7 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
             if (mode === InteractionScope.Mode.GNUGO && !GnuGoHelper.isGnuGoAvail(activity)) {
                 AlertDialog.Builder(activity).setTitle(R.string.install_gnugo)
                         .setMessage(R.string.gnugo_not_installed)
-                        .setPositiveButton(android.R.string.ok) { dialog, which ->
+                        .setPositiveButton(android.R.string.ok) { _, _ ->
                             val intent = Intent(Intent.ACTION_VIEW);
                             intent.data = Uri.parse("market://details?id=org.ligi.gobandroidhd.ai.gnugo")
                             val chooser = Intent.createChooser(intent, null)

@@ -16,9 +16,7 @@
 
 package org.ligi.gobandroid_hd.ui.review
 
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.RatingBar
+import kotlinx.android.synthetic.main.end_review_dialog.view.*
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.ui.GobandroidDialog
 import org.ligi.gobandroid_hd.ui.GobandroidNotifications
@@ -36,46 +34,35 @@ import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink
  */
 class EndReviewDialog(context: GobandroidFragmentActivity) : GobandroidDialog(context) {
 
-    private val bookmark_notification: CheckBox
-    private val save_bookmark_cp: CheckBox
-    private val bookmark_name: EditText
-    private val rating_bar: RatingBar
-    private val meta: SGFMetaData
+    private val meta by lazy { SGFMetaData(gameProvider.get()) }
 
     init {
-
-        meta = SGFMetaData(gameProvider.get())
         setContentView(R.layout.end_review_dialog)
 
         setTitle(R.string.end_review)
         setIconResource(R.drawable.ic_action_help_outline)
 
-        save_bookmark_cp = findViewById(R.id.save_bookmark_cp) as CheckBox
-        save_bookmark_cp.isChecked = true
+        container.save_bookmark_cp.isChecked = true
 
-        bookmark_notification = findViewById(R.id.bookmark_notification_cb) as CheckBox
-        bookmark_name = findViewById(R.id.bookmark_name_et) as EditText
-        bookmark_name.setText(BookmarkDialog.getCleanEnsuredFilename(settings, gameProvider.get()))
-
-        rating_bar = findViewById(R.id.game_rating) as RatingBar
+        container.bookmark_name_et.setText(BookmarkDialog.getCleanEnsuredFilename(settings, gameProvider.get()))
 
         if (meta.rating != null) {
-            rating_bar.rating = .5f * meta.rating!!
+            container.game_rating.rating = .5f * meta.rating!!
         }
 
-        save_bookmark_cp.setOnCheckedChangeListener { buttonView, isChecked ->
-            bookmark_notification.isEnabled = isChecked
-            bookmark_name.isEnabled = isChecked
+        container.save_bookmark_cp.setOnCheckedChangeListener { buttonView, isChecked ->
+            container.bookmark_notification_cb.isEnabled = isChecked
+            container.bookmark_name_et.isEnabled = isChecked
         }
 
         setPositiveButton(R.string.end_review_ok_button, { dialog ->
 
-            if (save_bookmark_cp.isChecked) {
-                GoLink.saveGameToGoLink(gameProvider.get(), settings.bookmarkPath, bookmark_name.text.toString() + ".golink")
+            if (container.save_bookmark_cp.isChecked) {
+                GoLink.saveGameToGoLink(gameProvider.get(), settings.bookmarkPath, container.bookmark_name_et.text.toString() + ".golink")
             }
 
-            if (bookmark_notification.isChecked) {
-                GobandroidNotifications(context).addGoLinkNotification(settings.bookmarkPath.toString() + "/" + bookmark_name.text.toString() + ".golink")
+            if (container.bookmark_notification_cb.isChecked) {
+                GobandroidNotifications(context).addGoLinkNotification(settings.bookmarkPath.toString() + "/" + container.bookmark_name_et.text.toString() + ".golink")
             }
 
             saveSGFMeta()
@@ -90,7 +77,7 @@ class EndReviewDialog(context: GobandroidFragmentActivity) : GobandroidDialog(co
     }
 
     fun saveSGFMeta() {
-        meta.rating = (rating_bar.rating * 2).toInt()
+        meta.rating = (container.game_rating.rating * 2).toInt()
         meta.persist()
     }
 }
