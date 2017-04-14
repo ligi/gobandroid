@@ -46,25 +46,18 @@ class GnuGoSetupDialog(context: Context) : GobandroidDialog(context) {
         }
     }
 
-    val isWhiteActive: Boolean
-        get() = container.gnugo_plays_white_radio.isChecked
-
-    val isBlackActive: Boolean
-        get() = container.gnugo_plays_black_radio.isChecked
-
-    val isBothActive: Boolean
-        get() = container.gnugo_plays_both_radio.isChecked
-
-    val strength: Int
-        get() = container.gnugo_strength_seek.progress
+    fun isWhiteActive() = container.gnugo_plays_white_radio.isChecked
+    fun isBlackActive() = container.gnugo_plays_black_radio.isChecked
+    fun isBothActive() = container.gnugo_plays_both_radio.isChecked
+    fun strength() = container.gnugo_strength_seek.progress
 
     fun saveRecentAsDefault() {
         val edit = shared_prefs.edit()
-        edit.putInt(SP_KEY_STRENGTH, strength)
+        edit.putInt(SP_KEY_STRENGTH, strength())
 
-        edit.putBoolean(SP_KEY_PLAYS_WHITE, isWhiteActive)
-        edit.putBoolean(SP_KEY_PLAYS_BLACK, isBlackActive)
-        edit.putBoolean(SP_KEY_PLAYS_BOTH, isBothActive)
+        edit.putBoolean(SP_KEY_PLAYS_WHITE, isWhiteActive())
+        edit.putBoolean(SP_KEY_PLAYS_BLACK, isBlackActive())
+        edit.putBoolean(SP_KEY_PLAYS_BOTH, isBothActive())
 
         edit.apply()
     }

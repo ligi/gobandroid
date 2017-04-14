@@ -52,9 +52,9 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
         dlg = GnuGoSetupDialog(this)
 
         dlg.setPositiveButton(R.string.ok) { dialog ->
-            gnuGoGame = GnuGoGame(dlg.isBlackActive or dlg.isBothActive,
-                    dlg.isWhiteActive or dlg.isBothActive,
-                    dlg.strength.toByte(),
+            gnuGoGame = GnuGoGame(dlg.isBlackActive() or dlg.isBothActive(),
+                    dlg.isWhiteActive() or dlg.isBothActive(),
+                    dlg.strength().toByte(),
                     game)
 
 
