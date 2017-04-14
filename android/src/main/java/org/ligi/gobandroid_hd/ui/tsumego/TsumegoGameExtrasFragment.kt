@@ -2,7 +2,6 @@ package org.ligi.gobandroid_hd.ui.tsumego
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.text.Html
 import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
@@ -12,6 +11,7 @@ import android.widget.TextView
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.lazy
 import kotlinx.android.synthetic.main.game_extra_tsumego.*
+import org.ligi.compat.HtmlCompat
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.model.GameProvider
@@ -51,7 +51,7 @@ class TsumegoGameExtrasFragment : Fragment() {
                             "'>" +
                             getString(R.string.next_tsumego) +
                             "</a>"
-                    tsumego_correct_view!!.text = Html.fromHtml(text)
+                    tsumego_correct_view!!.text = HtmlCompat.fromHtml(text)
                 } else {
                     tsumego_correct_view.text = getString(R.string.correct_but_no_more_tsumegos)
                 }

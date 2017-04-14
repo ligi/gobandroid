@@ -131,6 +131,7 @@ dependencies {
     compile 'com.github.ligi:KAXT:0.16'
     compile 'com.github.ligi:tracedroid:1.4'
     compile 'com.github.ligi:snackengage:0.9'
+    compile 'com.github.ligi:ExtraCompats:0.4'
 
     compile 'net.sourceforge.jchardet:jchardet:1.0'
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
