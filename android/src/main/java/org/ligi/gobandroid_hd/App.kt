@@ -33,7 +33,6 @@ open class App : Application() {
             bind<App>() with singleton { this@App }
         }
 
-        Kotpref.init(this)
         GobandroidSettingsTransition(this).transition()
 
         TsumegoCleaner(env).clean()
