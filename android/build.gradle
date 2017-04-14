@@ -132,7 +132,6 @@ dependencies {
     compile 'com.github.ligi:tracedroid:1.4'
     compile 'com.github.ligi:snackengage:0.9'
 
-    compile "com.jakewharton:butterknife:$butterknife_version"
     compile 'net.sourceforge.jchardet:jchardet:1.0'
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.n3twork.druid:alphanum:1.0.3'

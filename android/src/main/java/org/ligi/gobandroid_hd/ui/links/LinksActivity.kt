@@ -22,13 +22,9 @@
 package org.ligi.gobandroid_hd.ui.links
 
 import android.os.Bundle
-import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
-import butterknife.BindView
-import butterknife.ButterKnife
 import kotlinx.android.synthetic.main.links_view_pager.*
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
@@ -70,8 +66,6 @@ class LinksActivity : GobandroidFragmentActivity() {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(true)
         }
-
-        ButterKnife.bind(this)
 
         val items = arrayOf(
                 LinkFragmentItem(getString(R.string.link_tab_about), "about", { AboutListFragment() }),

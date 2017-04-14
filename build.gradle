@@ -4,7 +4,6 @@ buildscript {
         kotpref_version = '2.1.1'
 
         support_version = '25.3.1'
-        butterknife_version = '8.5.1'
         play_version = '9.8.0'
     }
 

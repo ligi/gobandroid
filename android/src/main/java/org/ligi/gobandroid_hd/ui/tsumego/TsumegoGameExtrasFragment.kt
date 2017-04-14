@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import butterknife.ButterKnife
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.lazy
 import kotlinx.android.synthetic.main.game_extra_tsumego.*
@@ -78,8 +77,6 @@ class TsumegoGameExtrasFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val res = inflater!!.inflate(R.layout.game_extra_tsumego, container, false)
-
-        ButterKnife.bind(this, res)
 
         updateUI()
         return res

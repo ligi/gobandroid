@@ -4,7 +4,6 @@ import android.content.IntentSender
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import butterknife.ButterKnife
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.gms.common.SignInButton
@@ -29,8 +28,6 @@ class ProfileActivityLogic : GoogleApiClient.OnConnectionFailedListener {
     fun onResume(base: BaseProfileActivity, mGoogleApiClient: GoogleApiClient) {
         this.base = base
         this.mGoogleApiClient = mGoogleApiClient
-
-        ButterKnife.bind(this, base)
 
         base.findViewById(R.id.sign_out_button).setOnClickListener {
             CloudPrefs.userWantsPlayConnection = false

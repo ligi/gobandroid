@@ -17,7 +17,6 @@
 package org.ligi.gobandroid_hd.ui.review
 
 import android.text.TextUtils
-import butterknife.ButterKnife
 import kotlinx.android.synthetic.main.save_bookmark.view.*
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.logic.GoGame
@@ -41,20 +40,12 @@ import java.util.*
  */
 class BookmarkDialog(context: GobandroidFragmentActivity) : GobandroidDialog(context) {
 
-    /*
-    @BindView(R.id.bookmark_name)
-    internal var fileNameEdit: EditText? = null
-
-    @BindView(R.id.message)
-    internal var message: TextView? = null
-*/
     init {
 
         setTitle(R.string.bookmark)
         setIconResource(R.drawable.ic_toggle_star_border)
         setContentView(R.layout.save_bookmark)
 
-        ButterKnife.bind(this)
         val innerFileName = getCleanEnsuredFilename(settings, gameProvider.get())
 
         container.message.text = context.resources.getString(R.string.bookmark_to_write_into) + " " + settings.bookmarkPath
