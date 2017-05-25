@@ -38,15 +38,17 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.game.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import org.ligi.gobandroid_hd.App.Companion.env
 import org.ligi.gobandroid_hd.BuildConfig
 import org.ligi.gobandroid_hd.InteractionScope
 import org.ligi.gobandroid_hd.R
+import org.ligi.gobandroid_hd.R.id.*
+import org.ligi.gobandroid_hd.R.layout.game
 import org.ligi.gobandroid_hd.events.GameChangedEvent
 import org.ligi.gobandroid_hd.events.OptionsItemClickedEvent
 import org.ligi.gobandroid_hd.logic.Cell
 import org.ligi.gobandroid_hd.logic.GoGame
-import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus.INVALID_NOT_ON_BOARD
-import org.ligi.gobandroid_hd.logic.GoMove
+import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus.*
 import org.ligi.gobandroid_hd.logic.sgf.SGFWriter
 import org.ligi.gobandroid_hd.print.GoGamePrintDocumentAdapter
 import org.ligi.gobandroid_hd.ui.GoSoundManager.Sound.*
@@ -80,11 +82,17 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
     var sound_man: GoSoundManager? = null
 
     private var info_toast: Toast? = null
-    private var actFragment: Fragment? = null
     private var last_processed_move_change_num = 0
 
-    open val gameExtraFragment: Fragment
-        get() = DefaultGameExtrasFragment()
+    open val isBoardFocusWanted = true
+    open val gameExtraFragment: Fragment = DefaultGameExtrasFragment()
+    protected val bus = EventBus.getDefault()
+
+
+    /**
+     * @return true if we want to ask the user - different in modes
+     */
+    open fun isAsk4QuitEnabled() = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -172,9 +180,6 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
         go_board.setLineSize(GoPrefs.boardLineWidth.toFloat())
     }
 
-    open val isBoardFocusWanted: Boolean
-        get() = true
-
     override fun onResume() {
         super.onResume()
 
@@ -192,14 +197,12 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
         bus.register(this)
     }
 
-    override fun doFullScreen(): Boolean {
-        return GoPrefs.isFullscreenEnabled or resources.getBoolean(R.bool.force_fullscreen)
-    }
+    override fun doFullScreen() = GoPrefs.isFullscreenEnabled or resources.getBoolean(R.bool.force_fullscreen)
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        this.menuInflater.inflate(R.menu.ingame_common, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
+    override fun onCreateOptionsMenu(menu: Menu) = super.onCreateOptionsMenu(menu.apply {
+        menuInflater.inflate(R.menu.ingame_common, this)
+    })
+
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         val item = menu.findItem(R.id.menu_game_print)
@@ -273,10 +276,6 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
         finish()
     }
 
-    /**
-     * @return true if we want to ask the user - different in modes
-     */
-    open fun isAsk4QuitEnabled() = true
 
     open fun quit(toHome: Boolean) {
         if (!isAsk4QuitEnabled()) {
@@ -317,8 +316,8 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
 
         val res = game.do_move(cell)
 
-        when (res) {
-            GoGame.MoveStatus.INVALID_IS_KO, GoGame.MoveStatus.INVALID_CELL_NO_LIBERTIES -> showInfoToast(getToastForResult(res))
+        if (res== INVALID_IS_KO || res == INVALID_CELL_NO_LIBERTIES) {
+            showInfoToast(getToastForResult(res))
         }
 
         return res
@@ -326,8 +325,8 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
 
     @StringRes
     private fun getToastForResult(res: GoGame.MoveStatus) = when (res) {
-        GoGame.MoveStatus.INVALID_IS_KO -> R.string.invalid_move_ko
-        GoGame.MoveStatus.INVALID_CELL_NO_LIBERTIES -> R.string.invalid_move_no_liberties
+        INVALID_IS_KO -> R.string.invalid_move_ko
+        INVALID_CELL_NO_LIBERTIES -> R.string.invalid_move_no_liberties
         else -> throw RuntimeException("Illegal game result " + res)
     }
 
@@ -335,26 +334,6 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
     fun game2ui() {
         go_board.postInvalidate()
         refreshZoomFragment()
-    }
-
-    fun setFragment(newFragment: Fragment) {
-
-        if (actFragment === newFragment) {
-            // GoFrag same same no need to do a thing here
-            return
-        }
-
-        val fragmentTransAction = supportFragmentManager.beginTransaction()
-
-        if (actFragment != null) {
-            fragmentTransAction.remove(actFragment)
-        }
-
-        fragmentTransAction.replace(R.id.game_extra_container, newFragment)
-
-        fragmentTransAction.commit()
-
-        actFragment = newFragment
     }
 
     protected fun eventForZoomBoard(event: MotionEvent) {
@@ -427,9 +406,7 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
         super.onPause()
     }
 
-    open fun doAutoSave(): Boolean {
-        return false
-    }
+    open fun doAutoSave()= false
 
     open fun doTouch(event: MotionEvent) {
 
@@ -476,7 +453,7 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
 
             AlertDialog.Builder(this).setMessage(R.string.hint_stone_move).setPositiveButton(R.string.ok
 
-            ) { dialog, whichButton -> GoPrefs.isAnnounceMoveActive = false }.show()
+            ) { _, _ -> GoPrefs.isAnnounceMoveActive = false }.show()
         }
     }
 
@@ -531,9 +508,6 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
 
         UndoWithVariationDialog.userInvokedUndo(this, interactionScope, game)
     }
-
-    protected val bus: EventBus
-        get() = EventBus.getDefault()
 
     @Subscribe
     open fun onGameChanged(gameChangedEvent: GameChangedEvent) {
