@@ -105,10 +105,8 @@ class NavigationDrawerHandler(private val ctx: GobandroidFragmentActivity) {
     }
 
 
-    private fun startSGFListForPath(path: File): Intent {
-        val i = Intent(ctx, SGFFileSystemListActivity::class.java)
-        i.data = Uri.parse("file://" + path.absolutePath)
-        return i
+    private fun startSGFListForPath(path: File) = Intent(ctx, SGFFileSystemListActivity::class.java).apply {
+        data = Uri.parse("file://" + path.absolutePath)
     }
 
     /**
