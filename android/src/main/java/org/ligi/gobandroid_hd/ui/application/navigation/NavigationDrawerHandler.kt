@@ -6,6 +6,7 @@ import android.net.Uri
 import android.support.design.widget.NavigationView
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.lazy
+import kotlinx.android.synthetic.main.navigation_drawer_container.*
 import org.greenrobot.eventbus.EventBus
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
@@ -25,14 +26,10 @@ import org.ligi.kaxt.startActivityFromURL
 import java.io.File
 
 class NavigationDrawerHandler(private val ctx: GobandroidFragmentActivity) {
-    private val navigationView: NavigationView
 
     internal val env: GoAndroidEnvironment by App.kodein.lazy.instance()
     internal val gameProvider: GameProvider by App.kodein.lazy.instance()
 
-    init {
-        navigationView = ctx.findViewById(R.id.left_drawer) as NavigationView
-    }
 
     val actionMap by lazy {
         mapOf(
@@ -93,7 +90,7 @@ class NavigationDrawerHandler(private val ctx: GobandroidFragmentActivity) {
     }
 
     fun handle() {
-        navigationView.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
+        ctx.left_drawer.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
             val function = actionMap[item.itemId]
             if (function != null) {
                 ctx.closeDrawers()
