@@ -135,9 +135,6 @@ dependencies {
 
     compile 'com.github.salomonbrys.kodein:kodein:3.3.0'
 
-    compile 'com.google.code.findbugs:jsr305:3.0.1'
-    provided 'org.glassfish:javax.annotation:10.0-b28'
-
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:recyclerview-v7:$support_version"
     compile "com.android.support:cardview-v7:$support_version"
@@ -166,7 +163,9 @@ dependencies {
     withCloudCompile "com.google.android.gms:play-services-gcm:$play_version"
     withCloudCompile "com.google.android.gms:play-services-plus:$play_version"
 
-    withCloudCompile 'com.google.apis:google-api-services-games:v1-rev214-1.22.0'
+    withCloudCompile ('com.google.apis:google-api-services-games:v1-rev214-1.22.0') {
+        exclude module: 'jsr305'
+    }
 
     androidTestCompile 'com.github.ligi:trulesk:0.19'
 
@@ -176,10 +175,8 @@ dependencies {
     testCompile 'com.squareup.assertj:assertj-android:1.1.1'
     testCompile "com.android.support:support-annotations:$support_version"
     testCompile 'junit:junit:4.12'
-    testCompile 'com.google.code.findbugs:jsr305:3.0.1'
 
     androidTestCompile 'com.squareup.spoon:spoon-client:1.7.1'
-    androidTestCompile 'com.google.code.findbugs:jsr305:3.0.1'
 
     compile 'org.greenrobot:eventbus:3.0.0'
 }
