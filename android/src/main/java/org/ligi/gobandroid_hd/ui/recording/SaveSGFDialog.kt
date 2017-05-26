@@ -55,7 +55,7 @@ class SaveSGFDialog(private val context: GobandroidFragmentActivity) : Gobandroi
             var suggested_name = oldFileName.replace(".sgf", "")
             val absolutePath = settings.SGFSavePath.absolutePath
             if (suggested_name.startsWith(absolutePath)) {
-                suggested_name = suggested_name.substring(absolutePath.length)
+                suggested_name = suggested_name.substring(absolutePath.length + 1)
             }
             sgf_name_edittext.setText(suggested_name)
         }
