@@ -178,5 +178,6 @@ dependencies {
 
     androidTestCompile 'com.squareup.spoon:spoon-client:1.7.1'
 
+    compile 'com.google.android:flexbox:0.2.6'
     compile 'org.greenrobot:eventbus:3.0.0'
 }

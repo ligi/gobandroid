@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/intro_txt"
@@ -24,10 +24,13 @@
         android:text="@string/add_to_sgf"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-    <LinearLayout
-        android:id="@+id/add_name_btns"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/add_name_btns"
+            app:flexWrap="wrap"
+            app:alignItems="stretch"
+            app:alignContent="stretch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/button_add_date"
@@ -52,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/players"/>
-    </LinearLayout>
+    </com.google.android.flexbox.FlexboxLayout>
     <!-- <CheckBox android:text="@string/share_question" android:layout_height="wrap_content" android:id="@+id/share_checkbox" android:layout_width="345dp"></CheckBox> -->
 
     <CheckBox
