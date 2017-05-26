@@ -1,7 +1,8 @@
 package org.ligi.gobandroid_hd.ui.recording
 
 import android.view.View
-import android.widget.*
+import android.widget.Toast
+import kotlinx.android.synthetic.main.dialog_save_sgf.*
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.logic.sgf.SGFWriter
 import org.ligi.gobandroid_hd.ui.GobandroidDialog
@@ -21,24 +22,16 @@ import java.util.*
  */
 class SaveSGFDialog(private val context: GobandroidFragmentActivity) : GobandroidDialog(context) {
 
-    private val fname_et: EditText
-    private val override_checkbox: CheckBox
-
     init {
 
         setContentView(R.layout.dialog_save_sgf)
 
         setIconResource(R.drawable.ic_content_save)
-        val intro_text = findViewById(R.id.intro_txt) as TextView
 
-        override_checkbox = findViewById(R.id.override_checkbox) as CheckBox
-
-        intro_text.text = String.format(context.resources.getString(R.string.save_sgf_question), settings.SGFSavePath)
-
-        fname_et = findViewById(R.id.sgf_name_edittext) as EditText
+        intro_txt.text = String.format(context.resources.getString(R.string.save_sgf_question), settings.SGFSavePath)
 
         setPositiveButton(android.R.string.ok, { dialog ->
-            val file = completeFileName
+            val file = completeFileName()
             val res = SGFWriter.saveSGF(gameProvider.get(), file!!)
 
             if (res)
@@ -49,7 +42,7 @@ class SaveSGFDialog(private val context: GobandroidFragmentActivity) : Gobandroi
             dialog.dismiss()
         })
 
-        fname_et.doAfterEdit {
+        sgf_name_edittext.doAfterEdit {
             setPositiveButtonAndOverrideCheckboxEnabledByExistenceOfFile()
         }
 
@@ -64,10 +57,10 @@ class SaveSGFDialog(private val context: GobandroidFragmentActivity) : Gobandroi
             if (suggested_name.startsWith(absolutePath)) {
                 suggested_name = suggested_name.substring(absolutePath.length)
             }
-            fname_et.setText(suggested_name)
+            sgf_name_edittext.setText(suggested_name)
         }
 
-        val (name, result, source, fileName, blackName, blackRank, whiteName) = gameProvider.get().metaData
+        val (name, _, _, _, blackName, _, whiteName) = gameProvider.get().metaData
 
         /**
          * this is a OnClickListener to add Stuff to the FileName like
@@ -95,12 +88,12 @@ class SaveSGFDialog(private val context: GobandroidFragmentActivity) : Gobandroi
             override fun onClick(v: View) {
                 val toAdd = getTextByButtonId(v.id)
                 if (toAdd != null) {
-                    val text = fname_et.text.toString()
-                    val cursorPos = fname_et.selectionStart
+                    val text = sgf_name_edittext.text.toString()
+                    val cursorPos = sgf_name_edittext.selectionStart
                     val sb = StringBuilder()
-                    sb.append(text.substring(0, cursorPos)).append(toAdd).append(text.substring(cursorPos, fname_et.length()))
-                    fname_et.setText(sb.toString())
-                    fname_et.setSelection(cursorPos + toAdd.length)
+                    sb.append(text.substring(0, cursorPos)).append(toAdd).append(text.substring(cursorPos, sgf_name_edittext.length()))
+                    sgf_name_edittext.setText(sb.toString())
+                    sgf_name_edittext.setSelection(cursorPos + toAdd.length)
                 }
             }
 
@@ -108,20 +101,18 @@ class SaveSGFDialog(private val context: GobandroidFragmentActivity) : Gobandroi
 
         val adder = FileNameAdder()
 
-        (findViewById(R.id.button_add_date) as Button).setOnClickListener(adder)
-        (findViewById(R.id.button_add_time) as Button).setOnClickListener(adder)
-        val add_name_btn = findViewById(R.id.button_add_gamename) as Button
-        val players_name_btn = findViewById(R.id.button_add_players) as Button
+        button_add_date.setOnClickListener(adder)
+        button_add_time.setOnClickListener(adder)
 
-        if (name == "")
-            add_name_btn.visibility = View.GONE
+        if (name.isBlank())
+            button_add_gamename.visibility = View.GONE
         else
-            add_name_btn.setOnClickListener(adder)
+            button_add_gamename.setOnClickListener(adder)
 
-        if (blackName == "" && whiteName == "")
-            players_name_btn.visibility = View.GONE
+        if (blackName.isBlank() && whiteName.isBlank())
+            button_add_players.visibility = View.GONE
         else
-            players_name_btn.setOnClickListener(adder)
+            button_add_players.setOnClickListener(adder)
 
         setTitle(R.string.save_sgf)
 
@@ -131,7 +122,7 @@ class SaveSGFDialog(private val context: GobandroidFragmentActivity) : Gobandroi
 
     private fun setPositiveButtonAndOverrideCheckboxEnabledByExistenceOfFile() {
 
-        val wanted_file = completeFileName
+        val wanted_file = completeFileName()
 
         if (wanted_file == null) { // we got no filename from user
 
@@ -153,19 +144,18 @@ class SaveSGFDialog(private val context: GobandroidFragmentActivity) : Gobandroi
      * * there is no filename given
      */
     private // append filename extension
-    val completeFileName: File?
-        get() {
-            var fname = fname_et.text.toString()
+    fun completeFileName(): File? {
+        var fname = sgf_name_edittext.text.toString()
 
-            if (fname.isEmpty())
-                return null
+        if (fname.isEmpty())
+            return null
 
-            fname += ".sgf"
+        fname += ".sgf"
 
-            if (fname.startsWith("/"))
-                return File(fname)
-            else
-                return File(settings.SGFSavePath, fname)
-        }
+        return if (fname.startsWith("/"))
+            File(fname)
+        else
+            File(settings.SGFSavePath, fname)
+    }
 
 }
