@@ -5,13 +5,13 @@
         android:title="@string/hint"
         android:id="@+id/menu_game_hint"
         android:icon="@drawable/ic_communication_live_help"
-        android:orderInCategory="10"
+        android:orderInCategory="9"
         yourapp:showAsAction="ifRoom|withText"/>
     <item
         android:title="@string/undo"
         android:id="@+id/menu_game_undo"
         android:icon="@drawable/ic_content_undo"
-        android:orderInCategory="9"
+        android:orderInCategory="10"
         yourapp:showAsAction="ifRoom|withText"/>
     <item
         android:title="@string/share"
