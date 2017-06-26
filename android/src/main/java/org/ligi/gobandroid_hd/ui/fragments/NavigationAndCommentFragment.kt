@@ -5,7 +5,8 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import kotlinx.android.synthetic.main.comment_textview.*
+import kotlinx.android.synthetic.main.game_extra_review.*
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.events.GameChangedEvent
 import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity
@@ -13,17 +14,15 @@ import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity
 class NavigationAndCommentFragment : GobandroidGameAwareFragment() {
 
 
-    private val gameChangeHandler = Handler()
-    private var myTextView: TextView? = null
+    private val gameChangeHandler by lazy { Handler() }
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         val res = inflater.inflate(R.layout.game_extra_review, container, false)
 
-        myTextView = res.findViewById(R.id.comments_textview) as TextView
-        myTextView!!.isFocusable = false
+        comments_textview.isFocusable = false
 
-        res.findViewById(R.id.scrollview).isFocusable = false
+        scrollview.isFocusable = false
 
         onGoGameChanged(null)
         return res
@@ -32,9 +31,9 @@ class NavigationAndCommentFragment : GobandroidGameAwareFragment() {
     override fun onGoGameChanged(gameChangedEvent: GameChangedEvent?) {
         super.onGoGameChanged(gameChangedEvent)
         gameChangeHandler.post {
-            if (myTextView != null) {
-                myTextView!!.text = game.actMove.comment
-                GoTerminologyViewActivity.linkifyTextView(myTextView!!)
+            comments_textview?.let {
+                it.text = game.actMove.comment
+                GoTerminologyViewActivity.linkifyTextView(it)
             }
         }
     }
