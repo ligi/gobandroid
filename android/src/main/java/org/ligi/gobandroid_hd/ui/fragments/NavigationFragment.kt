@@ -16,9 +16,9 @@ import org.ligi.gobandroid_hd.ui.alerts.GameForwardAlert
 
 class NavigationFragment : GobandroidGameAwareFragment() {
 
-    override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.nav_button_container, container, false)
-    }
+    override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
+            = inflater.inflate(R.layout.nav_button_container, container, false)
+
 
     override fun onStart() {
         super.onStart()
