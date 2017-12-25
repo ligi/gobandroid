@@ -13,7 +13,7 @@ repositories {
 }
 
 android {
-    flavorDimensions "analytics", "cloud"
+    flavorDimensions "analytics", "cloud", "autostart"
 
     productFlavors {
         withAnalytics {
@@ -30,6 +30,14 @@ android {
 
         noCloud {
             dimension "cloud"
+        }
+
+        withAutostart {
+            dimension "autostart"
+        }
+
+        noAutostart {
+            dimension "autostart"
         }
 
     }
