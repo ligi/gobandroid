@@ -17,13 +17,13 @@
 
     <!--  sometimes we have big comments -->
     <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:padding="5dip"
-            android:focusable="false"
-            android:id="@+id/scrollview"
-            android:layout_above="@id/container_for_nav">
+        android:id="@+id/scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/container_for_nav"
+        android:focusable="false"
+        android:padding="5dip">
 
-        <include layout="@layout/comment_textview"/>
+        <include layout="@layout/comment_textview" />
     </ScrollView>
 </RelativeLayout>
