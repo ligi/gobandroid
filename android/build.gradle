@@ -151,7 +151,11 @@ dependencies {
 
     compile 'com.github.ligi:KAXT:0.17'
     compile 'com.github.ligi:tracedroid:1.4'
-    compile 'com.github.ligi:snackengage:0.15@aar'
+
+    forPlayCompile 'com.github.ligi.snackengage:snackengage-playrate:0.15'
+    forFDroidCompile 'com.github.ligi.snackengage:snackengage-playrate:0.15'
+    forAmazonCompile 'com.github.ligi.snackengage:snackengage-amazonrate:0.15'
+
     compile 'com.github.ligi:ExtraCompats:0.4'
 
     compile 'net.sourceforge.jchardet:jchardet:1.0'
