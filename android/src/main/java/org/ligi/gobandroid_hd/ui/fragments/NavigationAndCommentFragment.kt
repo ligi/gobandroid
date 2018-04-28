@@ -19,11 +19,6 @@ class NavigationAndCommentFragment : GobandroidGameAwareFragment() {
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         val res = inflater.inflate(R.layout.game_extra_review, container, false)
-
-        comments_textview.isFocusable = false
-
-        scrollview.isFocusable = false
-
         onGoGameChanged(null)
         return res
     }

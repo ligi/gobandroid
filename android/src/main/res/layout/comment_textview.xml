@@ -6,6 +6,7 @@
     android:layout_alignParentTop="true"
     android:layout_margin="3dip"
     android:layout_weight="10"
+    android:focusable="false"
     android:text=""
-    android:textColor="#FF000000"
-    android:textAppearance="?android:attr/textAppearanceMedium" />
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textColor="#FF000000" />

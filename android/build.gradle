@@ -53,7 +53,7 @@ android {
     }
 
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    //buildToolsVersion "25.0.2"
 
     defaultConfig {
         versionCode 258
@@ -122,19 +122,9 @@ configurations {
     androidTestCompile.exclude group: 'com.android.support', module: 'support-v4'
     androidTestCompile.exclude group: 'com.android.support', module: 'support-annotations'
     androidTestCompile.exclude group: 'com.android.support', module: 'preference-v7'
+    androidTestCompile.exclude group: 'com.android.support', module: 'support-compat'
     androidTestCompile.exclude module: 'recyclerview-v7'
     androidTestCompile.exclude module: 'kotlin-stdlib'
-}
-
-configurations {
-
-    // http://stackoverflow.com/questions/30578243/why-would-adding-espresso-contrib-cause-an-inflateexception
-    androidTestCompile.exclude group: 'com.android.support', module: 'appcompat-v7'
-    androidTestCompile.exclude group: 'com.android.support', module: 'design'
-    androidTestCompile.exclude group: 'com.android.support', module: 'support-v4'
-    androidTestCompile.exclude group: 'com.android.support', module: 'support-annotations'
-    androidTestCompile.exclude group: 'com.android.support', module: 'preference-v7'
-    androidTestCompile.exclude module: 'recyclerview-v7'
 }
 
 dependencies {
