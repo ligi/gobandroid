@@ -157,7 +157,7 @@ dependencies {
     compile 'com.github.ligi:ExtraCompats:0.4'
 
     compile 'net.sourceforge.jchardet:jchardet:1.0'
-    compile 'com.squareup.okhttp3:okhttp:3.6.0'
+    compile 'com.squareup.okhttp3:okhttp:3.10.0'
     compile 'com.n3twork.druid:alphanum:1.0.3'
     compile "com.android.support:support-annotations:$support_version"
 
