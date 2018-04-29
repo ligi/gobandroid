@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.ligi.gobandroid_hd.logic.CellImpl
 import org.ligi.gobandroid_hd.logic.GoDefinitions
+import org.ligi.gobandroid_hd.logic.GoMove
 import org.ligi.gobandroid_hd.logic.markers.TextMarker
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader
 
@@ -98,5 +99,22 @@ class TheSGFReader {
         val game = SGFReader.sgf2game(readAsset("test_sgfs/komi.sgf"), null)!!
 
         assertThat(game.komi).isEqualTo(7f)
+    }
+
+    @Test
+    fun testCorrectMove() {
+        val game = SGFReader.sgf2game(readAsset("test_sgfs/ggg-easy-07.sgf"), null)
+        var move: GoMove? = game?.actMove
+        assertThat(move!!.nextMoveVariationCount).isEqualTo(4)
+        move = move.getNextMoveOnCell(CellImpl(16,16))
+        move = move!!.getNextMoveOnCell(CellImpl(18,16))
+        move = move!!.getNextMoveOnCell(CellImpl(18,17))
+        move = move!!.getNextMoveOnCell(CellImpl(17,18))
+
+        //the next move is missing from the variation list
+        move = move!!.getNextMoveOnCell(CellImpl(18,17))
+        move = move!!.getNextMoveOnCell(CellImpl(18,18))
+        move = move!!.getNextMoveOnCell(CellImpl(18,17))
+        assertThat(move!!.comment).isEqualToIgnoringCase("CORRECT")
     }
 }

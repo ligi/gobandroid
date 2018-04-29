@@ -222,9 +222,11 @@ class SGFReader private constructor(private val sgf: String, private val callbac
                     if (game!!.isBlackToMove && marker == Marker.ADD_BLACK) {
                         predef_count_b++
                         game!!.handicapBoard.setCell(cell, GoDefinitions.STONE_BLACK)
+                        game!!.calcBoard.setCell(cell, GoDefinitions.STONE_BLACK)
                     } else if (game!!.isBlackToMove && marker == Marker.ADD_WHITE) {
                         predef_count_w++
                         game!!.handicapBoard.setCell(cell, GoDefinitions.STONE_WHITE)
+                        game!!.calcBoard.setCell(cell, GoDefinitions.STONE_WHITE)
                     }
                 } else {
                     Log.w("AB / AW command without param")
