@@ -38,7 +38,6 @@ import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity
 
 class GoSetupActivity : GoActivity() {
 
-    private var setup_fragment: GameSetupFragment? = null
     private var clear_board_menu_item: MenuItem? = null
 
     override val gameExtraFragment by lazy { GameSetupFragment() }
@@ -65,7 +64,7 @@ class GoSetupActivity : GoActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_clear_board -> {
-                gameProvider.set(GoGame(setup_fragment!!.act_size, setup_fragment!!.act_handicap))
+                gameProvider.set(GoGame(gameExtraFragment.act_size, gameExtraFragment.act_handicap))
                 clear_board_menu_item!!.isVisible = false
                 notifyGoGameChange()
             }
