@@ -23,6 +23,10 @@ internal class EditModeButtonView(context: Context, val item: EditModeItem, val 
         newPaint
     }
 
+    init {
+        contentDescription = context.getString(item.contentDescriptionResId)
+    }
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         val padding = w / 7
@@ -51,9 +55,5 @@ internal class EditModeButtonView(context: Context, val item: EditModeItem, val 
         val size = context.resources.getDimensionPixelSize(R.dimen.edit_mode_item_size)
         val measureSpec = View.MeasureSpec.makeMeasureSpec(size, View.MeasureSpec.EXACTLY)
         super.onMeasure(measureSpec, measureSpec)
-    }
-
-    override fun getContentDescription(): CharSequence {
-        return context.getString(item.contentDescriptionResId)
     }
 }
