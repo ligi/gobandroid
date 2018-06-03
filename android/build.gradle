@@ -52,14 +52,14 @@ android {
 
     }
 
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.2"
 
     defaultConfig {
         versionCode 259
         versionName "2.5.9"
         minSdkVersion 9
-        targetSdkVersion 25
+        targetSdkVersion 27
         applicationId "org.ligi.gobandroid_hd"
         testInstrumentationRunner "org.ligi.gobandroid_hd.AppReplacingRunner"
         archivesBaseName = "Gobandroid-$versionName"
