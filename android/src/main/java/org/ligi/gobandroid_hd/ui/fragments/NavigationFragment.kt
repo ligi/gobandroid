@@ -29,8 +29,9 @@ class NavigationFragment : GobandroidGameAwareFragment() {
         seeker.progress = getMoveNumber(game.actMove)
 
         seeker.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                if (p0 == null) return
+            override fun onProgressChanged(p0: SeekBar?, p1: Int, userInitiated: Boolean) {
+                if (!userInitiated) return // don't switch back to main variation when seekbar updates in variation
+                if (p0 == null) return // not sure if this is possible but seems relatively sensible
                 game.jump(getMoveByNumber(p1))
             }
 
@@ -96,9 +97,9 @@ class NavigationFragment : GobandroidGameAwareFragment() {
         bindButtonToMove(game.nextVariationWithOffset(-1), btn_previous_var)
         bindButtonToMove(game.nextVariationWithOffset(1), btn_next_var)
 
-        val moveNumber = getMoveNumber(game.findLastMove())
-        if (moveNumber != seeker.max) {
-            seeker.max = moveNumber
+        val movesInGame = getMoveNumber(game.findLastMove())
+        if (movesInGame != seeker.max) {
+            seeker.max = movesInGame
         }
         seeker.progress = getMoveNumber(game.actMove)
     }
@@ -122,11 +123,12 @@ class NavigationFragment : GobandroidGameAwareFragment() {
     }
 
     private fun getMoveNumber(move: GoMove) : Int {
-        var currentMove = game.findFirstMove()
+        var currentMove = move
+
         var i = 0
-        while (move != currentMove) {
+        while (currentMove != game.findFirstMove()) {
             ++i
-            currentMove = currentMove.getnextMove(0)!!
+            currentMove = currentMove.parent!!
         }
         return i
     }
