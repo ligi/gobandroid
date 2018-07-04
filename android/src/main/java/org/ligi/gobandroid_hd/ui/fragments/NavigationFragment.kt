@@ -25,25 +25,13 @@ class NavigationFragment : GobandroidGameAwareFragment() {
         super.onStart()
         updateButtonStates()
 
-        var currentMove = game.findFirstMove()
-        var i = 0
-        while (currentMove.hasNextMove()) {
-            ++i
-            currentMove = currentMove.getnextMove(0)!!
-        }
-
-        seeker.max = i
-        seeker.progress = i
+        seeker.max = getMoveNumber(game.findLastMove())
+        seeker.progress = getMoveNumber(game.actMove)
 
         seeker.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                var i = 0
-                var moveToSet = game.findFirstMove()
-                while (i < p1) {
-                    moveToSet = moveToSet.getnextMove(0)!!
-                    i++
-                }
-                game.jump(moveToSet)
+                if (p0 == null) return
+                game.jump(getMoveByNumber(p1))
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) { }
@@ -107,6 +95,12 @@ class NavigationFragment : GobandroidGameAwareFragment() {
         setImageViewState(game.canRedo(), btn_next, btn_last)
         bindButtonToMove(game.nextVariationWithOffset(-1), btn_previous_var)
         bindButtonToMove(game.nextVariationWithOffset(1), btn_next_var)
+
+        val moveNumber = getMoveNumber(game.findLastMove())
+        if (moveNumber != seeker.max) {
+            seeker.max = moveNumber
+        }
+        seeker.progress = getMoveNumber(game.actMove)
     }
 
     private fun bindButtonToMove(move: GoMove?, button: ImageView) {
@@ -125,6 +119,26 @@ class NavigationFragment : GobandroidGameAwareFragment() {
         if (!GoPrefs.hasAcknowledgedJunctionInfo) {
             Snackbar.make(btn_last!!, found_junction_snack_for_last, Snackbar.LENGTH_LONG).setAction(android.R.string.ok) { GoPrefs.hasAcknowledgedJunctionInfo = true }.show()
         }
+    }
+
+    private fun getMoveNumber(move: GoMove) : Int {
+        var currentMove = game.findFirstMove()
+        var i = 0
+        while (move != currentMove) {
+            ++i
+            currentMove = currentMove.getnextMove(0)!!
+        }
+        return i
+    }
+
+    private fun getMoveByNumber(moveNumber: Int) : GoMove {
+        var i = 0
+        var currentMove = game.findFirstMove()
+        while (i < moveNumber) {
+            currentMove = currentMove.getnextMove(0)!!
+            i++
+        }
+        return currentMove
     }
 
 }
