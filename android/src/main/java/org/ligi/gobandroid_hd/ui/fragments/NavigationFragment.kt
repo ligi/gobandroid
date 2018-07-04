@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.SeekBar
 import kotlinx.android.synthetic.main.nav_button_container.*
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.events.GameChangedEvent
@@ -23,6 +24,33 @@ class NavigationFragment : GobandroidGameAwareFragment() {
     override fun onStart() {
         super.onStart()
         updateButtonStates()
+
+        var currentMove = game.findFirstMove()
+        var i = 0
+        while (currentMove.hasNextMove()) {
+            ++i
+            currentMove = currentMove.getnextMove(0)!!
+        }
+
+        seeker.max = i
+        seeker.progress = i
+
+        seeker.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+                var i = 0
+                var moveToSet = game.findFirstMove()
+                while (i < p1) {
+                    moveToSet = moveToSet.getnextMove(0)!!
+                    i++
+                }
+                game.jump(moveToSet)
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) { }
+
+            override fun onStopTrackingTouch(p0: SeekBar?) { }
+
+        })
 
         btn_next.setOnClickListener {
             if (GoPrefs.isShowForwardAlertWanted) {
