@@ -9,11 +9,15 @@ import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.InteractionScope
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity
+import permissions.dispatcher.NeedsPermission
+import permissions.dispatcher.OnPermissionDenied
+import permissions.dispatcher.RuntimePermissions
 import java.io.File
 
 /**
  * Activity to replay GO Games in TV / Lean back style
  */
+@RuntimePermissions
 open class GobanDroidTVActivity : GobandroidFragmentActivity() {
 
     private val path_to_play_from: File by lazy { File(env.reviewPath, "commented") }
@@ -21,7 +25,7 @@ open class GobanDroidTVActivity : GobandroidFragmentActivity() {
     open val intent2start: Intent
         get() = Intent(this, GobanDroidTVActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         interactionScope.mode = InteractionScope.Mode.TELEVIZE
 
@@ -29,6 +33,11 @@ open class GobanDroidTVActivity : GobandroidFragmentActivity() {
 
         App.tracker.init(this)
 
+        checkStorageWithPermissionCheck()
+    }
+
+    @NeedsPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    fun checkStorage(){
         if (path_to_play_from.listFiles() == null) {
             setContentView(R.layout.empty)
             App.tracker.trackEvent("intern", "unzip", "gtv", null)
@@ -36,7 +45,10 @@ open class GobanDroidTVActivity : GobandroidFragmentActivity() {
         } else {
             startTV()
         }
-
+    }
+    @OnPermissionDenied(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    fun onStorageDenied() {
+        finish()
     }
 
     private fun startTV() {
@@ -70,5 +82,11 @@ open class GobanDroidTVActivity : GobandroidFragmentActivity() {
     override fun onNewIntent(intent: Intent) {
         startTV()
         super.onNewIntent(intent)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // NOTE: delegate the permission handling to generated function
+        onRequestPermissionsResult(requestCode, grantResults)
     }
 }

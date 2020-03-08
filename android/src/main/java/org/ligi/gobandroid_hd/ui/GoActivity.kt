@@ -76,6 +76,7 @@ import java.util.*
 /**
  * Activity for a Go Game
  */
+@RuntimePermissions
 open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyListener {
 
     var sound_man: GoSoundManager? = null
@@ -243,7 +244,7 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
             }
 
             R.id.menu_write_sgf -> {
-                SaveSGFDialog(this).show()
+                prepareSaveWithPermissionCheck()
                 return true
             }
 
@@ -260,6 +261,11 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    @NeedsPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    fun prepareSave() {
+        SaveSGFDialog(this).show()
     }
 
     @TargetApi(19)
