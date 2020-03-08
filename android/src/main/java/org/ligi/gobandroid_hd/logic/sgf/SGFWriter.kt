@@ -134,9 +134,7 @@ object SGFWriter {
 
         try {
             file.createNewFile()
-
             val sgf_writer = FileWriter(file)
-
             val out = BufferedWriter(sgf_writer)
 
             out.write(game2sgf(game))

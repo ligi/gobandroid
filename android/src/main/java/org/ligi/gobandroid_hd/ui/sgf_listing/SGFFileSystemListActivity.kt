@@ -65,13 +65,13 @@ class SGFFileSystemListActivity : GobandroidFragmentActivity() {
         setActionbarProperties(sgfPath)
 
         list_fragment = SGFListFragment.newInstance(sgfPath)
-        supportFragmentManager.beginTransaction().replace(R.id.list_fragment, list_fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.list_fragment, list_fragment!!).commit()
     }
 
     private val sgfPath: File
         get() {
             if (intent.data != null) {
-                return File(intent.data.path)
+                return File(intent.data!!.path)
             }
 
             return env.SGFBasePath

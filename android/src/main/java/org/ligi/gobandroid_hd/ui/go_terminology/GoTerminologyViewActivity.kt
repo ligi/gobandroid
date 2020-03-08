@@ -1,7 +1,7 @@
 package org.ligi.gobandroid_hd.ui.go_terminology
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.text.util.Linkify
 import android.widget.TextView
 import org.ligi.gobandroid_hd.R

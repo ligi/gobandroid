@@ -2,7 +2,7 @@ package org.ligi.gobandroid_hd.uitest
 
 import android.content.Intent
 import android.net.Uri
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.runner.AndroidJUnit4
 import com.jraska.falcon.FalconSpoon
 import org.junit.Rule
 import org.junit.Test

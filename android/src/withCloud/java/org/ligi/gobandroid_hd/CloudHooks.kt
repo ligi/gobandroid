@@ -5,7 +5,7 @@ import android.app.Activity
 import android.app.Application
 import android.os.Build
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.games.Games
 import org.greenrobot.eventbus.EventBus

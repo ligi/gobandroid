@@ -28,9 +28,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.print.PrintManager
-import android.support.annotation.StringRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.AlertDialog
+import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AlertDialog
 import android.view.*
 import android.view.View.OnKeyListener
 import android.view.View.OnTouchListener
@@ -38,12 +38,9 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.game.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import org.ligi.gobandroid_hd.App.Companion.env
 import org.ligi.gobandroid_hd.BuildConfig
 import org.ligi.gobandroid_hd.InteractionScope
 import org.ligi.gobandroid_hd.R
-import org.ligi.gobandroid_hd.R.id.*
-import org.ligi.gobandroid_hd.R.layout.game
 import org.ligi.gobandroid_hd.events.GameChangedEvent
 import org.ligi.gobandroid_hd.events.OptionsItemClickedEvent
 import org.ligi.gobandroid_hd.logic.Cell
@@ -68,6 +65,8 @@ import org.ligi.snackengage.snacks.RateSnack
 import org.ligi.snackengage.snacks.TranslateSnack
 import org.ligi.tracedroid.logging.Log
 import org.ligi.tracedroid.sending.TraceDroidEmailSender
+import permissions.dispatcher.NeedsPermission
+import permissions.dispatcher.RuntimePermissions
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter

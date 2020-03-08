@@ -25,7 +25,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.widget.LinearLayout
 import org.greenrobot.eventbus.EventBus
 import org.ligi.gobandroid_hd.App
@@ -106,7 +106,7 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
 
         val buf = ByteArrayOutputStream()
 
-        inputStream.buffered().copyTo(buf)
+        inputStream!!.buffered().copyTo(buf)
 
         val stream_det = ByteArrayInputStream(buf.toByteArray())
         val charset = FileEncodeDetector.detect(stream_det)
@@ -153,7 +153,7 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
         var sgf: String? = null
 
         try {
-            sgf = uri2string(intent_uri)
+            sgf = uri2string(intent_uri!!)
 
             game = SGFReader.sgf2game(sgf, this)
 

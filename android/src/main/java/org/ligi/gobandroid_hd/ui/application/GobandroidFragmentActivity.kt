@@ -5,10 +5,10 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.navigation.NavigationView
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import android.view.*
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.lazy
@@ -24,7 +24,6 @@ import org.ligi.gobandroid_hd.ui.BaseProfileActivity
 import org.ligi.gobandroid_hd.ui.GoPrefs
 import org.ligi.gobandroid_hd.ui.GoPrefsActivity
 import org.ligi.gobandroid_hd.ui.UnzipSGFsDialog
-import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivityPermissionsDispatcher.startForPathWithCheck
 import org.ligi.gobandroid_hd.ui.links.LinksActivity
 import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity
@@ -96,14 +95,6 @@ open class GobandroidFragmentActivity : AppCompatActivity() {
                 drawerLayout, /* DrawerLayout object */
                 R.string.drawer_open, /* "open drawer" description */
                 R.string.drawer_close  /* "close drawer" description */) {
-            override fun onDrawerOpened(drawerView: View?) {
-                super.onDrawerOpened(drawerView)
-            }
-
-            override fun onDrawerClosed(drawerView: View?) {
-                super.onDrawerClosed(drawerView)
-            }
-
         }
 
         drawerLayout!!.setDrawerListener(drawerToggle)
@@ -179,12 +170,12 @@ open class GobandroidFragmentActivity : AppCompatActivity() {
                 },
 
                 R.id.menu_drawer_tsumego to {
-                    startForPathWithCheck(this, env.tsumegoPath)
+                    startForPathWithPermissionCheck(env.tsumegoPath)
                 },
 
                 R.id.menu_drawer_review to {
                     val path = env.reviewPath
-                    startForPathWithCheck(this, path)
+                    startForPathWithPermissionCheck(path)
 
                 },
 
@@ -212,7 +203,7 @@ open class GobandroidFragmentActivity : AppCompatActivity() {
     }
 
     @NeedsPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    protected fun startForPath(path: File) {
+    fun startForPath(path: File) {
         val next = startSGFListForPath(path)
 
         if (!unzipSGFifNeeded(next)) {
@@ -246,7 +237,7 @@ open class GobandroidFragmentActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        GobandroidFragmentActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults)
+        onRequestPermissionsResult(requestCode, grantResults)
     }
 
 }

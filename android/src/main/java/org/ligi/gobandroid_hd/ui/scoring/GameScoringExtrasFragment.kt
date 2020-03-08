@@ -22,7 +22,7 @@ class GameScoringExtrasFragment : GobandroidGameAwareFragment() {
 
     override fun onGoGameChanged(gameChangedEvent: GameChangedEvent?) {
         super.onGoGameChanged(gameChangedEvent)
-        activity.runOnUiThread { refresh() }
+        requireActivity().runOnUiThread { refresh() }
     }
 
     private fun getCapturesString(captures: Int, deadStones: Int): String {

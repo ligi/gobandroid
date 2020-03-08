@@ -22,7 +22,7 @@
 package org.ligi.gobandroid_hd.ui.alerts
 
 import android.content.Context
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.view.View
 import kotlinx.android.synthetic.main.dialog_gobandroid.view.*
 import kotlinx.android.synthetic.main.game_info.view.*

@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.support.v4.content.res.ResourcesCompat
-import android.support.v7.app.AlertDialog
+import androidx.core.content.res.ResourcesCompat
+import androidx.appcompat.app.AlertDialog
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.ScrollView

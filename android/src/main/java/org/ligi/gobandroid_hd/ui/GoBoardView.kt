@@ -218,7 +218,7 @@ open class GoBoardView : View {
         if (!move_stone_mode && actpos_highlight_condition) {
             val touch_cell = interactionScope.touchCell
             if (touch_cell != null) {
-                val bitmap = if (game.isBlackToMove) black_stone_bitmap else white_stone_bitmap
+                val bitmap = if (game.isBlackToMove) black_stone_bitmap!! else white_stone_bitmap!!
                 canvas.drawBitmap(bitmap, touch_cell.x * stone_size, touch_cell.y * stone_size, placeStonePaint)
             }
         }
@@ -260,26 +260,26 @@ open class GoBoardView : View {
             // paint the territory with alpha opaque stones
             if (game.scorer != null) {
                 if (game.scorer!!.area_assign[cell.x][cell.y] == GoDefinitions.PLAYER_BLACK)
-                    canvas.drawBitmap(black_stone_bitmap, cell.x * stone_size, cell.y * stone_size, opaque_paint)
+                    canvas.drawBitmap(black_stone_bitmap!!, cell.x * stone_size, cell.y * stone_size, opaque_paint)
                 else if (game.scorer!!.area_assign[cell.x][cell.y] == GoDefinitions.PLAYER_WHITE)
-                    canvas.drawBitmap(white_stone_bitmap, cell.x * stone_size, cell.y * stone_size, opaque_paint)
+                    canvas.drawBitmap(white_stone_bitmap!!, cell.x * stone_size, cell.y * stone_size, opaque_paint)
 
             }
 
             if (board.isCellDeadWhite(cell)) {
-                canvas.drawBitmap(white_stone_bitmap_small,
+                canvas.drawBitmap(white_stone_bitmap_small!!,
                         cell.x * stone_size + (stone_size - white_stone_bitmap_small!!.width) / 2,
                         cell.y * stone_size + (stone_size - white_stone_bitmap_small!!.height) / 2,
                         bitmapPaint)
             } else if (board.isCellDeadBlack(cell)) {
-                canvas.drawBitmap(black_stone_bitmap_small,
+                canvas.drawBitmap(black_stone_bitmap_small!!,
                         cell.x * stone_size + (stone_size - black_stone_bitmap_small!!.width) / 2,
                         cell.y * stone_size + (stone_size - black_stone_bitmap_small!!.height) / 2,
                         bitmapPaint)
             } else if (board.isCellWhite(cell)) {
-                canvas.drawBitmap(white_stone_bitmap, cell.x * stone_size, cell.y * stone_size, getStonePaintForCell(cell))
+                canvas.drawBitmap(white_stone_bitmap!!, cell.x * stone_size, cell.y * stone_size, getStonePaintForCell(cell))
             } else if (board.isCellBlack(cell)) {
-                canvas.drawBitmap(black_stone_bitmap, cell.x * stone_size, cell.y * stone_size, getStonePaintForCell(cell))
+                canvas.drawBitmap(black_stone_bitmap!!, cell.x * stone_size, cell.y * stone_size, getStonePaintForCell(cell))
             }
 
         }

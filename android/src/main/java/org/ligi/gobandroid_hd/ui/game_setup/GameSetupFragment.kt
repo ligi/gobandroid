@@ -39,7 +39,7 @@ class GameSetupFragment : GobandroidFragment(), OnSeekBarChangeListener {
                     uiHandler.postDelayed(this, 16)
                 }
 
-                if (!activity.isFinishing) {
+                if (!requireActivity().isFinishing) {
                     refresh_ui()
                 }
             }
