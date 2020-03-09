@@ -13,7 +13,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      run: sudo ./gradlew assembleNoAnalyticsNoCloudNoAutostartDebug
+      run: sudo ./gradlew assembleNoAnalyticsNoCloudNoAutostartDebug assembleNoAnalyticsNoCloudNoAutostartRelease
     - name: Upload APK
       uses: actions/upload-artifact@v1
       with:

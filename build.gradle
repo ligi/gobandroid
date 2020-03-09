@@ -13,7 +13,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.1'
+        classpath 'com.android.tools.build:gradle:4.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'de.mobilej.unmock:UnMockPlugin:0.7.5'
         classpath 'com.stanfy.spoon:spoon-gradle-plugin:1.2.2'

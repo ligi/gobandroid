@@ -12,4 +12,5 @@
     <dimen name="cardview_unelevated_elevation">1dp</dimen>
 
     <dimen name="small_padding">8dp</dimen>
+    <dimen name="nav_buttons_size">48dp</dimen>
 </resources>
