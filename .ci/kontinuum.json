@@ -1,4 +1,21 @@
 {
-"type":"android",
-"stages":["spoon","lint","test","assemble"]
+  "type": "android",
+  "stages": [
+    {
+      "name": "testWithMapsWithAnalyticsForPlayDebugComposer",
+      "needsEmulator": true
+    },
+    {
+      "name": "lint",
+      "needsEmulator": false
+    },
+    {
+      "name": "test",
+      "needsEmulator": false
+    },
+    {
+      "name": "assembleRelease",
+      "needsEmulator": false
+    }
+  ]
 }
