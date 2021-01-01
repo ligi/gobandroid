@@ -342,7 +342,7 @@ open class GoBoardView : View {
     /**
      * resize the images regarding to stone_size
      */
-    fun regenerate_images() {
+    private fun regenerate_images() {
 
         white_stone_bitmap = getScaledRes(stone_size, R.drawable.stone_white)
         black_stone_bitmap = getScaledRes(stone_size, R.drawable.stone_black)

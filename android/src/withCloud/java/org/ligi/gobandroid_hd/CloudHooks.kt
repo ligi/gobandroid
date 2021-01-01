@@ -2,6 +2,7 @@ package org.ligi.gobandroid_hd
 
 import android.annotation.TargetApi
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Application
 import android.os.Build
 import android.os.Bundle
