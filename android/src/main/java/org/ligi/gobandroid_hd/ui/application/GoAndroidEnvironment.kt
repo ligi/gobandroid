@@ -14,13 +14,12 @@ class GoAndroidEnvironment(private val ctx: Context) {
     val SGFBasePath: File
         get() {
             if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
-                return File(Environment.getExternalStorageDirectory(), "/gobandroid/sgf/")
+                return File(ctx.getExternalFilesDir(null), "/gobandroid/sgf/")
             }
             val probe = File("/sdcard/Android")
             if (probe.exists() && probe.isDirectory) {
                 return File("/sdcard/gobandroid/sgf/")
             }
-
             return File(ctx.filesDir, "/sgf/")
         }
 
