@@ -18,10 +18,10 @@ class GoTerminologyViewActivity : AppCompatActivity() {
         val term = this.intent.data.toString().substringAfterLast("/")
 
         val dialog = GoTerminologyDialog(this, term)
-        dialog.setPositiveButton(android.R.string.ok,  { dialog ->
-            dialog.dismiss()
+        dialog.setPositiveButton(android.R.string.ok) { dlg ->
+            dlg.dismiss()
             finish()
-        })
+        }
         dialog.setOnCancelListener { finish() }
         dialog.show()
 

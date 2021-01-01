@@ -27,14 +27,14 @@ class EditGameExtrasFragment : GobandroidGameAwareFragment() {
         val editModeAdapter = EditModeButtonsAdapter(editModePool)
         view.gridView.adapter = editModeAdapter
 
-        view.gridView.onItemClickListener = OnItemClickListener { adapter, arg1, position, arg3 ->
+        view.gridView.onItemClickListener = OnItemClickListener { adapter, _, position, _ ->
             editModePool.setModeByPosition(position)
             (adapter.adapter as BaseAdapter).notifyDataSetChanged()
         }
 
         view.editSwitch.isChecked = true
 
-        view.editSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+        view.editSwitch.setOnCheckedChangeListener { _, isChecked ->
             view.gridView.visibility = if (isChecked) View.VISIBLE else View.GONE
             editModePool.mode = if (isChecked) EditGameMode.BLACK else EditGameMode.PLAY
             editModeAdapter.notifyDataSetChanged()

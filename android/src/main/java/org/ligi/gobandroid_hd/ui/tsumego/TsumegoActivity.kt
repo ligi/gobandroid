@@ -96,10 +96,10 @@ class TsumegoActivity : GoActivity() {
         if (!tsumegoController.isFinishingMoveKnown()) {
             AlertDialog.Builder(this).setMessage(R.string.tsumego_sgf_no_solution)
                     .setNegativeButton(R.string.ok, null)
-                    .setPositiveButton(R.string.go_back, { dialogInterface: DialogInterface, i: Int ->
+                    .setPositiveButton(R.string.go_back) { dialogInterface: DialogInterface, _: Int ->
                         dialogInterface.dismiss()
                         finish()
-                    }).show()
+                    }.show()
         }
 
         val myZoom = TsumegoHelper.calcZoom(game, true)
@@ -133,7 +133,7 @@ class TsumegoActivity : GoActivity() {
 
             bus.post(TsumegoSolved(game))
         }
-        runOnUiThread { supportInvalidateOptionsMenu() }
+        runOnUiThread { invalidateOptionsMenu() }
     }
 
     override fun isAsk4QuitEnabled() = false

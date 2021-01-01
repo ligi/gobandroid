@@ -2,7 +2,6 @@ package org.ligi.gobandroid_hd
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.chibatching.kotpref.Kotpref
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance

@@ -76,7 +76,7 @@ class TsumegoGameExtrasFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val res = inflater!!.inflate(R.layout.game_extra_tsumego, container, false)
+        val res = inflater.inflate(R.layout.game_extra_tsumego, container, false)
 
         updateUI()
         return res
