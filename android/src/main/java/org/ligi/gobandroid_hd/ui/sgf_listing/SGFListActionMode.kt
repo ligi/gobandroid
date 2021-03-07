@@ -42,7 +42,7 @@ open class SGFListActionMode(internal val context: Context, internal val fileNam
     }
 
     private val fileOrDirRemovingOnClickListener: DialogInterface.OnClickListener
-        get() = DialogInterface.OnClickListener { dialog, which ->
+        get() = DialogInterface.OnClickListener { _, which ->
             val file = File(fileName)
             if (file.isDirectory) {
                 file.deleteRecursively()

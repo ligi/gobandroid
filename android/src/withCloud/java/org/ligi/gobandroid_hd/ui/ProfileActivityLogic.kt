@@ -29,22 +29,22 @@ class ProfileActivityLogic : GoogleApiClient.OnConnectionFailedListener {
         this.base = base
         this.mGoogleApiClient = mGoogleApiClient
 
-        base.findViewById(R.id.sign_out_button).setOnClickListener {
+        base.findViewById<Button>(R.id.sign_out_button).setOnClickListener {
             CloudPrefs.userWantsPlayConnection = false
             mGoogleApiClient.disconnect()
             refresh()
         }
 
-        base.findViewById(R.id.achievements).setOnClickListener {
+        base.findViewById<Button>(R.id.achievements).setOnClickListener {
             val achievementsIntent = Games.Achievements.getAchievementsIntent(mGoogleApiClient)
             base.startActivityForResult(achievementsIntent, 816)
         }
 
-        base.findViewById(R.id.turnbased).setOnClickListener {
+        base.findViewById<Button>(R.id.turnbased).setOnClickListener {
             base.startActivityFromClass(TurnBasedActivity::class.java)
         }
 
-        base.findViewById(R.id.sign_in_button).setOnClickListener {
+        base.findViewById<Button>(R.id.sign_in_button).setOnClickListener {
             mGoogleApiClient.registerConnectionFailedListener(this)
             CloudPrefs.userWantsPlayConnection = true
             mGoogleApiClient.connect()

@@ -70,19 +70,15 @@ class GoLink(file: File) {
         }
 
         fun saveGameToGoLink(game: GoGame, golink_path: File, golink_fname: String) {
-            var golink_path = golink_path
-
             val move_pos = game.actMove.movePos
-
 
             if (!golink_path.isDirectory)
                 golink_path.mkdirs()
 
             try {
-                golink_path.createNewFile()
-                golink_path = File(golink_path.toString() + "/" + golink_fname)
+                val golink_file = File(golink_path.toString() + "/" + golink_fname)
 
-                val sgf_writer = FileWriter(golink_path)
+                val sgf_writer = FileWriter(golink_file)
 
                 val out = BufferedWriter(sgf_writer)
 

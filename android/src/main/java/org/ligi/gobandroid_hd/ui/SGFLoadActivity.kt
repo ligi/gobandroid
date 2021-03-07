@@ -183,7 +183,7 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
                         .setMessage(
                                 R.string.problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem)
                         .setPositiveButton(R.string.yes
-                        ) { dialog, whichButton ->
+                        ) { _, _ ->
                             val emailIntent = Intent(
                                     android.content.Intent.ACTION_SEND)
                             emailIntent.type = "plain/text"
@@ -212,7 +212,7 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
                             finish()
                         }
                         .setNegativeButton(R.string.no
-                        ) { dialog, whichButton -> finish() }.show()
+                        ) { _, _ -> finish() }.show()
             }
 
             return

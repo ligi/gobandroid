@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
@@ -13,9 +14,10 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      run: sudo ./gradlew assembleNoAnalyticsNoCloudNoAutostartDebug assembleNoAnalyticsNoCloudNoAutostartRelease
+      run: sudo ./gradlew assemble
     - name: Upload APK
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
-        name: app
-        path: android/build/outputs/apk/noAnalyticsNoCloudNoAutostart/debug
+        path: ./**/*.apk
+        if-no-files-found: warn       
+      

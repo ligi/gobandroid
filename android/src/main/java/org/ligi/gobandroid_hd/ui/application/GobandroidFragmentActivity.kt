@@ -77,7 +77,7 @@ open class GobandroidFragmentActivity : AppCompatActivity() {
     override fun setContentView(layoutResId: Int) {
         super.setContentView(R.layout.navigation_drawer_container)
 
-        layoutInflater.inflate(layoutResId, findViewById(R.id.content_frame) as ViewGroup)
+        layoutInflater.inflate(layoutResId, findViewById<ViewGroup>(R.id.content_frame))
 
         left_drawer.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
             val function = actionMap[item.itemId]

@@ -288,7 +288,7 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
         } else {
             AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
                     .setMessage(R.string.quit_confirm)
-                    .setPositiveButton(R.string.yes) { dialog, whichButton -> finish() }
+                    .setPositiveButton(R.string.yes) { _, _ -> finish() }
                     .setCancelable(true)
                     .setNegativeButton(R.string.no, null)
                     .show()

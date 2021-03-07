@@ -50,7 +50,7 @@ class EndReviewDialog(context: GobandroidFragmentActivity) : GobandroidDialog(co
             container.game_rating.rating = .5f * meta.rating!!
         }
 
-        container.save_bookmark_cp.setOnCheckedChangeListener { buttonView, isChecked ->
+        container.save_bookmark_cp.setOnCheckedChangeListener { _, isChecked ->
             container.bookmark_notification_cb.isEnabled = isChecked
             container.bookmark_name_et.isEnabled = isChecked
         }

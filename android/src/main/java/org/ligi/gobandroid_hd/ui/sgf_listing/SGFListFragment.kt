@@ -79,7 +79,7 @@ class SGFListFragment : GobandroidFragment(), Refreshable {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState!!.putStringArray(EXTRA_MENU_ITEMS, menu_items)
+        outState.putStringArray(EXTRA_MENU_ITEMS, menu_items)
         outState.putString(EXTRA_DIR, dir)
     }
 
@@ -138,7 +138,7 @@ class SGFListFragment : GobandroidFragment(), Refreshable {
                     val game2 = SGFReader.sgf2game(File(dir_file, list[12]).bufferedReader().readText(), null, SGFReader.BREAKON_FIRSTMOVE)
                     if (game1!=null && game2!=null && !isEmpty(game1.metaData.difficulty) && !isEmpty(game2.metaData.difficulty)) {
                         AlertDialog.Builder(requireActivity()).setMessage("This looks like the gogameguru offline selection - sort by difficulty")
-                                .setPositiveButton(R.string.ok) { dialog, which ->
+                                .setPositiveButton(R.string.ok) { dialog, _ ->
                                     GoProblemsRenaming(requireActivity(), dir_file).execute()
                                     dialog.dismiss()
                                 }
@@ -204,7 +204,7 @@ class SGFListFragment : GobandroidFragment(), Refreshable {
             return
         }
 
-        alertBuilder.setPositiveButton(R.string.ok) { dialog, id ->
+        alertBuilder.setPositiveButton(R.string.ok) { dialog, _ ->
             // User clicked OK button
             dialog.dismiss()
             for (file in filesToDelete) {

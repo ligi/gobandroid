@@ -103,7 +103,7 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
         val intent = gnuGoIntent
         val resolveInfo = packageManager.resolveService(intent, 0)
 
-        val name = ComponentName(resolveInfo.serviceInfo.packageName, resolveInfo.serviceInfo.name)
+        val name = ComponentName(resolveInfo!!.serviceInfo.packageName, resolveInfo.serviceInfo.name)
 
         intent.component = name
 

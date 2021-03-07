@@ -62,7 +62,7 @@ open class GobanDroidTVActivity : GobandroidFragmentActivity() {
             AlertDialog.Builder(this)
                     .setMessage(getString(R.string.there_are_no_files_in) + " " + path_to_play_from)
                     .setTitle(R.string.problem)
-                    .setPositiveButton(R.string.ok, DialogInterface.OnClickListener { dialogInterface, i ->
+                    .setPositiveButton(R.string.ok, DialogInterface.OnClickListener { _, _ ->
                         this@GobanDroidTVActivity.finish()
                     }).show()
         } else {
