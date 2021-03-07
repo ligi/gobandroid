@@ -125,7 +125,7 @@ dependencies {
     implementation 'com.github.ligi:tracedroid:4.1'
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    implementation 'com.github.ligi.snackengage:snackengage-playrate:0.15'
+    implementation 'com.github.ligi.snackengage:snackengage-playrate:0.27'
     implementation 'com.github.ligi:ExtraCompats:1.0'
     implementation 'jchardet:jchardet:1.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
