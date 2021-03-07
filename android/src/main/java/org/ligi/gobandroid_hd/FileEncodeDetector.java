@@ -6,10 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.concurrent.atomic.AtomicReference;
-import org.ligi.tracedroid.logging.Log;
 import org.mozilla.intl.chardet.nsDetector;
 import org.mozilla.intl.chardet.nsICharsetDetectionObserver;
 import org.mozilla.intl.chardet.nsPSMDetector;
+import timber.log.Timber;
 
 /**
  * Created by icehong on 2014/11/9.
@@ -54,7 +54,7 @@ public class FileEncodeDetector {
                 }
             }
         } catch (Exception e) {
-            Log.w("exception in detect encoding.", e);
+            Timber.w(e, "exception in detect encoding.");
         }
         det.Done();
         return Charset.forName(code_name.get());

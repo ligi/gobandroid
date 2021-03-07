@@ -1,7 +1,7 @@
 package org.ligi.gobandroid_hd.ui.sgf_listing
 
 import org.ligi.gobandroid_hd.logic.GoGame
-import org.ligi.tracedroid.logging.Log
+import timber.log.Timber
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -86,7 +86,7 @@ class GoLink(file: File) {
                 out.close()
                 sgf_writer.close()
             } catch (e: IOException) {
-                Log.i("" + e)
+                Timber.i("" + e)
             }
 
         }

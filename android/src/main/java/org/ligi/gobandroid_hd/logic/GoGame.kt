@@ -25,7 +25,7 @@ import org.greenrobot.eventbus.EventBus
 import org.ligi.gobandroid_hd.events.GameChangedEvent
 import org.ligi.gobandroid_hd.logic.GoDefinitions.*
 import org.ligi.gobandroid_hd.logic.cell_gatherer.MustBeConnectedCellGatherer
-import org.ligi.tracedroid.logging.Log
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
@@ -122,7 +122,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
 
         actMove = GoMove(null)
         actMove.setIsFirstMove()
-        actMove.player = if(handicap == 0) PLAYER_WHITE else PLAYER_BLACK
+        actMove.player = if (handicap == 0) PLAYER_WHITE else PLAYER_BLACK
         reset()
     }
 
@@ -157,8 +157,8 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
      * place a stone on the board
      */
     fun do_move(cell: Cell): MoveStatus {
-        Log.i("do_move " + cell)
-        if(actMove.isFinalMove) {
+        Timber.i("do_move " + cell)
+        if (actMove.isFinalMove) {
             // game is finished - players are marking dead stones
             return MoveStatus.VALID
         }
@@ -190,8 +190,8 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
     }
 
     fun repositionActMove(cell: Cell): MoveStatus {
-        Log.i("repositionActMove " + cell)
-        if(cell == actMove.cell) {
+        Timber.i("repositionActMove " + cell)
+        if (cell == actMove.cell) {
             return MoveStatus.VALID
         }
 
@@ -215,7 +215,8 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         return !actMove.isFirstMove// &&(!getGoMover().isMoversMove());
     }
 
-    @JvmOverloads fun undo(keep_move: Boolean = true) {
+    @JvmOverloads
+    fun undo(keep_move: Boolean = true) {
         undoCaptures()
         actMove = actMove.undo(calcBoard, keep_move)
         refreshBoards()
@@ -235,7 +236,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
 
     fun applyCaptures() {
         val local_captures = actMove.captures.size
-        if(local_captures > 0) {
+        if (local_captures > 0) {
             actMove.cell?.let {
                 if (calcBoard.isCellKind(it, STONE_WHITE)) {
                     capturesWhite += local_captures
@@ -248,7 +249,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
 
     fun undoCaptures() {
         val local_captures = actMove.captures.size
-        if(local_captures > 0) {
+        if (local_captures > 0) {
             actMove.cell?.let {
                 if (calcBoard.isCellKind(it, STONE_WHITE)) {
                     capturesWhite -= local_captures
@@ -281,7 +282,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
 
     fun findMove(nextMove: (GoMove) -> GoMove?, condition: (GoMove) -> Boolean): GoMove? {
         var move: GoMove? = actMove
-        while (move!=null) {
+        while (move != null) {
             if (condition(move)) return move
             move = nextMove(move)
         }
@@ -306,7 +307,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
 
     fun jump(move: GoMove?) {
         if (move == null) {
-            Log.w("move is null #shouldnothappen")
+            Timber.w("move is null #shouldnothappen")
             return
         }
 
@@ -388,7 +389,7 @@ class GoGame @JvmOverloads constructor(size: Int, handicap: Int = 0) {
         get() {
             if (actMove.isFirstMove) return false
             if (actMove.parent == null) return false
-            return actMove.isPassMove && actMove.parent!=null && actMove.parent!!.isPassMove
+            return actMove.isPassMove && actMove.parent != null && actMove.parent!!.isPassMove
         }
 
     /**

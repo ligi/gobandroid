@@ -1,9 +1,9 @@
 package org.ligi.gobandroid_hd.ui.tsumego
 
 import android.content.DialogInterface
-import androidx.appcompat.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.game.*
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
@@ -14,7 +14,7 @@ import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.logic.GoMove
 import org.ligi.gobandroid_hd.ui.GoActivity
 import org.ligi.gobandroid_hd.ui.review.SGFMetaData
-import org.ligi.tracedroid.logging.Log
+import timber.log.Timber
 
 class TsumegoActivity : GoActivity() {
 
@@ -52,7 +52,7 @@ class TsumegoActivity : GoActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.menu_game_hint -> {
-            Log.i("FinishingMoveDebug " + tsumegoController.finishingMove)
+            Timber.i("FinishingMoveDebug " + tsumegoController.finishingMove)
             TsumegoHintAlert.show(this, tsumegoController.finishingMove)
             true
         }

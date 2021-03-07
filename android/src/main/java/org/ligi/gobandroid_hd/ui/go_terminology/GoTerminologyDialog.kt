@@ -6,7 +6,7 @@ import android.widget.TextView
 
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.ui.GobandroidDialog
-import org.ligi.tracedroid.logging.Log
+import timber.log.Timber
 
 class GoTerminologyDialog(context: Activity, term: String) : GobandroidDialog(context) {
 
@@ -24,7 +24,7 @@ class GoTerminologyDialog(context: Activity, term: String) : GobandroidDialog(co
             tv.setText(termMap[term]!!)
         } else {
             tv.setText(R.string.no_definition_found)
-            Log.w("no definition found for " + term)
+            Timber.w("no definition found for " + term)
         }
 
         Linkify.addLinks(tv, Linkify.ALL)

@@ -18,7 +18,7 @@
 
 package org.ligi.gobandroid_hd.logic;
 
-import org.ligi.tracedroid.logging.Log;
+import timber.log.Timber;
 
 /**
  * Class to help with GTP ( Go Text Protocol )
@@ -37,7 +37,7 @@ public class GTPHelper {
      */
     public static boolean doMoveByGTPString(String gtp_str, GoGame game) {
 
-        Log.i("processing gtp str" + gtp_str);
+        Timber.i("processing gtp str" + gtp_str);
 
         // remove chars we do not need
         for (String c : new String[]{" ", "=", "\r", "\n", "\t"}) {
@@ -67,11 +67,11 @@ public class GTPHelper {
             game.do_move(boardCell); // internal here?
             return true;
         } catch (Exception e) {
-            Log.w("Problem parsing coordinates from GTP " + e.toString());
+            Timber.w(e, "Problem parsing coordinates from GTP");
         }
 
         // if we got here we could not make sense of the command
-        Log.w("could not make sense of the GTP command: " + gtp_str);
+        Timber.w("could not make sense of the GTP command: " + gtp_str);
         return false;
 
     }

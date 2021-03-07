@@ -7,7 +7,7 @@ import android.net.Uri
 import android.os.AsyncTask
 import org.ligi.gobandroid_hd.helper.SGFFileNameFilter
 import org.ligi.gobandroid_hd.logic.sgf.SGFReader
-import org.ligi.tracedroid.logging.Log
+import timber.log.Timber
 import java.io.File
 
 class GoProblemsRenaming(private val context: Context, private val dir: File) : AsyncTask<Void, Int, Void>() {
@@ -50,7 +50,7 @@ class GoProblemsRenaming(private val context: Context, private val dir: File) : 
                     gameFile.renameTo(File(levelPath, gameFile.name))
                 }
             } catch (e: Exception) {
-                Log.w("problem in the process of GoProblemsRenaming", e)
+                Timber.w(e, "problem in the process of GoProblemsRenaming")
             }
 
             publishProgress(i++)

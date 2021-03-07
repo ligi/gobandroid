@@ -25,8 +25,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
-import androidx.appcompat.app.AlertDialog
 import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
 import org.greenrobot.eventbus.EventBus
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.BuildConfig
@@ -41,7 +41,8 @@ import org.ligi.gobandroid_hd.ui.application.GobandroidFragmentActivity
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoHelper
 import org.ligi.kaxt.startActivityFromClass
-import org.ligi.tracedroid.logging.Log
+import org.ligi.tracedroid.TraceDroid
+import timber.log.Timber
 import java.io.*
 import java.net.MalformedURLException
 import java.net.URL
@@ -133,7 +134,7 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
         // the intent
 
         if (intent_uri == null) {
-            Log.e("SGFLoadActivity with intent_uri==null")
+            Timber.e("SGFLoadActivity with intent_uri==null")
             finish()
             return
         }
@@ -169,7 +170,7 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
 
 
         } catch (e: Exception) {
-            Log.w("exception in load", e)
+            Timber.w(e, "exception in load")
         }
 
         if (game == null) {
@@ -203,8 +204,8 @@ class SGFLoadActivity : GobandroidFragmentActivity(), Runnable, SGFReader.ISGFLo
                                                     + intent_uri
                                                     + " sgf:\n"
                                                     + sgf
-                                                    + "err:"
-                                                    + Log.getCachedLog()
+                                                    + "log:"
+                                                    + TraceDroid.getLog().joinToString("\n")
                                     )
                             this@SGFLoadActivity.startActivity(Intent
                                     .createChooser(emailIntent,

@@ -5,7 +5,7 @@ import org.ligi.gobandroid_hd.logic.GoDefinitions
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.logic.GoMove
 import org.ligi.gobandroid_hd.logic.markers.TextMarker
-import org.ligi.tracedroid.logging.Log
+import timber.log.Timber
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -142,7 +142,7 @@ object SGFWriter {
             sgf_writer.close()
 
         } catch (e: IOException) {
-            Log.i("" + e)
+            Timber.i("" + e)
             return false
         }
 

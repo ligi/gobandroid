@@ -35,7 +35,7 @@ import org.ligi.gobandroid_hd.logic.CellImpl
 import org.ligi.gobandroid_hd.logic.GoDefinitions
 import org.ligi.gobandroid_hd.logic.GoGame
 import org.ligi.gobandroid_hd.model.GameProvider
-import org.ligi.tracedroid.logging.Log
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 
@@ -173,7 +173,7 @@ open class GoBoardView : View {
         } else if (interactionScope.touchCell != null) {
             interactionScope.touchCell
         } else {
-            Log.w("zoom requested but no POI to center around")
+            Timber.w("zoom requested but no POI to center around")
             return null
         }
     }

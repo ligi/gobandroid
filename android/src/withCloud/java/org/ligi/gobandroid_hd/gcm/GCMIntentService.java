@@ -3,13 +3,11 @@ package org.ligi.gobandroid_hd.gcm;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-
 import org.ligi.gobandroid_hd.App;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
 import org.ligi.gobandroid_hd.ui.tsumego.fetch.DownloadProblemsForNotification;
-import org.ligi.tracedroid.logging.Log;
+import timber.log.Timber;
 
 public class GCMIntentService extends IntentService {
 
@@ -23,7 +21,7 @@ public class GCMIntentService extends IntentService {
             return;
         }
 
-        Log.i("GCM incoming Message");
+        Timber.i("GCM incoming Message");
 
         App.Companion.getTracker().init(getApplicationContext());
 
@@ -38,7 +36,7 @@ public class GCMIntentService extends IntentService {
 
 
                 if (extras.getString("max_tsumego") != null) { // todo use the supplied value here
-                    Log.i("GCM starting DownloadProblemsForNotification");
+                    Timber.i("GCM starting DownloadProblemsForNotification");
                     App.Companion.getTracker().trackEvent("event", "gcm", "trigger", 0L);
                     DownloadProblemsForNotification.show(getBaseContext());
                 }

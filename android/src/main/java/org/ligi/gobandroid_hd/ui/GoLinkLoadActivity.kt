@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import org.ligi.gobandroid_hd.ui.SGFLoadActivity.Companion.INTENT_EXTRA_MOVE_NUM
 import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity
-import org.ligi.tracedroid.logging.Log
+import timber.log.Timber
 
 /**
  * Activity to load a go Link
@@ -19,7 +19,7 @@ class GoLinkLoadActivity : AppCompatActivity() {
         GobandroidNotifications(this).cancelGoLinkNotification()
 
         if (intent.data == null) {
-            Log.e("GoLinkLoadActivity with intent_uri==null")
+            Timber.e("GoLinkLoadActivity with intent_uri==null")
             finish()
             return
         }

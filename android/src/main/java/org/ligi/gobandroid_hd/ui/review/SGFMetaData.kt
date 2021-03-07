@@ -3,8 +3,7 @@ package org.ligi.gobandroid_hd.ui.review
 import org.json.JSONException
 import org.json.JSONObject
 import org.ligi.gobandroid_hd.logic.GoGame
-import org.ligi.tracedroid.logging.Log
-
+import timber.log.Timber
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -53,7 +52,7 @@ class SGFMetaData private constructor(val metaFile: File) {
 
                 has_data = true
             } catch (e: Exception) {
-                Log.i("got json file " + e)
+                Timber.i("got json file " + e)
             }
 
         }
@@ -87,7 +86,7 @@ class SGFMetaData private constructor(val metaFile: File) {
             out.close()
             sgf_writer.close()
         } catch (e: Exception) {
-            Log.w("problem writing metadata" + e)
+            Timber.w("problem writing metadata" + e)
         }
 
     }

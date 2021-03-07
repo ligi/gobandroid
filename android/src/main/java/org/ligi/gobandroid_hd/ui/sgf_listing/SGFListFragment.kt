@@ -4,6 +4,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils.isEmpty
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
@@ -11,11 +16,6 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import android.text.TextUtils.isEmpty
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
 import com.davekoelle.alphanum.AlphanumComparator
 import org.ligi.gobandroid_hd.InteractionScope.Mode.TSUMEGO
 import org.ligi.gobandroid_hd.R
@@ -30,7 +30,7 @@ import org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder.PathViewHolder
 import org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder.ReviewViewHolder
 import org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder.TsumegoViewHolder
 import org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder.ViewHolderInterface
-import org.ligi.tracedroid.logging.Log
+import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -147,7 +147,7 @@ class SGFListFragment : GobandroidFragment(), Refreshable {
                                 .show()
                     }
                 } catch (e: IOException) {
-                    Log.w("problem in gogameguru rename offer " + e)
+                    Timber.w("problem in gogameguru rename offer " + e)
                 }
 
                 return
@@ -187,7 +187,7 @@ class SGFListFragment : GobandroidFragment(), Refreshable {
 
 
     fun delete_sgfmeta() {
-        Log.i("delete sgfmeta files")
+        Timber.i("delete sgfmeta files")
         val alertBuilder = AlertDialog.Builder(requireActivity()).setTitle(R.string.del_sgfmeta)
         alertBuilder.setMessage(R.string.del_sgfmeta_prompt)
 
@@ -305,7 +305,7 @@ class SGFListFragment : GobandroidFragment(), Refreshable {
                 override fun onLongClick(v: View): Boolean {
 
                     if (activity !is AppCompatActivity) {
-                        Log.w("Activity not instanceof AppCompatActivity - this is not really expected")
+                        Timber.w("Activity not instanceof AppCompatActivity - this is not really expected")
                         return false
                     }
 

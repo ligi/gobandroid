@@ -26,7 +26,7 @@ import org.ligi.gobandroid_hd.logic.markers.CircleMarker
 import org.ligi.gobandroid_hd.logic.markers.SquareMarker
 import org.ligi.gobandroid_hd.logic.markers.TextMarker
 import org.ligi.gobandroid_hd.logic.markers.TriangleMarker
-import org.ligi.tracedroid.logging.Log
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -96,7 +96,7 @@ class SGFReader private constructor(private val sgf: String, private val callbac
                         // push the move we where to the stack to return
                         // here after the variation
                         // if (param_level!=0) break;
-                        Log.i("   !!! opening variation" + game)
+                        Timber.i("   !!! opening variation" + game)
                         if (game != null) {
                             variationList.add(orCreateGame().actMove)
                         }
@@ -106,12 +106,12 @@ class SGFReader private constructor(private val sgf: String, private val callbac
                     }
                     ')' -> {
                         if (variationList.isEmpty()) {
-                            Log.w("variation vector underrun!!")
+                            Timber.w("variation vector underrun!!")
                         } else {
                             val lastMove = variationList[variationList.size - 1]
                             orCreateGame().jump(lastMove)
                             variationList.remove(lastMove)
-                            Log.w("popping variaton from stack")
+                            Timber.w("popping variaton from stack")
                         }
 
                         last_cmd = ""
@@ -207,12 +207,12 @@ class SGFReader private constructor(private val sgf: String, private val callbac
                 } else {
                     val moveStatus = game!!.do_move(cell)
                     if (moveStatus !== VALID) {
-                        Log.w("There was a problem in this game")
+                        Timber.w("There was a problem in this game")
                     }
                 }
             }
             SGFReader.Marker.ADD_BLACK, SGFReader.Marker.ADD_WHITE -> {
-                Log.i("Adding stone $act_cmd $act_param at $cell")
+                Timber.i("Adding stone $act_cmd $act_param at $cell")
                 if (game == null) { // create a game if it is not there yet
                     game = GoGame(19.toByte().toInt())
                     variationList.add(game!!.actMove)
@@ -229,7 +229,7 @@ class SGFReader private constructor(private val sgf: String, private val callbac
                         game!!.calcBoard.setCell(cell, GoDefinitions.STONE_WHITE)
                     }
                 } else {
-                    Log.w("AB / AW command without param")
+                    Timber.w("AB / AW command without param")
                 }
             }
             SGFReader.Marker.WRITE_TEXT -> {
@@ -370,7 +370,7 @@ class SGFReader private constructor(private val sgf: String, private val callbac
             } catch (e: Exception) { // some weird sgf - we want to catch to not FC
                 // and have the chance to send the sgf to analysis
                 e.printStackTrace()
-                Log.w("Problem parsing SGF " + e)
+                Timber.w("Problem parsing SGF " + e)
                 return null
             }
 

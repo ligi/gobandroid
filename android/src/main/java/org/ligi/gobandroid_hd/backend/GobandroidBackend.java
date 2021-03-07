@@ -9,7 +9,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.ligi.gobandroid_hd.etc.GobandroidConfiguration;
-import org.ligi.tracedroid.logging.Log;
+import timber.log.Timber;
 
 public class GobandroidBackend {
 
@@ -35,7 +35,7 @@ public class GobandroidBackend {
             final String cleanedCountStr = count_str.replace("\n", "").replace("\r", "").trim(); // clean the string
             return Integer.parseInt(cleanedCountStr);
         } catch (Exception e) {
-            Log.w("cannot fetch the tsumego count " + e);
+            Timber.w(e, "cannot fetch the tsumego count");
             return -1;
         }
     }
@@ -44,7 +44,7 @@ public class GobandroidBackend {
         try {
             return key + "=" + URLEncoder.encode(val, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            Log.w("encoding problem");
+            Timber.w("encoding problem");
             return key + "=" + val;
         }
     }

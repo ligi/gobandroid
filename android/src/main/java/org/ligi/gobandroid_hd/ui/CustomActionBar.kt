@@ -5,11 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.core.content.res.ResourcesCompat
-import androidx.appcompat.app.AlertDialog
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.ScrollView
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.res.ResourcesCompat
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.lazy
 import kotlinx.android.synthetic.main.dropdown_item.view.*
@@ -24,7 +24,7 @@ import org.ligi.gobandroid_hd.events.GameChangedEvent
 import org.ligi.gobandroid_hd.model.GameProvider
 import org.ligi.gobandroid_hd.ui.gnugo.GnuGoHelper
 import org.ligi.gobandroid_hd.ui.ingame_common.SwitchModeHelper
-import org.ligi.tracedroid.logging.Log
+import timber.log.Timber
 
 class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
 
@@ -103,7 +103,7 @@ class CustomActionBar(private val activity: Activity) : LinearLayout(activity) {
                 return@Runnable
             }
             activity.finish()
-            Log.i("set mode" + mode)
+            Timber.i("set mode" + mode)
             interactionScope.mode = mode
             val i = SwitchModeHelper.getIntentByMode(app, mode)
             activity.startActivity(i)

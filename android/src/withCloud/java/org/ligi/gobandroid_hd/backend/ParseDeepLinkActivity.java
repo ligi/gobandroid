@@ -2,10 +2,9 @@ package org.ligi.gobandroid_hd.backend;
 
 import android.app.Activity;
 import android.os.Bundle;
-
 import com.google.android.gms.plus.PlusShare;
+import timber.log.Timber;
 
-import org.ligi.tracedroid.logging.Log;
 
 public class ParseDeepLinkActivity extends Activity {
     @Override
@@ -14,6 +13,6 @@ public class ParseDeepLinkActivity extends Activity {
 
         final String deepLinkId = PlusShare.getDeepLinkId(this.getIntent());
 
-        Log.i("coming from DeepLink " + deepLinkId);
+        Timber.i("coming from DeepLink " + deepLinkId);
     }
 }

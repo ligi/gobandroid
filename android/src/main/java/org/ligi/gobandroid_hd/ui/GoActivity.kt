@@ -28,13 +28,13 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.print.PrintManager
-import androidx.annotation.StringRes
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AlertDialog
 import android.view.*
 import android.view.View.OnKeyListener
 import android.view.View.OnTouchListener
 import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.game.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -63,10 +63,10 @@ import org.ligi.snackengage.conditions.NeverAgainWhenClickedOnce
 import org.ligi.snackengage.conditions.locale.IsOneOfTheseLocales
 import org.ligi.snackengage.snacks.RateSnack
 import org.ligi.snackengage.snacks.TranslateSnack
-import org.ligi.tracedroid.logging.Log
-import org.ligi.tracedroid.sending.TraceDroidEmailSender
+import org.ligi.tracedroid.sending.sendTraceDroidStackTracesIfExist
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.RuntimePermissions
+import timber.log.Timber
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -102,7 +102,7 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
 
         if (!BuildConfig.DEBUG) {
             // if there where stacktraces collected -> give the user the option to send them
-            if (!TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this)) {
+            if (!sendTraceDroidStackTracesIfExist("ligi@ligi.de", this)) {
                 SnackEngage.from(go_board)
                         .withSnack(RateSnack().withConditions(NeverAgainWhenClickedOnce(), AfterNumberOfOpportunities(42)))
                         .withSnack(TranslateSnack("https://www.transifex.com/ligi/gobandroid/").withConditions(AfterNumberOfOpportunities(4),
@@ -123,7 +123,7 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
         }
 
         if (game == null) { // cannot do anything without a game
-            Log.w("finish()ing " + this + " cuz getGame()==null")
+            Timber.w("finish()ing " + this + " cuz getGame()==null")
             finish()
             return
         }
@@ -171,7 +171,7 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
      */
     private fun setBoardPreferences() {
         if (go_board == null) {
-            Log.w("setBoardPreferences() called with go_board==null - means setupBoard() was propably not called - skipping to not FC")
+            Timber.w("setBoardPreferences() called with go_board==null - means setupBoard() was propably not called - skipping to not FC")
             return
         }
 
@@ -403,7 +403,7 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
                 sgf_writer.close()
 
             } catch (e: IOException) {
-                Log.i("" + e)
+                Timber.i("" + e)
             }
 
         }
@@ -516,7 +516,7 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
 
     @Subscribe
     open fun onGameChanged(gameChangedEvent: GameChangedEvent) {
-        Log.i("onGoGameChange in GoActivity")
+        Timber.i("onGoGameChange in GoActivity")
         if (game.actMove.movePos > last_processed_move_change_num) {
             if (game.isBlackToMove) {
                 sound_man!!.playSound(PLACE1)

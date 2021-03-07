@@ -24,7 +24,7 @@ package org.ligi.gobandroid_hd.logic
 import org.ligi.gobandroid_hd.logic.GoDefinitions.*
 import org.ligi.gobandroid_hd.logic.GoGame.MoveStatus
 import org.ligi.gobandroid_hd.logic.markers.GoMarker
-import org.ligi.tracedroid.logging.Log
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -128,10 +128,10 @@ class GoMove(val parent: GoMove?) {
             // can never place a stone where another is
             return MoveStatus.INVALID_CELL_NOT_FREE
         } else if (isIllegalKo) {
-            Log.i("illegal move -> KO")
+            Timber.i("illegal move -> KO")
             return MoveStatus.INVALID_IS_KO
         } else if (isIllegalNoLiberties(board)) {
-            Log.i("illegal move -> NO LIBERTIES")
+            Timber.i("illegal move -> NO LIBERTIES")
             return MoveStatus.INVALID_CELL_NO_LIBERTIES
         }
 
