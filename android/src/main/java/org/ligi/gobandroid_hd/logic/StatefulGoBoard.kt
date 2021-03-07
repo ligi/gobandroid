@@ -74,7 +74,7 @@ class StatefulGoBoard(val statelessGoBoard: StatelessGoBoard) : GoBoard by state
         val b = StringBuilder(size * size + size)
         for (y in 0..size - 1) {
             for (x in 0..size - 1) {
-                @CellStatus val cellStatus = board[x][y]
+                val cellStatus = board[x][y]
                 b.append(getStringFromCellStatus(cellStatus.toInt(), unicode))
             }
             b.append('\n')

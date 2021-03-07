@@ -1,3 +1,5 @@
+package org.ligi.gobandroid_hd
+
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
