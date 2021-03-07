@@ -1,7 +1,7 @@
 buildscript {
     ext {
         kotlin_version = '1.4.31'
-        kotpref_version = '2.6.0'
+        kotpref_version = '2.13.0'
         support_version = '28.0.0'
         play_version = '17.0.0'
     }
