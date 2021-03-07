@@ -126,7 +126,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     implementation 'com.github.ligi.snackengage:snackengage-playrate:0.15'
-    implementation 'com.github.ligi:ExtraCompats:0.4'
+    implementation 'com.github.ligi:ExtraCompats:1.0'
     implementation 'jchardet:jchardet:1.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.n3twork.druid:alphanum:1.0.3'
