@@ -19,7 +19,7 @@ class CommentAndNowPlayingFragment : GobandroidGameAwareFragment() {
 
     override fun onGoGameChanged(gameChangedEvent: GameChangedEvent?) {
         super.onGoGameChanged(gameChangedEvent)
-        activity.runOnUiThread {
+        requireActivity().runOnUiThread {
             comments_textview?.let {
                 it.text = game.actMove.comment
                 GoTerminologyViewActivity.linkifyTextView(it)

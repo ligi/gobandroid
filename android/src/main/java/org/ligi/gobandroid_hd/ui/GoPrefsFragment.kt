@@ -2,8 +2,9 @@ package org.ligi.gobandroid_hd.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.v7.app.AppCompatDelegate
-import android.support.v7.preference.PreferenceFragmentCompat
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.ui.application.GoAndroidEnvironment
 import org.ligi.kaxt.recreateWhenPossible
@@ -28,10 +29,9 @@ class GoPrefsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
 
         // fullscreen setting is not useful when fullscreen is forced for small devices
         val isFullscreenUseful = !resources.getBoolean(R.bool.force_fullscreen)
-        findPreference(getString(R.string.prefs_fullscreen)).isVisible = isFullscreenUseful
-        findPreference(getString(R.string.prefs_push_tsumego)).isVisible = false // TODO bring back
-
-        findPreference(getString(R.string.prefs_sgf_legend)).dependency = getString(R.string.prefs_do_legend)
+        findPreference<Preference>(getString(R.string.prefs_fullscreen))?.isVisible = isFullscreenUseful
+        findPreference<Preference>(getString(R.string.prefs_push_tsumego))?.isVisible = false // TODO bring back
+        findPreference<Preference>(getString(R.string.prefs_sgf_legend))?.dependency = getString(R.string.prefs_do_legend)
     }
 
     override fun onPause() {
@@ -42,7 +42,7 @@ class GoPrefsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         if (key == getString(R.string.prefs_daynight)) {
             AppCompatDelegate.setDefaultNightMode(GoPrefs.getThemeInt())
-            activity.recreateWhenPossible()
+            requireActivity().recreateWhenPossible()
         }
     }
 

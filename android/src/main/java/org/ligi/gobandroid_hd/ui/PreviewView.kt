@@ -84,21 +84,21 @@ class PreviewView : View {
         for (x in 0..span!!.y) {
             canvas.drawLine(0.5f * stone_size, (0.5f + x) * stone_size,
                     (0.5f + span!!.x) * stone_size, (0.5f + x) * stone_size,
-                    black_line_paint)
+                    black_line_paint!!)
         }
 
         for (y in 0..span!!.x) {
             canvas.drawLine((0.5f + y) * stone_size, 0.5f * stone_size,
                     (0.5f + y) * stone_size, (.5f + span!!.y) * stone_size,
-                    black_line_paint)
+                    black_line_paint!!)
         }
 
         game!!.statelessGoBoard.withAllCells { cell ->
             if (cell.x <= span!!.x && cell.y <= span!!.y) {
                 if (game!!.visualBoard.isCellBlack(cell))
-                    canvas.drawBitmap(black_stone_bitmap, cell.x * stone_size, cell.y * stone_size, null)
+                    canvas.drawBitmap(black_stone_bitmap!!, cell.x * stone_size, cell.y * stone_size, null)
                 if (game!!.visualBoard.isCellWhite(cell))
-                    canvas.drawBitmap(white_stone_bitmap, cell.x * stone_size, cell.y * stone_size, null)
+                    canvas.drawBitmap(white_stone_bitmap!!, cell.x * stone_size, cell.y * stone_size, null)
             }
         }
 

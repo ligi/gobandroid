@@ -1,8 +1,8 @@
 package org.ligi.gobandroid_hd.ui.fragments
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.view.ViewCompat
+import com.google.android.material.snackbar.Snackbar
+import androidx.core.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +26,7 @@ class NavigationFragment : GobandroidGameAwareFragment() {
 
         btn_next.setOnClickListener {
             if (GoPrefs.isShowForwardAlertWanted) {
-                GameForwardAlert.showIfNeeded(activity, game)
+                GameForwardAlert.showIfNeeded(requireActivity(), game)
             } else {
                 game.redo(0)
             }

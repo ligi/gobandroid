@@ -2,7 +2,7 @@ package org.ligi.gobandroid_hd.ui
 
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import org.ligi.gobandroid_hd.ui.SGFLoadActivity.Companion.INTENT_EXTRA_MOVE_NUM
 import org.ligi.gobandroid_hd.ui.sgf_listing.GoLink
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity

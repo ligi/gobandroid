@@ -1,7 +1,7 @@
 package org.ligi.gobandroid_hd.ui.go_terminology
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.text.util.Linkify
 import android.widget.TextView
 import org.ligi.gobandroid_hd.R
@@ -18,10 +18,10 @@ class GoTerminologyViewActivity : AppCompatActivity() {
         val term = this.intent.data.toString().substringAfterLast("/")
 
         val dialog = GoTerminologyDialog(this, term)
-        dialog.setPositiveButton(android.R.string.ok,  { dialog ->
-            dialog.dismiss()
+        dialog.setPositiveButton(android.R.string.ok) { dlg ->
+            dlg.dismiss()
             finish()
-        })
+        }
         dialog.setOnCancelListener { finish() }
         dialog.show()
 

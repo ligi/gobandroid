@@ -9,7 +9,7 @@ class AboutListFragment : LinkListFragment() {
             LinkWithDescription("https://plus.google.com/u/0/communities/113554258125816193874", "for questions and participation", "Gobandroid Community"),
             LinkWithDescription("http://github.com/ligi/gobandroid", "Code/Issues on GitHub"),
             LinkWithDescription("http://play.google.com/store/apps/details?id=org.ligi.gobandroid_hd", "Google Play link"),
-            LinkWithDescription(context.getString(R.string.wikipedia_rules_link), context.getString(R.string.wikipedia_rules)),
+            LinkWithDescription(requireContext().getString(R.string.wikipedia_rules_link), requireContext().getString(R.string.wikipedia_rules)),
             LinkWithDescription("http://gplv3.fsf.org/", "GPLv3 License")
     )
 }

@@ -1,25 +1,23 @@
 buildscript {
     ext {
-        kotlin_version = '1.2.41'
-        kotpref_version = '2.5.0'
-
-        support_version = '25.3.1'
-        play_version = '9.8.0'
+        kotlin_version = '1.4.21'
+        kotpref_version = '2.6.0'
+        support_version = '28.0.0'
+        play_version = '17.0.0'
     }
 
     repositories {
+        google()
         jcenter()
         maven { url 'https://jitpack.io' }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:4.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'de.mobilej.unmock:UnMockPlugin:0.6.4'
-
+        classpath 'de.mobilej.unmock:UnMockPlugin:0.7.5'
         classpath 'com.stanfy.spoon:spoon-gradle-plugin:1.2.2'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
-
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
     }
 }

@@ -2,7 +2,7 @@ package org.ligi.gobandroid_hd.ui.recording
 
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +27,7 @@ class RecordingGameExtrasFragment : GobandroidGameAwareFragment() {
         editText.setText(game.actMove.comment)
         editText.setHint(R.string.enter_your_comments_here)
         editText.gravity = Gravity.TOP
-        editText.setTextColor(ContextCompat.getColor(context, R.color.text_color_on_board_bg))
+        editText.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_color_on_board_bg))
 
         editText.doAfterEdit {
             game.actMove.comment = it.toString()

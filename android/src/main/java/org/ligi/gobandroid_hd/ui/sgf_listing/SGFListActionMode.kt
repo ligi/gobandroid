@@ -3,8 +3,8 @@ package org.ligi.gobandroid_hd.ui.sgf_listing
 
 import android.content.Context
 import android.content.DialogInterface
-import android.support.v7.app.AlertDialog
-import android.support.v7.view.ActionMode
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import org.ligi.gobandroid_hd.R
@@ -42,7 +42,7 @@ open class SGFListActionMode(internal val context: Context, internal val fileNam
     }
 
     private val fileOrDirRemovingOnClickListener: DialogInterface.OnClickListener
-        get() = DialogInterface.OnClickListener { dialog, which ->
+        get() = DialogInterface.OnClickListener { _, which ->
             val file = File(fileName)
             if (file.isDirectory) {
                 file.deleteRecursively()

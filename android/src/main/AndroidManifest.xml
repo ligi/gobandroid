@@ -1,39 +1,42 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.ligi.gobandroid_hd"
-    android:installLocation="auto">
+        xmlns:tools="http://schemas.android.com/tools"
+        package="org.ligi.gobandroid_hd"
+
+        android:installLocation="auto">
 
     <supports-screens
-        android:anyDensity="true"
-        android:largeScreens="true"
-        android:normalScreens="true"
-        android:smallScreens="true" />
+            android:anyDensity="true"
+            android:largeScreens="true"
+            android:normalScreens="true"
+            android:smallScreens="true" />
 
     <!-- Permission to keep the screen awake -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature
-        android:name="android.hardware.touchscreen"
-        android:required="false" />
+            android:name="android.hardware.touchscreen"
+            android:required="false" />
 
     <!--
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
  	-->
     <application
-        android:name=".App"
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:logo="@mipmap/ic_launcher"
-        android:theme="@style/base_theme">
-
+            android:name=".App"
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:logo="@mipmap/ic_launcher"
+            android:requestLegacyExternalStorage="true"
+            android:theme="@style/base_theme">
         <uses-library
-            android:name="com.sec.android.app.multiwindow"
-            android:required="false" />
+                android:name="com.sec.android.app.multiwindow"
+                android:required="false" />
 
         <activity android:name="org.ligi.gobandroid_hd.ui.game_setup.GoSetupActivity">
             <intent-filter>
@@ -45,10 +48,10 @@
 
         </activity>
         <activity
-            android:name="org.ligi.gobandroid_hd.ui.GobanDroidTVActivity"
-            android:icon="@drawable/gobandroid_tv"
-            android:launchMode="singleTask"
-            android:label="Gobandroid TV">
+                android:name="org.ligi.gobandroid_hd.ui.GobanDroidTVActivity"
+                android:icon="@drawable/gobandroid_tv"
+                android:label="Gobandroid TV"
+                android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -67,10 +70,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:theme="@style/TransparentTheme">
+                android:name="org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/TransparentTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -78,8 +81,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="org.ligi.gobandroid_hd.goterms"
-                    android:scheme="goterm" />
+                        android:host="org.ligi.gobandroid_hd.goterms"
+                        android:scheme="goterm" />
             </intent-filter>
         </activity>
         <activity android:name=".ui.gnugo.PlayAgainstGnuGoActivity" />
@@ -89,9 +92,9 @@
         <activity android:name=".ui.sgf_listing.SGFFileSystemListActivity" />
         <activity android:name="org.ligi.gobandroid_hd.ui.links.LinksActivity" />
         <activity
-            android:name="org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity"
-            android:exported="true"
-            android:launchMode="singleInstance" />
+                android:name="org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity"
+                android:exported="true"
+                android:launchMode="singleInstance" />
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadActivity" />
         <activity android:name="org.ligi.gobandroid_hd.ui.SGFLoadFromExternalActivity">
             <intent-filter>
@@ -101,9 +104,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="cloud-goban.appspot.com"
-                    android:pathPattern="/game/.*"
-                    android:scheme="https" />
+                        android:host="cloud-goban.appspot.com"
+                        android:pathPattern="/game/.*"
+                        android:scheme="https" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -112,9 +115,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="cloud-goban.appspot.com"
-                    android:pathPattern="/game/.*"
-                    android:scheme="http" />
+                        android:host="cloud-goban.appspot.com"
+                        android:pathPattern="/game/.*"
+                        android:scheme="http" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -123,9 +126,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="*"
-                    android:pathPattern=".*\\.sgf"
-                    android:scheme="http" />
+                        android:host="*"
+                        android:pathPattern=".*\\.sgf"
+                        android:scheme="http" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -134,9 +137,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="*"
-                    android:pathPattern=".*\\.sgf"
-                    android:scheme="https" />
+                        android:host="*"
+                        android:pathPattern=".*\\.sgf"
+                        android:scheme="https" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -145,55 +148,55 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern="/.*\\.sgf"
-                    android:scheme="file" />
+                        android:host="*"
+                        android:mimeType="*/*"
+                        android:pathPattern="/.*\\.sgf"
+                        android:scheme="file" />
                 <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern="/.*\\..*\\.sgf"
-                    android:scheme="file" />
+                        android:host="*"
+                        android:mimeType="*/*"
+                        android:pathPattern="/.*\\..*\\.sgf"
+                        android:scheme="file" />
                 <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern="/.*\\..*\\..*\\.sgf"
-                    android:scheme="file" />
+                        android:host="*"
+                        android:mimeType="*/*"
+                        android:pathPattern="/.*\\..*\\..*\\.sgf"
+                        android:scheme="file" />
                 <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern="/.*\\..*\\..*\\..*\\.sgf"
-                    android:scheme="file" />
+                        android:host="*"
+                        android:mimeType="*/*"
+                        android:pathPattern="/.*\\..*\\..*\\..*\\.sgf"
+                        android:scheme="file" />
                 <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern="/.*\\..*\\..*\\..*\\..*\\.sgf"
-                    android:scheme="file" />
+                        android:host="*"
+                        android:mimeType="*/*"
+                        android:pathPattern="/.*\\..*\\..*\\..*\\..*\\.sgf"
+                        android:scheme="file" />
                 <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\.sgf"
-                    android:scheme="file" />
+                        android:host="*"
+                        android:mimeType="*/*"
+                        android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\.sgf"
+                        android:scheme="file" />
                 <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\..*\\.sgf"
-                    android:scheme="file" />
+                        android:host="*"
+                        android:mimeType="*/*"
+                        android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\..*\\.sgf"
+                        android:scheme="file" />
                 <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\.sgf"
-                    android:scheme="file" />
+                        android:host="*"
+                        android:mimeType="*/*"
+                        android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\.sgf"
+                        android:scheme="file" />
                 <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\.sgf"
-                    android:scheme="file" />
+                        android:host="*"
+                        android:mimeType="*/*"
+                        android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\.sgf"
+                        android:scheme="file" />
                 <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\.sgf"
-                    android:scheme="file" />
+                        android:host="*"
+                        android:mimeType="*/*"
+                        android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\.sgf"
+                        android:scheme="file" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -202,10 +205,11 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="*"
-                    android:scheme="tsumego" />
+                        android:host="*"
+                        android:scheme="tsumego" />
             </intent-filter>
-            <intent-filter>
+            <!-- https://stackoverflow.com/questions/52506871/missing-url-error-on-view-intent-filter-if-i-specify-mimetype-for-action-pick -->
+            <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -222,9 +226,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="*"
-                    android:pathPattern=".*\\.golink"
-                    android:scheme="file" />
+                        android:host="*"
+                        android:pathPattern=".*\\.golink"
+                        android:scheme="file" />
             </intent-filter>
         </activity>
         <activity android:name="org.ligi.gobandroid_hd.ui.recording.GameRecordActivity" />

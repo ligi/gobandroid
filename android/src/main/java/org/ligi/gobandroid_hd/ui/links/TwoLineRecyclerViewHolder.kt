@@ -2,7 +2,7 @@ package org.ligi.gobandroid_hd.ui.links
 
 import android.content.Intent
 import android.net.Uri
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.two_line_list_item.view.*
 

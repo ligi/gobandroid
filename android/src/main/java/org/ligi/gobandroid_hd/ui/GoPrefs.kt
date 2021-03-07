@@ -21,7 +21,7 @@
 
 package org.ligi.gobandroid_hd.ui
 
-import android.support.v7.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate
 import com.chibatching.kotpref.KotprefModel
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.ui.application.GoAndroidEnvironment

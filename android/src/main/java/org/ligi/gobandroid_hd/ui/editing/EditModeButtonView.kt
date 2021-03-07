@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.view.View
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.logic.markers.GoMarker
@@ -21,6 +21,10 @@ internal class EditModeButtonView(context: Context, val item: EditModeItem, val 
         newPaint.textAlign = Paint.Align.CENTER
         newPaint.isAntiAlias = true
         newPaint
+    }
+
+    init {
+        contentDescription = context.getString(item.contentDescriptionResId)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -51,9 +55,5 @@ internal class EditModeButtonView(context: Context, val item: EditModeItem, val 
         val size = context.resources.getDimensionPixelSize(R.dimen.edit_mode_item_size)
         val measureSpec = View.MeasureSpec.makeMeasureSpec(size, View.MeasureSpec.EXACTLY)
         super.onMeasure(measureSpec, measureSpec)
-    }
-
-    override fun getContentDescription(): CharSequence {
-        return context.getString(item.contentDescriptionResId)
     }
 }

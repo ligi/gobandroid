@@ -1,7 +1,7 @@
 package org.ligi.gobandroid_hd.unittest
 
 import android.content.Context
-import android.support.test.InstrumentationRegistry
+import androidx.test.InstrumentationRegistry
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before

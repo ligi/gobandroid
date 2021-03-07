@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
 import android.os.SystemClock
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.Menu
 import android.view.MotionEvent
 import android.view.WindowManager
@@ -103,11 +103,11 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
         val intent = gnuGoIntent
         val resolveInfo = packageManager.resolveService(intent, 0)
 
-        val name = ComponentName(resolveInfo.serviceInfo.packageName, resolveInfo.serviceInfo.name)
+        val name = ComponentName(resolveInfo!!.serviceInfo.packageName, resolveInfo.serviceInfo.name)
 
         intent.component = name
 
-        app.bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        app.bindService(intent, connection!!, Context.BIND_AUTO_CREATE)
 
         Thread(this).start()
 
@@ -126,7 +126,7 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
 
         service = null
         try {
-            application.unbindService(connection)
+            application.unbindService(connection!!)
             application.stopService(gnuGoIntent)
         } catch (e: Exception) {
             Log.w("Exception in stop()", e)

@@ -6,18 +6,18 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-    <android.support.v4.widget.DrawerLayout
+    <androidx.drawerlayout.widget.DrawerLayout
             android:id="@+id/drawer_layout"
             style="@style/default_activity_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <android.support.design.widget.CoordinatorLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:id="@+id/content_frame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-        <android.support.design.widget.NavigationView
+        <com.google.android.material.navigation.NavigationView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/left_drawer"
@@ -26,5 +26,5 @@
                 android:choiceMode="singleChoice"
                 android:dividerHeight="0dp"/>
 
-    </android.support.v4.widget.DrawerLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </FrameLayout>

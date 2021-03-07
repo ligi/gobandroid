@@ -29,7 +29,7 @@ class ShareSGFDialog(context: Context) : GobandroidDialog(context) {
         setIconResource(R.drawable.ic_social_share)
 
         setNegativeButton(R.string.cancel)
-        setPositiveButton(R.string.ok,  { dialog ->
+        setPositiveButton(R.string.ok,  { _ ->
             when (container.shareTypeRadioGroup.checkedRadioButtonId) {
                 R.id.radioButtonAsUnicode -> {
                     val intent = Intent(Intent.ACTION_SEND)

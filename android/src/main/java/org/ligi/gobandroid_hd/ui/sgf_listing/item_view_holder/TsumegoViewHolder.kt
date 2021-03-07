@@ -1,6 +1,6 @@
 package org.ligi.gobandroid_hd.ui.sgf_listing.item_view_holder
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.sgf_tsumego_list_item.view.*
 import org.ligi.gobandroid_hd.FileEncodeDetector

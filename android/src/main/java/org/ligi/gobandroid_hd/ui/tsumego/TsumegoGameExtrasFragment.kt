@@ -1,7 +1,7 @@
 package org.ligi.gobandroid_hd.ui.tsumego
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
@@ -32,7 +32,7 @@ class TsumegoGameExtrasFragment : Fragment() {
 
         val game = gameProvider.get()
 
-        activity.runOnUiThread {
+        requireActivity().runOnUiThread {
             tsumego_off_path_view.visibility = if (off_path_visible) TextView.VISIBLE else TextView.GONE
 
             if (correct_visible) {
@@ -75,8 +75,8 @@ class TsumegoGameExtrasFragment : Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val res = inflater!!.inflate(R.layout.game_extra_tsumego, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val res = inflater.inflate(R.layout.game_extra_tsumego, container, false)
 
         updateUI()
         return res

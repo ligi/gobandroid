@@ -12,7 +12,7 @@ class TheSGFWriter {
     @Test
     fun testAllSGFsShouldSurviveRoundtrip() {
 
-        val test_sgf_dir = File(javaClass.classLoader.getResource("test_sgfs").toURI())
+        val test_sgf_dir = File(javaClass.classLoader!!.getResource("test_sgfs").toURI())
 
         for (sgf in test_sgf_dir.list(SGFFileNameFilter())) {
             val game = SGFReader.sgf2game(File(test_sgf_dir, sgf).readText(), null)!!

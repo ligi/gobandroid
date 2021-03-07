@@ -14,10 +14,10 @@ abstract class GobandroidGameAwareFragment : GobandroidFragment() {
 
     protected lateinit var game: GoGame
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         game = gameProvider.get()
         EventBus.getDefault().register(this)
-        return createView(inflater!!, container, savedInstanceState)
+        return createView(inflater, container, savedInstanceState)
     }
 
     abstract fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View

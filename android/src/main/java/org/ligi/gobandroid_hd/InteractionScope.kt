@@ -1,6 +1,6 @@
 package org.ligi.gobandroid_hd
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import org.ligi.gobandroid_hd.logic.Cell
 
 class InteractionScope {

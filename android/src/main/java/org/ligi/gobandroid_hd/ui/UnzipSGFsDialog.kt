@@ -33,7 +33,7 @@ class UnzipSGFsDialog(val activity: Activity, val intent_after_finish: Intent, s
             callback(cleanCurrent.substringAfterLast("/"))
             val list = assets.list(current)
             val toDir = File(toDirConst, cleanCurrent)
-            if (list.size > 0) {
+            if (list!!.size > 0) {
                 toDir.mkdirs()
                 val relativePathList = list.map { child -> "$current/$child" }.toTypedArray()
                 decompress(assets, relativePathList, toDirConst, callback)

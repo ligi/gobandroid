@@ -1,7 +1,7 @@
 package org.ligi.gobandroid_hd.ui.editing
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -27,14 +27,14 @@ class EditGameExtrasFragment : GobandroidGameAwareFragment() {
         val editModeAdapter = EditModeButtonsAdapter(editModePool)
         view.gridView.adapter = editModeAdapter
 
-        view.gridView.onItemClickListener = OnItemClickListener { adapter, arg1, position, arg3 ->
+        view.gridView.onItemClickListener = OnItemClickListener { adapter, _, position, _ ->
             editModePool.setModeByPosition(position)
             (adapter.adapter as BaseAdapter).notifyDataSetChanged()
         }
 
         view.editSwitch.isChecked = true
 
-        view.editSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+        view.editSwitch.setOnCheckedChangeListener { _, isChecked ->
             view.gridView.visibility = if (isChecked) View.VISIBLE else View.GONE
             editModePool.mode = if (isChecked) EditGameMode.BLACK else EditGameMode.PLAY
             editModeAdapter.notifyDataSetChanged()
@@ -42,7 +42,7 @@ class EditGameExtrasFragment : GobandroidGameAwareFragment() {
         view.comment_et.setText(gameProvider.get().actMove.comment)
         view.comment_et.setHint(R.string.enter_your_comments_here)
         view.comment_et.gravity = Gravity.TOP
-        view.comment_et.setTextColor(ContextCompat.getColor(context, R.color.text_color_on_board_bg))
+        view.comment_et.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_color_on_board_bg))
 
         view.comment_et.doAfterEdit {
             gameProvider.get().actMove.comment = it.toString()

@@ -2,7 +2,7 @@ package org.ligi.gobandroid_hd.ui.application
 
 import android.content.Context
 import android.preference.PreferenceManager
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.ui.GoPrefs
 
@@ -19,8 +19,8 @@ class GobandroidSettingsTransition(// we need some context
             prefs.isSGFLegendEnabled = isSGFLegendEnabled
             prefs.isConstantLightWanted = isConstantLightWanted
             prefs.isTsumegoPushEnabled = isTsumegoPushEnabled
-            prefs.username = username
-            prefs.rank = rank
+            prefs.username = username!!
+            prefs.rank = rank!!
             prefs.isVersionSeen(preferences.getInt("VERSION", 0))
             prefs.isTransitionDone = true
         }

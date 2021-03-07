@@ -28,9 +28,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.print.PrintManager
-import android.support.annotation.StringRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.AlertDialog
+import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AlertDialog
 import android.view.*
 import android.view.View.OnKeyListener
 import android.view.View.OnTouchListener
@@ -38,12 +38,9 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.game.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import org.ligi.gobandroid_hd.App.Companion.env
 import org.ligi.gobandroid_hd.BuildConfig
 import org.ligi.gobandroid_hd.InteractionScope
 import org.ligi.gobandroid_hd.R
-import org.ligi.gobandroid_hd.R.id.*
-import org.ligi.gobandroid_hd.R.layout.game
 import org.ligi.gobandroid_hd.events.GameChangedEvent
 import org.ligi.gobandroid_hd.events.OptionsItemClickedEvent
 import org.ligi.gobandroid_hd.logic.Cell
@@ -68,6 +65,8 @@ import org.ligi.snackengage.snacks.RateSnack
 import org.ligi.snackengage.snacks.TranslateSnack
 import org.ligi.tracedroid.logging.Log
 import org.ligi.tracedroid.sending.TraceDroidEmailSender
+import permissions.dispatcher.NeedsPermission
+import permissions.dispatcher.RuntimePermissions
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -77,6 +76,7 @@ import java.util.*
 /**
  * Activity for a Go Game
  */
+@RuntimePermissions
 open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyListener {
 
     var sound_man: GoSoundManager? = null
@@ -244,7 +244,7 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
             }
 
             R.id.menu_write_sgf -> {
-                SaveSGFDialog(this).show()
+                prepareSaveWithPermissionCheck()
                 return true
             }
 
@@ -261,6 +261,11 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    @NeedsPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    fun prepareSave() {
+        SaveSGFDialog(this).show()
     }
 
     @TargetApi(19)
@@ -283,7 +288,7 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
         } else {
             AlertDialog.Builder(this).setTitle(R.string.end_game_quesstion_title)
                     .setMessage(R.string.quit_confirm)
-                    .setPositiveButton(R.string.yes) { dialog, whichButton -> finish() }
+                    .setPositiveButton(R.string.yes) { _, _ -> finish() }
                     .setCancelable(true)
                     .setNegativeButton(R.string.no, null)
                     .show()
