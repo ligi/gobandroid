@@ -6,7 +6,6 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.lazy
-import com.squareup.spoon.Spoon
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
@@ -49,7 +48,7 @@ class TheEditGameActivity {
 
         tap9x3Field()
 
-        Spoon.screenshot(activity, "letters")
+        rule.screenShot("letters")
     }
 
     private fun tap9x3Field() {

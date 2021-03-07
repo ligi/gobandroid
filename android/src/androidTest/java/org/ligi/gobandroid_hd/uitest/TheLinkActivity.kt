@@ -4,15 +4,11 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.runner.AndroidJUnit4
-import com.jraska.falcon.FalconSpoon
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.ui.links.LinksActivity
 import org.ligi.trulesk.TruleskActivityRule
 
-@RunWith(AndroidJUnit4::class)
 class TheLinkActivity {
 
     @get:Rule
@@ -20,7 +16,7 @@ class TheLinkActivity {
 
     @Test
     fun testThatProjectPageEntryIsVisible() {
-        FalconSpoon.screenshot(rule.activity, "link_list")
+        rule.screenShot("link_list")
         onView(withText("Gobandroid Project Page")).check(matches(isDisplayed()))
     }
 }

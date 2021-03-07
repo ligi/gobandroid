@@ -2,7 +2,7 @@
   "type": "android",
   "stages": [
     {
-      "name": "spoon",
+      "name": "testWithAnalyticsWithCloudNoAutostartDebugComposer",
       "needsEmulator": true
     },
     {

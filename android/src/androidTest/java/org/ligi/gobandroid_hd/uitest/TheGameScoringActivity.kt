@@ -5,14 +5,11 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.runner.AndroidJUnit4
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.lazy
-import com.squareup.spoon.Spoon
 import org.hamcrest.Matchers.containsString
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.logic.Cell
@@ -23,14 +20,12 @@ import org.ligi.gobandroid_hd.test_helper_functions.tapStone
 import org.ligi.gobandroid_hd.ui.scoring.GameScoringActivity
 import org.ligi.trulesk.TruleskActivityRule
 
-
-@RunWith(AndroidJUnit4::class)
 class TheGameScoringActivity {
 
     @get:Rule
     val rule = TruleskActivityRule(GameScoringActivity::class.java, false)
 
-    val gameProvider: GameProvider  by App.kodein.lazy.instance()
+    val gameProvider: GameProvider by App.kodein.lazy.instance()
 
 
     @Test
@@ -38,7 +33,7 @@ class TheGameScoringActivity {
         val activity = rule.launchActivity(null)
 
         onView(withId(R.id.go_board)).check(matches(isDisplayed()))
-        Spoon.screenshot(activity, "count")
+        rule.screenShot("count")
     }
 
     @Test
@@ -57,7 +52,7 @@ class TheGameScoringActivity {
         onView(withId(R.id.captures_black)).check(matches(withText("0")))
         onView(withId(R.id.result_txt)).check(matches(withText(containsString("Black"))))
 
-        Spoon.screenshot(activity, "one_stone_count")
+        rule.screenShot("one_stone_count")
     }
 
 
@@ -78,7 +73,7 @@ class TheGameScoringActivity {
         onView(withId(R.id.captures_black)).check(matches(withText("0 + 1")))
         onView(withId(R.id.result_txt)).check(matches(withText(containsString("Black"))))
 
-        Spoon.screenshot(activity, "count_mark_one")
+        rule.screenShot("count_mark_one")
     }
 
     fun sleep() {
@@ -103,11 +98,11 @@ class TheGameScoringActivity {
         onView(withId(R.id.captures_white)).check(matches(withText("0 + 1")))
         onView(withId(R.id.result_txt)).check(matches(withText(containsString("White"))))
 
-        Spoon.screenshot(activity, "count_white_wins")
+        rule.screenShot("count_white_wins")
     }
 
     @Test
-            // https://github.com/ligi/gobandroid/issues/143
+    // https://github.com/ligi/gobandroid/issues/143
     fun testThatScoringWorksWhenTerritoryIsInsideDeadStones() {
         gameProvider.set(GoGame(3.toByte().toInt()))
         gameProvider.get().do_move(CellImpl(0, 1))
@@ -121,7 +116,7 @@ class TheGameScoringActivity {
         onView(withId(R.id.final_white)).perform(scrollTo())
         onView(withId(R.id.final_white)).check(matches(withText("16.5")))
 
-        Spoon.screenshot(activity, "count_scoring_territory_in_dead_stones")
+        rule.screenShot("count_scoring_territory_in_dead_stones")
     }
 
     @Test
@@ -136,7 +131,7 @@ class TheGameScoringActivity {
 
         onView(withId(R.id.final_white)).check(matches(withText("88.5")))
 
-        Spoon.screenshot(activity, "count_mark_group")
+        rule.screenShot("count_mark_group")
     }
 
     inner class GameBuilder constructor(val game: GoGame) {

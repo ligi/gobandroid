@@ -1,10 +1,14 @@
 apply plugin: 'com.android.application'
-apply plugin: 'spoon'
+
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'de.mobilej.unmock'
 apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: 'com.trevjonez.composer'
+composer {
+    apkInstallTimeout 600
+}
 
 repositories {
     google()
@@ -99,10 +103,6 @@ android {
     }
 } // android
 
-spoon {
-    debug = true
-}
-
 configurations {
     all {
         exclude module: 'commons-logging'
@@ -149,9 +149,7 @@ dependencies {
     testImplementation 'com.squareup.assertj:assertj-android:1.2.0'
     testImplementation 'androidx.annotation:annotation:1.1.0'
     testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'com.squareup.spoon:spoon-client:1.7.1'
-    androidTestImplementation 'com.jraska:falcon:2.1.1'
-    androidTestImplementation 'com.jraska:falcon-spoon-compat:1.0.4'
+
     implementation 'com.google.android:flexbox:0.2.6'
     implementation 'org.greenrobot:eventbus:3.0.0'
 

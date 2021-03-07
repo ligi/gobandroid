@@ -3,14 +3,11 @@ package org.ligi.gobandroid_hd.uitest
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.runner.AndroidJUnit4
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.lazy
-import com.squareup.spoon.Spoon
 import org.hamcrest.CoreMatchers.not
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.logic.CellImpl
@@ -20,7 +17,6 @@ import org.ligi.gobandroid_hd.test_helper_functions.readGame
 import org.ligi.gobandroid_hd.ui.tsumego.TsumegoActivity
 import org.ligi.trulesk.TruleskActivityRule
 
-@RunWith(AndroidJUnit4::class)
 class TheTsumegoActivity {
 
     @get:Rule
@@ -34,7 +30,7 @@ class TheTsumegoActivity {
         val activity = rule.launchActivity()
 
         onView(withText(R.string.tsumego_sgf_no_solution)).check(matches(isDisplayed()))
-        Spoon.screenshot(activity, "tsumego_fail")
+        rule.screenShot("tsumego_fail")
     }
 
     @Test
@@ -43,7 +39,7 @@ class TheTsumegoActivity {
         val activity = rule.launchActivity(null)
 
         onView(withId(R.id.tsumego_off_path_view)).check(matches(not(isDisplayed())))
-        Spoon.screenshot(activity, "tsumego_on_path")
+        rule.screenShot("tsumego_on_path")
     }
 
     @Test
@@ -54,7 +50,7 @@ class TheTsumegoActivity {
         onView(withId(R.id.go_board)).perform(placeStone(CellImpl(1, 1), gameProvider.get()))
 
         onView(withId(R.id.tsumego_off_path_view)).check(matches(isDisplayed()))
-        Spoon.screenshot(activity, "tsumego_off_path")
+        rule.screenShot("tsumego_off_path")
     }
 
     @Test
@@ -63,11 +59,11 @@ class TheTsumegoActivity {
         val activity = rule.launchActivity()
         onView(withId(R.id.game_comment)).check(matches(withText("testing comment")))
 
-        Spoon.screenshot(activity, "tsumego_comment")
+        rule.screenShot("tsumego_comment")
         onView(withId(R.id.go_board)).perform(placeStone(CellImpl(1, 1), gameProvider.get()))
 
         onView(withId(R.id.game_comment)).check(matches(not(isDisplayed())))
-        Spoon.screenshot(activity, "tsumego_comment_gone")
+        rule.screenShot("tsumego_comment_gone")
     }
 
 }

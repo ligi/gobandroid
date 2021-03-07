@@ -5,17 +5,14 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.runner.AndroidJUnit4
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.lazy
-import com.squareup.spoon.Spoon
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Fail.fail
 import org.hamcrest.CoreMatchers.not
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.model.GameProvider
@@ -24,13 +21,12 @@ import org.ligi.gobandroid_hd.test_helper_functions.readGame
 import org.ligi.gobandroid_hd.ui.review.GameReviewActivity
 import org.ligi.trulesk.TruleskActivityRule
 
-@RunWith(AndroidJUnit4::class)
 class TheReviewActivity {
 
     @get:Rule
     val rule = TruleskActivityRule(GameReviewActivity::class.java, false)
 
-    val gameProvider: GameProvider  by App.kodein.lazy.instance()
+    val gameProvider: GameProvider by App.kodein.lazy.instance()
 
     @Before
     fun setUp() {
@@ -40,7 +36,7 @@ class TheReviewActivity {
 
     @Test
     fun testThatGoBoardIsThere() {
-        Spoon.screenshot(rule.activity, "review")
+        rule.screenShot("review")
         onView(withId(R.id.go_board)).check(matches(isDisplayed()))
         onView(withId(R.id.btn_next)).check(matches(isDisplayed()))
     }

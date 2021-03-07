@@ -5,15 +5,12 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.runner.AndroidJUnit4
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.lazy
-import com.squareup.spoon.Spoon
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers.not
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.model.GameProvider
@@ -21,7 +18,6 @@ import org.ligi.gobandroid_hd.ui.review.GameReviewActivity
 import org.ligi.trulesk.TruleskActivityRule
 import org.ligi.trulesk.invokeMenu
 
-@RunWith(AndroidJUnit4::class)
 class TheGameInfoDialog {
 
     @get:Rule
@@ -33,7 +29,7 @@ class TheGameInfoDialog {
     fun testThatTheDialogShows() {
         val activity = openDialog()
         onView(withId(R.id.game_name_et)).check(matches(isDisplayed()))
-        Spoon.screenshot(activity, "game_info_dialog")
+        rule.screenShot("game_info_dialog")
     }
 
     fun openDialog(): GameReviewActivity {
@@ -78,7 +74,7 @@ class TheGameInfoDialog {
         assertThat(metaData.blackRank).isEqualTo(CUSTOM_BLACK_RANK)
         assertThat(gameProvider.get().komi).isEqualTo(java.lang.Float.valueOf(CUSTOM_KOMI))
 
-        Spoon.screenshot(activity, "game_info_dialog")
+        rule.screenShot("game_info_dialog")
     }
 
     @Test
@@ -94,7 +90,7 @@ class TheGameInfoDialog {
         onView(withText(R.string.komi_must_be_a_number)).check(matches(isDisplayed()))
 
         assertThat(gameProvider.get().komi).isEqualTo(java.lang.Float.valueOf(CUSTOM_KOMI))
-        Spoon.screenshot(activity, "game_info_reject_komi")
+        rule.screenShot("game_info_reject_komi")
     }
 
     companion object {

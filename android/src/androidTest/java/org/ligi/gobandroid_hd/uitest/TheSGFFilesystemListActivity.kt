@@ -7,18 +7,14 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.runner.AndroidJUnit4
-import com.jraska.falcon.FalconSpoon
 import org.junit.After
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.ui.sgf_listing.SGFFileSystemListActivity
 import org.ligi.trulesk.TruleskActivityRule
 import java.io.File
 
-@RunWith(AndroidJUnit4::class)
 class TheSGFFilesystemListActivity {
 
     @get:Rule
@@ -36,7 +32,7 @@ class TheSGFFilesystemListActivity {
         startListForPath()
 
         onView(withText(R.string.problem_listing_sgf)).check(matches(isDisplayed()))
-        FalconSpoon.screenshot(rule.activity, "file_list_empty")
+        rule.screenShot("file_list_empty")
     }
 
     @Test
@@ -46,7 +42,7 @@ class TheSGFFilesystemListActivity {
         startListForPath()
 
         onView(withText(probe)).check(matches(isDisplayed()))
-        FalconSpoon.screenshot(rule.activity, "file_list")
+        rule.screenShot("file_list")
     }
 
     private fun startListForPath() {

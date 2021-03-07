@@ -5,15 +5,12 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.runner.AndroidJUnit4
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.lazy
-import com.jraska.falcon.FalconSpoon
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.InteractionScope
 import org.ligi.gobandroid_hd.R
@@ -25,15 +22,14 @@ import org.ligi.gobandroid_hd.ui.recording.GameRecordActivity
 import org.ligi.trulesk.TruleskActivityRule
 import org.ligi.trulesk.invokeMenu
 
-@RunWith(AndroidJUnit4::class)
 class TheUndoFunctionality {
 
     @get:Rule
     val rule = TruleskActivityRule(GameRecordActivity::class.java)
 
-    val gameProvider: GameProvider  by App.kodein.lazy.instance()
+    val gameProvider: GameProvider by App.kodein.lazy.instance()
 
-    val interactionScope: InteractionScope  by App.kodein.lazy.instance()
+    val interactionScope: InteractionScope by App.kodein.lazy.instance()
 
     @Before
     fun setUp() {
@@ -47,7 +43,7 @@ class TheUndoFunctionality {
 
         doAndUndo()
 
-        FalconSpoon.screenshot(rule.activity, "ask_variant_dialog")
+        rule.screenShot("ask_variant_dialog")
         onView(withText(R.string.keep_variant)).check(matches(isDisplayed()))
         assertThat(interactionScope.ask_variant_session).isTrue()
     }
@@ -94,7 +90,7 @@ class TheUndoFunctionality {
 
         doAndUndo()
 
-        FalconSpoon.screenshot(rule.activity, "no_ask_variant_dialog")
+        rule.screenShot("no_ask_variant_dialog")
         onView(withText(R.string.keep_variant)).check(doesNotExist())
         assertThat(interactionScope.ask_variant_session).isFalse()
         assertThat(gameProvider.get().actMove.hasNextMoveVariations()).isFalse()

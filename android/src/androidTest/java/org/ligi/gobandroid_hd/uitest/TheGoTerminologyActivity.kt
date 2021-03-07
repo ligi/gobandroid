@@ -2,15 +2,11 @@ package org.ligi.gobandroid_hd.uitest
 
 import android.content.Intent
 import android.net.Uri
-import androidx.test.runner.AndroidJUnit4
-import com.jraska.falcon.FalconSpoon
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.ligi.gobandroid_hd.ui.go_terminology.GoTerminologyViewActivity
 import org.ligi.trulesk.TruleskActivityRule
 
-@RunWith(AndroidJUnit4::class)
 class TheGoTerminologyActivity {
 
     @get:Rule
@@ -24,7 +20,7 @@ class TheGoTerminologyActivity {
 
         rule.launchActivity(intent)
 
-        FalconSpoon.screenshot(rule.activity, "go_terms")
+        rule.screenShot("go_terms")
     }
 
 }
