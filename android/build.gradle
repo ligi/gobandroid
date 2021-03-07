@@ -152,7 +152,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     testImplementation 'com.squareup.assertj:assertj-android:1.2.0'
     testImplementation 'androidx.annotation:annotation:1.1.0'
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.2'
 
     implementation 'com.google.android:flexbox:2.0.1'
     implementation 'org.greenrobot:eventbus:3.0.0'
