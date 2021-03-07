@@ -147,7 +147,7 @@ class SGFListFragment : GobandroidFragment(), Refreshable {
                                 .show()
                     }
                 } catch (e: IOException) {
-                    Timber.w("problem in gogameguru rename offer " + e)
+                    Timber.w(e, "problem in gogameguru rename offer")
                 }
 
                 return

@@ -31,9 +31,7 @@ class GoProblemsRenaming(private val context: Context, private val dir: File) : 
 
     override fun doInBackground(vararg params: Void): Void? {
 
-        var i = 0
-
-        for (filename in list!!) {
+        for ((i, filename) in list!!.withIndex()) {
 
             val gameFile = File(dir, filename)
             try {
@@ -53,7 +51,7 @@ class GoProblemsRenaming(private val context: Context, private val dir: File) : 
                 Timber.w(e, "problem in the process of GoProblemsRenaming")
             }
 
-            publishProgress(i++)
+            publishProgress(i)
         }
         return null
     }

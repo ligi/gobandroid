@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.game.*
-import org.ligi.gobandroid_hd.App
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.events.GameChangedEvent
 import org.ligi.gobandroid_hd.events.TsumegoSolved
@@ -36,14 +35,6 @@ class TsumegoActivity : GoActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-
-        if (game == null) { // there was no game - fallback to main menu
-            App.tracker.trackException("tsumego start getGame() returned null in onCreate", false)
-            finish()
-            // startActivity(new Intent(this, gobandroid.class));
-            return super.onCreateOptionsMenu(menu)
-        }
-
         menuInflater.inflate(R.menu.ingame_tsumego, menu)
         menu.findItem(R.id.menu_game_hint).isVisible = tsumegoController.isFinishingMoveKnown() && tsumegoController.isOnPath()
         menu.findItem(R.id.menu_game_undo).isVisible = !game.actMove.isFirstMove
@@ -81,12 +72,6 @@ class TsumegoActivity : GoActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        if (game == null) { // there was no game - fallback to main menu
-            App.tracker.trackException("tsumego start getGame() returned null in onCreate", false)
-            finish()
-            return
-        }
 
         setTitle(R.string.tsumego)
 

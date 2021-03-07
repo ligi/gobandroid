@@ -5,13 +5,13 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
-import com.google.android.material.navigation.NavigationView
-import androidx.drawerlayout.widget.DrawerLayout
+import android.view.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import android.view.*
+import androidx.drawerlayout.widget.DrawerLayout
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.lazy
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.navigation_drawer_container.*
 import org.greenrobot.eventbus.EventBus
 import org.ligi.gobandroid_hd.App
@@ -141,7 +141,7 @@ open class GobandroidFragmentActivity : AppCompatActivity() {
         get() = applicationContext as App
 
     val game: GoGame
-        get() = gameProvider!!.get()
+        get() = gameProvider.get()
 
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {

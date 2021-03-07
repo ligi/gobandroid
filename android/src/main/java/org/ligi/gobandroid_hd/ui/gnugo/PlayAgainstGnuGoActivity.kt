@@ -296,10 +296,6 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
     }
 
     private fun coordinates2gtpstr(cell: Cell?): String {
-        if (game == null) {
-            Timber.w("coordinates2gtpstr called with game==null")
-            return ""
-        }
 
         if (cell == null) {
             Timber.w("coordinates2gtpstr called with cell==null")

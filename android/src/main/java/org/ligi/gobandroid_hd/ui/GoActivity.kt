@@ -122,12 +122,6 @@ open class GoActivity : GobandroidFragmentActivity(), OnTouchListener, OnKeyList
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
 
-        if (game == null) { // cannot do anything without a game
-            Timber.w("finish()ing " + this + " cuz getGame()==null")
-            finish()
-            return
-        }
-
         if (sound_man == null) {
             sound_man = GoSoundManager(this, env)
         }

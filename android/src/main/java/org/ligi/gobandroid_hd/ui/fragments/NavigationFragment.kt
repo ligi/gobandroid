@@ -89,7 +89,7 @@ class NavigationFragment : GobandroidGameAwareFragment() {
     private fun setImageViewState(state: Boolean, vararg views: ImageView) {
         views.forEach {
             it.isEnabled = state
-            ViewCompat.setAlpha(it, if (state) 1f else 0.4f)
+            it.alpha = if (state) 1f else 0.4f
         }
     }
 

@@ -16,7 +16,7 @@ import java.io.IOException
  */
 object SGFWriter {
 
-    fun escapeSGF(txt: String): String {
+    private fun escapeSGF(txt: String): String {
         return txt.replace("]", "\\]")
                 .replace(")", "\\)")
                 .replace("\\", "\\\\")
@@ -38,7 +38,7 @@ object SGFWriter {
         res.append(getSGFSnippet("PW", escapeSGF(game.metaData.whiteName)))
         res.append(getSGFSnippet("BR", escapeSGF(game.metaData.blackRank)))
         res.append(getSGFSnippet("WR", escapeSGF(game.metaData.whiteRank)))
-        res.append(getSGFSnippet("KM", escapeSGF(java.lang.Float.toString(game.komi))))
+        res.append(getSGFSnippet("KM", escapeSGF(game.komi.toString())))
         res.append(getSGFSnippet("RE", escapeSGF(game.metaData.result)))
         res.append(getSGFSnippet("SO", escapeSGF(game.metaData.source)))
         res.append("\n")
@@ -67,45 +67,45 @@ object SGFWriter {
 
     internal fun moves2string(move: GoMove): String {
         val res = StringBuilder()
-        var act_move: GoMove? = move
-        while (act_move != null) {
+        var actMove: GoMove? = move
+        while (actMove != null) {
             // add the move
-            if (!act_move.isFirstMove) {
-                res.append(";").append(if (act_move.player == GoDefinitions.PLAYER_BLACK) "B" else "W")
-                if (act_move.isPassMove) {
+            if (!actMove.isFirstMove) {
+                res.append(";").append(if (actMove.player == GoDefinitions.PLAYER_BLACK) "B" else "W")
+                if (actMove.isPassMove) {
                     res.append("[]")
                 } else {
-                    res.append(coords2SGFFragment(act_move.cell!!)).append("\n")
+                    res.append(coords2SGFFragment(actMove.cell!!)).append("\n")
                 }
             }
 
             // add the comment
-            if (!act_move.comment.isEmpty()) {
-                res.append("C[").append(act_move.comment).append("]\n")
+            if (!actMove.comment.isEmpty()) {
+                res.append("C[").append(actMove.comment).append("]\n")
             }
 
             // add markers
-            for (marker in act_move.markers) {
+            for (marker in actMove.markers) {
                 res.append(marker.getMarkerCode())
-                if(marker is TextMarker) {
+                if (marker is TextMarker) {
                     res.append(coords2SGFFragment(marker).replace("]", ":" + marker.text + "]"))
                 } else {
                     res.append(coords2SGFFragment(marker))
                 }
             }
 
-            var next_move: GoMove? = null
-            if (act_move.hasNextMove()) {
-                if (act_move.hasNextMoveVariations()) {
-                    for (variation in act_move.nextMoveVariations) {
+            var nextMove: GoMove? = null
+            if (actMove.hasNextMove()) {
+                if (actMove.hasNextMoveVariations()) {
+                    for (variation in actMove.nextMoveVariations) {
                         res.append("(").append(moves2string(variation)).append(")")
                     }
                 } else {
-                    next_move = act_move.getnextMove(0)
+                    nextMove = actMove.getnextMove(0)
                 }
             }
 
-            act_move = next_move
+            actMove = nextMove
         }
         return res.toString()
     }
@@ -121,28 +121,27 @@ object SGFWriter {
             throw IllegalArgumentException("cannot write - fname is a directory")
         }
 
-        if (file.parentFile == null) {
-            // not really sure when this can be the
-            // case ( perhaps only / ) - but the doc says it can be null and I would get NPE then
-            throw IllegalArgumentException("bad filename " + file.absolutePath)
-        }
+        val parentFile = file.parentFile
+                ?: // not really sure when this can be the
+                // case ( perhaps only / ) - but the doc says it can be null and I would get NPE then
+                throw IllegalArgumentException("bad filename " + file.absolutePath)
 
-        if (!file.parentFile.isDirectory) {
+        if (!parentFile.isDirectory) {
             // if  the  path is not there yet
-            file.parentFile.mkdirs()
+            parentFile.mkdirs()
         }
 
         try {
             file.createNewFile()
-            val sgf_writer = FileWriter(file)
-            val out = BufferedWriter(sgf_writer)
+            val sgfWriter = FileWriter(file)
+            val out = BufferedWriter(sgfWriter)
 
             out.write(game2sgf(game))
             out.close()
-            sgf_writer.close()
+            sgfWriter.close()
 
         } catch (e: IOException) {
-            Timber.i("" + e)
+            Timber.i(e)
             return false
         }
 

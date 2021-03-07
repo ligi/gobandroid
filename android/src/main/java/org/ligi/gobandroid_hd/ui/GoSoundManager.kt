@@ -1,6 +1,7 @@
 package org.ligi.gobandroid_hd.ui
 
 import android.content.Context
+import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.SoundPool
 import org.ligi.gobandroid_hd.R
@@ -30,8 +31,14 @@ class GoSoundManager(private val context: GobandroidFragmentActivity, private va
 
     private val soundMap = HashMap<Sound, Int>()
 
-    private val STREAM = AudioManager.STREAM_NOTIFICATION
-    private val mSoundPool: SoundPool by lazy { SoundPool(4, STREAM, 0) }
+    private val streamNotification = AudioManager.STREAM_NOTIFICATION
+    private val mSoundPool: SoundPool by lazy {
+        SoundPool.Builder()
+                .setMaxStreams(4)
+                .setAudioAttributes(
+                        AudioAttributes.Builder().setLegacyStreamType(streamNotification).build()
+                ).build()
+    }
     private val mAudioManager: AudioManager by lazy { context.getSystemService(Context.AUDIO_SERVICE) as AudioManager }
 
     fun playSound(sound: Sound) {
@@ -39,8 +46,8 @@ class GoSoundManager(private val context: GobandroidFragmentActivity, private va
             if (soundMap[sound] == null) {
                 soundMap[sound] = mSoundPool.load(context, sound.resID, 1)
             }
-            var streamVolume = mAudioManager.getStreamVolume(STREAM).toFloat()
-            streamVolume /= mAudioManager.getStreamMaxVolume(STREAM)
+            var streamVolume = mAudioManager.getStreamVolume(streamNotification).toFloat()
+            streamVolume /= mAudioManager.getStreamMaxVolume(streamNotification)
             mSoundPool.play(soundMap[sound]!!, streamVolume, streamVolume, 1, 0, 1f)
         }
     }

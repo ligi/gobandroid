@@ -41,8 +41,8 @@ class GoTerminologyViewActivity : AppCompatActivity() {
 
             Linkify.addLinks(myTextView, Linkify.ALL)
 
-            val mentionFilter: Linkify.TransformFilter = Linkify.TransformFilter { matcher, url ->
-                matcher.group(1).toLowerCase()
+            val mentionFilter: Linkify.TransformFilter = Linkify.TransformFilter { matcher, _ ->
+                matcher.group(1)?.toLowerCase()
             }
 
             Term2resMap.keys.forEach {
