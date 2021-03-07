@@ -7,7 +7,6 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import org.ligi.gobandroid_hd.R
 import org.ligi.gobandroid_hd.ui.application.GoAndroidEnvironment
-import org.ligi.kaxt.recreateWhenPossible
 
 class GoPrefsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -42,7 +41,7 @@ class GoPrefsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         if (key == getString(R.string.prefs_daynight)) {
             AppCompatDelegate.setDefaultNightMode(GoPrefs.getThemeInt())
-            requireActivity().recreateWhenPossible()
+            requireActivity().recreate()
         }
     }
 
