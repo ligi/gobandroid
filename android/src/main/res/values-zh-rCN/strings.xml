@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">ligi围棋</string>
+  <string name="app_name">Gobandroid</string>
   <string name="start_game">开始对局</string>
   <string name="start">开始</string>
   <string name="load_game">载入对局</string>
@@ -161,8 +161,8 @@
   <string name="problem_loading_sgf_would_you_like_to_send_ligi_this_sgf_to_fix_the_problem">加载棋谱文件失败,  你想给 ligi 大神发个邮件看看是什么问题吗?</string>
   <string name="go_back">上一步</string>
   <string name="download_status">下载状态</string>
-  <string name="no_new_tsumegos_found">没有新的诘碁 :-(</string>
-  <string name="downloaded_n_tsumego">下载了 %d 新的 诘碁 ;-)</string>
+  <string name="no_new_tsumegos_found">没有新的棋谱 :-(</string>
+  <string name="downloaded_n_tsumego">下载了 %d 新的 棋谱 ;-)</string>
   <string name="overwrite_existing_file">覆盖已有文件</string>
   <string name="share">分享</string>
   <string name="score">得分</string>
@@ -173,7 +173,7 @@
   <string name="clear_board">清空棋盘</string>
   <string name="invite">邀请</string>
   <string name="accept">接受</string>
-  <string name="new_tsumegos_available">发现新的诘碁文件!</string>
+  <string name="new_tsumegos_available">发现新的棋谱文件!</string>
   <string name="the_go_game_you_reviewed">您已经看过的对局</string>
   <string name="this_game_has_2_players_but_you_can_only_watch_it">已经有两个人了 - 你可以旁观一下</string>
   <string name="a_move_in_one_online_game_you_participate_is_done">你参与的一个在线对局中有了新的一手棋</string>
@@ -245,4 +245,13 @@
   </array>
   <string name="day_or_night">白天夜间模式</string>
   <string name="day_or_night_summary">选择白天或者间风格</string>
+  <string name="line_width">线宽</string>
+  <string name="print">打印</string>
+  <string name="found_junction_snack_for_last">发现分支--长按到最后一手</string>
+  <string name="found_junction_snack_for_first">发现分支--长按到第一手</string>
+  <string name="snackbar_keep_variant_action_enable">打开</string>
+  <string name="snackbar_keep_variant_action_disable">关闭</string>
+  <string name="snackbar_keep_variant_message_enable">打开分支变化</string>
+  <string name="snackbar_keep_variant_message_disable">关闭分支变化</string>
+  <string name="improve_translation">改进翻译</string>
 </resources>
