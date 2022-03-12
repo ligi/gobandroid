@@ -222,7 +222,6 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
                 try {
                     // set the size
                     service!!.processGTP("boardsize " + game.boardSize)
-                    var currentMove = game.findFirstMove()
                     game.statelessGoBoard.withAllCells { statelessBoardCell ->
                         try {
                             if (game.handicapBoard.isCellDeadWhite(statelessBoardCell)) {
@@ -233,12 +232,20 @@ class PlayAgainstGnuGoActivity : GoActivity(), Runnable {
                         } catch (e: RemoteException) {
                             e.printStackTrace()
                         }
-
                     }
-                    while (currentMove.hasNextMove()) {
-                        currentMove = currentMove.getnextMove(0)!!
-                        val gtpMove = getGtpMoveFromMove(currentMove)
-                        if (currentMove.player == GoDefinitions.PLAYER_BLACK) {
+
+                    val replay_moves = ArrayList<GoMove>()
+                    replay_moves.add(game.actMove)
+                    var tmp_move: GoMove
+                    while (true) {
+                        tmp_move = replay_moves.last()
+                        if (tmp_move.isFirstMove || tmp_move.parent == null) break
+                        replay_moves.add(tmp_move.parent!!)
+                    }
+                    for (step in replay_moves.indices.reversed()) {
+                        tmp_move = replay_moves[step]
+                        val gtpMove = getGtpMoveFromMove(tmp_move)
+                        if (tmp_move.player == GoDefinitions.PLAYER_BLACK) {
                             service!!.processGTP("play black " + gtpMove)
                         } else {
                             service!!.processGTP("play white " + gtpMove)
